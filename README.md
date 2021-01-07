@@ -5,7 +5,7 @@ Quo is a Python based toolkit for creating Command-Line Interface (CLI) applicat
 
 ---
 
-**Quo 📄 **: <a href="https://viewerdiscretion.github.io/quo" class="external-link" target="_blank">Documentation</a>
+**Quo📄** : <a href="https://viewerdiscretion.github.io/quo" class="external-link" target="_blank">Documentation</a>
 
 ---
 
