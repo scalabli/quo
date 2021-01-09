@@ -1,13 +1,13 @@
 # Project information
 site_name: Quo
-site_url: https://chouette254.github.io/quo/
+site_url: https://viewerdiscretion.github.io/quo/
 site_author: Gerrishon Sirere 
 site_description: >-
   Quo is a Python based toolkit for creating Command-Line Interface (CLI) applications. Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. 
 
 # Repository
 repo_name: chouette254/quo
-repo_url: https://github.com/chouette254/quo
+repo_url: https://github.com/viewerdiscretion/quo
 edit_uri: ""
 
 # Copyright
@@ -68,9 +68,9 @@ plugins:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/chouette254
+      link: https://github.com/viewerdiscretion
     - icon: fontawesome/brands/gitter
-      link: https://gitter.im/chouette254/quo
+      link: https://gitter.im/viewerdiscretion/quo
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/r/chouette254/quo/
     - icon: fontawesome/brands/twitter
@@ -106,7 +106,7 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.magiclink:
       repo_url_shorthand: true
-      user: chouette254
+      user: viewerdiscretion
       repo: quo
   - pymdownx.mark
   - pymdownx.smartsymbols
