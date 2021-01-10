@@ -16,6 +16,10 @@ Quo is a Python based toolkit for creating Command-Line Interface (CLI) applicat
 <a href="https://github.com/viewerdiscretion/quo/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/viewerdiscretion/quo?color=2b9348"></a>
 <a href="https://github.com/viewerdiscretion/quo/blob/master/LICENSE"><img src="https://img.shields.io/github/license/viewerdiscretion/quo?color=2b9348" alt="License Badge"/></a>
 
+![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s?label=Follow)
+[![Linkedin: anmol](https://img.shields.io/badge/-Gerrishon-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gerrishonsirere/)](https://www.linkedin.com/in/gerrishonsirere/)
+![](https://visitor-badge.glitch.me/badge?page_id=viewerdiscretion.quo)
+
 ---
 
 **Quo📄** : <a href="https://viewerdiscretion.github.io/quo" class="external-link" target="_blank">Documentation</a>
