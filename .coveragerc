@@ -1,0 +1,8 @@
+[run]
+
+source =
+    src/quo
+    tests
+    docs
+
+parallel = True
