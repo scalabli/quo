@@ -22,8 +22,8 @@ from .utilities import LazyFile
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
 visible_prompt_func = input
+#American National Standard Institute colors
 
-# American National Standard Institute color codes
 _ansi_colors = {
     "black": 30,
     "red": 31,
@@ -34,14 +34,14 @@ _ansi_colors = {
     "cyan": 36,
     "white": 37,
     "reset": 39,
-    "bright_black": 90,
-    "bright_red": 91,
-    "bright_green": 92,
-    "bright_yellow": 93,
-    "bright_blue": 94,
-    "bright_magenta": 95,
-    "bright_cyan": 96,
-    "bright_white": 97,
+    "bblack": 90,
+    "bred": 91,
+    "bgreen": 92,
+    "byellow": 93,
+    "bblue": 94,
+    "bmagenta": 95,
+    "bcyan": 96,
+    "bwhite": 97,
 }
 _ansi_reset_all = "\033[0m"
 
