@@ -23,6 +23,7 @@ from .utilities import LazyFile
 # functions to customize how they work.
 visible_prompt_func = input
 
+# American National Standard Institute color codes
 _ansi_colors = {
     "black": 30,
     "red": 31,
