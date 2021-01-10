@@ -1,9 +1,8 @@
 <h1 align="center">Quo
 
 Quo is a Python based toolkit for creating Command-Line Interface (CLI) applications. Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging.
-<p align="center">
 
- <a href="https://viewerdiscretion.github.io/quo"><img src="https://miro.medium.com/max/1400/1*SGa8qRilRIMzAM0PO2U-0Q.png" alt="Quo"></a>
+<a href="https://viewerdiscretion.github.io/quo"><img src="https://miro.medium.com/max/1400/1*SGa8qRilRIMzAM0PO2U-0Q.png" alt="Quo"></a>
 </p> 
 <a href="https://pypi.org/project/quo/"><img src="https://img.shields.io/static/v1?label=&labelColor=505050&message=website&color=%230076D6&style=flat&logo=google-chrome&logoColor=%230076D6" alt="Documentation"/></a>
 <!-- <img src="http://hits.dwyl.com/viewerdiscretion/quo.svg" alt="Hits Badge"/> -->
