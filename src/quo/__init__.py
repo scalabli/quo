@@ -26,7 +26,7 @@ from .exceptions import Abort
 from .exceptions import BadArgumentUsage
 from .exceptions import BadOptionUsage
 from .exceptions import BadParameter
-from .exceptions import SprightlyException
+from .exceptions import QuoException
 from .exceptions import FileError
 from .exceptions import MissingParameter
 from .exceptions import NoSuchOption
@@ -70,4 +70,4 @@ from .utilities import get_os_args
 from .utilities import get_text_stream
 from .utilities import open_file
 
-__version__ = "2021.01.dev1"
+__version__ = "2021.01.dev2"
