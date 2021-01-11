@@ -1,9 +1,9 @@
 Commands and Groups
 ===================
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
-The most important feature of Click is the concept of arbitrarily nesting
+The most important feature of quo is the concept of arbitrarily nesting
 command line utilities.  This is implemented through the :class:`Command`
 and :class:`Group` (actually :class:`MultiCommand`).
 
@@ -20,20 +20,20 @@ the callback fires whenever a subcommand fires (unless this behavior is
 changed).  What this means in practice is that an outer command runs
 when an inner command runs:
 
-.. click:example::
+.. quo:example::
 
-    @click.group()
-    @click.option('--debug/--no-debug', default=False)
+    @quo.group()
+    @quo.option('--debug/--no-debug', default=False)
     def cli(debug):
-        click.echo(f"Debug mode is {'on' if debug else 'off'}")
+        quo.echo(f"Debug mode is {'on' if debug else 'off'}")
 
-    @cli.command()  # @cli, not @click!
+    @cli.command()  # @cli, not @quo!
     def sync():
-        click.echo('Syncing')
+        quo.echo('Syncing')
 
 Here is what this looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='tool.py')
     println()
@@ -42,7 +42,7 @@ Here is what this looks like:
 Passing Parameters
 ------------------
 
-Click strictly separates parameters between commands and subcommands. What this
+quo strictly separates parameters between commands and subcommands. What this
 means is that options and arguments for a specific command have to be specified
 *after* the command name itself, but *before* any other command names.
 
@@ -56,8 +56,8 @@ Suppose we have a program called ``tool.py``, containing a subcommand called
 - ``tool.py sub --help`` will return the help for the ``sub`` subcommand.
 
 - But ``tool.py --help sub`` will treat ``--help`` as an argument for the main
-  program. Click then invokes the callback for ``--help``, which prints the
-  help and aborts the program before click can process the subcommand.
+  program. quo then invokes the callback for ``--help``, which prints the
+  help and aborts the program before quo can process the subcommand.
 
 Nested Handling and Contexts
 ----------------------------
@@ -81,11 +81,11 @@ The context can also carry a program specified object that can be
 used for the program's purposes.  What this means is that you can build a
 script like this:
 
-.. click:example::
+.. quo:example::
 
-    @click.group()
-    @click.option('--debug/--no-debug', default=False)
-    @click.pass_context
+    @quo.group()
+    @quo.option('--debug/--no-debug', default=False)
+    @quo.pass_context
     def cli(ctx, debug):
         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
         # by means other than the `if` block below)
@@ -94,9 +94,9 @@ script like this:
         ctx.obj['DEBUG'] = debug
 
     @cli.command()
-    @click.pass_context
+    @quo.pass_context
     def sync(ctx):
-        click.echo(f"Debug is {'on' if ctx.obj['DEBUG'] else 'off'}")
+        quo.echo(f"Debug is {'on' if ctx.obj['DEBUG'] else 'off'}")
 
     if __name__ == '__main__':
         cli(obj={})
@@ -126,12 +126,12 @@ argument.
 
 For instance, the :func:`pass_obj` decorator can be implemented like this:
 
-.. click:example::
+.. quo:example::
 
     from functools import update_wrapper
 
     def pass_obj(f):
-        @click.pass_context
+        @quo.pass_context
         def new_func(ctx, *args, **kwargs):
             return ctx.invoke(f, ctx.obj, *args, **kwargs)
         return update_wrapper(new_func, f)
@@ -158,23 +158,23 @@ subcommand.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.group(invoke_without_command=True)
-    @click.pass_context
+    @quo.group(invoke_without_command=True)
+    @quo.pass_context
     def cli(ctx):
         if ctx.invoked_subcommand is None:
-            click.echo('I was invoked without subcommand')
+            quo.echo('I was invoked without subcommand')
         else:
-            click.echo(f"I am about to invoke {ctx.invoked_subcommand}")
+            quo.echo(f"I am about to invoke {ctx.invoked_subcommand}")
 
     @cli.command()
     def sync():
-        click.echo('The subcommand')
+        quo.echo('The subcommand')
 
 And how it works in practice:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='tool', args=[])
     invoke(cli, prog_name='tool', args=['sync'])
@@ -184,20 +184,20 @@ And how it works in practice:
 Custom Multi Commands
 ---------------------
 
-In addition to using :func:`click.group`, you can also build your own
+In addition to using :func:`quo.group`, you can also build your own
 custom multi commands.  This is useful when you want to support commands
 being loaded lazily from plugins.
 
 A custom multi command just needs to implement a list and load method:
 
-.. click:example::
+.. quo:example::
 
-    import click
+    import quo
     import os
 
     plugin_folder = os.path.join(os.path.dirname(__file__), 'commands')
 
-    class MyCLI(click.MultiCommand):
+    class MyCLI(quo.MultiCommand):
 
         def list_commands(self, ctx):
             rv = []
@@ -223,9 +223,9 @@ A custom multi command just needs to implement a list and load method:
 
 These custom classes can also be used with decorators:
 
-.. click:example::
+.. quo:example::
 
-    @click.command(cls=MyCLI)
+    @quo.command(cls=MyCLI)
     def cli():
         pass
 
@@ -243,11 +243,11 @@ commands and makes the commands available on the same level.
 
 Example usage:
 
-.. click:example::
+.. quo:example::
 
-    import click
+    import quo
 
-    @click.group()
+    @quo.group()
     def cli1():
         pass
 
@@ -255,7 +255,7 @@ Example usage:
     def cmd1():
         """Command on cli1"""
 
-    @click.group()
+    @quo.group()
     def cli2():
         pass
 
@@ -263,14 +263,14 @@ Example usage:
     def cmd2():
         """Command on cli2"""
 
-    cli = click.CommandCollection(sources=[cli1, cli2])
+    cli = quo.CommandCollection(sources=[cli1, cli2])
 
     if __name__ == '__main__':
         cli()
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['--help'])
 
@@ -288,28 +288,28 @@ Sometimes it is useful to be allowed to invoke more than one subcommand in
 one go.  For instance if you have installed a setuptools package before
 you might be familiar with the ``setup.py sdist bdist_wheel upload``
 command chain which invokes ``sdist`` before ``bdist_wheel`` before
-``upload``.  Starting with Click 3.0 this is very simple to implement.
+``upload``.  Starting with quo 3.0 this is very simple to implement.
 All you have to do is to pass ``chain=True`` to your multicommand:
 
-.. click:example::
+.. quo:example::
 
-    @click.group(chain=True)
+    @quo.group(chain=True)
     def cli():
         pass
 
 
     @cli.command('sdist')
     def sdist():
-        click.echo('sdist called')
+        quo.echo('sdist called')
 
 
     @cli.command('bdist_wheel')
     def bdist_wheel():
-        click.echo('bdist_wheel called')
+        quo.echo('bdist_wheel called')
 
 Now you can invoke it like this:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='setup.py', args=['sdist', 'bdist_wheel'])
 
@@ -329,7 +329,7 @@ be handled are not yet available when the callback fires.
 .. note::
 
     It is currently not possible for chain commands to be nested.  This
-    will be fixed in future versions of Click.
+    will be fixed in future versions of quo.
 
 
 Multi Command Pipelines
@@ -356,10 +356,10 @@ these functions and then invoke them.
 
 To make this a bit more concrete consider this example:
 
-.. click:example::
+.. quo:example::
 
-    @click.group(chain=True, invoke_without_command=True)
-    @click.option('-i', '--input', type=click.File('r'))
+    @quo.group(chain=True, invoke_without_command=True)
+    @quo.option('-i', '--input', type=quo.File('r'))
     def cli(input):
         pass
 
@@ -369,7 +369,7 @@ To make this a bit more concrete consider this example:
         for processor in processors:
             iterator = processor(iterator)
         for item in iterator:
-            click.echo(item)
+            quo.echo(item)
 
     @cli.command('uppercase')
     def make_uppercase():
@@ -395,7 +395,7 @@ To make this a bit more concrete consider this example:
 That's a lot in one go, so let's go through it step by step.
 
 1.  The first thing is to make a :func:`group` that is chainable.  In
-    addition to that we also instruct Click to invoke even if no
+    addition to that we also instruct quo to invoke even if no
     subcommand is defined.  If this would not be done, then invoking an
     empty pipeline would produce the help page instead of running the
     result callbacks.
@@ -412,7 +412,7 @@ That's a lot in one go, so let's go through it step by step.
 After that point we can register as many subcommands as we want and each
 subcommand can return a processor function to modify the stream of lines.
 
-One important thing of note is that Click shuts down the context after
+One important thing of note is that quo shuts down the context after
 each callback has been run.  This means that for instance file types
 cannot be accessed in the `processor` functions as the files will already
 be closed there.  This limitation is unlikely to change because it would
@@ -422,8 +422,8 @@ to not use the file type and manually open the file through
 
 For a more complex example that also improves upon handling of the
 pipelines have a look at the `imagepipe multi command chaining demo
-<https://github.com/pallets/click/tree/master/examples/imagepipe>`__ in
-the Click repository.  It implements a pipeline based image editing tool
+<https://github.com/pallets/quo/tree/master/examples/imagepipe>`__ in
+the quo repository.  It implements a pipeline based image editing tool
 that has a nice internal structure for the pipelines.
 
 
@@ -455,18 +455,18 @@ could load the defaults from a configuration file.
 
 Example usage:
 
-.. click:example::
+.. quo:example::
 
-    import click
+    import quo
 
-    @click.group()
+    @quo.group()
     def cli():
         pass
 
     @cli.command()
-    @click.option('--port', default=8000)
+    @quo.option('--port', default=8000)
     def runserver(port):
-        click.echo(f"Serving on http://127.0.0.1:{port}/")
+        quo.echo(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli(default_map={
@@ -477,7 +477,7 @@ Example usage:
 
 And in action:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['runserver'], default_map={
         'runserver': {
@@ -490,36 +490,36 @@ Context Defaults
 
 .. versionadded:: 2.0
 
-Starting with Click 2.0 you can override defaults for contexts not just
+Starting with quo 2.0 you can override defaults for contexts not just
 when calling your script, but also in the decorator that declares a
 command.  For instance given the previous example which defines a custom
 ``default_map`` this can also be accomplished in the decorator now.
 
 This example does the same as the previous example:
 
-.. click:example::
+.. quo:example::
 
-    import click
+    import quo
 
     CONTEXT_SETTINGS = dict(
         default_map={'runserver': {'port': 5000}}
     )
 
-    @click.group(context_settings=CONTEXT_SETTINGS)
+    @quo.group(context_settings=CONTEXT_SETTINGS)
     def cli():
         pass
 
     @cli.command()
-    @click.option('--port', default=8000)
+    @quo.option('--port', default=8000)
     def runserver(port):
-        click.echo(f"Serving on http://127.0.0.1:{port}/")
+        quo.echo(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli()
 
 And again the example in action:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['runserver'])
 
@@ -529,7 +529,7 @@ Command Return Values
 
 .. versionadded:: 3.0
 
-One of the new introductions in Click 3.0 is the full support for return
+One of the new introductions in quo 3.0 is the full support for return
 values from command callbacks.  This enables a whole range of features
 that were previously hard to implement.
 
@@ -539,7 +539,7 @@ show in the example of :ref:`multi-command-chaining` where it has been
 demonstrated that chained multi commands can have callbacks that process
 all return values.
 
-When working with command return values in Click, this is what you need to
+When working with command return values in quo, this is what you need to
 know:
 
 -   The return value of a command callback is generally returned from the
@@ -561,11 +561,11 @@ know:
     and :meth:`Context.forward` methods.  This is useful in situations
     where you internally want to call into another command.
 
--   Click does not have any hard requirements for the return values and
+-   quo does not have any hard requirements for the return values and
     does not use them itself.  This allows return values to be used for
     custom decorators or workflows (like in the multi command chaining
     example).
 
--   When a Click script is invoked as command line application (through
+-   When a quo script is invoked as command line application (through
     :meth:`BaseCommand.main`) the return value is ignored unless the
     `standalone_mode` is disabled in which case it's bubbled through.
