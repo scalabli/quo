@@ -89,4 +89,4 @@ import quo
 ## Donate
 In order to for me to maintain this project, `please consider donating today` 
 
-* <a href="https://buymeacoffee.com/gerrishon" class="external-link" target="_blank">Buy me a ☕</a>
+* <a href="https://www.buymeacoffee.com/gerrishon" target="_blank"><img src="https://res.cloudinary.com/edev/image/upload/v1583011476/button_y8hgt8.png" alt="Donate" style="width: 250px !important; height: 60px !important;" width="250" height="60"></a>
