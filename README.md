@@ -89,3 +89,4 @@ import quo
 ## Donate
 In order to for me to maintain this project, `please consider donating today` 
 
+* <a href="https://buymeacoffee.com/gerrishon" class="external-link" target="_blank">Buy me a ☕</a>
