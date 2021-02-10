@@ -8,9 +8,7 @@ Quo
     :scale: 50%
     :target: https://quo.rtdf.io
 
-Quo is a Python based toolkit for creating Command-Line Interface (CLI) applications. Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. 
-
-
+Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
 
 Example
 
@@ -20,24 +18,7 @@ Example
     quo.secho(f'Hello Gerry') 
 
 
-.. rst-class:: hide-header
 
-Welcome to Click
-================
-
-.. image:: _static/click-logo.png
-    :align: center
-    :scale: 50%
-    :target: https://palletsprojects.com/p/click/
-
-Click is a Python package for creating beautiful command line interfaces
-in a composable way with as little code as necessary.  It's the "Command
-Line Interface Creation Kit".  It's highly configurable but comes with
-sensible defaults out of the box.
-
-It aims to make the process of writing command line tools quick and fun
-while also preventing any frustration caused by the inability to implement
-an intended CLI API.
 
 Click in three points:
 
