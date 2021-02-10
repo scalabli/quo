@@ -1,3 +1,6 @@
+#
+#
+#
 import codecs
 import io
 import os
@@ -39,17 +42,15 @@ def _make_text_stream(
         force_writable=force_writable,
     )
 
-
+#Checks if given code is ACII
 def is_ascii_encoding(encoding):
-    """Checks if a given encoding is ascii."""
     try:
         return codecs.lookup(encoding).name == "ascii"
     except LookupError:
         return False
 
-
+#If not found returns the default stream encoding
 def get_best_encoding(stream):
-    """Returns the default stream encoding if not found."""
     rv = getattr(stream, "encoding", None) or sys.getdefaultencoding()
     if is_ascii_encoding(rv):
         return "utf-8"
@@ -79,16 +80,10 @@ class _NonClosingTextIOWrapper(io.TextIOWrapper):
         # https://bitbucket.org/pypy/pypy/issue/1803
         return self._stream.isatty()
 
-
+#Fixes stream in some tools that put badly patched
+#bjects on sys 
 class _FixupStream:
-    """The new io interface needs more from streams than streams
-    traditionally implement.  As such, this fix-up code is necessary in
-    some circumstances.
-
-    The forcing of readable and writable flags are there because some tools
-    put badly patched objects on sys (one such offender are certain version
-    of jupyter notebook).
-    """
+    
 
     def __init__(self, stream, force_readable=False, force_writable=False):
         self._stream = stream
@@ -200,9 +195,8 @@ def _find_binary_writer(stream):
     if buf is not None and _is_binary_writer(buf, True):
         return buf
 
-
+# A stream is misconfigured if it's encoding is not ASCII
 def _stream_is_misconfigured(stream):
-    """A stream is misconfigured if its encoding is ASCII."""
     # If the stream does not have an encoding set, we assume it's set
     # to ASCII.  This appears to happen in certain unittest
     # environments.  It's not quite clear what the correct behavior is
@@ -499,7 +493,7 @@ if WIN:
     # Windows has a smaller terminal
     DEFAULT_COLUMNS = 79
 
-    from ._winconsole import _get_windows_console_stream
+    from .consoleapp import _get_windows_console_stream
 
     def _get_argv_encoding():
         import locale
