@@ -1,5 +1,6 @@
 """
-Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. 
+Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
+
 """
 
 from .core import Argument
@@ -70,4 +71,4 @@ from .utilities import get_os_args
 from .utilities import get_text_stream
 from .utilities import open_file
 
-__version__ = "2021.01.dev4"
+__version__ = "2021.02.dev5"
