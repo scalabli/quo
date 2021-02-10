@@ -18,7 +18,34 @@ Example
     quo.secho(f'Hello Gerry') 
 
 
+.. quo:example::
 
+    import quo
+
+    @quo.command()
+    @quo.option('--count', default=2, help='The number of times the person is interviewed (n).')
+    @quo.option('--name', prompt='Your name',
+                  help='The name of the person to interview.')
+    def hello(count, name):
+        """Program that greets and interviews a person  for a total of 'n' times."""
+        for x in range(count):
+            click.echo(f"Hello {name}!")
+
+    if __name__ == '__main__':
+        hello()
+
+
+And what it looks like when run:
+
+.. quo:run::
+
+    invoke(hello, ['--count=3'], prog_name='python hello.py', input='John\n')
+
+It automatically generates nicely formatted help pages:
+
+.. quo:run::
+
+    invoke(hello, ['--help'], prog_name='python hello.py')
 
 Click in three points:
 
@@ -26,35 +53,9 @@ Click in three points:
 -   automatic help page generation
 -   supports lazy loading of subcommands at runtime
 
-What does it look like?  Here is an example of a simple Click program:
 
-.. click:example::
 
-    import click
 
-    @click.command()
-    @click.option('--count', default=1, help='Number of greetings.')
-    @click.option('--name', prompt='Your name',
-                  help='The person to greet.')
-    def hello(count, name):
-        """Simple program that greets NAME for a total of COUNT times."""
-        for x in range(count):
-            click.echo(f"Hello {name}!")
-
-    if __name__ == '__main__':
-        hello()
-
-And what it looks like when run:
-
-.. click:run::
-
-    invoke(hello, ['--count=3'], prog_name='python hello.py', input='John\n')
-
-It automatically generates nicely formatted help pages:
-
-.. click:run::
-
-    invoke(hello, ['--help'], prog_name='python hello.py')
 
 You can get the library directly from PyPI::
 
