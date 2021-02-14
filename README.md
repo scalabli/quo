@@ -24,7 +24,7 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 
 ---
 
-**Quo📄** : <a href="https://quodocs.netlify.com" class="external-link" target="_blank">Documentation</a>
+**Quo📄** : <a href="https://quo.rtfd.io" class="external-link" target="_blank">Documentation</a>
 
 ---
 
