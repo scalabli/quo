@@ -21,24 +21,18 @@ There are many alternatives to Click; the obvious ones are ``optparse``
 and ``argparse`` from the standard library. Have a look to see if something
 else resonates with you.
 
-Click actually implements its own parsing of arguments and does not use
-``optparse`` or ``argparse`` following the ``optparse`` parsing behavior.
-The reason it's not based on ``argparse`` is that ``argparse`` does not
-allow proper nesting of commands by design and has some deficiencies when
-it comes to POSIX compliant argument handling.
+Just like Click, Quo implements its own parsing of arguments and does not use
+``optparse`` or ``argparse``
+``argparse`` does not allow proper nesting of commands by design and has some deficiencies when it comes to POSIX compliant argument handling.
+``argparse``has built-in behavior to guess if something is an argument or an option. This becomes a problem when dealing with incomplete command lines; the behaviour becomes unpredictable without full knowledge of a command line. This goes against Click's ambitions of dispatching to subparsers.
+``argparse`` does not support disabling interspersed arguments.
 
-Click is designed to be fun and customizable but not overly flexible.
+Quo is designed to be fun and customizable but not overly flexible.
 For instance, the customizability of help pages is constrained. This
-constraint is intentional because Click promises multiple Click instances
+constraint is intentional because Quo promises multiple Quo instances
 will continue to function as intended when strung together.
 
-Too much customizability would break this promise.
-
-Click was written to support the `Flask <https://palletsprojects.com/p/flask/>`_
-microframework ecosystem because no tool could provide it with the
-functionality it needed.
-
-To get an understanding of what Click is all about, I strongly recommend
+To get an understanding of what Quo is all about, I strongly recommend
 looking at the :ref:`complex-guide` chapter.
 
 Why not Argparse?
@@ -49,15 +43,7 @@ is an implementation detail that a user does not have to be concerned
 with. Click is not based on argparse because it has some behaviors that
 make handling arbitrary command line interfaces hard:
 
-*   argparse has built-in behavior to guess if something is an
-    argument or an option. This becomes a problem when dealing with
-    incomplete command lines; the behaviour becomes unpredictable
-    without full knowledge of a command line. This goes against Click's
-    ambitions of dispatching to subparsers.
-*   argparse does not support disabling interspersed arguments. Without
-    this feature, it's not possible to safely implement Click's nested
-    parsing.
-
+*   
 Why not Docopt etc.?
 --------------------
 
