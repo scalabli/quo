@@ -18,9 +18,7 @@ The most basic option is a simple string argument of one value.  If no
 type is provided, the type of the default value is used, and if no default
 value is provided, the type is assumed to be :data:`STRING`.
 
-Example:
-
-.. quo:example::
+Example::
 
     @quo.command()
     @quo.argument('filename')
@@ -28,9 +26,7 @@ Example:
         """Print FILENAME."""
         quo.echo(filename)
 
-And what it looks like:
-
-.. quo:run::
+And what it looks like::
 
     invoke(touch, args=['foo.txt'])
 
@@ -45,9 +41,7 @@ of arguments is accepted.
 The value is then passed as a tuple.  Note that only one argument can be
 set to ``nargs=-1``, as it will eat up all arguments.
 
-Example:
-
-.. quo:example::
+Example::
 
     @quo.command()
     @quo.argument('src', nargs=-1)
@@ -57,9 +51,7 @@ Example:
         for fn in src:
             quo.echo(f"move {fn} to folder {dst}")
 
-And what it looks like:
-
-.. quo:run::
+And what it looks like::
 
     invoke(copy, args=['foo.txt', 'bar.txt', 'my_folder'])
 
@@ -95,9 +87,7 @@ quo supports this through the :class:`quo.File` type which
 intelligently handles files for you.  It also deals with Unicode and bytes
 correctly for all versions of Python so your script stays very portable.
 
-Example:
-
-.. quo:example::
+Example::
 
     @quo.command()
     @quo.argument('input', type=quo.File('rb'))
@@ -110,9 +100,7 @@ Example:
                 break
             output.write(chunk)
 
-And what it does:
-
-.. quo:run::
+And what it does::
 
     with isolated_filesystem():
         invoke(inout, args=['-', 'hello.txt'], input=['hello'],
@@ -134,9 +122,7 @@ handles this ambiguity.  Not only will it return either bytes or Unicode
 depending on what makes more sense, but it will also be able to do some
 basic checks for you such as existence checks.
 
-Example:
-
-.. quo:example::
+Example::
 
     @quo.command()
     @quo.argument('filename', type=quo.Path(exists=True))
@@ -144,9 +130,7 @@ Example:
         """Print FILENAME if the file exists."""
         quo.echo(quo.format_filename(filename))
 
-And what it does:
-
-.. quo:run::
+And what it does::
 
     with isolated_filesystem():
         with open('hello.txt', 'w') as f:
@@ -196,9 +180,7 @@ Like options, arguments can also grab values from an environment variable.
 Unlike options, however, this is only supported for explicitly named
 environment variables.
 
-Example usage:
-
-.. quo:example::
+Example usage::
 
     @quo.command()
     @quo.argument('src', envvar='SRC', type=quo.File('r'))
@@ -206,9 +188,7 @@ Example usage:
         """Print value of SRC environment variable."""
         quo.echo(src.read())
 
-And from the command line:
-
-.. quo:run::
+And from the command line::
 
     with isolated_filesystem():
         with open('hello.txt', 'w') as f:
@@ -233,9 +213,7 @@ and that is to accept the string ``--`` as a separator for options and
 arguments.  After the ``--`` marker, all further parameters are accepted as
 arguments.
 
-Example usage:
-
-.. quo:example::
+Example usage::
 
     @quo.command()
     @quo.argument('files', nargs=-1, type=quo.Path())
@@ -244,16 +222,12 @@ Example usage:
         for filename in files:
             quo.echo(filename)
 
-And from the command line:
-
-.. quo:run::
+And from the command line::
 
     invoke(touch, ['--', '-foo.txt', 'bar.txt'])
 
 If you don't like the ``--`` marker, you can set ignore_unknown_options to
-True to avoid checking unknown options:
-
-.. quo:example::
+True to avoid checking unknown options::
 
     @quo.command(context_settings={"ignore_unknown_options": True})
     @quo.argument('files', nargs=-1, type=quo.Path())
@@ -262,8 +236,7 @@ True to avoid checking unknown options:
         for filename in files:
             quo.echo(filename)
 
-And from the command line:
+And from the command line::
 
-.. quo:run::
 
     invoke(touch, ['-foo.txt', 'bar.txt'])
