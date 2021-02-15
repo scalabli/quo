@@ -3,11 +3,11 @@
 Arguments
 =========
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
 Arguments work similarly to :ref:`options <options>` but are positional.
 They also only support a subset of the features of options due to their
-syntactical nature. Click will also not attempt to document arguments for
+syntactical nature. quo will also not attempt to document arguments for
 you and wants you to :ref:`document them manually <documenting-arguments>`
 in order to avoid ugly help pages.
 
@@ -20,17 +20,17 @@ value is provided, the type is assumed to be :data:`STRING`.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('filename')
+    @quo.command()
+    @quo.argument('filename')
     def touch(filename):
         """Print FILENAME."""
-        click.echo(filename)
+        quo.echo(filename)
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(touch, args=['foo.txt'])
 
@@ -47,19 +47,19 @@ set to ``nargs=-1``, as it will eat up all arguments.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('src', nargs=-1)
-    @click.argument('dst', nargs=1)
+    @quo.command()
+    @quo.argument('src', nargs=-1)
+    @quo.argument('dst', nargs=1)
     def copy(src, dst):
         """Move file SRC to DST."""
         for fn in src:
-            click.echo(f"move {fn} to folder {dst}")
+            quo.echo(f"move {fn} to folder {dst}")
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(copy, args=['foo.txt', 'bar.txt', 'my_folder'])
 
@@ -91,17 +91,17 @@ to explain how to deal with files properly.  Command line tools are more
 fun if they work with files the Unix way, which is to accept ``-`` as a
 special file that refers to stdin/stdout.
 
-Click supports this through the :class:`click.File` type which
+quo supports this through the :class:`quo.File` type which
 intelligently handles files for you.  It also deals with Unicode and bytes
 correctly for all versions of Python so your script stays very portable.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('input', type=click.File('rb'))
-    @click.argument('output', type=click.File('wb'))
+    @quo.command()
+    @quo.argument('input', type=quo.File('rb'))
+    @quo.argument('output', type=quo.File('wb'))
     def inout(input, output):
         """Copy contents of INPUT to OUTPUT."""
         while True:
@@ -112,7 +112,7 @@ Example:
 
 And what it does:
 
-.. click:run::
+.. quo:run::
 
     with isolated_filesystem():
         invoke(inout, args=['-', 'hello.txt'], input=['hello'],
@@ -124,7 +124,7 @@ File Path Arguments
 
 In the previous example, the files were opened immediately.  But what if
 we just want the filename?  The naïve way is to use the default string
-argument type.  However, remember that Click is Unicode-based, so the string
+argument type.  However, remember that quo is Unicode-based, so the string
 will always be a Unicode value.  Unfortunately, filenames can be Unicode or
 bytes depending on which operating system is being used.  As such, the type
 is insufficient.
@@ -136,17 +136,17 @@ basic checks for you such as existence checks.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('filename', type=click.Path(exists=True))
+    @quo.command()
+    @quo.argument('filename', type=quo.Path(exists=True))
     def touch(filename):
         """Print FILENAME if the file exists."""
-        click.echo(click.format_filename(filename))
+        quo.echo(quo.format_filename(filename))
 
 And what it does:
 
-.. click:run::
+.. quo:run::
 
     with isolated_filesystem():
         with open('hello.txt', 'w') as f:
@@ -183,7 +183,7 @@ necessary for manually prompting with the :func:`prompt` function as you
 do not know if a stream like stdout was opened (which was already open
 before) or a real file that needs closing.
 
-Starting with Click 2.0, it is also possible to open files in atomic mode by
+Starting with quo 2.0, it is also possible to open files in atomic mode by
 passing ``atomic=True``.  In atomic mode, all writes go into a separate
 file in the same folder, and upon completion, the file will be moved over to
 the original location.  This is useful if a file regularly read by other
@@ -198,17 +198,17 @@ environment variables.
 
 Example usage:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('src', envvar='SRC', type=click.File('r'))
+    @quo.command()
+    @quo.argument('src', envvar='SRC', type=quo.File('r'))
     def echo(src):
         """Print value of SRC environment variable."""
-        click.echo(src.read())
+        quo.echo(src.read())
 
 And from the command line:
 
-.. click:run::
+.. quo:run::
 
     with isolated_filesystem():
         with open('hello.txt', 'w') as f:
@@ -226,44 +226,44 @@ Option-Like Arguments
 
 Sometimes, you want to process arguments that look like options.  For
 instance, imagine you have a file named ``-foo.txt``.  If you pass this as
-an argument in this manner, Click will treat it as an option.
+an argument in this manner, quo will treat it as an option.
 
-To solve this, Click does what any POSIX style command line script does,
+To solve this, quo does what any POSIX style command line script does,
 and that is to accept the string ``--`` as a separator for options and
 arguments.  After the ``--`` marker, all further parameters are accepted as
 arguments.
 
 Example usage:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('files', nargs=-1, type=click.Path())
+    @quo.command()
+    @quo.argument('files', nargs=-1, type=quo.Path())
     def touch(files):
         """Print all FILES file names."""
         for filename in files:
-            click.echo(filename)
+            quo.echo(filename)
 
 And from the command line:
 
-.. click:run::
+.. quo:run::
 
     invoke(touch, ['--', '-foo.txt', 'bar.txt'])
 
 If you don't like the ``--`` marker, you can set ignore_unknown_options to
 True to avoid checking unknown options:
 
-.. click:example::
+.. quo:example::
 
-    @click.command(context_settings={"ignore_unknown_options": True})
-    @click.argument('files', nargs=-1, type=click.Path())
+    @quo.command(context_settings={"ignore_unknown_options": True})
+    @quo.argument('files', nargs=-1, type=quo.Path())
     def touch(files):
         """Print all FILES file names."""
         for filename in files:
-            click.echo(filename)
+            quo.echo(filename)
 
 And from the command line:
 
-.. click:run::
+.. quo:run::
 
     invoke(touch, ['-foo.txt', 'bar.txt'])
