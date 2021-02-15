@@ -527,9 +527,7 @@ And again the example in action:
 Command Return Values
 ---------------------
 
-.. versionadded:: 3.0
-
-One of the new introductions in quo 3.0 is the full support for return
+Just like Click, quo supports return
 values from command callbacks.  This enables a whole range of features
 that were previously hard to implement.
 
