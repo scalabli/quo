@@ -1,7 +1,7 @@
 API
 ===
 
-.. module:: click
+.. module:: quo
 
 This part of the documentation lists the full API reference of all public
 classes and functions.
@@ -108,7 +108,7 @@ Context
 
 .. autofunction:: get_current_context
 
-.. autoclass:: click.core.ParameterSource
+.. autoclass:: quo.core.ParameterSource
     :members:
     :member-order: bysource
 
@@ -146,7 +146,7 @@ Types
 Exceptions
 ----------
 
-.. autoexception:: ClickException
+.. autoexception:: QuoException
 
 .. autoexception:: Abort
 
@@ -181,9 +181,9 @@ Shell Completion
 ----------------
 
 See :doc:`/shell-completion` for information about enabling and
-customizing Click's shell completion system.
+customizing Quo's shell completion system.
 
-.. currentmodule:: click.shell_completion
+.. currentmodule:: quo.shell_completion
 
 .. autoclass:: CompletionItem
 
@@ -197,7 +197,7 @@ customizing Click's shell completion system.
 Testing
 -------
 
-.. currentmodule:: click.testing
+.. currentmodule:: quo.testing
 
 .. autoclass:: CliRunner
    :members:
