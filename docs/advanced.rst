@@ -122,9 +122,7 @@ the information in a wrapper however:
 Token Normalization
 -------------------
 
-.. versionadded:: 2.0
-
-Starting with Quo 2.0, it's possible to provide a function that is used
+It's possible to provide a function that is used
 for normalizing tokens.  Tokens are option names, choice values, or command
 values.  This can be used to implement case insensitive options, for
 instance.
@@ -252,8 +250,7 @@ Forwarding Unknown Options
 --------------------------
 
 In some situations it is interesting to be able to accept all unknown
-options for further manual processing.  Quo can generally do that as of
-Quo 4.0, but it has some limitations that lie in the nature of the
+options for further manual processing.  Quo can generally do that but it has some limitations that lie in the nature of the
 problem.  The support for this is provided through a parser flag called
 ``ignore_unknown_options`` which will instruct the parser to collect all
 unknown options and to put them to the leftover argument instead of
@@ -345,9 +342,7 @@ handle some arguments yourself.
 Global Context Access
 ---------------------
 
-.. versionadded:: 5.0
-
-Starting with Quo 5.0 it is possible to access the current context from
+It is possible to access the current context from
 anywhere within the same thread through the use of the
 :func:`get_current_context` function which returns it.  This is primarily
 useful for accessing the context bound object as well as some flags that
