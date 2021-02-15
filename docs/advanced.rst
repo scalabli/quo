@@ -1,11 +1,11 @@
 Advanced Patterns
 =================
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
 In addition to common functionality that is implemented in the library
 itself, there are countless patterns that can be implemented by extending
-Click.  This page should give some insight into what can be accomplished.
+Quo.  This page should give some insight into what can be accomplished.
 
 .. _aliases:
 
@@ -13,12 +13,12 @@ Command Aliases
 ---------------
 
 Many tools support aliases for commands (see `Command alias example
-<https://github.com/pallets/click/tree/master/examples/aliases>`_).
+<https://github.com/viewerdiscretion/quo/tree/master/examples/aliases>`_).
 For instance, you can configure ``git`` to accept ``git ci`` as alias for
 ``git commit``.  Other tools also support auto-discovery for aliases by
 automatically shortening them.
 
-Click does not support this out of the box, but it's very easy to customize
+Quo does not support this out of the box, but it's very easy to customize
 the :class:`Group` or any other :class:`MultiCommand` to provide this
 functionality.
 
@@ -32,12 +32,12 @@ This following example implements a subclass of :class:`Group` that
 accepts a prefix for a command.  If there were a command called ``push``,
 it would accept ``pus`` as an alias (so long as it was unique):
 
-.. click:example::
+.. quo:example::
 
-    class AliasedGroup(click.Group):
+    class AliasedGroup(quo.Group):
 
         def get_command(self, ctx, cmd_name):
-            rv = click.Group.get_command(self, ctx, cmd_name)
+            rv = quo.Group.get_command(self, ctx, cmd_name)
             if rv is not None:
                 return rv
             matches = [x for x in self.list_commands(ctx)
@@ -45,14 +45,14 @@ it would accept ``pus`` as an alias (so long as it was unique):
             if not matches:
                 return None
             elif len(matches) == 1:
-                return click.Group.get_command(self, ctx, matches[0])
+                return quo.Group.get_command(self, ctx, matches[0])
             ctx.fail(f"Too many matches: {', '.join(sorted(matches))}")
 
 And it can then be used like this:
 
-.. click:example::
+.. quo:example::
 
-    @click.command(cls=AliasedGroup)
+    @quo.command(cls=AliasedGroup)
     def cli():
         pass
 
@@ -79,7 +79,7 @@ This can be used to make up addition parameters.  Generally this pattern
 is not recommended but in some cases it can be useful.  At the very least
 it's good to know that the system works this way.
 
-.. click:example::
+.. quo:example::
 
     import urllib
 
@@ -88,17 +88,17 @@ it's good to know that the system works this way.
             ctx.params['fp'] = urllib.urlopen(value)
             return value
 
-    @click.command()
-    @click.option('--url', callback=open_url)
+    @quo.command()
+    @quo.option('--url', callback=open_url)
     def cli(url, fp=None):
         if fp is not None:
-            click.echo(f"{url}: {fp.code}")
+            quo.echo(f"{url}: {fp.code}")
 
 In this case the callback returns the URL unchanged but also passes a
 second ``fp`` value to the callback.  What's more recommended is to pass
 the information in a wrapper however:
 
-.. click:example::
+.. quo:example::
 
     import urllib
 
@@ -112,11 +112,11 @@ the information in a wrapper however:
         if value is not None:
             return URL(value, urllib.urlopen(value))
 
-    @click.command()
-    @click.option('--url', callback=open_url)
+    @quo.command()
+    @quo.option('--url', callback=open_url)
     def cli(url):
         if url is not None:
-            click.echo(f"{url.url}: {url.fp.code}")
+            quo.echo(f"{url.url}: {url.fp.code}")
 
 
 Token Normalization
@@ -124,7 +124,7 @@ Token Normalization
 
 .. versionadded:: 2.0
 
-Starting with Click 2.0, it's possible to provide a function that is used
+Starting with Quo 2.0, it's possible to provide a function that is used
 for normalizing tokens.  Tokens are option names, choice values, or command
 values.  This can be used to implement case insensitive options, for
 instance.
@@ -133,18 +133,18 @@ In order to use this feature, the context needs to be passed a function that
 performs the normalization of the token.  For instance, you could have a
 function that converts the token to lowercase:
 
-.. click:example::
+.. quo:example::
 
     CONTEXT_SETTINGS = dict(token_normalize_func=lambda x: x.lower())
 
-    @click.command(context_settings=CONTEXT_SETTINGS)
-    @click.option('--name', default='Pete')
+    @quo.command(context_settings=CONTEXT_SETTINGS)
+    @quo.option('--name', default='Pete')
     def cli(name):
-        click.echo(f"Name: {name}")
+        quo.echo(f"Name: {name}")
 
 And how it works on the command line:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['--NAME=Pete'])
 
@@ -152,7 +152,7 @@ Invoking Other Commands
 -----------------------
 
 Sometimes, it might be interesting to invoke one command from another
-command.  This is a pattern that is generally discouraged with Click, but
+command.  This is a pattern that is generally discouraged with Quo, but
 possible nonetheless.  For this, you can use the :func:`Context.invoke`
 or :func:`Context.forward` methods.
 
@@ -164,25 +164,25 @@ is passed onwards as you would expect.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    cli = click.Group()
+    cli = quo.group()
 
     @cli.command()
-    @click.option('--count', default=1)
+    @quo.option('--count', default=1)
     def test(count):
-        click.echo(f'Count: {count}')
+        quo.echo(f'Count: {count}')
 
     @cli.command()
-    @click.option('--count', default=1)
-    @click.pass_context
+    @quo.option('--count', default=1)
+    @quo.pass_context
     def dist(ctx, count):
         ctx.forward(test)
         ctx.invoke(test, count=42)
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['dist'])
 
@@ -192,18 +192,18 @@ And what it looks like:
 Callback Evaluation Order
 -------------------------
 
-Click works a bit differently than some other command line parsers in that
+Quo works a bit differently than some other command line parsers in that
 it attempts to reconcile the order of arguments as defined by the
 programmer with the order of arguments as defined by the user before
 invoking any callbacks.
 
 This is an important concept to understand when porting complex
-patterns to Click from optparse or other systems.  A parameter
+patterns to Quo from optparse or other systems.  A parameter
 callback invocation in optparse happens as part of the parsing step,
-whereas a callback invocation in Click happens after the parsing.
+whereas a callback invocation in Quo happens after the parsing.
 
 The main difference is that in optparse, callbacks are invoked with the raw
-value as it happens, whereas a callback in Click is invoked after the
+value as it happens, whereas a callback in Quo is invoked after the
 value has been fully converted.
 
 Generally, the order of invocation is driven by the order in which the user
@@ -231,7 +231,7 @@ Repeated parameters:
     ``bar``), then the callback for ``include`` will fire with ``baz``
     only.
 
-    Note that even if a parameter does not allow multiple versions, Click
+    Note that even if a parameter does not allow multiple versions, Quo
     will still accept the position of the first, but it will ignore every
     value except the last.  The reason for this is to allow composability
     through shell aliases that set defaults.
@@ -252,8 +252,8 @@ Forwarding Unknown Options
 --------------------------
 
 In some situations it is interesting to be able to accept all unknown
-options for further manual processing.  Click can generally do that as of
-Click 4.0, but it has some limitations that lie in the nature of the
+options for further manual processing.  Quo can generally do that as of
+Quo 4.0, but it has some limitations that lie in the nature of the
 problem.  The support for this is provided through a parser flag called
 ``ignore_unknown_options`` which will instruct the parser to collect all
 unknown options and to put them to the leftover argument instead of
@@ -286,26 +286,26 @@ options:
 
 In the end you end up with something like this:
 
-.. click:example::
+.. quo:example::
 
     import sys
     from subprocess import call
 
-    @click.command(context_settings=dict(
+    @quo.command(context_settings=dict(
         ignore_unknown_options=True,
     ))
-    @click.option('-v', '--verbose', is_flag=True, help='Enables verbose mode')
-    @click.argument('timeit_args', nargs=-1, type=click.UNPROCESSED)
+    @quo.option('-v', '--verbose', is_flag=True, help='Enables verbose mode')
+    @quo.argument('timeit_args', nargs=-1, type=quo.UNPROCESSED)
     def cli(verbose, timeit_args):
         """A fake wrapper around Python's timeit."""
         cmdline = ['echo', 'python', '-mtimeit'] + list(timeit_args)
         if verbose:
-            click.echo(f"Invoking: {' '.join(cmdline)}")
+            quo.echo(f"Invoking: {' '.join(cmdline)}")
         call(cmdline)
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['--help'])
     println()
@@ -313,7 +313,7 @@ And what it looks like:
     println()
     invoke(cli, prog_name='cli', args=['-v', 'a = 1; b = 2; a * b'])
 
-As you can see the verbosity flag is handled by Click, everything else
+As you can see the verbosity flag is handled by Quo, everything else
 ends up in the `timeit_args` variable for further processing which then
 for instance, allows invoking a subprocess.  There are a few things that
 are important to know about how this ignoring of unhandled flag happens:
@@ -326,7 +326,7 @@ are important to know about how this ignoring of unhandled flag happens:
 *   Unknown short options might be partially handled and reassembled if
     necessary.  For instance in the above example there is an option
     called ``-v`` which enables verbose mode.  If the command would be
-    ignored with ``-va`` then the ``-v`` part would be handled by Click
+    ignored with ``-va`` then the ``-v`` part would be handled by Quo
     (as it is known) and ``-a`` would end up in the leftover parameters
     for further processing.
 *   Depending on what you plan on doing you might have some success by
@@ -347,7 +347,7 @@ Global Context Access
 
 .. versionadded:: 5.0
 
-Starting with Click 5.0 it is possible to access the current context from
+Starting with Quo 5.0 it is possible to access the current context from
 anywhere within the same thread through the use of the
 :func:`get_current_context` function which returns it.  This is primarily
 useful for accessing the context bound object as well as some flags that
@@ -358,7 +358,7 @@ flag.
 Example usage::
 
     def get_current_command_name():
-        return click.get_current_context().info_name
+        return quo.get_current_context().info_name
 
 It should be noted that this only works within the current thread.  If you
 spawn additional threads then those threads will not have the ability to
@@ -388,19 +388,19 @@ In some situations it's helpful to understand whether or not an option
 or parameter came from the command line, the environment, the default
 value, or :attr:`Context.default_map`. The
 :meth:`Context.get_parameter_source` method can be used to find this
-out. It will return a member of the :class:`~click.core.ParameterSource`
+out. It will return a member of the :class:`~quo.core.ParameterSource`
 enum.
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('port', nargs=1, default=8080, envvar="PORT")
-    @click.pass_context
+    @quo.command()
+    @quo.argument('port', nargs=1, default=8080, envvar="PORT")
+    @quo.pass_context
     def cli(ctx, port):
         source = ctx.get_parameter_source("port")
-        click.echo(f"Port came from {source.name}")
+        quo.echo(f"Port came from {source.name}")
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='cli', args=['8080'])
     println()
@@ -445,35 +445,35 @@ Ordinarily, it would be used with the ``with`` statement:
 However, a ``with`` block in a group would exit and close the database
 before it could be used by a subcommand.
 
-Instead, use the context's :meth:`~click.Context.with_resource` method
+Instead, use the context's :meth:`~quo.Context.with_resource` method
 to enter the context manager and return the resource. When the group and
 any subcommands finish, the context's resources are cleaned up.
 
 .. code-block:: python
 
-    @click.group()
-    @click.option("--repo-home", default=".repo")
-    @click.pass_context
+    @quo.group()
+    @quo.option("--repo-home", default=".repo")
+    @quo.pass_context
     def cli(ctx, repo_home):
         ctx.obj = ctx.with_resource(Repo(repo_home))
 
     @cli.command()
-    @click.pass_obj
+    @quo.pass_obj
     def log(obj):
         # obj is the repo opened in the cli group
         for entry in obj.db.query(...):
-            click.echo(entry)
+            quo.echo(entry)
 
 If the resource isn't a context manager, usually it can be wrapped in
 one using something from :mod:`contextlib`. If that's not possible, use
-the context's :meth:`~click.Context.call_on_close` method to register a
+the context's :meth:`~quo.Context.call_on_close` method to register a
 cleanup function.
 
 .. code-block:: python
 
-    @click.group()
-    @click.option("--name", default="repo.db")
-    @click.pass_context
+    @quo.group()
+    @quo.option("--name", default="repo.db")
+    @quo.pass_context
     def cli(ctx, repo_home):
         ctx.obj = db = open_db(repo_home)
 
