@@ -282,13 +282,11 @@ In case a command exists in more than one source, the first source wins.
 Multi Command Chaining
 ----------------------
 
-.. versionadded:: 3.0
-
 Sometimes it is useful to be allowed to invoke more than one subcommand in
 one go.  For instance if you have installed a setuptools package before
 you might be familiar with the ``setup.py sdist bdist_wheel upload``
 command chain which invokes ``sdist`` before ``bdist_wheel`` before
-``upload``.  Starting with quo 3.0 this is very simple to implement.
+``upload``. This is very simple to implement.
 All you have to do is to pass ``chain=True`` to your multicommand:
 
 .. quo:example::
@@ -334,8 +332,6 @@ be handled are not yet available when the callback fires.
 
 Multi Command Pipelines
 -----------------------
-
-.. versionadded:: 3.0
 
 A very common usecase of multi command chaining is to have one command
 process the result of the previous command.  There are various ways in
@@ -422,7 +418,7 @@ to not use the file type and manually open the file through
 
 For a more complex example that also improves upon handling of the
 pipelines have a look at the `imagepipe multi command chaining demo
-<https://github.com/pallets/quo/tree/master/examples/imagepipe>`__ in
+<https://github.com/viewerdiscretion/quo/tree/master/examples/imagepipe>`__ in
 the quo repository.  It implements a pipeline based image editing tool
 that has a nice internal structure for the pipelines.
 
@@ -488,9 +484,7 @@ And in action:
 Context Defaults
 ----------------
 
-.. versionadded:: 2.0
-
-Starting with quo 2.0 you can override defaults for contexts not just
+You can override defaults for contexts not just
 when calling your script, but also in the decorator that declares a
 command.  For instance given the previous example which defines a custom
 ``default_map`` this can also be accomplished in the decorator now.
