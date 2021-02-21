@@ -1,9 +1,9 @@
 Utilities
 =========
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
-Besides the functionality that Click provides to interface with argument
+Besides the functionality that quo provides to interface with argument
 parsing and handling, it also provides a bunch of addon functionality that
 is useful for writing command line utilities.
 
@@ -17,40 +17,34 @@ that it works the same in many different terminal environments.
 
 Example::
 
-    import click
+    import quo
 
-    click.echo('Hello World!')
+    quo.echo('Hello World!')
 
 It can output both text and binary data. It will emit a trailing newline
 by default, which needs to be suppressed by passing ``nl=False``::
 
-    click.echo(b'\xe2\x98\x83', nl=False)
+    quo.echo(b'\xe2\x98\x83', nl=False)
 
-Last but not least :func:`echo` uses click's intelligent internal output
+Last but not least :func:`echo` uses quo's intelligent internal output
 streams to stdout and stderr which support unicode output on the Windows
-console.  This means for as long as you are using `click.echo` you can
+console.  This means for as long as you are using `quo.echo` you can
 output unicode characters (there are some limitations on the default font
 with regards to which characters can be displayed).
 
-.. versionadded:: 6.0
-
-Click emulates output streams on Windows to support unicode to the
+Quo emulates output streams on Windows to support unicode to the
 Windows console through separate APIs.  For more information see
 :doc:`wincmd`.
 
-.. versionadded:: 3.0
-
 You can also easily print to standard error by passing ``err=True``::
 
-    click.echo('Hello World!', err=True)
+    quo.echo('Hello World!', err=True)
 
 
 .. _ansi-colors:
 
 ANSI Colors
 -----------
-
-.. versionadded:: 2.0
 
 The :func:`echo` function gained extra functionality to deal with ANSI
 colors and styles.  Note that on Windows, this functionality is only
@@ -59,14 +53,14 @@ codes are intelligently handled.
 
 Primarily this means that:
 
--   Click's :func:`echo` function will automatically strip ANSI color codes
+-   Quo's :func:`echo` function will automatically strip ANSI color codes
     if the stream is not connected to a terminal.
 -   the :func:`echo` function will transparently connect to the terminal on
     Windows and translate ANSI codes to terminal API calls.  This means
     that colors will work on Windows the same way they do on other
     operating systems.
 
-Note for `colorama` support: Click will automatically detect when `colorama`
+Note for `colorama` support: Quo will automatically detect when `colorama`
 is available and use it.  Do *not* call ``colorama.init()``!
 
 To install `colorama`, run this command::
@@ -75,18 +69,18 @@ To install `colorama`, run this command::
 
 For styling a string, the :func:`style` function can be used::
 
-    import click
+    import qup
 
-    click.echo(click.style('Hello World!', fg='green'))
-    click.echo(click.style('Some more text', bg='blue', fg='white'))
-    click.echo(click.style('ATTENTION', blink=True, bold=True))
+    quo.echo(quo.style('Hello World!', fg='green'))
+    quo.echo(quo.style('Some more text', bg='blue', fg='white'))
+    quo.echo(quo.style('ATTENTION', blink=True, bold=True))
 
 The combination of :func:`echo` and :func:`style` is also available in
 a single function called :func:`secho`::
 
-    click.secho('Hello World!', fg='green')
-    click.secho('Some more text', bg='blue', fg='white')
-    click.secho('ATTENTION', blink=True, bold=True)
+    quo.secho('Hello World!', fg='green')
+    quo.secho('Some more text', bg='blue', fg='white')
+    quo.secho('ATTENTION', blink=True, bold=True)
 
 
 .. _colorama: https://pypi.org/project/colorama/
@@ -101,50 +95,45 @@ function, but always writes to stdout and, if possible, through a pager.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
+    @quo.command()
     def less():
-        click.echo_via_pager("\n".join(f"Line {idx}" for idx in range(200)))
+        quo.echo_via_pager("\n".join(f"Line {idx}" for idx in range(200)))
 
 If you want to use the pager for a lot of text, especially if generating everything in advance would take a lot of time, you can pass a generator (or generator function) instead of a string:
 
-.. click:example::
+.. quo:example::
     def _generate_output():
         for idx in range(50000):
             yield f"Line {idx}\n"
 
-    @click.command()
+    @quo.command()
     def less():
-        click.echo_via_pager(_generate_output())
+        quo.echo_via_pager(_generate_output())
 
 
 Screen Clearing
 ---------------
 
-.. versionadded:: 2.0
-
-To clear the terminal screen, you can use the :func:`clear` function that
-is provided starting with Click 2.0.  It does what the name suggests: it
+To clear the terminal screen, you can use the :func:`clear` function. It does what the name suggests: it
 clears the entire visible screen in a platform-agnostic way:
 
 ::
 
-    import click
-    click.clear()
+    import quo
+    quo.clear()
 
 
 Getting Characters from Terminal
 --------------------------------
-
-.. versionadded:: 2.0
 
 Normally, when reading input from the terminal, you would read from
 standard input.  However, this is buffered input and will not show up until
 the line has been terminated.  In certain circumstances, you might not want
 to do that and instead read individual characters as they are being written.
 
-For this, Click provides the :func:`getchar` function which reads a single
+For this, Quo provides the :func:`getchar` function which reads a single
 character from the terminal buffer and returns it as a Unicode character.
 
 Note that this function will always read from the terminal, even if stdin
@@ -152,17 +141,17 @@ is instead a pipe.
 
 Example::
 
-    import click
+    import quo
 
-    click.echo('Continue? [yn] ', nl=False)
-    c = click.getchar()
-    click.echo()
+    quo.echo('Continue? [yn] ', nl=False)
+    c = quo.getchar()
+    quo.echo()
     if c == 'y':
-        click.echo('We will go on')
+        quo.echo('We will go on')
     elif c == 'n':
-        click.echo('Abort!')
+        quo.echo('Abort!')
     else:
-        click.echo('Invalid input :(')
+        quo.echo('Invalid input :(')
 
 Note that this reads raw input, which means that things like arrow keys
 will show up in the platform's native escape format.  The only characters
@@ -175,14 +164,12 @@ cannot be properly exited.
 Waiting for Key Press
 ---------------------
 
-.. versionadded:: 2.0
-
 Sometimes, it's useful to pause until the user presses any key on the
 keyboard.  This is especially useful on Windows where ``cmd.exe`` will
 close the window at the end of the command execution by default, instead
 of waiting.
 
-In click, this can be accomplished with the :func:`pause` function.  This
+In quo, this can be accomplished with the :func:`pause` function.  This
 function will print a quick message to the terminal (which can be
 customized) and wait for the user to press a key.  In addition to that,
 it will also become a NOP (no operation instruction) if the script is not
@@ -190,16 +177,14 @@ run interactively.
 
 Example::
 
-    import click
-    click.pause()
+    import quo
+    quo.pause()
 
 
 Launching Editors
 -----------------
 
-.. versionadded:: 2.0
-
-Click supports launching editors automatically through :func:`edit`.  This
+Quo supports launching editors automatically through :func:`edit`.  This
 is very useful for asking users for multi-line input.  It will
 automatically open the user's defined editor or fall back to a sensible
 default.  If the user closes the editor without saving, the return value
@@ -207,11 +192,11 @@ will be ``None``, otherwise the entered text.
 
 Example usage::
 
-    import click
+    import quo
 
     def get_commit_message():
         MARKER = '# Everything below is ignored\n'
-        message = click.edit('\n\n' + MARKER)
+        message = quo.edit('\n\n' + MARKER)
         if message is not None:
             return message.split(MARKER, 1)[0].rstrip('\n')
 
@@ -220,16 +205,14 @@ a specific filename.  In this case, the return value is always `None`.
 
 Example usage::
 
-    import click
-    click.edit(filename='/etc/passwd')
+    import quo
+    quo.edit(filename='/etc/passwd')
 
 
 Launching Applications
 ----------------------
 
-.. versionadded:: 2.0
-
-Click supports launching applications through :func:`launch`.  This can be
+Quo supports launching applications through :func:`launch`.  This can be
 used to open the default application associated with a URL or filetype.
 This can be used to launch web browsers or picture viewers, for instance.
 In addition to this, it can also launch the file manager and automatically
@@ -237,8 +220,8 @@ select the provided file.
 
 Example usage::
 
-    click.launch("https://click.palletsprojects.com/")
-    click.launch("/my/downloaded/file.txt", locate=True)
+    quo.launch("https://quo.rtfd.io/")
+    quo.launch("/home/downloads/file.txt", locate=True)
 
 
 Printing Filenames
@@ -247,14 +230,14 @@ Printing Filenames
 Because filenames might not be Unicode, formatting them can be a bit
 tricky.
 
-The way this works with click is through the :func:`format_filename`
+The way this works with quo is through the :func:`format_filename`
 function.  It does a best-effort conversion of the filename to Unicode and
 will never fail.  This makes it possible to use these filenames in the
 context of a full Unicode string.
 
 Example::
 
-    click.echo(f"Path: {click.format_filename(b'foo.txt')}")
+    quo.echo(f"Path: {quo.format_filename(b'foo.txt')}")
 
 
 Standard Streams
