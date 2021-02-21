@@ -18,7 +18,7 @@ from .accordance import WIN
 from .current import resolve_color_default
 
 
-echo_native_types = (str, bytes, bytearray)
+echo_functionality = (bytes, bytearray, str)
 
 
 def _posixify(name):
