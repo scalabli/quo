@@ -69,7 +69,7 @@ To install `colorama`, run this command::
 
 For styling a string, the :func:`style` function can be used::
 
-    import qup
+    import quo
 
     quo.echo(quo.style('Hello World!', fg='green'))
     quo.echo(quo.style('Some more text', bg='blue', fg='white'))
@@ -93,17 +93,14 @@ let a user scroll through it.  This can be achieved by using the
 :func:`echo_via_pager` function which works similarly to the :func:`echo`
 function, but always writes to stdout and, if possible, through a pager.
 
-Example:
-
-.. quo:example::
+Example::
 
     @quo.command()
     def less():
         quo.echo_via_pager("\n".join(f"Line {idx}" for idx in range(200)))
 
-If you want to use the pager for a lot of text, especially if generating everything in advance would take a lot of time, you can pass a generator (or generator function) instead of a string:
+If you want to use the pager for a lot of text, especially if generating everything in advance would take a lot of time, you can pass a generator (or generator function) instead of a string::
 
-.. quo:example::
     def _generate_output():
         for idx in range(50000):
             yield f"Line {idx}\n"
