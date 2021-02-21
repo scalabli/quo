@@ -27,7 +27,7 @@ def encoding_filesystem():
 
 
 def text_flow(
-    encoding, errors, force_readable=False, force_writable=False, stream):
+    stream, encoding, errors, force_readable=False, force_writable=False):
     if encoding is None:
         encoding = get_best_encoding(stream)
     if errors is None:
