@@ -7,7 +7,7 @@ from datetime import datetime
 
 from .accordance import _get_argv_encoding
 from .accordance import filename_to_ui
-from .accordance import get_filesystem_encoding
+from .accordance import encoding_filesystem
 from .accordance import get_strerror
 from .accordance import open_stream
 from .exceptions import BadParameter
