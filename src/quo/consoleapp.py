@@ -6,6 +6,7 @@
 # compared to the original patches as we do not need to patch
 # the entire interpreter but just work in our little world of
 # echo and prompt.
+import sys
 import ctypes
 import io
 import time
