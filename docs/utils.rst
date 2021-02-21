@@ -75,7 +75,7 @@ For styling a string, the :func:`style` function can be used::
     quo.echo(quo.style('Some more text', bg='blue', fg='white'))
     quo.echo(quo.style('ATTENTION', blink=True, bold=True))
 
-The:func:`echo` and :func:`style` can also be combined to single function called :func:`flair`:: to add a little sparkle❇ in your code::
+The :func:`echo` and :func:`style` can also be combined to single function called :func:`flair`:: to add a little sparkle❇ in your code::
 
     quo.flair('Hello World!', fg='green')
     quo.flair('Some more text', bg='blue', fg='white')
