@@ -75,12 +75,11 @@ For styling a string, the :func:`style` function can be used::
     quo.echo(quo.style('Some more text', bg='blue', fg='white'))
     quo.echo(quo.style('ATTENTION', blink=True, bold=True))
 
-The combination of :func:`echo` and :func:`style` is also available in
-a single function called :func:`secho`::
+The:func:`echo` and :func:`style` can also be combined to single function called :func:`flair`:: to add a little sparkle❇ in your code
 
-    quo.secho('Hello World!', fg='green')
-    quo.secho('Some more text', bg='blue', fg='white')
-    quo.secho('ATTENTION', blink=True, bold=True)
+    quo.flair('Hello World!', fg='green')
+    quo.flair('Some more text', bg='blue', fg='white')
+    quo.flair('ATTENTION', blink=True, bold=True)
 
 
 .. _colorama: https://pypi.org/project/colorama/
