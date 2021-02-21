@@ -51,7 +51,7 @@ def ascii_encoding(encoding):
 #If not found returns the default stream encoding
 def default_system_encoding(stream):
     rv = getattr(stream, "encoding", None) or sys.getdefaultencoding()
-    if is_ascii_encoding(rv):
+    if ascii_encoding(rv):
         return "utf-8"
     return rv
 
@@ -200,7 +200,7 @@ def _stream_is_misconfigured(stream):
     # to ASCII.  This appears to happen in certain unittest
     # environments.  It's not quite clear what the correct behavior is
     # but this at least will force Click to recover somehow.
-    return is_ascii_encoding(getattr(stream, "encoding", None) or "ascii")
+    return ascii_encoding(getattr(stream, "encoding", None) or "ascii")
 
 
 def _is_compat_stream_attr(stream, attr, value):
