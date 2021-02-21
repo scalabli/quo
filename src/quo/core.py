@@ -40,7 +40,7 @@ SUBCOMMAND_METAVAR = "COMMAND [ARGS]..."
 SUBCOMMANDS_METAVAR = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
 
 DEPRECATED_HELP_NOTICE = " (DEPRECATED)"
-DEPRECATED_INVOKE_NOTICE = "DeprecationWarning: The command {name} has been deprecated."
+DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
 
 def deprecated_notice(cmd):
