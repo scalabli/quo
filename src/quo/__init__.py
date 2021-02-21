@@ -71,4 +71,4 @@ from .utilities import get_os_args
 from .utilities import get_text_stream
 from .utilities import open_file
 
-__version__ = "2021.02.dev4"
+__version__ = "2021.02.dev5"
