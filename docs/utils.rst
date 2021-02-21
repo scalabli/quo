@@ -249,7 +249,7 @@ streams through ``sys.stdout`` and friends, but unfortunately, there are
 API differences between 2.x and 3.x, especially with regards to how these
 streams respond to Unicode and binary data.
 
-Because of this, click provides the :func:`get_binary_stream` and
+Because of this, quo provides the :func:`get_binary_stream` and
 :func:`get_text_stream` functions, which produce consistent results with
 different Python versions and for a wide variety of terminal configurations.
 
@@ -258,14 +258,12 @@ stream object (except in very odd cases; see :doc:`/unicode-support`).
 
 Example::
 
-    import click
+    import quo
 
-    stdin_text = click.get_text_stream('stdin')
-    stdout_binary = click.get_binary_stream('stdout')
+    stdin_text = quo.get_text_stream('stdin')
+    stdout_binary = quo.get_binary_stream('stdout')
 
-.. versionadded:: 6.0
-
-Click now emulates output streams on Windows to support unicode to the
+Quo now emulates output streams on Windows to support unicode to the
 Windows console through separate APIs.  For more information see
 :doc:`wincmd`.
 
@@ -273,43 +271,39 @@ Windows console through separate APIs.  For more information see
 Intelligent File Opening
 ------------------------
 
-.. versionadded:: 3.0
-
-Starting with Click 3.0 the logic for opening files from the :class:`File`
+The logic for opening files from the :class:`File`
 type is exposed through the :func:`open_file` function.  It can
 intelligently open stdin/stdout as well as any other file.
 
 Example::
 
-    import click
+    import quo
 
-    stdout = click.open_file('-', 'w')
-    test_file = click.open_file('test.txt', 'w')
+    stdout = quo.open_file('-', 'w')
+    test_file = quo.open_file('test.txt', 'w')
 
 If stdin or stdout are returned, the return value is wrapped in a special
 file where the context manager will prevent the closing of the file.  This
 makes the handling of standard streams transparent and you can always use
 it like this::
 
-    with click.open_file(filename, 'w') as f:
+    with quo.open_file(filename, 'w') as f:
         f.write('Hello World!\n')
 
 
 Finding Application Folders
 ---------------------------
 
-.. versionadded:: 2.0
-
 Very often, you want to open a configuration file that belongs to your
 application.  However, different operating systems store these configuration
-files in different locations depending on their standards.  Click provides
+files in different locations depending on their standards.  Quo provides
 a :func:`get_app_dir` function which returns the most appropriate location
 for per-user config files for your application depending on the OS.
 
 Example usage::
 
     import os
-    import click
+    import quo
     import ConfigParser
 
     APP_NAME = 'My Application'
@@ -328,11 +322,9 @@ Example usage::
 Showing Progress Bars
 ---------------------
 
-.. versionadded:: 2.0
-
 Sometimes, you have command line scripts that need to process a lot of data,
 but you want to quickly show the user some progress about how long that
-will take.  Click supports simple progress bar rendering for that through
+will take.  Quo supports simple progress bar rendering for that through
 the :func:`progressbar` function.
 
 The basic usage is very simple: the idea is that you have an iterable that
@@ -345,18 +337,18 @@ time to do processing.  So say you have a loop like this::
 To hook this up with an automatically updating progress bar, all you need
 to do is to change the code to this::
 
-    import click
+    import quo
 
-    with click.progressbar(all_the_users_to_process) as bar:
+    with quo.progressbar(all_the_users_to_process) as bar:
         for user in bar:
             modify_the_user(user)
 
-Click will then automatically print a progress bar to the terminal and
+Quo will then automatically print a progress bar to the terminal and
 calculate the remaining time for you.  The calculation of remaining time
 requires that the iterable has a length.  If it does not have a length
 but you know the length, you can explicitly provide it::
 
-    with click.progressbar(all_the_users_to_process,
+    with quo.progressbar(all_the_users_to_process,
                            length=number_of_users) as bar:
         for user in bar:
             modify_the_user(user)
@@ -366,7 +358,7 @@ loop. So code like this will render correctly::
 
     import time
 
-    with click.progressbar([1, 2, 3]) as bar:
+    with quo.progressbar([1, 2, 3]) as bar:
         for x in bar:
             print(f"sleep({x})...")
             time.sleep(x)
@@ -385,7 +377,7 @@ progress bar irregularly. To do so, you need to specify the length (and no
 iterable), and use the update method on the context return value instead of
 iterating directly over it::
 
-    with click.progressbar(length=total_size,
+    with quo.progressbar(length=total_size,
                            label='Unzipping archive') as bar:
         for archive in zip_file:
             archive.extract()
