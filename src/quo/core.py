@@ -7,7 +7,7 @@ from contextlib import ExitStack
 from functools import update_wrapper
 from itertools import repeat
 
-from .universal import _verify_python_env
+from .universal import python_environment
 from .exceptions import Abort
 from .exceptions import BadParameter
 from .exceptions import QuoException
