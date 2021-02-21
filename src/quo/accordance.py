@@ -22,13 +22,12 @@ get_winterm_size = None
 _ansi_re = re.compile(r"\033\[[;?0-9]*[a-zA-Z]")
 
 
-def get_filesystem_encoding():
+def encoding_filesystem():
     return sys.getfilesystemencoding() or sys.getdefaultencoding()
 
 
-def _make_text_stream(
-    stream, encoding, errors, force_readable=False, force_writable=False
-):
+def text_flow(
+    encoding, errors, force_readable=False, force_writable=False, stream):
     if encoding is None:
         encoding = get_best_encoding(stream)
     if errors is None:
@@ -43,14 +42,14 @@ def _make_text_stream(
     )
 
 #Checks if given code is ACII
-def is_ascii_encoding(encoding):
+def ascii_encoding(encoding):
     try:
         return codecs.lookup(encoding).name == "ascii"
     except LookupError:
         return False
 
 #If not found returns the default stream encoding
-def get_best_encoding(stream):
+def default_system_encoding(stream):
     rv = getattr(stream, "encoding", None) or sys.getdefaultencoding()
     if is_ascii_encoding(rv):
         return "utf-8"
