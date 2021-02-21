@@ -1,9 +1,9 @@
 Unicode Support
 ===============
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
-Click has to take extra care to support Unicode text in different
+Quo has to take extra care to support Unicode text in different
 environments.
 
 *   The command line in Unix is traditionally bytes, not Unicode. While
@@ -49,7 +49,7 @@ environments.
     does not figure out the encoding. In that case, the Unicode string
     will contain error bytes encoded as surrogate escapes.
 
-*   When dealing with files, Click will always use the Unicode file
+*   When dealing with files, Quo will always use the Unicode file
     system API by using the operating system's reported or guessed
     filesystem encoding. Surrogates are supported for filenames, so it
     should be possible to open files through the :class:`File` type even
@@ -59,7 +59,7 @@ environments.
 Surrogate Handling
 ------------------
 
-Click does all the Unicode handling in the standard library and is
+Quo does all the Unicode handling in the standard library and is
 subject to its behavior. Unicode requires extra care. The reason for
 this is that the encoding detection is done in the interpreter, and on
 Linux and certain other operating systems, its encoding handling is
@@ -69,7 +69,7 @@ The biggest source of frustration is that Click scripts invoked by init
 systems, deployment tools, or cron jobs will refuse to work unless a
 Unicode locale is exported.
 
-If Click encounters such an environment it will prevent further
+If Quo encounters such an environment it will prevent further
 execution to force you to set a locale. This is done because Click
 cannot know about the state of the system once it's invoked and restore
 the values before Python's Unicode handling kicked in.
@@ -78,9 +78,9 @@ If you see something like this error::
 
     Traceback (most recent call last):
       ...
-    RuntimeError: Click will abort further execution because Python was
+    RuntimeError: Quo will abort further execution because Python was
       configured to use ASCII as encoding for the environment. Consult
-      https://click.palletsprojects.com/unicode-support/ for mitigation
+      https://quo.readthedocs.org/unicode-support/ for mitigation
       steps.
 
 You are dealing with an environment where Python thinks you are
