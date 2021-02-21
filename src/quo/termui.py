@@ -34,14 +34,14 @@ _ansi_colors = {
     "cyan": 36,
     "white": 37,
     "reset": 39,
-    "bblack": 90,
-    "bred": 91,
-    "bgreen": 92,
-    "byellow": 93,
-    "bblue": 94,
-    "bmagenta": 95,
-    "bcyan": 96,
-    "bwhite": 97,
+    "vivid_black": 90,
+    "vivid_red": 91,
+    "vivid_green": 92,
+    "vivid_yellow": 93,
+    "vivid_blue": 94,
+    "vivid_magenta": 95,
+    "vivid_cyan": 96,
+    "vivid_white": 97,
 }
 _ansi_reset_all = "\033[0m"
 
