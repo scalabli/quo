@@ -224,7 +224,7 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
             file = _default_text_stdout()
 
     # Convert non bytes/text into the native string type.
-    if message is not None and not isinstance(message, echo_native_types):
+    if message is not None and not isinstance(message, echo_functionality):
         message = str(message)
 
     if nl:
