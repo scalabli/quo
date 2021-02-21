@@ -363,7 +363,7 @@ loop. So code like this will render correctly::
 Another useful feature is to associate a label with the progress bar which
 will be shown preceding the progress bar::
 
-    with click.progressbar(all_the_users_to_process,
+    with quo.progressbar(all_the_users_to_process,
                            label='Modifying user accounts',
                            length=number_of_users) as bar:
         for user in bar:
