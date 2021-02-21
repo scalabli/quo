@@ -7,7 +7,7 @@ from .accordance import _find_binary_writer
 from .accordance import auto_wrap_for_ansi
 from .accordance import binary_streams
 from .accordance import filename_to_ui
-from .accordance import get_filesystem_encoding
+from .accordance import encoding_filesystem
 from .accordance import get_strerror
 from .accordance import is_bytes
 from .accordance import open_stream
