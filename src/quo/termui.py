@@ -580,11 +580,11 @@ def unstyle(text):
     return strip_ansi(text)
 
 
-def secho(message=None, file=None, nl=True, err=False, color=None, **styles):
+def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
     """This function combines :func:`echo` and :func:`style` into one
     call.  As such the following two calls are the same::
 
-        quo.secho('Hello World!', fg='green')
+        quo.flair('Hello World!', fg='green')
         quo.echo(quo.style('Hello World!', fg='green'))
 
     All keyword arguments are forwarded to the underlying functions
