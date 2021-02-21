@@ -40,15 +40,15 @@ SUBCOMMAND_METAVAR = "COMMAND [ARGS]..."
 SUBCOMMANDS_METAVAR = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
 
 DEPRECATED_HELP_NOTICE = " (DEPRECATED)"
-DEPRECATED_INVOKE_NOTICE = "DeprecationWarning: The command {name} is deprecated."
+DEPRECATED_INVOKE_NOTICE = "DeprecationWarning: The command {name} has been deprecated."
 
 
-def _maybe_show_deprecated_notice(cmd):
+def deprecated_notice(cmd):
     if cmd.deprecated:
-        echo(style(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="red"), err=True)
+        echo(style(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow"), err=True)
 
 
-def _fast_exit(code):
+def quick_exit(code):
     """Low-level exit that skips Python's cleanup but speeds up exit by
     about 10ms for things like shell completion.
 
@@ -74,7 +74,7 @@ def _complete_visible_commands(ctx, incomplete):
                 yield name, command
 
 
-def _check_multicommand(base_command, cmd_name, cmd, register=False):
+def multicommand_checker(base_command, cmd_name, cmd, register=False):
     if not base_command.chain or not isinstance(cmd, MultiCommand):
         return
     if register:
