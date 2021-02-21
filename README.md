@@ -56,7 +56,7 @@ Quo has been installed successfully🎉
 
 ```Python
 import quo
-quo.secho(f'Hello Gerry', fg='black', bg='cyan')
+quo.echo(f'Hello Gerry')
 
 ```
 
