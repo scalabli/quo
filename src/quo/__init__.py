@@ -46,7 +46,7 @@ from .termui import launch
 from .termui import pause
 from .termui import progressbar
 from .termui import prompt
-from .termui import secho
+from .termui import flair
 from .termui import style
 from .termui import unstyle
 from .types import BOOL
@@ -71,4 +71,4 @@ from .utilities import get_os_args
 from .utilities import get_text_stream
 from .utilities import open_file
 
-__version__ = "2021.02.dev1"
+__version__ = "2021.02.dev2"
