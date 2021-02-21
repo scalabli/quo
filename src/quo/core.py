@@ -23,6 +23,7 @@ from .parser import OptionParser
 from .parser import split_opt
 from .termui import confirm
 from .termui import prompt
+from .termui import flair
 from .termui import style
 from .types import _NumberRangeBase
 from .types import BOOL
@@ -45,7 +46,7 @@ DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
 def deprecated_notice(cmd):
     if cmd.deprecated:
-        echo(style(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow"), err=True)
+        flair(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow"), err=True)
 
 
 def quick_exit(code):
