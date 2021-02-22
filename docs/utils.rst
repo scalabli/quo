@@ -84,21 +84,21 @@ The :func:`echo` and :func:`style` can also be combined to single function calle
 
 .. _colorama: https://pypi.org/project/colorama/
 
-Pager Support
+Scrollable test
 -------------
 
 In some situations, you might want to show long texts on the terminal and
 let a user scroll through it.  This can be achieved by using the
-:func:`echo_via_pager` function which works similarly to the :func:`echo`
-function, but always writes to stdout and, if possible, through a pager.
+:func:`scrollable` function which works similarly to the :func:`echo`
+function, but always writes to stdout.
 
 Example::
 
     @quo.command()
     def less():
-        quo.echo_via_pager("\n".join(f"Line {idx}" for idx in range(200)))
+        quo.scrollable("\n".join(f"Line {idx}" for idx in range(200)))
 
-If you want to use the pager for a lot of text, especially if generating everything in advance would take a lot of time, you can pass a generator (or generator function) instead of a string::
+If you want to print a lot of text, especially if generating everything in advance would take a lot of time, you can pass a generator (or generator function) instead of a string::
 
     def _generate_output():
         for idx in range(50000):
@@ -106,7 +106,7 @@ If you want to use the pager for a lot of text, especially if generating everyth
 
     @quo.command()
     def less():
-        quo.echo_via_pager(_generate_output())
+        quo.scrollable(_generate_output())
 
 
 Screen Clearing
