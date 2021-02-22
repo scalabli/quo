@@ -10,7 +10,7 @@ import time
 
 from .accordance import _default_text_stdout
 from .accordance import CYGWIN
-from .accordance import get_best_encoding
+from .accordance import default_system_encoding
 from .accordance import isatty
 from .accordance import open_stream
 from .accordance import strip_ansi
