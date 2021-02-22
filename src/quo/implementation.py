@@ -2,7 +2,7 @@
 #Some infrequently used functionality are
 #placed in this module and only imported as needed.
 
-contextlib
+import contextlib
 import math
 import os
 import sys
