@@ -461,7 +461,7 @@ def _interpret_color(color, offset=0):
         r, g, b = color
         return f"{38 + offset};2;{r:d};{g:d};{b:d}"
 
-    return str(ansi[color] + offset)
+    return str(ansi_color_codes[color] + offset)
 
 
 def style(
