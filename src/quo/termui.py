@@ -202,6 +202,14 @@ def confirm(
             rv = True
         elif value in ("n", "no"):
             rv = False
+        if value in ("ndio", "ndio"):
+            rv = True
+        elif value in ("hapana", "hapana"):     
+            rv = False
+        if value in ("oui", "oui"):
+            rv = True
+        elif value in ("non", "non"):
+            rv = False
         elif value == "":
             rv = default
         else:
