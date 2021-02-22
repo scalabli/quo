@@ -24,7 +24,7 @@ from .utilities import LazyFile
 visible_prompt_func = input
 #American National Standard Institute colors
 
-_ansi_colors = {
+ansi = {
     "black": 30,
     "red": 31,
     "green": 32,
@@ -453,7 +453,7 @@ def _interpret_color(color, offset=0):
         r, g, b = color
         return f"{38 + offset};2;{r:d};{g:d};{b:d}"
 
-    return str(_ansi_colors[color] + offset)
+    return str(ansi[color] + offset)
 
 
 def style(
