@@ -264,7 +264,7 @@ def get_terminal_size():
     return int(cr[1]), int(cr[0])
 
 
-def echo_via_pager(text_or_generator, color=None):
+def scrollable(text_or_generator, color=None):
     """This function takes a text and shows it via an environment specific
     pager on stdout.
 
