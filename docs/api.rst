@@ -36,7 +36,7 @@ Utilities
 
 .. autofunction:: echo
 
-.. autofunction:: echo_via_pager
+.. autofunction:: scrollable
 
 .. autofunction:: prompt
 
@@ -50,7 +50,7 @@ Utilities
 
 .. autofunction:: unstyle
 
-.. autofunction:: secho
+.. autofunction:: flair
 
 .. autofunction:: edit
 
