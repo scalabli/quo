@@ -213,7 +213,7 @@ def confirm(
         elif value == "":
             rv = default
         else:
-            echo("Error: invalid input", err=err)
+            flair("Error: invalid input", bg="yellow", fg="black", err=err)
             continue
         break
     if abort and not rv:
