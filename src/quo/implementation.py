@@ -678,7 +678,7 @@ else:
     def getchar(echo):
         with raw_terminal() as fd:
             ch = os.read(fd, 32)
-            ch = ch.decode(get_best_encoding(sys.stdin), "replace")
+            ch = ch.decode(default_system_encoding(sys.stdin), "replace")
             if echo and isatty(sys.stdout):
                 sys.stdout.write(ch)
             _translate_ch_to_exc(ch)
