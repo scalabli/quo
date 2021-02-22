@@ -30,7 +30,7 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 
 ## Requirements
 
-Python 3.6+
+Python 2.7+
 
 ## Installation
 
