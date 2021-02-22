@@ -1,9 +1,9 @@
 Documenting Scripts
 ===================
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
-Click makes it very easy to document your command line tools.  First of
+Quo makes it very easy to document your command line tools.  First of
 all, it automatically generates help pages for you.  While these are
 currently not customizable in terms of their layout, all of the text
 can be changed.
@@ -16,19 +16,19 @@ docstring of the function is automatically used if provided.
 
 Simple example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.option('--count', default=1, help='number of greetings')
-    @click.argument('name')
+    @quo.command()
+    @quo.option('--count', default=1, help='number of greetings')
+    @quo.argument('name')
     def hello(count, name):
         """This script prints hello NAME COUNT times."""
         for x in range(count):
-            click.echo(f"Hello {name}!")
+            quo.echo(f"Hello {name}!")
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(hello, args=['--help'])
 
@@ -38,43 +38,43 @@ And what it looks like:
 Documenting Arguments
 ~~~~~~~~~~~~~~~~~~~~~
 
-:func:`click.argument` does not take a ``help`` parameter. This is to
+:func:`quo.argument` does not take a ``help`` parameter. This is to
 follow the general convention of Unix tools of using arguments for only
 the most necessary things, and to document them in the command help text
 by referring to them by name.
 
 You might prefer to reference the argument in the description:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('filename')
+    @quo.command()
+    @quo.argument('filename')
     def touch(filename):
         """Print FILENAME."""
-        click.echo(filename)
+        quo.echo(filename)
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(touch, args=['--help'])
 
 Or you might prefer to explicitly provide a description of the argument:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.argument('filename')
+    @quo.command()
+    @quo.argument('filename')
     def touch(filename):
         """Print FILENAME.
 
         FILENAME is the name of the file to check.
         """
-        click.echo(filename)
+        quo.echo(filename)
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(touch, args=['--help'])
 
@@ -84,7 +84,7 @@ For more examples, see the examples in :doc:`/arguments`.
 Preventing Rewrapping
 ---------------------
 
-The default behavior of Click is to rewrap text based on the width of the
+The default behavior of quo is to rewrap text based on the width of the
 terminal.  In some circumstances, this can become a problem. The main issue
 is when showing code examples, where newlines are significant.
 
@@ -94,9 +94,9 @@ help text and rewrapping will be disabled.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
+    @quo.command()
     def cli():
         """First paragraph.
 
@@ -116,7 +116,7 @@ Example:
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, args=['--help'])
 
@@ -125,19 +125,19 @@ And what it looks like:
 Truncating Help Texts
 ---------------------
 
-Click gets command help text from function docstrings.  However if you
+quo gets command help text from function docstrings.  However if you
 already use docstrings to document function arguments you may not want
 to see :param: and :return: lines in your help text.
 
-You can use the ``\f`` escape marker to have Click truncate the help text
+You can use the ``\f`` escape marker to have quo truncate the help text
 after the marker.
 
 Example:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.pass_context
+    @quo.command()
+    @quo.pass_context
     def cli(ctx):
         """First paragraph.
 
@@ -146,12 +146,12 @@ Example:
         wrapped but it will be rewrapped.
         \f
 
-        :param click.core.Context ctx: Click context.
+        :param quo.core.Context ctx: quo context.
         """
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, args=['--help'])
 
@@ -164,20 +164,20 @@ meta variable in the help page.  The default version is the parameter name
 in uppercase with underscores, but can be annotated differently if
 desired.  This can be customized at all levels:
 
-.. click:example::
+.. quo:example::
 
-    @click.command(options_metavar='<options>')
-    @click.option('--count', default=1, help='number of greetings',
+    @quo.command(options_metavar='<options>')
+    @quo.option('--count', default=1, help='number of greetings',
                   metavar='<int>')
-    @click.argument('name', metavar='<name>')
+    @quo.argument('name', metavar='<name>')
     def hello(count, name):
         """This script prints hello <name> <int> times."""
         for x in range(count):
-            click.echo(f"Hello {name}!")
+            quo.echo(f"Hello {name}!")
 
 Example:
 
-.. click:run::
+.. quo:run::
 
     invoke(hello, args=['--help'])
 
@@ -189,9 +189,9 @@ For commands, a short help snippet is generated.  By default, it's the first
 sentence of the help message of the command, unless it's too long.  This can
 also be overridden:
 
-.. click:example::
+.. quo:example::
 
-    @click.group()
+    @quo.group()
     def cli():
         """A simple command line tool."""
 
@@ -205,7 +205,7 @@ also be overridden:
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='repo.py')
 
@@ -215,8 +215,8 @@ Help Parameter Customization
 
 .. versionadded:: 2.0
 
-The help parameter is implemented in Click in a very special manner.
-Unlike regular parameters it's automatically added by Click for any
+The help parameter is implemented in quo in a very special manner.
+Unlike regular parameters it's automatically added by quo for any
 command and it performs automatic conflict resolution.  By default it's
 called ``--help``, but this can be changed.  If a command itself implements
 a parameter with the same name, the default help parameter stops accepting
@@ -226,16 +226,16 @@ the help parameters called :attr:`~Context.help_option_names`.
 This example changes the default parameters to ``-h`` and ``--help``
 instead of just ``--help``:
 
-.. click:example::
+.. quo:example::
 
     CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
-    @click.command(context_settings=CONTEXT_SETTINGS)
+    @quo.command(context_settings=CONTEXT_SETTINGS)
     def cli():
         pass
 
 And what it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, ['-h'])
