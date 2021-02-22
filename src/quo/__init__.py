@@ -38,7 +38,7 @@ from .current import get_current_context
 from .parser import OptionParser
 from .termui import clear
 from .termui import confirm
-from .termui import echo_via_pager
+from .termui import scrollable
 from .termui import edit
 from .termui import get_terminal_size
 from .termui import getchar
