@@ -86,6 +86,10 @@ import quo
 // A simple survey application
 ```
 
+## Contributing
+
+If you run into an issue or want to contribute, we would be very happy if you would file a bug on the [issue tracker](https://github.com/viewerdiscretion/quo/issues).
+
 ## Donate
 In order to for me to maintain this project, `please consider donating today` 
 
