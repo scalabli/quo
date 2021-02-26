@@ -43,7 +43,7 @@ You can also easily print to standard error by passing ``err=True``::
 
 .. _ansi-colors:
 
-ANSI Colors
+American National Standards Institute(ANSI) Colors
 -----------
 
 The :func:`echo` function gained extra functionality to deal with ANSI
