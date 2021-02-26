@@ -59,6 +59,19 @@ def quick_exit(code):
     sys.stderr.flush()
     os._exit(code)
 
+SHELL_NAMES = (
+    {"sh", "bash", "dash", "ash"}  # Bourne.
+    | {"csh", "tcsh"}  # C.
+    | {"ksh", "zsh", "fish"}  # Common alternatives.
+    | {"cmd", "powershell", "pwsh"}  # Microsoft.
+    | {"elvish", "xonsh"}  # More exotic.
+)
+
+
+class ShellDetectionFailure(EnvironmentError):
+    pass
+
+
 
 def _complete_visible_commands(ctx, incomplete):
     """List all the subcommands of a group that start with the
