@@ -13,7 +13,7 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 Example1::
 
     import quo
-    quo.secho(f'Hello Gerry') 
+    quo.echo(f'Hello Gerry') 
 
 
 Example2::
@@ -27,7 +27,7 @@ Example2::
     def hello(count, name):
         """Program that greets and interviews a person  for a total of 'n' times."""
         for x in range(count):
-            click.echo(f"Hello {name}!")
+            quo.echo(f"Hello {name}!")
 
     if __name__ == '__main__':
         hello()
