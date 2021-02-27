@@ -684,12 +684,12 @@ def launch(url, wait=False, locate=False):
     return open_url(url, wait=wait, locate=locate)
 
 
-# If this is provided, getchar() calls into this instead.  This is used
+# If this is provided, interpose() calls into this instead.  This is used
 # for unittesting purposes.
-_getchar = None
+_interpose = None
 
 
-def getchar(echo=False):
+def interpose(echo=False):
     """Fetches a single character from the terminal and returns it.  This
     will always return a unicode character and under certain rare
     circumstances this might return more than one character.  The
@@ -709,9 +709,9 @@ def getchar(echo=False):
     :param echo: if set to `True`, the character read will also show up on
                  the terminal.  The default is to not show it.
     """
-    f = _getchar
+    f = _interpose
     if f is None:
-        from .implementation import getchar as f
+        from .implementation import interpose as f
     return f(echo)
 
 
@@ -742,7 +742,7 @@ def pause(info="Press any key to continue ...", err=False):
         if info:
             echo(info, nl=False, err=err)
         try:
-            getchar()
+            interpose()
         except (KeyboardInterrupt, EOFError):
             pass
     finally:
