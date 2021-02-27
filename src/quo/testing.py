@@ -228,7 +228,7 @@ class CliRunner:
             sys.stdout.flush()
             return input.readline().rstrip("\r\n")
 
-        def _getchar(echo):
+        def _interpose (echo):
             char = sys.stdin.read(1)
             if echo:
                 sys.stdout.write(char)
@@ -244,11 +244,11 @@ class CliRunner:
 
         old_visible_prompt_func = termui.visible_prompt_func
         old_hidden_prompt_func = termui.hidden_prompt_func
-        old__getchar_func = termui._getchar
+        old__interpose _func = termui._interpose 
         old_should_strip_ansi = utilities.should_strip_ansi
         termui.visible_prompt_func = visible_input
         termui.hidden_prompt_func = hidden_input
-        termui._getchar = _getchar
+        termui._interpose  = _interpose 
         utilities.should_strip_ansi = should_strip_ansi
 
         old_env = {}
@@ -277,7 +277,7 @@ class CliRunner:
             sys.stdin = old_stdin
             termui.visible_prompt_func = old_visible_prompt_func
             termui.hidden_prompt_func = old_hidden_prompt_func
-            termui._getchar = old__getchar_func
+            termui._interpose  = old__interpose _func
             utilities.should_strip_ansi = old_should_strip_ansi
             layout.FORCED_WIDTH = old_forced_width
 
