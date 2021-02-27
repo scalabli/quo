@@ -43,7 +43,7 @@ from .termui import confirm
 from .termui import scrollable
 from .termui import edit
 from .termui import get_terminal_size
-from .termui import getchar
+from .termui import input
 from .termui import launch
 from .termui import pause
 from .termui import progressbar
