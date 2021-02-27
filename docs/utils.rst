@@ -129,7 +129,7 @@ standard input.  However, this is buffered input and will not show up until
 the line has been terminated.  In certain circumstances, you might not want
 to do that and instead read individual characters as they are being written.
 
-For this, Quo provides the :func:`getchar` function which reads a single
+For this, Quo provides the :func:`interpose` function which reads a single
 character from the terminal buffer and returns it as a Unicode character.
 
 Note that this function will always read from the terminal, even if stdin
@@ -140,7 +140,7 @@ Example::
     import quo
 
     quo.echo('Continue? [yn] ', nl=False)
-    c = quo.getchar()
+    c = quo.interpose()
     quo.echo()
     if c == 'y':
         quo.echo('We will go on')
