@@ -43,7 +43,7 @@ from .termui import confirm
 from .termui import scrollable
 from .termui import edit
 from .termui import get_terminal_size
-from .termui import input
+from .termui import interpose 
 from .termui import launch
 from .termui import pause
 from .termui import progressbar
@@ -92,4 +92,4 @@ def detect_shell(pid=None, max_depth=10):
     raise ShellDetectionFailure()
 
 
-__version__ = "2021.02.dev7"
+__version__ = "2021.02.dev8"
