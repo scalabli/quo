@@ -606,7 +606,7 @@ if WIN:
     def raw_terminal():
         yield
 
-    def input(echo):
+    def interpose (echo):
         # The function `getch` will return a bytes object corresponding to
         # the pressed character. Since Windows 10 build 1803, it will also
         # return \x00 when called a second time after pressing a regular key.
@@ -626,7 +626,7 @@ if WIN:
         #
         # When \xe0 is returned, we assume it's part of a special-key sequence
         # and call `getwch` again, but that means that when the user types
-        # the \u00e0 character, `input` doesn't return until a second
+        # the \u00e0 character, `interpose ` doesn't return until a second
         # character is typed.
         # The alternative is returning immediately, but that would mess up
         # cross-platform handling of arrow keys and others that start with
@@ -675,7 +675,7 @@ else:
         except termios.error:
             pass
 
-    def input(echo):
+    def interpose (echo):
         with raw_terminal() as fd:
             ch = os.read(fd, 32)
             ch = ch.decode(default_system_encoding(sys.stdin), "replace")
