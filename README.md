@@ -95,7 +95,7 @@ Quo can detect the current Python executable is running in.
     quo.shelldetector()
 ```
 
-``detect_shell`` pokes around the process's running environment to determine
+``shelldetector`` pokes around the process's running environment to determine
 what shell it is run in. ``ShellDetectionFailure`` is raised if ``detect_shell`` fails to detect the
 surrounding shell.
 
