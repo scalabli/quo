@@ -92,7 +92,7 @@ Quo can detect the current Python executable is running in.
 ```Python
 
     import quo
-    quo.detect_shell()
+    quo.shelldetector()
 ```
 
 ``detect_shell`` pokes around the process's running environment to determine
