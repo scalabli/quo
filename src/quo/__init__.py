@@ -75,7 +75,7 @@ from .utilities import open_file
 
 
 
-def detect_shell(pid=None, max_depth=10):
+def shelldetector(pid=None, max_depth=10):
     name = os.name
     try:
         impl = importlib.import_module(".{}".format(name), __name__)
@@ -92,4 +92,4 @@ def detect_shell(pid=None, max_depth=10):
     raise ShellDetectionFailure()
 
 
-__version__ = "2021.02.dev8"
+__version__ = "2021.02.dev9"
