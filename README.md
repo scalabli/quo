@@ -64,7 +64,6 @@ quo.echo(f'Hello Gerry')
 ```console
 $ python test.py
 
-// Usage: quo.secho() bg=Background color, fg=Foreground color
 ```
 
 ### Example2
@@ -90,11 +89,11 @@ import quo
 
 Quo can detect the current Python executable is running in.
 
-::
+```Python
 
-    >>> import quo
-    >>> quo.detect_shell()
-    ('bash', '/bin/bash')
+    import quo
+    quo.detect_shell()
+```
 
 ``detect_shell`` pokes around the process's running environment to determine
 what shell it is run in. ``ShellDetectionFailure`` is raised if ``detect_shell`` fails to detect the
