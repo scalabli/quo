@@ -195,7 +195,7 @@ def option(*param_decls, **attrs):
     return decorator
 
 
-def confirmation_option(*param_decls, **kwargs):
+def autoconfirm(*param_decls, **kwargs):
     """Add a ``--yes`` option which shows a prompt before continuing if
     not passed. If the prompt is declined, the program will exit.
 
@@ -219,7 +219,7 @@ def confirmation_option(*param_decls, **kwargs):
     return option(*param_decls, **kwargs)
 
 
-def password_option(*param_decls, **kwargs):
+def autopswd(*param_decls, **kwargs):
     """Add a ``--password`` option which prompts for a password, hiding
     input and asking to enter the value again for confirmation.
 
@@ -236,7 +236,7 @@ def password_option(*param_decls, **kwargs):
     return option(*param_decls, **kwargs)
 
 
-def version_option(
+def autoversion(
     version=None,
     *param_decls,
     package_name=None,
@@ -347,12 +347,12 @@ def version_option(
     return option(*param_decls, **kwargs)
 
 
-def help_option(*param_decls, **kwargs):
+def autohelp(*param_decls, **kwargs):
     """Add a ``--help`` option which immediately prints the help page
     and exits the program.
 
     This is usually unnecessary, as the ``--help`` option is added to
-    each command automatically unless ``add_help_option=False`` is
+    each command automatically unless ``add_autohelp=False`` is
     passed.
 
     :param param_decls: One or more option names. Defaults to the single
