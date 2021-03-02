@@ -13,6 +13,7 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 ---
 </p> 
 <a href="https://pypi.org/project/quo/"><img src="https://img.shields.io/static/v1?label=&labelColor=505050&message=website&color=%230076D6&style=flat&logo=google-chrome&logoColor=%230076D6" alt="Documentation"/></a>
+[![PyPI downloads](https://img.shields.io/pypi/dm/quo.svg)](https://quo.rtfd.io/)
 <a href="https://github.com/viewerdiscretion/quo/stargazers"><img src="https://img.shields.io/github/stars/viewerdiscretion/quo" alt="Stars Badge"/></a>
 <a href="https://github.com/viewerdiscretion/quo/network/members"><img src="https://img.shields.io/github/forks/viewerdiscretion/quo" alt="Forks Badge"/></a>
 <a href="https://github.com/viewerdiscretion/quo/pulls"><img src="https://img.shields.io/github/issues-pr/viewerdiscretion/quo" alt="Pull Requests Badge"/></a>
@@ -20,6 +21,15 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 <a href="https://github.com/viewerdiscretion/quo/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/viewerdiscretion/quo?color=2b9348"></a>
 <a href="https://github.com/viewerdiscretion/quo/blob/master/LICENSE"><img src="https://img.shields.io/github/license/viewerdiscretion/quo?color=2b9348" alt="License Badge"/></a>
 
+[![PyPI version](https://img.shields.io/pypi/v/quo.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/quo/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/quo.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/quo/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/quo.svg)](https://quo.rtfd.io)
+[![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum/quo)
+[![Azure Pipelines status](https://dev.azure.com/hugovk/hugovk/_apis/build/status/hugovk.pypistats?branchName=master)](https://dev.azure.com/hugovk/hugovk/_build?definitionId=1)
+[![codecov](https://codecov.io/gh/secretum/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretuminc/quo)
+[![GitHub](https://img.shields.io/github/license/secretuminc/quo.svg)](LICENSE.txt)
+[![DOI](https://zenodo.org/badge/149862343.svg)](https://zenodo.org/badge/latestdoi/149862343)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s?label=Follow)
 [![Linkedin: anmol](https://img.shields.io/badge/-Gerrishon-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gerrishonsirere/)](https://www.linkedin.com/in/gerrishonsirere/)
 ![](https://visitor-badge.glitch.me/badge?page_id=viewerdiscretion.quo)
