@@ -1,0 +1,10 @@
+steps:
+- uses: actions/checkout@master
+- uses: codecov/codecov-action@v1
+  with:
+    token: ${{ secrets.5347ac44-ce50-45d9-83e8-ccb61a7a9a23 }} # not required for public repos
+    files: ./coverage1.xml,./coverage2.xml # optional
+    flags: unittests # optional
+    name: codecov-umbrella # optional
+    fail_ci_if_error: true # optional (default = false)
+    verbose: true # optional (default = false)
