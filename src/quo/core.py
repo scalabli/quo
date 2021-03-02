@@ -227,7 +227,7 @@ class Context:
     :param ignore_unknown_options: instructs Quo to ignore options it does
                                    not know and keeps them for later
                                    processing.
-    :param help_option_names: optionally a list of strings that define how
+    :param autohelp_names: optionally a list of strings that define how
                               the default help parameter is named.  The
                               default is ``['--help']``.
     :param token_normalize_func: an optional function that is used to
@@ -259,7 +259,7 @@ class Context:
         parameters.
 
     .. versionchanged:: 2.0
-        Added the ``resilient_parsing``, ``help_option_names``, and
+        Added the ``resilient_parsing``, ``autohelp_names``, and
         ``token_normalize_func`` parameters.
     """
 
@@ -282,7 +282,7 @@ class Context:
         allow_extra_args=None,
         allow_interspersed_args=None,
         ignore_unknown_options=None,
-        help_option_names=None,
+        autohelp_names=None,
         token_normalize_func=None,
         color=None,
         show_default=None,
@@ -369,14 +369,14 @@ class Context:
         #: .. versionadded:: 4.0
         self.ignore_unknown_options = ignore_unknown_options
 
-        if help_option_names is None:
+        if autohelp_names is None:
             if parent is not None:
-                help_option_names = parent.help_option_names
+                autohelp_names = parent.autohelp_names
             else:
-                help_option_names = ["--help"]
+                autohelp_names = ["--help"]
 
         #: The names for the help options.
-        self.help_option_names = help_option_names
+        self.autohelp_names = autohelp_names
 
         if token_normalize_func is None and parent is not None:
             token_normalize_func = parent.token_normalize_func
@@ -1062,7 +1062,7 @@ class Command(BaseCommand):
                    help page after everything else.
     :param short_help: the short help to use for this command.  This is
                        shown on the command listing of the parent command.
-    :param add_help_option: by default each command registers a ``--help``
+    :param add_autohelp: by default each command registers a ``--help``
                             option.  This can be disabled by this parameter.
     :param no_args_is_help: this controls what happens if no arguments are
                             provided.  This option is disabled by default.
@@ -1084,7 +1084,7 @@ class Command(BaseCommand):
         epilog=None,
         short_help=None,
         options_metavar="[OPTIONS]",
-        add_help_option=True,
+        add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
         deprecated=False,
@@ -1105,7 +1105,7 @@ class Command(BaseCommand):
         self.epilog = epilog
         self.options_metavar = options_metavar
         self.short_help = short_help
-        self.add_help_option = add_help_option
+        self.add_autohelp = add_autohelp
         self.no_args_is_help = no_args_is_help
         self.hidden = hidden
         self.deprecated = deprecated
@@ -1136,9 +1136,9 @@ class Command(BaseCommand):
 
     def get_params(self, ctx):
         rv = self.params
-        help_option = self.get_help_option(ctx)
-        if help_option is not None:
-            rv = rv + [help_option]
+        autohelp = self.get_autohelp(ctx)
+        if autohelp is not None:
+            rv = rv + [autohelp]
         return rv
 
     def format_usage(self, ctx, formatter):
@@ -1158,18 +1158,18 @@ class Command(BaseCommand):
             rv.extend(param.get_usage_pieces(ctx))
         return rv
 
-    def get_help_option_names(self, ctx):
+    def get_autohelp_names(self, ctx):
         """Returns the names for the help option."""
-        all_names = set(ctx.help_option_names)
+        all_names = set(ctx.autohelp_names)
         for param in self.params:
             all_names.difference_update(param.opts)
             all_names.difference_update(param.secondary_opts)
         return all_names
 
-    def get_help_option(self, ctx):
+    def get_autohelp(self, ctx):
         """Returns the help option object."""
-        help_options = self.get_help_option_names(ctx)
-        if not help_options or not self.add_help_option:
+        autohelps = self.get_autohelp_names(ctx)
+        if not autohelps or not self.add_autohelp:
             return
 
         def show_help(ctx, param, value):
@@ -1178,7 +1178,7 @@ class Command(BaseCommand):
                 ctx.exit()
 
         return Option(
-            help_options,
+            autohelps,
             is_flag=True,
             is_eager=True,
             expose_value=False,
