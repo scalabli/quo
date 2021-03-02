@@ -4,11 +4,12 @@
 
 ---
 
-Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
+Quo is a Python  based module for writing Command-Line Interface(CLI) applications.
 
 ---
 
 [![quo](pics/quo.png)](https://github.com/secretuminc/quo)
+
 ---
 </p> 
 <a href="https://pypi.org/project/quo/"><img src="https://img.shields.io/static/v1?label=&labelColor=505050&message=website&color=%230076D6&style=flat&logo=google-chrome&logoColor=%230076D6" alt="Documentation"/></a>
@@ -22,6 +23,12 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 ![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s?label=Follow)
 [![Linkedin: anmol](https://img.shields.io/badge/-Gerrishon-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gerrishonsirere/)](https://www.linkedin.com/in/gerrishonsirere/)
 ![](https://visitor-badge.glitch.me/badge?page_id=viewerdiscretion.quo)
+
+---
+
+Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
+
+---
 
 ---
 
