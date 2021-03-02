@@ -55,10 +55,10 @@ class UsageError(QuoException):
             file = get_text_stderr()
         color = None
         hint = ""
-        if self.cmd is not None and self.cmd.get_help_option(self.ctx) is not None:
+        if self.cmd is not None and self.cmd.get_autohelp(self.ctx) is not None:
             hint = (
                 f"Try '{self.ctx.command_path}"
-                f" {self.ctx.help_option_names[0]}' for help.\n"
+                f" {self.ctx.autohelp_names[0]}' for help.\n"
             )
         if self.ctx is not None:
             color = self.ctx.color
