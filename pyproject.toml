@@ -4,9 +4,9 @@ build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
 module = "quo"
-author = "Gerrishon Sirere"
+author = "Secretum Inc."
 author-email = "secretum.inc@pm.me"
-home-page = "https://github.com/viewerdiscretion/quo "
+home-page = "https://github.com/secretuminc/quo "
 classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: System Administrators",
