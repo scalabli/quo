@@ -1,9 +1,7 @@
 Windows Console Notes
 =====================
 
-.. versionadded:: 6.0
-
-Click emulates output streams on Windows to support unicode to the
+Quo emulates output streams on Windows to support unicode to the
 Windows console through separate APIs and we perform different decoding of
 parameters.
 
@@ -12,7 +10,7 @@ Here is a brief overview of how this works and what it means to you.
 Unicode Arguments
 -----------------
 
-Click internally is generally based on the concept that any argument can
+Quo internally is generally based on the concept that any argument can
 come in as either byte string or unicode string and conversion is
 performed to the type expected value as late as possible.  This has some
 advantages as it allows us to accept the data in the most appropriate form
