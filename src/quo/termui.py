@@ -188,7 +188,7 @@ def confirm(
                 ``stdout``, the same as with echo.
     """
     prompt = _build_prompt(
-        text, prompt_suffix, show_default, "Y/n" if default else "y/N"
+        text, prompt_suffix, show_default, "Yes/no" if default else "yes/No"
     )
     while 1:
         try:
