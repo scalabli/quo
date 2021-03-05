@@ -3,7 +3,7 @@
 Quo
 ================
 
-.. image:: pics/quo.png
+.. image:: _image/quo.png
     :align: center
     :scale: 50%
     :target: https://quo.rtdf.io
