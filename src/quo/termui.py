@@ -198,9 +198,9 @@ def confirm(
             value = visible_prompt_func("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
-        if value in ("y", "yes"):
+        if value in ("yes", "yes"):
             rv = True
-        elif value in ("n", "no"):
+        elif value in ("no", "no"):
             rv = False
         if value in ("ndio", "ndio"):
             rv = True
