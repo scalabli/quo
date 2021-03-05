@@ -221,14 +221,14 @@ def confirm(
     return rv
 
 
-def get_terminal_size():
+def terminalsize():
     """Returns the current size of the terminal as tuple in the form
     ``(width, height)`` in columns and rows.
     """
     import shutil
 
-    if hasattr(shutil, "get_terminal_size"):
-        return shutil.get_terminal_size()
+    if hasattr(shutil, "terminalsize"):
+        return shutil.terminalsize()
 
     # We provide a sensible default for get_winterm_size() when being invoked
     # inside a subprocess. Without this, it would not provide a useful input.
