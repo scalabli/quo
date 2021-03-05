@@ -42,7 +42,7 @@ from .termui import clear
 from .termui import confirm
 from .termui import scrollable
 from .termui import edit
-from .termui import get_terminal_size
+from .termui import terminalsize
 from .termui import interpose 
 from .termui import launch
 from .termui import pause
@@ -92,4 +92,4 @@ def shelldetector(pid=None, max_depth=10):
     raise ShellDetectionFailure()
 
 
-__version__ = "2021.3.dev1"
+__version__ = "2021.3.dev2"
