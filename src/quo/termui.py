@@ -186,19 +186,11 @@ def confirm(
             value = visible_prompt_func("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
-        if value in ("yes", "yes"):
+        if value in ("y", "yes"):
             rv = True
-        elif value in ("no", "no"):
+        elif value in ("n", "no"):
             rv = False
-        if value in ("ndio", "ndio"):
-            rv = True
-        elif value in ("hapana", "hapana"):     
-            rv = False
-        if value in ("oui", "oui"):
-            rv = True
-        elif value in ("non", "non"):
-            rv = False
-        elif value == "":
+        elif default is not None and value == "":
             rv = default
         else:
             flair("Error: invalid input", bg="yellow", fg="black", err=err)
