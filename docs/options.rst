@@ -463,12 +463,12 @@ useful for password input:
     invoke(encode, input=['secret', 'secret'])
 
 Because this combination of parameters is quite common, this can also be
-replaced with the :func:`password_option` decorator:
+replaced with the :func:`autopswd` decorator:
 
 .. code-block:: python
 
     @quo.command()
-    @quo.password_option()
+    @quo.autopswd()
     def encrypt(password):
         quo.echo(f"encoded: to {codecs.encode(password, 'rot13')}")
 
@@ -607,20 +607,18 @@ And what it looks like on the command line:
     invoke(dropdb, args=['--yes'])
 
 Because this combination of parameters is quite common, this can also be
-replaced with the :func:`confirmation_option` decorator:
+replaced with the :func:`autoconfirm` decorator:
 
 .. quo:example::
 
     @quo.command()
-    @quo.confirmation_option(prompt='Are you sure you want to drop the db?')
+    @quo.autoconfirm(prompt='Are you sure you want to drop the db?')
     def dropdb():
         quo.echo('Dropped all tables!')
 
 .. admonition:: Callback Signature Changes
 
-    In quo 2.0 the signature for callbacks changed.  For more
-    information about these changes see :ref:`upgrade-to-2.0`.
-
+    
 Values from Environment Variables
 ---------------------------------
 
@@ -825,17 +823,10 @@ bounds are *closed* (the default).
 Callbacks for Validation
 ------------------------
 
-.. versionchanged:: 2.0
-
 If you want to apply custom validation logic, you can do this in the
 parameter callbacks. These callbacks can both modify values as well as
 raise errors if the validation does not work. The callback runs after
 type conversion. It is called for all sources, including prompts.
-
-In quo 1.0, you can only raise the :exc:`UsageError` but starting with
-quo 2.0, you can also raise the :exc:`BadParameter` error, which has the
-added advantage that it will automatically format the error message to
-also contain the parameter name.
 
 .. quo:example::
 
