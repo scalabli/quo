@@ -487,7 +487,8 @@ def style(
         quo.echo(quo.style('Some things', reverse=True, fg='cyan'))
         quo.echo(quo.style('More colors', fg=(255, 12, 128), bg=117))
 
-    Supported color names:
+  #v as in vblack or vred stands for vivid black or vivid red
+  Supported color names:
 
     * ``black`` (might be a gray)
     * ``red``
@@ -497,14 +498,14 @@ def style(
     * ``magenta``
     * ``cyan``
     * ``white`` (might be light gray)
-    * ``bright_black``
-    * ``bright_red``
-    * ``bright_green``
-    * ``bright_yellow``
-    * ``bright_blue``
-    * ``bright_magenta``
-    * ``bright_cyan``
-    * ``bright_white``
+    * ``vblack``
+    * ``vred``
+    * ``vgreen``
+    * ``vyellow``
+    * ``vblue``
+    * ``vmagenta``
+    * ``vcyan``
+    * ``vwhite``
     * ``reset`` (reset the color code only)
 
     If the terminal supports it, color may also be specified as:
