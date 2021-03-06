@@ -487,7 +487,7 @@ def style(
         quo.echo(quo.style('Some things', reverse=True, fg='cyan'))
         quo.echo(quo.style('More colors', fg=(255, 12, 128), bg=117))
 
-  #v as in vblack or vred stands for vivid black or vivid red
+  ##v as in vblack or vred stands for vivid black or vivid red
   Supported color names:
 
     * ``black`` (might be a gray)
