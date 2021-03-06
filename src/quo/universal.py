@@ -80,6 +80,6 @@ def python_environment():
     raise RuntimeError(
         "Quo will abort further execution because Python was"
         " configured to use ASCII as encoding for the environment."
-        " Consult https://viewerdiscretion.github.io/quo/unicode-support/"
+        " Consult https://quo.rtfd.io/unicode-support/"
         f" for mitigation steps.{extra}"
     )
