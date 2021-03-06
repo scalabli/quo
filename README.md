@@ -7,11 +7,15 @@
 Quo is a Python  based module for writing Command-Line Interface(CLI) applications.
 
 ---
-
-[![quo](pics/quo.png)](https://github.com/secretuminc/quo)
-
+<p align="center">
+  <a href="https://quo.rtfd.io"><img src="https://miro.medium.com/max/1400/1*wXEkk8gS6FMrBC-mJvVekQ.png" alt="Quo"></a>
+</p
 ---
 </p> 
+</a>
+<a href="https://codecov.io/gh/secretuminc/quo" target="_blank">
+    <img src="https://img.shields.io/codecov/c/github/secretuminc/quo?color=%2334D058" alt="Coverage">
+</a>
 <a href="https://pypi.org/project/quo/"><img src="https://img.shields.io/static/v1?label=&labelColor=505050&message=website&color=%230076D6&style=flat&logo=google-chrome&logoColor=%230076D6" alt="Documentation"/></a>
 <a href="https://github.com/viewerdiscretion/quo/stargazers"><img src="https://img.shields.io/github/stars/viewerdiscretion/quo" alt="Stars Badge"/></a>
 <a href="https://github.com/viewerdiscretion/quo/network/members"><img src="https://img.shields.io/github/forks/viewerdiscretion/quo" alt="Forks Badge"/></a>
