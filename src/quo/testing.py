@@ -178,9 +178,6 @@ class CliRunner:
 
         This is automatically done in the :meth:`invoke` method.
 
-        .. versionadded:: 4.0
-           The ``color`` parameter was added.
-
         :param input: the input stream to put into sys.stdin.
         :param env: the environment overrides as dictionary.
         :param color: whether the output should contain color codes. The
@@ -311,19 +308,6 @@ class CliRunner:
         :param color: whether the output should contain color codes. The
                       application can still override this explicitly.
 
-        .. versionchanged:: 8.0
-            The result object has the ``return_value`` attribute with
-            the value returned from the invoked command.
-
-        .. versionchanged:: 4.0
-            Added the ``color`` parameter.
-
-        .. versionchanged:: 3.0
-            Added the ``catch_exceptions`` parameter.
-
-        .. versionchanged:: 3.0
-            The result object has the ``exc_info`` attribute with the
-            traceback if available.
         """
         exc_info = None
         with self.isolation(input=input, env=env, color=color) as outstreams:
