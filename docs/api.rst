@@ -56,7 +56,7 @@ Utilities
 
 .. autofunction:: launch
 
-.. autofunction:: getchar
+.. autofunction:: interpose
 
 .. autofunction:: pause
 
