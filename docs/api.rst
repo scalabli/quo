@@ -17,13 +17,13 @@ Decorators
 
 .. autofunction:: option
 
-.. autofunction:: password_option
+.. autofunction:: autopswd
 
-.. autofunction:: confirmation_option
+.. autofunction:: autoconfirm
 
-.. autofunction:: version_option
+.. autofunction:: autoversion
 
-.. autofunction:: help_option
+.. autofunction:: autohelp
 
 .. autofunction:: pass_context
 
@@ -60,7 +60,7 @@ Utilities
 
 .. autofunction:: pause
 
-.. autofunction:: get_terminal_size
+.. autofunction:: terminalsize
 
 .. autofunction:: get_binary_stream
 
