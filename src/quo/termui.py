@@ -88,15 +88,6 @@ def prompt(
     If the user aborts the input by sending a interrupt signal, this
     function will catch it and raise a :exc:`Abort` exception.
 
-    .. versionadded:: 7.0
-       Added the show_choices parameter.
-
-    .. versionadded:: 6.0
-       Added unicode support for cmd.exe on Windows.
-
-    .. versionadded:: 4.0
-       Added the `err` parameter.
-
     :param text: the text to show for the prompt.
     :param default: the default value to use if no input happens.  If this
                     is not given it will prompt until it's aborted.
@@ -174,9 +165,6 @@ def confirm(
 
     If the user aborts the input by sending a interrupt signal this
     function will catch it and raise a :exc:`Abort` exception.
-
-    .. versionadded:: 4.0
-       Added the `err` parameter.
 
     :param text: the question to ask.
     :param default: the default for the prompt.
@@ -404,14 +392,6 @@ def progressbar(
     :param update_min_steps: Render only when this many updates have
         completed. This allows tuning for very fast iterators.
 
-    .. versionadded:: 8.0
-       Added the ``update_min_steps`` parameter.
-
-    .. versionchanged:: 4.0
-        Added the ``color`` parameter. Added the ``update`` method to
-        the object.
-
-    .. versionadded:: 2.0
     """
     from .implementation import ProgressBar
 
@@ -594,11 +574,6 @@ def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
     style. If you want to style bytes that represent text, call
     :meth:`bytes.decode` first.
 
-    .. versionchanged:: 8.0
-        A non-string ``message`` is converted to a string. Bytes are
-        passed through without style applied.
-
-    .. versionadded:: 2.0
     """
     if message is not None and not is_bytes(message):
         message = style(message, **styles)
@@ -658,8 +633,6 @@ def launch(url, wait=False, locate=False):
         quo.launch('https://quo.readthedocs.org/')
         quo.launch('/my/downloaded/file', locate=True)
 
-    .. versionadded:: 2.0
-
     :param url: URL or filename of the thing to launch.
     :param wait: Wait for the program to exit before returning. This
         only works if the launched program blocks. In particular,
@@ -695,7 +668,6 @@ def interpose(echo=False):
     function might wait for a second character and then return both at once.
     This is because certain Unicode characters look like special-key markers.
 
-    .. versionadded:: 2.0
 
     :param echo: if set to `True`, the character read will also show up on
                  the terminal.  The default is to not show it.
@@ -717,11 +689,6 @@ def pause(info="Press any key to continue ...", err=False):
     key to continue.  This is similar to the Windows batch "pause"
     command.  If the program is not run through a terminal, this command
     will instead do nothing.
-
-    .. versionadded:: 2.0
-
-    .. versionadded:: 4.0
-       Added the `err` parameter.
 
     :param info: the info string to print before pausing.
     :param err: if set to message goes to ``stderr`` instead of
