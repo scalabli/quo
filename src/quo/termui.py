@@ -256,9 +256,6 @@ def scrollable(text_or_generator, color=None):
     """This function takes a text and shows it via an environment specific
     pager on stdout.
 
-    .. versionchanged:: 3.0
-       Added the `color` flag.
-
     :param text_or_generator: the text to page, or alternatively, a
                               generator emitting the text to page.
     :param color: controls if the pager supports ANSI colors or not.  The
@@ -420,7 +417,6 @@ def clear():
     the whole visible space of the terminal and moving the cursor to the
     top left.  This does not do anything if not connected to a terminal.
 
-    .. versionadded:: 2.0
     """
     if not isatty(sys.stdout):
         return
@@ -551,8 +547,6 @@ def unstyle(text):
     """Removes ANSI styling information from a string.  Usually it's not
     necessary to use this function as quo's echo function will
     automatically remove styling if necessary.
-
-    .. versionadded:: 2.0
 
     :param text: the text to remove style information from.
     """
