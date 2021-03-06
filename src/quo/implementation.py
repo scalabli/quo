@@ -223,7 +223,7 @@ class ProgressBar:
         ).rstrip()
 
     def render_progress(self):
-        from .termui import get_terminal_size
+        from .termui import terminalsize
 
         if self.is_hidden:
             return
@@ -234,7 +234,7 @@ class ProgressBar:
             old_width = self.width
             self.width = 0
             clutter_length = term_len(self.format_progress_line())
-            new_width = max(0, get_terminal_size()[0] - clutter_length)
+            new_width = max(0, terminalsize()[0] - clutter_length)
             if new_width < old_width:
                 buf.append(BEFORE_BAR)
                 buf.append(" " * self.max_width)
