@@ -53,7 +53,6 @@ class ParamType:
         Use :meth:`quo.Context.to_info_dict` to traverse the entire
         CLI structure.
 
-        .. versionadded:: 8.0
         """
         # The class name without the "ParamType" suffix.
         param_type = type(self).__name__.partition("ParamType")[0]
@@ -71,7 +70,6 @@ class ParamType:
         """Optionally might return extra information about a missing
         parameter.
 
-        .. versionadded:: 2.0
         """
 
     def convert(self, value, param, ctx):
@@ -121,7 +119,6 @@ class ParamType:
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         return []
 
@@ -272,7 +269,6 @@ class Choice(ParamType):
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         from quo.shelldone import CompletionItem
 
@@ -447,7 +443,6 @@ class IntRange(_NumberRangeBase, IntParamType):
     If ``clamp`` is enabled, a value outside the range is clamped to the
     boundary instead of failing.
 
-    .. versionchanged:: 8.0
         Added the ``min_open`` and ``max_open`` parameters.
     """
 
@@ -480,7 +475,6 @@ class FloatRange(_NumberRangeBase, FloatParamType):
     boundary instead of failing. This is not supported if either
     boundary is marked ``open``.
 
-    .. versionchanged:: 8.0
         Added the ``min_open`` and ``max_open`` parameters.
     """
 
@@ -638,7 +632,6 @@ class File(ParamType):
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         from quo.shelldone import CompletionItem
 
@@ -651,7 +644,6 @@ class Path(ParamType):
     handle it returns just the filename.  Secondly, it can perform various
     basic checks about what the file or directory should be.
 
-    .. versionchanged:: 6.0
        `allow_dash` was added.
 
     :param exists: if set to true, the file or directory needs to exist for
@@ -784,7 +776,6 @@ class Path(ParamType):
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         from quo.shelldone import CompletionItem
 
@@ -904,7 +895,7 @@ def convert_type(ty, default=None):
 #: there are situations where an unprocessed type is useful which is why
 #: it is is provided.
 #:
-#: .. versionadded:: 4.0
+#:
 UNPROCESSED = UnprocessedParamType()
 
 #: A unicode string parameter type which is the implicit default.  This
