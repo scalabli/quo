@@ -126,7 +126,7 @@ class ParamType:
 class CompositeParamType(ParamType):
     is_composite = True
 
-    @property
+    nexus.property
     def arity(self):
         raise NotImplementedError()
 
@@ -805,11 +805,11 @@ class Tuple(CompositeParamType):
         info_dict["types"] = [t.to_info_dict() for t in self.types]
         return info_dict
 
-    @property
+    nexus.property
     def name(self):
         return f"<{' '.join(ty.name for ty in self.types)}>"
 
-    @property
+    nexus.property
     def arity(self):
         return len(self.types)
 
