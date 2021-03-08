@@ -143,7 +143,7 @@ class Option:
         self.const = const
         self.obj = obj
 
-    @property
+    nexus.property
     def takes_value(self):
         return self.action in ("store", "append")
 
