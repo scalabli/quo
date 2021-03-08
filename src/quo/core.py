@@ -68,7 +68,7 @@ SHELL_NAMES = (
 )
 
 
-class shelldetectorfailure(EnvironmentError):
+class ShellDetectionFailure(EnvironmentError):
     pass
 
 
