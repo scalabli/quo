@@ -24,7 +24,6 @@ markupsafe==1.1.1
     # via jinja2
 packaging==20.9
     # via
-    #   pallets-sphinx-themes
     #   sphinx
 pallets-sphinx-themes==1.2.3
 quo==2021.3.dev2
@@ -48,7 +47,6 @@ sphinx-tabs==2.0.1
 sphinx==3.5.1
     # via
     #   -r requirements/docs.in
-    #   pallets-sphinx-themes
     #   sphinx-issues
     #   sphinx-tabs
     #   sphinxcontrib-log-cabinet
@@ -69,5 +67,5 @@ sphinxcontrib-serializinghtml==1.1.4
 urllib3==1.26.3
     # via requests
 
-# The following packages are considered to be unsafe in a requirements file:
+# The following packages are considered to be unsafe in a requirements file therefore should not be listed
 # setuptools
