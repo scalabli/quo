@@ -440,8 +440,7 @@ def _detect_program_name(path=None, _main=sys.modules["__main__"]):
         ``sys.argv[0]``, which is used by default.
     :param _main: The ``__main__`` module. This should only be passed
         during internal testing.
-
-    .. versionadded:: 8.0
+        
         Based on command args detection in the Werkzeug reloader.
 
     :meta private:
@@ -449,25 +448,28 @@ def _detect_program_name(path=None, _main=sys.modules["__main__"]):
     if not path:
         path = sys.argv[0]
 
-    # The value of __package__ indicates how Python was called. It may
-    # not exist if a setuptools script is installed as an egg. It may be
-    # set incorrectly for entry points created with pip on Windows.
+    """The value of __package__ indicates how Python was called. It may
+     may not exist if a setuptools script is installed as an egg. It may be
+    set incorrectly for entry points created with pip on Windows."""
+    
     if getattr(_main, "__package__", None) is None or (
         os.name == "nt"
         and _main.__package__ == ""
         and not os.path.exists(path)
         and os.path.exists(f"{path}.exe")
     ):
-        # Executed a file, like "python app.py".
+        """Executed a file, like "python app.py"."""
         return os.path.basename(path)
 
-    # Executed a module, like "python -m example".
-    # Rewritten by Python from "-m script" to "/path/to/script.py".
+    """Executed a module, like "python -m example".
+    Rewritten by Python from "-m script" to "/path/to/script.py".
     # Need to look at main module to determine how it was executed.
+    """
+    
     py_module = _main.__package__
     name = os.path.splitext(os.path.basename(path))[0]
 
-    # A submodule like "example.cli".
+    """ A submodule like "example.cli"."""
     if name != "__main__":
         py_module = f"{py_module}.{name}"
 
