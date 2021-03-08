@@ -126,7 +126,7 @@ class ParamType:
 class CompositeParamType(ParamType):
     is_composite = True
 
-    nexus.property
+    @property
     def arity(self):
         raise NotImplementedError()
 
@@ -231,10 +231,11 @@ class Choice(ParamType):
         return f"Choose from:\n\t{choice_str}"
 
     def convert(self, value, param, ctx):
-        # Match through normalization and case sensitivity
-        # first do token_normalize_func, then lowercase
-        # preserve original `value` to produce an accurate message in
-        # `self.fail`
+        """Match through normalization and case sensitivity
+        first do token_normalize_func, then lowercase
+        preserve original `value` to produce an accurate message in
+         `self.fail`"""
+         
         normed_value = value
         normed_choices = {choice: choice for choice in self.choices}
 
@@ -805,11 +806,11 @@ class Tuple(CompositeParamType):
         info_dict["types"] = [t.to_info_dict() for t in self.types]
         return info_dict
 
-    nexus.property
+    @property
     def name(self):
         return f"<{' '.join(ty.name for ty in self.types)}>"
 
-    nexus.property
+    @property
     def arity(self):
         return len(self.types)
 
@@ -831,14 +832,16 @@ def convert_type(ty, default=None):
 
     if ty is None and default is not None:
         if isinstance(default, (tuple, list)):
-            # If the default is empty, ty will remain None and will
-            # return STRING.
+            """If the default is empty, ty will remain None and will
+            return STRING."""
+            
             if default:
                 item = default[0]
 
-                # A tuple of tuples needs to detect the inner types.
-                # Can't call convert recursively because that would
-                # incorrectly unwind the tuple to a single type.
+                """ A tuple of tuples needs to detect the inner types.
+                 Can't call convert recursively because that would
+                incorrectly unwind the tuple to a single type."""
+                
                 if isinstance(item, (tuple, list)):
                     ty = tuple(map(type, item))
                 else:
@@ -863,9 +866,10 @@ def convert_type(ty, default=None):
     if ty is float:
         return FLOAT
 
-    # Booleans are only okay if not guessed. For is_flag options with
-    # flag_value, default=True indicates which flag_value is the
-    # default.
+    """Booleans are only okay if not guessed. For is_flag options with
+    flag_value, default=True indicates which flag_value is the
+    default."""
+    
     if ty is bool and not guessed_type:
         return BOOL
 
