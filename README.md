@@ -14,6 +14,8 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 
 
 [![PyPI version](https://img.shields.io/pypi/v/quo.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/quo/)
+
+[![Documentation Status](https://readthedocs.org/projects/quo/badge/?version=latest)](https://quo.readthedocs.io/en/latest/?badge=latest)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/quo.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/quo/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/quo.svg)](https://quo.rtfd.io)
 [![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum/quo)
