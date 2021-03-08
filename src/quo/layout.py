@@ -233,7 +233,7 @@ class HelpFormatter:
             else:
                 self.write("\n")
 
-    nexus.contextmanager
+    @contextmanager
     def section(self, name):
         """Helpful context manager that writes a paragraph, a heading,
         and the indents.
@@ -248,7 +248,7 @@ class HelpFormatter:
         finally:
             self.dedent()
 
-    nexus.contextmanager
+    @contextmanager
     def indentation(self):
         """A context manager that increases the indentation."""
         self.indent()
