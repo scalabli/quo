@@ -1,7 +1,7 @@
 from pallets_sphinx_themes import get_version
 from pallets_sphinx_themes import ProjectLink
 
-import quo.accordance
+from quo import .accordance
 
 # compat until pallets-sphinx-themes is updated
 click._compat.text_type = str
