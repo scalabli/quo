@@ -1,3 +1,76 @@
+Logo
+Search docs
+FIRST STEPS
+
+Getting Started with Sphinx
+Getting Started with MkDocs
+Importing Your Documentation
+Read the Docs features
+Choosing Between Our Two Sites
+GETTING STARTED
+
+Configuration File
+Version 2
+Supported settings
+Schema
+Migrating from v1
+Migrating from the web interface
+Version 1
+Incoming Webhooks and Automation
+Custom Domains and White Labeling
+Versioned Documentation
+Downloadable Documentation
+Server Side Search
+Preview Documentation from Pull Requests
+Documentation Hosting Features
+Connecting Your VCS Account
+Build Process
+Badges
+Site Support
+Frequently Asked Questions
+STEP-BY-STEP GUIDES
+
+Sphinx & MkDocs Guides
+Read the Docs Guides
+Read the Docs for Business Guides
+ADVANCED FEATURES
+
+Subprojects
+Single Version Documentation
+Localization of Documentation
+User-defined Redirects
+Automatic Redirects
+Automation Rules
+Public API
+ABOUT READ THE DOCS
+
+Contributing to Read the Docs
+Developer documentation
+Roadmap
+Google Summer of Code
+Code of Conduct
+Security
+Privacy Policy
+Read the Docs Terms of Service
+DMCA Takedown Policy
+Policy for Abandoned Projects
+Changelog
+About Read the Docs
+Read the Docs Team
+Read the Docs Open Source Philosophy
+The Story of Read the Docs
+Advertising
+Sponsors of Read the Docs
+Read the Docs for Business
+Info about custom installs
+Read the Docs
+ » Configuration File » Configuration File V2
+Configuration File V2
+Read the Docs supports configuring your documentation builds with a YAML file. The configuration file must be in the root directory of your project an be named .readthedocs.yaml.
+
+All options are applied to the version containing this file. Below is an example YAML file which shows the most common configuration options:
+
+SphinxMkDocs
 # .readthedocs.yaml
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
@@ -5,9 +78,8 @@
 # Required
 version: 2
 
-# Build documentation in the docs/ directory with Sphinx
-sphinx:
-   configuration: docs/conf.py
+mkdocs:
+  configuration: mkdocs.yml
 
 # Optionally build your docs in additional formats such as PDF
 formats:
@@ -17,4 +89,4 @@ formats:
 python:
    version: 3.7
    install:
-   - requirements: requirements/docs.txt
+   - requirements: docs/requirements.txt
