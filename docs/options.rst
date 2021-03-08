@@ -11,8 +11,6 @@ Options in quo are highly configurable and should not be confused with :ref:`pos
 How to name Options
 -----------------
 
-When naming options, they are given as position arguments to the decorator.
-
 A name is chosen in the following order
 
 1.  If a name is not prefixed, it is used as the Python argument name
@@ -24,6 +22,7 @@ A name is chosen in the following order
 To get the Python argument name, the chosen name is converted to lower
 case, up to two dashes are removed as the prefix, and other dashes are
 converted to underscores.
+NB: Options are given as position arguments to the decorator.
 
 .. code-block:: python
 
