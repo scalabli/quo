@@ -25,7 +25,6 @@ markupsafe==1.1.1
 packaging==20.9
     # via
     #   sphinx
-pallets-sphinx-themes==1.2.3
 quo==2021.3.dev2
     # via -r requirements/docs.in
 pygments==2.7.4
