@@ -92,4 +92,4 @@ def shelldetector(pid=None, max_depth=10):
     raise ShellDetectionFailure()
 
 
-__version__ = "2021.3.dev2"
+__version__ = "2021.3.dev3"
