@@ -1,59 +1,120 @@
-from pallets_sphinx_themes import get_version
-from pallets_sphinx_themes import ProjectLink
+# -*- coding: utf-8 -*-
 
-import click._compat
+import sys
+import os
+import re
 
-# compat until pallets-sphinx-themes is updated
-click._compat.text_type = str
+# If we are building locally, or the build on Read the Docs looks like a PR
+# build, prefer to use the version of the theme in this repo, not the installed
+# version of the theme.
+def is_development_build():
+    # PR builds have an interger version
+    re_version = re.compile(r'^[\d]+$')
+    if 'READTHEDOCS' in os.environ:
+        version = os.environ.get('READTHEDOCS_VERSION', '')
+        if re_version.match(version):
+            return True
+        return False
+    return True
 
-# Project --------------------------------------------------------------
+if is_development_build():
+    sys.path.insert(0, os.path.abspath('..'))
+sys.path.append(os.path.abspath('./demo/'))
 
-project = "Quo"
-copyright = "2021, Secretum Inc"
-author = "Secretum Inc"
-release, version = get_version("Quo", version_length=1)
+import sphinx_rtd_theme
+from sphinx.locale import _
 
-# General --------------------------------------------------------------
+project = u'Read the Docs Sphinx Theme'
+slug = re.sub(r'\W+', '-', project.lower())
+version = '0.5.1'
+release = '0.5.1'
+author = u'Dave Snider, Read the Docs, Inc. & contributors'
+copyright = author
+language = 'en'
 
-master_doc = "index"
 extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.intersphinx",
-    "sphinxcontrib.log_cabinet",
-    "pallets_sphinx_themes",
-    "sphinx_issues",
-    "sphinx_tabs.tabs",
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.viewcode',
+    'sphinxcontrib.httpdomain',
+    'sphinx_rtd_theme',
 ]
-autodoc_typehints = "description"
-intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
-issues_github_path = "secretuminc/quo"
 
-# HTML -----------------------------------------------------------------
+templates_path = ['_templates']
+source_suffix = '.rst'
+exclude_patterns = []
+locale_dirs = ['locale/']
+gettext_compact = False
 
-html_theme = "quo"
-html_theme_options = {"index_sidebar_logo": False}
-html_context = {
-    "project_links": [
-        ProjectLink("Donate", "https://buymeacoffee.com/secretum"),
-        ProjectLink("PyPI Releases", "https://pypi.org/project/quo/"),
-        ProjectLink("Source Code", "https://github.com/pallets/click/"),
-        ProjectLink("Issue Tracker", "https://github.com/pallets/click/issues/"),
-        ProjectLink("Website", "https://palletsprojects.com/"),
-        ProjectLink("Twitter", "https://twitter.com/secretuminc"),
-        ProjectLink("Chat", "https://discord.gg/pallets"),
-    ]
+master_doc = 'index'
+suppress_warnings = ['image.nonlocal_uri']
+pygments_style = 'default'
+
+intersphinx_mapping = {
+    'rtd': ('https://docs.readthedocs.io/en/stable/', None),
+    'sphinx': ('https://www.sphinx-doc.org/en/stable/', None),
 }
-html_sidebars = {
-    "index": ["project.html", "localtoc.html", "searchbox.html"],
-    "**": ["localtoc.html", "relations.html", "searchbox.html"],
+
+html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'logo_only': True,
+    'navigation_depth': 5,
 }
-singlehtml_sidebars = {"index": ["project.html", "localtoc.html"]}
-html_static_path = ["_static"]
-html_favicon = "_static/quo.png"
-html_logo = "_static/click-logo-sidebar.png"
-html_title = f"Quo Documentation ({version})"
-html_show_sourcelink = False
+html_context = {}
 
-# LaTeX ----------------------------------------------------------------
+if not 'READTHEDOCS' in os.environ:
+    html_static_path = ['_static/']
+    html_js_files = ['debug.js']
 
-latex_documents = [(master_doc, f"Quo-{version}.tex", html_title, author, "manual")]
+    # Add fake versions for local QA of the menu
+    html_context['test_versions'] = list(map(
+        lambda x: str(x / 10),
+        range(1, 100)
+    ))
+
+html_logo = "demo/static/logo-wordmark-light.svg"
+html_show_sourcelink = True
+
+htmlhelp_basename = slug
+
+
+latex_documents = [
+  ('index', '{0}.tex'.format(slug), project, author, 'manual'),
+]
+
+man_pages = [
+    ('index', slug, project, [author], 1)
+]
+
+texinfo_documents = [
+  ('index', slug, project, author, slug, project, 'Miscellaneous'),
+]
+
+
+# Extensions to theme docs
+def setup(app):
+    from sphinx.domains.python import PyField
+    from sphinx.util.docfields import Field
+
+    app.add_object_type(
+        'confval',
+        'confval',
+        objname='configuration value',
+        indextemplate='pair: %s; configuration value',
+        doc_field_types=[
+            PyField(
+                'type',
+                label=_('Type'),
+                has_arg=False,
+                names=('type',),
+                bodyrolename='class'
+            ),
+            Field(
+                'default',
+                label=_('Default'),
+                has_arg=False,
+                names=('default',),
+            ),
+        ]
+    )
