@@ -13,7 +13,7 @@ from .core import Group
 from .core import MultiCommand
 from .core import Option
 from .core import Parameter
-from .core import ShellDetectionFailure
+from .core import shelldetectionfailure
 from .decorators import argument
 from .decorators import command
 from .decorators import autoconfirm
@@ -76,6 +76,8 @@ from .utilities import open_file
 
 
 def shelldetector(pid=None, max_depth=10):
+"""Quo can detect the current Python executable is running in. `shelldetector` pokes around the process's running environment to determine what shell it is run in. `shelldectorfailure` is raised if shelldetector fails to detect the surrounding shell."""
+
     name = os.name
     try:
         impl = importlib.import_module(".{}".format(name), __name__)
@@ -89,7 +91,7 @@ def shelldetector(pid=None, max_depth=10):
     shell = get_shell(pid, max_depth=max_depth)
     if shell:
         return shell
-    raise ShellDetectionFailure()
+    raise shelldetectorfailure()
 
 
 __version__ = "2021.3.dev4"
