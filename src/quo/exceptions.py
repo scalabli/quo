@@ -67,12 +67,9 @@ class UsageError(QuoException):
 
 
 class BadParameter(UsageError):
-    """An exception that formats out a standardized error message for a
-    bad parameter.  This is useful when thrown from a callback or type as
-    Quo will attach contextual information to it (for instance, which
-    parameter it is).
+    """This exception formats out a standardized error message for a
+    bad parameter.
 
-    .. versionadded:: 2.0
 
     :param param: the parameter object that caused this error.  This can
                   be left out, and Quo will attach this info itself
@@ -102,10 +99,8 @@ class BadParameter(UsageError):
 
 
 class MissingParameter(BadParameter):
-    """Raised if Quo required an option or argument but it was not
-    provided when invoking the script.
-
-    .. versionadded:: 4.0
+    """This parameter is raised if Quo required an option or argument but it was not
+    provided.
 
     :param param_type: a string that indicates the type of the parameter.
                        The default is to inherit the parameter type from
@@ -156,7 +151,6 @@ class NoSuchOption(UsageError):
     """Raised if Quo attempted to handle an option that does not
     exist.
 
-    .. versionadded:: 4.0
     """
 
     def __init__(self, option_name, message=None, possibilities=None, ctx=None):
@@ -183,8 +177,6 @@ class BadOptionUsage(UsageError):
     was incorrect.  This is for instance raised if the number of arguments
     for an option is not correct.
 
-    .. versionadded:: 4.0
-
     :param option_name: the name of the option being used incorrectly.
     """
 
@@ -198,7 +190,6 @@ class BadArgumentUsage(UsageError):
     was incorrect.  This is for instance raised if the number of values
     for an argument is not correct.
 
-    .. versionadded:: 6.0
     """
 
 
