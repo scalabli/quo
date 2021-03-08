@@ -872,7 +872,7 @@ can still be passed a value, but if only the flag is given the
     def hello(name):
         quo.echo(f"Hello, {name}!")
 
-.. quo:run::
+.. code-block:: python
 
     invoke(hello, args=[])
     invoke(hello, args=["--name", "Value"])
