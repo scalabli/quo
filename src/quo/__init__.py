@@ -76,8 +76,6 @@ from .utilities import open_file
 
 
 def shelldetector(pid=None, max_depth=10):
-"""Quo can detect the current Python executable is running in. `shelldetector` pokes around the process's running environment to determine what shell it is run in. `shelldectorfailure` is raised if shelldetector fails to detect the surrounding shell."""
-
     name = os.name
     try:
         impl = importlib.import_module(".{}".format(name), __name__)
