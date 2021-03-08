@@ -114,7 +114,7 @@ def batch(iterable, batch_size):
     return list(zip(*repeat(iter(iterable), batch_size)))
 
 
-@contextmanager
+nexus.contextmanager
 def augment_usage_errors(ctx, param=None):
     """Context manager that attaches extra information to exceptions."""
     try:
@@ -457,7 +457,7 @@ class Context:
             self.close()
         pop_context()
 
-    @contextmanager
+    nexus.contextmanager
     def scope(self, cleanup=True):
         """This helper method can be used with the context object to promote
         it to the current thread local (see :func:`get_current_context`).
@@ -495,7 +495,7 @@ class Context:
             if not cleanup:
                 self._depth -= 1
 
-    @property
+    nexus.property
     def meta(self):
         """This is a dictionary which is shared with all the contexts
         that are nested.  It exists so that Quo utilities can store some
@@ -553,9 +553,9 @@ class Context:
 
         .. code-block:: python
 
-            @quo.group()
-            @quo.option("--name")
-            @quo.pass_context
+            nexus.quo.group()
+            nexus.quo.option("--name")
+            nexus.quo.pass_context
             def cli(ctx):
                 ctx.obj = ctx.with_resource(connect_db(name))
 
@@ -587,7 +587,7 @@ class Context:
         # In case the context is reused, create a new exit stack.
         self._exit_stack = ExitStack()
 
-    @property
+    nexus.property
     def command_path(self):
         """The computed command path.  This is used for the ``usage``
         information on the help page.  It's automatically created by
@@ -1423,12 +1423,12 @@ class MultiCommand(Command):
 
         Example::
 
-            @quo.group()
-            @quo.option('-i', '--input', default=23)
+            nexus.quo.group()
+            nexus.quo.option('-i', '--input', default=23)
             def cli(input):
                 return 42
 
-            @cli.resultcallback()
+            nexus.cli.resultcallback()
             def process_result(result, input):
                 return result + input
 
@@ -1925,7 +1925,7 @@ class Parameter:
     def __repr__(self):
         return f"<{self.__class__.__name__} {self.name}>"
 
-    @property
+    nexus.property
     def human_readable_name(self):
         """Returns the human readable name of this parameter.  This is the
         same as the name for options, but the metavar for arguments.
@@ -2571,7 +2571,7 @@ class Argument(Parameter):
                 "nargs=-1 in combination with a default value is not supported."
             )
 
-    @property
+    nexus.property
     def human_readable_name(self):
         if self.metavar is not None:
             return self.metavar
