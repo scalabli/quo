@@ -184,7 +184,7 @@ Shell Completion
 ----------------
 
 See :doc:`/shell-completion` for information about enabling and
-customizing Click's shell completion system.
+customizing Quo's shell completion system.
 
 .. currentmodule:: quo.shell_completion
 
