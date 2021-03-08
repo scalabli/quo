@@ -51,12 +51,9 @@ nodeenv==1.5.0
     # via pre-commit
 packaging==20.9
     # via
-    #   pallets-sphinx-themes
     #   pytest
     #   sphinx
     #   tox
-pallets-sphinx-themes==1.2.3
-    # via -r requirements/docs.in
 pip-tools==5.5.0
     # via -r requirements/dev.in
 pluggy==0.13.1
@@ -96,7 +93,6 @@ sphinx-tabs==2.0.1
 sphinx==3.5.1
     # via
     #   -r requirements/docs.in
-    #   pallets-sphinx-themes
     #   sphinx-issues
     #   sphinx-tabs
     #   sphinxcontrib-log-cabinet
@@ -134,6 +130,6 @@ virtualenv==20.4.2
 zipp==3.4.0
     # via importlib-metadata
 
-# The following packages are considered to be unsafe in a requirements file:
+# NB: The following packages are unsafe in a requirements file therefore should not be listed
 # pip
 # setuptools
