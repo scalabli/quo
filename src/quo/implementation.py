@@ -134,19 +134,19 @@ class ProgressBar:
         self.file.write(AFTER_BAR)
         self.file.flush()
 
-    nexus.property
+    @property
     def pct(self):
         if self.finished:
             return 1.0
         return min(self.pos / (float(self.length) or 1), 1.0)
 
-    nexus.property
+    @property
     def time_per_iteration(self):
         if not self.avg:
             return 0.0
         return sum(self.avg) / float(len(self.avg))
 
-    nexus.property
+    @property
     def eta(self):
         if self.length_known and not self.finished:
             return self.time_per_iteration * (self.length - self.pos)
@@ -602,7 +602,7 @@ def _translate_ch_to_exc(ch):
 if WIN:
     import msvcrt
 
-    nexus.contextlib.contextmanager
+    @contextlib.contextmanager
     def raw_terminal():
         yield
 
@@ -654,7 +654,7 @@ else:
     import tty
     import termios
 
-    nexus.contextlib.contextmanager
+    @contextlib.contextmanager
     def raw_terminal():
         if not isatty(sys.stdin):
             f = open("/dev/tty")
