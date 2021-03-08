@@ -1,9 +1,9 @@
-Testing Click Applications
+Testing Quo Applications
 ==========================
 
-.. currentmodule:: click.testing
+.. currentmodule:: quo.testing
 
-For basic testing, Click provides the :mod:`click.testing` module which
+For basic testing, Quo provides the :mod:`quo.testing` module which
 provides test functionality that helps you invoke command line
 applications and check their behavior.
 
@@ -14,7 +14,7 @@ thread-safe!
 Basic Testing
 -------------
 
-The basic functionality for testing Click applications is the
+The basic functionality for testing quo applications is the
 :class:`CliRunner` which can invoke commands as command line scripts.  The
 :meth:`CliRunner.invoke` method runs the command line script in isolation
 and captures the output as both bytes and binary data.
@@ -25,17 +25,17 @@ data, exit code, and optional exception attached:
 .. code-block:: python
    :caption: hello.py
 
-   import click
+   import quo
 
-   @click.command()
-   @click.argument('name')
+   @quo.command()
+   @quo.argument('name')
    def hello(name):
-      click.echo(f'Hello {name}!')
+      quo.echo(f'Hello {name}!')
 
 .. code-block:: python
    :caption: test_hello.py
 
-   from click.testing import CliRunner
+   from quo.testing import CliRunner
    from hello import hello
 
    def test_hello_world():
@@ -49,21 +49,21 @@ For subcommand testing, a subcommand name must be specified in the `args` parame
 .. code-block:: python
    :caption: sync.py
 
-   import click
+   import quo
 
-   @click.group()
-   @click.option('--debug/--no-debug', default=False)
+   @quo.group()
+   @quo.option('--debug/--no-debug', default=False)
    def cli(debug):
-      click.echo(f"Debug mode is {'on' if debug else 'off'}")
+      quo.echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
    def sync():
-      click.echo('Syncing')
+      quo.echo('Syncing')
 
 .. code-block:: python
    :caption: test_sync.py
 
-   from click.testing import CliRunner
+   from quo.testing import CliRunner
    from sync import cli
 
    def test_sync():
@@ -89,17 +89,17 @@ current working directory to a new, empty folder.
 .. code-block:: python
    :caption: cat.py
 
-   import click
+   import quo
 
-   @click.command()
-   @click.argument('f', type=click.File())
+   @quo.command()
+   @quo.argument('f', type=quo.File())
    def cat(f):
-      click.echo(f.read())
+      quo.echo(f.read())
 
 .. code-block:: python
    :caption: test_cat.py
 
-   from click.testing import CliRunner
+   from quo.testing import CliRunner
    from cat import cat
 
    def test_cat():
@@ -121,17 +121,17 @@ stream (stdin).  This is very useful for testing prompts, for instance:
 .. code-block:: python
    :caption: prompt.py
 
-   import click
+   import quo
 
-   @click.command()
-   @click.option('--foo', prompt=True)
+   @quo.command()
+   @quo.option('--foo', prompt=True)
    def prompt(foo):
-      click.echo(f"foo={foo}")
+      quo.echo(f"foo={foo}")
 
 .. code-block:: python
    :caption: test_prompt.py
 
-   from click.testing import CliRunner
+   from quo.testing import CliRunner
    from prompt import prompt
 
    def test_prompts():
