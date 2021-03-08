@@ -8,13 +8,10 @@ Options
 Options can be added/nested to commands using the :func:`option` decorator.  Since options can come in various different versions, there
 Options in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
 
-Name Your Options
+How to name Options
 -----------------
 
-Options have a name that will be used as the Python argument name when
-calling the decorated function. This can be inferred from the option
-names or given explicitly. Names are given as position arguments to the
-decorator.
+When naming options, they are given as position arguments to the decorator.
 
 A name is chosen in the following order
 
