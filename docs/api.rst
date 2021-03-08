@@ -1,14 +1,17 @@
 API
+===
 
 .. module:: quo
 
 This part of the documentation lists the full API reference of all public
 classes and functions.
 
-DECORATORS
+Decorators
+----
 
-.. autofunction:: command
-quo.command(name=None, cls=None, **attrs)
+:: command
+
+ quo.command(name=None, cls=None, **attrs)
 Creates a new Command and uses the decorated function as callback. This will also automatically attach all decorated option()s and argument()s as parameters to the command.
 
 The name of the command defaults to the name of the function with underscores replaced by dashes. If you want to change that, you can pass the intended name as the first argument.
