@@ -13,8 +13,7 @@ How to name Options
 
 A name is chosen in the following order
 
-1.  If a name is not prefixed, it is used as the Python argument name
-    and not treated as an option name on the command line.
+1.  In the event that a name is not prefixed, therefore it is used as the Python argument name
 2.  If there is at least one name prefixed with two dashes, the first
     one given is used as the name.
 3.  The first name prefixed with one dash is used otherwise.
