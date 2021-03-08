@@ -63,14 +63,14 @@ parameter is the first long option defined; otherwise the first short one is
 used. By default, options are not required, however to make an option required,
 simply pass in `required=True` as an argument to the decorator.
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--n', default=1)
     def dots(n):
         quo.echo('.' * n)
 
-.. quo:example::
+.. code-block:: python
 
     # How to make an option required
     @quo.command()
@@ -78,7 +78,7 @@ simply pass in `required=True` as an argument to the decorator.
     def dots(n):
         quo.echo('.' * n)
 
-.. quo:example::
+.. code-block:: python
 
     # How to use a Python reserved word such as `from` as a parameter
     @quo.command()
@@ -98,7 +98,7 @@ is an integer.
 
 To show the default values when showing command help, use ``show_default=True``
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--n', default=1, show_default=True)
@@ -116,7 +116,7 @@ Sometimes, you have options that take more than one argument.  For options,
 only a fixed number of arguments is supported.  This can be configured by
 the ``nargs`` parameter.  The values are then stored as a tuple.
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--pos', nargs=2, type=float)
@@ -142,7 +142,7 @@ the resulting tuple is of the same type.  This might not be what you want.
 Commonly you might want to use different types for different indexes in
 the tuple.  For this you can directly specify a tuple as type:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--item', type=(str, int))
@@ -160,7 +160,7 @@ By using a tuple literal as type, `nargs` gets automatically set to the
 length of the tuple and the :class:`quo.Tuple` type is automatically
 used.  The above example is thus equivalent to this:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--item', nargs=2, type=quo.Tuple([str, int]))
@@ -181,7 +181,7 @@ accomplished with the ``multiple`` flag:
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--message', '-m', multiple=True)
@@ -210,7 +210,7 @@ In some very rare circumstances, it is interesting to use the repetition
 of options to count an integer up.  This can be used for verbosity flags,
 for instance:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('-v', '--verbose', count=True)
@@ -235,7 +235,7 @@ and disable flag so that you can change the default later.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     import sys
 
@@ -258,7 +258,7 @@ And on the command line:
 If you really don't want an off-switch, you can just define one and
 manually inform quo that something is a flag:
 
-.. quo:example::
+.. code-block:: python
 
     import sys
 
@@ -281,7 +281,7 @@ Note that if a slash is contained in your option already (for instance, if
 you use Windows-style parameters where ``/`` is the prefix character), you
 can alternatively split the parameters through ``;`` instead:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('/debug;/no-debug')
@@ -298,7 +298,7 @@ need to use leading whitespace to disambiguate the format string:
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     import sys
 
@@ -325,7 +325,7 @@ quo will implicitly set ``is_flag=True``.
 To set a default flag, assign a value of `True` to the flag that should be
 the default.
 
-.. quo:example::
+.. code-block:: python
 
     import sys
 
@@ -357,7 +357,7 @@ not the str passed on the command line.  Token normalization functions and
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--hash-type',
@@ -402,7 +402,7 @@ quo by defining a prompt string.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--name', prompt=True)
@@ -419,7 +419,7 @@ And what it looks like:
 If you are not happy with the default prompt string, you can ask for
 a different one:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--name', prompt='Your name please')
@@ -446,7 +446,7 @@ Password Prompts
 quo also supports hidden prompts and asking for confirmation.  This is
 useful for password input:
 
-.. quo:example::
+.. code-block:: python
 
     import codecs
 
@@ -500,7 +500,7 @@ from the environment:
 
 To describe what the default value will be, set it in ``show_default``.
 
-.. quo:example::
+.. code-block:: python
 
     import os
 
@@ -545,7 +545,7 @@ processed parameters.
 
 Here an example for a ``--version`` flag:
 
-.. quo:example::
+.. code-block:: python
 
     def print_version(ctx, param, value):
         if not value or ctx.resilient_parsing:
@@ -586,7 +586,7 @@ confirmation.  This can be done by adding a boolean ``--yes`` flag and
 asking for confirmation if the user did not provide it and to fail in a
 callback:
 
-.. quo:example::
+.. code-block:: python
 
     def abort_if_false(ctx, param, value):
         if not value:
@@ -609,7 +609,7 @@ And what it looks like on the command line:
 Because this combination of parameters is quite common, this can also be
 replaced with the :func:`autoconfirm` decorator:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.autoconfirm(prompt='Are you sure you want to drop the db?')
@@ -639,7 +639,7 @@ called ``run`` taking an option called ``reload`` and the prefix is
 
 Example usage:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--username')
@@ -664,7 +664,7 @@ the prefix is ``WEB``, then the variable is ``WEB_RUN_SERVER_HOST``.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
    @quo.group()
    @quo.option('--debug/--no-debug')
@@ -691,7 +691,7 @@ variables by defining the name of the environment variable on the option.
 
 Example usage:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--username', envvar='USERNAME')
@@ -728,7 +728,7 @@ every colon (``:``), and for Windows, on every semicolon (``;``).
 
 Example usage:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('paths', '--path', envvar='PATHS', multiple=True,
@@ -756,7 +756,7 @@ parameters ``/`` or something similar.  Note that this is strongly
 discouraged in general because quo wants developers to stay close to
 POSIX semantics.  However in certain situations this can be useful:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('+w/-w')
@@ -776,7 +776,7 @@ And from the command line:
 Note that if you are using ``/`` as prefix character and you want to use a
 boolean flag you need to separate it with ``;`` instead of ``/``:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('/debug;/no-debug')
@@ -806,7 +806,7 @@ would return ``5`` for the value ``10``, or ``0`` for the value ``-1``.
 When using :class:`FloatRange`, ``clamp`` can only be enabled if both
 bounds are *closed* (the default).
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option("--count", type=quo.IntRange(0, 20, clamp=True))
@@ -828,7 +828,7 @@ parameter callbacks. These callbacks can both modify values as well as
 raise errors if the validation does not work. The callback runs after
 type conversion. It is called for all sources, including prompts.
 
-.. quo:example::
+.. code-block:: python
 
     def validate_rolls(ctx, param, value):
         if isinstance(value, tuple):
@@ -871,7 +871,7 @@ Setting ``is_flag=False, flag_value=value`` tells quo that the option
 can still be passed a value, but if only the flag is given the
 ``flag_value`` is used.
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option("--name", is_flag=False, flag_value="Flag", default="Default")
@@ -888,7 +888,7 @@ If the option has ``prompt`` enabled, then setting
 ``prompt_required=False`` tells quo to only show the prompt if the
 option's flag is given, instead of if the option is not provided at all.
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--name', prompt=True, prompt_required=False, default="Default")
