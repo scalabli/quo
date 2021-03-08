@@ -21,8 +21,8 @@ from .decorators import group
 from .decorators import autohelp
 from .decorators import make_pass_decorator
 from .decorators import option
-from .decorators import pass_context
-from .decorators import pass_obj
+from .decorators import contextualize
+from .decorators import objectualize
 from .decorators import autopswd
 from .decorators import autoversion
 from .exceptions import Abort
@@ -36,7 +36,7 @@ from .exceptions import NoSuchOption
 from .exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import wrap_text
-from .current import get_current_context
+from .current import currentcontext
 from .parser import OptionParser
 from .termui import clear
 from .termui import confirm
