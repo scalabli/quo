@@ -34,8 +34,6 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 [![DOI](https://zenodo.org/badge/149862343.svg)](https://zenodo.org/badge/latestdoi/149862343)
 [![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo)
 [![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s?label=Follow)
-[![Linkedin: anmol](https://img.shields.io/badge/-Gerrishon-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gerrishonsirere/)](https://www.linkedin.com/in/gerrishonsirere/)
 ![](https://visitor-badge.glitch.me/badge?page_id=viewerdiscretion.quo)
 
 ---
