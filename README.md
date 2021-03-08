@@ -28,13 +28,10 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/quo.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/quo/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/quo.svg)](https://quo.rtfd.io)
 [![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum/quo)
-[![Azure Pipelines status](https://dev.azure.com/hugovk/hugovk/_apis/build/status/hugovk.pypistats?branchName=master)](https://dev.azure.com/hugovk/hugovk/_build?definitionId=1)
 [![codecov](https://codecov.io/gh/secretum/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretuminc/quo)
 [![GitHub](https://img.shields.io/github/license/secretuminc/quo.svg)](LICENSE.txt)
-[![DOI](https://zenodo.org/badge/149862343.svg)](https://zenodo.org/badge/latestdoi/149862343)
 [![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo)
 [![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-![](https://visitor-badge.glitch.me/badge?page_id=viewerdiscretion.quo)
 
 ---
 
