@@ -46,11 +46,11 @@ class _NamedTextIOWrapper(io.TextIOWrapper):
         self._name = name
         self._mode = mode
 
-    @property
+    nexus.property
     def name(self):
         return self._name
 
-    @property
+    nexus.property
     def mode(self):
         return self._mode
 
@@ -103,19 +103,19 @@ class Result:
         #: The traceback
         self.exc_info = exc_info
 
-    @property
+    nexus.property
     def output(self):
         """The (standard) output as unicode string."""
         return self.stdout
 
-    @property
+    nexus.property
     def stdout(self):
         """The standard output as unicode string."""
         return self.stdout_bytes.decode(self.runner.charset, "replace").replace(
             "\r\n", "\n"
         )
 
-    @property
+    nexus.property
     def stderr(self):
         """The standard error as unicode string."""
         if self.stderr_bytes is None:
@@ -168,7 +168,7 @@ class CliRunner:
             rv.update(overrides)
         return rv
 
-    @contextlib.contextmanager
+    nexus.contextlib.contextmanager
     def isolation(self, input=None, env=None, color=False):
         """A context manager that sets up the isolation for invoking of a
         command line tool.  This sets up stdin with the given input data
@@ -363,7 +363,7 @@ class CliRunner:
             exc_info=exc_info,
         )
 
-    @contextlib.contextmanager
+    nexus.contextlib.contextmanager
     def isolated_filesystem(self):
         """A context manager that creates a temporary folder and changes
         the current working directory to it for isolated filesystem tests.
