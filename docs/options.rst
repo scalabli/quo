@@ -82,7 +82,7 @@ simply pass in `required=True` as an argument to the decorator.
 
 And on the command line:
 
-.. quo:run::
+.. code-block:: python
 
    invoke(dots, args=['--n=2'])
 
