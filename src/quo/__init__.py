@@ -13,7 +13,7 @@ from .core import Group
 from .core import MultiCommand
 from .core import Option
 from .core import Parameter
-from .core import shelldetectionfailure
+from .core import ShellDetectionFailure
 from .decorators import argument
 from .decorators import command
 from .decorators import autoconfirm
@@ -89,7 +89,7 @@ def shelldetector(pid=None, max_depth=10):
     shell = get_shell(pid, max_depth=max_depth)
     if shell:
         return shell
-    raise shelldetectorfailure()
+    raise ShellDetectionFailure()
 
 
 __version__ = "2021.3.dev4"
