@@ -460,7 +460,7 @@ class Context:
     @contextmanager
     def scope(self, cleanup=True):
         """This helper method can be used with the context object to promote
-        it to the current thread local (see :func:`get_current_context`).
+        it to the current thread local (see :func:`currentcontext`).
         The default behavior of this is to invoke the cleanup functions which
         can be disabled by setting `cleanup` to `False`.  The cleanup
         functions are typically used for things such as closing file handles.
@@ -471,12 +471,12 @@ class Context:
         Example usage::
 
             with ctx.scope():
-                assert get_current_context() is ctx
+                assert currentcontext() is ctx
 
         This is equivalent::
 
             with ctx:
-                assert get_current_context() is ctx
+                assert currentcontext() is ctx
 
         .. versionadded:: 5.0
 
@@ -513,11 +513,11 @@ class Context:
             LANG_KEY = f'{__name__}.lang'
 
             def set_language(value):
-                ctx = get_current_context()
+                ctx = currentcontext()
                 ctx.meta[LANG_KEY] = value
 
             def get_language():
-                return get_current_context().meta.get(LANG_KEY, 'en_US')
+                return currentcontext().meta.get(LANG_KEY, 'en_US')
 
         .. versionadded:: 5.0
         """
@@ -555,7 +555,7 @@ class Context:
 
             @quo.group()
             @quo.option("--name")
-            @quo.pass_context
+            @quo.contextualize
             def cli(ctx):
                 ctx.obj = ctx.with_resource(connect_db(name))
 
