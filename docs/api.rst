@@ -1,13 +1,11 @@
 API
-===
 
 .. module:: quo
 
 This part of the documentation lists the full API reference of all public
 classes and functions.
 
-Decorators
-----------
+DECORATORS
 
 .. autofunction:: command
 quo.command(name=None, cls=None, **attrs)
