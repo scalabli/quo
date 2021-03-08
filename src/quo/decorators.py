@@ -8,36 +8,36 @@ from .core import Argument
 from .core import Command
 from .core import Group
 from .core import Option
-from .current import get_current_context
+from .current import currentcontext
 from .utilities import echo
 
 #Marks a callback as wanting to receive current context
-def pass_context(f):
+def contextualize(f):
     """Marks a callback as wanting to receive the current context
     object as first argument.
     """
 
     def new_func(*args, **kwargs):
-        return f(get_current_context(), *args, **kwargs)
+        return f(currentcontext(), *args, **kwargs)
 
     return update_wrapper(new_func, f)
 
 
-def pass_obj(f):
-    """Similar to :func:`pass_context`, but only pass the object on the
+def objectualize(f):
+    """Similar to :func:`contextualize`, but only pass the object on the
     context onwards (:attr:`Context.obj`).  This is useful if that object
     represents the state of a nested system.
     """
 
     def new_func(*args, **kwargs):
-        return f(get_current_context().obj, *args, **kwargs)
+        return f(currentcontext().obj, *args, **kwargs)
 
     return update_wrapper(new_func, f)
 
 
 def make_pass_decorator(object_type, ensure=False):
     """Given an object type this creates a decorator that will work
-    similar to :func:`pass_obj` but instead of passing the object of the
+    similar to :func:`objectualize` but instead of passing the object of the
     current context, it will find the innermost context of type
     :func:`object_type`.
 
@@ -46,7 +46,7 @@ def make_pass_decorator(object_type, ensure=False):
         from functools import update_wrapper
 
         def decorator(f):
-            @pass_context
+            @contextualize
             def new_func(ctx, *args, **kwargs):
                 obj = ctx.find_object(object_type)
                 return ctx.invoke(f, obj, *args, **kwargs)
@@ -60,7 +60,7 @@ def make_pass_decorator(object_type, ensure=False):
 
     def decorator(f):
         def new_func(*args, **kwargs):
-            ctx = get_current_context()
+            ctx = currentcontext()
             if ensure:
                 obj = ctx.ensure_object(object_type)
             else:
