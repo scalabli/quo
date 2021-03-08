@@ -5,7 +5,7 @@ Quo
 
 .. image:: _static/quo.png
     :align: center
-    :scale: 35%
+    :scale: 100%
     :target: https://quo.rtfd.io
 
 Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
