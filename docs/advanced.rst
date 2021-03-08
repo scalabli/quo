@@ -32,7 +32,7 @@ This following example implements a subclass of :class:`Group` that
 accepts a prefix for a command.  If there were a command called ``push``,
 it would accept ``pus`` as an alias (so long as it was unique):
 
-.. quo:example::
+.. code-block:: python
 
     class AliasedGroup(quo.Group):
 
@@ -50,7 +50,7 @@ it would accept ``pus`` as an alias (so long as it was unique):
 
 And it can then be used like this:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command(cls=AliasedGroup)
     def cli():
@@ -79,7 +79,7 @@ This can be used to make up addition parameters.  Generally this pattern
 is not recommended but in some cases it can be useful.  At the very least
 it's good to know that the system works this way.
 
-.. quo:example::
+.. code-block:: python
 
     import urllib
 
@@ -98,7 +98,7 @@ In this case the callback returns the URL unchanged but also passes a
 second ``fp`` value to the callback.  What's more recommended is to pass
 the information in a wrapper however:
 
-.. quo:example::
+.. code-block:: python
 
     import urllib
 
