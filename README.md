@@ -20,7 +20,6 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 [![codecov](https://codecov.io/gh/secretum/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretuminc/quo)
 [![GitHub](https://img.shields.io/github/license/secretuminc/quo.svg)](LICENSE.txt)
 [![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo)
-[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ---
 
