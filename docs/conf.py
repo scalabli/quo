@@ -4,7 +4,7 @@ from pallets_sphinx_themes import ProjectLink
 from quo import .accordance
 
 # compat until pallets-sphinx-themes is updated
-click._compat.text_type = str
+click.accordance.text_type = str
 
 # Project --------------------------------------------------------------
 
