@@ -3,13 +3,9 @@ Testing Quo Applications
 
 .. currentmodule:: quo.testing
 
-For basic testing, Quo provides the :mod:`quo.testing` module which
-provides test functionality that helps you invoke command line
-applications and check their behavior.
+We provide the :mod:`quo.testing` module which will help you to test and configure your application.
 
-These tools should really only be used for testing as they change
-the entire interpreter state for simplicity and are not in any way
-thread-safe!
+It is advisable to only use these tools in a virtual environment
 
 Basic Testing
 -------------
