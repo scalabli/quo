@@ -1,6 +1,6 @@
 from pallets_sphinx_themes import get_version
 from pallets_sphinx_themes import ProjectLink
-
+import quo
 
 
 # compat until pallets-sphinx-themes is updated
@@ -11,7 +11,7 @@ from pallets_sphinx_themes import ProjectLink
 project = "Quo"
 copyright = "2014 Pallets"
 author = "Pallets"
-release, version = get_version("Click", version_length=1)
+release, version = get_version("Quo", version_length=1)
 
 # General --------------------------------------------------------------
 
@@ -51,9 +51,9 @@ singlehtml_sidebars = {"index": ["project.html", "localtoc.html"]}
 html_static_path = ["_static"]
 html_favicon = "_static/click-icon.png"
 html_logo = "_static/click-logo-sidebar.png"
-html_title = f"Click Documentation ({version})"
+html_title = f"Quo Documentation ({version})"
 html_show_sourcelink = False
 
 # LaTeX ----------------------------------------------------------------
 
-latex_documents = [(master_doc, f"Click-{version}.tex", html_title, author, "manual")]
+latex_documents = [(master_doc, f"Quo-{version}.tex", html_title, author, "manual")]
