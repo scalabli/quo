@@ -1,6 +1,5 @@
 from pallets_sphinx_themes import get_version
 from pallets_sphinx_themes import ProjectLink
-import quo
 
 
 # compat until pallets-sphinx-themes is updated
@@ -26,11 +25,11 @@ extensions = [
 ]
 autodoc_typehints = "description"
 intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
-issues_github_path = "pallets/quo"
+issues_github_path = "secretuminc/quo"
 
 # HTML -----------------------------------------------------------------
 
-html_theme = "quo"
+html_theme = "click"
 html_theme_options = {"index_sidebar_logo": False}
 html_context = {
     "project_links": [
@@ -51,9 +50,7 @@ singlehtml_sidebars = {"index": ["project.html", "localtoc.html"]}
 html_static_path = ["_static"]
 html_favicon = "_static/click-icon.png"
 html_logo = "_static/click-logo-sidebar.png"
-html_title = f"Quo Documentation ({version})"
 html_show_sourcelink = False
 
 # LaTeX ----------------------------------------------------------------
 
-latex_documents = [(master_doc, f"Quo-{version}.tex", html_title, author, "manual")]
