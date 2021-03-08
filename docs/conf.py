@@ -26,11 +26,11 @@ extensions = [
 ]
 autodoc_typehints = "description"
 intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
-issues_github_path = "pallets/click"
+issues_github_path = "pallets/quo"
 
 # HTML -----------------------------------------------------------------
 
-html_theme = "click"
+html_theme = "quo"
 html_theme_options = {"index_sidebar_logo": False}
 html_context = {
     "project_links": [
