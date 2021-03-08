@@ -192,21 +192,6 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
 
     .. _colorama: https://pypi.org/project/colorama/
 
-    .. versionchanged:: 6.0
-       As of quo 6.0 the echo function will properly support unicode
-       output on the windows console.  Not that quo does not modify
-       the interpreter in any way which means that `sys.stdout` or the
-       print statement or function will still not provide unicode support.
-
-    .. versionchanged:: 2.0
-       Starting with version 2.0 of quo, the echo function will work
-       with colorama if it's installed.
-
-    .. versionadded:: 3.0
-       The `err` parameter was added.
-
-    .. versionchanged:: 4.0
-       Added the `color` flag.
 
     :param message: the message to print
     :param file: the file to write to (defaults to ``stdout``)
@@ -223,7 +208,10 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
         else:
             file = _default_text_stdout()
 
-    # Convert non bytes/text into the native string type.
+    """
+    Convert non bytes/text into the native string type.
+    """
+
     if message is not None and not isinstance(message, echo_functionality):
         message = str(message)
 
@@ -310,8 +298,6 @@ def open_file(
         with open_file(filename) as f:
             ...
 
-    .. versionadded:: 3.0
-
     :param filename: the name of the file to open (or ``'-'`` for stdin/stdout).
     :param mode: the mode in which to open the file.
     :param encoding: the encoding to use.
@@ -332,9 +318,6 @@ def get_os_args():
     """Returns the argument part of ``sys.argv``, removing the first
     value which is the name of the script.
 
-    .. deprecated:: 8.0
-        Will be removed in 8.1. Access ``sys.argv[1:]`` directly
-        instead.
     """
     import warnings
 
