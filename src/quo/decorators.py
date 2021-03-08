@@ -24,7 +24,7 @@ def contextualize(f):
 
 
 def objectualize(f):
-    """Similar to :func:`contextualize`, but only pass the object on the
+    """This function passes the object on the
     context onwards (:attr:`Context.obj`).  This is useful if that object
     represents the state of a nested system.
     """
