@@ -437,7 +437,7 @@ class _AtomicFile:
         self._real_filename = real_filename
         self.closed = False
 
-    nexus.property
+    @property
     def name(self):
         return self._real_filename
 
