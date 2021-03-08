@@ -10,13 +10,17 @@ Quo
 
 Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
 
-Example1::
+Example1
+
+.. code-block:: python
 
     import quo
     quo.echo(f'Hello Gerry') 
 
 
-Example2::
+Example2:
+
+.. code-block:: python
 
     import quo
 
@@ -32,14 +36,6 @@ Example2::
     if __name__ == '__main__':
         hello()
 
-
-And what it looks like when run::
-
-    invoke(hello, ['--count=3'], prog_name='python hello.py', input='John\n')
-
-It automatically generates nicely formatted help pages::
- 
-  invoke(hello, ['--help'], prog_name='python hello.py')
 
 Quo in three points:
 
