@@ -5,10 +5,8 @@ Options
 
 .. currentmodule:: quo
 
-Adding options to commands can be accomplished by the :func:`option`
-decorator.  Since options can come in various different versions, there
-are a ton of parameters to configure their behavior. Options in quo are
-distinct from :ref:`positional arguments <arguments>`.
+Options can be added/nested to commands using the :func:`option` decorator.  Since options can come in various different versions, there
+Options in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
 
 Name Your Options
 -----------------
