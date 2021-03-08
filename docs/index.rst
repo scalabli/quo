@@ -85,13 +85,24 @@ usage patterns.
 API Reference
 -------------
 
-If you are looking for information on a specific function, class, or
-method, this part of the documentation is for you.
+Detailed guidelines on Quo's functionality
 
 .. toctree::
    :maxdepth: 2
 
    api
+
+Contact Us
+-------------------
+
+.. toctree::
+   :maxdepth: 2
+   
+   donate
+   email
+   twitter
+   facebook
+   
 
 Miscellaneous Pages
 -------------------
