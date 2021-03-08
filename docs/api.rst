@@ -9,9 +9,11 @@ classes and functions.
 Decorators
 ----
 
-:: command
-
- quo.command(name=None, cls=None, **attrs)
+-------
+command
+-------
+ 
+quo.command(name=None, cls=None, **attrs)
 Creates a new Command and uses the decorated function as callback. This will also automatically attach all decorated option()s and argument()s as parameters to the command.
 
 The name of the command defaults to the name of the function with underscores replaced by dashes. If you want to change that, you can pass the intended name as the first argument.
@@ -25,23 +27,34 @@ name – the name of the command. This defaults to the function name with unders
 
 cls – the command class to instantiate. This defaults to Command.
 
-.. autofunction:: group
+------
+group
+------
 
 click.group(name=None, **attrs)
 Creates a new Group with a function as callback. This works otherwise the same as command() just that the cls parameter is set to Group.
 
+---------
+argument
+---------
 click.argument(*param_decls, **attrs)
 Attaches an argument to the command. All positional arguments are passed as parameter declarations to Argument; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Argument instance manually and attaching it to the Command.params list.
 
 Parameters
 cls – the argument class to instantiate. This defaults to Argument.
 
+---------
+option
+---------
 click.option(*param_decls, **attrs)
 Attaches an option to the command. All positional arguments are passed as parameter declarations to Option; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Option instance manually and attaching it to the Command.params list.
 
 Parameters
 cls – the option class to instantiate. This defaults to Option.
 
+----------
+autopswd
+----------
 click.password_option(*param_decls, **attrs)
 Shortcut for password prompts.
 
@@ -52,6 +65,10 @@ This is equivalent to decorating a function with option() with the following par
               hide_input=True)
 def changeadmin(password):
     pass
+
+-------------
+autoconfirm
+-------------
 click.confirmation_option(*param_decls, **attrs)
 Shortcut for confirmation prompts that can be ignored by passing --yes as parameter.
 
