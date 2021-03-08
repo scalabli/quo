@@ -71,7 +71,7 @@ def python_environment():
                 break
         if bad_locale is not None:
             extra += (
-                "\n\nClick discovered that you exported a UTF-8 locale"
+                "\n\nQuo discovered that you exported a UTF-8 locale"
                 " but the locale system could not pick up from it"
                 " because it does not exist. The exported locale is"
                 f" {bad_locale!r} but it is not supported"
