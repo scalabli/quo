@@ -7,7 +7,7 @@ from threading import local
 _local = local()
 
 # Access current context(s) 
-def get_current_context(silent=False):
+def currentcontext(silent=False):
    
     try:
         return _local.stack[-1]
@@ -29,6 +29,6 @@ def resolve_color_default(color=None):
  
     if color is not None:
         return color
-    ctx = get_current_context(silent=True)
+    ctx = currentcontext(silent=True)
     if ctx is not None:
         return ctx.color
