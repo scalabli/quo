@@ -28,7 +28,7 @@ project = u'Quo Documentation'
 slug = re.sub(r'\W+', '-', project.lower())
 version = '2021.3.3'
 release = '2021.3.3'
-author = u'2021, Secretum Inc.'
+author = u'2021, Gerrishon Sirere, Secretum Inc.'
 copyright = author
 language = 'en'
 
@@ -73,7 +73,7 @@ if not 'READTHEDOCS' in os.environ:
     ))
 
 html_logo = "_/static/quo.png"
-html_show_sourcelink = True
+html_show_sourcelink = False
 
 htmlhelp_basename = slug
 
