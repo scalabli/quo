@@ -148,25 +148,10 @@ And the corresponding help page:
 
 Echoing
 -------
-
-Why does this example use :func:`echo` instead of the regular
-:func:`print` function?  The answer to this question is that Click
-attempts to support different environments consistently and to be very
-robust even when the environment is misconfigured.  Click wants to be
-functional at least on a basic level even if everything is completely
-broken.
-
-What this means is that the :func:`echo` function applies some error
+The :func:`echo` function applies some error
 correction in case the terminal is misconfigured instead of dying with an
 :exc:`UnicodeError`.
-
-As an added benefit, starting with Click 2.0, the echo function also
-has good support for ANSI colors.  It will automatically strip ANSI codes
-if the output stream is a file and if colorama is supported, ANSI colors
-will also work on Windows. See :ref:`ansi-colors`.
-
-If you don't need this, you can also use the `print()` construct /
-function.
+This function also supports ANSI colors. ANSI colors will work On windows  colorama is installed.ANSI colors. See :ref:`ansi-colors`.
 
 Nesting Commands
 ----------------
