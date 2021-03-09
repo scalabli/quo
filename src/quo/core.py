@@ -950,7 +950,7 @@ class BaseCommand:
         """
         # Verify that the environment is configured correctly, or reject
         # further execution to avoid a broken script.
-        _verify_python_env()
+        python_environment()
 
         if args is None:
             args = sys.argv[1:]
@@ -1288,7 +1288,7 @@ class Command(BaseCommand):
         """Given a context, this invokes the attached callback (if it exists)
         in the right way.
         """
-        _maybe_show_deprecated_notice(self)
+        deprecated_notice(self)
         if self.callback is not None:
             return ctx.invoke(self.callback, **ctx.params)
 
