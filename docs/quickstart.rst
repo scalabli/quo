@@ -1,7 +1,7 @@
 Quickstart
 ==========
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
 You can get the library directly from PyPI::
 
@@ -79,7 +79,7 @@ After doing this, the prompt of your shell should be as familiar as before.
 Now, let's move on. Enter the following command to get Click activated in your
 virtualenv::
 
-    $ pip install Click
+    $ pip install quo
 
 A few seconds later and you are good to go.
 
@@ -118,27 +118,21 @@ as in the GitHub repository together with readme files:
 Basic Concepts - Creating a Command
 -----------------------------------
 
-Click is based on declaring commands through decorators.  Internally, there
-is a non-decorator interface for advanced use cases, but it's discouraged
-for high-level usage.
-
-A function becomes a Click command line tool by decorating it through
-:func:`click.command`.  At its simplest, just decorating a function
-with this decorator will make it into a callable script:
+In order to make a callable script, you need to decorate a function with this decorator :func:`quo.command`.
+Here's an easy example:
 
 .. code-block:: python
 
-    import click
+    import quo
 
-    @click.command()
-    def hello():
-        click.echo('Hello World!')
+    @quo.command()
+    def love():
+        quo.flair('I love quo!', bold=True, bg="white", fg="black")
 
-What's happening is that the decorator converts the function into a
-:class:`Command` which then can be invoked::
+The function can then be made into a callable script like so::
 
     if __name__ == '__main__':
-        hello()
+        love()
 
 And what it looks like:
 
