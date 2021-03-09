@@ -126,7 +126,7 @@ A function becomes a Click command line tool by decorating it through
 :func:`click.command`.  At its simplest, just decorating a function
 with this decorator will make it into a callable script:
 
-.. click:example::
+.. code-block:: python
 
     import click
 
@@ -142,13 +142,13 @@ What's happening is that the decorator converts the function into a
 
 And what it looks like:
 
-.. click:run::
+.. code-block:: console
 
     invoke(hello, args=[], prog_name='python hello.py')
 
 And the corresponding help page:
 
-.. click:run::
+.. code-block:: console
 
     invoke(hello, args=['--help'], prog_name='python hello.py')
 
