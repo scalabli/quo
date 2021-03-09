@@ -25,9 +25,9 @@ Decorators
 
 .. autofunction:: autohelp
 
-.. autofunction:: pass_context
+.. autofunction:: contextualize
 
-.. autofunction:: pass_obj
+.. autofunction:: objectualize
 
 .. autofunction:: make_pass_decorator
 
@@ -109,7 +109,7 @@ Context
 .. autoclass:: Context
    :members:
 
-.. autofunction:: get_current_context
+.. autofunction:: currentcontext
 
 .. autoclass:: click.core.ParameterSource
     :members:
