@@ -1,9 +1,22 @@
-.. currentmodule:: click.shell_completion
+.. currentmodule:: quo.shell_completion
+
+Detecting Current Shell
+=======================
+Quo can detect the current Python executable is running in.
+
+.. code-block:: python
+
+    import quo
+    quo.shelldetector()
+
+``shelldetector`` pokes around the process's running environment to determine
+what shell it is run in. ``ShellDetectionFailure`` is raised if ``shelldetector`` fails to detect the
+surrounding shell.
 
 Shell Completion
 ================
 
-Click provides tab completion support for Bash (version 4.4 and up),
+quo provides tab completion support for Bash (version 4.4 and up),
 Zsh, and Fish. It is possible to add support for other shells too, and
 suggestions can be customized at multiple levels.
 
@@ -12,7 +25,7 @@ choice, file, and path parameter types. Options are only listed if at
 least a dash has been entered. Hidden commands and options are not
 shown.
 
-.. code-block:: text
+.. code-block:: console
 
     $ repo <TAB><TAB>
     clone  commit  copy  delete  setuser
@@ -26,11 +39,11 @@ Enabling Completion
 Completion is only available if a script is installed and invoked
 through an entry point, not through the ``python`` command. See
 :doc:`/setuptools`. Once the executable is installed, calling it with
-a special environment variable will put Click in completion mode.
+a special environment variable will put quo in completion mode.
 
 In order for completion to be used, the user needs to register a special
 function with their shell. The script is different for every shell, and
-Click will output it when called with ``_{PROG_NAME}_COMPLETE`` set to
+quo will output it when called with ``_{PROG_NAME}_COMPLETE`` set to
 ``{shell}_source``. ``{PROG_NAME}`` is the executable name in uppercase
 with dashes replaced by underscores. The built-in shells are ``bash``,
 ``zsh``, and ``fish``.
@@ -118,8 +131,8 @@ for the changes to be loaded.
 Custom Type Completion
 ----------------------
 
-When creating a custom :class:`~click.ParamType`, override its
-:meth:`~click.ParamType.shell_complete` method to provide shell
+When creating a custom :class:`~quo.ParamType`, override its
+:meth:`~quo.ParamType.shell_complete` method to provide shell
 completion for parameters with the type. The method must return a list
 of :class:`~CompletionItem` objects. Besides the value, these objects
 hold metadata that shell support might use. The built-in implementations
@@ -138,10 +151,10 @@ with the incomplete value.
                 for name in os.environ if name.startswith(incomplete)
             ]
 
-    @click.command()
-    @click.option("--ev", type=EnvVarType())
+    @quo.command()
+    @quo.option("--ev", type=EnvVarType())
     def cli(ev):
-        click.echo(os.environ[ev])
+        quo.echo(os.environ[ev])
 
 
 Overriding Value Completion
@@ -168,11 +181,11 @@ start with the incomplete value.
     def complete_env_vars(ctx, param, incomplete):
         return [k for k in os.environ if k.startswith(incomplete)]
 
-    @click.command()
-    @click.argument("name", shell_complete=complete_env_vars)
+    @quo.command()
+    @quo.argument("name", shell_complete=complete_env_vars)
     def cli(name):
-        click.echo(f"Name: {name}")
-        click.echo(f"Value: {os.environ[name]}")
+        quo.echo(f"Name: {name}")
+        quo.echo(f"Value: {os.environ[name]}")
 
 
 Adding Support for a Shell
@@ -180,22 +193,22 @@ Adding Support for a Shell
 
 Support can be added for shells that do not come built in. Be sure to
 check PyPI to see if there's already a package that adds support for
-your shell. This topic is very technical, you'll want to look at Click's
+your shell. This topic is very technical, you'll want to look at quo's
 source to study the built-in implementations.
 
 Shell support is provided by subclasses of :class:`ShellComplete`
-registered with :func:`add_completion_class`. When Click is invoked in
+registered with :func:`add_completion_class`. When quo is invoked in
 completion mode, it calls :meth:`~ShellComplete.source` to output the
 completion script, or :meth:`~ShellComplete.complete` to output
 completions. The base class provides default implementations that
 require implementing some smaller parts.
 
 First, you'll need to figure out how your shell's completion system
-works and write a script to integrate it with Click. It must invoke your
+works and write a script to integrate it with quo. It must invoke your
 program with the environment variable ``_{PROG_NAME}_COMPLETE`` set to
 ``{shell}_complete`` and pass the complete args and incomplete value.
 How it passes those values, and the format of the completion response
-from Click is up to you.
+from quo is up to you.
 
 In your subclass, set :attr:`~ShellComplete.source_template` to the
 completion script. The default implementation will perform ``%``
@@ -211,8 +224,8 @@ The example code is for a made up shell "My Shell" or "mysh" for short.
 
 .. code-block:: python
 
-    from click.shell_completion import add_completion_class
-    from click.shell_completion import ShellComplete
+    from quo.shell_completion import add_completion_class
+    from quo.shell_completion import ShellComplete
 
     _mysh_source = """\
     %(complete_func)s {
@@ -237,7 +250,7 @@ method must return a ``(args, incomplete)`` tuple.
 .. code-block:: python
 
     import os
-    from click.parser import split_arg_string
+    from quo.parser import split_arg_string
 
     class MyshComplete(ShellComplete):
         ...
@@ -262,7 +275,7 @@ completion script.
 The ``type`` value is usually ``plain``, but it can be another value
 that the completion script can switch on. For example, ``file`` or
 ``dir`` can tell the shell to handle path completion, since the shell is
-better at that than Click.
+better at that than quo.
 
 .. code-block:: python
 
@@ -280,6 +293,6 @@ The activation instructions will again depend on how your shell works.
 Use the following to generate the completion script, then load it into
 the shell somehow.
 
-.. code-block:: text
+.. code-block:: console
 
     _FOO_BAR_COMPLETE=mysh_source foo-bar
