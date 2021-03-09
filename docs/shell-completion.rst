@@ -51,9 +51,9 @@ with dashes replaced by underscores. The built-in shells are ``bash``,
 Provide your users with the following instructions customized to your
 program name. This uses ``foo-bar`` as an example.
 
-.. tabs::
+.. code-block:: console
 
-    .. group-tab:: Bash
+    .. code-block:: Bash
 
         Add this to ``~/.bashrc``:
 
@@ -61,7 +61,7 @@ program name. This uses ``foo-bar`` as an example.
 
             eval "$(_FOO_BAR_COMPLETE=bash_source foo-bar)"
 
-    .. group-tab:: Zsh
+    .. code-block:: Zsh
 
         Add this to ``~/.zshrc``:
 
