@@ -1671,7 +1671,7 @@ class Group(MultiCommand):
         name = name or cmd.name
         if name is None:
             raise TypeError("Command has no name.")
-        _check_multicommand(self, name, cmd, register=True)
+        multicommand_checker(self, name, cmd, register=True)
         self.commands[name] = cmd
 
     def command(self, *args, **kwargs):
@@ -1753,7 +1753,7 @@ class CommandCollection(MultiCommand):
             rv = source.get_command(ctx, cmd_name)
             if rv is not None:
                 if self.chain:
-                    _check_multicommand(self, cmd_name, rv)
+                    multicommand_checker(self, cmd_name, rv)
                 return rv
 
     def list_commands(self, ctx):
