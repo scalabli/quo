@@ -60,7 +60,7 @@ usage patterns.
 .. toctree::
    :maxdepth: 2
 
-   why
+   into
    quickstart
    setuptools
    parameters
