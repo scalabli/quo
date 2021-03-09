@@ -1,4 +1,4 @@
-Why Click?
+Introduction
 ==========
 
 There are so many libraries out there for writing command line utilities;
