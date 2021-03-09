@@ -160,19 +160,19 @@ Commands can be attached to other commands of type :class:`Group`.  This
 allows arbitrary nesting of scripts.  As an example here is a script that
 implements two commands for managing databases:
 
-.. click:example::
+.. code-block:: python
 
-    @click.group()
+    @quo.group()
     def cli():
         pass
 
-    @click.command()
+    @quo.command()
     def initdb():
         click.echo('Initialized the database')
 
-    @click.command()
+    @quo.command()
     def dropdb():
-        click.echo('Dropped the database')
+        quo.echo('Dropped the database')
 
     cli.add_command(initdb)
     cli.add_command(dropdb)
