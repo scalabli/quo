@@ -90,20 +90,6 @@ import quo
 // A simple survey application
 ```
 
-## Shell
-
-Quo can detect the current Python executable is running in.
-
-```Python
-
-    import quo
-    quo.shelldetector()
-```
-
-``shelldetector`` pokes around the process's running environment to determine
-what shell it is run in. ``ShellDetectionFailure`` is raised if ``shelldetector`` fails to detect the
-surrounding shell.
-
 ## Contributing
 
 If you run into an issue or want to contribute, we would be very happy if you would file a bug on the [issue tracker](https://github.com/viewerdiscretion/quo/issues).
