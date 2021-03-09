@@ -53,7 +53,7 @@ program name. This uses ``foo-bar`` as an example.
 
 .. code-block:: console
 
-    .. code-block:: Bash
+    .. code-block:: bash
 
         Add this to ``~/.bashrc``:
 
@@ -61,7 +61,7 @@ program name. This uses ``foo-bar`` as an example.
 
             eval "$(_FOO_BAR_COMPLETE=bash_source foo-bar)"
 
-    .. code-block:: Zsh
+    .. code-block:: zsh
 
         Add this to ``~/.zshrc``:
 
@@ -69,7 +69,7 @@ program name. This uses ``foo-bar`` as an example.
 
             eval "$(_FOO_BAR_COMPLETE=zsh_source foo-bar)"
 
-    .. group-tab:: Fish
+    .. code-block: console
 
         Add this to ``~/.config/fish/completions/foo-bar.fish``:
 
@@ -86,9 +86,9 @@ it up, write the generated script to a file, then source that. You can
 generate the files ahead of time and distribute them with your program
 to save your users a step.
 
-.. tabs::
+.. code-block:: console
 
-    .. group-tab:: Bash
+    .. code-block:: bash
 
         Save the script somewhere.
 
@@ -102,11 +102,11 @@ to save your users a step.
 
             . ~/.foo-bar-complete.bash
 
-    .. group-tab:: Zsh
+    .. code-block:: console
 
         Save the script somewhere.
 
-        .. code-block:: bash
+        .. code-block:: zsh
 
             _FOO_BAR_COMPLETE=zsh_source foo-bar > ~/.foo-bar-complete.zsh
 
@@ -116,7 +116,7 @@ to save your users a step.
 
             . ~/.foo-bar-complete.zsh
 
-    .. group-tab:: Fish
+    .. code-block:: console
 
         Save the script to ``~/.config/fish/completions/foo-bar.fish``:
 
