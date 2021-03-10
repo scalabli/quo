@@ -22,7 +22,7 @@ from subprocess import check_call
 
 import six
 
-import edx_theme
+import edx-sphinx-theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
