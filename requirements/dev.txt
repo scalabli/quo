@@ -20,7 +20,7 @@ chardet==4.0.0
     # via requests
 quo==2021.3.dev3
     # via pip-tools
-sphinx-edx-theme
+sphinx-edx-theme==2.0.0
     # via pip-tools
 distlib==0.3.1
     # via virtualenv
