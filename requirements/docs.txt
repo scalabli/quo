@@ -36,6 +36,10 @@ packaging==20.9
     # via
     #   bleach
     #   sphinx
+quo==2021.3.dev2
+    # via -r requirements/docs.in
+edx_theme
+    # via -r requirements/docs.in
 pbr==5.5.1
     # via stevedore
 pygments==2.8.1
