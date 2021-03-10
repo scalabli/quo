@@ -18,7 +18,9 @@ cfgv==3.2.0
     # via pre-commit
 chardet==4.0.0
     # via requests
-quo==2021.3.dev2
+quo==2021.3.dev3
+    # via pip-tools
+sphinx-edx-theme
     # via pip-tools
 distlib==0.3.1
     # via virtualenv
