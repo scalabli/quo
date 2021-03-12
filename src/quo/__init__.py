@@ -15,7 +15,7 @@ from .core import Option
 from .core import Parameter
 from .core import ShellDetectionFailure
 from .decorators import argument
-from .decorators import command
+from .decorators import form
 from .decorators import autoconfirm
 from .decorators import group
 from .decorators import autohelp
@@ -92,4 +92,4 @@ def shelldetector(pid=None, max_depth=10):
     raise ShellDetectionFailure()
 
 
-__version__ = "2021.3.dev5"
+__version__ = "2021.3.dev6"
