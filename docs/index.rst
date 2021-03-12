@@ -90,9 +90,9 @@ Detailed guidelines on Quo's functionality
 
 Donate
 ------------
-.. donate:: Sponsoring our cause enables us to keep finding ways to contribute to communities, both in code/tools, and in community work. 
+.. note:: Sponsoring our cause enables us to keep finding ways to contribute to communities, both in code/tools, and in community work. 
 
-.. donate:: `Donate <https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54>`_
+.. note:: `Donate <https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54>`_
 
 .. toctree::
    :maxdepth: 2
