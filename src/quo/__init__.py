@@ -15,7 +15,7 @@ from .core import Option
 from .core import Parameter
 from .core import ShellDetectionFailure
 from .decorators import argument
-from .decorators import form
+from .decorators import command
 from .decorators import autoconfirm
 from .decorators import group
 from .decorators import autohelp
