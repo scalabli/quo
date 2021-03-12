@@ -3,8 +3,8 @@ Unicode Support
 
 .. currentmodule:: quo
 
-Quo has to take extra care to support Unicode text in different
-environments.
+
+Unicode is an information technology standard for the consistent encoding, representation, and handling of text.
 
 *   The command line in Unix is traditionally bytes, not Unicode. While
     there are encoding hints, there are some situations where this can
