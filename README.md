@@ -61,7 +61,10 @@ Quo has been installed successfully🎉
 
 ```Python
 import quo
-quo.echo(f'Hello Gerry')
+@quo.command()
+@quo.argument('name')
+def hello(name):
+   quo.echo(f'Hello {name}!')
 
 ```
 
