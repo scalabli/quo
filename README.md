@@ -57,7 +57,26 @@ Quo has been installed successfully🎉
 
 ### Example 1
 
-* Create a  file `test.py` 
+* Create a  file `test1.py` 
+
+```Python
+import quo
+quo.echo(f'Hi there')
+
+```
+
+### Example 2
+`test2.py`
+
+```Python
+import quo
+quo.flair(f'This is colorful', bg="red", fg="white")
+
+```
+
+### Example 3
+
+`test3.py`
 
 ```Python
 import quo
@@ -68,12 +87,6 @@ def hello(name):
 
 if __name__ == '__main__':
     hello() 
-
-```
-
-* Run the application
-```console
-$ python test.py
 
 ```
 
