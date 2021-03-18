@@ -62,9 +62,12 @@ Quo has been installed successfully🎉
 ```Python
 import quo
 @quo.command()
-@quo.argument('name')
+@quo.option("--name", prompt="What is your name?:") 
 def hello(name):
    quo.echo(f'Hello {name}!')
+
+if __name__ == '__main__':
+    hello() 
 
 ```
 
