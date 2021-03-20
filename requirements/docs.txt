@@ -43,7 +43,7 @@ sphinx-issues==1.2.0
     # via -r requirements/docs.in
 sphinx-tabs==2.0.1
     # via -r requirements/docs.in
-sphinx==3.5.1
+sphinx==3.5.3
     # via
     #   -r requirements/docs.in
     #   sphinx-issues
