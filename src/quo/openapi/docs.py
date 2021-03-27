@@ -1,7 +1,7 @@
 import json
 from typing import Any, Dict, Optional
 
-from fastapi.encoders import jsonable_encoder
+from quo.encoders import jsonable_encoder
 from starlette.responses import HTMLResponse
 
 
