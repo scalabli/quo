@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Callable, Dict, Iterable, List, Optional, Union
 
-from fastapi.logger import logger
+from quo.logger import logger
 from pydantic import AnyUrl, BaseModel, Field
 
 try:
