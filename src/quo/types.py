@@ -13,6 +13,10 @@ from .accordance import open_stream
 from .exceptions import BadParameter
 from .utilities import LazyFile
 from .utilities import safecall
+from typing import Any, Callable, TypeVar
+
+DecoratedCallable = TypeVar("DecoratedCallable", bound=Callable[..., Any])
+
 
 
 class ParamType:
