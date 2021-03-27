@@ -16,19 +16,19 @@ from typing import (
     cast,
 )
 
-from fastapi import params
-from fastapi.concurrency import (
+from quo import params
+from quo.concurrency import (
     AsyncExitStack,
     _fake_asynccontextmanager,
     asynccontextmanager,
     contextmanager_in_threadpool,
 )
-from fastapi.dependencies.models import Dependant, SecurityRequirement
-from fastapi.logger import logger
-from fastapi.security.base import SecurityBase
-from fastapi.security.oauth2 import OAuth2, SecurityScopes
-from fastapi.security.open_id_connect_url import OpenIdConnect
-from fastapi.utils import create_response_field, get_path_param_names
+from quo.dependencies.models import Dependant, SecurityRequirement
+from quo.logger import logger
+from quo.security.base import SecurityBase
+from quo.security.oauth2 import OAuth2, SecurityScopes
+from quo.security.open_id_connect_url import OpenIdConnect
+from quo.utils import create_response_field, get_path_param_names
 from pydantic import BaseModel, create_model
 from pydantic.error_wrappers import ErrorWrapper
 from pydantic.errors import MissingError
