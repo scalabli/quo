@@ -17,16 +17,21 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development",
+    "Environment :: Web Environment",
+    "Framework :: AsyncIO",
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
-    "License :: OSI Approved :: MIT License"
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Internet :: WWW/HTTP"
     ]
 requires = [
-
+    "starlette ==0.13.6",
+    "pydantic >=1.0.0,<2.0.0"
 ]
 description-file = "README.md"
 requires-python = ">=3.6"
