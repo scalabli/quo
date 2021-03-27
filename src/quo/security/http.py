@@ -2,11 +2,11 @@ import binascii
 from base64 import b64decode
 from typing import Optional
 
-from fastapi.exceptions import HTTPException
-from fastapi.openapi.models import HTTPBase as HTTPBaseModel
-from fastapi.openapi.models import HTTPBearer as HTTPBearerModel
-from fastapi.security.base import SecurityBase
-from fastapi.security.utils import get_authorization_scheme_param
+from quo.exceptions import HTTPException
+from quo.openapi.models import HTTPBase as HTTPBaseModel
+from quo.openapi.models import HTTPBearer as HTTPBearerModel
+from quo.security.base import SecurityBase
+from quo.security.utils import get_authorization_scheme_param
 from pydantic import BaseModel
 from starlette.requests import Request
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN
