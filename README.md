@@ -35,7 +35,7 @@ Quo improves programmer's productivity because it's easy to use and supports aut
 
 ## Requirements
 
-Python 2.7+
+Python 3.6+
 
 ## Installation
 
