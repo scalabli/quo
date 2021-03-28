@@ -16,7 +16,7 @@ from typing import (
 )
 
 from quo import params
-from ..datastructures import Default, DefaultPlaceholder
+from .datastructures import Default, DefaultPlaceholder
 from quo.dependencies.models import Dependant
 from quo.dependencies.utils import (
     get_body_field,
@@ -24,11 +24,11 @@ from quo.dependencies.utils import (
     get_parameterless_sub_dependant,
     solve_dependencies,
 )
-from ..encoders import DictIntStrAny, SetIntStr, jsonable_encoder
-from ..exceptions import RequestValidationError, WebSocketRequestValidationError
+from .encoders import DictIntStrAny, SetIntStr, jsonable_encoder
+from .exceptions import RequestValidationError, WebSocketRequestValidationError
 from quo.openapi.constants import STATUS_CODES_WITH_NO_BODY
-from ..types import DecoratedCallable
-from ..utils import (
+from .types import DecoratedCallable
+from .utils import (
     create_cloned_field,
     create_response_field,
     generate_operation_id_for_path,
