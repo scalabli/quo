@@ -1,23 +1,23 @@
 from typing import Any, Callable, Coroutine, Dict, List, Optional, Sequence, Type, Union
 
 from quo import routing
-from ..concurrency import AsyncExitStack
-from ..datastructures import Default, DefaultPlaceholder
-from ..encoders import DictIntStrAny, SetIntStr
-from ..exception_handlers import (
+from .concurrency import AsyncExitStack
+from .datastructures import Default, DefaultPlaceholder
+from .encoders import DictIntStrAny, SetIntStr
+from .exception_handlers import (
     http_exception_handler,
     request_validation_exception_handler,
 )
-from ..exceptions import RequestValidationError
-from ..logger import logger
+from .exceptions import RequestValidationError
+from .logger import logger
 from quo.openapi.docs import (
     get_redoc_html,
     get_swagger_ui_html,
     get_swagger_ui_oauth2_redirect_html,
 )
 from quo.openapi.utils import get_openapi
-from ..params import Depends
-from ..types import DecoratedCallable
+from .params import Depends
+from .types import DecoratedCallable
 from starlette.applications import Starlette
 from starlette.datastructures import State
 from starlette.exceptions import HTTPException
