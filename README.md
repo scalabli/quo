@@ -4,7 +4,7 @@
 
 ---
 
-Quo is a Python  based module for writing Command-Line Interface(CLI) applications.
+Quo is a Python  based web frame and a toolkit for writing Command-Line Interface(CLI) applications.
 
 ---
 <p align="center">
