@@ -1,7 +1,7 @@
 from typing import Optional
 
-from ...openapi.models import APIKey, APIKeyIn
-from ...security.base import SecurityBase
+from quo.openapi.models import APIKey, APIKeyIn
+from quo.security.base import SecurityBase
 from starlette.exceptions import HTTPException
 from starlette.requests import Request
 from starlette.status import HTTP_403_FORBIDDEN
