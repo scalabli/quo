@@ -2,20 +2,20 @@ import http.client
 from enum import Enum
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Type, Union, cast
 
-from quo.import routing
-from quo.datastructures import DefaultPlaceholder
-from quo.dependencies.models import Dependant
-from quo.dependencies.utils import get_flat_dependant, get_flat_params
+from ..import routing
+from ..datastructures import DefaultPlaceholder
+from ...dependencies.models import Dependant
+from ...dependencies.utils import get_flat_dependant, get_flat_params
 from quo.encoders import jsonable_encoder
 from quo.openapi.constants import (
     METHODS_WITH_BODY,
     REF_PREFIX,
     STATUS_CODES_WITH_NO_BODY,
 )
-from quo.openapi.models import OpenAPI
-from quo.params import Body, Param
-from quo.responses import Response
-from quo.utils import (
+from ...openapi.models import OpenAPI
+from ..params import Body, Param
+from ..responses import Response
+from ..utils import (
     deep_dict_update,
     generate_operation_id_for_path,
     get_model_definitions,

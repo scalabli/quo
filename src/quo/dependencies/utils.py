@@ -16,19 +16,19 @@ from typing import (
     cast,
 )
 
-from quo import params
-from quo.concurrency import (
+from ..import params
+from ..concurrency import (
     AsyncExitStack,
     _fake_asynccontextmanager,
     asynccontextmanager,
     contextmanager_in_threadpool,
 )
-from quo.dependencies.models import Dependant, SecurityRequirement
-from quo.logger import logger
-from quo.security.base import SecurityBase
-from quo.security.oauth2 import OAuth2, SecurityScopes
-from quo.security.open_id_connect_url import OpenIdConnect
-from quo.utils import create_response_field, get_path_param_names
+from ...dependencies.models import Dependant, SecurityRequirement
+from ..logger import logger
+from ...security.base import SecurityBase
+from ...security.oauth2 import OAuth2, SecurityScopes
+from ...security.open_id_connect_url import OpenIdConnect
+from ..utils import create_response_field, get_path_param_names
 from pydantic import BaseModel, create_model
 from pydantic.error_wrappers import ErrorWrapper
 from pydantic.errors import MissingError

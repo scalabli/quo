@@ -1,11 +1,11 @@
 from typing import Any, Dict, List, Optional, Union
 
-from quo.exceptions import HTTPException
-from quo.openapi.models import OAuth2 as OAuth2Model
-from quo.openapi.models import OAuthFlows as OAuthFlowsModel
-from quo.param_functions import Form
-from quo.security.base import SecurityBase
-from quo.security.utils import get_authorization_scheme_param
+from ..exceptions import HTTPException
+from ...openapi.models import OAuth2 as OAuth2Model
+from ...openapi.models import OAuthFlows as OAuthFlowsModel
+from ..param_functions import Form
+from ...security.base import SecurityBase
+from ...security.utils import get_authorization_scheme_param
 from starlette.requests import Request
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN
 
