@@ -28,7 +28,7 @@ from starlette.routing import BaseRoute
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 
-class quo(Starlette):
+class Quo(Starlette):
     def __init__(
         self,
         *,
