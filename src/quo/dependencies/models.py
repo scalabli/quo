@@ -1,6 +1,6 @@
 from typing import Any, Callable, List, Optional, Sequence
 
-from ...security.base import SecurityBase
+from quo.security.base import SecurityBase
 from pydantic.fields import ModelField
 
 
