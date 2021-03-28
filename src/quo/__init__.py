@@ -5,7 +5,7 @@ Quo is a Python  based module for writing Command-Line Interface(CLI) applicatio
 
 from starlette import status as status
 
-from .applications import FastAPI as FastAPI
+from .applications import Quo as Quo
 from .background import BackgroundTasks as BackgroundTasks
 from .datastructures import UploadFile as UploadFile
 from .exceptions import HTTPException as HTTPException
