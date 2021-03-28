@@ -4,15 +4,15 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Type, Union,
 
 from ..import routing
 from ..datastructures import DefaultPlaceholder
-from ...dependencies.models import Dependant
-from ...dependencies.utils import get_flat_dependant, get_flat_params
-from quo.encoders import jsonable_encoder
+from quo.dependencies.models import Dependant
+from quo.dependencies.utils import get_flat_dependant, get_flat_params
+from ..encoders import jsonable_encoder
 from quo.openapi.constants import (
     METHODS_WITH_BODY,
     REF_PREFIX,
     STATUS_CODES_WITH_NO_BODY,
 )
-from ...openapi.models import OpenAPI
+from quo.openapi.models import OpenAPI
 from ..params import Body, Param
 from ..responses import Response
 from ..utils import (
