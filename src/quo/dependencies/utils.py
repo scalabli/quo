@@ -23,11 +23,11 @@ from ..concurrency import (
     asynccontextmanager,
     contextmanager_in_threadpool,
 )
-from ...dependencies.models import Dependant, SecurityRequirement
+from quo.dependencies.models import Dependant, SecurityRequirement
 from ..logger import logger
-from ...security.base import SecurityBase
-from ...security.oauth2 import OAuth2, SecurityScopes
-from ...security.open_id_connect_url import OpenIdConnect
+from quo.security.base import SecurityBase
+from quo.security.oauth2 import OAuth2, SecurityScopes
+from quo.security.open_id_connect_url import OpenIdConnect
 from ..utils import create_response_field, get_path_param_names
 from pydantic import BaseModel, create_model
 from pydantic.error_wrappers import ErrorWrapper
