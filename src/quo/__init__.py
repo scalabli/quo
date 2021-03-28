@@ -1,5 +1,5 @@
 """
-Quo is a Python  based module for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
+Quo is a Python web framework and a toolkit for writing Command-Line Interface(CLI) applications. It improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
 
 """
 
@@ -114,4 +114,4 @@ def shelldetector(pid=None, max_depth=10):
     raise ShellDetectionFailure()
 
 
-__version__ = "2021.3.dev8"
+__version__ = "2021.3.dev9"
