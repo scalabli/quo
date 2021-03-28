@@ -5,7 +5,7 @@ from enum import Enum
 from typing import Any, Dict, Optional, Set, Type, Union, cast
 
 import quo
-from quo.datastructures import DefaultPlaceholder, DefaultType
+from ..datastructures import DefaultPlaceholder, DefaultType
 from quo.openapi.constants import REF_PREFIX
 from pydantic import BaseConfig, BaseModel, create_model
 from pydantic.class_validators import Validator
