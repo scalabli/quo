@@ -1,4 +1,4 @@
-from ...penapi.models import SecurityBase as SecurityBaseModel
+from quo.openapi.models import SecurityBase as SecurityBaseModel
 
 
 class SecurityBase:
