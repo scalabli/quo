@@ -21,6 +21,75 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
 [![GitHub](https://img.shields.io/github/license/secretuminc/quo.svg)](LICENSE.txt)
 [![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo)
 
+
+
+<table>
+    <tr>
+        <th>docs</th>
+        <td>
+            <a href="https://quo.readthedocs.io/?badge=latest"><img
+                alt="Documentation Status"
+                src="https://readthedocs.org/projects/quo/badge/?version=latest"></a>
+        </td>
+    </tr>
+    <tr>
+        <th>tests</th>
+        <td>
+            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3ALint"><img
+                alt="GitHub Actions build status (Lint)"
+                src="https://github.com/python-pillow/Pillow/workflows/Lint/badge.svg"></a>
+            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3ATest"><img
+                alt="GitHub Actions build status (Test Linux and macOS)"
+                src="https://github.com/python-pillow/Pillow/workflows/Test/badge.svg"></a>
+            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Windows%22"><img
+                alt="GitHub Actions build status (Test Windows)"
+                src="https://github.com/python-pillow/Pillow/workflows/Test%20Windows/badge.svg"></a>
+            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Docker%22"><img
+                alt="GitHub Actions build status (Test Docker)"
+                src="https://github.com/python-pillow/Pillow/workflows/Test%20Docker/badge.svg"></a>
+            <a href="https://ci.appveyor.com/project/python-pillow/Pillow"><img
+                alt="AppVeyor CI build status (Windows)"
+                src="https://img.shields.io/appveyor/build/python-pillow/Pillow/master.svg?label=Windows%20build"></a>
+            <a href="https://github.com/python-pillow/pillow-wheels/actions"><img
+                alt="GitHub Actions wheels build status (Wheels)"
+                src="https://github.com/python-pillow/pillow-wheels/workflows/Wheels/badge.svg"></a>
+            <a href="https://travis-ci.com/github/python-pillow/pillow-wheels"><img
+                alt="Travis CI wheels build status (aarch64)"
+                src="https://img.shields.io/travis/com/python-pillow/pillow-wheels/master.svg?label=aarch64%20wheels"></a>
+            <a href="https://codecov.io/gh/python-pillow/Pillow"><img
+                alt="Code coverage"
+                src="https://codecov.io/gh/python-pillow/Pillow/branch/master/graph/badge.svg"></a>
+        </td>
+    </tr>
+    <tr>
+        <th>package</th>
+        <td>
+            <a href="https://zenodo.org/badge/latestdoi/17549/python-pillow/Pillow"><img
+                alt="Zenodo"
+                src="https://zenodo.org/badge/17549/python-pillow/Pillow.svg"></a>
+            <a href="https://tidelift.com/subscription/pkg/pypi-pillow?utm_source=pypi-pillow&utm_medium=badge"><img
+                alt="Tidelift"
+                src="https://tidelift.com/badges/package/pypi/Pillow?style=flat"></a>
+            <a href="https://pypi.org/project/quo/"><img
+                alt="Newest PyPI version"
+                src="https://img.shields.io/pypi/v/quo.svg"></a>
+            <a href="https://pypi.org/project/quo/"><img
+                alt="Number of PyPI downloads"
+                src="https://img.shields.io/pypi/dm/quo.svg"></a>
+        </td>
+    </tr>
+    <tr>
+        <th>social</th>
+        <td>
+            <a href="https://gitter.im/python-pillow/Pillow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img
+                alt="Join the chat at https://gitter.im/python-pillow/Pillow"
+                src="https://badges.gitter.im/python-pillow/Pillow.svg"></a>
+            <a href="https://twitter.com/PythonPillow"><img
+                alt="Follow on https://twitter.com/gerrishon_s"
+                src="https://img.shields.io/badge/tweet-on%20Twitter-00aced.svg"></a>
+        </td>
+    </tr>
+</table>
 ---
 
 Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
