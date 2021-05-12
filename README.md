@@ -32,7 +32,7 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
     <tr>
         <th>tests</th>
         <td>
-            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3ALint"><img
+            <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3ALint"><img
                 alt="GitHub Actions build status (Lint)"
                 src="https://github.com/python-pillow/Pillow/workflows/Lint/badge.svg"></a>
             <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3ATest"><img
