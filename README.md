@@ -12,9 +12,6 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
 </p
 ---
 
-
-[![PyPI version](https://img.shields.io/pypi/v/quo.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/quo/)
-[![Documentation Status](https://readthedocs.org/projects/quo/badge/?version=latest)](https://quo.readthedocs.io/en/latest/?badge=latest)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/quo.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/quo/)
 [![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum/quo)
 [![codecov](https://codecov.io/gh/secretum/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretuminc/quo)
