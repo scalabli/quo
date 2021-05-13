@@ -81,7 +81,7 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
             <a href="https://gitter.im/python-pillow/Pillow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img
                 alt="Join the chat at https://gitter.im/python-pillow/Pillow"
                 src="https://badges.gitter.im/python-pillow/Pillow.svg"></a>
-            <a href="https://twitter.com/PythonPillow"><img
+            <a href="https://twitter.com/gerrishon_s"><img
                 alt="Follow on https://twitter.com/gerrishon_s"
                 src="https://img.shields.io/badge/tweet-on%20Twitter-00aced.svg"></a>
         </td>
