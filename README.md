@@ -34,10 +34,10 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
         <td>
             <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3ALint"><img
                 alt="GitHub Actions build status (Lint)"
-                src="https://github.com/python-pillow/Pillow/workflows/Lint/badge.svg"></a>
-            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3ATest"><img
+                src="https://github.com/secretum-inc/quo/workflows/Lint/badge.svg"></a>
+            <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3ATest"><img
                 alt="GitHub Actions build status (Test Linux and macOS)"
-                src="https://github.com/python-pillow/Pillow/workflows/Test/badge.svg"></a>
+                src="https://github.com/secretum-inc/quo/workflows/Test/badge.svg"></a>
             <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Windows%22"><img
                 alt="GitHub Actions build status (Test Windows)"
                 src="https://github.com/python-pillow/Pillow/workflows/Test%20Windows/badge.svg"></a>
@@ -61,12 +61,9 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
     <tr>
         <th>package</th>
         <td>
-            <a href="https://zenodo.org/badge/latestdoi/17549/python-pillow/Pillow"><img
+            <a href="https://zenodo.org/badge/latestdoi/17549/secretum-inc/quo"><img
                 alt="Zenodo"
                 src="https://zenodo.org/badge/17549/python-pillow/Pillow.svg"></a>
-            <a href="https://tidelift.com/subscription/pkg/pypi-pillow?utm_source=pypi-pillow&utm_medium=badge"><img
-                alt="Tidelift"
-                src="https://tidelift.com/badges/package/pypi/Pillow?style=flat"></a>
             <a href="https://pypi.org/project/quo/"><img
                 alt="Newest PyPI version"
                 src="https://img.shields.io/pypi/v/quo.svg"></a>
@@ -78,9 +75,9 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
     <tr>
         <th>social</th>
         <td>
-            <a href="https://gitter.im/python-pillow/Pillow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img
-                alt="Join the chat at https://gitter.im/python-pillow/Pillow"
-                src="https://badges.gitter.im/python-pillow/Pillow.svg"></a>
+            <a href="https://gitter.im/secretum-inc/quo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img
+                alt="Join the chat at https://gitter.im/secretum-inc/quo"
+                src="https://badges.gitter.im/secretum-inc/quo.svg"></a>
             <a href="https://twitter.com/gerrishon_s"><img
                 alt="Follow on https://twitter.com/gerrishon_s"
                 src="https://img.shields.io/badge/tweet-on%20Twitter-00aced.svg"></a>
