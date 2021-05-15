@@ -4,7 +4,6 @@ Quo is a Python based web framework and a toolkit for writing Command-Line Inter
 """
 
 
-from .exceptions import HTTPException as HTTPException
 import importlib
 import os
 import subprocess
