@@ -32,12 +32,6 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
     <tr>
         <th>tests</th>
         <td>
-            <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3ALint"><img
-                alt="GitHub Actions build status (Lint)"
-                src="https://github.com/secretum-inc/quo/workflows/Lint/badge.svg"></a>
-            <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3ATest"><img
-                alt="GitHub Actions build status (Test Linux and macOS)"
-                src="https://github.com/secretum-inc/quo/workflows/Test/badge.svg"></a>
             <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Windows%22"><img
                 alt="GitHub Actions build status (Test Windows)"
                 src="https://github.com/python-pillow/Pillow/workflows/Test%20Windows/badge.svg"></a>
