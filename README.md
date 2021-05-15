@@ -78,6 +78,7 @@ Quo is a Python  based web frame and a toolkit for writing Command-Line Interfac
         </td>
     </tr>
 </table>
+
 ---
 
 Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage.
