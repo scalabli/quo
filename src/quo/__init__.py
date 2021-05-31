@@ -12,7 +12,7 @@ from .core import BaseCommand
 from .core import Command
 from .core import CommandCollection
 from .core import Context
-from .core import Group
+from .core import Tether
 from .core import MultiCommand
 from .core import Option
 from .core import Parameter
@@ -20,7 +20,7 @@ from .core import ShellDetectionFailure
 from .decorators import argument
 from .decorators import command
 from .decorators import autoconfirm
-from .decorators import group
+from .decorators import tether
 from .decorators import autohelp
 from .decorators import make_pass_decorator
 from .decorators import option
