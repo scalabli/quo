@@ -357,7 +357,7 @@ def _wrap_io_open(file, mode, encoding, errors):
     return open(file, mode, encoding=encoding, errors=errors)
 
 
-def open_stream(filename, mode="r", encoding=None, errors="strict", atomic=False):
+def openstream(filename, mode="r", encoding=None, errors="strict", atomic=False):
     binary = "b" in mode
 
     # Standard streams first.  These are simple because they don't need
