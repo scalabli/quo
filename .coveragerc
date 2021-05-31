@@ -1,8 +1,2 @@
 [run]
-
-source =
-    src/quo
-    tests
-    docs
-
-parallel = True
+source=your_package_name
