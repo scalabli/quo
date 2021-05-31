@@ -283,7 +283,7 @@ def get_text_stream(name, encoding=None, errors="strict"):
     return opener(encoding, errors)
 
 
-def open_file(
+def openfile(
     filename, mode="r", encoding=None, errors="strict", lazy=False, atomic=False
 ):
     """This is similar to how the :class:`File` works but for manual
@@ -295,7 +295,7 @@ def open_file(
     to always use the function like this without having to worry to
     accidentally close a standard stream::
 
-        with open_file(filename) as f:
+        with openfile(filename) as f:
             ...
 
     :param filename: the name of the file to open (or ``'-'`` for stdin/stdout).
