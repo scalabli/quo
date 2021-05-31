@@ -80,12 +80,12 @@ def _complete_visible_commands(ctx, incomplete):
     :param ctx: Invocation context for the tethered sub-commands.
     :param incomplete: Value being completed. May be empty.
     """
-    for name in ctx.command.list_commands(ctx):
+    for name in ctx.decree.list_commands(ctx):
         if name.startswith(incomplete):
-            command = ctx.command.get_command(ctx, name)
+            decree = ctx.decree.get_command(ctx, name)
 
             if not command.hidden:
-                yield name, command
+                yield name, decree
 
 
 def multicommand_checker(base_command, cmd_name, cmd, register=False):
@@ -270,7 +270,7 @@ class Context:
 
     def __init__(
         self,
-        command,
+        decree,
         parent=None,
         info_name=None,
         obj=None,
@@ -289,8 +289,8 @@ class Context:
     ):
         #: the parent context or `None` if none exists.
         self.parent = parent
-        #: the :class:`Command` for this context.
-        self.command = command
+        #: the :class:`Decree` for this context.
+        self.command = decree
         #: the descriptive information name
         self.info_name = info_name
         #: Map of parameter names to their parsed values. Parameters
@@ -342,7 +342,7 @@ class Context:
         self.max_content_width = max_content_width
 
         if allow_extra_args is None:
-            allow_extra_args = command.allow_extra_args
+            allow_extra_args = decree.allow_extra_args
         #: Indicates if the context allows extra args or if it should
         #: fail on parsing.
         #:
@@ -350,7 +350,7 @@ class Context:
         self.allow_extra_args = allow_extra_args
 
         if allow_interspersed_args is None:
-            allow_interspersed_args = command.allow_interspersed_args
+            allow_interspersed_args = decree.allow_interspersed_args
         #: Indicates if the context allows mixing of arguments and
         #: options or not.
         #:
@@ -358,7 +358,7 @@ class Context:
         self.allow_interspersed_args = allow_interspersed_args
 
         if ignore_unknown_options is None:
-            ignore_unknown_options = command.ignore_unknown_options
+            ignore_unknown_options = decree.ignore_unknown_options
         #: Instructs Quo to ignore options that a command does not
         #: understand and will store it on the context for later
         #: processing.  This is primarily useful for situations where you
@@ -438,7 +438,7 @@ class Context:
         .. versionadded:: 8.0
         """
         return {
-            "command": self.command.to_info_dict(self),
+            "decree": self.command.to_info_dict(self),
             "info_name": self.info_name,
             "allow_extra_args": self.allow_extra_args,
             "allow_interspersed_args": self.allow_interspersed_args,
@@ -673,13 +673,13 @@ class Context:
         """
         return self.command.get_help(self)
 
-    def _make_sub_context(self, command):
+    def _make_sub_context(self, decree):
         """Create a new context of the same type as this context, but
         for a new command.
 
         :meta private:
         """
-        return type(self)(command, info_name=command.name, parent=self)
+        return type(self)(decree, info_name=command.name, parent=self)
 
     def invoke(*args, **kwargs):  # noqa: B902
         """Invokes a command callback in exactly the way it expects.  There
@@ -703,7 +703,7 @@ class Context:
         # It's also possible to invoke another command which might or
         # might not have a callback.  In that case we also fill
         # in defaults and make a new context for this command.
-        if isinstance(callback, Command):
+        if isinstance(callback, Decree):
             other_cmd = callback
             callback = other_cmd.callback
 
@@ -731,7 +731,7 @@ class Context:
         self, cmd = args[:2]
 
         # Can only forward to other commands, not direct callbacks.
-        if not isinstance(cmd, Command):
+        if not isinstance(cmd, Decree):
             raise TypeError("Callback is not a command.")
 
         for param in self.params:
@@ -874,7 +874,7 @@ class BaseCommand:
         raise NotImplementedError("Base commands do not know how to parse arguments.")
 
     def invoke(self, ctx):
-        """Given a context, this invokes the command.  The default
+        """Given a context, this invokes the decree.  The default
         implementation is raising a not implemented error.
         """
         raise NotImplementedError("Base commands are not invokable by default")
@@ -883,7 +883,7 @@ class BaseCommand:
         """Return a list of completions for the incomplete value. Looks
         at the names of chained multi-commands.
 
-        Any command could be part of a chained multi-command, so sibling
+        Any decree could be part of a chained multi-command, so sibling
         commands are valid at any point during command completion. Other
         command classes will return more completions.
 
@@ -899,10 +899,10 @@ class BaseCommand:
         while ctx.parent is not None:
             ctx = ctx.parent
 
-            if isinstance(ctx.command, MultiCommand) and ctx.command.chain:
+            if isinstance(ctx.decree, MultiCommand) and ctx.decree.chain:
                 results.extend(
-                    CompletionItem(name, help=command.get_short_help_str())
-                    for name, command in _complete_visible_commands(ctx, incomplete)
+                    CompletionItem(name, help=decree.get_short_help_str())
+                    for name, decree in _complete_visible_commands(ctx, incomplete)
                     if name not in ctx.protected_args
                 )
 
@@ -922,7 +922,7 @@ class BaseCommand:
         needs to be caught.
 
         This method is also available by directly calling the instance of
-        a :class:`Command`.
+        a :class:`Decree`.
 
         .. versionadded:: 3.0
            Added the `standalone_mode` flag to control the standalone mode.
@@ -1039,9 +1039,9 @@ class BaseCommand:
         return self.main(*args, **kwargs)
 
 
-class Command(BaseCommand):
-    """Commands are the basic building block of command line interfaces in
-    quo.  A basic command handles command line parsing and might dispatch
+class Decree(BaseCommand):
+    """Decrees are the basic building block of command line interfaces in
+    quo.  A basic decree handles command line parsing and might dispatch
     more parsing to commands nested below it.
 
     .. versionchanged:: 2.0
@@ -1055,13 +1055,13 @@ class Command(BaseCommand):
     :param context_settings: an optional dictionary with defaults that are
                              passed to the context object.
     :param callback: the callback to invoke.  This is optional.
-    :param params: the parameters to register with this command.  This can
+    :param params: the parameters to register with this decree.  This can
                    be either :class:`Option` or :class:`Argument` objects.
     :param help: the help string to use for this command.
     :param epilog: like the help string but it's printed at the end of the
                    help page after everything else.
     :param short_help: the short help to use for this command.  This is
-                       shown on the command listing of the parent command.
+                       shown on the decree listing of the parent command.
     :param add_autohelp: by default each command registers a ``--help``
                             option.  This can be disabled by this parameter.
     :param no_args_is_help: this controls what happens if no arguments are
@@ -1147,7 +1147,7 @@ class Command(BaseCommand):
         This is a low-level method called by :meth:`get_usage`.
         """
         pieces = self.collect_usage_pieces(ctx)
-        formatter.write_usage(ctx.command_path, " ".join(pieces))
+        formatter.write_usage(ctx.decree_path, " ".join(pieces))
 
     def collect_usage_pieces(self, ctx):
         """Returns all the pieces that go into the usage line and returns
@@ -1328,7 +1328,7 @@ class Command(BaseCommand):
         return results
 
 
-class MultiCommand(Command):
+class MultiCommand(Decree):
     """A multi command is the basic implementation of a command that
     dispatches to subcommands.  The most common version is the
     :class:`Tether`.
@@ -1394,8 +1394,8 @@ class MultiCommand(Command):
         commands = {}
 
         for name in self.list_commands(ctx):
-            command = self.get_command(ctx, name)
-            sub_ctx = ctx._make_sub_context(command)
+            decree = self.get_command(ctx, name)
+            sub_ctx = ctx._make_sub_context(decree)
 
             with sub_ctx.scope(cleanup=False):
                 commands[name] = command.to_info_dict(sub_ctx)
@@ -1528,7 +1528,7 @@ class MultiCommand(Command):
                 super().invoke(ctx)
                 sub_ctx = cmd.make_context(cmd_name, args, parent=ctx)
                 with sub_ctx:
-                    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                    return _process_result(sub_ctx.decree.invoke(sub_ctx))
 
         # In chain mode we create the contexts step by step, but after the
         # base command has been invoked.  Because at that point we do not
@@ -1558,7 +1558,7 @@ class MultiCommand(Command):
             rv = []
             for sub_ctx in contexts:
                 with sub_ctx:
-                    rv.append(sub_ctx.command.invoke(sub_ctx))
+                    rv.append(sub_ctx.decree.invoke(sub_ctx))
             return _process_result(rv)
 
     def resolve_command(self, ctx, args):
@@ -1588,7 +1588,7 @@ class MultiCommand(Command):
 
     def get_command(self, ctx, cmd_name):
         """Given a context and a command name, this returns a
-        :class:`Command` object if it exists or returns `None`.
+        :class:`Decree` object if it exists or returns `None`.
         """
         raise NotImplementedError()
 
@@ -1612,7 +1612,7 @@ class MultiCommand(Command):
 
         results = [
             CompletionItem(name, help=command.get_short_help_str())
-            for name, command in _complete_visible_commands(ctx, incomplete)
+            for name, decree in _complete_visible_commands(ctx, incomplete)
         ]
         results.extend(super().shell_complete(ctx, incomplete))
         return results
@@ -1623,11 +1623,11 @@ class Tether(MultiCommand):
     the most common way to implement nesting in quo.
 
     :param name: The name of the tethered command.
-    :param commands: A dict mapping names to :class:`Command` objects.
-        Can also be a list of :class:`Command`, which will use
+    :param commands: A dict mapping names to :class:`Decree` objects.
+        Can also be a list of :class:`Decree`, which will use
         :attr:`Command.name` to create the dict.
     :param attrs: Other command arguments described in
-        :class:`MultiCommand`, :class:`Command`, and
+        :class:`MultiCommand`, :class:`Decree`, and
         :class:`BaseCommand`.
 
     .. versionchanged:: 8.0
@@ -1635,7 +1635,7 @@ class Tether(MultiCommand):
     """
 
     #: If set, this is used by the tether's :meth:`command` decorator
-    #: as the default :class:`Command` class. This is useful to make all
+    #: as the default :class:`Decree` class. This is useful to make all
     #: subcommands use a custom command class.
     #:
     #: .. versionadded:: 8.0
@@ -1665,7 +1665,7 @@ class Tether(MultiCommand):
         self.commands = commands
 
     def addcommand(self, cmd, name=None):
-        """Registers another :class:`Command` with this tether.  If the name
+        """Registers another :class:`Decree` with this tether.  If the name
         is not provided, the name of the command is used.
         """
         name = name or cmd.name
@@ -1674,19 +1674,19 @@ class Tether(MultiCommand):
         multicommand_checker(self, name, cmd, register=True)
         self.commands[name] = cmd
 
-    def command(self, *args, **kwargs):
-        """A shortcut decorator for declaring and attaching a command to
-        the tether. This takes the same arguments as :func:`command` and
+    def decree(self, *args, **kwargs):
+        """A shortcut decorator for declaring and attaching a decree(command) to
+        the tether. This takes the same arguments as :func:`decree` and
         immediately registers the created command with this tether by
         calling :meth:`addcommand`.
 
-        To customize the command class used, set the
+        To customize the decree class used, set the
         :attr:`command_class` attribute.
 
         .. versionchanged:: 8.0
             Added the :attr:`command_class` attribute.
         """
-        from .decorators import command
+        from .decorators import decree
 
         if self.command_class is not None and "cls" not in kwargs:
             kwargs["cls"] = self.command_class
@@ -1764,7 +1764,7 @@ class CommandCollection(MultiCommand):
 
 
 class Parameter:
-    r"""A parameter to a command comes in two versions: they are either
+    r"""A parameter to a decree comes in two versions: they are either
     :class:`Option`\s or :class:`Argument`\s.  Other subclasses are currently
     not supported by design as some of the internals for parsing are
     intentionally not finalized.
@@ -1791,7 +1791,7 @@ class Parameter:
                   parameters are collected.
     :param metavar: how the value is represented in the help page.
     :param expose_value: if this is `True` then the value is passed onwards
-                         to the command callback and stored on the context,
+                         to the decree callback and stored on the context,
                          otherwise it's skipped.
     :param is_eager: eager values are processed before non eager ones.  This
                      should not be set for arguments or it will inverse the
@@ -2458,7 +2458,7 @@ class Option(Parameter):
         # if we're the the default one in which case we return the flag
         # value as default.
         if self.is_flag and not self.is_bool_flag:
-            for param in ctx.command.params:
+            for param in ctx.decree.params:
                 if param.name == self.name and param.default:
                     return param.flag_value
 
