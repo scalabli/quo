@@ -27,7 +27,9 @@
 Quo requires Python 3.6 or later for the new `async/await`_ syntax,
 and variable type annotations.
 
-Here's an example processing a stream of incoming orders:
+Installation
+============
+You can install quo via the Python Package Index (PyPI)
 
 .. sourcecode:: python
 
@@ -123,222 +125,17 @@ Quo is...
 .. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
 
 
-Installation
-============
-
-You can install Faust either via the Python Package Index (PyPI)
-or from source.
-
-To install using `pip`:
-
-.. sourcecode:: console
-
-    $ pip install -U faust
-
-.. _bundles:
-
-Bundles
--------
-
-Faust also defines a group of ``setuptools`` extensions that can be used
-to install Faust and the dependencies for a given feature.
-
-You can specify these in your requirements or on the ``pip``
-command-line by using brackets. Separate multiple bundles using the comma:
-
-.. sourcecode:: console
-
-    $ pip install "faust[rocksdb]"
-
-    $ pip install "faust[rocksdb,uvloop,fast,redis]"
-
-The following bundles are available:
-
-Stores
-~~~~~~
-
-:``faust[rocksdb]``:
-    for using `RocksDB`_ for storing Faust table state.
-
-    **Recommended in production.**
-
-
-.. _`RocksDB`: http://rocksdb.org
-
-Caching
-~~~~~~~
-
-:``faust[redis]``:
-    for using `Redis_` as a simple caching backend (Memcached-style).
-
-Codecs
-~~~~~~
-
-:``faust[yaml]``:
-    for using YAML and the ``PyYAML`` library in streams.
-
-Optimization
-~~~~~~~~~~~~
-
-:``faust[fast]``:
-    for installing all the available C speedup extensions to Faust core.
-
-Sensors
-~~~~~~~
-
-:``faust[datadog]``:
-    for using the Datadog Faust monitor.
-
-:``faust[statsd]``:
-    for using the Statsd Faust monitor.
-
-Event Loops
-~~~~~~~~~~~
-
-:``faust[uvloop]``:
-    for using Faust with ``uvloop``.
-
-:``faust[eventlet]``:
-    for using Faust with ``eventlet``
-
-Debugging
-~~~~~~~~~
-
-:``faust[debug]``:
-    for using ``aiomonitor`` to connect and debug a running Faust worker.
-
-:``faust[setproctitle]``:
-    when the ``setproctitle`` module is installed the Faust worker will
-    use it to set a nicer process name in ``ps``/``top`` listings.
-    Also installed with the ``fast`` and ``debug`` bundles.
-
-Downloading and installing from source
---------------------------------------
-
-Download the latest version of Faust from
-http://pypi.org/project/faust
-
-You can install it by doing:
-
-.. sourcecode:: console
-
-    $ tar xvfz faust-0.0.0.tar.gz
-    $ cd faust-0.0.0
-    $ python setup.py build
-    # python setup.py install
-
-The last command must be executed as a privileged user if
-you are not currently using a virtualenv.
-
-Using the development version
------------------------------
-
-With pip
-~~~~~~~~
-
-You can install the latest snapshot of Faust using the following
-``pip`` command:
-
-.. sourcecode:: console
-
-    $ pip install https://github.com/robinhood/faust/zipball/master#egg=faust
-
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
-
-FAQ
-===
-
-Can I use Faust with Django/Flask/etc.?
----------------------------------------
-
-Yes! Use ``eventlet`` as a bridge to integrate with ``asyncio``.
-
-
-Using ``eventlet``
-~~~~~~~~~~~~~~~~~~~~~~
-
-This approach works with any blocking Python library that can work with
-``eventlet``.
-
-Using ``eventlet`` requires you to install the ``aioeventlet`` module,
-and you can install this as a bundle along with Faust:
-
-.. sourcecode:: console
-
-    $ pip install -U faust[eventlet]
-
-Then to actually use eventlet as the event loop you have to either
-use the ``-L <faust --loop>`` argument to the ``faust`` program:
-
-.. sourcecode:: console
-
-    $ faust -L eventlet -A myproj worker -l info
-
-or add ``import mode.loop.eventlet`` at the top of your entry point script:
-
-.. sourcecode:: python
-
-    #!/usr/bin/env python3
-    import mode.loop.eventlet  # noqa
-
-.. warning::
-
-    It's very important this is at the very top of the module,
-    and that it executes before you import libraries.
-
-Can I use Faust with Tornado?
------------------------------
-
-Yes! Use the ``tornado.platform.asyncio`` bridge:
-http://www.tornadoweb.org/en/stable/asyncio.html
-
-Can I use Faust with Twisted?
------------------------------
-
-Yes! Use the ``asyncio`` reactor implementation:
-https://twistedmatrix.com/documents/17.1.0/api/twisted.internet.asyncioreactor.html
-
-Will you support Python 2.7 or Python 3.5?
-------------------------------------------
-
-No. Faust requires Python 3.6 or later, since it heavily uses features that were
-introduced in Python 3.6 (`async`, `await`, variable type annotations).
-
-I get a maximum number of open files exceeded error by RocksDB when running a Faust app locally. How can I fix this?
---------------------------------------------------------------------------------------------------------------------
-
-You may need to increase the limit for the maximum number of open files. The
-following post explains how to do so on OS X:
-https://blog.dekstroza.io/ulimit-shenanigans-on-osx-el-capitan/
-
-
-What kafka versions faust supports?
----------------------------------------
-
-Faust supports kafka with version >= 0.10.
-
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
-
-.. _getting-help:
 
 Getting Help
 ============
 
-.. _slack-channel:
+.. _gitter-channel:
 
-Slack
+Gitter
 -----
 
 For discussions about the usage, development, and future of quo,
-please join the `secretum-inc`_ Gitter.
+please join our Gitter community
 
 * https://gitter.im/secretum-inc
 * Join: https://gitter.im/secretum-inc/quo
