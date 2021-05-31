@@ -4,7 +4,7 @@
 
 ---
 
-Quo is a Python  based web frame and a toolkit for writing Command-Line Interface(CLI) applications.
+Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applications.
 
 ---
 <p align="center">
@@ -138,7 +138,7 @@ quo.flair(f'This is colorful', bg="red", fg="white")
 
 ```Python
 import quo
-@quo.command()
+@quo.decree()
 @quo.option("--name", prompt="What is your name?:") 
 def hello(name):
    quo.echo(f'Hello {name}!')
@@ -153,7 +153,7 @@ if __name__ == '__main__':
 
 ```Python
 import quo 
-    @quo.command()
+    @quo.decree()
     @quo.option("--count", default=1, help="The number of times the feedback is printed.")
     @quo.option("--name", prompt="What is your name", help="This prompts the user to input their name.")
     @quo.option("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
