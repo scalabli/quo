@@ -38,7 +38,7 @@ from .exceptions import MissingParameter
 from .exceptions import NoSuchOption
 from .exceptions import UsageError
 from .layout import HelpFormatter
-from .layout import wrap_text
+from .layout import wraptext
 from .current import currentcontext
 from .parser import OptionParser
 from .termui import clear
@@ -74,8 +74,8 @@ from .utilities import get_app_dir
 from .utilities import get_binary_stream
 from .utilities import get_os_args
 from .utilities import get_text_stream
-from .utilities import open_file
+from .utilities import openfile
 
 
 
-__version__ = "2021.5.dev10"
+__version__ = "2021.5.dev11"
