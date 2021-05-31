@@ -12,7 +12,7 @@ from .accordance import _default_text_stdout
 from .accordance import CYGWIN
 from .accordance import default_system_encoding
 from .accordance import isatty
-from .accordance import open_stream
+from .accordance import openstream
 from .accordance import strip_ansi
 from .accordance import term_len
 from .accordance import WIN
