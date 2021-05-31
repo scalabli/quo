@@ -10,7 +10,7 @@ from .accordance import filename_to_ui
 from .accordance import encoding_filesystem
 from .accordance import get_strerror
 from .accordance import is_bytes
-from .accordance import open_stream
+from .accordance import openstream
 from .accordance import should_strip_ansi
 from .accordance import strip_ansi
 from .accordance import text_streams
