@@ -1,11 +1,4 @@
-# This module is based on the excellent work by Adam Bartoš who
-# provided a lot of what went into the implementation here in
-# the discussion to issue1602 in the Python bug tracker.
-#
-# There are some general differences in regards to how this works
-# compared to the original patches as we do not need to patch
-# the entire interpreter but just work in our little world of
-# echo and prompt.
+
 import sys
 import ctypes
 import io
