@@ -22,69 +22,7 @@
     # as a library w/ asyncio & static typing.
     import faust
 
-**Faust** is a stream processing library, porting the ideas from
-`Kafka Streams`_ to Python.
-
-Installing
-----------
-
-Install and update using `pip`_:
-
-.. code-block:: text
-
-    $ pip install -U click
-
-.. _pip: https://pip.pypa.io/en/stable/quickstart/
-
-
-A Simple Example
-----------------
-
-.. code-block:: python
-
-    import click
-
-    @click.command()
-    @click.option("--count", default=1, help="Number of greetings.")
-    @click.option("--name", prompt="Your name", help="The person to greet.")
-    def hello(count, name):
-        """Simple program that greets NAME for a total of COUNT times."""
-        for _ in range(count):
-            click.echo(f"Hello, {name}!")
-
-    if __name__ == '__main__':
-        hello()
-
-.. code-block:: text
-
-    $ python hello.py --count=3
-    Your name: Click
-    Hello, Click!
-    Hello, Click!
-    Hello, Click!
-
-
-Donate
-------
-
-The Pallets organization develops and supports Click and other popular
-packages. In order to grow the community of contributors and users, and
-allow the maintainers to devote more time to the projects, `please
-donate today`_.
-
-.. _please donate today: https://palletsprojects.com/donate
-
-
-Links
------
-
--   Documentation: https://quo.rtfd.io/
--   PyPI Releases: https://pypi.org/project/quo/
--   Source Code: https://github.com/secretum-inc/quo
--   Issue Tracker: https://github.com/secretum-inc/quo/issues
--   Website: https://quo.rtfd.io
--   Twitter: https://twitter.com/secretum-inc
--   Chat: https://gitter.im/secretum-inc/quo
+**Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
 
 
 
@@ -237,11 +175,11 @@ resource for learning the implementation of `Kafka Streams`_.
 
 .. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
 
-Faust is...
+Quo is...
 ===========
 
 **Simple**
-    Faust is extremely easy to use. To get started using other stream processing
+    Quo is a Python based toolkit for writing Command-Line Interface(CLI) applications. To get started using other stream processing
     solutions you have complicated hello-world projects, and
     infrastructure requirements.  Faust only requires Kafka,
     the rest is just Python, so If you know Python you can already use Faust to do
