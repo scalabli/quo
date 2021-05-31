@@ -10,7 +10,7 @@ from itertools import repeat
 from .universal import python_environment
 from .exceptions import Abort
 from .exceptions import BadParameter
-from .exceptions import Outlier
+from .exceptions import QuoException
 from .exceptions import Exit
 from .exceptions import MissingParameter
 from .exceptions import UsageError
@@ -980,7 +980,7 @@ class BaseCommand:
             except (EOFError, KeyboardInterrupt):
                 echo(file=sys.stderr)
                 raise Abort()
-            except Outlier as e:
+            except QuoException as e:
                 if not standalone_mode:
                     raise
                 e.show()
