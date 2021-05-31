@@ -9,7 +9,7 @@ import os
 import subprocess
 from .core import Argument
 from .core import BaseCommand
-from .core import Decree
+from .core import Command
 from .core import CommandCollection
 from .core import Context
 from .core import Tether
@@ -32,14 +32,14 @@ from .exceptions import Abort
 from .exceptions import BadArgumentUsage
 from .exceptions import BadOptionUsage
 from .exceptions import BadParameter
-from .exceptions import Outlier
+from .exceptions import QuoException
 from .exceptions import FileError
 from .exceptions import MissingParameter
 from .exceptions import NoSuchOption
 from .exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import wraptext
-from quo.context.current import currentcontext
+from .current import currentcontext
 from .parser import OptionParser
 from .termui import clear
 from .termui import confirm
