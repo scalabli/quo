@@ -12,7 +12,6 @@
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
-:Keywords: distributed, stream, async, processing, data, queue, state management
 
 
 .. sourcecode:: python
@@ -21,6 +20,8 @@
     # Forever scalable
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
+Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage
+
 Quo requires Python 3.6 or later. 
 
 Installation
@@ -200,7 +201,7 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
     :target: https://travis-ci.org/secretum-inc/quo
 
 .. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=master
-    :target: https://codecov.io/github/robinhood/faust?branch=master
+    :target: https://codecov.io/github/secretum-inc/quo?branch=main
 
 .. |license| image:: https://img.shields.io/pypi/l/quo.svg
     :alt: MIT License
