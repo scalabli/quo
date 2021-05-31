@@ -63,6 +63,25 @@ Example 3
   if __name__ == '__main__':
       hello() 
 
+
+Example 4
+
+.. sourcecode:: python
+
+    import quo 
+    @quo.decree()
+    @quo.option("--count", default=1, help="The number of times the feedback is printed.")
+    @quo.option("--name", prompt="What is your name", help="This prompts the user to input their name.")
+    @quo.option("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
+    def survey(count, name, proffession):
+       
+        for _ in range(count):
+            quo.echo(f"Thank you for your time, {name}!")
+
+    if __name__ == '__main__':
+        survey
+
+
 The Agent decorator defines a "stream processor" that essentially
 consumes from a Kafka topic and does something for every event it receives.
 
