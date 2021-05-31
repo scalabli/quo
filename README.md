@@ -16,7 +16,7 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
 [![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum/quo)
 [![codecov](https://codecov.io/gh/secretum/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretuminc/quo)
 [![GitHub](https://img.shields.io/github/license/secretuminc/quo.svg)](LICENSE.txt)
-[![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo)
+[![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo) [![Join the chat at https://gitter.im/secretum-inc/quo](https://badges.gitter.im/secretum-inc/quo.svg)](https://gitter.im/secretum-inc/quo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 
