@@ -32,7 +32,7 @@ classifiers = [
 requires = [
 
 ]
-description-file = "README.md"
+description-file = "README.rst"
 requires-python = ">=3.6"
 
 [tool.flit.metadata.urls]
