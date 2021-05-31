@@ -35,7 +35,7 @@ Here's an example processing a stream of incoming orders:
 
     $ pip install -U quo
 
-Example 1
+**Example 1**
 
 .. sourcecode:: python
 
@@ -43,7 +43,7 @@ Example 1
     quo.echo('Hello, World!')
     
 
-Example 2
+**Example 2**
 
 .. sourcecode:: python
 
@@ -51,7 +51,7 @@ Example 2
   quo.flair(f'Hello, World!', fg="red", bold=True)
 
 
-Example 3
+**Example 3**
 
 .. sourcecode:: python
 
@@ -64,7 +64,7 @@ Example 3
       hello() 
 
 
-Example 4
+**Example 4**
 
 .. sourcecode:: python
 
@@ -82,113 +82,15 @@ Example 4
         survey
 
 
-The Agent decorator defines a "stream processor" that essentially
-consumes from a Kafka topic and does something for every event it receives.
 
-The agent is an ``async def`` function, so can also perform
-other operations asynchronously, such as web requests.
+Donate
+=======
 
-This system can persist state, acting like a database.
-Tables are named distributed key/value stores you can use
-as regular Python dictionaries.
+In order to for us to maintain this project and grow our community of contributors, `please consider donating today`_.
 
-Tables are stored locally on each machine using a super fast
-embedded database written in C++, called `RocksDB`_.
-
-Tables can also store aggregate counts that are optionally "windowed"
-so you can keep track
-of "number of clicks from the last day," or
-"number of clicks in the last hour." for example. Like `Kafka Streams`_,
-we support tumbling, hopping and sliding windows of time, and old windows
-can be expired to stop data from filling up.
-
-For reliability we use a Kafka topic as "write-ahead-log".
-Whenever a key is changed we publish to the changelog.
-Standby nodes consume from this changelog to keep an exact replica
-of the data and enables instant recovery should any of the nodes fail.
-
-To the user a table is just a dictionary, but data is persisted between
-restarts and replicated across nodes so on failover other nodes can take over
-automatically.
-
-You can count page views by URL:
-
-.. sourcecode:: python
-
-    # data sent to 'clicks' topic sharded by URL key.
-    # e.g. key="http://example.com" value="1"
-    click_topic = app.topic('clicks', key_type=str, value_type=int)
-
-    # default value for missing URL will be 0 with `default=int`
-    counts = app.Table('click_counts', default=int)
-
-    @app.agent(click_topic)
-    async def count_click(clicks):
-        async for url, count in clicks.items():
-            counts[url] += count
-
-The data sent to the Kafka topic is partitioned, which means
-the clicks will be sharded by URL in such a way that every count
-for the same URL will be delivered to the same Faust worker instance.
+.. _please consider donating today: https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54
 
 
-Faust supports any type of stream data: bytes, Unicode and serialized
-structures, but also comes with "Models" that use modern Python
-syntax to describe how keys and values in streams are serialized:
-
-.. sourcecode:: python
-
-    # Order is a json serialized dictionary,
-    # having these fields:
-
-    class Order(faust.Record):
-        account_id: str
-        product_id: str
-        price: float
-        quantity: float = 1.0
-
-    orders_topic = app.topic('orders', key_type=str, value_type=Order)
-
-    @app.agent(orders_topic)
-    async def process_order(orders):
-        async for order in orders:
-            # process each order using regular Python
-            total_price = order.price * order.quantity
-            await send_order_received_email(order.account_id, order)
-
-Faust is statically typed, using the ``mypy`` type checker,
-so you can take advantage of static types when writing applications.
-
-The Faust source code is small, well organized, and serves as a good
-resource for learning the implementation of `Kafka Streams`_.
-
-**Learn more about Faust in the** `introduction`_ **introduction page**
-    to read more about Faust, system requirements, installation instructions,
-    community resources, and more.
-
-**or go directly to the** `quickstart`_ **tutorial**
-    to see Faust in action by programming a streaming application.
-
-**then explore the** `User Guide`_
-    for in-depth information organized by topic.
-
-.. _`Robinhood`: http://robinhood.com
-.. _`async/await`:
-    https://medium.freecodecamp.org/a-guide-to-asynchronous-programming-in-python-with-asyncio-232e2afa44f6
-.. _`Celery`: http://celeryproject.org
-.. _`Kafka Streams`: https://kafka.apache.org/documentation/streams
-.. _`Apache Spark`: http://spark.apache.org
-.. _`Storm`: http://storm.apache.org
-.. _`Samza`: http://samza.apache.org
-.. _`Flink`: http://flink.apache.org
-.. _`RocksDB`: http://rocksdb.org
-.. _`Apache Kafka`: https://kafka.apache.org
-
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
 
 Quo is...
 ===========
@@ -476,11 +378,11 @@ Getting Help
 Slack
 -----
 
-For discussions about the usage, development, and future of Faust,
-please join the `fauststream`_ Slack.
+For discussions about the usage, development, and future of quo,
+please join the `secretum-inc`_ Gitter.
 
-* https://fauststream.slack.com
-* Sign-up: https://join.slack.com/t/fauststream/shared_invite/enQtNDEzMTIyMTUyNzU2LTIyMjNjY2M2YzA2OWFhMDlmMzVkODk3YTBlYThlYmZiNTUwZDJlYWZiZTdkN2Q4ZGU4NWM4YWMyNTM5MGQ5OTg
+* https://gitter.im/secretum-inc
+* Join: https://gitter.im/secretum-inc/quo
 
 Resources
 =========
@@ -491,14 +393,14 @@ Bug tracker
 -----------
 
 If you have any suggestions, bug reports, or annoyances please report them
-to our issue tracker at https://github.com/robinhood/faust/issues/
+to our issue tracker at https://github.com/secretum-inc/quo/issues/
 
 .. _license:
 
 License
 =======
 
-This software is licensed under the `New BSD License`. See the ``LICENSE``
+This software is licensed under the `MIT License`. See the ``LICENSE``
 file in the top distribution directory for the full license text.
 
 .. # vim: syntax=rst expandtab tabstop=4 shiftwidth=4 shiftround
@@ -509,19 +411,6 @@ file in the top distribution directory for the full license text.
 
 .. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
 
-Contributing
-============
-
-Development of `Faust` happens at GitHub: https://github.com/robinhood/faust
-
-You're highly encouraged to participate in the development
-of `Faust`.
-
-Be sure to also read the `Contributing to Faust`_ section in the
-documentation.
-
-.. _`Contributing to Faust`:
-    http://faust.readthedocs.io/en/latest/contributing.html
 
 Code of Conduct
 ===============
