@@ -16,7 +16,7 @@ from .accordance import openstream
 from .accordance import strip_ansi
 from .accordance import term_len
 from .accordance import WIN
-from .exceptions import Outlier
+from .exceptions import QuoException
 from .utilities import echo
 
 if os.name == "nt":
@@ -479,9 +479,9 @@ class Editor:
             c = subprocess.Popen(f'{editor} "{filename}"', env=environ, shell=True)
             exit_code = c.wait()
             if exit_code != 0:
-                raise Outlier(f"{editor}: Editing failed!")
+                raise QuoException(f"{editor}: Editing failed!")
         except OSError as e:
-            raise Outlier(f"{editor}: Editing failed: {e}")
+            raise QuoException(f"{editor}: Editing failed: {e}")
 
     def edit(self, text):
         import tempfile
