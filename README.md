@@ -178,10 +178,26 @@ In order to for me to maintain this project, `please consider donating today`
 
 ## Links
 
-Documentation:
+* Documentation:
 
-[Quo's Documentation ](https://quo.rtfd.io)
+  [Quo's Documentation ](https://quo.rtfd.io)
 
-Pypi releases:
-[PyPi](https:// pypi.com/project/quo)
+* Pypi releases:
+
+     [PyPi](https://pypi.com/project/quo)
+
+* Source code:
+
+     [Github](https://github.com/secretum-inc/quo)
+
+* Issue tracker:
+
+     [Issues](https://github.com/secretum-inc/quo/issues)
+
+* Chat:
+
+     [Gitter](https://gitter.im/secretum-inc)
+
+
+
 
