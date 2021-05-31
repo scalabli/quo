@@ -13,9 +13,9 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
 ---
 
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/quo.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/quo/)
-[![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum/quo)
-[![codecov](https://codecov.io/gh/secretum/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretuminc/quo)
-[![GitHub](https://img.shields.io/github/license/secretuminc/quo.svg)](LICENSE.txt)
+[![Travis CI status](https://img.shields.io/travis/secretum/quo/master?label=Travis%20CI&logo=travis)](https://travis-ci.org/secretum-inc/quo)
+[![codecov](https://codecov.io/gh/secretum-inc/quo/branch/master/graph/badge.svg)](https://codecov.io/gh/secretum-inc/quo)
+[![GitHub](https://img.shields.io/github/license/secretum-inc/quo.svg)](LICENSE.txt)
 [![quo](https://snyk.io/advisor/python/quo/badge.svg)](https://snyk.io/advisor/python/quo)
 
 
@@ -32,9 +32,9 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
     <tr>
         <th>tests</th>
         <td>
-            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Windows%22"><img
+            <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3A%22Test+Windows%22"><img
                 alt="GitHub Actions build status (Test Windows)"
-                src="https://github.com/python-pillow/Pillow/workflows/Test%20Windows/badge.svg"></a>
+                src="https://github.com/secretum-inc/quo/workflows/Test%20Windows/badge.svg"></a>
             <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Docker%22"><img
                 alt="GitHub Actions build status (Test Docker)"
                 src="https://github.com/python-pillow/Pillow/workflows/Test%20Docker/badge.svg"></a>
@@ -49,7 +49,7 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
                 src="https://img.shields.io/travis/com/python-pillow/pillow-wheels/master.svg?label=aarch64%20wheels"></a>
             <a href="https://codecov.io/gh/python-pillow/Pillow"><img
                 alt="Code coverage"
-                src="https://codecov.io/gh/python-pillow/Pillow/branch/master/graph/badge.svg"></a>
+                src="https://codecov.io/gh/secretum-inc/quo/branch/master/graph/badge.svg"></a>
         </td>
     </tr>
     <tr>
