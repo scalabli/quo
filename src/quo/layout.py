@@ -25,7 +25,7 @@ def iter_rows(rows, col_count):
         yield row + ("",) * (col_count - len(row))
 
 
-def wrap_text(
+def wraptext(
     text, width=78, initial_indent="", subsequent_indent="", preserve_paragraphs=False
 ):
     """A helper function that intelligently wraps text.  By default, it
@@ -144,7 +144,7 @@ class HelpFormatter:
             # The arguments will fit to the right of the prefix.
             indent = " " * term_len(usage_prefix)
             self.write(
-                wrap_text(
+                wraptext(
                     args,
                     text_width,
                     initial_indent=usage_prefix,
@@ -157,7 +157,7 @@ class HelpFormatter:
             self.write("\n")
             indent = " " * (max(self.current_indent, term_len(prefix)) + 4)
             self.write(
-                wrap_text(
+                wraptext(
                     args, text_width, initial_indent=indent, subsequent_indent=indent
                 )
             )
@@ -180,7 +180,7 @@ class HelpFormatter:
         text_width = max(self.width - self.current_indent, 11)
         indent = " " * self.current_indent
         self.write(
-            wrap_text(
+            wraptext(
                 text,
                 text_width,
                 initial_indent=indent,
@@ -218,7 +218,7 @@ class HelpFormatter:
                 self.write(" " * (first_col + self.current_indent))
 
             text_width = max(self.width - first_col - 2, 10)
-            wrapped_text = wrap_text(second, text_width, preserve_paragraphs=True)
+            wrapped_text = wraptext(second, text_width, preserve_paragraphs=True)
             lines = wrapped_text.splitlines()
 
             if lines:
