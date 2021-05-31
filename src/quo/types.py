@@ -9,7 +9,7 @@ from .accordance import _get_argv_encoding
 from .accordance import filename_to_ui
 from .accordance import encoding_filesystem
 from .accordance import get_strerror
-from .accordance import open_stream
+from .accordance import openstream
 from .exceptions import BadParameter
 from .utilities import LazyFile
 from .utilities import safecall
