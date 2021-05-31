@@ -1,9 +1,9 @@
-.. XXX Need to change this image to readthedocs before release
+
 
 .. image:: https://raw.githubusercontent.com/robinhood/faust/8ee5e209322d9edf5bdb79b992ef986be2de4bb4/artwork/banner-alt1.png
 
 ===========================
- Python Stream Processing
+ Quo
 ===========================
 
 |build-status| |coverage| |license| |wheel| |pyversion| |pyimp|
@@ -548,28 +548,28 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
 .. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
 
-.. |build-status| image:: https://secure.travis-ci.org/robinhood/faust.png?branch=master
+.. |build-status| image:: https://secure.travis-ci.org/secretum-inc/quo.png?branch=master
     :alt: Build status
-    :target: https://travis-ci.org/robinhood/faust
+    :target: https://travis-ci.org/secretum-inc/quo
 
-.. |coverage| image:: https://codecov.io/github/robinhood/faust/coverage.svg?branch=master
+.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=master
     :target: https://codecov.io/github/robinhood/faust?branch=master
 
-.. |license| image:: https://img.shields.io/pypi/l/faust.svg
-    :alt: BSD License
-    :target: https://opensource.org/licenses/BSD-3-Clause
+.. |license| image:: https://img.shields.io/pypi/l/quo.svg
+    :alt: MIT License
+    :target: https://opensource.org/licenses/MIT
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/faust.svg
-    :alt: faust can be installed via wheel
-    :target: http://pypi.org/project/faust/
+.. |wheel| image:: https://img.shields.io/pypi/wheel/quo.svg
+    :alt: quo can be installed via wheel
+    :target: http://pypi.org/project/quo/
 
-.. |pyversion| image:: https://img.shields.io/pypi/pyversions/faust.svg
+.. |pyversion| image:: https://img.shields.io/pypi/pyversions/quo.svg
     :alt: Supported Python versions.
-    :target: http://pypi.org/project/faust/
+    :target: http://pypi.org/project/quo/
 
-.. |pyimp| image:: https://img.shields.io/pypi/implementation/faust.svg
+.. |pyimp| image:: https://img.shields.io/pypi/implementation/quo.svg
     :alt: Support Python implementations.
-    :target: http://pypi.org/project/faust/
+    :target: http://pypi.org/project/quo/
 
 .. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
 
