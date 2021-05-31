@@ -32,7 +32,7 @@ from .exceptions import Abort
 from .exceptions import BadArgumentUsage
 from .exceptions import BadOptionUsage
 from .exceptions import BadParameter
-from .exceptions import QuoException
+from .exceptions import Outlier
 from .exceptions import FileError
 from .exceptions import MissingParameter
 from .exceptions import NoSuchOption
