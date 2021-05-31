@@ -31,7 +31,7 @@ Installation
 ============
 You can install quo via the Python Package Index (PyPI)
 
-.. sourcecode:: python
+.. sourcecode:: console
 
     $ pip install -U quo
 
@@ -98,25 +98,6 @@ Quo is...
 **Simple**
      If you know Python you can  easily use quo and it can integrate with just about anything.
 
-
-**Highly Available**
-    Faust is highly available and can survive network problems and server
-    crashes.  In the case of node failure, it can automatically recover,
-    and tables have standby nodes that will take over.
-
-**Distributed**
-    Start more instances of your application as needed.
-
-**Fast**
-    A single-core Faust worker instance can already process tens of thousands
-    of events every second, and we are reasonably confident that throughput will
-    increase once we can support a more optimized Kafka client.
-
-**Flexible**
-    Faust is just Python, and a stream is an infinite asynchronous iterator.
-    If you know how to use Python, you already know how to use Faust,
-    and it works with your favorite Python libraries like Django, Flask,
-    SQLAlchemy, NTLK, NumPy, SciPy, TensorFlow, etc.
 
 .. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
 
