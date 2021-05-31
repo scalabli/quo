@@ -39,7 +39,7 @@ from .exceptions import NoSuchOption
 from .exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import wraptext
-from .current import currentcontext
+from context.current import currentcontext
 from .parser import OptionParser
 from .termui import clear
 from .termui import confirm
