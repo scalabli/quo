@@ -477,9 +477,9 @@ def _resolve_context(cli, ctx_args, prog_name, args):
     args = ctx.protected_args + ctx.args
 
     while args:
-        if isinstance(ctx.command, MultiCommand):
-            if not ctx.command.chain:
-                name, cmd, args = ctx.command.resolve_command(ctx, args)
+        if isinstance(ctx.decree, MultiCommand):
+            if not ctx.decree.chain:
+                name, cmd, args = ctx.decree.resolve_command(ctx, args)
 
                 if cmd is None:
                     return ctx
@@ -488,7 +488,7 @@ def _resolve_context(cli, ctx_args, prog_name, args):
                 args = ctx.protected_args + ctx.args
             else:
                 while args:
-                    name, cmd, args = ctx.command.resolve_command(ctx, args)
+                    name, cmd, args = ctx.decree.resolve_command(ctx, args)
 
                     if cmd is None:
                         return ctx
@@ -535,9 +535,9 @@ def _resolve_incomplete(ctx, args, incomplete):
     # given and the incomplete arg looks like an option, the current
     # command will provide option name completions.
     if "--" not in args and _start_of_option(incomplete):
-        return ctx.command, incomplete
+        return ctx.decree, incomplete
 
-    params = ctx.command.get_params(ctx)
+    params = ctx.decree.get_params(ctx)
 
     # If the last complete arg is an option name with an incomplete
     # value, the option will provide value completions.
@@ -553,7 +553,7 @@ def _resolve_incomplete(ctx, args, incomplete):
 
     # There were no unparsed arguments, the command may be a group that
     # will provide command name completions.
-    return ctx.command, incomplete
+    return ctx.decree, incomplete
 
 
 
