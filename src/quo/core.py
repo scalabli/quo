@@ -74,10 +74,10 @@ class ShellDetectionFailure(EnvironmentError):
 
 
 def _complete_visible_commands(ctx, incomplete):
-    """List all the subcommands of a group that start with the
+    """List all the subcommands tethered that start with the
     incomplete value and aren't hidden.
 
-    :param ctx: Invocation context for the group.
+    :param ctx: Invocation context for the tethered sub-commands.
     :param incomplete: Value being completed. May be empty.
     """
     for name in ctx.command.list_commands(ctx):
@@ -319,7 +319,7 @@ class Context:
         self.default_map = default_map
 
         #: This flag indicates if a subcommand is going to be executed. A
-        #: group callback can use this information to figure out if it's
+        #: tether callback can use this information to figure out if it's
         #: being executed directly or because the execution flow passes
         #: onwards to a subcommand. By default it's None, but it can be
         #: the name of the subcommand to execute.
@@ -553,7 +553,7 @@ class Context:
 
         .. code-block:: python
 
-            @quo.group()
+            @quo.tether()
             @quo.option("--name")
             @quo.contextualize
             def cli(ctx):
@@ -785,7 +785,7 @@ class BaseCommand:
     .. versionchanged:: 2.0
        Added the `context_settings` parameter.
 
-    :param name: the name of the command to use unless a group overrides it.
+    :param name: the name of the command to use unless a tether overrides it.
     :param context_settings: an optional dictionary with defaults that are
                              passed to the context object.
     """
@@ -803,7 +803,7 @@ class BaseCommand:
 
     def __init__(self, name, context_settings=None):
         #: the name the command thinks it has.  Upon registering a command
-        #: on a :class:`Group` the group will default the command name
+        #: on a :class:`Tether` the tethered sub-commands will default the command name
         #: with this information.  You should instead use the
         #: :class:`Context`\'s :attr:`~Context.info_name` attribute.
         self.name = name
@@ -1051,7 +1051,7 @@ class Command(BaseCommand):
     .. versionchanged:: 7.1
        Added the `no_args_is_help` parameter.
 
-    :param name: the name of the command to use unless a group overrides it.
+    :param name: the name of the command to use unless a tether overrides it.
     :param context_settings: an optional dictionary with defaults that are
                              passed to the context object.
     :param callback: the callback to invoke.  This is optional.
@@ -1331,7 +1331,7 @@ class Command(BaseCommand):
 class MultiCommand(Command):
     """A multi command is the basic implementation of a command that
     dispatches to subcommands.  The most common version is the
-    :class:`Group`.
+    :class:`Tether`.
 
     :param invoke_without_command: this controls how the multi command itself
                                    is invoked.  By default it's only invoked
@@ -1423,7 +1423,7 @@ class MultiCommand(Command):
 
         Example::
 
-            @quo.group()
+            @quo.tether()
             @quo.option('-i', '--input', default=23)
             def cli(input):
                 return 42
@@ -1504,8 +1504,8 @@ class MultiCommand(Command):
         if not ctx.protected_args:
             if self.invoke_without_command:
                 # No subcommand was invoked, so the result callback is
-                # invoked with None for regular groups, or an empty list
-                # for chained groups.
+                # invoked with None for regular tethered componentss, or an empty list
+                # for chained commandss.
                 with ctx:
                     super().invoke(ctx)
                     return _process_result([] if self.chain else None)
@@ -1618,11 +1618,11 @@ class MultiCommand(Command):
         return results
 
 
-class Group(MultiCommand):
-    """A group allows a command to have subcommands attached. This is
+class Tether(MultiCommand):
+    """A tether allows a command to have subcommands attached. This is
     the most common way to implement nesting in quo.
 
-    :param name: The name of the group command.
+    :param name: The name of the tethered command.
     :param commands: A dict mapping names to :class:`Command` objects.
         Can also be a list of :class:`Command`, which will use
         :attr:`Command.name` to create the dict.
@@ -1634,21 +1634,21 @@ class Group(MultiCommand):
         The ``commmands`` argument can be a list of command objects.
     """
 
-    #: If set, this is used by the group's :meth:`command` decorator
+    #: If set, this is used by the tether's :meth:`command` decorator
     #: as the default :class:`Command` class. This is useful to make all
     #: subcommands use a custom command class.
     #:
     #: .. versionadded:: 8.0
     command_class = None
 
-    #: If set, this is used by the group's :meth:`group` decorator
-    #: as the default :class:`Group` class. This is useful to make all
-    #: subgroups use a custom group class.
+    #: If set, this is used by the tether's :meth:`tether` decorator
+    #: as the default :class:`Tether` class. This is useful to make all
+    #: subgroups use a custom tether class.
     #:
     #: If set to the special value :class:`type` (literally
-    #: ``group_class = type``), this group's class will be used as the
-    #: default class. This makes a custom group class continue to make
-    #: custom groups.
+    #: ``group_class = type``), this tether's class will be used as the
+    #: default class. This makes a custom tether class continue to make
+    #: custom tethered componentss.
     #:
     #: .. versionadded:: 8.0
     group_class = None
@@ -1664,8 +1664,8 @@ class Group(MultiCommand):
         #: The registered subcommands by their exported names.
         self.commands = commands
 
-    def add_command(self, cmd, name=None):
-        """Registers another :class:`Command` with this group.  If the name
+    def addcommand(self, cmd, name=None):
+        """Registers another :class:`Command` with this tether.  If the name
         is not provided, the name of the command is used.
         """
         name = name or cmd.name
@@ -1676,9 +1676,9 @@ class Group(MultiCommand):
 
     def command(self, *args, **kwargs):
         """A shortcut decorator for declaring and attaching a command to
-        the group. This takes the same arguments as :func:`command` and
-        immediately registers the created command with this group by
-        calling :meth:`add_command`.
+        the tether. This takes the same arguments as :func:`command` and
+        immediately registers the created command with this tether by
+        calling :meth:`addcommand`.
 
         To customize the command class used, set the
         :attr:`command_class` attribute.
@@ -1693,24 +1693,24 @@ class Group(MultiCommand):
 
         def decorator(f):
             cmd = command(*args, **kwargs)(f)
-            self.add_command(cmd)
+            self.addcommand(cmd)
             return cmd
 
         return decorator
 
-    def group(self, *args, **kwargs):
-        """A shortcut decorator for declaring and attaching a group to
-        the group. This takes the same arguments as :func:`group` and
-        immediately registers the created group with this group by
-        calling :meth:`add_command`.
+    def tether(self, *args, **kwargs):
+        """A shortcut decorator for declaring and attaching a tether to
+        the tether. This takes the same arguments as :func:`tether` and
+        immediately registers the created tether with this tether by
+        calling :meth:`addcommand`.
 
-        To customize the group class used, set the :attr:`group_class`
+        To customize the tether class used, set the :attr:`group_class`
         attribute.
 
         .. versionchanged:: 8.0
             Added the :attr:`group_class` attribute.
         """
-        from .decorators import group
+        from .decorators import tether
 
         if self.group_class is not None and "cls" not in kwargs:
             if self.group_class is type:
@@ -1720,7 +1720,7 @@ class Group(MultiCommand):
 
         def decorator(f):
             cmd = group(*args, **kwargs)(f)
-            self.add_command(cmd)
+            self.addcommand(cmd)
             return cmd
 
         return decorator
@@ -2454,7 +2454,7 @@ class Option(Parameter):
 
     def get_default(self, ctx, call=True):
         # If we're a non boolean flag our default is more complex because
-        # we need to look at all flags in the same group to figure out
+        # we need to look at all flags in the same tether to figure out
         # if we're the the default one in which case we return the flag
         # value as default.
         if self.is_flag and not self.is_bool_flag:
