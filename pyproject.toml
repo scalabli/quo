@@ -6,7 +6,13 @@ build-backend = "flit_core.buildapi"
 module = "quo"
 author = "Gerrishon Sirere"
 author-email = "secretum.inc@pm.me"
-home-page = "https://github.com/secretum-inc/quo "
+home-page = "https://quo.rtfd.io"
+source-code = "https://github.com/secretum-inc/quo"
+donate = "https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54"
+issue-tracker = "https://github.com/secretum-inc/quo/issues/"
+twitter = "https://twitter.com/secretum-inc/"
+chat = "https://gitter.im/secretum-inc/quo"
+
 classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: System Administrators",
