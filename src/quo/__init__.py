@@ -9,7 +9,7 @@ import os
 import subprocess
 from .core import Argument
 from .core import BaseCommand
-from .core import Command
+from .core import Decree
 from .core import CommandCollection
 from .core import Context
 from .core import Tether
