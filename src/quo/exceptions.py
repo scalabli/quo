@@ -51,7 +51,7 @@ class UsageError(Outlier):
     def __init__(self, message, ctx=None):
         super().__init__(message)
         self.ctx = ctx
-        self.cmd = self.ctx.decree if self.ctx else None
+        self.cmd = self.ctx.command if self.ctx else None
 
     def show(self, file=None):
         if file is None:
