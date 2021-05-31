@@ -1,6 +1,6 @@
 
 
-.. image:: https://raw.githubusercontent.com/robinhood/faust/8ee5e209322d9edf5bdb79b992ef986be2de4bb4/artwork/banner-alt1.png
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/pics/quo.png
 
 ===========================
  Quo
@@ -26,46 +26,42 @@
 
 
 
-
-
-
-
-
-
-
-
-It is used at `Robinhood`_ to build high performance distributed systems
-and real-time data pipelines that process billions of events every day.
-
-Faust provides both *stream processing* and *event processing*,
-sharing similarity with tools such as
-`Kafka Streams`_, `Apache Spark`_/`Storm`_/`Samza`_/`Flink`_,
-
-It does not use a DSL, it's just Python!
-This means you can use all your favorite Python libraries
-when stream processing: NumPy, PyTorch, Pandas, NLTK, Django,
-Flask, SQLAlchemy, ++
-
-Faust requires Python 3.6 or later for the new `async/await`_ syntax,
+Quo requires Python 3.6 or later for the new `async/await`_ syntax,
 and variable type annotations.
 
 Here's an example processing a stream of incoming orders:
 
 .. sourcecode:: python
 
-    app = faust.App('myapp', broker='kafka://localhost')
+    $ pip install -U quo
 
-    # Models describe how messages are serialized:
-    # {"account_id": "3fae-...", amount": 3}
-    class Order(faust.Record):
-        account_id: str
-        amount: int
+Example 1
 
-    @app.agent(value_type=Order)
-    async def order(orders):
-        async for order in orders:
-            # process infinite stream of orders.
-            print(f'Order for {order.account_id}: {order.amount}')
+.. sourcecode:: python
+
+    import quo
+    quo.echo('Hello, World!')
+    
+
+Example 2
+
+.. sourcecode:: python
+
+  import quo
+  quo.flair(f'Hello, World!', fg="red", bold=True)
+
+
+Example 3
+
+.. sourcecode:: python
+
+  import quo
+  @quo.decree()
+  @quo.option("--name", prompt="What is your name?:")
+  def hello(name):
+  quo.echo(f'Hello {name}!')
+  if __name__ == '__main__':
+      hello() 
 
 The Agent decorator defines a "stream processor" that essentially
 consumes from a Kafka topic and does something for every event it receives.
