@@ -35,19 +35,19 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
             <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3A%22Test+Windows%22"><img
                 alt="GitHub Actions build status (Test Windows)"
                 src="https://github.com/secretum-inc/quo/workflows/Test%20Windows/badge.svg"></a>
-            <a href="https://github.com/python-pillow/Pillow/actions?query=workflow%3A%22Test+Docker%22"><img
+            <a href="https://github.com/secretum-inc/quo/actions?query=workflow%3A%22Test+Docker%22"><img
                 alt="GitHub Actions build status (Test Docker)"
-                src="https://github.com/python-pillow/Pillow/workflows/Test%20Docker/badge.svg"></a>
-            <a href="https://ci.appveyor.com/project/python-pillow/Pillow"><img
+                src="https://github.com/secretum-inc/quo/workflows/Test%20Docker/badge.svg"></a>
+            <a href="https://ci.appveyor.com/project/secretum-inc/quo"><img
                 alt="AppVeyor CI build status (Windows)"
-                src="https://img.shields.io/appveyor/build/python-pillow/Pillow/master.svg?label=Windows%20build"></a>
-            <a href="https://github.com/python-pillow/pillow-wheels/actions"><img
+                src="https://img.shields.io/appveyor/build/secretum-inc/quo/master.svg?label=Windows%20build"></a>
+            <a href="https://github.com/secretum-inc/quo-wheels/actions"><img
                 alt="GitHub Actions wheels build status (Wheels)"
-                src="https://github.com/python-pillow/pillow-wheels/workflows/Wheels/badge.svg"></a>
-            <a href="https://travis-ci.com/github/python-pillow/pillow-wheels"><img
+                src="https://github.com/secretum-inc/quo-wheels/workflows/Wheels/badge.svg"></a>
+            <a href="https://travis-ci.com/github/secretum-inc/quo-wheels"><img
                 alt="Travis CI wheels build status (aarch64)"
-                src="https://img.shields.io/travis/com/python-pillow/pillow-wheels/master.svg?label=aarch64%20wheels"></a>
-            <a href="https://codecov.io/gh/python-pillow/Pillow"><img
+                src="https://img.shields.io/travis/com/secretum-inc/quo-wheels/master.svg?label=aarch64%20wheels"></a>
+            <a href="https://codecov.io/gh/secretum-inc/quo"><img
                 alt="Code coverage"
                 src="https://codecov.io/gh/secretum-inc/quo/branch/master/graph/badge.svg"></a>
         </td>
@@ -57,7 +57,7 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
         <td>
             <a href="https://zenodo.org/badge/latestdoi/17549/secretum-inc/quo"><img
                 alt="Zenodo"
-                src="https://zenodo.org/badge/17549/python-pillow/Pillow.svg"></a>
+                src="https://zenodo.org/badge/17549/secretum-inc/quo.svg"></a>
             <a href="https://pypi.org/project/quo/"><img
                 alt="Newest PyPI version"
                 src="https://img.shields.io/pypi/v/quo.svg"></a>
@@ -72,8 +72,8 @@ Quo is a Python  based toolkit for writing Command-Line Interface(CLI) applicati
             <a href="https://gitter.im/secretum-inc/quo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img
                 alt="Join the chat at https://gitter.im/secretum-inc/quo"
                 src="https://badges.gitter.im/secretum-inc/quo.svg"></a>
-            <a href="https://twitter.com/gerrishon_s"><img
-                alt="Follow on https://twitter.com/gerrishon_s"
+            <a href="https://twitter.com/secretum-inc"><img
+                alt="Follow on https://twitter.com/secretum-inc"
                 src="https://img.shields.io/badge/tweet-on%20Twitter-00aced.svg"></a>
         </td>
     </tr>
@@ -175,4 +175,13 @@ If you run into an issue or want to contribute, we would be very happy if you wo
 In order to for me to maintain this project, `please consider donating today` 
 
 * <a href="https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54" target="_blank"><img src="https://res.cloudinary.com/edev/image/upload/v1583011476/button_y8hgt8.png" alt="Donate" style="width: 250px !important; height: 60px !important;" width="250" height="60"></a>
+
+## Links
+
+Documentation:
+
+[Quo's Documentation ](https://quo.rtfd.io)
+
+Pypi releases:
+[PyPi](https:// pypi.com/project/quo)
 
