@@ -21,11 +21,7 @@
     # Forever scalable
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
-
-
-
-Quo requires Python 3.6 or later for the new `async/await`_ syntax,
-and variable type annotations.
+Quo requires Python 3.6 or later. 
 
 Installation
 ============
