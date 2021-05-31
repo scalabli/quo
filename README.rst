@@ -17,10 +17,8 @@
 
 .. sourcecode:: python
 
-    # Python Streams
-    # Forever scalable event processing & in-memory durable K/V store;
-    # as a library w/ asyncio & static typing.
-    import faust
+    # Quo
+    # Forever scalable
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
 
@@ -96,47 +94,8 @@ Quo is...
 ===========
 
 **Simple**
-    Quo is a Python based toolkit for writing Command-Line Interface(CLI) applications. To get started using other stream processing
-    solutions you have complicated hello-world projects, and
-    infrastructure requirements.  Faust only requires Kafka,
-    the rest is just Python, so If you know Python you can already use Faust to do
-    stream processing, and it can integrate with just about anything.
+     If you know Python you can  easily use quo and it can integrate with just about anything.
 
-    Here's one of the easier applications you can make::
-
-        import faust
-
-        class Greeting(faust.Record):
-            from_name: str
-            to_name: str
-
-        app = faust.App('hello-app', broker='kafka://localhost')
-        topic = app.topic('hello-topic', value_type=Greeting)
-
-        @app.agent(topic)
-        async def hello(greetings):
-            async for greeting in greetings:
-                print(f'Hello from {greeting.from_name} to {greeting.to_name}')
-
-        @app.timer(interval=1.0)
-        async def example_sender(app):
-            await hello.send(
-                value=Greeting(from_name='Faust', to_name='you'),
-            )
-
-        if __name__ == '__main__':
-            app.main()
-
-    You're probably a bit intimidated by the `async` and `await` keywords,
-    but you don't have to know how ``asyncio`` works to use
-    Faust: just mimic the examples, and you'll be fine.
-
-    The example application starts two tasks: one is processing a stream,
-    the other is a background thread sending events to that stream.
-    In a real-life application, your system will publish
-    events to Kafka topics that your processors can consume from,
-    and the background thread is only needed to feed data into our
-    example.
 
 **Highly Available**
     Faust is highly available and can survive network problems and server
