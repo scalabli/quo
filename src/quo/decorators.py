@@ -6,7 +6,7 @@ from functools import update_wrapper
 
 from .core import Argument
 from .core import Command
-from .core import Group
+from .core import Tether
 from .core import Option
 from .current import currentcontext
 from .utilities import echo
@@ -116,7 +116,7 @@ def command(name=None, cls=None, **attrs):
 
     Once decorated the function turns into a :class:`Command` instance
     that can be invoked as a command line utility or be attached to a
-    command :class:`Group`.
+    command :class:`Tether`.
 
     :param name: the name of the command.  This defaults to the function
                  name with underscores replaced by dashes.
@@ -134,12 +134,12 @@ def command(name=None, cls=None, **attrs):
     return decorator
 
 
-def group(name=None, **attrs):
-    """Creates a new :class:`Group` with a function as callback.  This
+def tether(name=None, **attrs):
+    """Creates a new :class:`Tether` with a function as callback.  This
     works otherwise the same as :func:`command` just that the `cls`
-    parameter is set to :class:`Group`.
+    parameter is set to :class:`Tether`.
     """
-    attrs.setdefault("cls", Group)
+    attrs.setdefault("cls", Tether)
     return command(name, **attrs)
 
 
