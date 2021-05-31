@@ -5,7 +5,7 @@ import inspect
 from functools import update_wrapper
 
 from .core import Argument
-from .core import Decree
+from .core import Command
 from .core import Tether
 from .core import Option
 from .current import currentcontext
@@ -79,7 +79,7 @@ def make_pass_decorator(object_type, ensure=False):
 
 
 def _make_command(f, name, attrs, cls):
-    if isinstance(f, Decree):
+    if isinstance(f, Command):
         raise TypeError("Attempted to convert a callback into a command twice.")
     try:
         params = f.__quo_params__
@@ -103,28 +103,28 @@ def _make_command(f, name, attrs, cls):
     )
 
 
-def decree(name=None, cls=None, **attrs):
-    r"""Creates a new :class:`Decree` and uses the decorated function as
+def command(name=None, cls=None, **attrs):
+    r"""Creates a new :class:`Command` and uses the decorated function as
     callback.  This will also automatically attach all decorated
-    :func:`option`\s and :func:`argument`\s as parameters to the decree.
+    :func:`option`\s and :func:`argument`\s as parameters to the command.
 
-    The name of the decree defaults to the name of the function with
+    The name of the command defaults to the name of the function with
     underscores replaced by dashes.  If you want to change that, you can
     pass the intended name as the first argument.
 
     All keyword arguments are forwarded to the underlying command class.
 
-    Once decorated the function turns into a :class:`Decree` instance
+    Once decorated the function turns into a :class:`Command` instance
     that can be invoked as a command line utility or be attached to a
-    decree :class:`Tether`.
+    command :class:`Tether`.
 
     :param name: the name of the command.  This defaults to the function
                  name with underscores replaced by dashes.
-    :param cls: the decree class to instantiate.  This defaults to
-                :class:`Decree`.
+    :param cls: the command class to instantiate.  This defaults to
+                :class:`Command`.
     """
     if cls is None:
-        cls = Decree
+        cls = Command
 
     def decorator(f):
         cmd = _make_command(f, name, attrs, cls)
@@ -136,15 +136,15 @@ def decree(name=None, cls=None, **attrs):
 
 def tether(name=None, **attrs):
     """Creates a new :class:`Tether` with a function as callback.  This
-    works otherwise the same as :func:`decree` just that the `cls`
+    works otherwise the same as :func:`command` just that the `cls`
     parameter is set to :class:`Tether`.
     """
     attrs.setdefault("cls", Tether)
-    return decree(name, **attrs)
+    return command(name, **attrs)
 
 
 def _param_memo(f, param):
-    if isinstance(f, Decree):
+    if isinstance(f, Command):
         f.params.append(param)
     else:
         if not hasattr(f, "__quo_params__"):
@@ -153,11 +153,11 @@ def _param_memo(f, param):
 
 
 def argument(*param_decls, **attrs):
-    """Attaches an argument to the decree.  All positional arguments are
+    """Attaches an argument to the command.  All positional arguments are
     passed as parameter declarations to :class:`Argument`; all keyword
     arguments are forwarded unchanged (except ``cls``).
     This is equivalent to creating an :class:`Argument` instance manually
-    and attaching it to the :attr:`Decree.params` list.
+    and attaching it to the :attr:`Command.params` list.
 
     :param cls: the argument class to instantiate.  This defaults to
                 :class:`Argument`.
@@ -172,11 +172,11 @@ def argument(*param_decls, **attrs):
 
 
 def option(*param_decls, **attrs):
-    """Attaches an option to the decree.  All positional arguments are
+    """Attaches an option to the command.  All positional arguments are
     passed as parameter declarations to :class:`Option`; all keyword
     arguments are forwarded unchanged (except ``cls``).
     This is equivalent to creating an :class:`Option` instance manually
-    and attaching it to the :attr:`Decree.params` list.
+    and attaching it to the :attr:`Command.params` list.
 
     :param cls: the option class to instantiate.  This defaults to
                 :class:`Option`.
@@ -271,7 +271,7 @@ def autoversion(
     :param package_name: The package name to detect the version from. If
         not provided, quo will try to detect it.
     :param prog_name: The name of the CLI to show in the message. If not
-        provided, it will be detected from the decree.
+        provided, it will be detected from the command.
     :param message: The message to show. The values ``%(prog)s``,
         ``%(package)s``, and ``%(version)s`` are available.
     :param kwargs: Extra arguments are passed to :func:`option`.
@@ -360,7 +360,7 @@ def autohelp(*param_decls, **kwargs):
     and exits the program.
 
     This is usually unnecessary, as the ``--help`` option is added to
-    each decree automatically unless ``add_autohelp=False`` is
+    each command automatically unless ``add_autohelp=False`` is
     passed.
 
     :param param_decls: One or more option names. Defaults to the single
