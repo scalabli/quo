@@ -16,8 +16,8 @@ from .exceptions import MissingParameter
 from .exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import join_options
-from .current import pop_context
-from .current import push_context
+from quo.context.current import pop_context
+from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import OptionParser
 from .parser import split_opt
