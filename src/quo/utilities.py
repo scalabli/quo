@@ -15,7 +15,7 @@ from .accordance import should_strip_ansi
 from .accordance import strip_ansi
 from .accordance import text_streams
 from .accordance import WIN
-from .current import resolve_color_default
+from quo.context.current import resolve_color_default
 
 
 echo_functionality = (bytes, bytearray, str)
