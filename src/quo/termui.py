@@ -12,7 +12,7 @@ from .accordance import isatty
 from .accordance import strip_ansi
 from .accordance import WIN
 from .exceptions import Abort
-from .exceptions import UsageError
+from quo.outliers.usage_error import UsageError
 from quo.context.current import resolve_color_default
 from .types import Choice
 from .types import convert_type
