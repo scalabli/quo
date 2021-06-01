@@ -53,7 +53,7 @@ You can install quo via the Python Package Index (PyPI)
 .. sourcecode:: python
 
   import quo
-  @quo.decree()
+  @quo.command()
   @quo.option("--name", prompt="What is your name?:")
   def hello(name):
   quo.echo(f'Hello {name}!')
@@ -66,7 +66,7 @@ You can install quo via the Python Package Index (PyPI)
 .. sourcecode:: python
 
     import quo 
-    @quo.decree()
+    @quo.command()
     @quo.option("--count", default=1, help="The number of times the feedback is printed.")
     @quo.option("--name", prompt="What is your name", help="This prompts the user to input their name.")
     @quo.option("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
@@ -139,11 +139,11 @@ file in the top distribution directory for the full license text.
 
 .. # vim: syntax=rst expandtab tabstop=4 shiftwidth=4 shiftround
 
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
+.. _`introduction`: http://quo.readthedocs.io/en/latest/introduction.html
 
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
+.. _`quickstart`: http://quo.readthedocs.io/en/latest/playbooks/quickstart.html
 
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
+.. _`User Guide`: http://quo.readthedocs.io/en/latest/userguide/index.html
 
 
 Code of Conduct
