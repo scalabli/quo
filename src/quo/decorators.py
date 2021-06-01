@@ -3,13 +3,20 @@
 #
 import inspect
 from functools import update_wrapper
-
 from .core import Argument
 from .core import Command
 from .core import Tether
 from .core import Option
 from quo.context.current import currentcontext
 from .utilities import echo
+from quo.decorators import argument
+from quo.decorators import autoconfirm
+from quo.decorators import autopswd
+from quo.decorators import autoversion
+from quo.decorators import autohelp
+from quo.decorators import command
+from quo.decorators import option
+from quo.decorators import tether
 
 #Marks a callback as wanting to receive current context
 def contextualize(f):
