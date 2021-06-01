@@ -14,7 +14,6 @@ from quo.decorators import autoconfirm
 from quo.decorators import autopswd
 from quo.decorators import autoversion
 from quo.decorators import autohelp
-from quo.decorators import command
 from quo.decorators import option
 from quo.decorators import tether
 
