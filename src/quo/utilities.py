@@ -121,7 +121,7 @@ class LazyFile:
                 self.name, self.mode, self.encoding, self.errors, atomic=self.atomic
             )
         except OSError as e:  # noqa: E402
-            from .exceptions import FileError
+            from quo.outliers.file_error import FileError
 
             raise FileError(self.name, hint=get_strerror(e))
         self._f = rv
