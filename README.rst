@@ -105,12 +105,12 @@ Quo is...
 
 
 Getting Help
-============
+=============
 
 .. _gitter-channel:
 
 Gitter
------
+-------
 
 For discussions about the usage, development, and future of quo,
 please join our Gitter community
@@ -119,12 +119,12 @@ please join our Gitter community
 * Join: https://gitter.im/secretum-inc/quo
 
 Resources
-=========
+==========
 
 .. _bug-tracker:
 
 Bug tracker
------------
+------------
 
 If you have any suggestions, bug reports, or annoyances please report them
 to our issue tracker at https://github.com/secretum-inc/quo/issues/
@@ -132,7 +132,7 @@ to our issue tracker at https://github.com/secretum-inc/quo/issues/
 .. _license:
 
 License
-=======
+========
 
 This software is licensed under the `MIT License`. See the ``LICENSE``
 file in the top distribution directory for the full license text.
@@ -147,7 +147,7 @@ file in the top distribution directory for the full license text.
 
 
 Code of Conduct
-===============
+================
 
 Everyone interacting in the project's code bases, issue trackers, chat rooms,
 and mailing lists is expected to follow the Faust Code of Conduct.
