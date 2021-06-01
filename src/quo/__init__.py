@@ -22,10 +22,10 @@ from quo.decorators import command
 from quo.decorators import autoconfirm
 from quo.decorators import tether
 from quo.decorators import autohelp
-from .decorators import make_pass_decorator
+from .decorate import make_pass_decorator
 from quo.decorators import option
-from .decorators import contextualize
-from .decorators import objectualize
+from .decorate import contextualize
+from .decorate import objectualize
 from quo.decorators import autopswd
 from quo.decorators import autoversion
 from .exceptions import Abort
