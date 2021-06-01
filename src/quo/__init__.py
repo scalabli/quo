@@ -69,7 +69,7 @@ from .types import Tuple
 from .types import UNPROCESSED
 from .types import UUID
 from .utilities import echo
-from .utilities import format_filename
+from .utilities import formatfilename
 from .utilities import get_app_dir
 from .utilities import get_binary_stream
 from .utilities import get_os_args
