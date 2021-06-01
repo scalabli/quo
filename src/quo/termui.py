@@ -13,7 +13,7 @@ from .accordance import strip_ansi
 from .accordance import WIN
 from .exceptions import Abort
 from .exceptions import UsageError
-from .current import resolve_color_default
+from quo.context.current import resolve_color_default
 from .types import Choice
 from .types import convert_type
 from .utilities import echo
