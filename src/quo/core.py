@@ -1686,7 +1686,7 @@ class Tether(MultiCommand):
         .. versionchanged:: 8.0
             Added the :attr:`command_class` attribute.
         """
-        from .decorators import command
+        from .decorate import command
 
         if self.command_class is not None and "cls" not in kwargs:
             kwargs["cls"] = self.command_class
