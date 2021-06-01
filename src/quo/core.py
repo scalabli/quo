@@ -9,11 +9,11 @@ from itertools import repeat
 
 from .universal import python_environment
 from .exceptions import Abort
-from .exceptions import BadParameter
+from quo.outliers.bad_parameter import BadParameter
 from .exceptions import QuoException
 from .exceptions import Exit
-from .exceptions import MissingParameter
-from .exceptions import UsageError
+from quo.outliers.missing_parameter import MissingParameter
+from quo.outliers.usage_error import UsageError
 from .layout import HelpFormatter
 from .layout import join_options
 from quo.context.current import pop_context
