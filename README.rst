@@ -96,12 +96,6 @@ Quo is...
      If you know Python you can  easily use quo and it can integrate with just about anything.
 
 
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
-
 
 
 Getting Help
@@ -136,14 +130,6 @@ License
 
 This software is licensed under the `MIT License`. See the ``LICENSE``
 file in the top distribution directory for the full license text.
-
-.. # vim: syntax=rst expandtab tabstop=4 shiftwidth=4 shiftround
-
-.. _`introduction`: http://quo.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://quo.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://quo.readthedocs.io/en/latest/userguide/index.html
 
 
 Code of Conduct
@@ -190,12 +176,6 @@ reported by opening an issue or contacting one or more of the project maintainer
 This Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
-
 .. |build-status| image:: https://secure.travis-ci.org/secretum-inc/quo.png?branch=master
     :alt: Build status
     :target: https://travis-ci.org/secretum-inc/quo
@@ -218,10 +198,4 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 .. |pyimp| image:: https://img.shields.io/pypi/implementation/quo.svg
     :alt: Support Python implementations.
     :target: http://pypi.org/project/quo/
-
-.. _`introduction`: http://faust.readthedocs.io/en/latest/introduction.html
-
-.. _`quickstart`: http://faust.readthedocs.io/en/latest/playbooks/quickstart.html
-
-.. _`User Guide`: http://faust.readthedocs.io/en/latest/userguide/index.html
 
