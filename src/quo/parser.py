@@ -5,7 +5,7 @@ from collections import deque
 from .exceptions import BadArgumentUsage
 from .exceptions import BadOptionUsage
 from .exceptions import NoSuchOption
-from .exceptions import UsageError
+from quo.outliers.usage_error import UsageError
 
 # Sentinel value that indicates an option was passed as a flag without a
 # value but is not a flag option. Option.consume_value uses this to
