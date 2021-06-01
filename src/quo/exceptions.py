@@ -4,6 +4,11 @@
 from .accordance import filename_to_ui
 from .accordance import get_text_stderr
 from .utilities import echo
+from quo.outliers import bad_parameter
+from quo.outliers import file_error
+from quo.outliers import missing_parameter
+from quo.outliers import usage_error
+
 
 from typing import Any, Dict, Optional, Sequence, Type
 
