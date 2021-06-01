@@ -17,17 +17,17 @@ from .core import MultiCommand
 from .core import Option
 from .core import Parameter
 from .core import ShellDetectionFailure
-from .decorators import argument
-from .decorators import command
-from .decorators import autoconfirm
-from .decorators import tether
-from .decorators import autohelp
+from quo.decorators import argument
+from quo.decorators import command
+from quo.decorators import autoconfirm
+from quo.decorators import tether
+from quo.decorators import autohelp
 from .decorators import make_pass_decorator
-from .decorators import option
+from quo.decorators import option
 from .decorators import contextualize
 from .decorators import objectualize
-from .decorators import autopswd
-from .decorators import autoversion
+from quo.decorators import autopswd
+from quo.decorators import autoversion
 from .exceptions import Abort
 from .exceptions import BadArgumentUsage
 from .exceptions import BadOptionUsage
@@ -78,4 +78,4 @@ from .utilities import openfile
 
 
 
-__version__ = "2021.5.dev11"
+__version__ = "2021.5.dev12"
