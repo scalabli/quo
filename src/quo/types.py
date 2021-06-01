@@ -10,7 +10,7 @@ from .accordance import filename_to_ui
 from .accordance import encoding_filesystem
 from .accordance import get_strerror
 from .accordance import openstream
-from .exceptions import BadParameter
+from quo.outliers.bad_parameter import BadParameter
 from .utilities import LazyFile
 from .utilities import safecall
 from typing import Any, Callable, TypeVar
