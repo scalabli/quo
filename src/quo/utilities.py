@@ -330,7 +330,7 @@ def get_os_args():
     return sys.argv[1:]
 
 
-def format_filename(filename, shorten=False):
+def formatfilename(filename, shorten=False):
     """Formats a filename for user display.  The main purpose of this
     function is to ensure that the filename can be displayed at all.  This
     will decode the filename to unicode if necessary in a way that it will
