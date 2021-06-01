@@ -17,7 +17,7 @@ from .core import MultiCommand
 from .core import Option
 from .core import Parameter
 from .core import ShellDetectionFailure
-from quo.decorators import argument
+from .decorate import argument
 from .decorate import command
 from quo.decorators import autoconfirm
 from .decorate import tether
