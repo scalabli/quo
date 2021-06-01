@@ -8,7 +8,7 @@ from .core import Argument
 from .core import Command
 from .core import Tether
 from .core import Option
-from .current import currentcontext
+from quo.context.current import currentcontext
 from .utilities import echo
 
 #Marks a callback as wanting to receive current context
