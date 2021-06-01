@@ -18,12 +18,12 @@ from .core import Option
 from .core import Parameter
 from .core import ShellDetectionFailure
 from quo.decorators import argument
-from quo.decorators import command
+from .decorate import command
 from quo.decorators import autoconfirm
-from quo.decorators import tether
+from .decorate import tether
 from quo.decorators import autohelp
 from .decorate import make_pass_decorator
-from quo.decorators import option
+from .decorate import option
 from .decorate import contextualize
 from .decorate import objectualize
 from quo.decorators import autopswd
