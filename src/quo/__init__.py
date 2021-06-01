@@ -31,12 +31,12 @@ from quo.decorators import autoversion
 from .exceptions import Abort
 from .exceptions import BadArgumentUsage
 from .exceptions import BadOptionUsage
-from .exceptions import BadParameter
+from quo.outliers import BadParameter
 from .exceptions import QuoException
-from .exceptions import FileError
-from .exceptions import MissingParameter
+from quo.outliers import FileError
+from quo.outliers import MissingParameter
 from .exceptions import NoSuchOption
-from .exceptions import UsageError
+from quo.outliers import UsageError
 from .layout import HelpFormatter
 from .layout import wraptext
 from quo.context.current import currentcontext
