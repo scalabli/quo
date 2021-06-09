@@ -136,7 +136,7 @@ Code of Conduct
 ================
 
 Everyone interacting in the project's code bases, issue trackers, chat rooms,
-and mailing lists is expected to follow the Faust Code of Conduct.
+and mailing lists is expected to follow Quo's Code of Conduct.
 
 As contributors and maintainers of these projects, and in the interest of fostering
 an open and welcoming community, we pledge to respect all people who contribute
