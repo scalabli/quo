@@ -154,11 +154,6 @@ class ParameterSource(enum.Enum):
     Use :meth:`quo.Context.get_parameter_source` to get the
     source for a parameter by name.
 
-    .. versionchanged:: 8.0
-        Use :class:`~enum.Enum` and drop the ``validate`` method.
-
-    .. versionchanged:: 8.0
-        Added the ``PROMPT`` value.
     """
 
     COMMANDLINE = enum.auto()
@@ -243,29 +238,11 @@ class Context:
         defaults to the value from a parent context. Overrides an
         option's ``show_default`` argument.
 
-    .. versionchanged:: 8.0
-        The ``show_default`` parameter defaults to the value from the
-        parent context.
-
-    .. versionchanged:: 7.1
-       Added the ``show_default`` parameter.
-
-    .. versionchanged:: 4.0
-        Added the ``color``, ``ignore_unknown_options``, and
-        ``max_content_width`` parameters.
-
-    .. versionchanged:: 3.0
-        Added the ``allow_extra_args`` and ``allow_interspersed_args``
-        parameters.
-
-    .. versionchanged:: 2.0
-        Added the ``resilient_parsing``, ``autohelp_names``, and
-        ``token_normalize_func`` parameters.
     """
 
     #: The formatter class to create with :meth:`make_formatter`.
     #:
-    #: .. versionadded:: 8.0
+    #:
     formatter_class = HelpFormatter
 
     def __init__(
@@ -346,7 +323,7 @@ class Context:
         #: Indicates if the context allows extra args or if it should
         #: fail on parsing.
         #:
-        #: .. versionadded:: 3.0
+        #:
         self.allow_extra_args = allow_extra_args
 
         if allow_interspersed_args is None:
@@ -366,7 +343,7 @@ class Context:
         #: strongly discouraged because it's not possibly to losslessly
         #: forward all arguments.
         #:
-        #: .. versionadded:: 4.0
+        #:
         self.ignore_unknown_options = ignore_unknown_options
 
         if autohelp_names is None:
@@ -435,7 +412,7 @@ class Context:
             with Context(cli) as ctx:
                 info = ctx.to_info_dict()
 
-        .. versionadded:: 8.0
+  
         """
         return {
             "command": self.command.to_info_dict(self),
@@ -519,7 +496,6 @@ class Context:
             def get_language():
                 return currentcontext().meta.get(LANG_KEY, 'en_US')
 
-        .. versionadded:: 5.0
         """
         return self._meta
 
@@ -530,8 +506,6 @@ class Context:
         To quickly customize the formatter class used without overriding
         this method, set the :attr:`formatter_class` attribute.
 
-        .. versionchanged:: 8.0
-            Added the :attr:`formatter_class` attribute.
         """
         return self.formatter_class(
             width=self.terminal_width, max_width=self.max_content_width
@@ -562,7 +536,6 @@ class Context:
         :param context_manager: The context manager to enter.
         :return: Whatever ``context_manager.__enter__()`` returns.
 
-        .. versionadded:: 8.0
         """
         return self._exit_stack.enter_context(context_manager)
 
@@ -634,8 +607,6 @@ class Context:
         :param call: If the default is a callable, call it. Disable to
             return the callable instead.
 
-        .. versionchanged:: 8.0
-            Added the ``call`` parameter.
         """
         if self.default_map is not None:
             value = self.default_map.get(name)
@@ -761,9 +732,6 @@ class Context:
         :param name: The name of the parameter.
         :rtype: ParameterSource
 
-        .. versionchanged:: 8.0
-            Returns ``None`` if the parameter was not provided from any
-            source.
         """
         return self._parameter_source.get(name)
 
@@ -782,9 +750,6 @@ class BaseCommand:
     operations.  For instance, they cannot be used with the decorators
     usually and they have no built-in callback system.
 
-    .. versionchanged:: 2.0
-       Added the `context_settings` parameter.
-
     :param name: the name of the command to use unless a tether overrides it.
     :param context_settings: an optional dictionary with defaults that are
                              passed to the context object.
@@ -792,7 +757,7 @@ class BaseCommand:
 
     #: The context class to create with :meth:`make_context`.
     #:
-    #: .. versionadded:: 8.0
+    #:
     context_class = Context
     #: the default for the :attr:`Context.allow_extra_args` flag.
     allow_extra_args = False
@@ -822,7 +787,6 @@ class BaseCommand:
 
         :param ctx: A :class:`Context` representing this command.
 
-        .. versionadded:: 8.0
         """
         return {"name": self.name}
 
@@ -853,8 +817,6 @@ class BaseCommand:
         :param extra: extra keyword arguments forwarded to the context
                       constructor.
 
-        .. versionchanged:: 8.0
-            Added the :attr:`context_class` attribute.
         """
         for key, value in self.context_settings.items():
             if key not in extra:
@@ -890,7 +852,6 @@ class BaseCommand:
         :param ctx: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         from quo.shelldone import CompletionItem
 
@@ -923,9 +884,6 @@ class BaseCommand:
 
         This method is also available by directly calling the instance of
         a :class:`Command`.
-
-        .. versionadded:: 3.0
-           Added the `standalone_mode` flag to control the standalone mode.
 
         :param args: the arguments that should be used for parsing.  If not
                      provided, ``sys.argv[1:]`` is used.
@@ -1044,11 +1002,7 @@ class Command(BaseCommand):
     quo.  A basic command handles command line parsing and might dispatch
     more parsing to commands nested below it.
 
-    .. versionchanged:: 2.0
-       Added the `context_settings` parameter.
-    .. versionchanged:: 8.0
-       Added repr showing the command name
-    .. versionchanged:: 7.1
+    .. 
        Added the `no_args_is_help` parameter.
 
     :param name: the name of the command to use unless a tether overrides it.
