@@ -2,10 +2,10 @@
 # maintained by the Python Software Foundation.
 from collections import deque
 
-from .exceptions import BadArgumentUsage
-from .exceptions import BadOptionUsage
-from .exceptions import NoSuchOption
-from quo.outliers.usage_error import UsageError
+from quo.outliers.exceptions import BadArgumentUsage
+from quo.outliers.exceptions import BadOptionUsage
+from quo.outliers.exceptions import NoSuchOption
+from quo.outliers.exceptions import UsageError
 
 # Sentinel value that indicates an option was passed as a flag without a
 # value but is not a flag option. Option.consume_value uses this to
