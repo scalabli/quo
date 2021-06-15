@@ -1002,9 +1002,6 @@ class Command(BaseCommand):
     quo.  A basic command handles command line parsing and might dispatch
     more parsing to commands nested below it.
 
-    .. 
-       Added the `no_args_is_help` parameter.
-
     :param name: the name of the command to use unless a tether overrides it.
     :param context_settings: an optional dictionary with defaults that are
                              passed to the context object.
@@ -1253,7 +1250,6 @@ class Command(BaseCommand):
         :param ctx: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         from quo.shelldone import CompletionItem
 
@@ -1387,9 +1383,8 @@ class MultiCommand(Command):
                 return result + input
 
         :param replace: if set to `True` an already existing result
-                        callback will be removed.
+                        callback will be removed
 
-        .. versionadded:: 3.0
         """
 
         def decorator(f):
@@ -1584,15 +1579,12 @@ class Tether(MultiCommand):
         :class:`MultiCommand`, :class:`Command`, and
         :class:`BaseCommand`.
 
-    .. versionchanged:: 8.0
-        The ``commmands`` argument can be a list of command objects.
     """
 
     #: If set, this is used by the tether's :meth:`command` decorator
     #: as the default :class:`Command` class. This is useful to make all
     #: subcommands use a custom command class.
     #:
-    #: .. versionadded:: 8.0
     command_class = None
 
     #: If set, this is used by the tether's :meth:`tether` decorator
@@ -1603,8 +1595,6 @@ class Tether(MultiCommand):
     #: ``group_class = type``), this tether's class will be used as the
     #: default class. This makes a custom tether class continue to make
     #: custom tethered componentss.
-    #:
-    #: .. versionadded:: 8.0
     group_class = None
 
     def __init__(self, name=None, commands=None, **attrs):
@@ -1637,8 +1627,6 @@ class Tether(MultiCommand):
         To customize the command class used, set the
         :attr:`command_class` attribute.
 
-        .. versionchanged:: 8.0
-            Added the :attr:`command_class` attribute.
         """
         from .decorate import command
 
@@ -1661,8 +1649,6 @@ class Tether(MultiCommand):
         To customize the tether class used, set the :attr:`group_class`
         attribute.
 
-        .. versionchanged:: 8.0
-            Added the :attr:`group_class` attribute.
         """
         from .decorators import tether
 
@@ -1758,30 +1744,6 @@ class Parameter:
         of :class:`~quo.shelldone.CompletionItem` or a list of
         strings.
 
-    .. versionchanged:: 8.0
-        ``autocompletion`` is renamed to ``shell_complete`` and has new
-        semantics described above. The old name is deprecated and will
-        be removed in 8.1, until then it will be wrapped to match the
-        new requirements.
-
-    .. versionchanged:: 8.0
-        For ``multiple=True, nargs>1``, the default must be a list of
-        tuples.
-
-    .. versionchanged:: 8.0
-        Setting a default is no longer required for ``nargs>1``, it will
-        default to ``None``. ``multiple=True`` or ``nargs=-1`` will
-        default to ``()``.
-
-    .. versionchanged:: 7.1
-        Empty environment variables are ignored rather than taking the
-        empty string value. This makes it possible for scripts to clear
-        variables if they can't unset them.
-
-    .. versionchanged:: 2.0
-        Changed signature for parameter callback to also be passed the
-        parameter. The old callback format will still work, but it will
-        raise a warning to give you a chance to migrate the code easier.
     """
 
     param_type_name = "parameter"
@@ -1859,9 +1821,8 @@ class Parameter:
         user-facing documentation.
 
         Use :meth:`quo.Context.to_info_dict` to traverse the entire
-        CLI structure.
+        CLI structure 
 
-        .. versionadded:: 8.0
         """
         return {
             "name": self.name,
@@ -2082,9 +2043,8 @@ class Parameter:
         :meth:`~quo.types.ParamType.shell_complete` function is used.
 
         :param ctx: Invocation context for this command.
-        :param incomplete: Value being completed. May be empty.
+        :param incomplete: Value being completed. May be empty
 
-        .. versionadded:: 8.0
         """
         if self._custom_shell_complete is not None:
             results = self._custom_shell_complete(ctx, self, incomplete)
