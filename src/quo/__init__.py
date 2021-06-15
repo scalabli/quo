@@ -35,7 +35,7 @@ from quo.outliers.exceptions import BadParameter
 from quo.outliers.exceptions import QuoException
 from quo.outliers.exceptions import FileError
 from quo.outliers.exceptions import MissingParameter
-from quo.outliers exceptions import NoSuchOption
+from quo.outliers.exceptions import NoSuchOption
 from quo.outliers.exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import wraptext
