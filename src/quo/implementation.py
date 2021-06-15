@@ -16,7 +16,7 @@ from .accordance import openstream
 from .accordance import strip_ansi
 from .accordance import term_len
 from .accordance import WIN
-from .exceptions import QuoException
+from quo.outliers.exceptions import QuoException
 from .utilities import echo
 
 if os.name == "nt":
