@@ -17,7 +17,7 @@ from .accordance import strip_ansi
 from .accordance import term_len
 from .accordance import WIN
 from quo.outliers.exceptions import QuoException
-from .utilities import echo
+from quo.expediency.utilities import echo
 
 if os.name == "nt":
     BEFORE_BAR = "\r"
