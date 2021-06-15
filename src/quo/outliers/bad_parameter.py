@@ -1,5 +1,5 @@
-from .accordance import filename_to_ui
-from .accordance import get_text_stderr
+from quo.accordance import filename_to_ui
+from quo.accordance import get_text_stderr
 from .utilities import echo
 
 from typing import Any, Dict, Optional, Sequence, Type
