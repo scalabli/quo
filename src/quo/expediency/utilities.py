@@ -7,7 +7,7 @@ from quo.accordance import _find_binary_writer
 from quo.accordance import auto_wrap_for_ansi
 from quo.accordance import binary_streams
 from quo.accordance import filename_to_ui
-from qui.accordance import encoding_filesystem
+from quo.accordance import encoding_filesystem
 from quo.accordance import get_strerror
 from quo.accordance import is_bytes
 from quo.accordance import openstream
