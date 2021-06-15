@@ -78,4 +78,4 @@ from quo.expediency.utilities import openfile
 
 
 
-__version__ = "2021.5.dev17"
+__version__ = "2021.6.dev1"
