@@ -72,10 +72,10 @@ from quo.expediency.utilities import echo
 from quo.expediency.utilities import formatfilename
 from quo.expediency.utilities import get_app_dir
 from quo.expediency.utilities import get_binary_stream
-from qou.expediency.utilities import get_os_args
+from quo.expediency.utilities import get_os_args
 from quo.expediency.utilities import get_text_stream
 from quo.expediency.utilities import openfile
 
 
 
-__version__ = "2021.6.dev1"
+__version__ = "2021.6.dev2"
