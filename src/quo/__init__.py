@@ -68,13 +68,13 @@ from .types import STRING
 from .types import Tuple
 from .types import UNPROCESSED
 from .types import UUID
-from .utilities import echo
-from .utilities import formatfilename
-from .utilities import get_app_dir
-from .utilities import get_binary_stream
-from .utilities import get_os_args
-from .utilities import get_text_stream
-from .utilities import openfile
+from quo.expediency.utilities import echo
+from quo.expediency.utilities import formatfilename
+from quo.expediency.utilities import get_app_dir
+from quo.expediency.utilities import get_binary_stream
+from qou.expediency.utilities import get_os_args
+from quo.expediency.utilities import get_text_stream
+from quo.expediency.utilities import openfile
 
 
 
