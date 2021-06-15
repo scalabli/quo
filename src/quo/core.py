@@ -29,11 +29,11 @@ from .types import _NumberRangeBase
 from .types import BOOL
 from .types import convert_type
 from .types import IntRange
-from .utilities import _detect_program_name
-from .utilities import echo
-from .utilities import make_default_short_help
-from .utilities import make_str
-from .utilities import PacifyFlushWrapper
+from quo.expediency.utilities import _detect_program_name
+from quo.expediency.utilities import echo
+from quo.expediency.utilities import make_default_short_help
+from quo.expediency.utilities import make_str
+from quo.expediency.utilities import PacifyFlushWrapper
 
 _missing = object()
 
