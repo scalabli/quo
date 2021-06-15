@@ -16,8 +16,8 @@ from quo.outliers.exceptions import UsageError
 from quo.context.current import resolve_color_default
 from .types import Choice
 from .types import convert_type
-from .utilities import echo
-from .utilities import LazyFile
+from quo.expediency.utilities import echo
+from quo.expediency.utilities import LazyFile
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
