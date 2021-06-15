@@ -1,6 +1,7 @@
 from quo.accordance import filename_to_ui
 from quo.accordance import get_text_stderr
 from quo.utilities import echo
+from quo import exceptions
 
 from typing import Any, Dict, Optional, Sequence, Type
 
