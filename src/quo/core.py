@@ -8,12 +8,12 @@ from functools import update_wrapper
 from itertools import repeat
 
 from .universal import python_environment
-from .exceptions import Abort
-from quo.outliers.bad_parameter import BadParameter
-from .exceptions import QuoException
-from .exceptions import Exit
-from quo.outliers.missing_parameter import MissingParameter
-from quo.outliers.usage_error import UsageError
+from quo.outliers.exceptions import Abort
+from quo.outliers.exceptions import BadParameter
+from quo.outliers.exceptions import QuoException
+from quo.outliers.exceptions import Exit
+from quo.outliers.exceptions import MissingParameter
+from quo.outliers.exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import join_options
 from quo.context.current import pop_context
