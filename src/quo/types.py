@@ -11,8 +11,8 @@ from .accordance import encoding_filesystem
 from .accordance import get_strerror
 from .accordance import openstream
 from quo.outliers.exceptions import BadParameter
-from .utilities import LazyFile
-from .utilities import safecall
+from quo.expediency.utilities import LazyFile
+from quo.expediency.utilities import safecall
 from typing import Any, Callable, TypeVar
 
 DecoratedCallable = TypeVar("DecoratedCallable", bound=Callable[..., Any])
