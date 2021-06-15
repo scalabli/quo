@@ -28,15 +28,15 @@ from .decorate import contextualize
 from .decorate import objectualize
 from quo.decorators import autopswd
 from quo.decorators import autoversion
-from .exceptions import Abort
-from .exceptions import BadArgumentUsage
-from .exceptions import BadOptionUsage
-from quo.outliers.bad_parameter import BadParameter
-from .exceptions import QuoException
-from quo.outliers.file_error import FileError
-from quo.outliers.missing_parameter import MissingParameter
-from .exceptions import NoSuchOption
-from quo.outliers.usage_error import UsageError
+from quo.outliers.exceptions import Abort
+from quo.outliers.exceptions import BadArgumentUsage
+from quo.outliers.exceptions import BadOptionUsage
+from quo.outliers.exceptions import BadParameter
+from quo.outliers.exceptions import QuoException
+from quo.outliers.exceptions import FileError
+from quo.outliers.exceptions import MissingParameter
+from quo.outliers exceptions import NoSuchOption
+from quo.outliers.exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import wraptext
 from quo.context.current import currentcontext
@@ -78,4 +78,4 @@ from .utilities import openfile
 
 
 
-__version__ = "2021.5.dev16"
+__version__ = "2021.5.dev17"
