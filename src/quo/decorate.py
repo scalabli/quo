@@ -8,7 +8,7 @@ from .core import Command
 from .core import Tether
 from .core import Option
 from quo.context.current import currentcontext
-from .utilities import echo
+from quo.expediency.utilities import echo
 from quo.decorators import autoconfirm
 from quo.decorators import autopswd
 from quo.decorators import autoversion
