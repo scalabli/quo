@@ -69,7 +69,7 @@ def _format_default(default):
 
     return default
 
-
+##################################################################
 def prompt(
     text,
     default=None,
@@ -156,7 +156,7 @@ def prompt(
         if value == value2:
             return result
         echo("Error: the two entered values do not match", err=err)
-
+###########################################################################
 
 def confirm(
     text, default=False, abort=False, prompt_suffix=": ", show_default=True, err=False
@@ -200,6 +200,7 @@ def confirm(
         raise Abort()
     return rv
 
+###########################################################################
 
 def terminalsize():
     """Returns the current size of the terminal as tuple in the form
