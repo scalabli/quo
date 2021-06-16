@@ -2,6 +2,7 @@
 #
 #
 import inspect
+import asyncio
 from functools import update_wrapper
 from .core import Argument
 from .core import Command
