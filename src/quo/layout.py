@@ -46,7 +46,7 @@ def wraptext(
     :param preserve_paragraphs: if this flag is set then the wrapping will
                                 intelligently handle paragraphs.
     """
-    from .textshawl import TextWrapper
+    from quo.wrapper.textshawl import TextWrapper
 
     text = text.expandtabs()
     wrapper = TextWrapper(
