@@ -436,8 +436,8 @@ def _interpret_color(color, offset=0):
 
 def style(
     text,
-    fg=None,
-    bg=None,
+    foreground=None,
+    background=None,
     bold=None,
     dim=None,
     underline=None,
@@ -452,10 +452,10 @@ def style(
 
     Examples::
 
-        quo.echo(quo.style('Hello World!', fg='green'))
+        quo.echo(quo.style('Hello World!', foreground='green'))
         quo.echo(quo.style('ATTENTION!', blink=True))
-        quo.echo(quo.style('Some things', reverse=True, fg='cyan'))
-        quo.echo(quo.style('More colors', fg=(255, 12, 128), bg=117))
+        quo.echo(quo.style('Some things', reverse=True, foreground='cyan'))
+        quo.echo(quo.style('More colors', foreground=(255, 12, 128), background=117))
 
   Note: v as in vblack or vred stands for vivid black or vivid red
   Supported color names:
@@ -489,8 +489,8 @@ def style(
     https://gist.github.com/XVilka/8346728 for more information.
 
     :param text: the string to style with ansi codes.
-    :param fg: if provided this will become the foreground color.
-    :param bg: if provided this will become the background color.
+    :param foreground: if provided this will become the foreground color.
+    :param background: if provided this will become the background color.
     :param bold: if provided this will enable or disable bold mode.
     :param dim: if provided this will enable or disable dim mode.  This is
                 badly supported.
@@ -509,17 +509,17 @@ def style(
 
     bits = []
 
-    if fg:
+    if foreground:
         try:
-            bits.append(f"\033[{_interpret_color(fg)}m")
+            bits.append(f"\033[{_interpret_color(foreground)}m")
         except KeyError:
-            raise TypeError(f"Unknown color {fg!r}")
+            raise TypeError(f"Unknown color {foreground!r}")
 
-    if bg:
+    if background:
         try:
-            bits.append(f"\033[{_interpret_color(bg, 10)}m")
+            bits.append(f"\033[{_interpret_color(background, 10)}m")
         except KeyError:
-            raise TypeError(f"Unknown color {bg!r}")
+            raise TypeError(f"Unknown color {background!r}")
 
     if bold is not None:
         bits.append(f"\033[{1 if bold else 22}m")
