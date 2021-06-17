@@ -246,10 +246,7 @@ def terminalsize():
 
 
 
-def scrollable(
-    text_or_generator: t.Union[t.Iterable[str], t.Callable[[], t.Iterable[str]], str],
-    color: t.Optional[bool] = None,
-) -> None:
+def scrollable(text_or_generator, color=None):
     """This function takes a text and shows it via an environment specific
     pager on stdout.
 
@@ -261,11 +258,11 @@ def scrollable(
     color = resolve_color_default(color)
 
     if inspect.isgeneratorfunction(text_or_generator):
-        i = t.cast(t.Callable[[], t.Iterable[str]], text_or_generator)()
+        i = text_or_generator()
     elif isinstance(text_or_generator, str):
         i = [text_or_generator]
     else:
-        i = iter(t.cast(t.Iterable[str], text_or_generator))
+        i = iter(text_or_generator)
 
     # convert every element of i to a text type if necessary
     text_generator = (el if isinstance(el, str) else str(el) for el in i)
@@ -273,7 +270,6 @@ def scrollable(
     from .implementation import pager
 
     return pager(itertools.chain(text_generator, "\n"), color)
-
 
 
 def progressbar(
