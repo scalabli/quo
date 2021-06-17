@@ -7,7 +7,7 @@ import sys
 import tempfile
 
 from . import layout
-from . import termui
+from quo.ui import termui
 from quo.expediency import utilities
 from .accordance import _find_binary_reader
 
