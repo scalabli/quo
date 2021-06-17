@@ -11,8 +11,8 @@ from quo.accordance import encoding_filesystem
 from quo.accordance import get_strerror
 from quo.accordance import is_bytes
 from quo.accordance import openstream
-from quo.accordance import should_strip_ansi
-from quo.accordance import strip_ansi
+from quo.accordance import should_strip_ansi_colors
+from quo.accordance import strip_ansi_colors
 from quo.accordance import text_streams
 from quo.accordance import WIN
 from quo.context.current import resolve_color_default
@@ -241,13 +241,13 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
     # ansi codes to API calls.
     if message and not is_bytes(message):
         color = resolve_color_default(color)
-        if should_strip_ansi(file, color):
-            message = strip_ansi(message)
+        if should_strip_ansi_colors(file, color):
+            message = strip_ansi_colors(message)
         elif WIN:
             if auto_wrap_for_ansi is not None:
                 file = auto_wrap_for_ansi(file)
             elif not color:
-                message = strip_ansi(message)
+                message = strip_ansi_colors(message)
 
     if message:
         file.write(message)
