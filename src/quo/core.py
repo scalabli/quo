@@ -331,7 +331,6 @@ class Context:
         #: Indicates if the context allows mixing of arguments and
         #: options or not.
         #:
-        #: .. versionadded:: 3.0
         self.allow_interspersed_args = allow_interspersed_args
 
         if ignore_unknown_options is None:
@@ -455,7 +454,6 @@ class Context:
             with ctx:
                 assert currentcontext() is ctx
 
-        .. versionadded:: 5.0
 
         :param cleanup: controls if the cleanup functions should be run or
                         not.  The default is to run these functions.  In
@@ -1555,7 +1553,6 @@ class MultiCommand(Command):
         :param ctx: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
 
-        .. versionadded:: 8.0
         """
         from quo.shelldone import CompletionItem
 
@@ -1865,10 +1862,8 @@ class Parameter:
         :param call: If the default is a callable, call it. Disable to
             return the callable instead.
 
-        .. versionchanged:: 8.0
             Looks at ``ctx.default_map`` first.
 
-        .. versionchanged:: 8.0
             Added the ``call`` parameter.
         """
         value = ctx.lookup_default(self.name, call=False)
