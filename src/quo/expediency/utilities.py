@@ -170,7 +170,7 @@ class KeepOpenFile:
         return iter(self._file)
 
 
-def echo(message=None, file=None, nl=True, err=False, color=None):
+def echo(message=None, file=None, newline=True, err=False, color=None):
     """Prints a message plus a newline to the given file or stdout.  On
     first sight, this looks like the print function, but it has improved
     support for handling Unicode and binary data that does not fail no
@@ -198,7 +198,7 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
     :param err: if set to true the file defaults to ``stderr`` instead of
                 ``stdout``.  This is faster and easier than calling
                 :func:`get_text_stderr` yourself.
-    :param nl: if set to `True` (the default) a newline is printed afterwards.
+    :param newline: if set to `True` (the default) a newline is printed afterwards.
     :param color: controls if the terminal supports ANSI colors or not.  The
                   default is autodetection.
     """
@@ -215,7 +215,7 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
     if message is not None and not isinstance(message, echo_functionality):
         message = str(message)
 
-    if nl:
+    if newline:
         message = message or ""
         if isinstance(message, str):
             message += "\n"
