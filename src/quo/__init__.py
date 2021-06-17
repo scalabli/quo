@@ -77,5 +77,4 @@ from quo.expediency.utilities import get_text_stream
 from quo.expediency.utilities import openfile
 
 
-
 __version__ = "2021.6.dev2"
