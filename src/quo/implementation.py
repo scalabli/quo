@@ -13,7 +13,7 @@ from .accordance import CYGWIN
 from .accordance import default_system_encoding
 from .accordance import isatty
 from .accordance import openstream
-from .accordance import strip_ansi
+from .accordance import strip_ansi_colors
 from .accordance import term_len
 from .accordance import WIN
 from quo.outliers.exceptions import QuoException
