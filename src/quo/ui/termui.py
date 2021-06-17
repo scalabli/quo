@@ -9,7 +9,7 @@ from quo.accordance import DEFAULT_COLUMNS
 from quo.accordance import get_winterm_size
 from quo.accordance import is_bytes
 from quo.accordance import isatty
-from quo.accordance import strip_ansi
+from quo.accordance import strip_ansi_colors
 from quo.accordance import WIN
 from quo.outliers.exceptions import Abort
 from quo.outliers.exceptions import UsageError
