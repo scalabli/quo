@@ -13,7 +13,7 @@ def currentcontext(silent=False):
         return _local.stack[-1]
     except (AttributeError, IndexError):
         if not silent:
-            raise RuntimeError("No active content available.")
+            raise RuntimeError("No dynamic content available.")
 
 # Push new content to the stack
 def push_context(ctx):
