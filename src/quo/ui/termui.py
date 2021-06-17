@@ -267,7 +267,7 @@ def scrollable(text_or_generator, color=None):
     # convert every element of i to a text type if necessary
     text_generator = (el if isinstance(el, str) else str(el) for el in i)
 
-    from .implementation import pager
+    from quo.implementation import pager
 
     return pager(itertools.chain(text_generator, "\n"), color)
 
@@ -631,7 +631,7 @@ def launch(url, wait=False, locate=False):
                    might have weird effects if the URL does not point to
                    the filesystem.
     """
-    from .implementation import open_url
+    from quo.implementation import open_url
 
     return open_url(url, wait=wait, locate=locate)
 
@@ -662,12 +662,12 @@ def interpose(echo=False):
     """
     f = _interpose
     if f is None:
-        from .implementation import interpose as f
+        from quo.implementation import interpose as f
     return f(echo)
 
 
 def raw_terminal():
-    from .implementation import raw_terminal as f
+    from quo.implementation import raw_terminal as f
 
     return f()
 
