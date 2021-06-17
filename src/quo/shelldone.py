@@ -196,7 +196,6 @@ class ShellComplete:
     :param complete_var: Name of the environment variable that holds
         the completion instruction.
 
-    .. versionadded:: 8.0
     """
 
     name = None
