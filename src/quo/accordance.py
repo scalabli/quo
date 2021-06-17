@@ -461,7 +461,7 @@ class _AtomicFile:
         return repr(self._f)
 
 
-def strip_ansi(value):
+def strip_ansi_colors(value):
     return _ansi_re.sub("", value)
 
 
@@ -477,7 +477,7 @@ def _is_jupyter_kernel_output(stream):
     return stream.__class__.__module__.startswith("ipykernel.")
 
 
-def should_strip_ansi(stream=None, color=None):
+def should_strip_ansi_colors(stream=None, color=None):
     if color is None:
         if stream is None:
             stream = sys.stdin
@@ -518,7 +518,7 @@ if WIN:
                 cached = None
             if cached is not None:
                 return cached
-            strip = should_strip_ansi(stream, color)
+            strip = should_strip_ansi_colors(stream, color)
             ansi_wrapper = colorama.AnsiToWin32(stream, strip=strip)
             rv = ansi_wrapper.stream
             _write = rv.write
@@ -554,7 +554,7 @@ else:
 
 
 def term_len(x):
-    return len(strip_ansi(x))
+    return len(strip_ansi_colors(x))
 
 
 def isatty(stream):
