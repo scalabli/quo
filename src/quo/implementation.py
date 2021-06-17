@@ -223,7 +223,7 @@ class ProgressBar:
         ).rstrip()
 
     def render_progress(self):
-        from .termui import terminalsize
+        from quo.ui.termui import terminalsize
 
         if self.is_hidden:
             return
@@ -394,7 +394,7 @@ def _pipepager(generator, cmd, color):
     try:
         for text in generator:
             if not color:
-                text = strip_ansi(text)
+                text = strip_ansi_colors(text)
 
             c.stdin.write(text.encode(encoding, "replace"))
     except (OSError, KeyboardInterrupt):
@@ -427,7 +427,7 @@ def _tempfilepager(generator, cmd, color):
     # TODO: This never terminates if the passed generator never terminates.
     text = "".join(generator)
     if not color:
-        text = strip_ansi(text)
+        text = strip_ansi_colors(text)
     encoding = get_best_encoding(sys.stdout)
     with open_stream(filename, "wb")[0] as f:
         f.write(text.encode(encoding))
@@ -441,7 +441,7 @@ def _nullpager(stream, generator, color):
     """Simply print unformatted text.  This is the ultimate fallback."""
     for text in generator:
         if not color:
-            text = strip_ansi(text)
+            text = strip_ansi_colors(text)
         stream.write(text)
 
 
