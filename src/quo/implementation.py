@@ -258,7 +258,7 @@ class ProgressBar:
 
         if line != self._last_line and not self.is_fast():
             self._last_line = line
-            echo(line, file=self.file, color=self.color, nl=False)
+            echo(line, file=self.file, color=self.color, newline=False)
             self.file.flush()
 
     def make_step(self, n_steps):
@@ -292,10 +292,8 @@ class ProgressBar:
         :param current_item: Optional item to set as ``current_item``
             for the updated position.
 
-        .. versionchanged:: 8.0
             Added the ``current_item`` optional parameter.
 
-        .. versionchanged:: 8.0
             Only render when the number of steps meets the
             ``update_min_steps`` threshold.
         """
