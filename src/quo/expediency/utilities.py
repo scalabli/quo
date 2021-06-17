@@ -371,7 +371,6 @@ def get_app_dir(app_name, roaming=True, force_posix=False):
     Win 7 (not roaming):
       ``C:\Users\<user>\AppData\Local\Foo Bar``
 
-    .. versionadded:: 2.0
 
     :param app_name: the application name.  This should be properly capitalized
                      and can contain whitespace.
