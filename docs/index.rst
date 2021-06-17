@@ -180,7 +180,7 @@ reported by opening an issue or contacting one or more of the project maintainer
 This Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
-.. |build-status| image:: https://secure.travis-ci.org/secretum-inc/quo.png?branch=master
+.. |build-status| image:: https://secure.travis-ci.com/secretum-inc/quo.png?branch=master
     :alt: Build status
     :target: https://travis-ci.org/secretum-inc/quo
 
