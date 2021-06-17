@@ -193,7 +193,7 @@ def confirm(
         elif default is not None and value == "":
             rv = default
         else:
-            flair("Error: invalid input", bg="yellow", fg="black", err=err)
+            flair("Error: invalid input", background="yellow", foreground="black", err=err)
             continue
         break
     if abort and not rv:
@@ -544,7 +544,7 @@ def unstyle(text):
 
     :param text: the text to remove style information from.
     """
-    return strip_ansi(text)
+    return strip_ansi_colors(text)
 
 
 def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
