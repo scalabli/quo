@@ -114,7 +114,7 @@ def prompt(
         try:
             # Write the prompt separately so that we get nice
             # coloring through colorama on Windows
-            echo(text, nl=False, err=err)
+            echo(text, newline=False, err=err)
             return f("")
         except (KeyboardInterrupt, EOFError):
             # getpass doesn't print a newline if the user aborts input with ^C.
@@ -182,7 +182,7 @@ def confirm(
         try:
             # Write the prompt separately so that we get nice
             # coloring through colorama on Windows
-            echo(prompt, nl=False, err=err)
+            echo(prompt, newline=False, err=err)
             value = visible_prompt_func("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
@@ -547,7 +547,7 @@ def unstyle(text):
     return strip_ansi_colors(text)
 
 
-def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
+def flair(message=None, file=None, newline=True, err=False, color=None, **styles):
     """This function combines :func:`echo` and :func:`style` into one
     call.  As such the following two calls are the same::
 
@@ -566,7 +566,7 @@ def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
     if message is not None and not is_bytes(message):
         message = style(message, **styles)
 
-    return echo(message, file=file, nl=nl, err=err, color=color)
+    return echo(message, file=file, newline=newline, err=err, color=color)
 
 
 def edit(
@@ -686,7 +686,7 @@ def pause(info="Press any key to continue ...", err=False):
         return
     try:
         if info:
-            echo(info, nl=False, err=err)
+            echo(info, newline=False, err=err)
         try:
             interpose()
         except (KeyboardInterrupt, EOFError):
