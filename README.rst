@@ -45,7 +45,7 @@ You can install quo via the Python Package Index (PyPI)
 .. sourcecode:: python
 
   import quo
-  quo.flair(f'Hello, World!', fg="red", bold=True)
+  quo.flair(f'Hello, World!', foreground="red", bold=True)
 
 
 **Example 3**
