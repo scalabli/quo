@@ -21,10 +21,10 @@ from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import OptionParser
 from .parser import split_opt
-from .termui import confirm
-from .termui import prompt
-from .termui import flair
-from .termui import style
+from quo.termui import confirm
+from quo.termui import prompt
+from quo.termui import flair
+from quo.termui import style
 from .types import _NumberRangeBase
 from .types import BOOL
 from .types import convert_type
