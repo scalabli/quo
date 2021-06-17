@@ -94,7 +94,6 @@ class Result:
         self.stderr_bytes = stderr_bytes
         #: The value returned from the invoked command.
         #:
-        #: .. versionadded:: 8.0
         self.return_value = return_value
         #: The exit code as integer.
         self.exit_code = exit_code
