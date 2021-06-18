@@ -91,7 +91,7 @@ class LazyFile:
         self.atomic = atomic
 
         if filename == "-":
-            self._f, self.should_close = open_stream(filename, mode, encoding, errors)
+            self._f, self.should_close = openstream(filename, mode, encoding, errors)
         else:
             if "r" in mode:
                 # Open and close the file in case we're opening it for
@@ -117,7 +117,7 @@ class LazyFile:
         if self._f is not None:
             return self._f
         try:
-            rv, self.should_close = open_stream(
+            rv, self.should_close = openstream(
                 self.name, self.mode, self.encoding, self.errors, atomic=self.atomic
             )
         except OSError as e:  # noqa: E402
@@ -308,7 +308,7 @@ def openfile(
     """
     if lazy:
         return LazyFile(filename, mode, encoding, errors, atomic=atomic)
-    f, should_close = open_stream(filename, mode, encoding, errors, atomic=atomic)
+    f, should_close = openstream(filename, mode, encoding, errors, atomic=atomic)
     if not should_close:
         f = KeepOpenFile(f)
     return f
