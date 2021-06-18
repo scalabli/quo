@@ -2070,7 +2070,7 @@ class Option(Parameter):
     :param prompt: if set to `True` or a non empty string then the user will be
                    prompted for input.  If set to `True` the prompt will be the
                    option name capitalized.
-    :param confirmation_prompt: if set then the value will need to be confirmed
+    :param autoconfirm: if set then the value will need to be confirmed
                                 if it was prompted for.
     :param prompt_required: If set to ``False``, the user will be
         prompted for input only when the option was specified as a flag
@@ -2103,7 +2103,7 @@ class Option(Parameter):
         param_decls=None,
         show_default=False,
         prompt=False,
-        confirmation_prompt=False,
+        autoconfirm=False,
         prompt_required=True,
         hide_input=False,
         is_flag=None,
@@ -2128,7 +2128,7 @@ class Option(Parameter):
         else:
             prompt_text = prompt
         self.prompt = prompt_text
-        self.confirmation_prompt = confirmation_prompt
+        self.autoconfirm = autoconfirm
         self.prompt_required = prompt_required
         self.hide_input = hide_input
         self.hidden = hidden
@@ -2395,7 +2395,7 @@ class Option(Parameter):
             type=self.type,
             hide_input=self.hide_input,
             show_choices=self.show_choices,
-            confirmation_prompt=self.confirmation_prompt,
+            autoconfirm=self.autoconfirm,
             value_proc=lambda x: self.process_value(ctx, x),
         )
 
