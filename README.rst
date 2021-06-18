@@ -8,7 +8,7 @@
 
 |build-status| |coverage| |license| |wheel| |pyversion| |pyimp|
 
-:Version: 2.1.0
+:Version: 2021.1
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
