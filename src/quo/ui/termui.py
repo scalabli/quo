@@ -74,7 +74,7 @@ def prompt(
     text,
     default=None,
     hide_input=False,
-    confirmation_prompt=False,
+    autoconfirm=False,
     type=None,
     value_proc=None,
     prompt_suffix=": ",
@@ -93,7 +93,7 @@ def prompt(
                     is not given it will prompt until it's aborted.
     :param hide_input: if this is set to true then the input value will
                        be hidden.
-    :param confirmation_prompt: asks for confirmation for the value.
+    :param autoconfirm: asks for confirmation for the value.
     :param type: the type to use to check the value against.
     :param value_proc: if this parameter is provided it's a function that
                        is invoked instead of the type conversion to
@@ -147,7 +147,7 @@ def prompt(
             else:
                 echo(f"Error: {e.message}", err=err)  # noqa: B306
             continue
-        if not confirmation_prompt:
+        if not autoconfirm:
             return result
         while 1:
             value2 = prompt_func("Repeat for confirmation: ")
