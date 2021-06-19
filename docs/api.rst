@@ -528,6 +528,257 @@ shorten – this optionally shortens the filename to strip of the path that lead
 
 Commands
 --------
+class click.BaseCommand(name, context_settings=None)
+The base command implements the minimal API contract of commands. Most code will never use this as it does not implement a lot of useful functionality but it can act as the direct subclass of alternative parsing methods that do not depend on the Click parser.
+
+For instance, this can be used to bridge Click and other systems like argparse or docopt.
+
+Because base commands do not implement a lot of the API that other parts of Click take for granted, they are not supported for all operations. For instance, they cannot be used with the decorators usually and they have no built-in callback system.
+
+Changelog
+Parameters
+name – the name of the command to use unless a group overrides it.
+
+context_settings – an optional dictionary with defaults that are passed to the context object.
+
+allow_extra_args = False
+the default for the Context.allow_extra_args flag.
+
+allow_interspersed_args = True
+the default for the Context.allow_interspersed_args flag.
+
+context_settings = None
+an optional dictionary with defaults passed to the context.
+
+ignore_unknown_options = False
+the default for the Context.ignore_unknown_options flag.
+
+invoke(ctx)
+Given a context, this invokes the command. The default implementation is raising a not implemented error.
+
+main(args=None, prog_name=None, complete_var=None, standalone_mode=True, **extra)
+This is the way to invoke a script with all the bells and whistles as a command line application. This will always terminate the application after a call. If this is not wanted, SystemExit needs to be caught.
+
+This method is also available by directly calling the instance of a Command.
+
+Changelog
+Parameters
+args – the arguments that should be used for parsing. If not provided, sys.argv[1:] is used.
+
+prog_name – the program name that should be used. By default the program name is constructed by taking the file name from sys.argv[0].
+
+complete_var – the environment variable that controls the bash completion support. The default is "_<prog_name>_COMPLETE" with prog_name in uppercase.
+
+standalone_mode – the default behavior is to invoke the script in standalone mode. Click will then handle exceptions and convert them into error messages and the function will never return but shut down the interpreter. If this is set to False they will be propagated to the caller and the return value of this function is the return value of invoke().
+
+extra – extra keyword arguments are forwarded to the context constructor. See Context for more information.
+
+make_context(info_name, args, parent=None, **extra)
+This function when given an info name and arguments will kick off the parsing and create a new Context. It does not invoke the actual command callback though.
+
+Parameters
+info_name – the info name for this invokation. Generally this is the most descriptive name for the script or command. For the toplevel script it’s usually the name of the script, for commands below it it’s the name of the script.
+
+args – the arguments to parse as list of strings.
+
+parent – the parent context if available.
+
+extra – extra keyword arguments forwarded to the context constructor.
+
+name = None
+the name the command thinks it has. Upon registering a command on a Group the group will default the command name with this information. You should instead use the Context’s info_name attribute.
+
+parse_args(ctx, args)
+Given a context and a list of arguments this creates the parser and parses the arguments, then modifies the context as necessary. This is automatically invoked by make_context().
+
+class click.Command(name, context_settings=None, callback=None, params=None, help=None, epilog=None, short_help=None, options_metavar='[OPTIONS]', add_help_option=True, no_args_is_help=False, hidden=False, deprecated=False)
+Commands are the basic building block of command line interfaces in Click. A basic command handles command line parsing and might dispatch more parsing to commands nested below it.
+
+Changed in version 7.1: Added the no_args_is_help parameter.
+
+Changelog
+Parameters
+name – the name of the command to use unless a group overrides it.
+
+context_settings – an optional dictionary with defaults that are passed to the context object.
+
+callback – the callback to invoke. This is optional.
+
+params – the parameters to register with this command. This can be either Option or Argument objects.
+
+help – the help string to use for this command.
+
+epilog – like the help string but it’s printed at the end of the help page after everything else.
+
+short_help – the short help to use for this command. This is shown on the command listing of the parent command.
+
+add_help_option – by default each command registers a --help option. This can be disabled by this parameter.
+
+no_args_is_help – this controls what happens if no arguments are provided. This option is disabled by default. If enabled this will add --help as argument if no arguments are passed
+
+hidden – hide this command from help outputs.
+
+deprecated – issues a message indicating that the command is deprecated.
+
+callback = None
+the callback to execute when the command fires. This might be None in which case nothing happens.
+
+collect_usage_pieces(ctx)
+Returns all the pieces that go into the usage line and returns it as a list of strings.
+
+format_epilog(ctx, formatter)
+Writes the epilog into the formatter if it exists.
+
+format_help(ctx, formatter)
+Writes the help into the formatter if it exists.
+
+This is a low-level method called by get_help().
+
+This calls the following methods:
+
+format_usage()
+
+format_help_text()
+
+format_options()
+
+format_epilog()
+
+format_help_text(ctx, formatter)
+Writes the help text to the formatter if it exists.
+
+format_options(ctx, formatter)
+Writes all the options into the formatter if they exist.
+
+format_usage(ctx, formatter)
+Writes the usage line into the formatter.
+
+This is a low-level method called by get_usage().
+
+get_help(ctx)
+Formats the help into a string and returns it.
+
+Calls format_help() internally.
+
+get_help_option(ctx)
+Returns the help option object.
+
+get_help_option_names(ctx)
+Returns the names for the help option.
+
+get_short_help_str(limit=45)
+Gets short help for the command or makes it by shortening the long help string.
+
+get_usage(ctx)
+Formats the usage line into a string and returns it.
+
+Calls format_usage() internally.
+
+invoke(ctx)
+Given a context, this invokes the attached callback (if it exists) in the right way.
+
+make_parser(ctx)
+Creates the underlying option parser for this command.
+
+params = None
+the list of parameters for this command in the order they should show up in the help page and execute. Eager parameters will automatically be handled before non eager ones.
+
+parse_args(ctx, args)
+Given a context and a list of arguments this creates the parser and parses the arguments, then modifies the context as necessary. This is automatically invoked by make_context().
+
+class click.MultiCommand(name=None, invoke_without_command=False, no_args_is_help=None, subcommand_metavar=None, chain=False, result_callback=None, **attrs)
+A multi command is the basic implementation of a command that dispatches to subcommands. The most common version is the Group.
+
+Parameters
+invoke_without_command – this controls how the multi command itself is invoked. By default it’s only invoked if a subcommand is provided.
+
+no_args_is_help – this controls what happens if no arguments are provided. This option is enabled by default if invoke_without_command is disabled or disabled if it’s enabled. If enabled this will add --help as argument if no arguments are passed.
+
+subcommand_metavar – the string that is used in the documentation to indicate the subcommand place.
+
+chain – if this is set to True chaining of multiple subcommands is enabled. This restricts the form of commands in that they cannot have optional arguments but it allows multiple commands to be chained together.
+
+result_callback – the result callback to attach to this multi command.
+
+collect_usage_pieces(ctx)
+Returns all the pieces that go into the usage line and returns it as a list of strings.
+
+format_commands(ctx, formatter)
+Extra format methods for multi methods that adds all the commands after the options.
+
+format_options(ctx, formatter)
+Writes all the options into the formatter if they exist.
+
+get_command(ctx, cmd_name)
+Given a context and a command name, this returns a Command object if it exists or returns None.
+
+invoke(ctx)
+Given a context, this invokes the attached callback (if it exists) in the right way.
+
+list_commands(ctx)
+Returns a list of subcommand names in the order they should appear.
+
+parse_args(ctx, args)
+Given a context and a list of arguments this creates the parser and parses the arguments, then modifies the context as necessary. This is automatically invoked by make_context().
+
+result_callback = None
+The result callback that is stored. This can be set or overridden with the resultcallback() decorator.
+
+resultcallback(replace=False)
+Adds a result callback to the chain command. By default if a result callback is already registered this will chain them but this can be disabled with the replace parameter. The result callback is invoked with the return value of the subcommand (or the list of return values from all subcommands if chaining is enabled) as well as the parameters as they would be passed to the main callback.
+
+Example:
+
+@click.group()
+@click.option('-i', '--input', default=23)
+def cli(input):
+    return 42
+
+@cli.resultcallback()
+def process_result(result, input):
+    return result + input
+Changelog
+Parameters
+replace – if set to True an already existing result callback will be removed.
+
+class click.Group(name=None, commands=None, **attrs)
+A group allows a command to have subcommands attached. This is the most common way to implement nesting in Click.
+
+Parameters
+commands – a dictionary of commands.
+
+add_command(cmd, name=None)
+Registers another Command with this group. If the name is not provided, the name of the command is used.
+
+command(*args, **kwargs)
+A shortcut decorator for declaring and attaching a command to the group. This takes the same arguments as command() but immediately registers the created command with this instance by calling into add_command().
+
+commands = None
+the registered subcommands by their exported names.
+
+get_command(ctx, cmd_name)
+Given a context and a command name, this returns a Command object if it exists or returns None.
+
+group(*args, **kwargs)
+A shortcut decorator for declaring and attaching a group to the group. This takes the same arguments as group() but immediately registers the created command with this instance by calling into add_command().
+
+list_commands(ctx)
+Returns a list of subcommand names in the order they should appear.
+
+class click.CommandCollection(name=None, sources=None, **attrs)
+A command collection is a multi command that merges multiple multi commands together into one. This is a straightforward implementation that accepts a list of different multi commands as sources and provides all the commands for each of them.
+
+add_source(multi_cmd)
+Adds a new multi command to the chain dispatcher.
+
+get_command(ctx, cmd_name)
+Given a context and a command name, this returns a Command object if it exists or returns None.
+
+list_commands(ctx)
+Returns a list of subcommand names in the order they should appear.
+
+sources = None
+The list of registered multi commands.
 
 .. autoclass:: BaseCommand
    :members:
@@ -648,7 +899,7 @@ customizing Quo's shell completion system.
 .. autofunction:: add_completion_class
 
 
-Testing
+Tests
 -------
 
 .. currentmodule:: quo.testing
