@@ -1137,7 +1137,7 @@ class Command(BaseCommand):
 
     def make_parser(self, ctx):
         """Creates the underlying app parser for this command."""
-        parser = OptionParser(ctx)
+        parser = AppParser(ctx)
         for param in self.get_params(ctx):
             param.add_to_parser(parser, ctx)
         return parser
