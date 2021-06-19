@@ -277,29 +277,29 @@ Supported color names:
 
 * ``green``
 
-* ``yellow (might be an orange)``
+* ``yellow`` *(might be an orange)*
 
 * ``blue``
 
 * ``magenta``
 
-cyan
+* ``cyan``
 
-* ``white (might be light gray)``
+* ``white`` *(might be light gray)*
 
-* ``vblack``
+* ``vblack``  *vibrant black*
 
-bright_red
+* ``vred``
 
-bright_green
+* ``vgreen``
 
-bright_yellow
+* ``vyellow``
 
-bright_blue
+* ``vblue``
 
-bright_magenta
+* ``vmagenta``
 
-bright_cyan
+* ``vcyan``
 
 * ``vwhite``
 
