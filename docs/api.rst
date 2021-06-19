@@ -8,14 +8,10 @@ classes and functions.
 
 Decorators
 ----------
-
 **quo.command** *(name=None, cls=None, **attrs)*
 Creates a new Command and uses the decorated function as callback. This will also automatically attach all decorated option()s and argument()s as parameters to the command.
-
 The name of the command defaults to the name of the function with underscores replaced by dashes. If you want to change that, you can pass the intended name as the first argument.
-
 All keyword arguments are forwarded to the underlying command class.
-
 Once decorated the function turns into a Command instance that can be invoked as a command line utility or be attached to a command Group.
 
 Parameters
@@ -39,9 +35,7 @@ Parameters
                                                          * ``cls`` – the option class to instantiate. This defaults to Option.
 
 **quo.password_option** *(*param_decls, **attrs)*
-Shortcut for password prompts.
-
-This is equivalent to decorating a function with option() with the following parameters:
+Shortcut for password prompts. This is equivalent to decorating a function with option() with the following parameters:
 
 @quo.command()
 @quo.option('--password', prompt=True, confirmation_prompt=True,
@@ -50,7 +44,6 @@ def changeadmin(password):
     pass
 ``quo.confirmation_option`` (*param_decls, **attrs)
 Shortcut for confirmation prompts that can be ignored by passing --yes as parameter.
-
 This is equivalent to decorating a function with option() with the following parameters:
 
 def callback(ctx, param, value):
