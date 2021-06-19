@@ -5,7 +5,7 @@ def autoconfirm(*param_decls, **kwargs):
 
     :param param_decls: One or more option names. Defaults to the single
         value ``"--yes"``.
-    :param kwargs: Extra arguments are passed to :func:`option`.
+    :param kwargs: Extra arguments are passed to :func:`app`.
     """
 
     def callback(ctx, param, value):
@@ -20,6 +20,6 @@ def autoconfirm(*param_decls, **kwargs):
     kwargs.setdefault("expose_value", False)
     kwargs.setdefault("prompt", "Do you want to continue?")
     kwargs.setdefault("help", "Confirm the action without prompting.")
-    return option(*param_decls, **kwargs)
+    return app(*param_decls, **kwargs)
 
 
