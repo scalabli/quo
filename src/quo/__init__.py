@@ -14,7 +14,7 @@ from .core import CommandCollection
 from .core import Context
 from .core import Tether
 from .core import MultiCommand
-from .core import Option
+from .core import App
 from .core import Parameter
 from .core import ShellDetectionFailure
 from quo.decorators.decorate import argument
@@ -23,7 +23,7 @@ from quo.decorators import autoconfirm
 from quo.decorators.decorate import tether
 from quo.decorators import autohelp
 from quo.decorators.decorate import make_pass_decorator
-from quo.decorators.decorate import option
+from quo.decorators.decorate import app
 from quo.decorators.decorate import contextualize
 from quo.decorators.decorate import objectualize
 from quo.decorators import autopswd
@@ -77,4 +77,4 @@ from quo.expediency.utilities import get_text_stream
 from quo.expediency.utilities import openfile
 
 
-__version__ = "2021.1"
+__version__ = "2021.2"
