@@ -18,7 +18,7 @@ from ctypes.wintypes import (
 
 from .core import Argument
 from .core import MultiCommand
-from .core import Option
+from .core import App
 from .core import ParameterSource
 from .core import SHELL_NAMES
 from .parser import split_arg_string
@@ -434,33 +434,33 @@ def _is_incomplete_argument(ctx, param):
     )
 
 
-def _start_of_option(value):
-    """Check if the value looks like the start of an option."""
+def _start_of_app(value):
+    """Check if the value looks like the start of an app."""
     return value and not value[0].isalnum()
 
 
-def _is_incomplete_option(args, param):
-    """Determine if the given parameter is an option that needs a value.
+def _is_incomplete_app(args, param):
+    """Determine if the given parameter is an app that needs a value.
 
     :param args: List of complete args before the incomplete value.
-    :param param: Option object being checked.
+    :param param: App object being checked.
     """
-    if not isinstance(param, Option):
+    if not isinstance(param, App):
         return False
 
     if param.is_flag:
         return False
 
-    last_option = None
+    last_app = None
 
     for index, arg in enumerate(reversed(args)):
         if index + 1 > param.nargs:
             break
 
-        if _start_of_option(arg):
-            last_option = arg
+        if _start_of_app(arg):
+            last_app = arg
 
-    return last_option is not None and last_option in param.opts
+    return last_app is not None and last_app in param.opts
 
 
 def _resolve_context(cli, ctx_args, prog_name, args):
@@ -520,32 +520,32 @@ def _resolve_incomplete(ctx, args, incomplete):
     :param args: List of complete args before the incomplete value.
     :param incomplete: Value being completed. May be empty.
     """
-    # Different shells treat an "=" between a long option name and
+    # Different shells treat an "=" between a long app name and
     # value differently. Might keep the value joined, return the "="
     # as a separate item, or return the split name and value. Always
     # split and discard the "=" to make completion easier.
     if incomplete == "=":
         incomplete = ""
-    elif "=" in incomplete and _start_of_option(incomplete):
+    elif "=" in incomplete and _start_of_app(incomplete):
         name, _, incomplete = incomplete.partition("=")
         args.append(name)
 
     # The "--" marker tells quo to stop treating values as options
-    # even if they start with the option character. If it hasn't been
-    # given and the incomplete arg looks like an option, the current
-    # command will provide option name completions.
-    if "--" not in args and _start_of_option(incomplete):
+    # even if they start with the app character. If it hasn't been
+    # given and the incomplete arg looks like an app, the current
+    # command will provide app name completions.
+    if "--" not in args and _start_of_app(incomplete):
         return ctx.command, incomplete
 
     params = ctx.command.get_params(ctx)
 
-    # If the last complete arg is an option name with an incomplete
-    # value, the option will provide value completions.
+    # If the last complete arg is an app name with an incomplete
+    # value, the app will provide value completions.
     for param in params:
-        if _is_incomplete_option(args, param):
+        if _is_incomplete_app(args, param):
             return param, incomplete
 
-    # It's not an option name or value. The first argument without a
+    # It's not an app name or value. The first argument without a
     # parsed value will provide value completions.
     for param in params:
         if _is_incomplete_argument(ctx, param):
