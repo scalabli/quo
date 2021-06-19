@@ -28,14 +28,12 @@ def autoversion(
         provided, it will be detected from the command.
     :param message: The message to show. The values ``%(prog)s``,
         ``%(package)s``, and ``%(version)s`` are available.
-    :param kwargs: Extra arguments are passed to :func:`option`.
+    :param kwargs: Extra arguments are passed to :func:`app`.
     :raise RuntimeError: ``version`` could not be detected.
 
-    .. versionchanged:: 8.0
         Add the ``package_name`` parameter, and the ``%(package)s``
         value for messages.
 
-    .. versionchanged:: 8.0
         Use :mod:`importlib.metadata` instead of ``pkg_resources``.
     """
     if version is None and package_name is None:
@@ -106,6 +104,6 @@ def autoversion(
     kwargs.setdefault("is_eager", True)
     kwargs.setdefault("help", "Show the version and exit.")
     kwargs["callback"] = callback
-    return option(*param_decls, **kwargs)
+    return app(*param_decls, **kwargs)
 
 
