@@ -191,7 +191,7 @@ class HelpFormatter:
         self.write("\n")
 
     def write_dl(self, rows, col_max=30, col_spacing=2):
-        """Writes a definition list into the buffer.  This is how options
+        """Writes a definition list into the buffer.  This is how apps
         and commands are usually formatted.
 
         :param rows: a list of two item tuples for the terms and values.
@@ -228,7 +228,7 @@ class HelpFormatter:
                     self.write(f"{'':>{first_col + self.current_indent}}{line}\n")
 
                 if len(lines) > 1:
-                    # separate long help from next option
+                    # separate long help from next app
                     self.write("\n")
             else:
                 self.write("\n")
@@ -262,15 +262,15 @@ class HelpFormatter:
         return "".join(self.buffer)
 
 
-def join_options(options):
-    """Given a list of option strings this joins them in the most appropriate
+def join_apps(apps):
+    """Given a list of app strings this joins them in the most appropriate
     way and returns them in the form ``(formatted_string,
     any_prefix_is_slash)`` where the second item in the tuple is a flag that
-    indicates if any of the option prefixes was a slash.
+    indicates if any of the app prefixes was a slash.
     """
     rv = []
     any_prefix_is_slash = False
-    for opt in options:
+    for opt in apps:
         prefix = split_opt(opt)[0]
         if prefix == "/":
             any_prefix_is_slash = True
