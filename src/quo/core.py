@@ -46,7 +46,7 @@ DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
 def deprecated_notice(cmd):
     if cmd.deprecated:
-        flair(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow", err=True)
+        flair(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), foreground="black", background="yellow", err=True)
 
 
 def quick_exit(code):
