@@ -1154,6 +1154,36 @@ Formatting
 Parsing
 -------
 
+class click.OptionParser(ctx=None)
+The option parser is an internal class that is ultimately used to parse options and arguments. It’s modelled after optparse and brings a similar but vastly simplified API. It should generally not be used directly as the high level Click classes wrap it for you.
+
+It’s not nearly as extensible as optparse or argparse as it does not implement features that are implemented on a higher level (such as types or defaults).
+
+Parameters
+ctx – optionally the Context where this parser should go with.
+
+add_argument(dest, nargs=1, obj=None)
+Adds a positional argument named dest to the parser.
+
+The obj can be used to identify the option in the order list that is returned from the parser.
+
+add_option(opts, dest, action=None, nargs=1, const=None, obj=None)
+Adds a new option named dest to the parser. The destination is not inferred (unlike with optparse) and needs to be explicitly provided. Action can be any of store, store_const, append, appnd_const or count.
+
+The obj can be used to identify the option in the order list that is returned from the parser.
+
+allow_interspersed_args = None
+This controls how the parser deals with interspersed arguments. If this is set to False, the parser will stop on the first non-option. Click uses this to implement nested subcommands safely.
+
+ctx = None
+The Context for this parser. This might be None for some advanced use cases.
+
+ignore_unknown_options = None
+This tells the parser how to deal with unknown options. By default it will error out (which is sensible), but there is a second mode where it will ignore it and continue processing after shifting all the unknown options into the resulting args.
+
+parse_args(args)
+Parses positional arguments and returns (values, args, order) for the parsed options and arguments as well as the leftover arguments if there are any. The order is a list of objects as they appear on the command line. If arguments appear multiple times they will be memorized multiple times as well.
+
 .. autoclass:: OptionParser
    :members:
 
@@ -1178,6 +1208,90 @@ customizing Quo's shell completion system.
 Tests
 -------
 
+click.testing.CliRunner(charset=None, env=None, echo_stdin=False, mix_stderr=True)
+The CLI runner provides functionality to invoke a Click command line script for unittesting purposes in a isolated environment. This only works in single-threaded systems without any concurrency as it changes the global interpreter state.
+
+Parameters
+charset – the character set for the input and output data. This is UTF-8 by default and should not be changed currently as the reporting to Click only works in Python 2 properly.
+
+env – a dictionary with environment variables for overriding.
+
+echo_stdin – if this is set to True, then reading from stdin writes to stdout. This is useful for showing examples in some circumstances. Note that regular prompts will automatically echo the input.
+
+mix_stderr – if this is set to False, then stdout and stderr are preserved as independent streams. This is useful for Unix-philosophy apps that have predictable stdout and noisy stderr, such that each may be measured independently
+
+get_default_prog_name(cli)
+Given a command object it will return the default program name for it. The default is the name attribute or "root" if not set.
+
+invoke(cli, args=None, input=None, env=None, catch_exceptions=True, color=False, **extra)
+Invokes a command in an isolated environment. The arguments are forwarded directly to the command line script, the extra keyword arguments are passed to the main() function of the command.
+
+This returns a Result object.
+
+Changelog
+Parameters
+cli – the command to invoke
+
+args – the arguments to invoke. It may be given as an iterable or a string. When given as string it will be interpreted as a Unix shell command. More details at shlex.split().
+
+input – the input data for sys.stdin.
+
+env – the environment overrides.
+
+catch_exceptions – Whether to catch any other exceptions than SystemExit.
+
+extra – the keyword arguments to pass to main().
+
+color – whether the output should contain color codes. The application can still override this explicitly.
+
+isolated_filesystem()
+A context manager that creates a temporary folder and changes the current working directory to it for isolated filesystem tests.
+
+isolation(input=None, env=None, color=False)
+A context manager that sets up the isolation for invoking of a command line tool. This sets up stdin with the given input data and os.environ with the overrides from the given dictionary. This also rebinds some internals in Click to be mocked (like the prompt functionality).
+
+This is automatically done in the invoke() method.
+
+Changelog
+Parameters
+input – the input stream to put into sys.stdin.
+
+env – the environment overrides as dictionary.
+
+color – whether the output should contain color codes. The application can still override this explicitly.
+
+make_env(overrides=None)
+Returns the environment overrides for invoking a script.
+
+class click.testing.Result(runner, stdout_bytes, stderr_bytes, exit_code, exception, exc_info=None)
+Holds the captured result of an invoked CLI script.
+
+exc_info = None
+The traceback
+
+exception = None
+The exception that happened if one did.
+
+exit_code = None
+The exit code as integer.
+
+property output
+The (standard) output as unicode string.
+
+runner = None
+The runner that created the result
+
+property stderr
+The standard error as unicode string.
+
+stderr_bytes = None
+The standard error as bytes, or None if not available
+
+property stdout
+The standard output as unicode string.
+
+stdout_bytes = None
+The standard output as bytes
 .. currentmodule:: quo.testing
 
 .. autoclass:: CliRunner
