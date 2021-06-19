@@ -1126,6 +1126,47 @@ Types
 
 Exceptions
 ----------
+exception click.ClickException(message)
+An exception that Click can handle and show to the user.
+
+exception click.Abort
+An internal signalling exception that signals Click to abort.
+
+exception click.UsageError(message, ctx=None)
+An internal exception that signals a usage error. This typically aborts any further handling.
+
+Parameters
+message – the error message to display.
+
+ctx – optionally the context that caused this error. Click will fill in the context automatically in some situations.
+
+exception click.BadParameter(message, ctx=None, param=None, param_hint=None)
+An exception that formats out a standardized error message for a bad parameter. This is useful when thrown from a callback or type as Click will attach contextual information to it (for instance, which parameter it is).
+
+Changelog
+Parameters
+param – the parameter object that caused this error. This can be left out, and Click will attach this info itself if possible.
+
+param_hint – a string that shows up as parameter name. This can be used as alternative to param in cases where custom validation should happen. If it is a string it’s used as such, if it’s a list then each item is quoted and separated.
+
+exception click.FileError(filename, hint=None)
+Raised if a file cannot be opened.
+
+exception click.NoSuchOption(option_name, message=None, possibilities=None, ctx=None)
+Raised if click attempted to handle an option that does not exist.
+
+Changelog
+exception click.BadOptionUsage(option_name, message, ctx=None)
+Raised if an option is generally supplied but the use of the option was incorrect. This is for instance raised if the number of arguments for an option is not correct.
+
+Changelog
+Parameters
+option_name – the name of the option being used incorrectly.
+
+exception click.BadArgumentUsage(message, ctx=None)
+Raised if an argument is generally supplied but the use of the argument was incorrect. This is for instance raised if the number of values for an argument is not correct.
+
+Changelog
 
 .. autoexception:: QuoException
 
@@ -1145,6 +1186,7 @@ Exceptions
 
 Formatting
 ----------
+
 
 .. autoclass:: HelpFormatter
    :members:
