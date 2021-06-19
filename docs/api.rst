@@ -9,7 +9,7 @@ classes and functions.
 Decorators
 ----------
 
-quo.command(name=None, cls=None, **attrs)
+``quo.command`` (name=None, cls=None, **attrs)
 Creates a new Command and uses the decorated function as callback. This will also automatically attach all decorated option()s and argument()s as parameters to the command.
 
 The name of the command defaults to the name of the function with underscores replaced by dashes. If you want to change that, you can pass the intended name as the first argument.
@@ -23,32 +23,32 @@ name – the name of the command. This defaults to the function name with unders
 
 cls – the command class to instantiate. This defaults to Command.
 
-click.group(name=None, **attrs)
+``quo.group``(name=None, **attrs)
 Creates a new Group with a function as callback. This works otherwise the same as command() just that the cls parameter is set to Group.
 
-click.argument(*param_decls, **attrs)
+quo.argument(*param_decls, **attrs)
 Attaches an argument to the command. All positional arguments are passed as parameter declarations to Argument; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Argument instance manually and attaching it to the Command.params list.
 
 Parameters
 cls – the argument class to instantiate. This defaults to Argument.
 
-click.option(*param_decls, **attrs)
+quo.option(*param_decls, **attrs)
 Attaches an option to the command. All positional arguments are passed as parameter declarations to Option; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Option instance manually and attaching it to the Command.params list.
 
 Parameters
 cls – the option class to instantiate. This defaults to Option.
 
-click.password_option(*param_decls, **attrs)
+quo.password_option(*param_decls, **attrs)
 Shortcut for password prompts.
 
 This is equivalent to decorating a function with option() with the following parameters:
 
-@click.command()
-@click.option('--password', prompt=True, confirmation_prompt=True,
+@quo.command()
+@quo.option('--password', prompt=True, confirmation_prompt=True,
               hide_input=True)
 def changeadmin(password):
     pass
-click.confirmation_option(*param_decls, **attrs)
+quo.confirmation_option(*param_decls, **attrs)
 Shortcut for confirmation prompts that can be ignored by passing --yes as parameter.
 
 This is equivalent to decorating a function with option() with the following parameters:
@@ -57,16 +57,16 @@ def callback(ctx, param, value):
     if not value:
         ctx.abort()
 
-@click.command()
-@click.option('--yes', is_flag=True, callback=callback,
+@quo.command()
+@quo.option('--yes', is_flag=True, callback=callback,
               expose_value=False, prompt='Do you want to continue?')
 def dropdb():
     pass
-click.version_option(version=None, *param_decls, **attrs)
+quo.version_option(version=None, *param_decls, **attrs)
 Adds a --version option which immediately ends the program printing out the version number. This is implemented as an eager option that prints the version and exits the program in the callback.
 
 Parameters
-version – the version number to show. If not provided Click attempts an auto discovery via setuptools.
+version – the version number to show. If not provided quo attempts an auto discovery via setuptools.
 
 prog_name – the name of the program (defaults to autodetection)
 
@@ -74,20 +74,20 @@ message – custom message to show instead of the default ('%(prog)s, version %(
 
 others – everything else is forwarded to option().
 
-click.help_option(*param_decls, **attrs)
+quo.help_option(*param_decls, **attrs)
 Adds a --help option which immediately ends the program printing out the help page. This is usually unnecessary to add as this is added by default to all commands unless suppressed.
 
 Like version_option(), this is implemented as eager option that prints in the callback and exits.
 
 All arguments are forwarded to option().
 
-click.pass_context(f)
+quo.pass_context(f)
 Marks a callback as wanting to receive the current context object as first argument.
 
-click.pass_obj(f)
+quo.pass_obj(f)
 Similar to pass_context(), but only pass the object on the context onwards (Context.obj). This is useful if that object represents the state of a nested system.
 
-click.make_pass_decorator(object_type, ensure=False)
+quo.make_pass_decorator(object_type, ensure=False)
 Given an object type this creates a decorator that will work similar to pass_obj() but instead of passing the object of the current context, it will find the innermost context of type object_type().
 
 This generates a decorator that works roughly like this:
@@ -134,10 +134,10 @@ ensure – if set to True, a new object will be created and remembered on the co
 Utilities
 ---------
 
-click.echo(message=None, file=None, nl=True, err=False, color=None)
+quo.echo(message=None, file=None, nl=True, err=False, color=None)
 Prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode and binary data that does not fail no matter how badly configured the system is.
 
-Primarily it means that you can print binary data as well as Unicode data on both 2.x and 3.x to the given file in the most appropriate way possible. This is a very carefree function in that it will try its best to not fail. As of Click 6.0 this includes support for unicode output on the Windows console.
+Primarily it means that you can print binary data as well as Unicode data on both 2.x and 3.x to the given file in the most appropriate way possible. This is a very carefree function in that it will try its best to not fail. As of quo 6.0 this includes support for unicode output on the Windows console.
 
 In addition to that, if colorama is installed, the echo function will also support clever handling of ANSI codes. Essentially it will then do the following:
 
@@ -157,7 +157,7 @@ nl – if set to True (the default) a newline is printed afterwards.
 
 color – controls if the terminal supports ANSI colors or not. The default is autodetection.
 
-click.echo_via_pager(text_or_generator, color=None)
+quo.echo_via_pager(text_or_generator, color=None)
 This function takes a text and shows it via an environment specific pager on stdout.
 
 Changelog
@@ -166,7 +166,7 @@ text_or_generator – the text to page, or alternatively, a generator emitting t
 
 color – controls if the pager supports ANSI colors or not. The default is autodetection.
 
-click.prompt(text, default=None, hide_input=False, confirmation_prompt=False, type=None, value_proc=None, prompt_suffix=': ', show_default=True, err=False, show_choices=True)
+quo.prompt(text, default=None, hide_input=False, confirmation_prompt=False, type=None, value_proc=None, prompt_suffix=': ', show_default=True, err=False, show_choices=True)
 Prompts a user for input. This is a convenience function that can be used to prompt a user for input later.
 
 If the user aborts the input by sending a interrupt signal, this function will catch it and raise a Abort exception.
@@ -195,7 +195,7 @@ err – if set to true the file defaults to stderr instead of stdout, the same a
 
 show_choices – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
 
-click.confirm(text, default=False, abort=False, prompt_suffix=': ', show_default=True, err=False)
+quo.confirm(text, default=False, abort=False, prompt_suffix=': ', show_default=True, err=False)
 Prompts for confirmation (yes/no question).
 
 If the user aborts the input by sending a interrupt signal this function will catch it and raise a Abort exception.
@@ -214,7 +214,7 @@ show_default – shows or hides the default value in the prompt.
 
 err – if set to true the file defaults to stderr instead of stdout, the same as with echo.
 
-click.progressbar(iterable=None, length=None, label=None, show_eta=True, show_percent=None, show_pos=False, item_show_func=None, fill_char='#', empty_char='-', bar_template='%(label)s [%(bar)s] %(info)s', info_sep=' ', width=36, file=None, color=None)
+quo.progressbar(iterable=None, length=None, label=None, show_eta=True, show_percent=None, show_pos=False, item_show_func=None, fill_char='#', empty_char='-', bar_template='%(label)s [%(bar)s] %(info)s', info_sep=' ', width=36, file=None, color=None)
 This function creates an iterable context manager that can be used to iterate over something while showing a progress bar. It will either iterate over the iterable or length items (that are counted up). While iteration happens, this function will print a rendered progress bar to the given file (defaults to stdout) and will attempt to calculate remaining time and more. By default, this progress bar will not be rendered if the file is not a terminal.
 
 The context manager creates the progress bar. When the context manager is entered the progress bar is already created. With every iteration over the progress bar, the iterable passed to the bar is advanced and the bar is updated. When the context manager exits, a newline is printed and the progress bar is finalized on screen.
@@ -264,18 +264,18 @@ file – the file to write to. If this is not a terminal then only the label is 
 
 color – controls if the terminal supports ANSI colors or not. The default is autodetection. This is only needed if ANSI codes are included anywhere in the progress bar output which is not the case by default.
 
-click.clear()
+quo.clear()
 Clears the terminal screen. This will have the effect of clearing the whole visible space of the terminal and moving the cursor to the top left. This does not do anything if not connected to a terminal.
 
 Changelog
-click.style(text, fg=None, bg=None, bold=None, dim=None, underline=None, blink=None, reverse=None, reset=True)
+quo.style(text, fg=None, bg=None, bold=None, dim=None, underline=None, blink=None, reverse=None, reset=True)
 Styles a text with ANSI styles and returns the new string. By default the styling is self contained which means that at the end of the string a reset code is issued. This can be prevented by passing reset=False.
 
 Examples:
 
-click.echo(click.style('Hello World!', fg='green'))
-click.echo(click.style('ATTENTION!', blink=True))
-click.echo(click.style('Some things', reverse=True, fg='cyan'))
+click.echo(quo.style('Hello World!', fg='green'))
+quo.echo(quo.style('ATTENTION!', blink=True))
+quo.echo(quo.style('Some things', reverse=True, fg='cyan'))
 Supported color names:
 
 black (might be a gray)
@@ -334,22 +334,22 @@ reverse – if provided this will enable or disable inverse rendering (foregroun
 
 reset – by default a reset-all code is added at the end of the string which means that styles do not carry over. This can be disabled to compose styles.
 
-click.unstyle(text)
-Removes ANSI styling information from a string. Usually it’s not necessary to use this function as Click’s echo function will automatically remove styling if necessary.
+quo.unstyle(text)
+Removes ANSI styling information from a string. Usually it’s not necessary to use this function as quo’s echo function will automatically remove styling if necessary.
 
 Changelog
 Parameters
 text – the text to remove style information from.
 
-click.secho(message=None, file=None, nl=True, err=False, color=None, **styles)
+quo.flair(message=None, file=None, nl=True, err=False, color=None, **styles)
 This function combines echo() and style() into one call. As such the following two calls are the same:
 
-click.secho('Hello World!', fg='green')
-click.echo(click.style('Hello World!', fg='green'))
+quo.flair('Hello World!', fg='green')
+click.echo(quo.style('Hello World!', fg='green'))
 All keyword arguments are forwarded to the underlying functions depending on which one they go with.
 
 Changelog
-click.edit(text=None, editor=None, env=None, require_save=True, extension='.txt', filename=None)
+quo.edit(text=None, editor=None, env=None, require_save=True, extension='.txt', filename=None)
 Edits the given text in the defined editor. If an editor is given (should be the full path to the executable but the regular operating system search path is used for finding the executable) it overrides the detected editor. Optionally, some environment variables can be used. If the editor is closed without changes, None is returned. In case a file is edited directly the return value is always None and require_save and extension are ignored.
 
 If the editor cannot be opened a UsageError is raised.
@@ -369,13 +369,13 @@ extension – the extension to tell the editor about. This defaults to .txt but 
 
 filename – if provided it will edit this file instead of the provided text contents. It will not use a temporary file as an indirection in that case.
 
-click.launch(url, wait=False, locate=False)
+quo.launch(url, wait=False, locate=False)
 This function launches the given URL (or filename) in the default viewer application for this file type. If this is an executable, it might launch the executable in a new session. The return value is the exit code of the launched application. Usually, 0 indicates success.
 
 Examples:
 
-click.launch('https://click.palletsprojects.com/')
-click.launch('/my/downloaded/file', locate=True)
+quo.launch('https://quo.palletsprojects.com/')
+quo.launch('/my/downloaded/file', locate=True)
 Changelog
 Parameters
 url – URL or filename of the thing to launch.
@@ -384,7 +384,7 @@ wait – waits for the program to stop.
 
 locate – if this is set to True then instead of launching the application associated with the URL it will attempt to launch a file manager with the file located. This might have weird effects if the URL does not point to the filesystem.
 
-click.getchar(echo=False)
+quo.getchar(echo=False)
 Fetches a single character from the terminal and returns it. This will always return a unicode character and under certain rare circumstances this might return more than one character. The situations which more than one character is returned is when for whatever reason multiple characters end up in the terminal buffer or standard input was not actually a terminal.
 
 Note that this will always read from the terminal, even if something is piped into the standard input.
@@ -395,7 +395,7 @@ Changelog
 Parameters
 echo – if set to True, the character read will also show up on the terminal. The default is to not show it.
 
-click.pause(info='Press any key to continue ...', err=False)
+quo.pause(info='Press any key to continue ...', err=False)
 This command stops execution and waits for the user to press any key to continue. This is similar to the Windows batch “pause” command. If the program is not run through a terminal, this command will instead do nothing.
 
 Changelog
@@ -404,16 +404,16 @@ info – the info string to print before pausing.
 
 err – if set to message goes to stderr instead of stdout, the same as with echo.
 
-click.get_terminal_size()
+quo.get_terminal_size()
 Returns the current size of the terminal as tuple in the form (width, height) in columns and rows.
 
-click.get_binary_stream(name)
+quo.get_binary_stream(name)
 Returns a system stream for byte processing. This essentially returns the stream from the sys module with the given name but it solves some compatibility issues between different Python versions. Primarily this function is necessary for getting binary streams on Python 3.
 
 Parameters
 name – the name of the stream to open. Valid names are 'stdin', 'stdout' and 'stderr'
 
-click.get_text_stream(name, encoding=None, errors='strict')
+quo.get_text_stream(name, encoding=None, errors='strict')
 Returns a system stream for text processing. This usually returns a wrapped stream around a binary stream returned from get_binary_stream() but it also can take shortcuts on Python 3 for already correctly configured streams.
 
 Parameters
@@ -423,7 +423,7 @@ encoding – overrides the detected default encoding.
 
 errors – overrides the default error mode.
 
-click.open_file(filename, mode='r', encoding=None, errors='strict', lazy=False, atomic=False)
+quo.open_file(filename, mode='r', encoding=None, errors='strict', lazy=False, atomic=False)
 This is similar to how the File works but for manual usage. Files are opened non lazy by default. This can open regular files as well as stdin/stdout if '-' is passed.
 
 If stdin/stdout is returned the stream is wrapped so that the context manager will not close the stream accidentally. This makes it possible to always use the function like this without having to worry to accidentally close a standard stream:
@@ -444,7 +444,7 @@ lazy – can be flipped to true to open the file lazily.
 
 atomic – in atomic mode writes go into a temporary file and it’s moved on close.
 
-click.get_app_dir(app_name, roaming=True, force_posix=False)
+quo.get_app_dir(app_name, roaming=True, force_posix=False)
 Returns the config folder for the application. The default behavior is to return whatever is most appropriate for the operating system.
 
 To give you an idea, for an app called "Foo Bar", something like the following folders could be returned:
@@ -481,7 +481,7 @@ roaming – controls if the folder should be roaming or not on Windows. Has no a
 
 force_posix – if this is set to True then on any POSIX system the folder will be stored in the home folder with a leading dot instead of the XDG config home or darwin’s application support folder.
 
-click.format_filename(filename, shorten=False)
+quo.format_filename(filename, shorten=False)
 Formats a filename for user display. The main purpose of this function is to ensure that the filename can be displayed at all. This will decode the filename to unicode if necessary in a way that it will not fail. Optionally, it can shorten the filename to not include the full path to the filename.
 
 Parameters
@@ -528,12 +528,12 @@ shorten – this optionally shortens the filename to strip of the path that lead
 
 Commands
 --------
-class click.BaseCommand(name, context_settings=None)
-The base command implements the minimal API contract of commands. Most code will never use this as it does not implement a lot of useful functionality but it can act as the direct subclass of alternative parsing methods that do not depend on the Click parser.
+class quo.BaseCommand(name, context_settings=None)
+The base command implements the minimal API contract of commands. Most code will never use this as it does not implement a lot of useful functionality but it can act as the direct subclass of alternative parsing methods that do not depend on the quo parser.
 
-For instance, this can be used to bridge Click and other systems like argparse or docopt.
+For instance, this can be used to bridge quo and other systems like argparse or docopt.
 
-Because base commands do not implement a lot of the API that other parts of Click take for granted, they are not supported for all operations. For instance, they cannot be used with the decorators usually and they have no built-in callback system.
+Because base commands do not implement a lot of the API that other parts of quo take for granted, they are not supported for all operations. For instance, they cannot be used with the decorators usually and they have no built-in callback system.
 
 Changelog
 Parameters
@@ -569,7 +569,7 @@ prog_name – the program name that should be used. By default the program name 
 
 complete_var – the environment variable that controls the bash completion support. The default is "_<prog_name>_COMPLETE" with prog_name in uppercase.
 
-standalone_mode – the default behavior is to invoke the script in standalone mode. Click will then handle exceptions and convert them into error messages and the function will never return but shut down the interpreter. If this is set to False they will be propagated to the caller and the return value of this function is the return value of invoke().
+standalone_mode – the default behavior is to invoke the script in standalone mode. quo will then handle exceptions and convert them into error messages and the function will never return but shut down the interpreter. If this is set to False they will be propagated to the caller and the return value of this function is the return value of invoke().
 
 extra – extra keyword arguments are forwarded to the context constructor. See Context for more information.
 
@@ -591,8 +591,8 @@ the name the command thinks it has. Upon registering a command on a Group the gr
 parse_args(ctx, args)
 Given a context and a list of arguments this creates the parser and parses the arguments, then modifies the context as necessary. This is automatically invoked by make_context().
 
-class click.Command(name, context_settings=None, callback=None, params=None, help=None, epilog=None, short_help=None, options_metavar='[OPTIONS]', add_help_option=True, no_args_is_help=False, hidden=False, deprecated=False)
-Commands are the basic building block of command line interfaces in Click. A basic command handles command line parsing and might dispatch more parsing to commands nested below it.
+class quo.Command(name, context_settings=None, callback=None, params=None, help=None, epilog=None, short_help=None, options_metavar='[OPTIONS]', add_help_option=True, no_args_is_help=False, hidden=False, deprecated=False)
+Commands are the basic building block of command line interfaces in quo. A basic command handles command line parsing and might dispatch more parsing to commands nested below it.
 
 Changed in version 7.1: Added the no_args_is_help parameter.
 
@@ -686,7 +686,7 @@ the list of parameters for this command in the order they should show up in the 
 parse_args(ctx, args)
 Given a context and a list of arguments this creates the parser and parses the arguments, then modifies the context as necessary. This is automatically invoked by make_context().
 
-class click.MultiCommand(name=None, invoke_without_command=False, no_args_is_help=None, subcommand_metavar=None, chain=False, result_callback=None, **attrs)
+class quo.MultiCommand(name=None, invoke_without_command=False, no_args_is_help=None, subcommand_metavar=None, chain=False, result_callback=None, **attrs)
 A multi command is the basic implementation of a command that dispatches to subcommands. The most common version is the Group.
 
 Parameters
@@ -729,8 +729,8 @@ Adds a result callback to the chain command. By default if a result callback is 
 
 Example:
 
-@click.group()
-@click.option('-i', '--input', default=23)
+@quo.group()
+@quo.option('-i', '--input', default=23)
 def cli(input):
     return 42
 
@@ -741,8 +741,8 @@ Changelog
 Parameters
 replace – if set to True an already existing result callback will be removed.
 
-class click.Group(name=None, commands=None, **attrs)
-A group allows a command to have subcommands attached. This is the most common way to implement nesting in Click.
+class quo.Group(name=None, commands=None, **attrs)
+A group allows a command to have subcommands attached. This is the most common way to implement nesting in quo.
 
 Parameters
 commands – a dictionary of commands.
@@ -765,7 +765,7 @@ A shortcut decorator for declaring and attaching a group to the group. This take
 list_commands(ctx)
 Returns a list of subcommand names in the order they should appear.
 
-class click.CommandCollection(name=None, sources=None, **attrs)
+class quo.CommandCollection(name=None, sources=None, **attrs)
 A command collection is a multi command that merges multiple multi commands together into one. This is a straightforward implementation that accepts a list of different multi commands as sources and provides all the commands for each of them.
 
 add_source(multi_cmd)
@@ -797,7 +797,7 @@ The list of registered multi commands.
 
 Parameters
 ----------
-class click.Parameter(param_decls=None, type=None, required=False, default=None, callback=None, nargs=None, metavar=None, expose_value=True, is_eager=False, envvar=None, autocompletion=None)
+class quo.Parameter(param_decls=None, type=None, required=False, default=None, callback=None, nargs=None, metavar=None, expose_value=True, is_eager=False, envvar=None, autocompletion=None)
 A parameter to a command comes in two versions: they are either Options or Arguments. Other subclasses are currently not supported by design as some of the internals for parsing are intentionally not finalized.
 
 Some settings are supported by both options and arguments.
@@ -841,7 +841,7 @@ Given a value and context this runs the logic to convert the value as necessary.
 type_cast_value(ctx, value)
 Given a value this runs it properly through the type system. This automatically handles things like nargs and multiple as well as composite types.
 
-class click.Option(param_decls=None, show_default=False, prompt=False, confirmation_prompt=False, hide_input=False, is_flag=None, flag_value=None, multiple=False, count=False, allow_from_autoenv=True, type=None, help=None, hidden=False, show_choices=True, show_envvar=False, **attrs)
+class quo.Option(param_decls=None, show_default=False, prompt=False, confirmation_prompt=False, hide_input=False, is_flag=None, flag_value=None, multiple=False, count=False, allow_from_autoenv=True, type=None, help=None, hidden=False, show_choices=True, show_envvar=False, **attrs)
 Options are usually optional values on the command line and have some extra features that arguments don’t have.
 
 All other parameters are passed onwards to the parameter constructor.
@@ -871,7 +871,7 @@ help – the help string.
 
 hidden – hide this option from help outputs.
 
-class click.Argument(param_decls, required=None, **attrs)
+class quo.Argument(param_decls, required=None, **attrs)
 Arguments are positional parameters to a command. They generally provide fewer features than options but can have infinite nargs and are required by default.
 
 All parameters are passed onwards to the parameter constructor.
@@ -886,7 +886,7 @@ All parameters are passed onwards to the parameter constructor.
 Context
 -------
 
-class click.Context(command, parent=None, info_name=None, obj=None, auto_envvar_prefix=None, default_map=None, terminal_width=None, max_content_width=None, resilient_parsing=False, allow_extra_args=None, allow_interspersed_args=None, ignore_unknown_options=None, help_option_names=None, token_normalize_func=None, color=None, show_default=None)
+class quo.Context(command, parent=None, info_name=None, obj=None, auto_envvar_prefix=None, default_map=None, terminal_width=None, max_content_width=None, resilient_parsing=False, allow_extra_args=None, allow_interspersed_args=None, ignore_unknown_options=None, help_option_names=None, token_normalize_func=None, color=None, show_default=None)
 The context is a special internal object that holds state relevant for the script execution at every single level. It’s normally invisible to commands unless they opt-in to getting access to it.
 
 The context is useful as it can pass internal objects around and can control special execution features such as reading data from environment variables.
@@ -911,21 +911,21 @@ default_map – a dictionary (like object) with default values for parameters.
 
 terminal_width – the width of the terminal. The default is inherit from parent context. If no context defines the terminal width then auto detection will be applied.
 
-max_content_width – the maximum width for content rendered by Click (this currently only affects help pages). This defaults to 80 characters if not overridden. In other words: even if the terminal is larger than that, Click will not format things wider than 80 characters by default. In addition to that, formatters might add some safety mapping on the right.
+max_content_width – the maximum width for content rendered by quo (this currently only affects help pages). This defaults to 80 characters if not overridden. In other words: even if the terminal is larger than that, quo will not format things wider than 80 characters by default. In addition to that, formatters might add some safety mapping on the right.
 
-resilient_parsing – if this flag is enabled then Click will parse without any interactivity or callback invocation. Default values will also be ignored. This is useful for implementing things such as completion support.
+resilient_parsing – if this flag is enabled then quo will parse without any interactivity or callback invocation. Default values will also be ignored. This is useful for implementing things such as completion support.
 
 allow_extra_args – if this is set to True then extra arguments at the end will not raise an error and will be kept on the context. The default is to inherit from the command.
 
 allow_interspersed_args – if this is set to False then options and arguments cannot be mixed. The default is to inherit from the command.
 
-ignore_unknown_options – instructs click to ignore options it does not know and keeps them for later processing.
+ignore_unknown_options – instructs quo to ignore options it does not know and keeps them for later processing.
 
 help_option_names – optionally a list of strings that define how the default help parameter is named. The default is ['--help'].
 
 token_normalize_func – an optional function that is used to normalize tokens (options, choices, etc.). This for instance can be used to implement case insensitive behavior.
 
-color – controls if the terminal supports ANSI colors or not. The default is autodetection. This is only needed if ANSI codes are used in texts that Click prints which is by default not the case. This for instance would affect help output.
+color – controls if the terminal supports ANSI colors or not. The default is autodetection. This is only needed if ANSI codes are used in texts that quo prints which is by default not the case. This for instance would affect help output.
 
 show_default – if True, shows defaults for all options. Even if an option is later created with show_default=False, this command-level setting overrides it.
 
@@ -992,7 +992,7 @@ help_option_names = None
 The names for the help options.
 
 ignore_unknown_options = None
-Instructs click to ignore options that a command does not understand and will store it on the context for later processing. This is primarily useful for situations where you want to call into external programs. Generally this pattern is strongly discouraged because it’s not possibly to losslessly forward all arguments.
+Instructs quo to ignore options that a command does not understand and will store it on the context for later processing. This is primarily useful for situations where you want to call into external programs. Generally this pattern is strongly discouraged because it’s not possibly to losslessly forward all arguments.
 
 Changelog
 info_name = None
@@ -1003,9 +1003,9 @@ Invokes a command callback in exactly the way it expects. There are two ways to 
 
 the first argument can be a callback and all other arguments and keyword arguments are forwarded directly to the function.
 
-the first argument is a click command object. In that case all arguments are forwarded as well but proper click parameters (options and click arguments) must be keyword arguments and Click will fill in defaults.
+the first argument is a quo command object. In that case all arguments are forwarded as well but proper quo parameters (options and quo arguments) must be keyword arguments and quo will fill in defaults.
 
-Note that before Click 3.2 keyword arguments were not properly filled in against the intention of this code and no context was created. For more information about this change and why it was done in a bugfix release see Upgrading to 3.2.
+Note that before quo 3.2 keyword arguments were not properly filled in against the intention of this code and no context was created. For more information about this change and why it was done in a bugfix release see Upgrading to 3.2.
 
 invoked_subcommand = None
 This flag indicates if a subcommand is going to be executed. A group callback can use this information to figure out if it’s being executed directly or because the execution flow passes onwards to a subcommand. By default it’s None, but it can be the name of the subcommand to execute.
@@ -1022,9 +1022,9 @@ max_content_width = None
 The maximum width of formatted content (None implies a sensible default which is 80 for most things).
 
 property meta
-This is a dictionary which is shared with all the contexts that are nested. It exists so that click utilities can store some state here if they need to. It is however the responsibility of that code to manage this dictionary well.
+This is a dictionary which is shared with all the contexts that are nested. It exists so that quo utilities can store some state here if they need to. It is however the responsibility of that code to manage this dictionary well.
 
-The keys are supposed to be unique dotted strings. For instance module paths are a good choice for it. What is stored in there is irrelevant for the operation of click. However what is important is that code that places data here adheres to the general semantics of the system.
+The keys are supposed to be unique dotted strings. For instance module paths are a good choice for it. What is stored in there is irrelevant for the operation of quo. However what is important is that code that places data here adheres to the general semantics of the system.
 
 Example usage:
 
@@ -1050,7 +1050,7 @@ protected_args = None
 protected arguments. These are arguments that are prepended to args when certain parsing scenarios are encountered but must be never propagated to another arguments. This is used to implement nested parsing.
 
 resilient_parsing = None
-Indicates if resilient parsing is enabled. In that case Click will do its best to not cause any failures and default values will be ignored. Useful for completion.
+Indicates if resilient parsing is enabled. In that case quo will do its best to not cause any failures and default values will be ignored. Useful for completion.
 
 scope(cleanup=True)
 This helper method can be used with the context object to promote it to the current thread local (see get_current_context()). The default behavior of this is to invoke the cleanup functions which can be disabled by setting cleanup to False. The cleanup functions are typically used for things such as closing file handles.
@@ -1075,8 +1075,8 @@ The width of the terminal (None is autodetection).
 token_normalize_func = None
 An optional normalization function for tokens. This is options, choices, commands etc.
 
-click.get_current_context(silent=False)
-Returns the current click context. This can be used as a way to access the current context object from anywhere. This is a more implicit alternative to the pass_context() decorator. This function is primarily useful for helpers such as echo() which might be interested in changing its behavior based on the current context.
+quo.get_current_context(silent=False)
+Returns the current quo context. This can be used as a way to access the current context object from anywhere. This is a more implicit alternative to the pass_context() decorator. This function is primarily useful for helpers such as echo() which might be interested in changing its behavior based on the current context.
 
 To push the current context, Context.scope() can be used.
 
@@ -1089,7 +1089,7 @@ silent – if set to True the return value is None if no context is available. T
 
 .. autofunction:: currentcontext
 
-.. autoclass:: click.core.ParameterSource
+.. autoclass:: quo.core.ParameterSource
     :members:
     :member-order: bysource
 
@@ -1126,44 +1126,44 @@ Types
 
 Exceptions
 ----------
-exception click.ClickException(message)
-An exception that Click can handle and show to the user.
+exception quo.ClickException(message)
+An exception that quo can handle and show to the user.
 
-exception click.Abort
-An internal signalling exception that signals Click to abort.
+exception quo.Abort
+An internal signalling exception that signals quo to abort.
 
-exception click.UsageError(message, ctx=None)
+exception quo.UsageError(message, ctx=None)
 An internal exception that signals a usage error. This typically aborts any further handling.
 
 Parameters
 message – the error message to display.
 
-ctx – optionally the context that caused this error. Click will fill in the context automatically in some situations.
+ctx – optionally the context that caused this error. quo will fill in the context automatically in some situations.
 
-exception click.BadParameter(message, ctx=None, param=None, param_hint=None)
-An exception that formats out a standardized error message for a bad parameter. This is useful when thrown from a callback or type as Click will attach contextual information to it (for instance, which parameter it is).
+exception quo.BadParameter(message, ctx=None, param=None, param_hint=None)
+An exception that formats out a standardized error message for a bad parameter. This is useful when thrown from a callback or type as quo will attach contextual information to it (for instance, which parameter it is).
 
 Changelog
 Parameters
-param – the parameter object that caused this error. This can be left out, and Click will attach this info itself if possible.
+param – the parameter object that caused this error. This can be left out, and quo will attach this info itself if possible.
 
 param_hint – a string that shows up as parameter name. This can be used as alternative to param in cases where custom validation should happen. If it is a string it’s used as such, if it’s a list then each item is quoted and separated.
 
-exception click.FileError(filename, hint=None)
+exception quo.FileError(filename, hint=None)
 Raised if a file cannot be opened.
 
-exception click.NoSuchOption(option_name, message=None, possibilities=None, ctx=None)
-Raised if click attempted to handle an option that does not exist.
+exception quo.NoSuchOption(option_name, message=None, possibilities=None, ctx=None)
+Raised if quo attempted to handle an option that does not exist.
 
 Changelog
-exception click.BadOptionUsage(option_name, message, ctx=None)
+exception quo.BadOptionUsage(option_name, message, ctx=None)
 Raised if an option is generally supplied but the use of the option was incorrect. This is for instance raised if the number of arguments for an option is not correct.
 
 Changelog
 Parameters
 option_name – the name of the option being used incorrectly.
 
-exception click.BadArgumentUsage(message, ctx=None)
+exception quo.BadArgumentUsage(message, ctx=None)
 Raised if an argument is generally supplied but the use of the argument was incorrect. This is for instance raised if the number of values for an argument is not correct.
 
 Changelog
@@ -1196,8 +1196,8 @@ Formatting
 Parsing
 -------
 
-class click.OptionParser(ctx=None)
-The option parser is an internal class that is ultimately used to parse options and arguments. It’s modelled after optparse and brings a similar but vastly simplified API. It should generally not be used directly as the high level Click classes wrap it for you.
+class quo.OptionParser(ctx=None)
+The option parser is an internal class that is ultimately used to parse options and arguments. It’s modelled after optparse and brings a similar but vastly simplified API. It should generally not be used directly as the high level quo classes wrap it for you.
 
 It’s not nearly as extensible as optparse or argparse as it does not implement features that are implemented on a higher level (such as types or defaults).
 
@@ -1215,7 +1215,7 @@ Adds a new option named dest to the parser. The destination is not inferred (unl
 The obj can be used to identify the option in the order list that is returned from the parser.
 
 allow_interspersed_args = None
-This controls how the parser deals with interspersed arguments. If this is set to False, the parser will stop on the first non-option. Click uses this to implement nested subcommands safely.
+This controls how the parser deals with interspersed arguments. If this is set to False, the parser will stop on the first non-option. quo uses this to implement nested subcommands safely.
 
 ctx = None
 The Context for this parser. This might be None for some advanced use cases.
@@ -1250,11 +1250,11 @@ customizing Quo's shell completion system.
 Tests
 -------
 
-click.testing.CliRunner(charset=None, env=None, echo_stdin=False, mix_stderr=True)
+quo.testing.CliRunner(charset=None, env=None, echo_stdin=False, mix_stderr=True)
 The CLI runner provides functionality to invoke a Click command line script for unittesting purposes in a isolated environment. This only works in single-threaded systems without any concurrency as it changes the global interpreter state.
 
 Parameters
-charset – the character set for the input and output data. This is UTF-8 by default and should not be changed currently as the reporting to Click only works in Python 2 properly.
+charset – the character set for the input and output data. This is UTF-8 by default and should not be changed currently as the reporting to quo only works in Python 2 properly.
 
 env – a dictionary with environment variables for overriding.
 
@@ -1290,7 +1290,7 @@ isolated_filesystem()
 A context manager that creates a temporary folder and changes the current working directory to it for isolated filesystem tests.
 
 isolation(input=None, env=None, color=False)
-A context manager that sets up the isolation for invoking of a command line tool. This sets up stdin with the given input data and os.environ with the overrides from the given dictionary. This also rebinds some internals in Click to be mocked (like the prompt functionality).
+A context manager that sets up the isolation for invoking of a command line tool. This sets up stdin with the given input data and os.environ with the overrides from the given dictionary. This also rebinds some internals in quo to be mocked (like the prompt functionality).
 
 This is automatically done in the invoke() method.
 
@@ -1305,7 +1305,7 @@ color – whether the output should contain color codes. The application can sti
 make_env(overrides=None)
 Returns the environment overrides for invoking a script.
 
-class click.testing.Result(runner, stdout_bytes, stderr_bytes, exit_code, exception, exc_info=None)
+class quo.testing.Result(runner, stdout_bytes, stderr_bytes, exit_code, exception, exc_info=None)
 Holds the captured result of an invoked CLI script.
 
 exc_info = None
