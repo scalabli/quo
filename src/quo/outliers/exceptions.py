@@ -102,13 +102,13 @@ class BadParameter(UsageError):
 
 
 class MissingParameter(BadParameter):
-    """This parameter is raised if Quo required an option or argument but it was not
+    """This parameter is raised if Quo required an app or argument but it was not
     provided.
 
     :param param_type: a string that indicates the type of the parameter.
                        The default is to inherit the parameter type from
                        the given `param`.  Valid values are ``'parameter'``,
-                       ``'option'`` or ``'argument'``.
+                       ``'app'`` or ``'argument'``.
     """
 
     def __init__(
@@ -151,17 +151,17 @@ class MissingParameter(BadParameter):
 
 
 class NoSuchOption(UsageError):
-    """Raised if Quo attempted to handle an option that does not
+    """Raised if Quo attempted to handle an app that does not
     exist.
 
     """
 
-    def __init__(self, option_name, message=None, possibilities=None, ctx=None):
+    def __init__(self, app_name, message=None, possibilities=None, ctx=None):
         if message is None:
-            message = f"no such option: {option_name}"
+            message = f"no such app: {app_name}"
 
         super().__init__(message, ctx)
-        self.option_name = option_name
+        self.app_name = app_name
         self.possibilities = possibilities
 
     def format_message(self):
@@ -171,21 +171,21 @@ class NoSuchOption(UsageError):
                 bits.append(f"Did you mean {self.possibilities[0]}?")
             else:
                 possibilities = sorted(self.possibilities)
-                bits.append(f"(Possible options: {', '.join(possibilities)})")
+                bits.append(f"(Possible apps: {', '.join(possibilities)})")
         return "  ".join(bits)
 
 
 class BadOptionUsage(UsageError):
-    """Raised if an option is generally supplied but the use of the option
+    """Raised if an app is generally supplied but the use of the app
     was incorrect.  This is for instance raised if the number of arguments
-    for an option is not correct.
+    for an app is not correct.
 
-    :param option_name: the name of the option being used incorrectly.
+    :param app_name: the name of the app being used incorrectly.
     """
 
-    def __init__(self, option_name, message, ctx=None):
+    def __init__(self, app_name, message, ctx=None):
         super().__init__(message, ctx)
-        self.option_name = option_name
+        self.app_name = app_name
 
 
 class BadArgumentUsage(UsageError):
