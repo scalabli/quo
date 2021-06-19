@@ -4,11 +4,11 @@ def autopswd(*param_decls, **kwargs):
 
     :param param_decls: One or more option names. Defaults to the single
         value ``"--password"``.
-    :param kwargs: Extra arguments are passed to :func:`option`.
+    :param kwargs: Extra arguments are passed to :func:`app`.
     
     Example::
 
-    @quo.option('--password', prompt=True, confirmation_prompt=True,
+    @quo.app('--password', prompt=True, autoconfirm=True,
               hide_input=True)
      def changeadmin(password):
      pass
@@ -18,8 +18,8 @@ def autopswd(*param_decls, **kwargs):
         param_decls = ("--password",)
 
     kwargs.setdefault("prompt", True)
-    kwargs.setdefault("confirmation_prompt", True)
+    kwargs.setdefault("autoconfirm", True)
     kwargs.setdefault("hide_input", True)
-    return option(*param_decls, **kwargs)
+    return app(*param_decls, **kwargs)
 
 
