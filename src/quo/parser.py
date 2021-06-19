@@ -7,8 +7,8 @@ from quo.outliers.exceptions import BadOptionUsage
 from quo.outliers.exceptions import NoSuchOption
 from quo.outliers.exceptions import UsageError
 
-# Sentinel value that indicates an option was passed as a flag without a
-# value but is not a flag option. Option.consume_value uses this to
+# Sentinel value that indicates an app was passed as a flag without a
+# value but is not a flag app. App.consume_value uses this to
 # prompt or use the flag_value.
 _flag_needs_value = object()
 
@@ -117,7 +117,7 @@ def split_arg_string(string):
     return out
 
 
-class Option:
+class App:
     def __init__(self, opts, dest, action=None, nargs=1, const=None, obj=None):
         self._short_opts = []
         self._long_opts = []
@@ -126,7 +126,7 @@ class Option:
         for opt in opts:
             prefix, value = split_opt(opt)
             if not prefix:
-                raise ValueError(f"Invalid start character for option ({opt})")
+                raise ValueError(f"Invalid start character for app ({opt})")
             self.prefixes.add(prefix[0])
             if len(prefix) == 1 and len(value) == 1:
                 self._short_opts.append(opt)
@@ -194,9 +194,9 @@ class ParsingState:
         self.order = []
 
 
-class OptionParser:
-    """The option parser is an internal class that is ultimately used to
-    parse options and arguments.  It's modelled after optparse and brings
+class AppParser:
+    """The app parser is an internal class that is ultimately used to
+    parse apps and arguments.  It's modelled after optparse and brings
     a similar but vastly simplified API.  It should generally not be used
     directly as the high level quo classes wrap it for you.
 
@@ -214,45 +214,45 @@ class OptionParser:
         self.ctx = ctx
         #: This controls how the parser deals with interspersed arguments.
         #: If this is set to `False`, the parser will stop on the first
-        #: non-option.  quo uses this to implement nested subcommands
+        #: non-app.  quo uses this to implement nested subcommands
         #: safely.
         self.allow_interspersed_args = True
-        #: This tells the parser how to deal with unknown options.  By
+        #: This tells the parser how to deal with unknown apps.  By
         #: default it will error out (which is sensible), but there is a
         #: second mode where it will ignore it and continue processing
-        #: after shifting all the unknown options into the resulting args.
-        self.ignore_unknown_options = False
+        #: after shifting all the unknown apps into the resulting args.
+        self.ignore_unknown_apps = False
         if ctx is not None:
             self.allow_interspersed_args = ctx.allow_interspersed_args
-            self.ignore_unknown_options = ctx.ignore_unknown_options
+            self.ignore_unknown_apps = ctx.ignore_unknown_apps
         self._short_opt = {}
         self._long_opt = {}
         self._opt_prefixes = {"-", "--"}
         self._args = []
 
-    def add_option(self, opts, dest, action=None, nargs=1, const=None, obj=None):
-        """Adds a new option named `dest` to the parser.  The destination
+    def add_app(self, opts, dest, action=None, nargs=1, const=None, obj=None):
+        """Adds a new app named `dest` to the parser.  The destination
         is not inferred (unlike with optparse) and needs to be explicitly
         provided.  Action can be any of ``store``, ``store_const``,
         ``append``, ``appnd_const`` or ``count``.
 
-        The `obj` can be used to identify the option in the order list
+        The `obj` can be used to identify the app in the order list
         that is returned from the parser.
         """
         if obj is None:
             obj = dest
         opts = [normalize_opt(opt, self.ctx) for opt in opts]
-        option = Option(opts, dest, action=action, nargs=nargs, const=const, obj=obj)
-        self._opt_prefixes.update(option.prefixes)
-        for opt in option._short_opts:
-            self._short_opt[opt] = option
-        for opt in option._long_opts:
-            self._long_opt[opt] = option
+        app = App(opts, dest, action=action, nargs=nargs, const=const, obj=obj)
+        self._opt_prefixes.update(app.prefixes)
+        for opt in app._short_opts:
+            self._short_opt[opt] = app
+        for opt in app._long_opts:
+            self._long_opt[opt] = app
 
     def add_argument(self, dest, nargs=1, obj=None):
         """Adds a positional argument named `dest` to the parser.
 
-        The `obj` can be used to identify the option in the order list
+        The `obj` can be used to identify the app in the order list
         that is returned from the parser.
         """
         if obj is None:
@@ -261,14 +261,14 @@ class OptionParser:
 
     def parse_args(self, args):
         """Parses positional arguments and returns ``(values, args, order)``
-        for the parsed options and arguments as well as the leftover
+        for the parsed apps and arguments as well as the leftover
         arguments if there are any.  The order is a list of objects as they
         appear on the command line.  If arguments appear multiple times they
         will be memorized multiple times as well.
         """
         state = ParsingState(args)
         try:
-            self._process_args_for_options(state)
+            self._process_args_for_apps(state)
             self._process_args_for_args(state)
         except UsageError:
             if self.ctx is None or not self.ctx.resilient_parsing:
@@ -286,7 +286,7 @@ class OptionParser:
         state.largs = args
         state.rargs = []
 
-    def _process_args_for_options(self, state):
+    def _process_args_for_apps(self, state):
         while state.rargs:
             arg = state.rargs.pop(0)
             arglen = len(arg)
@@ -312,8 +312,8 @@ class OptionParser:
             possibilities = get_close_matches(opt, self._long_opt)
             raise NoSuchOption(opt, possibilities=possibilities, ctx=self.ctx)
 
-        option = self._long_opt[opt]
-        if option.takes_value:
+        app = self._long_opt[opt]
+        if app.takes_value:
             # 
             #
             #
@@ -321,78 +321,78 @@ class OptionParser:
             if explicit_value is not None:
                 state.rargs.insert(0, explicit_value)
 
-            value = self._get_value_from_state(opt, option, state)
+            value = self._get_value_from_state(opt, app, state)
 
         elif explicit_value is not None:
-            raise BadOptionUsage(opt, f"{opt} option does not take a value")
+            raise BadOptionUsage(opt, f"{opt} app does not take a value")
 
         else:
             value = None
 
-        option.process(value, state)
+        app.process(value, state)
 
     def _match_short_opt(self, arg, state):
         stop = False
         i = 1
         prefix = arg[0]
-        unknown_options = []
+        unknown_apps = []
 
         for ch in arg[1:]:
             opt = normalize_opt(f"{prefix}{ch}", self.ctx)
-            option = self._short_opt.get(opt)
+            app = self._short_opt.get(opt)
             i += 1
 
-            if not option:
-                if self.ignore_unknown_options:
-                    unknown_options.append(ch)
+            if not app:
+                if self.ignore_unknown_apps:
+                    unknown_apps.append(ch)
                     continue
                 raise NoSuchOption(opt, ctx=self.ctx)
-            if option.takes_value:
+            if app.takes_value:
                 # Any characters left in arg?  Pretend they're the
                 # next arg, and stop consuming characters of arg.
                 if i < len(arg):
                     state.rargs.insert(0, arg[i:])
                     stop = True
 
-                value = self._get_value_from_state(opt, option, state)
+                value = self._get_value_from_state(opt, app, state)
 
             else:
                 value = None
 
-            option.process(value, state)
+            app.process(value, state)
 
             if stop:
                 break
 
-        # If we got any unknown options we re-combinate the string of the
-        # remaining options and re-attach the prefix, then report that
+        # If we got any unknown apps we re-combinate the string of the
+        # remaining apps and re-attach the prefix, then report that
         # to the state as new larg.  This way there is basic combinatorics
         # that can be achieved while still ignoring unknown arguments.
-        if self.ignore_unknown_options and unknown_options:
-            state.largs.append(f"{prefix}{''.join(unknown_options)}")
+        if self.ignore_unknown_apps and unknown_apps:
+            state.largs.append(f"{prefix}{''.join(unknown_apps)}")
 
-    def _get_value_from_state(self, option_name, option, state):
-        nargs = option.nargs
+    def _get_value_from_state(self, app_name, app, state):
+        nargs = app.nargs
 
         if len(state.rargs) < nargs:
-            if option.obj._flag_needs_value:
-                # Option allows omitting the value.
+            if app.obj._flag_needs_value:
+                # App allows omitting the value.
                 value = _flag_needs_value
             else:
                 n_str = "an argument" if nargs == 1 else f"{nargs} arguments"
                 raise BadOptionUsage(
-                    option_name, f"{option_name} option requires {n_str}."
+                    app_name, f"{app_name} app requires {n_str}."
                 )
         elif nargs == 1:
             next_rarg = state.rargs[0]
 
             if (
-                option.obj._flag_needs_value
+                app.obj._flag_needs_value
                 and isinstance(next_rarg, str)
                 and next_rarg[:1] in self._opt_prefixes
                 and len(next_rarg) > 1
             ):
-                # The next arg looks like the start of an option, don't
+                # The next arg looks like the start of an app, don't
                 # use it as the value if omitting the value is allowed.
                 value = _flag_needs_value
             else:
@@ -405,29 +405,29 @@ class OptionParser:
 
     def _process_opts(self, arg, state):
         explicit_value = None
-        # Long option handling happens in two parts.  The first part is
+        # Long app handling happens in two parts.  The first part is
         # supporting explicitly attached values.  In any case, we will try
-        # to long match the option first.
+        # to long match the app first.
         if "=" in arg:
             long_opt, explicit_value = arg.split("=", 1)
         else:
             long_opt = arg
         norm_long_opt = normalize_opt(long_opt, self.ctx)
 
-        # At this point we will match the (assumed) long option through
-        # the long option matching code.  Note that this allows options
-        # like "-foo" to be matched as long options.
+        # At this point we will match the (assumed) long app through
+        # the long app matching code.  Note that this allows apps
+        # like "-foo" to be matched as long apps.
         try:
             self._match_long_opt(norm_long_opt, explicit_value, state)
         except NoSuchOption:
-            # At this point the long option matching failed, and we need
-            # to try with short options.  However there is a special rule
-            # which says, that if we have a two character options prefix
+            # At this point the long app matching failed, and we need
+            # to try with short apps.  However there is a special rule
+            # which says, that if we have a two character apps prefix
             # (applies to "--foo" for instance), we do not dispatch to the
-            # short option code and will instead raise the no option
+            # short app code and will instead raise the no app
             # error.
             if arg[:2] not in self._opt_prefixes:
                 return self._match_short_opt(arg, state)
-            if not self.ignore_unknown_options:
+            if not self.ignore_unknown_apps:
                 raise
             state.largs.append(arg)
