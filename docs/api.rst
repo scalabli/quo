@@ -38,7 +38,7 @@ Attaches an option to the command. All positional arguments are passed as parame
 Parameters
 cls – the option class to instantiate. This defaults to Option.
 
-``quo.password_option``(*param_decls, **attrs)
+``quo.password_option`` (*param_decls, **attrs)
 Shortcut for password prompts.
 
 This is equivalent to decorating a function with option() with the following parameters:
@@ -62,7 +62,7 @@ def callback(ctx, param, value):
               expose_value=False, prompt='Do you want to continue?')
 def dropdb():
     pass
-quo.version_option(version=None, *param_decls, **attrs)
+``quo.version_option`` (version=None, *param_decls, **attrs)
 Adds a --version option which immediately ends the program printing out the version number. This is implemented as an eager option that prints the version and exits the program in the callback.
 
 Parameters
@@ -74,7 +74,7 @@ message – custom message to show instead of the default ('%(prog)s, version %(
 
 others – everything else is forwarded to option().
 
-quo.help_option(*param_decls, **attrs)
+``quo.help_option`` (*param_decls, **attrs)
 Adds a --help option which immediately ends the program printing out the help page. This is usually unnecessary to add as this is added by default to all commands unless suppressed.
 
 Like version_option(), this is implemented as eager option that prints in the callback and exits.
@@ -87,7 +87,7 @@ Marks a callback as wanting to receive the current context object as first argum
 quo.pass_obj(f)
 Similar to pass_context(), but only pass the object on the context onwards (Context.obj). This is useful if that object represents the state of a nested system.
 
-quo.make_pass_decorator(object_type, ensure=False)
+``quo.make_pass_decorator`` (object_type, ensure=False)
 Given an object type this creates a decorator that will work similar to pass_obj() but instead of passing the object of the current context, it will find the innermost context of type object_type().
 
 This generates a decorator that works roughly like this:
