@@ -15,7 +15,7 @@ from quo.outliers.exceptions import Exit
 from quo.outliers.exceptions import MissingParameter
 from quo.outliers.exceptions import UsageError
 from .layout import HelpFormatter
-from .layout import join_options
+from .layout import join_apps
 from quo.context.current import pop_context
 from quo.context.current import push_context
 from .parser import _flag_needs_value
@@ -216,17 +216,17 @@ class Context:
                              at the end will not raise an error and will be
                              kept on the context.  The default is to inherit
                              from the command.
-    :param allow_interspersed_args: if this is set to `False` then options
+    :param allow_interspersed_args: if this is set to `False` then apps
                                     and arguments cannot be mixed.  The
                                     default is to inherit from the command.
-    :param ignore_unknown_options: instructs Quo to ignore options it does
+    :param ignore_unknown_apps: instructs Quo to ignore apps it does
                                    not know and keeps them for later
                                    processing.
     :param autohelp_names: optionally a list of strings that define how
                               the default help parameter is named.  The
                               default is ``['--help']``.
     :param token_normalize_func: an optional function that is used to
-                                 normalize tokens (options, choices,
+                                 normalize tokens (apps, choices,
                                  etc.).  This for instance can be used to
                                  implement case insensitive behavior.
     :param color: controls if the terminal supports ANSI colors or not.  The
@@ -234,9 +234,9 @@ class Context:
                   codes are used in texts that Quo prints which is by
                   default not the case.  This for instance would affect
                   help output.
-    :param show_default: Show defaults for all options. If not set,
+    :param show_default: Show defaults for all apps. If not set,
         defaults to the value from a parent context. Overrides an
-        option's ``show_default`` argument.
+        app's ``show_default`` argument.
 
     """
 
@@ -258,7 +258,7 @@ class Context:
         resilient_parsing=False,
         allow_extra_args=None,
         allow_interspersed_args=None,
-        ignore_unknown_options=None,
+        ignore_unknown_apps=None,
         autohelp_names=None,
         token_normalize_func=None,
         color=None,
@@ -329,13 +329,13 @@ class Context:
         if allow_interspersed_args is None:
             allow_interspersed_args = command.allow_interspersed_args
         #: Indicates if the context allows mixing of arguments and
-        #: options or not.
+        #: apps or not.
         #:
         self.allow_interspersed_args = allow_interspersed_args
 
-        if ignore_unknown_options is None:
-            ignore_unknown_options = command.ignore_unknown_options
-        #: Instructs Quo to ignore options that a command does not
+        if ignore_unknown_apps is None:
+            ignore_unknown_apps = command.ignore_unknown_apps
+        #: Instructs Quo to ignore apps that a command does not
         #: understand and will store it on the context for later
         #: processing.  This is primarily useful for situations where you
         #: want to call into external programs.  Generally this pattern is
@@ -343,7 +343,7 @@ class Context:
         #: forward all arguments.
         #:
         #:
-        self.ignore_unknown_options = ignore_unknown_options
+        self.ignore_unknown_apps = ignore_unknown_apps
 
         if autohelp_names is None:
             if parent is not None:
@@ -351,14 +351,14 @@ class Context:
             else:
                 autohelp_names = ["--help"]
 
-        #: The names for the help options.
+        #: The names for the help apps.
         self.autohelp_names = autohelp_names
 
         if token_normalize_func is None and parent is not None:
             token_normalize_func = parent.token_normalize_func
 
         #: An optional normalization function for tokens.  This is
-        #: options, choices, commands etc.
+        #: apps, choices, commands etc.
         self.token_normalize_func = token_normalize_func
 
         #: Indicates if resilient parsing is enabled.  In that case Quo
@@ -393,7 +393,7 @@ class Context:
         if show_default is None and parent is not None:
             show_default = parent.show_default
 
-        #: Show option default values when formatting help text.
+        #: Show app default values when formatting help text.
         self.show_default = show_default
 
         self._close_callbacks = []
@@ -418,7 +418,7 @@ class Context:
             "info_name": self.info_name,
             "allow_extra_args": self.allow_extra_args,
             "allow_interspersed_args": self.allow_interspersed_args,
-            "ignore_unknown_options": self.ignore_unknown_options,
+            "ignore_unknown_apps": self.ignore_unknown_apps,
             "auto_envvar_prefix": self.auto_envvar_prefix,
         }
 
@@ -526,7 +526,7 @@ class Context:
         .. code-block:: python
 
             @quo.tether()
-            @quo.option("--name")
+            @quo.app("--name")
             @quo.contextualize
             def cli(ctx):
                 ctx.obj = ctx.with_resource(connect_db(name))
@@ -658,7 +658,7 @@ class Context:
             keyword arguments are forwarded directly to the function.
         2.  the first argument is a quo command object.  In that case all
             arguments are forwarded as well but proper quo parameters
-            (options and quo arguments) must be keyword arguments and quo
+            (apps and quo arguments) must be keyword arguments and quo
             will fill in defaults.
 
         Note that before quo 3.2 keyword arguments were not properly filled
@@ -761,8 +761,8 @@ class BaseCommand:
     allow_extra_args = False
     #: the default for the :attr:`Context.allow_interspersed_args` flag.
     allow_interspersed_args = True
-    #: the default for the :attr:`Context.ignore_unknown_options` flag.
-    ignore_unknown_options = False
+    #: the default for the :attr:`Context.ignore_unknown_apps` flag.
+    ignore_unknown_apps = False
 
     def __init__(self, name, context_settings=None):
         #: the name the command thinks it has.  Upon registering a command
@@ -1005,16 +1005,16 @@ class Command(BaseCommand):
                              passed to the context object.
     :param callback: the callback to invoke.  This is optional.
     :param params: the parameters to register with this command.  This can
-                   be either :class:`Option` or :class:`Argument` objects.
+                   be either :class:`App` or :class:`Argument` objects.
     :param help: the help string to use for this command.
     :param epilog: like the help string but it's printed at the end of the
                    help page after everything else.
     :param short_help: the short help to use for this command.  This is
                        shown on the command listing of the parent command.
     :param add_autohelp: by default each command registers a ``--help``
-                            option.  This can be disabled by this parameter.
+                            app.  This can be disabled by this parameter.
     :param no_args_is_help: this controls what happens if no arguments are
-                            provided.  This option is disabled by default.
+                            provided.  This app is disabled by default.
                             If enabled this will add ``--help`` as argument
                             if no arguments are passed
     :param hidden: hide this command from help outputs.
@@ -1032,7 +1032,7 @@ class Command(BaseCommand):
         help=None,
         epilog=None,
         short_help=None,
-        options_metavar="[OPTIONS]",
+        apps_metavar="[OPTIONS]",
         add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
@@ -1052,7 +1052,7 @@ class Command(BaseCommand):
             help = help.split("\f", 1)[0]
         self.help = help
         self.epilog = epilog
-        self.options_metavar = options_metavar
+        self.apps_metavar = apps_metavar
         self.short_help = short_help
         self.add_autohelp = add_autohelp
         self.no_args_is_help = no_args_is_help
@@ -1102,13 +1102,13 @@ class Command(BaseCommand):
         """Returns all the pieces that go into the usage line and returns
         it as a list of strings.
         """
-        rv = [self.options_metavar] if self.options_metavar else []
+        rv = [self.apps_metavar] if self.apps_metavar else []
         for param in self.get_params(ctx):
             rv.extend(param.get_usage_pieces(ctx))
         return rv
 
     def get_autohelp_names(self, ctx):
-        """Returns the names for the help option."""
+        """Returns the names for the help app."""
         all_names = set(ctx.autohelp_names)
         for param in self.params:
             all_names.difference_update(param.opts)
@@ -1116,7 +1116,7 @@ class Command(BaseCommand):
         return all_names
 
     def get_autohelp(self, ctx):
-        """Returns the help option object."""
+        """Returns the help app object."""
         autohelps = self.get_autohelp_names(ctx)
         if not autohelps or not self.add_autohelp:
             return
@@ -1126,7 +1126,7 @@ class Command(BaseCommand):
                 echo(ctx.get_help(), color=ctx.color)
                 ctx.exit()
 
-        return Option(
+        return App(
             autohelps,
             is_flag=True,
             is_eager=True,
@@ -1136,7 +1136,7 @@ class Command(BaseCommand):
         )
 
     def make_parser(self, ctx):
-        """Creates the underlying option parser for this command."""
+        """Creates the underlying app parser for this command."""
         parser = OptionParser(ctx)
         for param in self.get_params(ctx):
             param.add_to_parser(parser, ctx)
@@ -1171,12 +1171,12 @@ class Command(BaseCommand):
 
         -   :meth:`format_usage`
         -   :meth:`format_help_text`
-        -   :meth:`format_options`
+        -   :meth:`format_apps`
         -   :meth:`format_epilog`
         """
         self.format_usage(ctx, formatter)
         self.format_help_text(ctx, formatter)
-        self.format_options(ctx, formatter)
+        self.format_apps(ctx, formatter)
         self.format_epilog(ctx, formatter)
 
     def format_help_text(self, ctx, formatter):
@@ -1193,8 +1193,8 @@ class Command(BaseCommand):
             with formatter.indentation():
                 formatter.write_text(DEPRECATED_HELP_NOTICE)
 
-    def format_options(self, ctx, formatter):
-        """Writes all the options into the formatter if they exist."""
+    def format_apps(self, ctx, formatter):
+        """Writes all the apps into the formatter if they exist."""
         opts = []
         for param in self.get_params(ctx):
             rv = param.get_help_record(ctx)
@@ -1202,7 +1202,7 @@ class Command(BaseCommand):
                 opts.append(rv)
 
         if opts:
-            with formatter.section("Options"):
+            with formatter.section("Apps"):
                 formatter.write_dl(opts)
 
     def format_epilog(self, ctx, formatter):
@@ -1243,7 +1243,7 @@ class Command(BaseCommand):
 
     def shell_complete(self, ctx, incomplete):
         """Return a list of completions for the incomplete value. Looks
-        at the names of options and chained multi-commands.
+        at the names of apps and chained multi-commands.
 
         :param ctx: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
@@ -1256,7 +1256,7 @@ class Command(BaseCommand):
         if incomplete and not incomplete[0].isalnum():
             for param in self.get_params(ctx):
                 if (
-                    not isinstance(param, Option)
+                    not isinstance(param, App)
                     or param.hidden
                     or (
                         not param.multiple
@@ -1285,7 +1285,7 @@ class MultiCommand(Command):
                                    is invoked.  By default it's only invoked
                                    if a subcommand is provided.
     :param no_args_is_help: this controls what happens if no arguments are
-                            provided.  This option is enabled by default if
+                            provided.  This app is enabled by default if
                             `invoke_without_command` is disabled or disabled
                             if it's enabled.  If enabled this will add
                             ``--help`` as argument if no arguments are
@@ -1356,8 +1356,8 @@ class MultiCommand(Command):
         rv.append(self.subcommand_metavar)
         return rv
 
-    def format_options(self, ctx, formatter):
-        super().format_options(ctx, formatter)
+    def format_apps(self, ctx, formatter):
+        super().format_apps(ctx, formatter)
         self.format_commands(ctx, formatter)
 
     def resultcallback(self, replace=False):
@@ -1372,7 +1372,7 @@ class MultiCommand(Command):
         Example::
 
             @quo.tether()
-            @quo.option('-i', '--input', default=23)
+            @quo.app('-i', '--input', default=23)
             def cli(input):
                 return 42
 
@@ -1401,7 +1401,7 @@ class MultiCommand(Command):
 
     def format_commands(self, ctx, formatter):
         """Extra format methods for multi methods that adds all the commands
-        after the options.
+        after the apps.
         """
         commands = []
         for subcommand in self.list_commands(ctx):
@@ -1524,7 +1524,7 @@ class MultiCommand(Command):
         # If we don't find the command we want to show an error message
         # to the user that it was not provided.  However, there is
         # something else we should do: if the first argument looks like
-        # an option we want to kick off parsing again for arguments to
+        # an app we want to kick off parsing again for arguments to
         # resolve things like --help which now should go to the main
         # place.
         if cmd is None and not ctx.resilient_parsing:
@@ -1547,7 +1547,7 @@ class MultiCommand(Command):
 
     def shell_complete(self, ctx, incomplete):
         """Return a list of completions for the incomplete value. Looks
-        at the names of options, subcommands, and chained
+        at the names of apps, subcommands, and chained
         multi-commands.
 
         :param ctx: Invocation context for this command.
@@ -1702,13 +1702,13 @@ class CommandCollection(MultiCommand):
 
 class Parameter:
     r"""A parameter to a command comes in two versions: they are either
-    :class:`Option`\s or :class:`Argument`\s.  Other subclasses are currently
+    :class:`App`\s or :class:`Argument`\s.  Other subclasses are currently
     not supported by design as some of the internals for parsing are
     intentionally not finalized.
 
-    Some settings are supported by both options and arguments.
+    Some settings are supported by both apps and arguments.
 
-    :param param_decls: the parameter declarations for this option or
+    :param param_decls: the parameter declarations for this app or
                         argument.  This is a list of flags or argument
                         names.
     :param type: the type that should be used.  Either a :class:`ParamType`
@@ -1840,7 +1840,7 @@ class Parameter:
     @property
     def human_readable_name(self):
         """Returns the human readable name of this parameter.  This is the
-        same as the name for options, but the metavar for arguments.
+        same as the name for apps, but the metavar for arguments.
         """
         return self.name
 
@@ -2054,8 +2054,8 @@ class Parameter:
         return self.type.shell_complete(ctx, self, incomplete)
 
 
-class Option(Parameter):
-    """Options are usually optional values on the command line and
+class App(Parameter):
+    """Apps are usually optional values on the command line and
     have some extra features that arguments don't have.
 
     All other parameters are passed onwards to the parameter constructor.
@@ -2063,31 +2063,31 @@ class Option(Parameter):
     :param show_default: controls if the default value should be shown on the
                          help page. Normally, defaults are not shown. If this
                          value is a string, it shows the string instead of the
-                         value. This is particularly useful for dynamic options.
+                         value. This is particularly useful for dynamic apps.
     :param show_envvar: controls if an environment variable should be shown on
                         the help page.  Normally, environment variables
                         are not shown.
     :param prompt: if set to `True` or a non empty string then the user will be
                    prompted for input.  If set to `True` the prompt will be the
-                   option name capitalized.
+                   app name capitalized.
     :param autoconfirm: if set then the value will need to be confirmed
                                 if it was prompted for.
     :param prompt_required: If set to ``False``, the user will be
-        prompted for input only when the option was specified as a flag
+        prompted for input only when the app was specified as a flag
         without a value.
     :param hide_input: if this is `True` then the input on the prompt will be
                        hidden from the user.  This is useful for password
                        input.
-    :param is_flag: forces this option to act as a flag.  The default is
+    :param is_flag: forces this app to act as a flag.  The default is
                     auto detection.
     :param flag_value: which value should be used for this flag if it's
                        enabled.  This is set to a boolean automatically if
-                       the option string contains a slash to mark two options.
+                       the app string contains a slash to mark two apps.
     :param multiple: if this is set to `True` then the argument is accepted
                      multiple times and recorded.  This is similar to ``nargs``
                      in how it works but supports arbitrary number of
                      arguments.
-    :param count: this flag makes an option increment an integer.
+    :param count: this flag makes an app increment an integer.
     :param allow_from_autoenv: if this is enabled then the value of this
                                parameter will be pulled from an environment
                                variable in case a prefix is defined on the
@@ -2096,7 +2096,7 @@ class Option(Parameter):
     :param hidden: hide this option from help outputs.
     """
 
-    param_type_name = "option"
+    param_type_name = "app"
 
     def __init__(
         self,
@@ -2133,7 +2133,7 @@ class Option(Parameter):
         self.hide_input = hide_input
         self.hidden = hidden
 
-        # If prompt is enabled but not required, then the option can be
+        # If prompt is enabled but not required, then the app can be
         # used as a flag to indicate using prompt or flag_value.
         self._flag_needs_value = self.prompt is not None and not self.prompt_required
 
@@ -2145,7 +2145,7 @@ class Option(Parameter):
                 # Not a flag, but when used as a flag it shows a prompt.
                 is_flag = False
             else:
-                # Implicitly a flag because flag options were given.
+                # Implicitly a flag because flag apps were given.
                 is_flag = bool(self.secondary_opts)
         elif is_flag is False and not self._flag_needs_value:
             # Not a flag, and prompt is not enabled, can be used as a
@@ -2185,21 +2185,21 @@ class Option(Parameter):
         # Sanity check for stuff we don't support
         if __debug__:
             if self.nargs < 0:
-                raise TypeError("Options cannot have nargs < 0")
+                raise TypeError("Apps cannot have nargs < 0")
             if self.prompt and self.is_flag and not self.is_bool_flag:
                 raise TypeError("Cannot prompt for flags that are not bools.")
             if not self.is_bool_flag and self.secondary_opts:
-                raise TypeError("Got secondary option for non boolean flag.")
+                raise TypeError("Got secondary app for non boolean flag.")
             if self.is_bool_flag and self.hide_input and self.prompt is not None:
                 raise TypeError("Hidden input does not work with boolean flag prompts.")
             if self.count:
                 if self.multiple:
                     raise TypeError(
-                        "Options cannot be multiple and count at the same time."
+                        "Apps cannot be multiple and count at the same time."
                     )
                 elif self.is_flag:
                     raise TypeError(
-                        "Options cannot be count and flags at the same time."
+                        "Apps cannot be count and flags at the same time."
                     )
 
     def to_info_dict(self):
@@ -2238,7 +2238,7 @@ class Option(Parameter):
                         secondary_opts.append(second.lstrip())
                     if first == second:
                         raise ValueError(
-                            f"Boolean option {decl!r} cannot use the"
+                            f"Boolean app {decl!r} cannot use the"
                             " same flag for true/false."
                         )
                 else:
@@ -2246,7 +2246,7 @@ class Option(Parameter):
                     opts.append(decl)
 
         if name is None and possible_names:
-            possible_names.sort(key=lambda x: -len(x[0]))  # group long options first
+            possible_names.sort(key=lambda x: -len(x[0]))  # group long apps first
             name = possible_names[0][1].replace("-", "_").lower()
             if not name.isidentifier():
                 name = None
@@ -2254,11 +2254,11 @@ class Option(Parameter):
         if name is None:
             if not expose_value:
                 return None, opts, secondary_opts
-            raise TypeError("Could not determine name for option")
+            raise TypeError("Could not determine name for app")
 
         if not opts and not secondary_opts:
             raise TypeError(
-                f"No options defined but a name was passed ({name})."
+                f"No apps defined but a name was passed ({name})."
                 " Did you mean to declare an argument instead? Did"
                 f" you mean to pass '--{name}'?"
             )
@@ -2283,17 +2283,17 @@ class Option(Parameter):
             kwargs.pop("nargs", None)
             action_const = f"{action}_const"
             if self.is_bool_flag and self.secondary_opts:
-                parser.add_option(self.opts, action=action_const, const=True, **kwargs)
-                parser.add_option(
+                parser.add_app(self.opts, action=action_const, const=True, **kwargs)
+                parser.add_app(
                     self.secondary_opts, action=action_const, const=False, **kwargs
                 )
             else:
-                parser.add_option(
+                parser.add_app(
                     self.opts, action=action_const, const=self.flag_value, **kwargs
                 )
         else:
             kwargs["action"] = action
-            parser.add_option(self.opts, **kwargs)
+            parser.add_app(self.opts, **kwargs)
 
     def get_help_record(self, ctx):
         if self.hidden:
@@ -2301,7 +2301,7 @@ class Option(Parameter):
         any_prefix_is_slash = []
 
         def _write_opts(opts):
-            rv, any_slashes = join_options(opts)
+            rv, any_slashes = join_apps(opts)
             if any_slashes:
                 any_prefix_is_slash[:] = [True]
             if not self.is_flag and not self.count:
@@ -2431,7 +2431,7 @@ class Option(Parameter):
     def consume_value(self, ctx, opts):
         value, source = super().consume_value(ctx, opts)
 
-        # The parser will emit a sentinel value if the option can be
+        # The parser will emit a sentinel value if the app can be
         # given as a flag without a value. This is different from None
         # to distinguish from the flag not being given at all.
         if value is _flag_needs_value:
@@ -2458,7 +2458,7 @@ class Option(Parameter):
 
 class Argument(Parameter):
     """Arguments are positional parameters to a command.  They generally
-    provide fewer features than options but can have infinite ``nargs``
+    provide fewer features than apps but can have infinite ``nargs``
     and are required by default.
 
     All parameters are passed onwards to the parameter constructor.
