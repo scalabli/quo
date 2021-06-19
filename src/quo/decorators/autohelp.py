@@ -8,7 +8,7 @@ def autohelp(*param_decls, **kwargs):
 
     :param param_decls: One or more option names. Defaults to the single
         value ``"--help"``.
-    :param kwargs: Extra arguments are passed to :func:`option`.
+    :param kwargs: Extra arguments are passed to :func:`app`.
     """
 
     def callback(ctx, param, value):
@@ -26,4 +26,4 @@ def autohelp(*param_decls, **kwargs):
     kwargs.setdefault("is_eager", True)
     kwargs.setdefault("help", "Show this message and exit.")
     kwargs["callback"] = callback
-    return option(*param_decls, **kwargs)
+    return app(*param_decls, **kwargs)
