@@ -6,13 +6,9 @@
 #
 alabaster==0.7.12
 babel==2.9.1
-    # via sphinx
 certifi==2020.12.5
 chardet==4.0.0
 docutils==0.16
-    # via
-    #   sphinx
-    #   sphinx-tabs
 idna==2.10
     # via requests
 imagesize==1.2.0
@@ -33,9 +29,7 @@ requests==2.25.1
 snowballstemmer==2.1.0
     # via sphinx
 sphinx-issues==1.2.0
-    # via -r docs.in
 sphinx-tabs==3.0.0
-    # via -r docs.in
 sphinx==4.0.2
     # via
     #   -r docs.in
@@ -43,9 +37,7 @@ sphinx==4.0.2
     #   sphinx-tabs
     #   sphinxcontrib-log-cabinet
 sphinxcontrib-applehelp==1.0.2
-    # via sphinx
 sphinxcontrib-devhelp==1.0.2
-    # via sphinx
 sphinxcontrib-htmlhelp==1.0.3
     # via sphinx
 sphinxcontrib-jsmath==1.0.1
