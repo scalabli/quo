@@ -271,23 +271,23 @@ quo.echo(quo.style('ATTENTION!', blink=True))
 quo.echo(quo.style('Some things', reverse=True, fg='cyan'))
 Supported color names:
 
-black (might be a gray)
+* ``black (might be a gray)``
 
-red
+* ``red``
 
-green
+* ``green``
 
-yellow (might be an orange)
+* ``yellow (might be an orange)``
 
-blue
+* ``blue``
 
-magenta
+* ``magenta``
 
 cyan
 
-white (might be light gray)
+* ``white (might be light gray)``
 
-bright_black
+* ``vblack``
 
 bright_red
 
@@ -301,7 +301,7 @@ bright_magenta
 
 bright_cyan
 
-bright_white
+* ``vwhite``
 
 reset (reset the color code only)
 
