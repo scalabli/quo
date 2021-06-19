@@ -797,6 +797,84 @@ The list of registered multi commands.
 
 Parameters
 ----------
+class click.Parameter(param_decls=None, type=None, required=False, default=None, callback=None, nargs=None, metavar=None, expose_value=True, is_eager=False, envvar=None, autocompletion=None)
+A parameter to a command comes in two versions: they are either Options or Arguments. Other subclasses are currently not supported by design as some of the internals for parsing are intentionally not finalized.
+
+Some settings are supported by both options and arguments.
+
+Parameters
+param_decls – the parameter declarations for this option or argument. This is a list of flags or argument names.
+
+type – the type that should be used. Either a ParamType or a Python type. The later is converted into the former automatically if supported.
+
+required – controls if this is optional or not.
+
+default – the default value if omitted. This can also be a callable, in which case it’s invoked when the default is needed without any arguments.
+
+callback – a callback that should be executed after the parameter was matched. This is called as fn(ctx, param, value) and needs to return the value.
+
+nargs – the number of arguments to match. If not 1 the return value is a tuple instead of single value. The default for nargs is 1 (except if the type is a tuple, then it’s the arity of the tuple).
+
+metavar – how the value is represented in the help page.
+
+expose_value – if this is True then the value is passed onwards to the command callback and stored on the context, otherwise it’s skipped.
+
+is_eager – eager values are processed before non eager ones. This should not be set for arguments or it will inverse the order of processing.
+
+envvar – a string or list of strings that are environment variables that should be checked.
+
+Changed in version 7.1: Empty environment variables are ignored rather than taking the empty string value. This makes it possible for scripts to clear variables if they can’t unset them.
+
+Changelog
+get_default(ctx)
+Given a context variable this calculates the default value.
+
+get_error_hint(ctx)
+Get a stringified version of the param for use in error messages to indicate which param caused the error.
+
+property human_readable_name
+Returns the human readable name of this parameter. This is the same as the name for options, but the metavar for arguments.
+
+process_value(ctx, value)
+Given a value and context this runs the logic to convert the value as necessary.
+
+type_cast_value(ctx, value)
+Given a value this runs it properly through the type system. This automatically handles things like nargs and multiple as well as composite types.
+
+class click.Option(param_decls=None, show_default=False, prompt=False, confirmation_prompt=False, hide_input=False, is_flag=None, flag_value=None, multiple=False, count=False, allow_from_autoenv=True, type=None, help=None, hidden=False, show_choices=True, show_envvar=False, **attrs)
+Options are usually optional values on the command line and have some extra features that arguments don’t have.
+
+All other parameters are passed onwards to the parameter constructor.
+
+Parameters
+show_default – controls if the default value should be shown on the help page. Normally, defaults are not shown. If this value is a string, it shows the string instead of the value. This is particularly useful for dynamic options.
+
+show_envvar – controls if an environment variable should be shown on the help page. Normally, environment variables are not shown.
+
+prompt – if set to True or a non empty string then the user will be prompted for input. If set to True the prompt will be the option name capitalized.
+
+confirmation_prompt – if set then the value will need to be confirmed if it was prompted for.
+
+hide_input – if this is True then the input on the prompt will be hidden from the user. This is useful for password input.
+
+is_flag – forces this option to act as a flag. The default is auto detection.
+
+flag_value – which value should be used for this flag if it’s enabled. This is set to a boolean automatically if the option string contains a slash to mark two options.
+
+multiple – if this is set to True then the argument is accepted multiple times and recorded. This is similar to nargs in how it works but supports arbitrary number of arguments.
+
+count – this flag makes an option increment an integer.
+
+allow_from_autoenv – if this is enabled then the value of this parameter will be pulled from an environment variable in case a prefix is defined on the context.
+
+help – the help string.
+
+hidden – hide this option from help outputs.
+
+class click.Argument(param_decls, required=None, **attrs)
+Arguments are positional parameters to a command. They generally provide fewer features than options but can have infinite nargs and are required by default.
+
+All parameters are passed onwards to the parameter constructor.
 
 .. autoclass:: Parameter
    :members:
@@ -807,6 +885,204 @@ Parameters
 
 Context
 -------
+
+class click.Context(command, parent=None, info_name=None, obj=None, auto_envvar_prefix=None, default_map=None, terminal_width=None, max_content_width=None, resilient_parsing=False, allow_extra_args=None, allow_interspersed_args=None, ignore_unknown_options=None, help_option_names=None, token_normalize_func=None, color=None, show_default=None)
+The context is a special internal object that holds state relevant for the script execution at every single level. It’s normally invisible to commands unless they opt-in to getting access to it.
+
+The context is useful as it can pass internal objects around and can control special execution features such as reading data from environment variables.
+
+A context can be used as context manager in which case it will call close() on teardown.
+
+New in version 7.1: Added the show_default parameter.
+
+Changelog
+Parameters
+command – the command class for this context.
+
+parent – the parent context.
+
+info_name – the info name for this invocation. Generally this is the most descriptive name for the script or command. For the toplevel script it is usually the name of the script, for commands below it it’s the name of the script.
+
+obj – an arbitrary object of user data.
+
+auto_envvar_prefix – the prefix to use for automatic environment variables. If this is None then reading from environment variables is disabled. This does not affect manually set environment variables which are always read.
+
+default_map – a dictionary (like object) with default values for parameters.
+
+terminal_width – the width of the terminal. The default is inherit from parent context. If no context defines the terminal width then auto detection will be applied.
+
+max_content_width – the maximum width for content rendered by Click (this currently only affects help pages). This defaults to 80 characters if not overridden. In other words: even if the terminal is larger than that, Click will not format things wider than 80 characters by default. In addition to that, formatters might add some safety mapping on the right.
+
+resilient_parsing – if this flag is enabled then Click will parse without any interactivity or callback invocation. Default values will also be ignored. This is useful for implementing things such as completion support.
+
+allow_extra_args – if this is set to True then extra arguments at the end will not raise an error and will be kept on the context. The default is to inherit from the command.
+
+allow_interspersed_args – if this is set to False then options and arguments cannot be mixed. The default is to inherit from the command.
+
+ignore_unknown_options – instructs click to ignore options it does not know and keeps them for later processing.
+
+help_option_names – optionally a list of strings that define how the default help parameter is named. The default is ['--help'].
+
+token_normalize_func – an optional function that is used to normalize tokens (options, choices, etc.). This for instance can be used to implement case insensitive behavior.
+
+color – controls if the terminal supports ANSI colors or not. The default is autodetection. This is only needed if ANSI codes are used in texts that Click prints which is by default not the case. This for instance would affect help output.
+
+show_default – if True, shows defaults for all options. Even if an option is later created with show_default=False, this command-level setting overrides it.
+
+abort()
+Aborts the script.
+
+allow_extra_args = None
+Indicates if the context allows extra args or if it should fail on parsing.
+
+Changelog
+allow_interspersed_args = None
+Indicates if the context allows mixing of arguments and options or not.
+
+Changelog
+args = None
+the leftover arguments.
+
+call_on_close(f)
+This decorator remembers a function as callback that should be executed when the context tears down. This is most useful to bind resource handling to the script execution. For instance, file objects opened by the File type will register their close callbacks here.
+
+Parameters
+f – the function to execute on teardown.
+
+close()
+Invokes all close callbacks.
+
+color = None
+Controls if styling output is wanted or not.
+
+command = None
+the Command for this context.
+
+property command_path
+The computed command path. This is used for the usage information on the help page. It’s automatically created by combining the info names of the chain of contexts to the root.
+
+ensure_object(object_type)
+Like find_object() but sets the innermost object to a new instance of object_type if it does not exist.
+
+exit(code=0)
+Exits the application with a given exit code.
+
+fail(message)
+Aborts the execution of the program with a specific error message.
+
+Parameters
+message – the error message to fail with.
+
+find_object(object_type)
+Finds the closest object of a given type.
+
+find_root()
+Finds the outermost context.
+
+forward(**kwargs)
+Similar to invoke() but fills in default keyword arguments from the current context if the other command expects it. This cannot invoke callbacks directly, only other commands.
+
+get_help()
+Helper method to get formatted help page for the current context and command.
+
+get_usage()
+Helper method to get formatted usage string for the current context and command.
+
+help_option_names = None
+The names for the help options.
+
+ignore_unknown_options = None
+Instructs click to ignore options that a command does not understand and will store it on the context for later processing. This is primarily useful for situations where you want to call into external programs. Generally this pattern is strongly discouraged because it’s not possibly to losslessly forward all arguments.
+
+Changelog
+info_name = None
+the descriptive information name
+
+invoke(**kwargs)
+Invokes a command callback in exactly the way it expects. There are two ways to invoke this method:
+
+the first argument can be a callback and all other arguments and keyword arguments are forwarded directly to the function.
+
+the first argument is a click command object. In that case all arguments are forwarded as well but proper click parameters (options and click arguments) must be keyword arguments and Click will fill in defaults.
+
+Note that before Click 3.2 keyword arguments were not properly filled in against the intention of this code and no context was created. For more information about this change and why it was done in a bugfix release see Upgrading to 3.2.
+
+invoked_subcommand = None
+This flag indicates if a subcommand is going to be executed. A group callback can use this information to figure out if it’s being executed directly or because the execution flow passes onwards to a subcommand. By default it’s None, but it can be the name of the subcommand to execute.
+
+If chaining is enabled this will be set to '*' in case any commands are executed. It is however not possible to figure out which ones. If you require this knowledge you should use a resultcallback().
+
+lookup_default(name)
+Looks up the default for a parameter name. This by default looks into the default_map if available.
+
+make_formatter()
+Creates the formatter for the help and usage output.
+
+max_content_width = None
+The maximum width of formatted content (None implies a sensible default which is 80 for most things).
+
+property meta
+This is a dictionary which is shared with all the contexts that are nested. It exists so that click utilities can store some state here if they need to. It is however the responsibility of that code to manage this dictionary well.
+
+The keys are supposed to be unique dotted strings. For instance module paths are a good choice for it. What is stored in there is irrelevant for the operation of click. However what is important is that code that places data here adheres to the general semantics of the system.
+
+Example usage:
+
+LANG_KEY = f'{__name__}.lang'
+
+def set_language(value):
+    ctx = get_current_context()
+    ctx.meta[LANG_KEY] = value
+
+def get_language():
+    return get_current_context().meta.get(LANG_KEY, 'en_US')
+Changelog
+obj = None
+the user object stored.
+
+params = None
+the parsed parameters except if the value is hidden in which case it’s not remembered.
+
+parent = None
+the parent context or None if none exists.
+
+protected_args = None
+protected arguments. These are arguments that are prepended to args when certain parsing scenarios are encountered but must be never propagated to another arguments. This is used to implement nested parsing.
+
+resilient_parsing = None
+Indicates if resilient parsing is enabled. In that case Click will do its best to not cause any failures and default values will be ignored. Useful for completion.
+
+scope(cleanup=True)
+This helper method can be used with the context object to promote it to the current thread local (see get_current_context()). The default behavior of this is to invoke the cleanup functions which can be disabled by setting cleanup to False. The cleanup functions are typically used for things such as closing file handles.
+
+If the cleanup is intended the context object can also be directly used as a context manager.
+
+Example usage:
+
+with ctx.scope():
+    assert get_current_context() is ctx
+This is equivalent:
+
+with ctx:
+    assert get_current_context() is ctx
+Changelog
+Parameters
+cleanup – controls if the cleanup functions should be run or not. The default is to run these functions. In some situations the context only wants to be temporarily pushed in which case this can be disabled. Nested pushes automatically defer the cleanup.
+
+terminal_width = None
+The width of the terminal (None is autodetection).
+
+token_normalize_func = None
+An optional normalization function for tokens. This is options, choices, commands etc.
+
+click.get_current_context(silent=False)
+Returns the current click context. This can be used as a way to access the current context object from anywhere. This is a more implicit alternative to the pass_context() decorator. This function is primarily useful for helpers such as echo() which might be interested in changing its behavior based on the current context.
+
+To push the current context, Context.scope() can be used.
+
+Changelog
+Parameters
+silent – if set to True the return value is None if no context is available. The default behavior is to raise a RuntimeError.
 
 .. autoclass:: Context
    :members:
