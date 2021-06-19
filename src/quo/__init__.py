@@ -40,7 +40,7 @@ from quo.outliers.exceptions import UsageError
 from .layout import HelpFormatter
 from .layout import wraptext
 from quo.context.current import currentcontext
-from .parser import OptionParser
+from .parser import AppParser
 from quo.ui.termui import clear
 from quo.ui.termui import confirm
 from quo.ui.termui import scrollable
