@@ -8,9 +8,9 @@ def autoconfirm(*param_decls, **kwargs):
     :param kwargs: Extra arguments are passed to :func:`app`.
     """
 
-    def callback(ctx, param, value):
+    def callback(clime, param, value):
         if not value:
-            ctx.abort()
+            clime.abort()
 
     if not param_decls:
         param_decls = ("--yes",)
