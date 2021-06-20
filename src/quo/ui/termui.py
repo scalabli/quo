@@ -25,7 +25,7 @@ visible_prompt_func = input
 #American National Standard Institute colors
 
 ansi_color_codes = {
-    "black": 16,
+    "black": 30,
     "red": 31,
     "green": 32,
     "yellow": 33,
