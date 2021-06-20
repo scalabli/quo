@@ -73,16 +73,16 @@ class ShellDetectionFailure(EnvironmentError):
 
 
 
-def _complete_visible_commands(ctx, incomplete):
+def _complete_visible_commands(clime, incomplete):
     """List all the subcommands tethered that start with the
     incomplete value and aren't hidden.
 
-    :param ctx: Invocation context for the tethered sub-commands.
+    :param clime: Invocation context for the tethered sub-commands.
     :param incomplete: Value being completed. May be empty.
     """
-    for name in ctx.command.list_commands(ctx):
+    for name in clime.command.list_commands(clime):
         if name.startswith(incomplete):
-            command = ctx.command.get_command(ctx, name)
+            command = clime.command.get_command(clime, name)
 
             if not command.hidden:
                 yield name, command
@@ -115,19 +115,19 @@ def batch(iterable, batch_size):
 
 
 @contextmanager
-def augment_usage_errors(ctx, param=None):
+def augment_usage_errors(clime, param=None):
     """Context manager that attaches extra information to exceptions."""
     try:
         yield
     except BadParameter as e:
-        if e.ctx is None:
-            e.ctx = ctx
+        if e.clime is None:
+            e.clime = clime
         if param is not None and e.param is None:
             e.param = param
         raise
     except UsageError as e:
-        if e.ctx is None:
-            e.ctx = ctx
+        if e.clime is None:
+            e.clime = clime
         raise
 
 
@@ -408,8 +408,8 @@ class Context:
 
         .. code-block:: python
 
-            with Context(cli) as ctx:
-                info = ctx.to_info_dict()
+            with Context(cli) as clime:
+                info = clime.to_info_dict()
 
   
         """
@@ -446,13 +446,13 @@ class Context:
 
         Example usage::
 
-            with ctx.scope():
-                assert currentcontext() is ctx
+            with clime.scope():
+                assert currentcontext() is clime
 
         This is equivalent::
 
-            with ctx:
-                assert currentcontext() is ctx
+            with clime:
+                assert currentcontext() is clime
 
 
         :param cleanup: controls if the cleanup functions should be run or
@@ -488,8 +488,8 @@ class Context:
             LANG_KEY = f'{__name__}.lang'
 
             def set_language(value):
-                ctx = currentcontext()
-                ctx.meta[LANG_KEY] = value
+                clime = currentcontext()
+                clime.meta[LANG_KEY] = value
 
             def get_language():
                 return currentcontext().meta.get(LANG_KEY, 'en_US')
@@ -528,8 +528,8 @@ class Context:
             @quo.tether()
             @quo.app("--name")
             @quo.contextualize
-            def cli(ctx):
-                ctx.obj = ctx.with_resource(connect_db(name))
+            def cli(clime):
+                clime.obj = clime.with_resource(connect_db(name))
 
         :param context_manager: The context manager to enter.
         :return: Whatever ``context_manager.__enter__()`` returns.
@@ -667,7 +667,7 @@ class Context:
         release see :ref:`upgrade-to-3.2`.
         """
         self, callback = args[:2]
-        ctx = self
+        clime = self
 
         # It's also possible to invoke another command which might or
         # might not have a callback.  In that case we also fill
@@ -681,15 +681,15 @@ class Context:
                     "The given command does not have a callback that can be invoked."
                 )
 
-            ctx = self._make_sub_context(other_cmd)
+            clime = self._make_sub_context(other_cmd)
 
             for param in other_cmd.params:
                 if param.name not in kwargs and param.expose_value:
-                    kwargs[param.name] = param.get_default(ctx)
+                    kwargs[param.name] = param.get_default(clime)
 
         args = args[2:]
         with augment_usage_errors(self):
-            with ctx:
+            with clime:
                 return callback(*args, **kwargs)
 
     def forward(*args, **kwargs):  # noqa: B902
@@ -775,7 +775,7 @@ class BaseCommand:
         #: an optional dictionary with defaults passed to the context.
         self.context_settings = context_settings
 
-    def to_info_dict(self, ctx):
+    def to_info_dict(self, clime):
         """Gather information that could be useful for a tool generating
         user-facing documentation. This traverses the entire structure
         below this command.
@@ -783,7 +783,7 @@ class BaseCommand:
         Use :meth:`quo.Context.to_info_dict` to traverse the entire
         CLI structure.
 
-        :param ctx: A :class:`Context` representing this command.
+        :param clime: A :class:`Context` representing this command.
 
         """
         return {"name": self.name}
@@ -791,10 +791,10 @@ class BaseCommand:
     def __repr__(self):
         return f"<{self.__class__.__name__} {self.name}>"
 
-    def get_usage(self, ctx):
+    def get_usage(self, clime):
         raise NotImplementedError("Base commands cannot get usage")
 
-    def get_help(self, ctx):
+    def get_help(self, clime):
         raise NotImplementedError("Base commands cannot get help")
 
     def make_context(self, info_name, args, parent=None, **extra):
@@ -820,26 +820,26 @@ class BaseCommand:
             if key not in extra:
                 extra[key] = value
 
-        ctx = self.context_class(self, info_name=info_name, parent=parent, **extra)
+        clime = self.context_class(self, info_name=info_name, parent=parent, **extra)
 
-        with ctx.scope(cleanup=False):
-            self.parse_args(ctx, args)
-        return ctx
+        with clime.scope(cleanup=False):
+            self.parse_args(clime, args)
+        return clime
 
-    def parse_args(self, ctx, args):
+    def parse_args(self, clime, args):
         """Given a context and a list of arguments this creates the parser
         and parses the arguments, then modifies the context as necessary.
         This is automatically invoked by :meth:`make_context`.
         """
         raise NotImplementedError("Base commands do not know how to parse arguments.")
 
-    def invoke(self, ctx):
+    def invoke(self, clime):
         """Given a context, this invokes the command.  The default
         implementation is raising a not implemented error.
         """
         raise NotImplementedError("Base commands are not invokable by default")
 
-    def shell_complete(self, ctx, incomplete):
+    def shell_complete(self, clime, incomplete):
         """Return a list of completions for the incomplete value. Looks
         at the names of chained multi-commands.
 
@@ -847,7 +847,7 @@ class BaseCommand:
         commands are valid at any point during command completion. Other
         command classes will return more completions.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
 
         """
@@ -855,14 +855,14 @@ class BaseCommand:
 
         results = []
 
-        while ctx.parent is not None:
-            ctx = ctx.parent
+        while clime.parent is not None:
+            clime = clime.parent
 
-            if isinstance(ctx.command, MultiCommand) and ctx.command.chain:
+            if isinstance(clime.command, MultiCommand) and clime.command.chain:
                 results.extend(
                     CompletionItem(name, help=command.get_short_help_str())
-                    for name, command in _complete_visible_commands(ctx, incomplete)
-                    if name not in ctx.protected_args
+                    for name, command in _complete_visible_commands(clime, incomplete)
+                    if name not in clime.protected_args
                 )
 
         return results
@@ -921,18 +921,18 @@ class BaseCommand:
 
         try:
             try:
-                with self.make_context(prog_name, args, **extra) as ctx:
-                    rv = self.invoke(ctx)
+                with self.make_context(prog_name, args, **extra) as clime:
+                    rv = self.invoke(clime)
                     if not standalone_mode:
                         return rv
-                    # it's not safe to `ctx.exit(rv)` here!
+                    # it's not safe to `clime.exit(rv)` here!
                     # note that `rv` may actually contain data like "1" which
                     # has obvious effects
                     # more subtle case: `rv=[None, None]` can come out of
                     # chained commands which all returned `None` -- so it's not
                     # even always obvious that `rv` indicates success/failure
                     # by its truthiness/falsiness
-                    ctx.exit()
+                    clime.exit()
             except (EOFError, KeyboardInterrupt):
                 echo(file=sys.stderr)
                 raise Abort()
@@ -958,7 +958,7 @@ class BaseCommand:
                 # would return its result
                 # the results of non-standalone execution may therefore be
                 # somewhat ambiguous: if there are codepaths which lead to
-                # `ctx.exit(1)` and to `return 1`, the caller won't be able to
+                # `clime.exit(1)` and to `return 1`, the caller won't be able to
                 # tell the difference between the two
                 return e.exit_code
         except Abort:
@@ -967,7 +967,7 @@ class BaseCommand:
             echo("Aborted!", file=sys.stderr)
             sys.exit(1)
 
-    def _main_shelldone(self, ctx_args, prog_name, complete_var=None):
+    def _main_shelldone(self, clime_args, prog_name, complete_var=None):
         """Check if the shell is asking for tab completion, process
         that, then exit early. Called from :meth:`main` before the
         program is invoked.
@@ -987,7 +987,7 @@ class BaseCommand:
 
         from .shelldone import shell_complete
 
-        rv = shell_complete(self, ctx_args, prog_name, complete_var, instruction)
+        rv = shell_complete(self, clime_args, prog_name, complete_var, instruction)
         _fast_exit(rv)
 
     def __call__(self, *args, **kwargs):
@@ -1059,10 +1059,10 @@ class Command(BaseCommand):
         self.hidden = hidden
         self.deprecated = deprecated
 
-    def to_info_dict(self, ctx):
-        info_dict = super().to_info_dict(ctx)
+    def to_info_dict(self, clime):
+        info_dict = super().to_info_dict(clime)
         info_dict.update(
-            params=[param.to_info_dict() for param in self.get_params(ctx)],
+            params=[param.to_info_dict() for param in self.get_params(clime)],
             help=self.help,
             epilog=self.epilog,
             short_help=self.short_help,
@@ -1074,57 +1074,57 @@ class Command(BaseCommand):
     def __repr__(self):
         return f"<{self.__class__.__name__} {self.name}>"
 
-    def get_usage(self, ctx):
+    def get_usage(self, clime):
         """Formats the usage line into a string and returns it.
 
         Calls :meth:`format_usage` internally.
         """
-        formatter = ctx.make_formatter()
-        self.format_usage(ctx, formatter)
+        formatter = clime.make_formatter()
+        self.format_usage(clime, formatter)
         return formatter.getvalue().rstrip("\n")
 
-    def get_params(self, ctx):
+    def get_params(self, clime):
         rv = self.params
-        autohelp = self.get_autohelp(ctx)
+        autohelp = self.get_autohelp(clime)
         if autohelp is not None:
             rv = rv + [autohelp]
         return rv
 
-    def format_usage(self, ctx, formatter):
+    def format_usage(self, clime, formatter):
         """Writes the usage line into the formatter.
 
         This is a low-level method called by :meth:`get_usage`.
         """
-        pieces = self.collect_usage_pieces(ctx)
-        formatter.write_usage(ctx.command_path, " ".join(pieces))
+        pieces = self.collect_usage_pieces(clime)
+        formatter.write_usage(clime.command_path, " ".join(pieces))
 
-    def collect_usage_pieces(self, ctx):
+    def collect_usage_pieces(self, clime):
         """Returns all the pieces that go into the usage line and returns
         it as a list of strings.
         """
         rv = [self.apps_metavar] if self.apps_metavar else []
-        for param in self.get_params(ctx):
-            rv.extend(param.get_usage_pieces(ctx))
+        for param in self.get_params(clime):
+            rv.extend(param.get_usage_pieces(clime))
         return rv
 
-    def get_autohelp_names(self, ctx):
+    def get_autohelp_names(self, clime):
         """Returns the names for the help app."""
-        all_names = set(ctx.autohelp_names)
+        all_names = set(clime.autohelp_names)
         for param in self.params:
             all_names.difference_update(param.opts)
             all_names.difference_update(param.secondary_opts)
         return all_names
 
-    def get_autohelp(self, ctx):
+    def get_autohelp(self, clime):
         """Returns the help app object."""
-        autohelps = self.get_autohelp_names(ctx)
+        autohelps = self.get_autohelp_names(clime)
         if not autohelps or not self.add_autohelp:
             return
 
-        def show_help(ctx, param, value):
-            if value and not ctx.resilient_parsing:
-                echo(ctx.get_help(), color=ctx.color)
-                ctx.exit()
+        def show_help(clime, param, value):
+            if value and not clime.resilient_parsing:
+                echo(clime.get_help(), color=clime.color)
+                clime.exit()
 
         return App(
             autohelps,
@@ -1135,20 +1135,20 @@ class Command(BaseCommand):
             help="Show this message and exit.",
         )
 
-    def make_parser(self, ctx):
+    def make_parser(self, clime):
         """Creates the underlying app parser for this command."""
-        parser = AppParser(ctx)
-        for param in self.get_params(ctx):
-            param.add_to_parser(parser, ctx)
+        parser = AppParser(clime)
+        for param in self.get_params(clime):
+            param.add_to_parser(parser, clime)
         return parser
 
-    def get_help(self, ctx):
+    def get_help(self, clime):
         """Formats the help into a string and returns it.
 
         Calls :meth:`format_help` internally.
         """
-        formatter = ctx.make_formatter()
-        self.format_help(ctx, formatter)
+        formatter = clime.make_formatter()
+        self.format_help(clime, formatter)
         return formatter.getvalue().rstrip("\n")
 
     def get_short_help_str(self, limit=45):
@@ -1162,7 +1162,7 @@ class Command(BaseCommand):
             or ""
         )
 
-    def format_help(self, ctx, formatter):
+    def format_help(self, clime, formatter):
         """Writes the help into the formatter if it exists.
 
         This is a low-level method called by :meth:`get_help`.
@@ -1174,12 +1174,12 @@ class Command(BaseCommand):
         -   :meth:`format_apps`
         -   :meth:`format_epilog`
         """
-        self.format_usage(ctx, formatter)
-        self.format_help_text(ctx, formatter)
-        self.format_apps(ctx, formatter)
-        self.format_epilog(ctx, formatter)
+        self.format_usage(clime, formatter)
+        self.format_help_text(clime, formatter)
+        self.format_apps(clime, formatter)
+        self.format_epilog(clime, formatter)
 
-    def format_help_text(self, ctx, formatter):
+    def format_help_text(self, clime, formatter):
         """Writes the help text to the formatter if it exists."""
         if self.help:
             formatter.write_paragraph()
@@ -1193,11 +1193,11 @@ class Command(BaseCommand):
             with formatter.indentation():
                 formatter.write_text(DEPRECATED_HELP_NOTICE)
 
-    def format_apps(self, ctx, formatter):
+    def format_apps(self, clime, formatter):
         """Writes all the apps into the formatter if they exist."""
         opts = []
-        for param in self.get_params(ctx):
-            rv = param.get_help_record(ctx)
+        for param in self.get_params(clime):
+            rv = param.get_help_record(clime)
             if rv is not None:
                 opts.append(rv)
 
@@ -1205,47 +1205,47 @@ class Command(BaseCommand):
             with formatter.section("Apps"):
                 formatter.write_dl(opts)
 
-    def format_epilog(self, ctx, formatter):
+    def format_epilog(self, clime, formatter):
         """Writes the epilog into the formatter if it exists."""
         if self.epilog:
             formatter.write_paragraph()
             with formatter.indentation():
                 formatter.write_text(self.epilog)
 
-    def parse_args(self, ctx, args):
-        if not args and self.no_args_is_help and not ctx.resilient_parsing:
-            echo(ctx.get_help(), color=ctx.color)
-            ctx.exit()
+    def parse_args(self, clime, args):
+        if not args and self.no_args_is_help and not clime.resilient_parsing:
+            echo(clime.get_help(), color=clime.color)
+            clime.exit()
 
-        parser = self.make_parser(ctx)
+        parser = self.make_parser(clime)
         opts, args, param_order = parser.parse_args(args=args)
 
-        for param in iter_params_for_processing(param_order, self.get_params(ctx)):
-            value, args = param.handle_parse_result(ctx, opts, args)
+        for param in iter_params_for_processing(param_order, self.get_params(clime)):
+            value, args = param.handle_parse_result(clime, opts, args)
 
-        if args and not ctx.allow_extra_args and not ctx.resilient_parsing:
-            ctx.fail(
+        if args and not clime.allow_extra_args and not clime.resilient_parsing:
+            clime.fail(
                 "Got unexpected extra"
                 f" argument{'s' if len(args) != 1 else ''}"
                 f" ({' '.join(map(make_str, args))})"
             )
 
-        ctx.args = args
+        clime.args = args
         return args
 
-    def invoke(self, ctx):
+    def invoke(self, clime):
         """Given a context, this invokes the attached callback (if it exists)
         in the right way.
         """
         deprecated_notice(self)
         if self.callback is not None:
-            return ctx.invoke(self.callback, **ctx.params)
+            return clime.invoke(self.callback, **clime.params)
 
-    def shell_complete(self, ctx, incomplete):
+    def shell_complete(self, clime, incomplete):
         """Return a list of completions for the incomplete value. Looks
         at the names of apps and chained multi-commands.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
 
         """
@@ -1254,13 +1254,13 @@ class Command(BaseCommand):
         results = []
 
         if incomplete and not incomplete[0].isalnum():
-            for param in self.get_params(ctx):
+            for param in self.get_params(clime):
                 if (
                     not isinstance(param, App)
                     or param.hidden
                     or (
                         not param.multiple
-                        and ctx.get_parameter_source(param.name)
+                        and clime.get_parameter_source(param.name)
                         is ParameterSource.COMMANDLINE
                     )
                 ):
@@ -1272,7 +1272,7 @@ class Command(BaseCommand):
                     if name.startswith(incomplete)
                 )
 
-        results.extend(super().shell_complete(ctx, incomplete))
+        results.extend(super().shell_complete(clime, incomplete))
         return results
 
 
@@ -1337,28 +1337,28 @@ class MultiCommand(Command):
                         " optional arguments."
                     )
 
-    def to_info_dict(self, ctx):
-        info_dict = super().to_info_dict(ctx)
+    def to_info_dict(self, clime):
+        info_dict = super().to_info_dict(clime)
         commands = {}
 
-        for name in self.list_commands(ctx):
-            command = self.get_command(ctx, name)
-            sub_ctx = ctx._make_sub_context(command)
+        for name in self.list_commands(clime):
+            command = self.get_command(clime, name)
+            sub_clime = clime._make_sub_context(command)
 
-            with sub_ctx.scope(cleanup=False):
-                commands[name] = command.to_info_dict(sub_ctx)
+            with sub_clime.scope(cleanup=False):
+                commands[name] = command.to_info_dict(sub_clime)
 
         info_dict.update(commands=commands, chain=self.chain)
         return info_dict
 
-    def collect_usage_pieces(self, ctx):
-        rv = super().collect_usage_pieces(ctx)
+    def collect_usage_pieces(self, clime):
+        rv = super().collect_usage_pieces(clime)
         rv.append(self.subcommand_metavar)
         return rv
 
-    def format_apps(self, ctx, formatter):
-        super().format_apps(ctx, formatter)
-        self.format_commands(ctx, formatter)
+    def format_apps(self, clime, formatter):
+        super().format_apps(clime, formatter)
+        self.format_commands(clime, formatter)
 
     def resultcallback(self, replace=False):
         """Adds a result callback to the command.  By default if a
@@ -1399,13 +1399,13 @@ class MultiCommand(Command):
 
         return decorator
 
-    def format_commands(self, ctx, formatter):
+    def format_commands(self, clime, formatter):
         """Extra format methods for multi methods that adds all the commands
         after the apps.
         """
         commands = []
-        for subcommand in self.list_commands(ctx):
-            cmd = self.get_command(ctx, subcommand)
+        for subcommand in self.list_commands(clime):
+            cmd = self.get_command(clime, subcommand)
             # What is this, the tool lied about a command.  Ignore it
             if cmd is None:
                 continue
@@ -1427,41 +1427,41 @@ class MultiCommand(Command):
                 with formatter.section("Commands"):
                     formatter.write_dl(rows)
 
-    def parse_args(self, ctx, args):
-        if not args and self.no_args_is_help and not ctx.resilient_parsing:
-            echo(ctx.get_help(), color=ctx.color)
-            ctx.exit()
+    def parse_args(self, clime, args):
+        if not args and self.no_args_is_help and not clime.resilient_parsing:
+            echo(clime.get_help(), color=clime.color)
+            clime.exit()
 
-        rest = super().parse_args(ctx, args)
+        rest = super().parse_args(clime, args)
 
         if self.chain:
-            ctx.protected_args = rest
-            ctx.args = []
+            clime.protected_args = rest
+            clime.args = []
         elif rest:
-            ctx.protected_args, ctx.args = rest[:1], rest[1:]
+            clime.protected_args, clime.args = rest[:1], rest[1:]
 
-        return ctx.args
+        return clime.args
 
-    def invoke(self, ctx):
+    def invoke(self, clime):
         def _process_result(value):
             if self.result_callback is not None:
-                value = ctx.invoke(self.result_callback, value, **ctx.params)
+                value = clime.invoke(self.result_callback, value, **clime.params)
             return value
 
-        if not ctx.protected_args:
+        if not clime.protected_args:
             if self.invoke_without_command:
                 # No subcommand was invoked, so the result callback is
                 # invoked with None for regular tethered componentss, or an empty list
                 # for chained commandss.
-                with ctx:
-                    super().invoke(ctx)
+                with clime:
+                    super().invoke(clime)
                     return _process_result([] if self.chain else None)
-            ctx.fail("Missing command.")
+            clime.fail("Missing command.")
 
         # Fetch args back out
-        args = ctx.protected_args + ctx.args
-        ctx.args = []
-        ctx.protected_args = []
+        args = clime.protected_args + clime.args
+        clime.args = []
+        clime.protected_args = []
 
         # If we're not in chain mode, we only allow the invocation of a
         # single command but we also inform the current context about the
@@ -1469,57 +1469,57 @@ class MultiCommand(Command):
         if not self.chain:
             # Make sure the context is entered so we do not clean up
             # resources until the result processor has worked.
-            with ctx:
-                cmd_name, cmd, args = self.resolve_command(ctx, args)
-                ctx.invoked_subcommand = cmd_name
-                super().invoke(ctx)
-                sub_ctx = cmd.make_context(cmd_name, args, parent=ctx)
-                with sub_ctx:
-                    return _process_result(sub_ctx.command.invoke(sub_ctx))
+            with clime:
+                cmd_name, cmd, args = self.resolve_command(clime, args)
+                clime.invoked_subcommand = cmd_name
+                super().invoke(clime)
+                sub_clime = cmd.make_context(cmd_name, args, parent=clime)
+                with sub_clime:
+                    return _process_result(sub_clime.command.invoke(sub_clime))
 
         # In chain mode we create the contexts step by step, but after the
         # base command has been invoked.  Because at that point we do not
         # know the subcommands yet, the invoked subcommand attribute is
         # set to ``*`` to inform the command that subcommands are executed
         # but nothing else.
-        with ctx:
-            ctx.invoked_subcommand = "*" if args else None
-            super().invoke(ctx)
+        with clime:
+            clime.invoked_subcommand = "*" if args else None
+            super().invoke(clime)
 
             # Otherwise we make every single context and invoke them in a
             # chain.  In that case the return value to the result processor
             # is the list of all invoked subcommand's results.
             contexts = []
             while args:
-                cmd_name, cmd, args = self.resolve_command(ctx, args)
-                sub_ctx = cmd.make_context(
+                cmd_name, cmd, args = self.resolve_command(clime, args)
+                sub_clime = cmd.make_context(
                     cmd_name,
                     args,
-                    parent=ctx,
+                    parent=clime,
                     allow_extra_args=True,
                     allow_interspersed_args=False,
                 )
-                contexts.append(sub_ctx)
-                args, sub_ctx.args = sub_ctx.args, []
+                contexts.append(sub_clime)
+                args, sub_clime.args = sub_clime.args, []
 
             rv = []
-            for sub_ctx in contexts:
-                with sub_ctx:
-                    rv.append(sub_ctx.command.invoke(sub_ctx))
+            for sub_clime in contexts:
+                with sub_clime:
+                    rv.append(sub_clime.command.invoke(sub_clime))
             return _process_result(rv)
 
-    def resolve_command(self, ctx, args):
+    def resolve_command(self, clime, args):
         cmd_name = make_str(args[0])
         original_cmd_name = cmd_name
 
         # Get the command
-        cmd = self.get_command(ctx, cmd_name)
+        cmd = self.get_command(clime, cmd_name)
 
         # If we can't find the command but there is a normalization
         # function available, we try with that one.
-        if cmd is None and ctx.token_normalize_func is not None:
-            cmd_name = ctx.token_normalize_func(cmd_name)
-            cmd = self.get_command(ctx, cmd_name)
+        if cmd is None and clime.token_normalize_func is not None:
+            cmd_name = clime.token_normalize_func(cmd_name)
+            cmd = self.get_command(clime, cmd_name)
 
         # If we don't find the command we want to show an error message
         # to the user that it was not provided.  However, there is
@@ -1527,30 +1527,30 @@ class MultiCommand(Command):
         # an app we want to kick off parsing again for arguments to
         # resolve things like --help which now should go to the main
         # place.
-        if cmd is None and not ctx.resilient_parsing:
+        if cmd is None and not clime.resilient_parsing:
             if split_opt(cmd_name)[0]:
-                self.parse_args(ctx, ctx.args)
-            ctx.fail(f"No such command '{original_cmd_name}'.")
+                self.parse_args(clime, clime.args)
+            clime.fail(f"No such command '{original_cmd_name}'.")
         return cmd.name if cmd else None, cmd, args[1:]
 
-    def get_command(self, ctx, cmd_name):
+    def get_command(self, clime, cmd_name):
         """Given a context and a command name, this returns a
         :class:`Command` object if it exists or returns `None`.
         """
         raise NotImplementedError()
 
-    def list_commands(self, ctx):
+    def list_commands(self, clime):
         """Returns a list of subcommand names in the order they should
         appear.
         """
         return []
 
-    def shell_complete(self, ctx, incomplete):
+    def shell_complete(self, clime, incomplete):
         """Return a list of completions for the incomplete value. Looks
         at the names of apps, subcommands, and chained
         multi-commands.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param incomplete: Value being completed. May be empty.
 
         """
@@ -1558,9 +1558,9 @@ class MultiCommand(Command):
 
         results = [
             CompletionItem(name, help=command.get_short_help_str())
-            for name, command in _complete_visible_commands(ctx, incomplete)
+            for name, command in _complete_visible_commands(clime, incomplete)
         ]
-        results.extend(super().shell_complete(ctx, incomplete))
+        results.extend(super().shell_complete(clime, incomplete))
         return results
 
 
@@ -1662,10 +1662,10 @@ class Tether(MultiCommand):
 
         return decorator
 
-    def get_command(self, ctx, cmd_name):
+    def get_command(self, clime, cmd_name):
         return self.commands.get(cmd_name)
 
-    def list_commands(self, ctx):
+    def list_commands(self, clime):
         return sorted(self.commands)
 
 
@@ -1685,18 +1685,18 @@ class CommandCollection(MultiCommand):
         """Adds a new multi command to the chain dispatcher."""
         self.sources.append(multi_cmd)
 
-    def get_command(self, ctx, cmd_name):
+    def get_command(self, clime, cmd_name):
         for source in self.sources:
-            rv = source.get_command(ctx, cmd_name)
+            rv = source.get_command(clime, cmd_name)
             if rv is not None:
                 if self.chain:
                     multicommand_checker(self, cmd_name, rv)
                 return rv
 
-    def list_commands(self, ctx):
+    def list_commands(self, clime):
         rv = set()
         for source in self.sources:
-            rv.update(source.list_commands(ctx))
+            rv.update(source.list_commands(clime))
         return sorted(rv)
 
 
@@ -1719,7 +1719,7 @@ class Parameter:
                     in which case it's invoked when the default is needed
                     without any arguments.
     :param callback: a callback that should be executed after the parameter
-                     was matched.  This is called as ``fn(ctx, param,
+                     was matched.  This is called as ``fn(clime, param,
                      value)`` and needs to return the value.
     :param nargs: the number of arguments to match.  If not ``1`` the return
                   value is a tuple instead of single value.  The default for
@@ -1737,7 +1737,7 @@ class Parameter:
                    that should be checked.
     :param shell_complete: A function that returns custom shell
         completions. Used instead of the param's type completion if
-        given. Takes ``ctx, param, incomplete`` and must return a list
+        given. Takes ``clime, param, incomplete`` and must return a list
         of :class:`~quo.shelldone.CompletionItem` or a list of
         strings.
 
@@ -1795,12 +1795,12 @@ class Parameter:
                 stacklevel=2,
             )
 
-            def shell_complete(ctx, param, incomplete):
+            def shell_complete(clime, param, incomplete):
                 from quo.shelldone import CompletionItem
 
                 out = []
 
-                for c in autocompletion(ctx, [], incomplete):
+                for c in autocompletion(clime, [], incomplete):
                     if isinstance(c, tuple):
                         c = CompletionItem(c[0], help=c[1])
                     elif isinstance(c, str):
@@ -1854,19 +1854,19 @@ class Parameter:
             metavar += "..."
         return metavar
 
-    def get_default(self, ctx, call=True):
+    def get_default(self, clime, call=True):
         """Get the default for the parameter. Tries
         :meth:`Context.lookup_value` first, then the local default.
 
-        :param ctx: Current context.
+        :param clime: Current context.
         :param call: If the default is a callable, call it. Disable to
             return the callable instead.
 
-            Looks at ``ctx.default_map`` first.
+            Looks at ``clime.default_map`` first.
 
             Added the ``call`` parameter.
         """
-        value = ctx.lookup_default(self.name, call=False)
+        value = clime.lookup_default(self.name, call=False)
 
         if value is None:
             value = self.default
@@ -1878,30 +1878,30 @@ class Parameter:
 
             value = value()
 
-        return self.type_cast_value(ctx, value)
+        return self.type_cast_value(clime, value)
 
-    def add_to_parser(self, parser, ctx):
+    def add_to_parser(self, parser, clime):
         pass
 
-    def consume_value(self, ctx, opts):
+    def consume_value(self, clime, opts):
         value = opts.get(self.name)
         source = ParameterSource.COMMANDLINE
 
         if value is None:
-            value = self.value_from_envvar(ctx)
+            value = self.value_from_envvar(clime)
             source = ParameterSource.ENVIRONMENT
 
         if value is None:
-            value = ctx.lookup_default(self.name)
+            value = clime.lookup_default(self.name)
             source = ParameterSource.DEFAULT_MAP
 
         if value is None:
-            value = self.get_default(ctx)
+            value = self.get_default(clime)
             source = ParameterSource.DEFAULT
 
         return value, source
 
-    def type_cast_value(self, ctx, value):
+    def type_cast_value(self, clime, value):
         """Given a value this runs it properly through the type system.
         This automatically handles things like `nargs` and `multiple` as
         well as composite types.
@@ -1918,19 +1918,19 @@ class Parameter:
                 )
 
             if self.multiple:
-                return tuple(self.type(x, self, ctx) for x in value)
+                return tuple(self.type(x, self, clime) for x in value)
 
-            return self.type(value, self, ctx)
+            return self.type(value, self, clime)
 
         def _convert(value, level):
             if level == 0:
-                return self.type(value, self, ctx)
+                return self.type(value, self, clime)
 
             return tuple(_convert(x, level - 1) for x in value)
 
         return _convert(value, (self.nargs != 1) + bool(self.multiple))
 
-    def process_value(self, ctx, value):
+    def process_value(self, clime, value):
         """Given a value and context this runs the logic to convert the
         value as necessary.
         """
@@ -1939,7 +1939,7 @@ class Parameter:
         # not provided.  Otherwise it would be converted into an empty
         # tuple for multiple invocations which is inconvenient.
         if value is not None:
-            return self.type_cast_value(ctx, value)
+            return self.type_cast_value(clime, value)
 
     def value_is_missing(self, value):
         if value is None:
@@ -1948,15 +1948,15 @@ class Parameter:
             return True
         return False
 
-    def full_process_value(self, ctx, value):
-        value = self.process_value(ctx, value)
+    def full_process_value(self, clime, value):
+        value = self.process_value(clime, value)
 
         if self.required and self.value_is_missing(value):
-            raise MissingParameter(ctx=ctx, param=self)
+            raise MissingParameter(clime=clime, param=self)
 
         # For bounded nargs (!= -1), validate the number of values.
         if (
-            not ctx.resilient_parsing
+            not clime.resilient_parsing
             and self.nargs > 1
             and isinstance(value, (tuple, list))
             and (
@@ -1966,14 +1966,14 @@ class Parameter:
             )
         ):
             were = "was" if len(value) == 1 else "were"
-            ctx.fail(
+            clime.fail(
                 f"Argument {self.name!r} takes {self.nargs} values but"
                 f" {len(value)} {were} given."
             )
 
         return value
 
-    def resolve_envvar_value(self, ctx):
+    def resolve_envvar_value(self, clime):
         if self.envvar is None:
             return
 
@@ -1989,60 +1989,60 @@ class Parameter:
             if rv:
                 return rv
 
-    def value_from_envvar(self, ctx):
-        rv = self.resolve_envvar_value(ctx)
+    def value_from_envvar(self, clime):
+        rv = self.resolve_envvar_value(clime)
 
         if rv is not None and self.nargs != 1:
             rv = self.type.split_envvar_value(rv)
 
         return rv
 
-    def handle_parse_result(self, ctx, opts, args):
-        with augment_usage_errors(ctx, param=self):
-            value, source = self.consume_value(ctx, opts)
-            ctx.set_parameter_source(self.name, source)
+    def handle_parse_result(self, clime, opts, args):
+        with augment_usage_errors(clime, param=self):
+            value, source = self.consume_value(clime, opts)
+            clime.set_parameter_source(self.name, source)
 
             try:
-                value = self.full_process_value(ctx, value)
+                value = self.full_process_value(clime, value)
 
                 if self.callback is not None:
-                    value = self.callback(ctx, self, value)
+                    value = self.callback(clime, self, value)
             except Exception:
-                if not ctx.resilient_parsing:
+                if not clime.resilient_parsing:
                     raise
 
                 value = None
 
         if self.expose_value:
-            ctx.params[self.name] = value
+            clime.params[self.name] = value
 
         return value, args
 
-    def get_help_record(self, ctx):
+    def get_help_record(self, clime):
         pass
 
-    def get_usage_pieces(self, ctx):
+    def get_usage_pieces(self, clime):
         return []
 
-    def get_error_hint(self, ctx):
+    def get_error_hint(self, clime):
         """Get a stringified version of the param for use in error messages to
         indicate which param caused the error.
         """
         hint_list = self.opts or [self.human_readable_name]
         return " / ".join(repr(x) for x in hint_list)
 
-    def shell_complete(self, ctx, incomplete):
+    def shell_complete(self, clime, incomplete):
         """Return a list of completions for the incomplete value. If a
         ``shell_complete`` function was given during init, it is used.
         Otherwise, the :attr:`type`
         :meth:`~quo.types.ParamType.shell_complete` function is used.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param incomplete: Value being completed. May be empty
 
         """
         if self._custom_shell_complete is not None:
-            results = self._custom_shell_complete(ctx, self, incomplete)
+            results = self._custom_shell_complete(clime, self, incomplete)
 
             if results and isinstance(results[0], str):
                 from quo.shelldone import CompletionItem
@@ -2051,7 +2051,7 @@ class Parameter:
 
             return results
 
-        return self.type.shell_complete(ctx, self, incomplete)
+        return self.type.shell_complete(clime, self, incomplete)
 
 
 class App(Parameter):
@@ -2265,7 +2265,7 @@ class App(Parameter):
 
         return name, opts, secondary_opts
 
-    def add_to_parser(self, parser, ctx):
+    def add_to_parser(self, parser, clime):
         kwargs = {
             "dest": self.name,
             "nargs": self.nargs,
@@ -2295,7 +2295,7 @@ class App(Parameter):
             kwargs["action"] = action
             parser.add_app(self.opts, **kwargs)
 
-    def get_help_record(self, ctx):
+    def get_help_record(self, clime):
         if self.hidden:
             return
         any_prefix_is_slash = []
@@ -2317,8 +2317,8 @@ class App(Parameter):
         if self.show_envvar:
             envvar = self.envvar
             if envvar is None:
-                if self.allow_from_autoenv and ctx.auto_envvar_prefix is not None:
-                    envvar = f"{ctx.auto_envvar_prefix}_{self.name.upper()}"
+                if self.allow_from_autoenv and clime.auto_envvar_prefix is not None:
+                    envvar = f"{clime.auto_envvar_prefix}_{self.name.upper()}"
             if envvar is not None:
                 var_str = (
                     ", ".join(str(d) for d in envvar)
@@ -2327,9 +2327,9 @@ class App(Parameter):
                 )
                 extra.append(f"env var: {var_str}")
 
-        default_value = self.get_default(ctx, call=False)
+        default_value = self.get_default(clime, call=False)
 
-        if default_value is not None and (self.show_default or ctx.show_default):
+        if default_value is not None and (self.show_default or clime.show_default):
             if isinstance(self.show_default, str):
                 default_string = f"({self.show_default})"
             elif isinstance(default_value, (list, tuple)):
@@ -2361,28 +2361,28 @@ class App(Parameter):
 
         return ("; " if any_prefix_is_slash else " / ").join(rv), help
 
-    def get_default(self, ctx, call=True):
+    def get_default(self, clime, call=True):
         # If we're a non boolean flag our default is more complex because
         # we need to look at all flags in the same tether to figure out
         # if we're the the default one in which case we return the flag
         # value as default.
         if self.is_flag and not self.is_bool_flag:
-            for param in ctx.command.params:
+            for param in clime.command.params:
                 if param.name == self.name and param.default:
                     return param.flag_value
 
             return None
 
-        return super().get_default(ctx, call=call)
+        return super().get_default(clime, call=call)
 
-    def prompt_for_value(self, ctx):
+    def prompt_for_value(self, clime):
         """This is an alternative flow that can be activated in the full
         value processing if a value does not exist.  It will prompt the
         user until a valid value exists and then returns the processed
         value as result.
         """
         # Calculate the default before prompting anything to be stable.
-        default = self.get_default(ctx)
+        default = self.get_default(clime)
 
         # If this is a prompt for a flag we need to handle this
         # differently.
@@ -2396,24 +2396,24 @@ class App(Parameter):
             hide_input=self.hide_input,
             show_choices=self.show_choices,
             autoconfirm=self.autoconfirm,
-            value_proc=lambda x: self.process_value(ctx, x),
+            value_proc=lambda x: self.process_value(clime, x),
         )
 
-    def resolve_envvar_value(self, ctx):
-        rv = super().resolve_envvar_value(ctx)
+    def resolve_envvar_value(self, clime):
+        rv = super().resolve_envvar_value(clime)
 
         if rv is not None:
             return rv
 
-        if self.allow_from_autoenv and ctx.auto_envvar_prefix is not None:
-            envvar = f"{ctx.auto_envvar_prefix}_{self.name.upper()}"
+        if self.allow_from_autoenv and clime.auto_envvar_prefix is not None:
+            envvar = f"{clime.auto_envvar_prefix}_{self.name.upper()}"
             rv = os.environ.get(envvar)
 
             if rv:
                 return rv
 
-    def value_from_envvar(self, ctx):
-        rv = self.resolve_envvar_value(ctx)
+    def value_from_envvar(self, clime):
+        rv = self.resolve_envvar_value(clime)
 
         if rv is None:
             return None
@@ -2428,15 +2428,15 @@ class App(Parameter):
 
         return rv
 
-    def consume_value(self, ctx, opts):
-        value, source = super().consume_value(ctx, opts)
+    def consume_value(self, clime, opts):
+        value, source = super().consume_value(clime, opts)
 
         # The parser will emit a sentinel value if the app can be
         # given as a flag without a value. This is different from None
         # to distinguish from the flag not being given at all.
         if value is _flag_needs_value:
-            if self.prompt is not None and not ctx.resilient_parsing:
-                value = self.prompt_for_value(ctx)
+            if self.prompt is not None and not clime.resilient_parsing:
+                value = self.prompt_for_value(clime)
                 source = ParameterSource.PROMPT
             else:
                 value = self.flag_value
@@ -2448,9 +2448,9 @@ class App(Parameter):
             source in {None, ParameterSource.DEFAULT}
             and self.prompt is not None
             and (self.required or self.prompt_required)
-            and not ctx.resilient_parsing
+            and not clime.resilient_parsing
         ):
-            value = self.prompt_for_value(ctx)
+            value = self.prompt_for_value(clime)
             source = ParameterSource.PROMPT
 
         return value, source
@@ -2513,11 +2513,11 @@ class Argument(Parameter):
             )
         return name, [arg], []
 
-    def get_usage_pieces(self, ctx):
+    def get_usage_pieces(self, clime):
         return [self.make_metavar()]
 
-    def get_error_hint(self, ctx):
+    def get_error_hint(self, clime):
         return repr(self.make_metavar())
 
-def add_to_parser(self, parser, ctx):
+def add_to_parser(self, parser, clime):
         parser.add_argument(dest=self.name, nargs=self.nargs, obj=self)
