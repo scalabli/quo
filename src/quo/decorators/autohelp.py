@@ -11,12 +11,12 @@ def autohelp(*param_decls, **kwargs):
     :param kwargs: Extra arguments are passed to :func:`app`.
     """
 
-    def callback(ctx, param, value):
-        if not value or ctx.resilient_parsing:
+    def callback(clime, param, value):
+        if not value or clime.resilient_parsing:
             return
 
-        echo(ctx.get_help(), color=ctx.color)
-        ctx.exit()
+        echo(clime.get_help(), color=clime.color)
+        clime.exit()
 
     if not param_decls:
         param_decls = ("--help",)
