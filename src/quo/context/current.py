@@ -16,9 +16,9 @@ def currentcontext(silent=False):
             raise RuntimeError("No dynamic content available.")
 
 # Push new content to the stack
-def push_context(ctx):
+def push_context(clime):
 
-    _local.__dict__.setdefault("stack", []).append(ctx)
+    _local.__dict__.setdefault("stack", []).append(clime)
 
 # Removes the top level from the stack
 def pop_context():
@@ -29,6 +29,6 @@ def resolve_color_default(color=None):
  
     if color is not None:
         return color
-    ctx = currentcontext(silent=True)
-    if ctx is not None:
-        return ctx.color
+    clime = currentcontext(silent=True)
+    if clime is not None:
+        return clime.color
