@@ -52,15 +52,15 @@ def autoversion(
             if package_name:
                 package_name = package_name.partition(".")[0]
 
-    def callback(ctx, param, value):
-        if not value or ctx.resilient_parsing:
+    def callback(clime, param, value):
+        if not value or clime.resilient_parsing:
             return
 
         nonlocal prog_name
         nonlocal version
 
         if prog_name is None:
-            prog_name = ctx.find_root().info_name
+            prog_name = clime.find_root().info_name
 
         if version is None and package_name is not None:
             try:
@@ -92,9 +92,9 @@ def autoversion(
 
         echo(
             message % {"prog": prog_name, "package": package_name, "version": version},
-            color=ctx.color,
+            color=clime.color,
         )
-        ctx.exit()
+        clime.exit()
 
     if not param_decls:
         param_decls = ("--version",)
