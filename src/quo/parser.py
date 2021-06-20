@@ -75,11 +75,11 @@ def split_opt(opt):
     return first, opt[1:]
 
 
-def normalize_opt(opt, ctx):
-    if ctx is None or ctx.token_normalize_func is None:
+def normalize_opt(opt, clime):
+    if clime is None or clime.token_normalize_func is None:
         return opt
     prefix, opt = split_opt(opt)
-    return f"{prefix}{ctx.token_normalize_func(opt)}"
+    return f"{prefix}{clime.token_normalize_func(opt)}"
 
 
 def split_arg_string(string):
@@ -204,14 +204,14 @@ class AppParser:
     implement features that are implemented on a higher level (such as
     types or defaults).
 
-    :param ctx: optionally the :class:`~quo.Context` where this parser
+    :param clime: optionally the :class:`~quo.Context` where this parser
                 should go with.
     """
 
-    def __init__(self, ctx=None):
+    def __init__(self, clime=None):
         #: The :class:`~quo.Context` for this parser.  This might be
         #: `None` for some advanced use cases.
-        self.ctx = ctx
+        self.clime = clime
         #: This controls how the parser deals with interspersed arguments.
         #: If this is set to `False`, the parser will stop on the first
         #: non-app.  quo uses this to implement nested subcommands
@@ -222,9 +222,9 @@ class AppParser:
         #: second mode where it will ignore it and continue processing
         #: after shifting all the unknown apps into the resulting args.
         self.ignore_unknown_apps = False
-        if ctx is not None:
-            self.allow_interspersed_args = ctx.allow_interspersed_args
-            self.ignore_unknown_apps = ctx.ignore_unknown_apps
+        if clime is not None:
+            self.allow_interspersed_args = clime.allow_interspersed_args
+            self.ignore_unknown_apps = clime.ignore_unknown_apps
         self._short_opt = {}
         self._long_opt = {}
         self._opt_prefixes = {"-", "--"}
@@ -241,7 +241,7 @@ class AppParser:
         """
         if obj is None:
             obj = dest
-        opts = [normalize_opt(opt, self.ctx) for opt in opts]
+        opts = [normalize_opt(opt, self.clime) for opt in opts]
         app = App(opts, dest, action=action, nargs=nargs, const=const, obj=obj)
         self._opt_prefixes.update(app.prefixes)
         for opt in app._short_opts:
@@ -271,7 +271,7 @@ class AppParser:
             self._process_args_for_apps(state)
             self._process_args_for_args(state)
         except UsageError:
-            if self.ctx is None or not self.ctx.resilient_parsing:
+            if self.clime is None or not self.clime.resilient_parsing:
                 raise
         return state.opts, state.largs, state.order
 
@@ -310,7 +310,7 @@ class AppParser:
             from difflib import get_close_matches
 
             possibilities = get_close_matches(opt, self._long_opt)
-            raise NoSuchOption(opt, possibilities=possibilities, ctx=self.ctx)
+            raise NoSuchOption(opt, possibilities=possibilities, clime=self.clime)
 
         app = self._long_opt[opt]
         if app.takes_value:
@@ -338,7 +338,7 @@ class AppParser:
         unknown_apps = []
 
         for ch in arg[1:]:
-            opt = normalize_opt(f"{prefix}{ch}", self.ctx)
+            opt = normalize_opt(f"{prefix}{ch}", self.clime)
             app = self._short_opt.get(opt)
             i += 1
 
@@ -346,7 +346,7 @@ class AppParser:
                 if self.ignore_unknown_apps:
                     unknown_apps.append(ch)
                     continue
-                raise NoSuchOption(opt, ctx=self.ctx)
+                raise NoSuchOption(opt, clime=self.clime)
             if app.takes_value:
                 # Any characters left in arg?  Pretend they're the
                 # next arg, and stop consuming characters of arg.
@@ -412,7 +412,7 @@ class AppParser:
             long_opt, explicit_value = arg.split("=", 1)
         else:
             long_opt = arg
-        norm_long_opt = normalize_opt(long_opt, self.ctx)
+        norm_long_opt = normalize_opt(long_opt, self.clime)
 
         # At this point we will match the (assumed) long app through
         # the long app matching code.  Note that this allows apps
