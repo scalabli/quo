@@ -32,7 +32,7 @@ class ParamType:
     -   :meth:`convert` must convert string values to the correct type.
     -   :meth:`convert` must accept values that are already the correct
         type.
-    -   It must be able to convert a value if the ``ctx`` and ``param``
+    -   It must be able to convert a value if the ``clime`` and ``param``
         arguments are ``None``. This can occur when converting prompt
         input.
     """
@@ -63,9 +63,9 @@ class ParamType:
         param_type = param_type.partition("ParameterType")[0]
         return {"param_type": param_type, "name": self.name}
 
-    def __call__(self, value, param=None, ctx=None):
+    def __call__(self, value, param=None, clime=None):
         if value is not None:
-            return self.convert(value, param, ctx)
+            return self.convert(value, param, clime)
 
     def get_metavar(self, param):
         """Returns the metavar default for this param if it provides one."""
@@ -76,7 +76,7 @@ class ParamType:
 
         """
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         """Convert the value to the correct type. This is not called if
         the value is ``None`` (the missing value).
 
@@ -84,7 +84,7 @@ class ParamType:
         values that are already the correct type. It may also convert
         other compatible types.
 
-        The ``param`` and ``ctx`` arguments may be ``None`` in certain
+        The ``param`` and ``clime`` arguments may be ``None`` in certain
         situations, such as when converting prompt input.
 
         If the value cannot be converted, call :meth:`fail` with a
@@ -93,7 +93,7 @@ class ParamType:
         :param value: The value to convert.
         :param param: The parameter that is using this type to convert
             its value. May be ``None``.
-        :param ctx: The current context that arrived at this value. May
+        :param clime: The current context that arrived at this value. May
             be ``None``.
         """
         return value
@@ -108,18 +108,18 @@ class ParamType:
         """
         return (rv or "").split(self.envvar_list_splitter)
 
-    def fail(self, message, param=None, ctx=None):
+    def fail(self, message, param=None, clime=None):
         """Helper method to fail with an invalid value message."""
-        raise BadParameter(message, ctx=ctx, param=param)
+        raise BadParameter(message, clime=clime, param=param)
 
-    def shell_complete(self, ctx, param, incomplete):
+    def shell_complete(self, clime, param, incomplete):
         """Return a list of
         :class:`~quo.shelldone.CompletionItem` objects for the
         incomplete value. Most types do not provide completions, but
         some do, and this allows custom types to provide custom
         completions as well.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
@@ -145,7 +145,7 @@ class FuncParamType(ParamType):
         info_dict["func"] = self.func
         return info_dict
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         try:
             return self.func(value)
         except ValueError:
@@ -154,13 +154,13 @@ class FuncParamType(ParamType):
             except UnicodeError:
                 value = value.decode("utf-8", "replace")
 
-            self.fail(value, param, ctx)
+            self.fail(value, param, clime)
 
 
 class UnprocessedParamType(ParamType):
     name = "text"
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         return value
 
     def __repr__(self):
@@ -170,7 +170,7 @@ class UnprocessedParamType(ParamType):
 class StringParamType(ParamType):
     name = "text"
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         if isinstance(value, bytes):
             enc = _get_argv_encoding()
             try:
@@ -199,7 +199,7 @@ class Choice(ParamType):
     (like generators) may lead to surprising results.
 
     The resulting value will always be one of the originally passed choices
-    regardless of ``case_sensitive`` or any ``ctx.token_normalize_func``
+    regardless of ``case_sensitive`` or any ``clime.token_normalize_func``
     being specified.
 
     See :ref:`choice-opts` for an example.
@@ -234,7 +234,7 @@ class Choice(ParamType):
         choice_str = ",\n\t".join(self.choices)
         return f"Choose from:\n\t{choice_str}"
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         """Match through normalization and case sensitivity
         first do token_normalize_func, then lowercase
         preserve original `value` to produce an accurate message in
@@ -243,10 +243,10 @@ class Choice(ParamType):
         normed_value = value
         normed_choices = {choice: choice for choice in self.choices}
 
-        if ctx is not None and ctx.token_normalize_func is not None:
-            normed_value = ctx.token_normalize_func(value)
+        if clime is not None and clime.token_normalize_func is not None:
+            normed_value = clime.token_normalize_func(value)
             normed_choices = {
-                ctx.token_normalize_func(normed_choice): original
+                clime.token_normalize_func(normed_choice): original
                 for normed_choice, original in normed_choices.items()
             }
 
@@ -262,15 +262,15 @@ class Choice(ParamType):
 
         one_of = "one of " if len(self.choices) > 1 else ""
         choices_str = ", ".join(repr(c) for c in self.choices)
-        self.fail(f"{value!r} is not {one_of}{choices_str}.", param, ctx)
+        self.fail(f"{value!r} is not {one_of}{choices_str}.", param, clime)
 
     def __repr__(self):
         return f"Choice({list(self.choices)})"
 
-    def shell_complete(self, ctx, param, incomplete):
+    def shell_complete(self, clime, param, incomplete):
         """Complete choices that start with the incomplete value.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
@@ -328,7 +328,7 @@ class DateTime(ParamType):
         except ValueError:
             return None
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         if isinstance(value, datetime):
             return value
 
@@ -341,7 +341,7 @@ class DateTime(ParamType):
         plural = "s" if len(self.formats) > 1 else ""
         formats_str = ", ".join(repr(f) for f in self.formats)
         self.fail(
-            f"{value!r} does not match the format{plural} {formats_str}.", param, ctx
+            f"{value!r} does not match the format{plural} {formats_str}.", param, clime
         )
 
     def __repr__(self):
@@ -351,11 +351,11 @@ class DateTime(ParamType):
 class _NumberParamTypeBase(ParamType):
     _number_class = None
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         try:
             return self._number_class(value)
         except ValueError:
-            self.fail(f"{value!r} is not a valid {self.name}.", param, ctx)
+            self.fail(f"{value!r} is not a valid {self.name}.", param, clime)
 
 
 class _NumberRangeBase(_NumberParamTypeBase):
@@ -377,10 +377,10 @@ class _NumberRangeBase(_NumberParamTypeBase):
         )
         return info_dict
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         import operator
 
-        rv = super().convert(value, param, ctx)
+        rv = super().convert(value, param, clime)
         lt_min = self.min is not None and (
             operator.le if self.min_open else operator.lt
         )(rv, self.min)
@@ -396,7 +396,7 @@ class _NumberRangeBase(_NumberParamTypeBase):
                 return self._clamp(self.max, -1, self.max_open)
 
         if lt_min or gt_max:
-            self.fail(f"{rv} is not in the range {self._describe_range()}.", param, ctx)
+            self.fail(f"{rv} is not in the range {self._describe_range()}.", param, clime)
 
         return rv
 
@@ -506,7 +506,7 @@ class FloatRange(_NumberRangeBase, FloatParamType):
 class BoolParamType(ParamType):
     name = "boolean"
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         if value in {False, True}:
             return bool(value)
 
@@ -518,7 +518,7 @@ class BoolParamType(ParamType):
         if norm in {"0", "false", "f", "no", "n", "off"}:
             return False
 
-        self.fail(f"{value!r} is not a valid boolean.", param, ctx)
+        self.fail(f"{value!r} is not a valid boolean.", param, clime)
 
     def __repr__(self):
         return "BOOL"
@@ -527,7 +527,7 @@ class BoolParamType(ParamType):
 class UUIDParameterType(ParamType):
     name = "uuid"
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         import uuid
 
         if isinstance(value, uuid.UUID):
@@ -538,7 +538,7 @@ class UUIDParameterType(ParamType):
         try:
             return uuid.UUID(value)
         except ValueError:
-            self.fail(f"{value!r} is not a valid UUID.", param, ctx)
+            self.fail(f"{value!r} is not a valid UUID.", param, clime)
 
     def __repr__(self):
         return "UUID"
@@ -597,7 +597,7 @@ class File(ParamType):
             return True
         return False
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         try:
             if hasattr(value, "read") or hasattr(value, "write"):
                 return value
@@ -608,8 +608,8 @@ class File(ParamType):
                 f = LazyFile(
                     value, self.mode, self.encoding, self.errors, atomic=self.atomic
                 )
-                if ctx is not None:
-                    ctx.call_on_close(f.close_intelligently)
+                if clime is not None:
+                    clime.call_on_close(f.close_intelligently)
                 return f
 
             f, should_close = open_stream(
@@ -620,20 +620,20 @@ class File(ParamType):
             # context does not exist, it's the caller's responsibility to
             # properly close the file.  This for instance happens when the
             # type is used with prompts.
-            if ctx is not None:
+            if clime is not None:
                 if should_close:
-                    ctx.call_on_close(safecall(f.close))
+                    clime.call_on_close(safecall(f.close))
                 else:
-                    ctx.call_on_close(safecall(f.flush))
+                    clime.call_on_close(safecall(f.flush))
             return f
         except OSError as e:  # noqa: B014
-            self.fail(f"{filename_to_ui(value)!r}: {get_strerror(e)}", param, ctx)
+            self.fail(f"{filename_to_ui(value)!r}: {get_strerror(e)}", param, clime)
 
-    def shell_complete(self, ctx, param, incomplete):
+    def shell_complete(self, clime, param, incomplete):
         """Return a special completion marker that tells the completion
         system to use the shell to provide file path completions.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
@@ -725,7 +725,7 @@ class Path(ParamType):
                 rv = rv.encode(get_filesystem_encoding())
         return rv
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         rv = value
 
         is_dash = self.file_okay and self.allow_dash and rv in (b"-", "-")
@@ -742,42 +742,42 @@ class Path(ParamType):
                 self.fail(
                     f"{self.path_type} {filename_to_ui(value)!r} does not exist.",
                     param,
-                    ctx,
+                    clime,
                 )
 
             if not self.file_okay and stat.S_ISREG(st.st_mode):
                 self.fail(
                     f"{self.path_type} {filename_to_ui(value)!r} is a file.",
                     param,
-                    ctx,
+                    clime,
                 )
             if not self.dir_okay and stat.S_ISDIR(st.st_mode):
                 self.fail(
                     f"{self.path_type} {filename_to_ui(value)!r} is a directory.",
                     param,
-                    ctx,
+                    clime,
                 )
             if self.writable and not os.access(value, os.W_OK):
                 self.fail(
                     f"{self.path_type} {filename_to_ui(value)!r} is not writable.",
                     param,
-                    ctx,
+                    clime,
                 )
             if self.readable and not os.access(value, os.R_OK):
                 self.fail(
                     f"{self.path_type} {filename_to_ui(value)!r} is not readable.",
                     param,
-                    ctx,
+                    clime,
                 )
 
         return self.coerce_path_result(rv)
 
-    def shell_complete(self, ctx, param, incomplete):
+    def shell_complete(self, clime, param, incomplete):
         """Return a special completion marker that tells the completion
         system to use the shell to provide path completions for only
         directories or any paths.
 
-        :param ctx: Invocation context for this command.
+        :param clime: Invocation context for this command.
         :param param: The parameter that is requesting completion.
         :param incomplete: Value being completed. May be empty.
 
@@ -818,13 +818,13 @@ class Tuple(CompositeParamType):
     def arity(self):
         return len(self.types)
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, clime):
         if len(value) != len(self.types):
             raise TypeError(
                 "It would appear that nargs is set to conflict with the"
                 " composite type arity."
             )
-        return tuple(ty(x, param, ctx) for ty, x in zip(self.types, value))
+        return tuple(ty(x, param, clime) for ty, x in zip(self.types, value))
 
 
 def convert_type(ty, default=None):
