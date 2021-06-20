@@ -51,9 +51,9 @@ def make_pass_decorator(object_type, ensure=False):
 
         def decorator(f):
             @contextualize
-            def new_func(ctx, *args, **kwargs):
-                obj = ctx.find_object(object_type)
-                return ctx.invoke(f, obj, *args, **kwargs)
+            def new_func(clime, *args, **kwargs):
+                obj = clime.find_object(object_type)
+                return clime.invoke(f, obj, *args, **kwargs)
             return update_wrapper(new_func, f)
         return decorator
 
@@ -64,18 +64,18 @@ def make_pass_decorator(object_type, ensure=False):
 
     def decorator(f):
         def new_func(*args, **kwargs):
-            ctx = currentcontext()
+            clime = currentcontext()
             if ensure:
-                obj = ctx.ensure_object(object_type)
+                obj = clime.ensure_object(object_type)
             else:
-                obj = ctx.find_object(object_type)
+                obj = clime.find_object(object_type)
             if obj is None:
                 raise RuntimeError(
                     "Managed to invoke callback without a context"
                     f" object of type {object_type.__name__!r}"
                     " existing."
                 )
-            return ctx.invoke(f, obj, *args, **kwargs)
+            return clime.invoke(f, obj, *args, **kwargs)
 
         return update_wrapper(new_func, f)
 
