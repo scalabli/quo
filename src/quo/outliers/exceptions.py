@@ -42,30 +42,30 @@ class UsageError(QuoException):
     aborts any further handling.
 
     :param message: the error message to display.
-    :param ctx: optionally the context that caused this error.  Quo will
+    :param clime: optionally the context that caused this error.  Quo will
                 fill in the context automatically in some situations.
     """
 
     exit_code = 2
 
-    def __init__(self, message, ctx=None):
+    def __init__(self, message, clime=None):
         super().__init__(message)
-        self.ctx = ctx
-        self.cmd = self.ctx.command if self.ctx else None
+        self.clime = clime
+        self.cmd = self.clime.command if self.clime else None
 
     def show(self, file=None):
         if file is None:
             file = get_text_stderr()
         color = None
         hint = ""
-        if self.cmd is not None and self.cmd.get_autohelp(self.ctx) is not None:
+        if self.cmd is not None and self.cmd.get_autohelp(self.clime) is not None:
             hint = (
-                f"Try '{self.ctx.command_path}"
-                f" {self.ctx.autohelp_names[0]}' for help.\n"
+                f"Try '{self.clime.command_path}"
+                f" {self.clime.autohelp_names[0]}' for help.\n"
             )
-        if self.ctx is not None:
-            color = self.ctx.color
-            echo(f"{self.ctx.get_usage()}\n{hint}", file=file, color=color)
+        if self.clime is not None:
+            color = self.clime.color
+            echo(f"{self.clime.get_usage()}\n{hint}", file=file, color=color)
         echo(f"Error: {self.format_message()}", file=file, color=color)
 
 
@@ -84,8 +84,8 @@ class BadParameter(UsageError):
                        each item is quoted and separated.
     """
 
-    def __init__(self, message, ctx=None, param=None, param_hint=None):
-        super().__init__(message, ctx)
+    def __init__(self, message, clime=None, param=None, param_hint=None):
+        super().__init__(message, clime)
         self.param = param
         self.param_hint = param_hint
 
@@ -93,7 +93,7 @@ class BadParameter(UsageError):
         if self.param_hint is not None:
             param_hint = self.param_hint
         elif self.param is not None:
-            param_hint = self.param.get_error_hint(self.ctx)
+            param_hint = self.param.get_error_hint(self.clime)
         else:
             return f"Invalid value: {self.message}"
         param_hint = _join_param_hints(param_hint)
@@ -112,16 +112,16 @@ class MissingParameter(BadParameter):
     """
 
     def __init__(
-        self, message=None, ctx=None, param=None, param_hint=None, param_type=None
+        self, message=None, clime=None, param=None, param_hint=None, param_type=None
     ):
-        super().__init__(message, ctx, param, param_hint)
+        super().__init__(message, clime, param, param_hint)
         self.param_type = param_type
 
     def format_message(self):
         if self.param_hint is not None:
             param_hint = self.param_hint
         elif self.param is not None:
-            param_hint = self.param.get_error_hint(self.ctx)
+            param_hint = self.param.get_error_hint(self.clime)
         else:
             param_hint = None
         param_hint = _join_param_hints(param_hint)
@@ -156,11 +156,11 @@ class NoSuchOption(UsageError):
 
     """
 
-    def __init__(self, app_name, message=None, possibilities=None, ctx=None):
+    def __init__(self, app_name, message=None, possibilities=None, clime=None):
         if message is None:
             message = f"no such app: {app_name}"
 
-        super().__init__(message, ctx)
+        super().__init__(message, clime)
         self.app_name = app_name
         self.possibilities = possibilities
 
@@ -183,8 +183,8 @@ class BadOptionUsage(UsageError):
     :param app_name: the name of the app being used incorrectly.
     """
 
-    def __init__(self, app_name, message, ctx=None):
-        super().__init__(message, ctx)
+    def __init__(self, app_name, message, clime=None):
+        super().__init__(message, clime)
         self.app_name = app_name
 
 
