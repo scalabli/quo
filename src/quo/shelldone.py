@@ -25,11 +25,11 @@ from .parser import split_arg_string
 from quo.expediency.utilities import echo
 
 
-def shell_complete(cli, ctx_args, prog_name, complete_var, instruction):
+def shell_complete(cli, clime_args, prog_name, complete_var, instruction):
     #Perform shell completion for the given CLI program.
 
     #param cli: Command being called.
-    #param ctx_args: Extra arguments to pass to
+    #param clime_args: Extra arguments to pass to
         ``cli.make_context``.
     #param prog_name: Name of the executable in the shell.
     #param complete_var: Name of the environment variable that holds
@@ -44,7 +44,7 @@ def shell_complete(cli, ctx_args, prog_name, complete_var, instruction):
     if comp_cls is None:
         return 1
 
-    comp = comp_cls(cli, ctx_args, prog_name, complete_var)
+    comp = comp_cls(cli, clime_args, prog_name, complete_var)
 
     if instruction == "source":
         echo(comp.source())
@@ -208,9 +208,9 @@ class ShellComplete:
     be provided by subclasses.
     """
 
-    def __init__(self, cli, ctx_args, prog_name, complete_var):
+    def __init__(self, cli, clime_args, prog_name, complete_var):
         self.cli = cli
-        self.ctx_args = ctx_args
+        self.clime_args = clime_args
         self.prog_name = prog_name
         self.complete_var = complete_var
 
@@ -257,13 +257,13 @@ class ShellComplete:
         :param args: List of complete args before the incomplete value.
         :param incomplete: Value being completed. May be empty.
         """
-        ctx = _resolve_context(self.cli, self.ctx_args, self.prog_name, args)
+        clime = _resolve_context(self.cli, self.clime_args, self.prog_name, args)
 
-        if ctx is None:
+        if clime is None:
             return []
 
-        obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
-        return obj.shell_complete(ctx, incomplete)
+        obj, incomplete = _resolve_incomplete(clime, args, incomplete)
+        return obj.shell_complete(clime, incomplete)
 
     def format_completion(self, item):
         """Format a completion item into the form recognized by the
@@ -411,21 +411,21 @@ def get_completion_class(shell):
     return _available_shells.get(shell)
 
 
-def _is_incomplete_argument(ctx, param):
+def _is_incomplete_argument(clime, param):
     """Determine if the given parameter is an argument that can still
     accept values.
 
-    :param ctx: Invocation context for the command represented by the
+    :param clime: Invocation context for the command represented by the
         parsed complete args.
     :param param: Argument object being checked.
     """
     if not isinstance(param, Argument):
         return False
 
-    value = ctx.params[param.name]
+    value = clime.params[param.name]
     return (
         param.nargs == -1
-        or ctx.get_parameter_source(param.name) is not ParameterSource.COMMANDLINE
+        or clime.get_parameter_source(param.name) is not ParameterSource.COMMANDLINE
         or (
             param.nargs > 1
             and isinstance(value, (tuple, list))
@@ -463,7 +463,7 @@ def _is_incomplete_app(args, param):
     return last_app is not None and last_app in param.opts
 
 
-def _resolve_context(cli, ctx_args, prog_name, args):
+def _resolve_context(cli, clime_args, prog_name, args):
     """Produce the context hierarchy starting with the command and
     traversing the complete arguments. This only follows the commands,
     it doesn't trigger input prompts or callbacks.
@@ -472,50 +472,50 @@ def _resolve_context(cli, ctx_args, prog_name, args):
     :param prog_name: Name of the executable in the shell.
     :param args: List of complete args before the incomplete value.
     """
-    ctx_args["resilient_parsing"] = True
-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
-    args = ctx.protected_args + ctx.args
+    clime_args["resilient_parsing"] = True
+    clime = cli.make_context(prog_name, args.copy(), **clime_args)
+    args = clime.protected_args + clime.args
 
     while args:
-        if isinstance(ctx.command, MultiCommand):
-            if not ctx.command.chain:
-                name, cmd, args = ctx.command.resolve_command(ctx, args)
+        if isinstance(clime.command, MultiCommand):
+            if not clime.command.chain:
+                name, cmd, args = clime.command.resolve_command(clime, args)
 
                 if cmd is None:
-                    return ctx
+                    return clime
 
-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
-                args = ctx.protected_args + ctx.args
+                clime = cmd.make_context(name, args, parent=clime, resilient_parsing=True)
+                args = clime.protected_args + clime.args
             else:
                 while args:
-                    name, cmd, args = ctx.command.resolve_command(ctx, args)
+                    name, cmd, args = clime.command.resolve_command(clime, args)
 
                     if cmd is None:
-                        return ctx
+                        return clime
 
-                    sub_ctx = cmd.make_context(
+                    sub_clime = cmd.make_context(
                         name,
                         args,
-                        parent=ctx,
+                        parent=clime,
                         allow_extra_args=True,
                         allow_interspersed_args=False,
                         resilient_parsing=True,
                     )
-                    args = sub_ctx.args
+                    args = sub_clime.args
 
-                ctx = sub_ctx
-                args = sub_ctx.protected_args + sub_ctx.args
+                clime = sub_clime
+                args = sub_clime.protected_args + sub_clime.args
         else:
             break
 
-    return ctx
+    return clime
 
 
-def _resolve_incomplete(ctx, args, incomplete):
+def _resolve_incomplete(clime, args, incomplete):
     """Find the quo object that will handle the completion of the
     incomplete value. Return the object and the incomplete value.
 
-    :param ctx: Invocation context for the command represented by
+    :param clime: Invocation context for the command represented by
         the parsed complete args.
     :param args: List of complete args before the incomplete value.
     :param incomplete: Value being completed. May be empty.
@@ -535,9 +535,9 @@ def _resolve_incomplete(ctx, args, incomplete):
     # given and the incomplete arg looks like an app, the current
     # command will provide app name completions.
     if "--" not in args and _start_of_app(incomplete):
-        return ctx.command, incomplete
+        return clime.command, incomplete
 
-    params = ctx.command.get_params(ctx)
+    params = clime.command.get_params(clime)
 
     # If the last complete arg is an app name with an incomplete
     # value, the app will provide value completions.
@@ -548,12 +548,12 @@ def _resolve_incomplete(ctx, args, incomplete):
     # It's not an app name or value. The first argument without a
     # parsed value will provide value completions.
     for param in params:
-        if _is_incomplete_argument(ctx, param):
+        if _is_incomplete_argument(clime, param):
             return param, incomplete
 
     # There were no unparsed arguments, the command may be a group that
     # will provide command name completions.
-    return ctx.command, incomplete
+    return clime.command, incomplete
 
 
 
