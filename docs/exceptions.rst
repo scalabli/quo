@@ -33,9 +33,9 @@ Generally you always have the option to invoke the :meth:`invoke` method
 yourself.  For instance if you have a :class:`Command` you can invoke it
 manually like this::
 
-    ctx = command.make_context('command-name', ['args', 'go', 'here'])
-    with ctx:
-        result = command.invoke(ctx)
+    clime = command.make_context('command-name', ['args', 'go', 'here'])
+    with clime:
+        result = command.invoke(clime)
 
 In this case exceptions will not be handled at all and bubbled up as you
 would expect.
