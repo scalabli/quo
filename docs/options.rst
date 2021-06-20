@@ -5,7 +5,7 @@ Options
 
 .. currentmodule:: quo
 
-Options can be added/nested to commands using the :func:`option` decorator.  Since options can come in various different versions, there
+Options can be added/nested to commands using the :func:`app` decorator.  Since apps can come in various different versions, there
 Options in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
 
 How to name Options
@@ -475,7 +475,7 @@ configuration file.  However, this overrides the prompting mechanism, so
 that the user does not get the option to change the value interactively.
 
 If you want to let the user configure the default value, but still be
-prompted if the option isn't specified on the command line, you can do so
+prompted if the app isn't specified on the command line, you can do so
 by supplying a callable as the default value. For example, to get a default
 from the environment:
 
@@ -484,7 +484,7 @@ from the environment:
     import os
 
     @quo.command()
-    @quo.option(
+    @quo.app(
         "--username", prompt=True,
         default=lambda: os.environ.get("USER", "")
     )
@@ -498,7 +498,7 @@ To describe what the default value will be, set it in ``show_default``.
     import os
 
     @quo.command()
-    @quo.option(
+    @quo.app(
         "--username", prompt=True,
         default=lambda: os.environ.get("USER", ""),
         show_default="current user"
@@ -547,7 +547,7 @@ Here an example for a ``--version`` flag:
         ctx.exit()
 
     @quo.command()
-    @quo.option('--version', is_flag=True, callback=print_version,
+    @quo.app('--version', is_flag=True, callback=print_version,
                   expose_value=False, is_eager=True)
     def hello():
         quo.echo('Hello World!')
@@ -586,7 +586,7 @@ callback:
             ctx.abort()
 
     @quo.command()
-    @quo.option('--yes', is_flag=True, callback=abort_if_false,
+    @quo.app('--yes', is_flag=True, callback=abort_if_false,
                   expose_value=False,
                   prompt='Are you sure you want to drop the db?')
     def dropdb():
@@ -623,11 +623,11 @@ a ``TOOL_CONFIG=hello.cfg`` key-value pair for a nicer development
 experience.
 
 This is supported by quo in two ways.  One is to automatically build
-environment variables which is supported for options only.  To enable this
+environment variables which is supported for apps only.  To enable this
 feature, the ``auto_envvar_prefix`` parameter needs to be passed to the
 script that is invoked.  Each command and parameter is then added as an
 uppercase underscore-separated variable.  If you have a subcommand
-called ``run`` taking an option called ``reload`` and the prefix is
+called ``run`` taking an app called ``reload`` and the prefix is
 ``WEB``, then the variable is ``WEB_RUN_RELOAD``.
 
 Example usage:
@@ -635,7 +635,7 @@ Example usage:
 .. code-block:: python
 
     @quo.command()
-    @quo.option('--username')
+    @quo.app('--username')
     def greet(username):
         quo.echo(f'Hello {username}!')
 
@@ -652,7 +652,7 @@ And from the command line:
 When using ``auto_envvar_prefix`` with command groups, the command name
 needs to be included in the environment variable, between the prefix and
 the parameter name, *i.e.* ``PREFIX_COMMAND_VARIABLE``. If you have a
-subcommand called ``run-server`` taking an option called ``host`` and
+subcommand called ``run-server`` taking an app called ``host`` and
 the prefix is ``WEB``, then the variable is ``WEB_RUN_SERVER_HOST``.
 
 Example:
@@ -660,12 +660,12 @@ Example:
 .. code-block:: python
 
    @quo.group()
-   @quo.option('--debug/--no-debug')
+   @quo.app('--debug/--no-debug')
    def cli(debug):
        quo.echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
-   @quo.option('--username')
+   @quo.app('--username')
    def greet(username):
        quo.echo(f"Hello {username}!")
 
@@ -680,14 +680,14 @@ Example:
 
 
 The second option is to manually pull values in from specific environment
-variables by defining the name of the environment variable on the option.
+variables by defining the name of the environment variable on the app.
 
 Example usage:
 
 .. code-block:: python
 
     @quo.command()
-    @quo.option('--username', envvar='USERNAME')
+    @quo.app('--username', envvar='USERNAME')
     def greet(username):
        quo.echo(f"Hello {username}!")
 
@@ -706,7 +706,7 @@ where the first one is picked.
 Multiple Values from Environment Values
 ---------------------------------------
 
-As options can accept multiple values, pulling in such values from
+As apps can accept multiple values, pulling in such values from
 environment variables (which are strings) is a bit more complex.  The way
 quo solves this is by leaving it up to the type to customize this
 behavior.  For both ``multiple`` and ``nargs`` with values other than
@@ -724,7 +724,7 @@ Example usage:
 .. code-block:: python
 
     @quo.command()
-    @quo.option('paths', '--path', envvar='PATHS', multiple=True,
+    @quo.app('paths', '--path', envvar='PATHS', multiple=True,
                   type=quo.Path())
     def perform(paths):
         for path in paths:
@@ -744,7 +744,7 @@ Other Prefix Characters
 -----------------------
 
 quo can deal with alternative prefix characters other than ``-`` for
-options.  This is for instance useful if you want to handle slashes as
+apps.  This is for instance useful if you want to handle slashes as
 parameters ``/`` or something similar.  Note that this is strongly
 discouraged in general because quo wants developers to stay close to
 POSIX semantics.  However in certain situations this can be useful:
@@ -752,7 +752,7 @@ POSIX semantics.  However in certain situations this can be useful:
 .. code-block:: python
 
     @quo.command()
-    @quo.option('+w/-w')
+    @quo.app('+w/-w')
     def chmod(w):
         quo.echo(f"writable={w}")
 
@@ -772,7 +772,7 @@ boolean flag you need to separate it with ``;`` instead of ``/``:
 .. code-block:: python
 
     @quo.command()
-    @quo.option('/debug;/no-debug')
+    @quo.app('/debug;/no-debug')
     def log(debug):
         quo.echo(f"debug={debug}")
 
@@ -802,8 +802,8 @@ bounds are *closed* (the default).
 .. code-block:: python
 
     @quo.command()
-    @quo.option("--count", type=quo.IntRange(0, 20, clamp=True))
-    @quo.option("--digit", type=quo.IntRange(0, 9))
+    @quo.app("--count", type=quo.IntRange(0, 20, clamp=True))
+    @quo.app("--digit", type=quo.IntRange(0, 9))
     def repeat(count, digit):
         quo.echo(str(digit) * count)
 
@@ -834,7 +834,7 @@ type conversion. It is called for all sources, including prompts.
             raise quo.BadParameter("format must be 'NdM'")
 
     @quo.command()
-    @quo.option(
+    @quo.app(
         "--rolls", type=quo.UNPROCESSED, callback=validate_rolls,
         default="1d6", prompt=True,
     )
@@ -856,18 +856,18 @@ type conversion. It is called for all sources, including prompts.
 Optional Value
 --------------
 
-Providing the value to an option can be made optional, in which case
-providing only the option's flag without a value will either show a
+Providing the value to an app can be made optional, in which case
+providing only the app's flag without a value will either show a
 prompt or use its ``flag_value``.
 
-Setting ``is_flag=False, flag_value=value`` tells quo that the option
+Setting ``is_flag=False, flag_value=value`` tells quo that the app
 can still be passed a value, but if only the flag is given the
 ``flag_value`` is used.
 
 .. code-block:: python
 
     @quo.command()
-    @quo.option("--name", is_flag=False, flag_value="Flag", default="Default")
+    @quo.app("--name", is_flag=False, flag_value="Flag", default="Default")
     def hello(name):
         quo.echo(f"Hello, {name}!")
 
@@ -877,14 +877,14 @@ can still be passed a value, but if only the flag is given the
     invoke(hello, args=["--name", "Value"])
     invoke(hello, args=["--name"])
 
-If the option has ``prompt`` enabled, then setting
+If the app has ``prompt`` enabled, then setting
 ``prompt_required=False`` tells quo to only show the prompt if the
-option's flag is given, instead of if the option is not provided at all.
+app's flag is given, instead of if the app is not provided at all.
 
 .. code-block:: python
 
     @quo.command()
-    @quo.option('--name', prompt=True, prompt_required=False, default="Default")
+    @quo.app('--name', prompt=True, prompt_required=False, default="Default")
     def hello(name):
         quo.echo(f"Hello {name}!")
 
