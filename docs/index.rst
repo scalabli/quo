@@ -5,7 +5,7 @@ Quo
 
 .. image:: _static/quo.png
     :align: center
-    :scale: 33%
+    :scale: 34%
     :target: https://quo.rtfd.io
 
 
@@ -58,7 +58,7 @@ You can install quo via the Python Package Index (PyPI)
 
   import quo
   @quo.command()
-  @quo.option("--name", prompt="What is your name?:")
+  @quo.app("--name", prompt="What is your name?:")
   def hello(name):
   quo.echo(f'Hello {name}!')
   if __name__ == '__main__':
@@ -71,9 +71,9 @@ You can install quo via the Python Package Index (PyPI)
 
     import quo 
     @quo.command()
-    @quo.option("--count", default=1, help="The number of times the feedback is printed.")
-    @quo.option("--name", prompt="What is your name", help="This prompts the user to input their name.")
-    @quo.option("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
+    @quo.app("--count", default=1, help="The number of times the feedback is printed.")
+    @quo.app("--name", prompt="What is your name", help="This prompts the user to input their name.")
+    @quo.app("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
     def survey(count, name, proffession):
        
         for _ in range(count):
