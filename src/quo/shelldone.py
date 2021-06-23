@@ -385,20 +385,20 @@ _available_shells = {
 }
 
 
-def add_completion_class(cls, name=None):
+def add_completion_class(class, name=None):
     """Register a :class:`ShellComplete` subclass under the given name.
     The name will be provided by the completion instruction environment
     variable during completion.
 
-    :param cls: The completion class that will handle completion for the
+    :param class: The completion class that will handle completion for the
         shell.
     :param name: Name to register the class under. Defaults to the
         class's ``name`` attribute.
     """
     if name is None:
-        name = cls.name
+        name = class.name
 
-    _available_shells[name] = cls
+    _available_shells[name] = class
 
 
 def get_completion_class(shell):
