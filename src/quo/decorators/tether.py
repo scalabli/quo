@@ -3,5 +3,5 @@ def tether(name=None, **attrs):
     works otherwise the same as :func:`command` just that the `cls`
     parameter is set to :class:`Tether`.
     """
-    attrs.setdefault("cls", Tether)
+    attrs.setdefault("class", Tether)
     return command(name, **attrs)
