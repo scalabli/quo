@@ -82,7 +82,7 @@ def make_pass_decorator(object_type, ensure=False):
     return decorator
 
 
-def _make_command(f, name, attrs, cls):
+def _make_command(f, name, attrs, class):
     if isinstance(f, Command):
         raise TypeError("Attempted to convert a callback into a command twice.")
     try:
@@ -99,7 +99,7 @@ def _make_command(f, name, attrs, cls):
     else:
         help = inspect.cleandoc(help)
     attrs["help"] = help
-    return cls(
+    return class(
         name=name or f.__name__.lower().replace("_", "-"),
         callback=f,
         params=params,
@@ -107,7 +107,7 @@ def _make_command(f, name, attrs, cls):
     )
 
 
-def command(name=None, cls=None, **attrs):
+def command(name=None, class=None, **attrs):
     r"""Creates a new :class:`Command` and uses the decorated function as
     callback.  This will also automatically attach all decorated
     :func:`app`\s and :func:`argument`\s as parameters to the command.
@@ -124,14 +124,14 @@ def command(name=None, cls=None, **attrs):
 
     :param name: the name of the command.  This defaults to the function
                  name with underscores replaced by dashes.
-    :param cls: the command class to instantiate.  This defaults to
+    :param class: the command class to instantiate.  This defaults to
                 :class:`Command`.
     """
-    if cls is None:
-        cls = Command
+    if class is None:
+        class = Command
 
     def decorator(f):
-        cmd = _make_command(f, name, attrs, cls)
+        cmd = _make_command(f, name, attrs, class)
         cmd.__doc__ = f.__doc__
         return cmd
 
@@ -155,21 +155,21 @@ def _param_memo(f, param):
 def app(*param_decls, **attrs):
     """Attaches an app to the command.  All positional arguments are
     passed as parameter declarations to :class:`App`; all keyword
-    arguments are forwarded unchanged (except ``cls``).
+    arguments are forwarded unchanged (except ``class``).
     This is equivalent to creating an :class:`App` instance manually
     and attaching it to the :attr:`Command.params` list.
 
-    :param cls: the app class to instantiate.  This defaults to
+    :param class: the app class to instantiate.  This defaults to
                 :class:`App`.
     """
 
     def decorator(f):
-        # Issue 926, copy attrs, so pre-defined apps can re-use the same cls=
+        # Issue 926, copy attrs, so pre-defined apps can re-use the same class=
         app_attrs = attrs.copy()
 
         if "help" in app_attrs:
             app_attrs["help"] = inspect.cleandoc(app_attrs["help"])
-        OptionClass = app_attrs.pop("cls", App)
+        OptionClass = app_attrs.pop("class", App)
         _param_memo(f, OptionClass(param_decls, **app_attrs))
         return f
 
@@ -179,16 +179,16 @@ def app(*param_decls, **attrs):
 def argument(*param_decls, **attrs):
     """Attaches an argument to the command.  All positional arguments are
     passed as parameter declarations to :class:`Argument`; all keyword
-    arguments are forwarded unchanged (except ``cls``).
+    arguments are forwarded unchanged (except ``class``).
     This is equivalent to creating an :class:`Argument` instance manually
     and attaching it to the :attr:`Command.params` list.
 
-    :param cls: the argument class to instantiate.  This defaults to
+    :param class: the argument class to instantiate.  This defaults to
                 :class:`Argument`.
     """
 
     def decorator(f):
-        ArgumentClass = attrs.pop("cls", Argument)
+        ArgumentClass = attrs.pop("class", Argument)
         _param_memo(f, ArgumentClass(param_decls, **attrs))
         return f
 
@@ -196,8 +196,8 @@ def argument(*param_decls, **attrs):
 
 def tether(name=None, **attrs):
     """Creates a new :class:`Tether` with a function as callback.  This
-    works otherwise the same as :func:`command` just that the `cls`
+    works otherwise the same as :func:`command` just that the `class`
     parameter is set to :class:`Tether`.
     """
-    attrs.setdefault("cls", Tether)
+    attrs.setdefault("class", Tether)
     return command(name, **attrs)
