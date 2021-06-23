@@ -1627,8 +1627,8 @@ class Tether(MultiCommand):
         """
         from .decorate import command
 
-        if self.command_class is not None and "cls" not in kwargs:
-            kwargs["cls"] = self.command_class
+        if self.command_class is not None and "class" not in kwargs:
+            kwargs["class"] = self.command_class
 
         def decorator(f):
             cmd = command(*args, **kwargs)(f)
@@ -1649,11 +1649,11 @@ class Tether(MultiCommand):
         """
         from .decorators import tether
 
-        if self.group_class is not None and "cls" not in kwargs:
+        if self.group_class is not None and "class" not in kwargs:
             if self.group_class is type:
-                kwargs["cls"] = type(self)
+                kwargs["class"] = type(self)
             else:
-                kwargs["cls"] = self.group_class
+                kwargs["class"] = self.group_class
 
         def decorator(f):
             cmd = group(*args, **kwargs)(f)
