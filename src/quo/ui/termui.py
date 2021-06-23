@@ -418,7 +418,7 @@ def clear():
     # clear the screen by shelling out.  Otherwise we can use an escape
     # sequence.
     if WIN:
-        os.system("cls")
+        os.system("class")
     else:
         sys.stdout.write("\033[2J\033[1;1H")
 
