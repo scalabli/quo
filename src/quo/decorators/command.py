@@ -1,4 +1,4 @@
-def command(name=None, cls=None, **attrs):
+def command(name=None, class=None, **attrs):
     r"""Creates a new :class:`Command` and uses the decorated function as
     callback.  This will also automatically attach all decorated
     :func:`app`\s and :func:`argument`\s as parameters to the command.
@@ -15,14 +15,14 @@ def command(name=None, cls=None, **attrs):
 
     :param name: the name of the command.  This defaults to the function
                  name with underscores replaced by dashes.
-    :param cls: the command class to instantiate.  This defaults to
+    :param class: the command class to instantiate.  This defaults to
                 :class:`Command`.
     """
-    if cls is None:
-        cls = Command
+    if class is None:
+        class = Command
 
     def decorator(f):
-        cmd = _make_command(f, name, attrs, cls)
+        cmd = _make_command(f, name, attrs, class)
         cmd.__doc__ = f.__doc__
         return cmd
 
