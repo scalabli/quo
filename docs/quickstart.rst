@@ -5,7 +5,7 @@ Quickstart
 
 You can get the library directly from PyPI::
 
-    pip install click
+    pip install quo
 
 The installation into a :ref:`virtualenv` is heavily recommended.
 
@@ -14,11 +14,11 @@ The installation into a :ref:`virtualenv` is heavily recommended.
 virtualenv
 ----------
 
-Virtualenv is probably what you want to use for developing Click
+Virtualenv is probably what you want to use for developing Quo
 applications.
 
 What problem does virtualenv solve?  Chances are that you want to use it
-for other projects besides your Click script.  But the more projects you
+for other projects besides your Quo script.  But the more projects you
 have, the more likely it is that you will be working with different
 versions of Python itself, or at least different versions of Python
 libraries.  Let's face it: quite often libraries break backwards
@@ -76,44 +76,36 @@ And if you want to go back to the real world, use the following command::
 
 After doing this, the prompt of your shell should be as familiar as before.
 
-Now, let's move on. Enter the following command to get Click activated in your
+Now, let's move on. Enter the following command to get Quo activated in your
 virtualenv::
 
     $ pip install quo
 
 A few seconds later and you are good to go.
 
-Screencast and Examples
------------------------
 
-There is a screencast available which shows the basic API of Click and
-how to build simple applications with it.  It also explores how to build
-commands with subcommands.
 
-*   `Building Command Line Applications with Click
-    <https://www.youtube.com/watch?v=kNke39OZ2k0>`_
-
-Examples of Click applications can be found in the documentation as well
+Examples of quo applications can be found in the documentation as well
 as in the GitHub repository together with readme files:
 
 *   ``inout``: `File input and output
-    <https://github.com/pallets/click/tree/master/examples/inout>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/inout>`_
 *   ``naval``: `Port of docopt naval example
-    <https://github.com/pallets/click/tree/master/examples/naval>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/naval>`_
 *   ``aliases``: `Command alias example
-    <https://github.com/pallets/click/tree/master/examples/aliases>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/aliases>`_
 *   ``repo``: `Git-/Mercurial-like command line interface
-    <https://github.com/pallets/click/tree/master/examples/repo>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/repo>`_
 *   ``complex``: `Complex example with plugin loading
-    <https://github.com/pallets/click/tree/master/examples/complex>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/complex>`_
 *   ``validation``: `Custom parameter validation example
-    <https://github.com/pallets/click/tree/master/examples/validation>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/validation>`_
 *   ``colors``: `Colorama ANSI color support
-    <https://github.com/pallets/click/tree/master/examples/colors>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/colors>`_
 *   ``termui``: `Terminal UI functions demo
-    <https://github.com/pallets/click/tree/master/examples/termui>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/termui>`_
 *   ``imagepipe``: `Multi command chaining demo
-    <https://github.com/pallets/click/tree/master/examples/imagepipe>`_
+    <https://github.com/secretum-inc/quo/tree/main/examples/imagepipe>`_
 
 Basic Concepts - Creating a Command
 -----------------------------------
@@ -156,50 +148,50 @@ This function also supports ANSI colors. ANSI colors will work On windows  color
 Nesting Commands
 ----------------
 
-Commands can be attached to other commands of type :class:`Group`.  This
+Commands can be attached to other commands of type :class:`Tether`.  This
 allows arbitrary nesting of scripts.  As an example here is a script that
 implements two commands for managing databases:
 
 .. code-block:: python
 
-    @quo.group()
+    @quo.tether() 
     def cli():
         pass
 
     @quo.command()
     def initdb():
-        click.echo('Initialized the database')
+        quo.echo('Initialized the database')
 
     @quo.command()
     def dropdb():
         quo.echo('Dropped the database')
 
-    cli.add_command(initdb)
-    cli.add_command(dropdb)
+    cli.addcommand(initdb)
+    cli.addcommand(dropdb)
 
 As you can see, the :func:`group` decorator works like the :func:`command`
-decorator, but creates a :class:`Group` object instead which can be given
-multiple subcommands that can be attached with :meth:`Group.add_command`.
+decorator, but creates a :class:`Tether` object instead which can be given
+multiple subcommands that can be attached with :meth:`Tether.addcommand`.
 
 For simple scripts, it's also possible to automatically attach and create a
-command by using the :meth:`Group.command` decorator instead.  The above
+command by using the :meth:`Tether.command` decorator instead.  The above
 script can instead be written like this:
 
-.. click:example::
+.. quo:example::
 
-    @click.group()
+    @quo.tether() 
     def cli():
         pass
 
     @cli.command()
     def initdb():
-        click.echo('Initialized the database')
+        quo.echo('Initialized the database')
 
     @cli.command()
     def dropdb():
-        click.echo('Dropped the database')
+        quo.echo('Dropped the database')
 
-You would then invoke the :class:`Group` in your setuptools entry points or
+You would then invoke the :class:`Tether` in your setuptools entry points or
 other invocations::
 
     if __name__ == '__main__':
@@ -210,42 +202,42 @@ Registering Commands Later
 --------------------------
 
 Instead of using the ``@group.command()`` decorator, commands can be
-decorated with the plain ``@click.command()`` decorator and registered
-with a group later with ``group.add_command()``. This could be used to
+decorated with the plain ``@quo.command()`` decorator and registered
+with a group later with ``group.addcommand()``. This could be used to
 split commands into multiple Python modules.
 
 .. code-block:: python
 
-    @click.command()
+    @quo.command()
     def greet():
-        click.echo("Hello, World!")
+        quo.echo("Hello, World!")
 
 .. code-block:: python
 
-    @click.group()
-    def group():
+    @quo.tether() 
+    def tether() :
         pass
 
-    group.add_command(greet)
+    tether.addcommand(greet)
 
 
 Adding Parameters
 -----------------
 
-To add parameters, use the :func:`option` and :func:`argument` decorators:
+To add parameters, use the :func:`app` and :func:`argument` decorators:
 
-.. click:example::
+.. quo:example::
 
-    @click.command()
-    @click.option('--count', default=1, help='number of greetings')
-    @click.argument('name')
+    @quo.command()
+    @quo.app('--count', default=1, help='number of greetings')
+    @quo.argument('name')
     def hello(count, name):
         for x in range(count):
-            click.echo(f"Hello {name}!")
+            quo.echo(f"Hello {name}!")
 
 What it looks like:
 
-.. click:run::
+.. quo:run::
 
     invoke(hello, args=['--help'], prog_name='python hello.py')
 
@@ -256,7 +248,7 @@ Switching to Setuptools
 
 In the code you wrote so far there is a block at the end of the file which
 looks like this: ``if __name__ == '__main__':``.  This is traditionally
-how a standalone Python file looks like.  With Click you can continue
+how a standalone Python file looks like.  With quo you can continue
 doing that, but there are better ways through setuptools.
 
 There are two main (and many more) reasons for this:
@@ -269,7 +261,7 @@ without the virtualenv having to be activated.  This is a very useful
 concept which allows you to bundle your scripts with all requirements into
 a virtualenv.
 
-Click is perfectly equipped to work with that and in fact the rest of the
+quo is perfectly equipped to work with that and in fact the rest of the
 documentation will assume that you are writing applications through
 setuptools.
 
