@@ -23,7 +23,7 @@ _ansi_re = re.compile(r"\033\[[;?0-9]*[a-zA-Z]")
 
 
 def encoding_filesystem():
-    return sys.getfilesystemencoding() or sys.getdefaultencoding()
+    return sys.getdefaultencoding()
 
 
 def text_flow(
