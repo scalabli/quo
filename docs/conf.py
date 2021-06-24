@@ -26,8 +26,8 @@ from sphinx.locale import _
 
 project = u'Quo Documentation'
 slug = re.sub(r'\W+', '-', project.lower())
-version = '2021.3.3'
-release = '2021.3.3'
+version = '2021.3'
+release = '2021.3'
 author = u'2021, Gerrishon Sirere, Secretum Inc.'
 copyright = author
 language = 'en'
