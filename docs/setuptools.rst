@@ -52,14 +52,14 @@ Imagine this directory structure:
 
 Contents of ``yourscript.py``:
 
-.. click:example::
+.. quo:example::
 
-    import click
+    import quo
 
-    @click.command()
+    @quo.command()
     def cli():
         """Example script."""
-        click.echo('Hello World!')
+        quo.echo('Hello World!')
 
 Contents of ``setup.py``:
 
@@ -72,7 +72,7 @@ Contents of ``setup.py``:
         version='0.1.0',
         py_modules=['yourscript'],
         install_requires=[
-            'Click',
+            'quo',
         ],
         entry_points={
             'console_scripts': [
@@ -85,7 +85,7 @@ The magic is in the ``entry_points`` parameter.  Below
 ``console_scripts``, each line identifies one console script.  The first
 part before the equals sign (``=``) is the name of the script that should
 be generated, the second part is the import path followed by a colon
-(``:``) with the Click command.
+(``:``) with the quo command.
 
 That's it.
 
@@ -103,7 +103,7 @@ package:
 
 Afterwards, your command should be available:
 
-.. click:run::
+.. quo:run::
 
     invoke(cli, prog_name='yourscript')
 
@@ -143,7 +143,7 @@ These would be the modified contents of ``setup.py``:
         packages=find_packages(),
         include_package_data=True,
         install_requires=[
-            'Click',
+            'quo',
         ],
         entry_points={
             'console_scripts': [
