@@ -15,17 +15,10 @@ quo==2021.2
 distlib==0.3.1
 docutils==0.16
 filelock==3.0.12
-    # via
-    #   tox
-    #   virtualenv
 identify==2.2.4
-    # via pre-commit
 idna==2.10
-    # via requests
 imagesize==1.2.0
-    # via sphinx
 iniconfig==1.1.1
-    # via pytest
 jinja2==3.0.1
     # via sphinx
 markupsafe==2.0.1
@@ -37,27 +30,14 @@ mypy==0.812
 nodeenv==1.6.0
     # via pre-commit
 packaging==20.9
-    # via
-    #   pallets-sphinx-themes
-    #   pytest
-    #   sphinx
-    #   tox
-pallets-sphinx-themes==2.0.1
-    # via -r docs.in
 pep517==0.10.0
     # via pip-tools
 pip-tools==6.1.0
     # via -r dev.in
 pluggy==0.13.1
-    # via
-    #   pytest
-    #   tox
 pre-commit==2.13.0
     # via -r dev.in
 py==1.10.0
-    # via
-    #   pytest
-    #   tox
 pygments==2.9.0
     # via
     #   sphinx
@@ -99,16 +79,8 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.4
     # via sphinx
 toml==0.10.2
-    # via
-    #   pep517
-    #   pre-commit
-    #   pytest
-    #   tox
 tox==3.23.1
-    # via -r dev.in
 typed-ast==1.4.3
-    # via mypy
 typing-extensions==3.10.0.0
-    # via mypy
 urllib3==1.26.5
 virtualenv==20.4.6
