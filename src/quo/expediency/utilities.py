@@ -322,8 +322,7 @@ def get_os_args():
     import warnings
 
     warnings.warn(
-        "'get_os_args' is deprecated and will be removed in 8.1. Access"
-        " 'sys.argv[1:]' directly instead.",
+        "Alternatively, you can access 'sys.argv[1:]' directly instead.",
         DeprecationWarning,
         stacklevel=2,
     )
