@@ -70,7 +70,7 @@ from .types import UNPROCESSED
 from .types import UUID
 from quo.expediency.utilities import echo
 from quo.expediency.utilities import formatfilename
-from quo.expediency.utilities import get_app_dir
+from quo.expediency.utilities import appdir
 from quo.expediency.utilities import get_binary_stream
 from quo.expediency.utilities import get_os_args
 from quo.expediency.utilities import get_text_stream
