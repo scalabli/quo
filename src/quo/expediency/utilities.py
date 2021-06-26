@@ -346,7 +346,7 @@ def formatfilename(filename, shorten=False):
     return filename_to_ui(filename)
 
 
-def get_app_dir(app_name, roaming=True, force_posix=False):
+def appdir(appname, roaming=True, force_posix=False):
     r"""Returns the config folder for the application.  The default behavior
     is to return whatever is most appropriate for the operating system.
 
@@ -371,7 +371,7 @@ def get_app_dir(app_name, roaming=True, force_posix=False):
       ``C:\Users\<user>\AppData\Local\Foo Bar``
 
 
-    :param app_name: the application name.  This should be properly capitalized
+    :param appname: the application name.  This should be properly capitalized
                      and can contain whitespace.
     :param roaming: controls if the folder should be roaming or not on Windows.
                     Has no affect otherwise.
@@ -385,16 +385,16 @@ def get_app_dir(app_name, roaming=True, force_posix=False):
         folder = os.environ.get(key)
         if folder is None:
             folder = os.path.expanduser("~")
-        return os.path.join(folder, app_name)
+        return os.path.join(folder, appname)
     if force_posix:
-        return os.path.join(os.path.expanduser(f"~/.{_posixify(app_name)}"))
+        return os.path.join(os.path.expanduser(f"~/.{_posixify(appname)}"))
     if sys.platform == "darwin":
         return os.path.join(
-            os.path.expanduser("~/Library/Application Support"), app_name
+            os.path.expanduser("~/Library/Application Support"), appname
         )
     return os.path.join(
         os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config")),
-        _posixify(app_name),
+        _posixify(appname),
     )
 
 
