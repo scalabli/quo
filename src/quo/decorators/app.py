@@ -15,7 +15,7 @@ def app(*param_decls, **attrs):
 
         if "help" in app_attrs:
             app_attrs["help"] = inspect.cleandoc(app_attrs["help"])
-        OptionClass = app_attrs.pop("cls", App)
+        OptionClass = app_attrs.pop("class", App)
         _param_memo(f, OptionClass(param_decls, **app_attrs))
         return f
 
