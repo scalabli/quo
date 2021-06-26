@@ -319,13 +319,6 @@ def get_os_args():
     value which is the name of the script.
 
     """
-    import warnings
-
-    warnings.warn(
-        "Alternatively, you can access 'sys.argv[1:]' directly instead.",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     return sys.argv[1:]
 
 
