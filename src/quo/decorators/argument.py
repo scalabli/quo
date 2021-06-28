@@ -10,7 +10,7 @@ def argument(*param_decls, **attrs):
     """
 
     def decorator(f):
-        ArgumentClass = attrs.pop("class", Argument)
+        ArgumentClass = attrs.pop("cls", Argument)
         _param_memo(f, ArgumentClass(param_decls, **attrs))
         return f
 
