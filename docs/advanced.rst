@@ -19,7 +19,7 @@ For instance, you can configure ``git`` to accept ``git ci`` as alias for
 automatically shortening them.
 
 Quo does not support this out of the box, but it's very easy to customize
-the :class:`Group` or any other :class:`MultiCommand` to provide this
+the :class:`Tether` or any other :class:`MultiCommand` to provide this
 functionality.
 
 As explained in :ref:`custom-multi-commands`, a multi command can provide
@@ -28,16 +28,16 @@ two methods: :meth:`~MultiCommand.list_commands` and
 to override the latter as you generally don't want to enumerate the
 aliases on the help page in order to avoid confusion.
 
-This following example implements a subclass of :class:`Group` that
+This following example implements a subclass of :class:`Tether` that
 accepts a prefix for a command.  If there were a command called ``push``,
 it would accept ``pus`` as an alias (so long as it was unique):
 
 .. code-block:: python
 
-    class AliasedGroup(quo.Group):
+    class AliasedTether(quo.Tether):
 
         def get_command(self, clime, cmd_name):
-            rv = quo.Group.get_command(self, clime, cmd_name)
+            rv = quo.Tether.get_command(self, clime, cmd_name)
             if rv is not None:
                 return rv
             matches = [x for x in self.list_commands(clime)
@@ -45,14 +45,14 @@ it would accept ``pus`` as an alias (so long as it was unique):
             if not matches:
                 return None
             elif len(matches) == 1:
-                return quo.Group.get_command(self, clime, matches[0])
+                return quo.Tether.get_command(self, clime, matches[0])
             clime.fail(f"Too many matches: {', '.join(sorted(matches))}")
 
 And it can then be used like this:
 
 .. code-block:: python
 
-    @quo.command(class=AliasedGroup)
+    @quo.command(class=AliasedTether)
     def cli():
         pass
 
@@ -131,7 +131,7 @@ In order to use this feature, the context needs to be passed a function that
 performs the normalization of the token.  For instance, you could have a
 function that converts the token to lowercase:
 
-.. quo:example::
+.. code-block:: python
 
     CONTEXT_SETTINGS = dict(token_normalize_func=lambda x: x.lower())
 
@@ -142,7 +142,7 @@ function that converts the token to lowercase:
 
 And how it works on the command line:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(cli, prog_name='cli', args=['--NAME=Pete'])
 
@@ -164,7 +164,7 @@ Example:
 
 .. quo:example::
 
-    cli = quo.group()
+    cli = quo.tether()
 
     @cli.command()
     @quo.app('--count', default=1)
@@ -283,7 +283,7 @@ options:
 
 In the end you end up with something like this:
 
-.. quo:example::
+.. code-block:: python
 
     import sys
     from subprocess import call
@@ -408,7 +408,7 @@ enum.
 Managing Resources
 ------------------
 
-It can be useful to open a resource in a group, to be made available to
+It can be useful to open a resource in a tether, to be made available to
 subcommands. Many types of resources need to be closed or otherwise
 cleaned up after use. The standard way to do this in Python is by using
 a context manager with the ``with`` statement.
@@ -437,16 +437,16 @@ Ordinarily, it would be used with the ``with`` statement:
     with Repo() as repo:
         repo.db.query(...)
 
-However, a ``with`` block in a group would exit and close the database
+However, a ``with`` block in a tether would exit and close the database
 before it could be used by a subcommand.
 
 Instead, use the context's :meth:`~quo.Context.with_resource` method
-to enter the context manager and return the resource. When the group and
+to enter the context manager and return the resource. When the tether and
 any subcommands finish, the context's resources are cleaned up.
 
 .. code-block:: python
 
-    @quo.group()
+    @quo.tether()
     @quo.app("--repo-home", default=".repo")
     @quo.pass_context
     def cli(clime, repo_home):
@@ -455,7 +455,7 @@ any subcommands finish, the context's resources are cleaned up.
     @cli.command()
     @quo.pass_obj
     def log(obj):
-        # obj is the repo opened in the cli group
+        # obj is the repo opened in the cli tether
         for entry in obj.db.query(...):
             quo.echo(entry)
 
@@ -466,7 +466,7 @@ cleanup function.
 
 .. code-block:: python
 
-    @quo.group()
+    @quo.tether()
     @quo.app("--name", default="repo.db")
     @quo.pass_context
     def cli(clime, repo_home):
