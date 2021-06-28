@@ -3,33 +3,33 @@ Parameters
 
 .. currentmodule:: quo
 
-quo supports two types of parameters for scripts: options and arguments.
+quo supports two types of parameters for scripts: apps and arguments.
 There is generally some confusion among authors of command line scripts of
 when to use which, so here is a quick overview of the differences.  As its
 name indicates, an option is optional.  While arguments can be optional
 within reason, they are much more restricted in how optional they can be.
 
-To help you decide between options and arguments, the recommendation is
+To help you decide between apps and arguments, the recommendation is
 to use arguments exclusively for things like going to subcommands or input
 filenames / URLs, and have everything else be an option instead.
 
 Differences
 -----------
 
-Arguments can do less than options.  The following features are only
-available for options:
+Arguments can do less than apps.  The following features are only
+available for apps:
 
 *   automatic prompting for missing input
 *   act as flags (boolean or otherwise)
 *   option values can be pulled from environment variables, arguments can not
-*   options are fully documented in the help page, arguments are not
+*   apps are fully documented in the help page, arguments are not
     (:ref:`this is intentional <documenting-arguments>` as arguments
     might be too specific to be automatically documented)
 
-On the other hand arguments, unlike options, can accept an arbitrary number
-of arguments.  Options can strictly ever only accept a fixed number of
+On the other hand arguments, unlike apps, can accept an arbitrary number
+of arguments.  Apps can strictly ever only accept a fixed number of
 arguments (defaults to 1), or they may be specified multiple times using
-:ref:`multiple-options`.
+:ref:`multiple-apps`.
 
 Parameter Types
 ---------------
@@ -83,16 +83,16 @@ fails with a `ValueError` is also supported, though discouraged.
 Parameter Names
 ---------------
 
-Parameters (both options and arguments) have a name that will be used as
+Parameters (both apps and arguments) have a name that will be used as
 the Python argument name when calling the decorated function with
 values.
 
 Arguments take only one positional name. To provide a different name for
 use in help text, see :ref:`doc-meta-variables`.
 
-Options can have many names that may be prefixed with one or two dashes.
-Names with one dash are parsed as short options, names with two are
-parsed as long options. If a name is not prefixed, it is used as the
+Apps can have many names that may be prefixed with one or two dashes.
+Names with one dash are parsed as short apps, names with two are
+parsed as long apps. If a name is not prefixed, it is used as the
 Python argument name and not parsed as an option name. Otherwise, the
 first name with a two dash prefix is used, or the first with a one dash
 prefix if there are none with two. The prefix is removed and dashes are
