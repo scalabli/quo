@@ -15,7 +15,7 @@ from quo.outliers.exceptions import Exit
 from quo.outliers.exceptions import MissingParameter
 from quo.outliers.exceptions import UsageError
 from .layout import HelpFormatter
-from .layout import join_options
+from .layout import join_apps
 from quo.context.current import pop_context
 from quo.context.current import push_context
 from .parser import _flag_needs_value
