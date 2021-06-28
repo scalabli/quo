@@ -82,7 +82,7 @@ def make_pass_decorator(object_type, ensure=False):
     return decorator
 
 
-def _make_command(f, name, attrs, class):
+def _make_command(f, name, attrs, cls):
     if isinstance(f, Command):
         raise TypeError("Attempted to convert a callback into a command twice.")
     try:
@@ -99,7 +99,7 @@ def _make_command(f, name, attrs, class):
     else:
         help = inspect.cleandoc(help)
     attrs["help"] = help
-    return class(
+    return cls(
         name=name or f.__name__.lower().replace("_", "-"),
         callback=f,
         params=params,
@@ -107,8 +107,8 @@ def _make_command(f, name, attrs, class):
     )
 
 
-def command(name=None, class=None, **attrs):
-    r"""Creates a new :class:`Command` and uses the decorated function as
+def command(name=None, cls=None, **attrs):
+    r"""Creates a new :cls:`Command` and uses the decorated function as
     callback.  This will also automatically attach all decorated
     :func:`app`\s and :func:`argument`\s as parameters to the command.
 
@@ -116,22 +116,22 @@ def command(name=None, class=None, **attrs):
     underscores replaced by dashes.  If you want to change that, you can
     pass the intended name as the first argument.
 
-    All keyword arguments are forwarded to the underlying command class.
+    All keyword arguments are forwarded to the underlying command cls.
 
-    Once decorated the function turns into a :class:`Command` instance
+    Once decorated the function turns into a :cls:`Command` instance
     that can be invoked as a command line utility or be attached to a
-    command :class:`Tether`.
+    command :cls:`Tether`.
 
     :param name: the name of the command.  This defaults to the function
                  name with underscores replaced by dashes.
-    :param class: the command class to instantiate.  This defaults to
-                :class:`Command`.
+    :param cls: the command cls to instantiate.  This defaults to
+                :cls:`Command`.
     """
-    if class is None:
-        class = Command
+    if cls is None:
+        cls = Command
 
     def decorator(f):
-        cmd = _make_command(f, name, attrs, class)
+        cmd = _make_command(f, name, attrs, cls)
         cmd.__doc__ = f.__doc__
         return cmd
 
@@ -154,23 +154,23 @@ def _param_memo(f, param):
 
 def app(*param_decls, **attrs):
     """Attaches an app to the command.  All positional arguments are
-    passed as parameter declarations to :class:`App`; all keyword
-    arguments are forwarded unchanged (except ``class``).
-    This is equivalent to creating an :class:`App` instance manually
+    passed as parameter declarations to :cls:`App`; all keyword
+    arguments are forwarded unchanged (except ``cls``).
+    This is equivalent to creating an :cls:`App` instance manually
     and attaching it to the :attr:`Command.params` list.
 
-    :param class: the app class to instantiate.  This defaults to
-                :class:`App`.
+    :param cls: the app cls to instantiate.  This defaults to
+                :cls:`App`.
     """
 
     def decorator(f):
-        # Issue 926, copy attrs, so pre-defined apps can re-use the same class=
+        # Issue 926, copy attrs, so pre-defined apps can re-use the same cls=
         app_attrs = attrs.copy()
 
         if "help" in app_attrs:
             app_attrs["help"] = inspect.cleandoc(app_attrs["help"])
-        OptionClass = app_attrs.pop("class", App)
-        _param_memo(f, OptionClass(param_decls, **app_attrs))
+        Optioncls = app_attrs.pop("cls", App)
+        _param_memo(f, Optioncls(param_decls, **app_attrs))
         return f
 
     return decorator
@@ -178,26 +178,26 @@ def app(*param_decls, **attrs):
 
 def argument(*param_decls, **attrs):
     """Attaches an argument to the command.  All positional arguments are
-    passed as parameter declarations to :class:`Argument`; all keyword
-    arguments are forwarded unchanged (except ``class``).
-    This is equivalent to creating an :class:`Argument` instance manually
+    passed as parameter declarations to :cls:`Argument`; all keyword
+    arguments are forwarded unchanged (except ``cls``).
+    This is equivalent to creating an :cls:`Argument` instance manually
     and attaching it to the :attr:`Command.params` list.
 
-    :param class: the argument class to instantiate.  This defaults to
-                :class:`Argument`.
+    :param cls: the argument cls to instantiate.  This defaults to
+                :cls:`Argument`.
     """
 
     def decorator(f):
-        ArgumentClass = attrs.pop("class", Argument)
-        _param_memo(f, ArgumentClass(param_decls, **attrs))
+        Argumentcls = attrs.pop("cls", Argument)
+        _param_memo(f, Argumentcls(param_decls, **attrs))
         return f
 
     return decorator
 
 def tether(name=None, **attrs):
-    """Creates a new :class:`Tether` with a function as callback.  This
-    works otherwise the same as :func:`command` just that the `class`
-    parameter is set to :class:`Tether`.
+    """Creates a new :cls:`Tether` with a function as callback.  This
+    works otherwise the same as :func:`command` just that the `cls`
+    parameter is set to :cls:`Tether`.
     """
-    attrs.setdefault("class", Tether)
+    attrs.setdefault("cls", Tether)
     return command(name, **attrs)
