@@ -19,7 +19,7 @@ from .layout import join_apps
 from quo.context.current import pop_context
 from quo.context.current import push_context
 from .parser import _flag_needs_value
-from .parser import OptionParser
+from .parser import AppParser
 from .parser import split_opt
 from quo.ui.termui import confirm
 from quo.ui.termui import prompt
