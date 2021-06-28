@@ -36,23 +36,23 @@ it would accept ``pus`` as an alias (so long as it was unique):
 
     class AliasedGroup(quo.Group):
 
-        def get_command(self, ctx, cmd_name):
-            rv = quo.Group.get_command(self, ctx, cmd_name)
+        def get_command(self, clime, cmd_name):
+            rv = quo.Group.get_command(self, clime, cmd_name)
             if rv is not None:
                 return rv
-            matches = [x for x in self.list_commands(ctx)
+            matches = [x for x in self.list_commands(clime)
                        if x.startswith(cmd_name)]
             if not matches:
                 return None
             elif len(matches) == 1:
-                return quo.Group.get_command(self, ctx, matches[0])
-            ctx.fail(f"Too many matches: {', '.join(sorted(matches))}")
+                return quo.Group.get_command(self, clime, matches[0])
+            clime.fail(f"Too many matches: {', '.join(sorted(matches))}")
 
 And it can then be used like this:
 
 .. code-block:: python
 
-    @quo.command(cls=AliasedGroup)
+    @quo.command(class=AliasedGroup)
     def cli():
         pass
 
@@ -67,7 +67,7 @@ And it can then be used like this:
 Parameter Modifications
 -----------------------
 
-Parameters (options and arguments) are forwarded to the command callbacks
+Parameters (apps and arguments) are forwarded to the command callbacks
 as you have seen.  One common way to prevent a parameter from being passed
 to the callback is the `expose_value` argument to a parameter which hides
 the parameter entirely.  The way this works is that the :class:`Context`
@@ -83,9 +83,9 @@ it's good to know that the system works this way.
 
     import urllib
 
-    def open_url(ctx, param, value):
+    def open_url(clime, param, value):
         if value is not None:
-            ctx.params['fp'] = urllib.urlopen(value)
+            clime.params['fp'] = urllib.urlopen(value)
             return value
 
     @quo.command()
@@ -108,7 +108,7 @@ the information in a wrapper however:
             self.url = url
             self.fp = fp
 
-    def open_url(ctx, param, value):
+    def open_url(clime, param, value):
         if value is not None:
             return URL(value, urllib.urlopen(value))
 
@@ -124,7 +124,7 @@ Token Normalization
 
 It's possible to provide a function that is used
 for normalizing tokens.  Tokens are option names, choice values, or command
-values.  This can be used to implement case insensitive options, for
+values.  This can be used to implement case insensitive apps, for
 instance.
 
 In order to use this feature, the context needs to be passed a function that
@@ -174,9 +174,9 @@ Example:
     @cli.command()
     @quo.option('--count', default=1)
     @quo.pass_context
-    def dist(ctx, count):
-        ctx.forward(test)
-        ctx.invoke(test, count=42)
+    def dist(clime, count):
+        clime.forward(test)
+        clime.invoke(test, count=42)
 
 And what it looks like:
 
@@ -225,7 +225,7 @@ Repeated parameters:
     places because it is repeated -- for instance, ``--exclude foo --include
     baz --exclude bar`` -- the callback will fire based on the position of
     the first option.  In this case, the callback will fire for
-    ``exclude`` and it will be passed both options (``foo`` and
+    ``exclude`` and it will be passed both apps (``foo`` and
     ``bar``), then the callback for ``include`` will fire with ``baz``
     only.
 
@@ -244,33 +244,33 @@ Missing parameters:
 Most of the time you do not need to be concerned about any of this,
 but it is important to know how it works for some advanced cases.
 
-.. _forwarding-unknown-options:
+.. _forwarding-unknown-apps:
 
-Forwarding Unknown Options
+Forwarding Unknown Apps
 --------------------------
 
 In some situations it is interesting to be able to accept all unknown
-options for further manual processing.  Quo can generally do that but it has some limitations that lie in the nature of the
+apps for further manual processing.  Quo can generally do that but it has some limitations that lie in the nature of the
 problem.  The support for this is provided through a parser flag called
-``ignore_unknown_options`` which will instruct the parser to collect all
-unknown options and to put them to the leftover argument instead of
+``ignore_unknown_apps`` which will instruct the parser to collect all
+unknown apps and to put them to the leftover argument instead of
 triggering a parsing error.
 
 This can generally be activated in two different ways:
 
 1.  It can be enabled on custom :class:`Command` subclasses by changing
-    the :attr:`~BaseCommand.ignore_unknown_options` attribute.
+    the :attr:`~BaseCommand.ignore_unknown_apps` attribute.
 2.  It can be enabled by changing the attribute of the same name on the
-    context class (:attr:`Context.ignore_unknown_options`).  This is best
+    context class (:attr:`Context.ignore_unknown_apps`).  This is best
     changed through the ``context_settings`` dictionary on the command.
 
 For most situations the easiest solution is the second.  Once the behavior
-is changed something needs to pick up those leftover options (which at
+is changed something needs to pick up those leftover apps (which at
 this point are considered arguments).  For this again you have two
 options:
 
 1.  You can use :func:`pass_context` to get the context passed.  This will
-    only work if in addition to :attr:`~Context.ignore_unknown_options`
+    only work if in addition to :attr:`~Context.ignore_unknown_apps`
     you also set :attr:`~Context.allow_extra_args` as otherwise the
     command will abort with an error that there are leftover arguments.
     If you go with this solution, the extra arguments will be collected in
@@ -289,7 +289,7 @@ In the end you end up with something like this:
     from subprocess import call
 
     @quo.command(context_settings=dict(
-        ignore_unknown_options=True,
+        ignore_unknown_apps=True,
     ))
     @quo.option('-v', '--verbose', is_flag=True, help='Enables verbose mode')
     @quo.argument('timeit_args', nargs=-1, type=quo.UNPROCESSED)
@@ -315,12 +315,12 @@ ends up in the `timeit_args` variable for further processing which then
 for instance, allows invoking a subprocess.  There are a few things that
 are important to know about how this ignoring of unhandled flag happens:
 
-*   Unknown long options are generally ignored and not processed at all.
+*   Unknown long apps are generally ignored and not processed at all.
     So for instance if ``--foo=bar`` or ``--foo bar`` are passed they
     generally end up like that.  Note that because the parser cannot know
     if an option will accept an argument or not, the ``bar`` part might be
     handled as an argument.
-*   Unknown short options might be partially handled and reassembled if
+*   Unknown short apps might be partially handled and reassembled if
     necessary.  For instance in the above example there is an option
     called ``-v`` which enables verbose mode.  If the command would be
     ignored with ``-va`` then the ``-v`` part would be handled by Quo
@@ -329,10 +329,10 @@ are important to know about how this ignoring of unhandled flag happens:
 *   Depending on what you plan on doing you might have some success by
     disabling interspersed arguments
     (:attr:`~Context.allow_interspersed_args`) which instructs the parser
-    to not allow arguments and options to be mixed.  Depending on your
+    to not allow arguments and apps to be mixed.  Depending on your
     situation this might improve your results.
 
-Generally though the combinated handling of options and arguments from
+Generally though the combinated handling of apps and arguments from
 your own commands and commands from another application are discouraged
 and if you can avoid it, you should.  It's a much better idea to have
 everything below a subcommand be forwarded to another application than to
@@ -361,9 +361,9 @@ refer to the current context.  If you want to give another thread the
 ability to refer to this context you need to use the context within the
 thread as a context manager::
 
-    def spawn_thread(ctx, func):
+    def spawn_thread(clime, func):
         def wrapper():
-            with ctx:
+            with clime:
                 func()
         t = threading.Thread(target=wrapper)
         t.start()
@@ -391,8 +391,8 @@ enum.
     @quo.command()
     @quo.argument('port', nargs=1, default=8080, envvar="PORT")
     @quo.pass_context
-    def cli(ctx, port):
-        source = ctx.get_parameter_source("port")
+    def cli(clime, port):
+        source = clime.get_parameter_source("port")
         quo.echo(f"Port came from {source.name}")
 
 .. quo:run::
@@ -449,8 +449,8 @@ any subcommands finish, the context's resources are cleaned up.
     @quo.group()
     @quo.option("--repo-home", default=".repo")
     @quo.pass_context
-    def cli(ctx, repo_home):
-        ctx.obj = ctx.with_resource(Repo(repo_home))
+    def cli(clime, repo_home):
+        clime.obj = clime.with_resource(Repo(repo_home))
 
     @cli.command()
     @quo.pass_obj
@@ -469,10 +469,10 @@ cleanup function.
     @quo.group()
     @quo.option("--name", default="repo.db")
     @quo.pass_context
-    def cli(ctx, repo_home):
-        ctx.obj = db = open_db(repo_home)
+    def cli(clime, repo_home):
+        clime.obj = db = open_db(repo_home)
 
-        @ctx.call_on_close
+        @clime.call_on_close
         def close_db():
             db.record_use()
             db.save()
