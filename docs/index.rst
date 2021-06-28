@@ -1,18 +1,14 @@
-.. rst-class:: hide-header
-
-Quo
-================
-
-.. image:: _static/quo.png
-    :align: center
-    :scale: 34%
-    :target: https://quo.rtfd.io
 
 
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/pics/quo.png
+
+===========================
+ Quo
+===========================
 
 |build-status| |coverage| |license| |wheel| |pyversion| |pyimp|
 
-:Version: 2.1.0
+:Version: 2021.2
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
@@ -26,7 +22,9 @@ Quo
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
 Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage
 
-Quo requires Python 3.6 or later. 
+Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointment brought about by the failure to execute a CLI API.
+
+Quo requires Python `3.6` or later. 
 
 Installation
 ============
@@ -182,7 +180,7 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
 .. |build-status| image:: https://secure.travis-ci.com/secretum-inc/quo.png?branch=master
     :alt: Build status
-    :target: https://travis-ci.org/secretum-inc/quo
+    :target: https://travis-ci.com/secretum-inc/quo
 
 .. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=master
     :target: https://codecov.io/github/secretum-inc/quo?branch=main
