@@ -117,7 +117,7 @@ integers.
     class BasedIntParamType(quo.ParamType):
         name = "integer"
 
-        def convert(self, value, param, ctx):
+        def convert(self, value, param, clime):
             try:
                 if value[:2].lower() == "0x":
                     return int(value[2:], 16)
@@ -129,14 +129,14 @@ integers.
                     "expected string for int() conversion, got "
                     f"{value!r} of type {type(value).__name__}",
                     param,
-                    ctx,
+                    clime,
                 )
             except ValueError:
-                self.fail(f"{value!r} is not a valid integer", param, ctx)
+                self.fail(f"{value!r} is not a valid integer", param, clime)
 
     BASED_INT = BasedIntParamType()
 
 The :attr:`~ParamType.name` attribute is optional and is used for
 documentation. Call :meth:`~ParamType.fail` if conversion fails. The
-``param`` and ``ctx`` arguments may be ``None`` in some cases such as
+``param`` and ``clime`` arguments may be ``None`` in some cases such as
 prompts.
