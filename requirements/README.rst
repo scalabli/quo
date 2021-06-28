@@ -2,16 +2,13 @@
       Quo Requirement Files
 ====================================
 
-+ ``docs.quo``
-
-    The requirements that are installed when you do ``pip install quo``.
-
-    These are the core dependencies for the documentation. 
-
 + ``dev.quo``
 
-    Requirements necessary to build the documentation
-    with ``make Documentation``.
+    Core dependencies for the development suite. 
+
++ ``docs.quo``
+
+    Requirements necessary to build the documentation.
 
 + ``test.quo``
 
