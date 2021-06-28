@@ -162,7 +162,7 @@ is passed onwards as you would expect.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     cli = quo.tether()
 
