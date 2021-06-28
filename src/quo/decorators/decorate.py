@@ -7,7 +7,7 @@ from functools import update_wrapper
 from quo.core import Argument
 from quo.core import Command
 from quo.core import Tether
-from quo.core import Option
+from quo.core import App
 from quo.context.current import currentcontext
 from quo.expediency.utilities import echo
 from quo.decorators import autoconfirm
@@ -110,7 +110,7 @@ def _make_command(f, name, attrs, cls):
 def command(name=None, cls=None, **attrs):
     r"""Creates a new :class:`Command` and uses the decorated function as
     callback.  This will also automatically attach all decorated
-    :func:`option`\s and :func:`argument`\s as parameters to the command.
+    :func:`app`\s and :func:`argument`\s as parameters to the command.
 
     The name of the command defaults to the name of the function with
     underscores replaced by dashes.  If you want to change that, you can
@@ -152,15 +152,15 @@ def _param_memo(f, param):
 
 
 
-def option(*param_decls, **attrs):
-    """Attaches an option to the command.  All positional arguments are
-    passed as parameter declarations to :class:`Option`; all keyword
+def app(*param_decls, **attrs):
+    """Attaches an app to the command.  All positional arguments are
+    passed as parameter declarations to :class:`App`; all keyword
     arguments are forwarded unchanged (except ``cls``).
-    This is equivalent to creating an :class:`Option` instance manually
+    This is equivalent to creating an :class:`App` instance manually
     and attaching it to the :attr:`Command.params` list.
 
     :param cls: the option class to instantiate.  This defaults to
-                :class:`Option`.
+                :class:`App`.
     """
 
     def decorator(f):
@@ -169,7 +169,7 @@ def option(*param_decls, **attrs):
 
         if "help" in option_attrs:
             option_attrs["help"] = inspect.cleandoc(option_attrs["help"])
-        OptionClass = option_attrs.pop("cls", Option)
+        OptionClass = option_attrs.pop("cls", App)
         _param_memo(f, OptionClass(param_decls, **option_attrs))
         return f
 
