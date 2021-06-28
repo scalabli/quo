@@ -156,12 +156,12 @@ class NoSuchOption(UsageError):
 
     """
 
-    def __init__(self, app_name, message=None, possibilities=None, clime=None):
+    def __init__(self, appname, message=None, possibilities=None, clime=None):
         if message is None:
-            message = f"no such app: {app_name}"
+            message = f"no such app: {appname}"
 
         super().__init__(message, clime)
-        self.app_name = app_name
+        self.appname = appname
         self.possibilities = possibilities
 
     def format_message(self):
@@ -180,12 +180,12 @@ class BadOptionUsage(UsageError):
     was incorrect.  This is for instance raised if the number of arguments
     for an app is not correct.
 
-    :param app_name: the name of the app being used incorrectly.
+    :param appname: the name of the app being used incorrectly.
     """
 
-    def __init__(self, app_name, message, clime=None):
+    def __init__(self, appname, message, clime=None):
         super().__init__(message, clime)
-        self.app_name = app_name
+        self.appname = appname
 
 
 class BadArgumentUsage(UsageError):
