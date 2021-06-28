@@ -89,7 +89,7 @@ it's good to know that the system works this way.
             return value
 
     @quo.command()
-    @quo.option('--url', callback=open_url)
+    @quo.app('--url', callback=open_url)
     def cli(url, fp=None):
         if fp is not None:
             quo.echo(f"{url}: {fp.code}")
@@ -113,7 +113,7 @@ the information in a wrapper however:
             return URL(value, urllib.urlopen(value))
 
     @quo.command()
-    @quo.option('--url', callback=open_url)
+    @quo.app('--url', callback=open_url)
     def cli(url):
         if url is not None:
             quo.echo(f"{url.url}: {url.fp.code}")
@@ -123,7 +123,7 @@ Token Normalization
 -------------------
 
 It's possible to provide a function that is used
-for normalizing tokens.  Tokens are option names, choice values, or command
+for normalizing tokens.  Tokens are app names, choice values, or command
 values.  This can be used to implement case insensitive apps, for
 instance.
 
@@ -136,7 +136,7 @@ function that converts the token to lowercase:
     CONTEXT_SETTINGS = dict(token_normalize_func=lambda x: x.lower())
 
     @quo.command(context_settings=CONTEXT_SETTINGS)
-    @quo.option('--name', default='Pete')
+    @quo.app('--name', default='Pete')
     def cli(name):
         quo.echo(f"Name: {name}")
 
@@ -167,12 +167,12 @@ Example:
     cli = quo.group()
 
     @cli.command()
-    @quo.option('--count', default=1)
+    @quo.app('--count', default=1)
     def test(count):
         quo.echo(f'Count: {count}')
 
     @cli.command()
-    @quo.option('--count', default=1)
+    @quo.app('--count', default=1)
     @quo.pass_context
     def dist(clime, count):
         clime.forward(test)
@@ -205,14 +205,14 @@ value as it happens, whereas a callback in Quo is invoked after the
 value has been fully converted.
 
 Generally, the order of invocation is driven by the order in which the user
-provides the arguments to the script; if there is an option called ``--foo``
-and an option called ``--bar`` and the user calls it as ``--bar
+provides the arguments to the script; if there is an app called ``--foo``
+and an app called ``--bar`` and the user calls it as ``--bar
 --foo``, then the callback for ``bar`` will fire before the one for ``foo``.
 
 There are three exceptions to this rule which are important to know:
 
 Eagerness:
-    An option can be set to be "eager".  All eager parameters are
+    An app can be set to be "eager".  All eager parameters are
     evaluated before all non-eager parameters, but again in the order as
     they were provided on the command line by the user.
 
@@ -221,10 +221,10 @@ Eagerness:
     comes first on the command line will win and exit the program.
 
 Repeated parameters:
-    If an option or argument is split up on the command line into multiple
+    If an app or argument is split up on the command line into multiple
     places because it is repeated -- for instance, ``--exclude foo --include
     baz --exclude bar`` -- the callback will fire based on the position of
-    the first option.  In this case, the callback will fire for
+    the first app.  In this case, the callback will fire for
     ``exclude`` and it will be passed both apps (``foo`` and
     ``bar``), then the callback for ``include`` will fire with ``baz``
     only.
@@ -291,7 +291,7 @@ In the end you end up with something like this:
     @quo.command(context_settings=dict(
         ignore_unknown_apps=True,
     ))
-    @quo.option('-v', '--verbose', is_flag=True, help='Enables verbose mode')
+    @quo.app('-v', '--verbose', is_flag=True, help='Enables verbose mode')
     @quo.argument('timeit_args', nargs=-1, type=quo.UNPROCESSED)
     def cli(verbose, timeit_args):
         """A fake wrapper around Python's timeit."""
@@ -318,10 +318,10 @@ are important to know about how this ignoring of unhandled flag happens:
 *   Unknown long apps are generally ignored and not processed at all.
     So for instance if ``--foo=bar`` or ``--foo bar`` are passed they
     generally end up like that.  Note that because the parser cannot know
-    if an option will accept an argument or not, the ``bar`` part might be
+    if an app will accept an argument or not, the ``bar`` part might be
     handled as an argument.
 *   Unknown short apps might be partially handled and reassembled if
-    necessary.  For instance in the above example there is an option
+    necessary.  For instance in the above example there is an app
     called ``-v`` which enables verbose mode.  If the command would be
     ignored with ``-va`` then the ``-v`` part would be handled by Quo
     (as it is known) and ``-a`` would end up in the leftover parameters
@@ -379,7 +379,7 @@ it.
 Detecting the Source of a Parameter
 -----------------------------------
 
-In some situations it's helpful to understand whether or not an option
+In some situations it's helpful to understand whether or not an app
 or parameter came from the command line, the environment, the default
 value, or :attr:`Context.default_map`. The
 :meth:`Context.get_parameter_source` method can be used to find this
@@ -447,7 +447,7 @@ any subcommands finish, the context's resources are cleaned up.
 .. code-block:: python
 
     @quo.group()
-    @quo.option("--repo-home", default=".repo")
+    @quo.app("--repo-home", default=".repo")
     @quo.pass_context
     def cli(clime, repo_home):
         clime.obj = clime.with_resource(Repo(repo_home))
@@ -467,7 +467,7 @@ cleanup function.
 .. code-block:: python
 
     @quo.group()
-    @quo.option("--name", default="repo.db")
+    @quo.app("--name", default="repo.db")
     @quo.pass_context
     def cli(clime, repo_home):
         clime.obj = db = open_db(repo_home)
