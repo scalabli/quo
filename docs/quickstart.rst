@@ -119,7 +119,7 @@ Here's an easy example:
 
     @quo.command()
     def love():
-        quo.flair('I love quo!', bold=True, bg="white", fg="black")
+        quo.flair('I love quo!', bold=True, background="white", foreground="black")
 
 The function can then be made into a callable script like so::
 
