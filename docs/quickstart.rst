@@ -177,7 +177,7 @@ For simple scripts, it's also possible to automatically attach and create a
 command by using the :meth:`Tether.command` decorator instead.  The above
 script can instead be written like this:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.tether() 
     def cli():
@@ -226,7 +226,7 @@ Adding Parameters
 
 To add parameters, use the :func:`app` and :func:`argument` decorators:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.app('--count', default=1, help='number of greetings')
@@ -237,7 +237,7 @@ To add parameters, use the :func:`app` and :func:`argument` decorators:
 
 What it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(hello, args=['--help'], prog_name='python hello.py')
 
