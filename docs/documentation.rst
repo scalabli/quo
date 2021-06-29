@@ -19,7 +19,7 @@ Simple example:
 .. code-block:: python
 
     @quo.command()
-    @quo.option('--count', default=1, help='number of greetings')
+    @quo.app('--count', default=1, help='number of greetings')
     @quo.argument('name')
     def hello(count, name):
         """This script prints hello NAME COUNT times."""
@@ -28,7 +28,7 @@ Simple example:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(hello, args=['--help'])
 
@@ -55,7 +55,7 @@ You might prefer to reference the argument in the description:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(touch, args=['--help'])
 
@@ -74,7 +74,7 @@ Or you might prefer to explicitly provide a description of the argument:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(touch, args=['--help'])
 
