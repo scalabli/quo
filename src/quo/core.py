@@ -1625,7 +1625,7 @@ class Tether(MultiCommand):
         :attr:`command_class` attribute.
 
         """
-        from .decorate import command
+        from quo.decorators.decorate import command
 
         if self.command_class is not None and "cls" not in kwargs:
             kwargs["cls"] = self.command_class
