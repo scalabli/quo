@@ -16,7 +16,7 @@ docstring of the function is automatically used if provided.
 
 Simple example:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.option('--count', default=1, help='number of greetings')
@@ -45,7 +45,7 @@ by referring to them by name.
 
 You might prefer to reference the argument in the description:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.argument('filename')
@@ -61,7 +61,7 @@ And what it looks like:
 
 Or you might prefer to explicitly provide a description of the argument:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.argument('filename')
@@ -94,7 +94,7 @@ help text and rewrapping will be disabled.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     def cli():
@@ -116,7 +116,7 @@ Example:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(cli, args=['--help'])
 
@@ -134,7 +134,7 @@ after the marker.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command()
     @quo.pass_context
@@ -151,7 +151,7 @@ Example:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(cli, args=['--help'])
 
@@ -164,10 +164,10 @@ meta variable in the help page.  The default version is the parameter name
 in uppercase with underscores, but can be annotated differently if
 desired.  This can be customized at all levels:
 
-.. quo:example::
+.. code-block:: python
 
     @quo.command(options_metavar='<options>')
-    @quo.option('--count', default=1, help='number of greetings',
+    @quo.app('--count', default=1, help='number of greetings',
                   metavar='<int>')
     @quo.argument('name', metavar='<name>')
     def hello(count, name):
@@ -177,7 +177,7 @@ desired.  This can be customized at all levels:
 
 Example:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(hello, args=['--help'])
 
@@ -189,9 +189,9 @@ For commands, a short help snippet is generated.  By default, it's the first
 sentence of the help message of the command, unless it's too long.  This can
 also be overridden:
 
-.. quo:example::
+.. code-block:: python
 
-    @quo.group()
+    @quo.tether()
     def cli():
         """A simple command line tool."""
 
@@ -205,16 +205,13 @@ also be overridden:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(cli, prog_name='repo.py')
 
 
 Help Parameter Customization
-----------------------------
-
-.. versionadded:: 2.0
-
+-----------------------------
 The help parameter is implemented in quo in a very special manner.
 Unlike regular parameters it's automatically added by quo for any
 command and it performs automatic conflict resolution.  By default it's
@@ -226,7 +223,7 @@ the help parameters called :attr:`~Context.help_option_names`.
 This example changes the default parameters to ``-h`` and ``--help``
 instead of just ``--help``:
 
-.. quo:example::
+.. code-block:: python
 
     CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -236,6 +233,6 @@ instead of just ``--help``:
 
 And what it looks like:
 
-.. quo:run::
+.. code-block:: python
 
     invoke(cli, ['-h'])
