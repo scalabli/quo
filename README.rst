@@ -82,7 +82,7 @@ You can install quo via the Python Package Index (PyPI)
 
 
 
-Donate
+Donate🎁
 =======
 
 In order to for us to maintain this project and grow our community of contributors, `please consider donating today`_.
@@ -127,7 +127,7 @@ to our issue tracker at https://github.com/secretum-inc/quo/issues/
 
 .. _license:
 
-License
+License📑
 ========
 
 This software is licensed under the `MIT License`. See the ``LICENSE``
