@@ -1,6 +1,6 @@
-from prompt_toolkit.completion.filesystem import ExecutableCompleter, PathCompleter
-from prompt_toolkit.contrib.regular_languages.compiler import compile
-from prompt_toolkit.contrib.regular_languages.completion import GrammarCompleter
+from quo.completion.filesystem import ExecutableCompleter, PathCompleter
+from quo.contrib.regular_languages.compiler import compile
+from quo.contrib.regular_languages.completion import GrammarCompleter
 
 __all__ = [
     "SystemCompleter",
