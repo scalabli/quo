@@ -3,14 +3,14 @@ Filters that accept a `Application` as argument.
 """
 from typing import TYPE_CHECKING, cast
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.cache import memoized
-from prompt_toolkit.enums import EditingMode
+from quo.application.current import get_app
+from quo.cache import memoized
+from quo.enums import EditingMode
 
 from .base import Condition
 
 if TYPE_CHECKING:
-    from prompt_toolkit.layout.layout import FocusableElement
+    from quo.layout.setout import FocusableElement
 
 
 __all__ = [
