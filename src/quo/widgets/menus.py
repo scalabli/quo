@@ -1,12 +1,12 @@
 from typing import Callable, Iterable, List, Optional, Sequence, Union
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.filters import Condition
-from prompt_toolkit.formatted_text.base import OneStyleAndTextTuple, StyleAndTextTuples
-from prompt_toolkit.key_binding.key_bindings import KeyBindings, KeyBindingsBase
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.layout.containers import (
+from quo.application.current import get_app
+from quo.filters import Condition
+from quo.formatted_text.base import OneStyleAndTextTuple, StyleAndTextTuples
+from quo.key_binding.key_bindings import KeyBindings, KeyBindingsBase
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys import Keys
+from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
     Container,
@@ -15,10 +15,10 @@ from prompt_toolkit.layout.containers import (
     HSplit,
     Window,
 )
-from prompt_toolkit.layout.controls import FormattedTextControl
-from prompt_toolkit.mouse_events import MouseEvent, MouseEventType
-from prompt_toolkit.utils import get_cwidth
-from prompt_toolkit.widgets import Shadow
+from quo.layout.controls import FormattedTextControl
+from quo.mouse_events import MouseEvent, MouseEventType
+from quo.utils import get_cwidth
+from quo.widgets import Shadow
 
 from .base import Border
 
