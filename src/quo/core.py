@@ -2,8 +2,6 @@ import enum
 import errno
 import os
 import sys
-from collections import namedtuple
-from copy import deepcopy
 from contextlib import contextmanager
 from contextlib import ExitStack
 from functools import update_wrapper
