@@ -6,7 +6,7 @@ import shutil
 import sys
 import tempfile
 
-from quo import layout
+from quo.layout import setout
 from quo.ui import termui
 from quo.expediency import utilities
 from quo.accordance import _find_binary_reader
