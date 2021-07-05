@@ -31,7 +31,7 @@ from asyncio import AbstractEventLoop, get_event_loop
 from selectors import BaseSelector
 from typing import Callable
 
-from prompt_toolkit.utils import is_windows
+from quo.utils import is_windows
 
 __all__ = [
     "new_eventloop_with_inputhook",
