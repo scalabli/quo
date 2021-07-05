@@ -4,12 +4,12 @@ the input using a regular grammar with annotations.
 """
 from typing import Callable, Dict, Optional
 
-from prompt_toolkit.document import Document
-from prompt_toolkit.formatted_text.base import StyleAndTextTuples
-from prompt_toolkit.formatted_text.utils import split_lines
-from prompt_toolkit.lexers import Lexer
+from quo.document import Document
+from quo.formatted_text.base import StyleAndTextTuples
+from quo.formatted_text.utils import split_lines
+from quo.lexers import Lexer
 
-from .compiler import _CompiledGrammar
+from quo.contrib.regular_languages.compiler import _CompiledGrammar
 
 __all__ = [
     "GrammarLexer",
