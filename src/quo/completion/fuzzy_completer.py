@@ -1,9 +1,9 @@
 import re
 from typing import Callable, Dict, Iterable, List, NamedTuple, Optional, Tuple, Union
 
-from prompt_toolkit.document import Document
-from prompt_toolkit.filters import FilterOrBool, to_filter
-from prompt_toolkit.formatted_text import AnyFormattedText, StyleAndTextTuples
+from quo.document import Document
+from quo.filters import FilterOrBool, to_filter
+from quo.formatted_text import AnyFormattedText, StyleAndTextTuples
 
 from .base import CompleteEvent, Completer, Completion
 from .word_completer import WordCompleter
