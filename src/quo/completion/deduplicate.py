@@ -1,6 +1,6 @@
 from typing import Iterable, Set
 
-from prompt_toolkit.document import Document
+from quo.document import Document
 
 from .base import CompleteEvent, Completer, Completion
 
