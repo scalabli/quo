@@ -3,10 +3,10 @@ Validator for a regular language.
 """
 from typing import Dict
 
-from prompt_toolkit.document import Document
-from prompt_toolkit.validation import ValidationError, Validator
+from quo.document import Document
+from quo.validation import ValidationError, Validator
 
-from .compiler import _CompiledGrammar
+from quo.contrib.regular_languages.compiler import _CompiledGrammar
 
 __all__ = [
     "GrammarValidator",
