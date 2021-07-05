@@ -7,10 +7,10 @@ from typing import Awaitable, Callable, Optional, TextIO, cast
 
 import asyncssh
 
-from prompt_toolkit.application.current import AppSession, create_app_session
-from prompt_toolkit.data_structures import Size
-from prompt_toolkit.input import create_pipe_input
-from prompt_toolkit.output.vt100 import Vt100_Output
+from quo.application.current import AppSession, create_app_session
+from quo.data_structures import Size
+from quo.input import create_pipe_input
+from quo.output.vt100 import Vt100_Output
 
 __all__ = ["PromptToolkitSSHSession", "PromptToolkitSSHServer"]
 
