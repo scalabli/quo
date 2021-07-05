@@ -1,7 +1,7 @@
 """
 The default styling.
 """
-from prompt_toolkit.cache import memoized
+from quo.cache import memoized
 
 from .base import ANSI_COLOR_NAMES, BaseStyle
 from .named_colors import NAMED_COLORS
