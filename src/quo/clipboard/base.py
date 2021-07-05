@@ -4,7 +4,7 @@ Clipboard for command line interface.
 from abc import ABCMeta, abstractmethod
 from typing import Callable, Optional
 
-from prompt_toolkit.selection import SelectionType
+from quo.selection import SelectionType
 
 __all__ = [
     "Clipboard",
