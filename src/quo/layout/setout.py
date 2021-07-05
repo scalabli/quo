@@ -1,10 +1,6 @@
-#
-#
-#
-
 from contextlib import contextmanager
-from .accordance import term_len
-from .parser import split_opt
+from quo.accordance import term_len
+from quo.parser import split_opt
 from quo.ui.termui import terminalsize
 
 # Can force a width.  This is used by the test system
