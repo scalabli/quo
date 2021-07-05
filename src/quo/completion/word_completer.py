@@ -1,8 +1,8 @@
 from typing import Callable, Iterable, List, Mapping, Optional, Pattern, Union
 
-from prompt_toolkit.completion import CompleteEvent, Completer, Completion
-from prompt_toolkit.document import Document
-from prompt_toolkit.formatted_text import AnyFormattedText
+from quo.completion import CompleteEvent, Completer, Completion
+from quo.document import Document
+from quo.formatted_text import AnyFormattedText
 
 __all__ = [
     "WordCompleter",
