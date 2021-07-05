@@ -3,10 +3,10 @@ Completer for a regular grammar.
 """
 from typing import Dict, Iterable, List
 
-from prompt_toolkit.completion import CompleteEvent, Completer, Completion
-from prompt_toolkit.document import Document
+from quo.completion import CompleteEvent, Completer, Completion
+from quo.document import Document
 
-from .compiler import Match, _CompiledGrammar
+from quo.contrib.regular_languages.compiler import Match, _CompiledGrammar
 
 __all__ = [
     "GrammarCompleter",
