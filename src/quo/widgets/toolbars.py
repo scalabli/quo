@@ -1,9 +1,9 @@
 from typing import Any, Optional
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.enums import SYSTEM_BUFFER
-from prompt_toolkit.filters import (
+from quo.application.current import get_app
+from quo.buffer import Buffer
+from quo.enums import SYSTEM_BUFFER
+from quo.filters import (
     Condition,
     FilterOrBool,
     emacs_mode,
@@ -15,33 +15,33 @@ from prompt_toolkit.filters import (
     vi_mode,
     vi_navigation_mode,
 )
-from prompt_toolkit.formatted_text import (
+from quo.formatted_text import (
     AnyFormattedText,
     StyleAndTextTuples,
     fragment_list_len,
     to_formatted_text,
 )
-from prompt_toolkit.key_binding.key_bindings import (
+from quo.key_binding.key_bindings import (
     ConditionalKeyBindings,
     KeyBindings,
     KeyBindingsBase,
     merge_key_bindings,
 )
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
-from prompt_toolkit.key_binding.vi_state import InputMode
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.layout.containers import ConditionalContainer, Container, Window
-from prompt_toolkit.layout.controls import (
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.key_binding.vi_state import InputMode
+from quo.keys import Keys
+from quo.layout.containers import ConditionalContainer, Container, Window
+from quo.layout.controls import (
     BufferControl,
     FormattedTextControl,
     SearchBufferControl,
     UIContent,
     UIControl,
 )
-from prompt_toolkit.layout.dimension import Dimension
-from prompt_toolkit.layout.processors import BeforeInput
-from prompt_toolkit.lexers import SimpleLexer
-from prompt_toolkit.search import SearchDirection
+from quo.layout.dimension import Dimension
+from quo.layout.processors import BeforeInput
+from quo.lexers import SimpleLexer
+from quo.search import SearchDirection
 
 __all__ = [
     "ArgToolbar",
