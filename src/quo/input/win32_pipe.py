@@ -2,10 +2,10 @@ from ctypes import windll
 from ctypes.wintypes import HANDLE
 from typing import Callable, ContextManager, List
 
-from prompt_toolkit.eventloop.win32 import create_win32_event
+from quo.eventloop.win32 import create_win32_event
 
-from ..key_binding import KeyPress
-from ..utils import DummyContext
+from quo.key_binding import KeyPress
+from quo.utils import DummyContext
 from .base import PipeInput
 from .vt100_parser import Vt100Parser
 from .win32 import _Win32InputBase, attach_win32_input, detach_win32_input
