@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Deque, Optional
 
-from .base import Clipboard, ClipboardData
+from quo.clipboard.base import Clipboard, ClipboardData
 
 __all__ = [
     "InMemoryClipboard",
