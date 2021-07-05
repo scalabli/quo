@@ -2,7 +2,7 @@
 Collection of reusable components for building full screen applications.
 
 All of these widgets implement the ``__pt_container__`` method, which makes
-them usable in any situation where we are expecting a `prompt_toolkit`
+them usable in any situation where we are expecting a `quo`
 container object.
 
 .. warning::
@@ -10,17 +10,17 @@ container object.
     At this point, the API for these widgets is considered unstable, and can
     potentially change between minor releases (we try not too, but no
     guarantees are made yet). The public API in
-    `prompt_toolkit.shortcuts.dialogs` on the other hand is considered stable.
+    `quo.shortcuts.dialogs` on the other hand is considered stable.
 """
 from functools import partial
 from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.auto_suggest import AutoSuggest, DynamicAutoSuggest
-from prompt_toolkit.buffer import Buffer, BufferAcceptHandler
-from prompt_toolkit.completion import Completer, DynamicCompleter
-from prompt_toolkit.document import Document
-from prompt_toolkit.filters import (
+from quo.application.current import get_app
+from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
+from quo.buffer import Buffer, BufferAcceptHandler
+from quo.completion import Completer, DynamicCompleter
+from quo.document import Document
+from quo.filters import (
     Condition,
     FilterOrBool,
     has_focus,
@@ -28,18 +28,18 @@ from prompt_toolkit.filters import (
     is_true,
     to_filter,
 )
-from prompt_toolkit.formatted_text import (
+from quo.formatted_text import (
     AnyFormattedText,
     StyleAndTextTuples,
     Template,
     to_formatted_text,
 )
-from prompt_toolkit.formatted_text.utils import fragment_list_to_text
-from prompt_toolkit.history import History
-from prompt_toolkit.key_binding.key_bindings import KeyBindings
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.layout.containers import (
+from quo.formatted_text.utils import fragment_list_to_text
+from quo.history import History
+from quo.key_binding.key_bindings import KeyBindings
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys import Keys
+from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
     Container,
@@ -51,30 +51,30 @@ from prompt_toolkit.layout.containers import (
     Window,
     WindowAlign,
 )
-from prompt_toolkit.layout.controls import (
+from quo.layout.controls import (
     BufferControl,
     FormattedTextControl,
     GetLinePrefixCallable,
 )
-from prompt_toolkit.layout.dimension import AnyDimension
-from prompt_toolkit.layout.dimension import Dimension as D
-from prompt_toolkit.layout.dimension import to_dimension
-from prompt_toolkit.layout.margins import (
+from quo.layout.dimension import AnyDimension
+from quo.layout.dimension import Dimension as D
+from quo.layout.dimension import to_dimension
+from quo.layout.margins import (
     ConditionalMargin,
     NumberedMargin,
     ScrollbarMargin,
 )
-from prompt_toolkit.layout.processors import (
+from quo.layout.processors import (
     AppendAutoSuggestion,
     BeforeInput,
     ConditionalProcessor,
     PasswordProcessor,
     Processor,
 )
-from prompt_toolkit.lexers import DynamicLexer, Lexer
-from prompt_toolkit.mouse_events import MouseEvent, MouseEventType
-from prompt_toolkit.utils import get_cwidth
-from prompt_toolkit.validation import DynamicValidator, Validator
+from quo.lexers import DynamicLexer, Lexer
+from quo.mouse_events import MouseEvent, MouseEventType
+from quo.utils import get_cwidth
+from quo.validation import DynamicValidator, Validator
 
 from .toolbars import SearchToolbar
 
@@ -116,21 +116,21 @@ class TextArea:
     This widget does have the most common options, but it does not intend to
     cover every single use case. For more configurations options, you can
     always build a text area manually, using a
-    :class:`~prompt_toolkit.buffer.Buffer`,
-    :class:`~prompt_toolkit.layout.BufferControl` and
-    :class:`~prompt_toolkit.layout.Window`.
+    :class:`~quo.buffer.Buffer`,
+    :class:`~quo.layout.BufferControl` and
+    :class:`~quo.layout.Window`.
 
     Buffer attributes:
 
     :param text: The initial text.
     :param multiline: If True, allow multiline input.
-    :param completer: :class:`~prompt_toolkit.completion.Completer` instance
+    :param completer: :class:`~quo.completion.Completer` instance
         for auto completion.
     :param complete_while_typing: Boolean.
     :param accept_handler: Called when `Enter` is pressed (This should be a
         callable that takes a buffer as input).
-    :param history: :class:`~prompt_toolkit.history.History` instance.
-    :param auto_suggest: :class:`~prompt_toolkit.auto_suggest.AutoSuggest`
+    :param history: :class:`~quo.history.History` instance.
+    :param auto_suggest: :class:`~quo.auto_suggest.AutoSuggest`
         instance for input suggestions.
 
     BufferControl attributes:
@@ -139,17 +139,17 @@ class TextArea:
     :param focusable: When `True`, allow this widget to receive the focus.
     :param focus_on_click: When `True`, focus after mouse click.
     :param input_processors: `None` or a list of
-        :class:`~prompt_toolkit.layout.Processor` objects.
-    :param validator: `None` or a :class:`~prompt_toolkit.validation.Validator`
+        :class:`~quo.layout.Processor` objects.
+    :param validator: `None` or a :class:`~quo.validation.Validator`
         object.
 
     Window attributes:
 
-    :param lexer: :class:`~prompt_toolkit.lexers.Lexer` instance for syntax
+    :param lexer: :class:`~quo.lexers.Lexer` instance for syntax
         highlighting.
     :param wrap_lines: When `True`, don't scroll horizontally, but wrap lines.
-    :param width: Window width. (:class:`~prompt_toolkit.layout.Dimension` object.)
-    :param height: Window height. (:class:`~prompt_toolkit.layout.Dimension` object.)
+    :param width: Window width. (:class:`~quo.layout.Dimension` object.)
+    :param height: Window height. (:class:`~quo.layout.Dimension` object.)
     :param scrollbar: When `True`, display a scroll bar.
     :param style: A style string.
     :param dont_extend_width: When `True`, don't take up more width then the
@@ -322,7 +322,7 @@ class Label:
     Widget that displays the given text. It is not editable or focusable.
 
     :param text: Text to display. Can be multiline. All value types accepted by
-        :class:`prompt_toolkit.layout.FormattedTextControl` are allowed,
+        :class:`quo.layout.FormattedTextControl` are allowed,
         including a callable.
     :param style: A style string.
     :param width: When given, use this width, rather than calculating it from
