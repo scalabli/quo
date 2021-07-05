@@ -72,6 +72,6 @@ TODO: some examples of:
     - How to create an autocompleter from this grammar.
     - How to create a parser from this grammar.
 """
-from .compiler import compile
+from quo.contrib.regular_languages.compiler import compile
 
 __all__ = ["compile"]
