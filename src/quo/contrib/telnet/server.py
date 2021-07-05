@@ -7,14 +7,14 @@ import socket
 from asyncio import get_event_loop
 from typing import Awaitable, Callable, List, Optional, Set, TextIO, Tuple, cast
 
-from prompt_toolkit.application.current import create_app_session, get_app
-from prompt_toolkit.application.run_in_terminal import run_in_terminal
-from prompt_toolkit.data_structures import Size
-from prompt_toolkit.formatted_text import AnyFormattedText, to_formatted_text
-from prompt_toolkit.input import create_pipe_input
-from prompt_toolkit.output.vt100 import Vt100_Output
-from prompt_toolkit.renderer import print_formatted_text as print_formatted_text
-from prompt_toolkit.styles import BaseStyle, DummyStyle
+from quo.application.current import create_app_session, get_app
+from quo.application.run_in_terminal import run_in_terminal
+from quo.data_structures import Size
+from quo.formatted_text import AnyFormattedText, to_formatted_text
+from quo.input import create_pipe_input
+from quo.output.vt100 import Vt100_Output
+from quo.renderer import print_formatted_text as print_formatted_text
+from quo.styles import BaseStyle, DummyStyle
 
 from .log import logger
 from .protocol import (
