@@ -3,9 +3,9 @@ Nestedcompleter for completion of hierarchical data structures.
 """
 from typing import Any, Dict, Iterable, Mapping, Optional, Set, Union
 
-from prompt_toolkit.completion import CompleteEvent, Completer, Completion
-from prompt_toolkit.completion.word_completer import WordCompleter
-from prompt_toolkit.document import Document
+from quo.completion import CompleteEvent, Completer, Completion
+from quo.completion.word_completer import WordCompleter
+from quo.document import Document
 
 __all__ = ["NestedCompleter"]
 
