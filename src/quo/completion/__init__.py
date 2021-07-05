@@ -1,4 +1,4 @@
-from .base import (
+from quo.completion.base import (
     CompleteEvent,
     Completer,
     Completion,
