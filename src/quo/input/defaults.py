@@ -1,7 +1,7 @@
 import sys
 from typing import Optional, TextIO
 
-from prompt_toolkit.utils import is_windows
+from quo.utils import is_windows
 
 from .base import Input, PipeInput
 
