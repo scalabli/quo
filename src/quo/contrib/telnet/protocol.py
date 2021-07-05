@@ -7,7 +7,7 @@ Inspired by `Twisted.conch.telnet`.
 import struct
 from typing import Callable, Generator
 
-from .log import logger
+from quo.contrib.telnet.log import logger
 
 __all__ = [
     "TelnetProtocolParser",
