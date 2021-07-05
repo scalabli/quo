@@ -7,7 +7,7 @@ import sys
 from enum import Enum
 from typing import Dict, Hashable, List, Set, Tuple, TypeVar
 
-from prompt_toolkit.cache import SimpleCache
+from quo.cache import SimpleCache
 
 from .base import (
     ANSI_COLOR_NAMES,
