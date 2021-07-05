@@ -2,6 +2,8 @@ import enum
 import errno
 import os
 import sys
+from collections import namedtuple
+from copy import deepcopy
 from contextlib import contextmanager
 from contextlib import ExitStack
 from functools import update_wrapper
@@ -29,6 +31,7 @@ from .types import _NumberRangeBase
 from .types import BOOL
 from .types import convert_type
 from .types import IntRange
+from quo.progressbar.animations import bars, spinners
 from quo.expediency.utilities import _detect_program_name
 from quo.expediency.utilities import echo
 from quo.expediency.utilities import make_default_short_help
