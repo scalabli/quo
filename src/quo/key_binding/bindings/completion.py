@@ -5,21 +5,21 @@ import asyncio
 import math
 from typing import TYPE_CHECKING, List
 
-from prompt_toolkit.application.run_in_terminal import in_terminal
-from prompt_toolkit.completion import (
+from quo.application.run_in_terminal import in_terminal
+from quo.completion import (
     CompleteEvent,
     Completion,
     get_common_complete_suffix,
 )
-from prompt_toolkit.formatted_text import StyleAndTextTuples
-from prompt_toolkit.key_binding.key_bindings import KeyBindings
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.utils import get_cwidth
+from quo.formatted_text import StyleAndTextTuples
+from quo.key_binding.key_bindings import KeyBindings
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys import Keys
+from quo.utils import get_cwidth
 
 if TYPE_CHECKING:
-    from prompt_toolkit.application import Application
-    from prompt_toolkit.shortcuts import PromptSession
+    from quo.application import Application
+    from quo.shortcuts import PromptSession
 
 __all__ = [
     "generate_completions",

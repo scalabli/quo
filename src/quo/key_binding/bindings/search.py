@@ -1,10 +1,10 @@
 """
 Search related key bindings.
 """
-from prompt_toolkit import search
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.filters import Condition, control_is_searchable, is_searching
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
+from quo import search
+from quo.application.current import get_app
+from quo.filters import Condition, control_is_searchable, is_searching
+from quo.key_binding.key_processor import KeyPressEvent
 
 from ..key_bindings import key_binding
 

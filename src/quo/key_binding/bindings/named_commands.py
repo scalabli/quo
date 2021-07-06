@@ -5,14 +5,14 @@ See: http://www.delorie.com/gnu/docs/readline/rlman_13.html
 """
 from typing import Callable, Dict, TypeVar, Union, cast
 
-from prompt_toolkit.document import Document
-from prompt_toolkit.enums import EditingMode
-from prompt_toolkit.key_binding.key_bindings import Binding, key_binding
-from prompt_toolkit.key_binding.key_processor import KeyPress, KeyPressEvent
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.layout.controls import BufferControl
-from prompt_toolkit.search import SearchDirection
-from prompt_toolkit.selection import PasteMode
+from quo.document import Document
+from quo.enums import EditingMode
+from quo.key_binding.key_bindings import Binding, key_binding
+from quo.key_binding.key_processor import KeyPress, KeyPressEvent
+from quo.keys import Keys
+from quo.layout.controls import BufferControl
+from quo.search import SearchDirection
+from quo.selection import PasteMode
 
 from .completion import display_completions_like_readline, generate_completions
 

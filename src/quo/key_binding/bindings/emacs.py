@@ -1,10 +1,10 @@
 # pylint: disable=function-redefined
 from typing import Dict, Union
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.buffer import Buffer, indent, unindent
-from prompt_toolkit.completion import CompleteEvent
-from prompt_toolkit.filters import (
+from quo.application.current import get_app
+from quo.buffer import Buffer, indent, unindent
+from quo.completion import CompleteEvent
+from quo.filters import (
     Condition,
     emacs_insert_mode,
     emacs_mode,
@@ -16,10 +16,10 @@ from prompt_toolkit.filters import (
     shift_selection_mode,
     vi_search_direction_reversed,
 )
-from prompt_toolkit.key_binding.key_bindings import Binding
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.selection import SelectionType
+from quo.key_binding.key_bindings import Binding
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys import Keys
+from quo.selection import SelectionType
 
 from ..key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
 from .named_commands import get_by_name

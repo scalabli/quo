@@ -3,10 +3,10 @@ Key bindings for auto suggestion (for fish-style auto suggestion).
 """
 import re
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.filters import Condition, emacs_mode
-from prompt_toolkit.key_binding.key_bindings import KeyBindings
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
+from quo.application.current import get_app
+from quo.filters import Condition, emacs_mode
+from quo.key_binding.key_bindings import KeyBindings
+from quo.key_binding.key_processor import KeyPressEvent
 
 __all__ = [
     "load_auto_suggest_bindings",
