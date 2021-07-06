@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Iterable, List, TypeVar, Union, cast, overload
 
-from prompt_toolkit.formatted_text.base import OneStyleAndTextTuple
+from quo.formatted_text.base import OneStyleAndTextTuple
 
 if TYPE_CHECKING:
     from typing_extensions import SupportsIndex

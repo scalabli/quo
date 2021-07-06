@@ -17,27 +17,27 @@ from typing import (
     cast,
 )
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.cache import SimpleCache
-from prompt_toolkit.data_structures import Point
-from prompt_toolkit.filters import (
+from quo.application.current import get_app
+from quo.cache import SimpleCache
+from quo.data_structures import Point
+from quo.filters import (
     FilterOrBool,
     emacs_insert_mode,
     to_filter,
     vi_insert_mode,
 )
-from prompt_toolkit.formatted_text import (
+from quo.formatted_text import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,
 )
-from prompt_toolkit.formatted_text.utils import (
+from quo.formatted_text.utils import (
     fragment_list_to_text,
     fragment_list_width,
 )
-from prompt_toolkit.key_binding import KeyBindingsBase
-from prompt_toolkit.mouse_events import MouseEvent, MouseEventType
-from prompt_toolkit.utils import get_cwidth, take_using_weights, to_int, to_str
+from quo.key_binding import KeyBindingsBase
+from quo.mouse_events import MouseEvent, MouseEventType
+from quo.utils import get_cwidth, take_using_weights, to_int, to_str
 
 from .controls import (
     DummyControl,

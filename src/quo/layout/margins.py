@@ -4,13 +4,13 @@ Margin implementations for a :class:`~prompt_toolkit.layout.containers.Window`.
 from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, Callable, Optional
 
-from prompt_toolkit.filters import FilterOrBool, to_filter
-from prompt_toolkit.formatted_text import (
+from quo.filters import FilterOrBool, to_filter
+from quo.formatted_text import (
     StyleAndTextTuples,
     fragment_list_to_text,
     to_formatted_text,
 )
-from prompt_toolkit.utils import get_cwidth
+from quo.utils import get_cwidth
 
 from .controls import UIContent
 

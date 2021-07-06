@@ -13,26 +13,26 @@ from typing import (
     cast,
 )
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.buffer import CompletionState
-from prompt_toolkit.completion import Completion
-from prompt_toolkit.data_structures import Point
-from prompt_toolkit.filters import (
+from quo.application.current import get_app
+from quo.buffer import CompletionState
+from quo.completion import Completion
+from quo.data_structures import Point
+from quo.filters import (
     Condition,
     FilterOrBool,
     has_completions,
     is_done,
     to_filter,
 )
-from prompt_toolkit.formatted_text import (
+from quo.formatted_text import (
     StyleAndTextTuples,
     fragment_list_width,
     to_formatted_text,
 )
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent
-from prompt_toolkit.layout.utils import explode_text_fragments
-from prompt_toolkit.mouse_events import MouseEvent, MouseEventType
-from prompt_toolkit.utils import get_cwidth
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.layout.utils import explode_text_fragments
+from quo.mouse_events import MouseEvent, MouseEventType
+from quo.utils import get_cwidth
 
 from .containers import ConditionalContainer, HSplit, ScrollOffsets, Window
 from .controls import GetLinePrefixCallable, UIContent, UIControl
@@ -40,7 +40,7 @@ from .dimension import Dimension
 from .margins import ScrollbarMargin
 
 if TYPE_CHECKING:
-    from prompt_toolkit.key_binding.key_bindings import KeyBindings
+    from quo.key_binding.key_bindings import KeyBindings
 
     NotImplementedOrNone = object
 

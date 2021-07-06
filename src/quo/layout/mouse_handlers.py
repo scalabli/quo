@@ -2,7 +2,7 @@ from collections import defaultdict
 from itertools import product
 from typing import Callable, DefaultDict, Tuple
 
-from prompt_toolkit.mouse_events import MouseEvent
+from quo.mouse_events import MouseEvent
 
 __all__ = [
     "MouseHandler",

@@ -1,9 +1,9 @@
 from collections import defaultdict
 from typing import TYPE_CHECKING, Callable, DefaultDict, Dict, List, Optional, Tuple
 
-from prompt_toolkit.cache import FastDictCache
-from prompt_toolkit.data_structures import Point
-from prompt_toolkit.utils import get_cwidth
+from quo.cache import FastDictCache
+from quo.data_structures import Point
+from quo.utils import get_cwidth
 
 if TYPE_CHECKING:
     from .containers import Window
