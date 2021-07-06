@@ -1,3 +1,3 @@
 import quo
 answer = quo.prompt("How old are you?:")
-print("I am", answer)
+quo.echo(f"I am %s" % answer)
