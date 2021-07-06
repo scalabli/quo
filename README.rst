@@ -34,6 +34,11 @@ You can install quo via the Python Package Index (PyPI)
 
     $ pip install -U quo
 
+
+Getting Started
+================
+The most simple example of the library would look like this:
+
 **Example 1**
 
 .. sourcecode:: python
@@ -49,8 +54,16 @@ You can install quo via the Python Package Index (PyPI)
   import quo
   quo.flair(f'Hello, World!', foreground="red", bold=True)
 
-
 **Example 3**
+
+.. sourcecode:: python
+
+   import quo
+   answer = quo.prompt("How old are you?")
+   quo.echo(f"I am: {answer}")
+
+
+**Example 4**
 
 .. sourcecode:: python
 
@@ -63,7 +76,7 @@ You can install quo via the Python Package Index (PyPI)
       hello() 
 
 
-**Example 4**
+**Example 5**
 
 .. sourcecode:: python
 
@@ -79,6 +92,9 @@ You can install quo via the Python Package Index (PyPI)
 
     if __name__ == '__main__':
         survey
+
+
+For more examples, have a look in the tutorials directory.
 
 
 
