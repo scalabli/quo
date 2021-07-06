@@ -16,7 +16,7 @@ from typing import (
 )
 
 from quo.application.current import get_app
-from quo.buffer import Buffer
+#from quo.buffer import Buffer
 from quo.cache import SimpleCache
 from quo.data_structures import Point
 from quo.document import Document
