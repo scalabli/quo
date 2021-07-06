@@ -4,8 +4,8 @@ Base classes for prompt_toolkit lexers.
 from abc import ABCMeta, abstractmethod
 from typing import Callable, Hashable, Optional
 
-from prompt_toolkit.document import Document
-from prompt_toolkit.formatted_text.base import StyleAndTextTuples
+from quo.document import Document
+from quo.formatted_text.base import StyleAndTextTuples
 
 __all__ = [
     "Lexer",

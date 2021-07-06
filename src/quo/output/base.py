@@ -4,8 +4,8 @@ Interface for an output.
 from abc import ABCMeta, abstractmethod
 from typing import Optional, TextIO
 
-from prompt_toolkit.data_structures import Size
-from prompt_toolkit.styles import Attrs
+from quo.data_structures import Size
+from quo.styles import Attrs
 
 from .color_depth import ColorDepth
 

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import TYPE_CHECKING, Callable, Dict, Optional
 
-from prompt_toolkit.clipboard import ClipboardData
+from quo.clipboard import ClipboardData
 
 if TYPE_CHECKING:
     from .key_bindings.vi import TextObject

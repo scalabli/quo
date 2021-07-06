@@ -27,10 +27,10 @@ from typing import (
     Tuple,
 )
 
-from prompt_toolkit.data_structures import Size
-from prompt_toolkit.output import Output
-from prompt_toolkit.styles import ANSI_COLOR_NAMES, Attrs
-from prompt_toolkit.utils import is_dumb_terminal
+from quo.data_structures import Size
+from quo.output import Output
+from quo.styles import ANSI_COLOR_NAMES, Attrs
+from quo.utils import is_dumb_terminal
 
 from .color_depth import ColorDepth
 

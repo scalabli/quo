@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, List, Tuple
 
-from prompt_toolkit.styles.pygments import pygments_token_to_classname
+from quo.styles.pygments import pygments_token_to_classname
 
 from .base import StyleAndTextTuples
 

@@ -39,26 +39,27 @@ from typing import (
     overload,
 )
 
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.cache import SimpleCache
-from prompt_toolkit.clipboard import Clipboard, InMemoryClipboard
-from prompt_toolkit.data_structures import Size
-from prompt_toolkit.enums import EditingMode
-from prompt_toolkit.eventloop import (
+
+#from quo.core import Buffer
+from quo.cache import SimpleCache
+from quo.clipboard import Clipboard, InMemoryClipboard
+from quo.data_structures import Size
+from quo.enums import EditingMode
+from quo.eventloop import (
     get_traceback_from_context,
     run_in_executor_with_context,
 )
-from prompt_toolkit.eventloop.utils import call_soon_threadsafe
-from prompt_toolkit.filters import Condition, Filter, FilterOrBool, to_filter
-from prompt_toolkit.formatted_text import AnyFormattedText
-from prompt_toolkit.input.base import Input
-from prompt_toolkit.input.typeahead import get_typeahead, store_typeahead
-from prompt_toolkit.key_binding.bindings.page_navigation import (
+from quo.eventloop.utils import call_soon_threadsafe
+from quo.filters import Condition, Filter, FilterOrBool, to_filter
+from quo.formatted_text import AnyFormattedText
+from quo.input.base import Input
+from quo.input.typeahead import get_typeahead, store_typeahead
+from quo.key_binding.bindings.page_navigation import (
     load_page_navigation_bindings,
 )
-from prompt_toolkit.key_binding.defaults import load_key_bindings
-from prompt_toolkit.key_binding.emacs_state import EmacsState
-from prompt_toolkit.key_binding.key_bindings import (
+from quo.key_binding.defaults import load_key_bindings
+from quo.key_binding.emacs_state import EmacsState
+from quo.key_binding.key_bindings import (
     Binding,
     ConditionalKeyBindings,
     GlobalOnlyKeyBindings,
@@ -67,17 +68,17 @@ from prompt_toolkit.key_binding.key_bindings import (
     KeysTuple,
     merge_key_bindings,
 )
-from prompt_toolkit.key_binding.key_processor import KeyPressEvent, KeyProcessor
-from prompt_toolkit.key_binding.vi_state import ViState
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.layout.containers import Container, Window
-from prompt_toolkit.layout.controls import BufferControl, UIControl
-from prompt_toolkit.layout.dummy import create_dummy_layout
-from prompt_toolkit.layout.layout import Layout, walk
-from prompt_toolkit.output import ColorDepth, Output
-from prompt_toolkit.renderer import Renderer, print_formatted_text
-from prompt_toolkit.search import SearchState
-from prompt_toolkit.styles import (
+from quo.key_binding.key_processor import KeyPressEvent, KeyProcessor
+from quo.key_binding.vi_state import ViState
+from quo.keys import Keys
+from quo.layout.containers import Container, Window
+from quo.layout.controls import BufferControl, UIControl
+from quo.layout.dummy import create_dummy_layout
+from quo.layout.layout import Layout, walk
+from quo.output import ColorDepth, Output
+from quo.renderer import Renderer, print_formatted_text
+from quo.search import SearchState
+from quo.styles import (
     BaseStyle,
     DummyStyle,
     DummyStyleTransformation,
@@ -87,7 +88,7 @@ from prompt_toolkit.styles import (
     default_ui_style,
     merge_styles,
 )
-from prompt_toolkit.utils import Event, in_main_thread
+from quo.utils import Event, in_main_thread
 
 from .current import get_app_session, set_app
 from .run_in_terminal import in_terminal, run_in_terminal
@@ -95,7 +96,7 @@ from .run_in_terminal import in_terminal, run_in_terminal
 try:
     import contextvars
 except ImportError:
-    import prompt_toolkit.eventloop.dummy_contextvars as contextvars  # type: ignore
+    import quo.eventloop.dummy_contextvars as contextvars  # type: ignore
 
 
 __all__ = [
@@ -116,11 +117,11 @@ class Application(Generic[_AppResult]):
     The main Application class!
     This glues everything together.
 
-    :param layout: A :class:`~prompt_toolkit.layout.Layout` instance.
+    :param layout: A :class:`~quo.layout.Layout` instance.
     :param key_bindings:
-        :class:`~prompt_toolkit.key_binding.KeyBindingsBase` instance for
+        :class:`~quo.key_binding.KeyBindingsBase` instance for
         the key bindings.
-    :param clipboard: :class:`~prompt_toolkit.clipboard.Clipboard` to use.
+    :param clipboard: :class:`~quo.clipboard.Clipboard` to use.
     :param full_screen: When True, run the application on the alternate screen buffer.
     :param color_depth: Any :class:`~.ColorDepth` value, a callable that
         returns a :class:`~.ColorDepth` or `None` for default.
@@ -153,10 +154,10 @@ class Application(Generic[_AppResult]):
 
     Filters:
 
-    :param mouse_support: (:class:`~prompt_toolkit.filters.Filter` or
+    :param mouse_support: (:class:`~quo.filters.Filter` or
         boolean). When True, enable mouse support.
-    :param paste_mode: :class:`~prompt_toolkit.filters.Filter` or boolean.
-    :param editing_mode: :class:`~prompt_toolkit.enums.EditingMode`.
+    :param paste_mode: :class:`~quo.filters.Filter` or boolean.
+    :param editing_mode: :class:`~quo.enums.EditingMode`.
 
     :param enable_page_navigation_bindings: When `True`, enable the page
         navigation key bindings. These include both Emacs and Vi bindings like
@@ -166,7 +167,7 @@ class Application(Generic[_AppResult]):
         enabled if `full_screen` is set.
 
     Callbacks (all of these should accept an
-    :class:`~prompt_toolkit.application.Application` object as input.)
+    :class:`~quo.application.Application` object as input.)
 
     :param on_reset: Called during reset.
     :param on_invalidate: Called when the UI has been invalidated.
@@ -179,8 +180,8 @@ class Application(Generic[_AppResult]):
     applications running at the same time, you have to create a separate
     `AppSession` using a `with create_app_session():` block.
 
-    :param input: :class:`~prompt_toolkit.input.Input` instance.
-    :param output: :class:`~prompt_toolkit.output.Output` instance. (Probably
+    :param input: :class:`~quo.input.Input` instance.
+    :param output: :class:`~quo.output.Output` instance. (Probably
                    Vt100_Output or Win32Output.)
 
     Usage:
@@ -380,7 +381,7 @@ class Application(Generic[_AppResult]):
         - Otherwise, fall back to the color depth that is reported by the
           :class:`.Output` implementation. If the :class:`.Output` class was
           created using `output.defaults.create_output`, then this value is
-          coming from the $PROMPT_TOOLKIT_COLOR_DEPTH environment variable.
+          coming from the $quo_COLOR_DEPTH environment variable.
         """
         depth = self._color_depth
 
@@ -633,13 +634,13 @@ class Application(Generic[_AppResult]):
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
-        Run the prompt_toolkit :class:`~prompt_toolkit.application.Application`
-        until :meth:`~prompt_toolkit.application.Application.exit` has been
+        Run the quo :class:`~quo.application.Application`
+        until :meth:`~quo.application.Application.exit` has been
         called. Return the value that was passed to
-        :meth:`~prompt_toolkit.application.Application.exit`.
+        :meth:`~quo.application.Application.exit`.
 
-        This is the main entry point for a prompt_toolkit
-        :class:`~prompt_toolkit.application.Application` and usually the only
+        This is the main entry point for a quo
+        :class:`~quo.application.Application` and usually the only
         place where the event loop is actually running.
 
         :param pre_run: Optional callable, which is called right after the
@@ -1270,7 +1271,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
     - This will share the same input/output I/O.
     - This doesn't block the event loop.
     """
-    from prompt_toolkit.shortcuts import PromptSession
+    from quo.shortcuts import PromptSession
 
     key_bindings = KeyBindings()
 
@@ -1332,3 +1333,4 @@ def attach_winch_signal_handler(
                 previous_winch_handler._callback,
                 *previous_winch_handler._args,
             )
+

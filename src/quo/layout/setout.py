@@ -96,7 +96,7 @@ Wrapper for the layout.
 """
 from typing import Dict, Generator, Iterable, List, Optional, Union
 
-from prompt_toolkit.buffer import Buffer
+from quo.buffer import Buffer
 
 from .containers import (
     AnyContainer,

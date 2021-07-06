@@ -11,17 +11,17 @@ from asyncio import Task, sleep
 from collections import deque
 from typing import TYPE_CHECKING, Any, Deque, Generator, List, Optional, Union
 
-from prompt_toolkit.application.current import get_app
-from prompt_toolkit.enums import EditingMode
-from prompt_toolkit.filters.app import vi_navigation_mode
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.utils import Event
+from quo.application.current import get_app
+from quo.enums import EditingMode
+from quo.filters.app import vi_navigation_mode
+from quo.keys import Keys
+from quo.utils import Event
 
 from .key_bindings import Binding, KeyBindingsBase
 
 if TYPE_CHECKING:
-    from prompt_toolkit.application import Application
-    from prompt_toolkit.buffer import Buffer
+    from quo.application import Application
+    from quo.buffer import Buffer
 
 
 __all__ = [

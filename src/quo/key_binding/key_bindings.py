@@ -49,9 +49,9 @@ from typing import (
     cast,
 )
 
-from prompt_toolkit.cache import SimpleCache
-from prompt_toolkit.filters import FilterOrBool, Never, to_filter
-from prompt_toolkit.keys import KEY_ALIASES, Keys
+from quo.cache import SimpleCache
+from quo.filters import FilterOrBool, Never, to_filter
+from quo.keys import KEY_ALIASES, Keys
 
 # Avoid circular imports.
 if TYPE_CHECKING:

@@ -1,7 +1,7 @@
 import sys
 from typing import Optional, TextIO, cast
 
-from prompt_toolkit.utils import (
+from quo.utils import (
     get_bell_environment_variable,
     get_term_environment_variable,
     is_conemu_ansi,

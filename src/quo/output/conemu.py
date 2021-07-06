@@ -1,6 +1,6 @@
 from typing import Any, Optional, TextIO
 
-from prompt_toolkit.data_structures import Size
+from quo.data_structures import Size
 
 from .base import Output
 from .color_depth import ColorDepth

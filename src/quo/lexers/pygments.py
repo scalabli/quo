@@ -17,11 +17,11 @@ from typing import (
     Type,
 )
 
-from prompt_toolkit.document import Document
-from prompt_toolkit.filters import FilterOrBool, to_filter
-from prompt_toolkit.formatted_text.base import StyleAndTextTuples
-from prompt_toolkit.formatted_text.utils import split_lines
-from prompt_toolkit.styles.pygments import pygments_token_to_classname
+from quo.document import Document
+from quo.filters import FilterOrBool, to_filter
+from quo.formatted_text.base import StyleAndTextTuples
+from quo.formatted_text.utils import split_lines
+from quo.styles.pygments import pygments_token_to_classname
 
 from .base import Lexer, SimpleLexer
 
