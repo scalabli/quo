@@ -35,22 +35,24 @@ from .shortcuts import PromptSession, print_formatted_text, prompt
 # Don't forget to update in `docs/conf.py`!
 
 # Version tuple.
-VERSION = tuple(__version__.split("."))
+#VERSION = tuple(__version__.split("."))
 
 
-__all__ = [
+#__all__ = [
     # Application.
-    "Application",
+ #   "Application",
     # Shortcuts.
-    "prompt",
-    "PromptSession",
-    "print_formatted_text",
+  #  "prompt",
+ #   "PromptSession",
+   # "print_formatted_text",
     # Formatted text.
-    "HTML",
-    "ANSI",
+ #   "HTML",
+   # "ANSI",
     # Version info.
-    "__version__",
-    "VERSION",
+   # "__version__",
+  #  "VERSION",
+
+
 from quo.outliers.exceptions import Abort
 from quo.outliers.exceptions import BadArgumentUsage
 from quo.outliers.exceptions import BadOptionUsage

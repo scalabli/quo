@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Any, Callable, Iterable, List, Tuple, Union, cast
 
-from prompt_toolkit.mouse_events import MouseEvent
+from quo.mouse_events import MouseEvent
 
 if TYPE_CHECKING:
     from typing_extensions import Protocol
