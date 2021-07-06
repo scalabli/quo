@@ -1,8 +1,8 @@
-from prompt_toolkit.data_structures import Point
-from prompt_toolkit.key_binding.key_processor import KeyPress, KeyPressEvent
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.mouse_events import MouseEvent, MouseEventType
-from prompt_toolkit.utils import is_windows
+from quo.data_structures import Point
+from quo.key_binding.key_processor import KeyPress, KeyPressEvent
+from quo.keys import Keys
+from quo.mouse_events import MouseEvent, MouseEventType
+from qul.utils import is_windows
 
 from ..key_bindings import KeyBindings
 
