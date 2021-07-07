@@ -194,11 +194,11 @@ reported by opening an issue or contacting one or more of the project maintainer
 This Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
-.. |build-status| image:: https://secure.travis-ci.com/secretum-inc/quo.png?branch=master
-    :alt: Build status
-    :target: https://travis-ci.com/secretum-inc/quo
+.. |build-status| image:: https://pepy.tech/badge/quo/month
+    :alt: Monthly downloads
+    :target: https://pepy.tech/badge/quo/month
 
-.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=master
+.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=main
     :target: https://codecov.io/github/secretum-inc/quo?branch=main
 
 .. |license| image:: https://img.shields.io/pypi/l/quo.svg
@@ -216,4 +216,3 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 .. |pyimp| image:: https://img.shields.io/pypi/implementation/quo.svg
     :alt: Support Python implementations.
     :target: http://pypi.org/project/quo/
-
