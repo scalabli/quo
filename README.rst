@@ -195,7 +195,7 @@ This Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
 .. |build-status| image:: https://pepy.tech/badge/quo/month
-    :alt: Monthly downloads
+    :alt: Downloads
     :target: https://pepy.tech/badge/quo/month
 
 .. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=main
