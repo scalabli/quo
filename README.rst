@@ -52,15 +52,16 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
   import quo
-  quo.flair(f'Hello, World!', foreground="red", bold=True)
+  quo.flair(f'Hello, World!', fg="red", bold=True)
 
 **Example 3**
 
 .. sourcecode:: python
 
    import quo
+   from quo.output import echo
    answer = quo.prompt("How old are you?")
-   quo.echo(f"I am: {answer}")
+   echo(f"I am: {answer}")
 
 
 **Example 4**
