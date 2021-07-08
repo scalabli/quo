@@ -1,7 +1,7 @@
 import xml.dom.minidom as minidom
 from typing import Any, List, Tuple, Union
 
-from .base import FormattedText, StyleAndTextTuples
+from .core import FormattedText, StyleAndTextTuples
 
 __all__ = ["HTML"]
 

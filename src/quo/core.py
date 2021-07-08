@@ -21,6 +21,7 @@ from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
+from quo.output import inscribe
 from quo.output.vitals import confirm
 from quo.output.vitals import flair
 from quo.output.vitals import prompt
@@ -31,7 +32,7 @@ from .types import BOOL
 from .types import convert_type
 from .types import IntRange
 from quo.expediency.utilities import _detect_program_name
-from quo.output import inscribe
+from quo.output.inscribe import echo
 #from quo.expediency.utilities import echo
 from quo.expediency.utilities import make_default_short_help
 from quo.expediency.utilities import make_str
@@ -936,7 +937,7 @@ class BaseCommand:
                     # by its truthiness/falsiness
                     clime.exit()
             except (EOFError, KeyboardInterrupt):
-                echo(file=sys.stderr)
+                flair(file=sys.stderr,fg="red")
                 raise Abort()
             except QuoException as e:
                 if not standalone_mode:

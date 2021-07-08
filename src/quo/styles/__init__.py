@@ -17,7 +17,7 @@ from .pygments import (
     style_from_pygments_dict,
 )
 from .style import Priority, Style, merge_styles, parse_color
-from .style_transformation import (
+from .transformation import (
     AdjustBrightnessStyleTransformation,
     ConditionalStyleTransformation,
     DummyStyleTransformation,

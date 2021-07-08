@@ -11,7 +11,7 @@ an :class:`.HTML` object, an :class:`.ANSI` object or a sequence of
 function takes any of these and turns all of them into such a tuple sequence.
 """
 from .ansi import ANSI
-from .base import (
+from .core import (
     AnyFormattedText,
     FormattedText,
     StyleAndTextTuples,

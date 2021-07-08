@@ -16,7 +16,7 @@ from quo.layout.containers import (
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 
-from .base import Box, Button, Frame, Shadow
+from .core import Box, Button, Frame, Shadow
 
 __all__ = [
         "Dialog",

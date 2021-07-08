@@ -51,8 +51,8 @@ from .setout import HelpFormatter
 from .setout import wraptext
 from quo.context.current import currentcontext
 from .parser import AppParser
-from quo.ui.termui import clear
-from quo.ui.termui import confirm
+from quo.output.vitals import clear
+from quo.output.vitals import confirm
 from quo.output import generator
 #from quo.output import vitals
 #from quo.ui.termui import scrollable

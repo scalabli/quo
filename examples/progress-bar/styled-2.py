@@ -5,10 +5,10 @@ iterator.
 """
 import time
 
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.styles import Style
+from quo.formatted_text import HTML
+from quo.shortcuts import ProgressBar
+from quo.shortcuts.progress_bar import formatters
+from quo.styles import Style
 
 style = Style.from_dict(
     {
@@ -24,7 +24,7 @@ style = Style.from_dict(
     }
 )
 
-
+titles = "Progress bar with custom formatter"
 def main():
     custom_formatters = [
         formatters.Label(),
@@ -37,9 +37,9 @@ def main():
         formatters.TimeLeft(),
     ]
     with ProgressBar(
-        title="Progress bar example with custom formatter.",
-        formatters=custom_formatters,
-        style=style,
+        quo.flair(f"{titles}", fg="cyan"
+       # formatters=custom_formatters,
+     #   style=style,
     ) as pb:
 
         for i in pb(range(20), label="Downloading..."):

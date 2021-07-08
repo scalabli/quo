@@ -8,7 +8,7 @@ from typing import Iterable, cast
 
 from quo.utils import get_cwidth
 
-from .base import OneStyleAndTextTuple, StyleAndTextTuples
+from .core import OneStyleAndTextTuple, StyleAndTextTuples
 
 __all__ = [
     "fragment_list_len",
