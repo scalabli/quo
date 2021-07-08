@@ -8,12 +8,12 @@ import logging
 import asyncssh
 from pygments.lexers.html import HtmlLexer
 
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.contrib.ssh import PromptToolkitSSHServer, PromptToolkitSSHSession
-from prompt_toolkit.lexers import PygmentsLexer
-from prompt_toolkit.shortcuts import ProgressBar, print_formatted_text
-from prompt_toolkit.shortcuts.dialogs import input_dialog, yes_no_dialog
-from prompt_toolkit.shortcuts.prompt import PromptSession
+from quo.completion import WordCompleter
+from quo.contrib.ssh import PromptToolkitSSHServer, PromptToolkitSSHSession
+from quo.lexers import PygmentsLexer
+from quo.shortcuts import ProgressBar, print_formatted_text
+from quo.shortcuts.dialogs import input_dialog, yes_no_dialog
+from quo.shortcuts.prompt import PromptSession
 
 animal_completer = WordCompleter(
     [

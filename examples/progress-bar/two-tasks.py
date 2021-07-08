@@ -4,8 +4,8 @@ Two progress bars that run in parallel.
 """
 import threading
 import time
-
-from prompt_toolkit.shortcuts import ProgressBar
+#from quo import ProgressBar<F11><F11>
+from quo.indicators import ProgressBar
 
 
 def main():
