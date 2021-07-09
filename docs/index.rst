@@ -6,7 +6,7 @@
  Quo
 ===========================
 
-|build-status| |coverage| |license| |wheel| |pyversion| |pyimp|
+|build-status| |coverage| |license| |wheel| |pyimp|
 
 :Version: 2021.2
 :Web: http://quo.readthedocs.io/
@@ -34,6 +34,11 @@ You can install quo via the Python Package Index (PyPI)
 
     $ pip install -U quo
 
+
+Getting Started
+================
+The most simple example of the library would look like this:
+
 **Example 1**
 
 .. sourcecode:: python
@@ -47,10 +52,19 @@ You can install quo via the Python Package Index (PyPI)
 .. sourcecode:: python
 
   import quo
-  quo.flair(f'Hello, World!', foreground="red", bold=True)
-
+  quo.flair(f'Hello, World!', fg="red", bold=True)
 
 **Example 3**
+
+.. sourcecode:: python
+
+   import quo
+   from quo import echo
+   answer = quo.prompt("How old are you?")
+   echo(f"I am: {answer}")
+
+
+**Example 4**
 
 .. sourcecode:: python
 
@@ -63,15 +77,16 @@ You can install quo via the Python Package Index (PyPI)
       hello() 
 
 
-**Example 4**
+**Example 5**
 
 .. sourcecode:: python
 
-    import quo 
-    @quo.command()
-    @quo.app("--count", default=1, help="The number of times the feedback is printed.")
-    @quo.app("--name", prompt="What is your name", help="This prompts the user to input their name.")
-    @quo.app("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
+    import quo
+    from quo import command, app
+    @command()
+    @app("--count", default=1, help="The number of times the feedback is printed.")
+    @app("--name", prompt="What is your name", help="This prompts the user to input their name.")
+    @app("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
     def survey(count, name, proffession):
        
         for _ in range(count):
@@ -81,8 +96,11 @@ You can install quo via the Python Package Index (PyPI)
         survey
 
 
+For more examples, have a look in the tutorials directory.
 
-Donate
+
+
+Donate🎁
 =======
 
 In order to for us to maintain this project and grow our community of contributors, `please consider donating today`_.
@@ -127,7 +145,7 @@ to our issue tracker at https://github.com/secretum-inc/quo/issues/
 
 .. _license:
 
-License
+License📑
 ========
 
 This software is licensed under the `MIT License`. See the ``LICENSE``
@@ -178,11 +196,11 @@ reported by opening an issue or contacting one or more of the project maintainer
 This Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
-.. |build-status| image:: https://secure.travis-ci.com/secretum-inc/quo.png?branch=master
-    :alt: Build status
-    :target: https://travis-ci.com/secretum-inc/quo
+.. |build-status| image:: https://pepy.tech/badge/quo/month
+    :alt: Downloads
+    :target: https://pepy.tech/badge/quo/month
 
-.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=master
+.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=main
     :target: https://codecov.io/github/secretum-inc/quo?branch=main
 
 .. |license| image:: https://img.shields.io/pypi/l/quo.svg
@@ -200,70 +218,3 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 .. |pyimp| image:: https://img.shields.io/pypi/implementation/quo.svg
     :alt: Support Python implementations.
     :target: http://pypi.org/project/quo/
-
-
-
-
-Documentation
--------------
-
-This part of the documentation guides you through all of the library's
-usage patterns.
-
-.. toctree::
-   :maxdepth: 2
-
-   why
-   quickstart
-   setuptools
-   parameters
-   options
-   arguments
-   commands
-   prompts
-   documentation
-   complex
-   advanced
-   testing
-   utils
-   shell-completion
-   exceptions
-   unicode-support
-   wincmd
-
-API Reference
--------------
-
-Detailed guidelines on Quo's functionality
-
-.. toctree::
-   :maxdepth: 2
-
-   api
-
-Donate
-------------
-.. note:: Sponsoring our cause enables us to keep finding ways to contribute to communities, both in code/tools, and in community work. 
-
-`Donate <https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54>`_
-
-.. toctree::
-   :maxdepth: 2
-   
-   donate
-   email
-   twitter
-   facebook
-   
-
-Miscellaneous Pages
--------------------
-
-.. toctree::
-   :maxdepth: 2
-
-   contrib
-   changelog
-   upgrading
-   license
-
