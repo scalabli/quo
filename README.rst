@@ -82,8 +82,7 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
     import quo
-    from quo import command
-    from quo import app 
+    from quo import command, app
     @command()
     @app("--count", default=1, help="The number of times the feedback is printed.")
     @app("--name", prompt="What is your name", help="This prompts the user to input their name.")
