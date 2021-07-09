@@ -1,5 +1,6 @@
 
 
+
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/pics/quo.png
 
 ===========================
@@ -218,3 +219,69 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 .. |pyimp| image:: https://img.shields.io/pypi/implementation/quo.svg
     :alt: Support Python implementations.
     :target: http://pypi.org/project/quo/
+
+
+
+Documentation
+-------------
+
+This part of the documentation guides you through all of the library's
+usage patterns.
+
+.. toctree::
+   :maxdepth: 2
+
+   why
+   quickstart
+   setuptools
+   parameters
+   options
+   arguments
+   commands
+   prompts
+   documentation
+   complex
+   advanced
+   testing
+   utils
+   shell-completion
+   exceptions
+   unicode-support
+   wincmd
+
+API Reference
+-------------
+
+Detailed guidelines on Quo's functionality
+
+.. toctree::
+   :maxdepth: 2
+
+   api
+
+Donate
+------------
+.. note:: Sponsoring our cause enables us to keep finding ways to contribute to communities, both in code/tools, and in community work. 
+
+`Donate <https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54>`_
+
+.. toctree::
+   :maxdepth: 2
+   
+   donate
+   email
+   twitter
+   facebook
+   
+
+Miscellaneous Pages
+-------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   contrib
+   changelog
+   upgrading
+   license
+
