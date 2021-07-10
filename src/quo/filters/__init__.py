@@ -16,10 +16,11 @@ Filters can be chained using ``&`` and ``|`` operations, and inverted using the
 
     filter = has_focus('default') & ~ has_selection
 """
-from .app import *
-from .base import Always, Condition, Filter, FilterOrBool, Never
-from .cli import *
-from .utils import is_true, to_filter
+from quo.filters.app import *
+from quo.filters.core import Always, Condition, Filter, FilterOrBool, Never
+from quo.filters.cli import *
+from quo.filters.utils import is_true, to_filter
+from quo.filters.app import vi_mode
 
 __all__ = [
     # app
@@ -63,6 +64,6 @@ __all__ = [
     "to_filter",
 ]
 
-from .cli import __all__ as cli_all
+from quo.filters.cli import __all__ as cli_all
 
 __all__.extend(cli_all)

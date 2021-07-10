@@ -18,7 +18,7 @@ from .core import MultiCommand
 from .core import App
 from .core import Parameter
 from .core import ShellDetectionFailure
-from .formatted_text import ANSI, HTML
+from .text import ANSI, HTML
 from quo.output import ColorDepth
 from quo.shortcuts import prompt
 from quo.shortcuts import button_dialog
@@ -67,7 +67,8 @@ from quo.output.vitals import pause
 from quo.output import flair
 from quo.output import style
 from quo.output import unstyle
-from quo.output.vitals import prompt
+from quo.input.vitals import prompt
+#from quo.output.vitals import prompt
 #from quo.output.vitals import flair
 #from quo.output.vitals import style
 #from quo.output.vitals import unstyle

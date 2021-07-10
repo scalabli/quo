@@ -7,7 +7,7 @@ from quo.application.current import get_app
 from quo.cache import memoized
 from quo.enums import EditingMode
 
-from .base import Condition
+from quo.filters.core import Condition
 
 if TYPE_CHECKING:
     from quo.layout.layout import FocusableElement

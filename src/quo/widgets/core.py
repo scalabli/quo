@@ -28,13 +28,13 @@ from quo.filters import (
     is_true,
     to_filter,
 )
-from quo.formatted_text import (
+from quo.text import (
     AnyFormattedText,
     StyleAndTextTuples,
     Template,
     to_formatted_text,
 )
-from quo.formatted_text.utils import fragment_list_to_text
+from quo.text.utils import fragment_list_to_text
 from quo.history import History
 from quo.key_binding.key_bindings import KeyBindings
 from quo.key_binding.key_processor import KeyPressEvent
@@ -51,26 +51,12 @@ from quo.layout.containers import (
     Window,
     WindowAlign,
 )
-from quo.layout.controls import (
-    BufferControl,
-    FormattedTextControl,
-    GetLinePrefixCallable,
-)
+from quo.layout.controls import BufferControl, FormattedTextControl, GetLinePrefixCallable
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 from quo.layout.dimension import to_dimension
-from quo.layout.margins import (
-    ConditionalMargin,
-    NumberedMargin,
-    ScrollbarMargin,
-)
-from quo.layout.processors import (
-    AppendAutoSuggestion,
-    BeforeInput,
-    ConditionalProcessor,
-    PasswordProcessor,
-    Processor,
-)
+from quo.layout.margins import ConditionalMargin, NumberedMargin, ScrollbarMargin
+from quo.layout.processors import AppendAutoSuggestion, BeforeInput, ConditionalProcessor, PasswordProcessor, Processor
 from quo.lexers import DynamicLexer, Lexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils import get_cwidth

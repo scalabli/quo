@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any, Optional, TextIO
 
 from quo.application import Application
 from quo.application.current import get_app_session
-from quo.formatted_text import (
+from quo.text import (
     FormattedText,
     StyleAndTextTuples,
     to_formatted_text,

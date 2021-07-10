@@ -5,7 +5,7 @@ from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
 from quo.formatted_text import AnyFormattedText, StyleAndTextTuples
 
-from .base import CompleteEvent, Completer, Completion
+from .core import CompleteEvent, Completer, Completion
 from .word_completer import WordCompleter
 
 __all__ = [

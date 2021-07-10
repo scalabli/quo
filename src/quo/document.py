@@ -7,7 +7,6 @@ import string
 import weakref
 from typing import (
     Callable,
-    Dict,
     Iterable,
     List,
     NoReturn,
@@ -18,7 +17,7 @@ from typing import (
 )
 
 from quo.clipboard import Data
-from .filters import vi_mode
+from quo.filters import vi_mode
 from .selection import PasteMode, SelectionState, SelectionType
 
 __all__ = [
@@ -46,6 +45,8 @@ _FIND_CURRENT_BIG_WORD_INCLUDE_TRAILING_WHITESPACE_RE = re.compile(r"^([^\s]+\s*
 # (Document instances are considered immutable. That means that if another
 # `Document` is constructed with the same text, it should have the same
 # `_DocumentCache`.)
+
+from typing import Dict
 _text_to_document_cache: Dict[str, "_DocumentCache"] = cast(
     Dict[str, "_DocumentCache"],
     weakref.WeakValueDictionary(),  # Maps document.text to DocumentCache instance.

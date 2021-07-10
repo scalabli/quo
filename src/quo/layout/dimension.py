@@ -2,6 +2,7 @@
 Layout dimensions are used to give the minimum, maximum and preferred
 dimensions for containers and controls.
 """
+
 from typing import Any, Callable, List, Optional, Union
 
 __all__ = [
@@ -190,7 +191,7 @@ def to_dimension(value: AnyDimension) -> Dimension:
     if callable(value):
         return to_dimension(value())
 
-    raise ValueError("Not an integer or Dimension object.")
+    raise ValueError("It an integer or Dimension object.")
 
 
 def is_dimension(value: object) -> bool:

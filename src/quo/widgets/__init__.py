@@ -22,14 +22,7 @@ from .core import (
 )
 from .dialogs import Dialog
 from .menus import MenuContainer, MenuItem
-from .toolbars import (
-    ArgToolbar,
-    CompletionsToolbar,
-    FormattedTextToolbar,
-    SearchToolbar,
-    SystemToolbar,
-    ValidationToolbar,
-)
+from .toolbars import ArgToolbar, CompletionsToolbar, FormattedTextToolbar, SearchToolbar, SystemToolbar, ValidationToolbar
 
 #__all__ = [
     # Base.
