@@ -3,9 +3,8 @@
 Setuptools Integration
 ======================
 
-When writing command line utilities, it's recommended to write them as
-modules that are distributed with setuptools instead of using Unix
-shebangs.
+When composing CLIs, it's recommended to write them as modules that are 
+disseminated with setuptools as opposed to utilizing Unix shebangs.
 
 Why would you want to do that?  There are a bunch of reasons:
 
