@@ -453,18 +453,17 @@ could load the defaults from a configuration file.
 
 Example usage:
 
-.. quo:example::
+.. code-block:: python
 
-    import quo
-
-    @quo.group()
+    from quo import tether, app, command, echo
+    @tether()
     def cli():
         pass
 
     @cli.command()
-    @quo.option('--port', default=8000)
+    @app('--port', default=8000)
     def runserver(port):
-        quo.echo(f"Serving on http://127.0.0.1:{port}/")
+        echo(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli(default_map={
@@ -523,8 +522,7 @@ And again the example in action:
 Command Return Values
 ---------------------
 
-Just like Click, quo supports return
-values from command callbacks.  This enables a whole range of features
+Quo supports return values from command callbacks.  This enables a whole range of features
 that were previously hard to implement.
 
 In essence any command callback can now return a value.  This return value
