@@ -18,13 +18,14 @@ Simple example:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('--count', default=1, help='number of greetings')
-    @quo.argument('name')
+    from quo import command, app, argument, echo
+    @command()
+    @app('--count', default=1, help='number of greetings')
+    @argument('name')
     def hello(count, name):
         """This script prints hello NAME COUNT times."""
         for x in range(count):
-            quo.echo(f"Hello {name}!")
+            echo(f"Hello {name}!")
 
 And what it looks like:
 
@@ -47,11 +48,12 @@ You might prefer to reference the argument in the description:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.argument('filename')
+    from quo import command, argument, echo
+    @command()
+    @argument('filename')
     def touch(filename):
         """Print FILENAME."""
-        quo.echo(filename)
+        echo(filename)
 
 And what it looks like:
 
@@ -62,15 +64,16 @@ And what it looks like:
 Or you might prefer to explicitly provide a description of the argument:
 
 .. code-block:: python
-
-    @quo.command()
-    @quo.argument('filename')
+    
+    from quo import command, argument, echo
+    @command()
+    @argument('filename')
     def touch(filename):
         """Print FILENAME.
 
         FILENAME is the name of the file to check.
         """
-        quo.echo(filename)
+        echo(filename)
 
 And what it looks like:
 
@@ -96,7 +99,8 @@ Example:
 
 .. code-block:: python
 
-    @quo.command()
+    from quo import command
+    @command()
     def cli():
         """First paragraph.
 
@@ -136,7 +140,9 @@ Example:
 
 .. code-block:: python
 
-    @quo.command()
+    import quo
+    from quo import command
+    @command()
     @quo.pass_context
     def cli(ctx):
         """First paragraph.
@@ -166,14 +172,15 @@ desired.  This can be customized at all levels:
 
 .. code-block:: python
 
-    @quo.command(options_metavar='<options>')
-    @quo.app('--count', default=1, help='number of greetings',
+    from quo import command, app, argument, echo
+    @command(options_metavar='<options>')
+    @app('--count', default=1, help='number of greetings',
                   metavar='<int>')
-    @quo.argument('name', metavar='<name>')
+    @argument('name', metavar='<name>')
     def hello(count, name):
         """This script prints hello <name> <int> times."""
         for x in range(count):
-            quo.echo(f"Hello {name}!")
+            echo(f"Hello {name}!")
 
 Example:
 
@@ -190,6 +197,7 @@ sentence of the help message of the command, unless it's too long.  This can
 also be overridden:
 
 .. code-block:: python
+
 
     @quo.tether()
     def cli():
