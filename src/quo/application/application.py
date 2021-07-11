@@ -50,7 +50,7 @@ from quo.eventloop import (
 )
 from quo.eventloop.utils import call_soon_threadsafe
 from quo.filters import Condition, Filter, FilterOrBool, to_filter
-from quo.formatted_text import AnyFormattedText
+from quo.text import AnyFormattedText
 from quo.input.core import Input
 from quo.input.typeahead import get_typeahead, store_typeahead
 from quo.key_binding.bindings.page_navigation import (

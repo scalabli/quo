@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 from typing import Callable, Hashable, Optional
 
 from quo.document import Document
-from quo.formatted_text.base import StyleAndTextTuples
+from quo.text.core import StyleAndTextTuples
 
 __all__ = [
     "Lexer",

@@ -23,12 +23,12 @@ from quo.application.current import get_app
 from quo.cache import SimpleCache
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter, vi_insert_multiple_mode
-from quo.formatted_text import (
+from quo.text import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,
 )
-from quo.formatted_text.utils import fragment_list_len, fragment_list_to_text
+from quo.text.utils import fragment_list_len, fragment_list_to_text
 from quo.search import SearchDirection
 from quo.utils import to_int, to_str
 

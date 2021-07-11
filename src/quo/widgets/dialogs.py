@@ -4,7 +4,7 @@ Collection of reusable components for building full screen applications.
 from typing import Optional, Sequence, Union
 
 from quo.filters import has_completions, has_focus
-from quo.formatted_text import AnyFormattedText
+from quo.text import AnyFormattedText
 from quo.key_binding.bindings.focus import focus_next, focus_previous
 from quo.key_binding.key_bindings import KeyBindings
 from quo.layout.containers import (

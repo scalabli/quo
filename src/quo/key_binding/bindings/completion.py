@@ -11,7 +11,7 @@ from quo.completion import (
     Completion,
     get_common_complete_suffix,
 )
-from quo.formatted_text import StyleAndTextTuples
+from quo.text import StyleAndTextTuples
 from quo.key_binding.key_bindings import KeyBindings
 from quo.key_binding.key_processor import KeyPressEvent
 from quo.keys import Keys

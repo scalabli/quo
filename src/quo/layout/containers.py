@@ -26,12 +26,12 @@ from quo.filters import (
     to_filter,
     vi_insert_mode,
 )
-from quo.formatted_text import (
+from quo.text import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,
 )
-from quo.formatted_text.utils import (
+from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
 )

@@ -1,6 +1,6 @@
 from typing import Callable, Optional
 
-from quo.formatted_text import AnyFormattedText
+from quo.text import AnyFormattedText
 from quo.input import DummyInput
 from quo.output import DummyOutput
 

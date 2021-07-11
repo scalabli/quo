@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, Callable, Optional
 
 from quo.filters import FilterOrBool, to_filter
-from quo.formatted_text import (
+from quo.text import (
     StyleAndTextTuples,
     fragment_list_to_text,
     to_formatted_text,

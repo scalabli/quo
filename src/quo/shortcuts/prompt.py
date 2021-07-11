@@ -59,7 +59,7 @@ from quo.filters import (
     renderer_height_is_known,
     to_filter,
 )
-from quo.formatted_text import (
+from quo.text import (
     AnyFormattedText,
     StyleAndTextTuples,
     fragment_list_to_text,

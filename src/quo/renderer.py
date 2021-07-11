@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Any, Callable, Deque, Dict, Hashable, Optional
 from quo.application.current import get_app
 from quo.data_structures import Point, Size
 from quo.filters import FilterOrBool, to_filter
-from quo.formatted_text import AnyFormattedText, to_formatted_text
+from quo.text import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
 from quo.layout.screen import Char, Screen, WritePosition
 from quo.output import ColorDepth, Output

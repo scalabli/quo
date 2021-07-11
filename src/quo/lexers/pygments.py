@@ -19,8 +19,8 @@ from typing import (
 
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.formatted_text.base import StyleAndTextTuples
-from quo.formatted_text.utils import split_lines
+from quo.text.core import StyleAndTextTuples
+from quo.text.utils import split_lines
 from quo.styles.pygments import pygments_token_to_classname
 
 from .base import Lexer, SimpleLexer

@@ -21,12 +21,12 @@ from quo.cache import SimpleCache
 from quo.data_structures import Point
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.formatted_text import (
+from quo.text import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,
 )
-from quo.formatted_text.utils import (
+from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
     split_lines,

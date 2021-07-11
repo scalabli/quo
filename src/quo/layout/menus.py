@@ -24,7 +24,7 @@ from quo.filters import (
     is_done,
     to_filter,
 )
-from quo.formatted_text import (
+from quo.text import (
     StyleAndTextTuples,
     fragment_list_width,
     to_formatted_text,

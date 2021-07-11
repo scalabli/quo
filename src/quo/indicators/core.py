@@ -29,7 +29,7 @@ from typing import (
 from quo.application import Application
 from quo.application.current import get_app_session
 from quo.filters import Condition, is_done, renderer_height_is_known
-from quo.formatted_text import (
+from quo.text import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,
