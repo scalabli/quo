@@ -32,10 +32,11 @@ NB: Options are given as position arguments to the decorator.
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('-s', '--string-to-echo', 'string')
+    from quo import command, app, echo
+    @command()
+    @app('-s', '--string-to-echo', 'string')
     def echo(string):
-        quo.echo(string)
+        echo(string)
 
 -   ``"-f", "--foo-bar"``, the name is ``foo_bar``
 -   ``"-x"``, the name is ``x``
