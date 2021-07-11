@@ -1,6 +1,6 @@
-.. _options:
+.. _apps:
 
-Options
+Apps
 =======
 
 .. currentmodule:: quo
@@ -8,7 +8,7 @@ Options
 Options can be added/nested to commands using the :func:`app` decorator.  Since apps can come in various different versions, there
 Options in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
 
-How to name Options
+How to name Apps
 -----------------
 
 A name is chosen in the following order
@@ -103,7 +103,7 @@ To show the default values when showing command help, use ``show_default=True``
 
    invoke(dots, args=['--help'])
 
-Multi Value Options
+Multi Value Apps
 -------------------
 
 Sometimes, you have options that take more than one argument.  For options,
@@ -126,10 +126,9 @@ And on the command line:
 
 .. _tuple-type:
 
-Tuples as Multi Value Options
+Tuples as Multi Value Apps
 -----------------------------
 
-.. versionadded:: 4.0
 
 As you can see that by using `nargs` set to a specific number each item in
 the resulting tuple is of the same type.  This might not be what you want.
@@ -164,7 +163,7 @@ used.  The above example is thus equivalent to this:
 
 .. _multiple-options:
 
-Multiple Options
+Multiple Apps
 ----------------
 
 Similarly to ``nargs``, there is also the case of wanting to support a
