@@ -11,11 +11,11 @@ This can be accomplished with the :func:`prompt` function, which asks for
 valid input according to a type, or the :func:`confirm` function, which asks
 for confirmation (yes/no).
 
-Option Prompts
+App Prompts
 --------------
 
-Option prompts are integrated into the option interface.  See
-:ref:`option-prompting` for more information.  Internally, it
+App prompts are integrated into the app interface.  See
+:ref:`app-prompting` for more information.  Internally, it
 automatically calls either :func:`prompt` or :func:`confirm` as necessary.
 
 Input Prompts
