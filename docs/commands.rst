@@ -1,4 +1,4 @@
-Commands and Groups
+Commands and Tethers
 ===================
 
 .. currentmodule:: quo
@@ -81,10 +81,11 @@ The context can also carry a program specified object that can be
 used for the program's purposes.  What this means is that you can build a
 script like this:
 
-.. quo:example::
+.. code-block:: python
 
-    @quo.group()
-    @quo.option('--debug/--no-debug', default=False)
+    from quo import tether, app
+    @tether()
+    @app('--debug/--no-debug', default=False)
     @quo.pass_context
     def cli(ctx, debug):
         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
@@ -132,7 +133,7 @@ For instance, the :func:`pass_obj` decorator can be implemented like this:
 
     def pass_obj(f):
         @quo.pass_context
-        def new_func(ctx, *args, **kwargs):
+        def new_func(clime, *args, **kwargs):
             return ctx.invoke(f, ctx.obj, *args, **kwargs)
         return update_wrapper(new_func, f)
 
@@ -145,7 +146,7 @@ This is a very powerful concept that can be used to build very complex
 nested applications; see :ref:`complex-guide` for more information.
 
 
-Group Invocation Without Command
+Tether Invocation Without Command
 --------------------------------
 
 By default, a group or multi command is not invoked unless a subcommand is
@@ -158,19 +159,20 @@ subcommand.
 
 Example:
 
-.. quo:example::
+.. code-block:: python
 
-    @quo.group(invoke_without_command=True)
+    from quo import tether, command, echo
+    @tether(invoke_without_command=True)
     @quo.pass_context
-    def cli(ctx):
-        if ctx.invoked_subcommand is None:
-            quo.echo('I was invoked without subcommand')
+    def cli(clime):
+        if clime.invoked_subcommand is None:
+            echo('I was invoked without subcommand')
         else:
-            quo.echo(f"I am about to invoke {ctx.invoked_subcommand}")
+            echo(f"I am about to invoke {ctx.invoked_subcommand}")
 
     @cli.command()
     def sync():
-        quo.echo('The subcommand')
+        echo('The subcommand')
 
 And how it works in practice:
 
@@ -243,11 +245,10 @@ commands and makes the commands available on the same level.
 
 Example usage:
 
-.. quo:example::
+.. code-block:: python
 
-    import quo
-
-    @quo.group()
+    from quo import tether, command
+    @tether()
     def cli1():
         pass
 
@@ -255,7 +256,7 @@ Example usage:
     def cmd1():
         """Command on cli1"""
 
-    @quo.group()
+    @tether()
     def cli2():
         pass
 
@@ -289,21 +290,22 @@ command chain which invokes ``sdist`` before ``bdist_wheel`` before
 ``upload``. This is very simple to implement.
 All you have to do is to pass ``chain=True`` to your multicommand:
 
-.. quo:example::
+.. code-block:: python
 
-    @quo.group(chain=True)
+    from quo import tether, command, echo
+    @tether(chain=True)
     def cli():
         pass
 
 
     @cli.command('sdist')
     def sdist():
-        quo.echo('sdist called')
+        echo('sdist called')
 
 
     @cli.command('bdist_wheel')
     def bdist_wheel():
-        quo.echo('bdist_wheel called')
+        echo('bdist_wheel called')
 
 Now you can invoke it like this:
 
