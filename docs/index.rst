@@ -235,7 +235,7 @@ usage patterns.
    quickstart
    setuptools
    parameters
-   options
+   apps
    arguments
    commands
    prompts
