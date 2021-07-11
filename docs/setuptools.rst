@@ -52,14 +52,14 @@ Imagine this directory structure:
 
 Contents of ``yourscript.py``:
 
-.. quo:example::
+.. code-block:: python
 
     import quo
-
-    @quo.command()
+    from quo import command, echo
+    @command()
     def cli():
         """Example script."""
-        quo.echo('Hello World!')
+        echo('Hello World!')
 
 Contents of ``setup.py``:
 
