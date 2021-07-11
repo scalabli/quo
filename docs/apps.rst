@@ -24,11 +24,12 @@ converted to underscores.
 NB: Options are given as position arguments to the decorator.
 
 .. code-block:: python
-
-    @quo.command()
-    @quo.option('-s', '--string-to-echo')
+  
+    from quo import command, app, echo
+    @command()
+    @app('-s', '--string-to-echo')
     def echo(string_to_echo):
-        quo.echo(string_to_echo)
+        echo(string_to_echo)
 
 .. code-block:: python
 
@@ -59,33 +60,33 @@ simply pass in `required=True` as an argument to the decorator.
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--n', default=1)
+    from quo import command, app, echo
+    @command()
+    @app('--n', default=1)
     def dots(n):
-        quo.echo('.' * n)
+        echo('.' * n)
 
 .. code-block:: python
 
     # How to make an option required
-    @quo.command()
-    @quo.option('--n', required=True, type=int)
+    from quo import command, app, echo
+    @command()
+    @app('--n', required=True, type=int)
     def dots(n):
         quo.echo('.' * n)
 
 .. code-block:: python
 
     # How to use a Python reserved word such as `from` as a parameter
-    @quo.command()
-    @quo.option('--from', '-f', 'from_')
-    @quo.option('--to', '-t')
+    from quo import command, app, echo
+    @command()
+    @app('--from', '-f', 'from_')
+    @app('--to', '-t')
     def reserved_param_name(from_, to):
-        quo.echo(f"from {from_} to {to}")
+        echo(f"from {from_} to {to}")
 
 And on the command line:
 
-.. code-block:: python
-
-   invoke(dots, args=['--n=2'])
 
 In this case the option is of type :data:`INT` because the default value
 is an integer.
@@ -112,11 +113,12 @@ the ``nargs`` parameter.  The values are then stored as a tuple.
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--pos', nargs=2, type=float)
+    from quo import command, app, echo
+    @command()
+    @app('--pos', nargs=2, type=float)
     def findme(pos):
         a, b = pos
-        quo.echo(f"{a} / {b}")
+        echo(f"{a} / {b}")
 
 And on the command line:
 
