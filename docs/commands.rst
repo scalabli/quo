@@ -20,16 +20,17 @@ the callback fires whenever a subcommand fires (unless this behavior is
 changed).  What this means in practice is that an outer command runs
 when an inner command runs:
 
-.. quo:example::
-
-    @quo.group()
-    @quo.option('--debug/--no-debug', default=False)
+.. code-block:: python
+      
+    from quo import tether, app, echo
+    @tether()
+    @app('--debug/--no-debug', default=False)
     def cli(debug):
-        quo.echo(f"Debug mode is {'on' if debug else 'off'}")
+        echo(f"Debug mode is {'on' if debug else 'off'}")
 
     @cli.command()  # @cli, not @quo!
     def sync():
-        quo.echo('Syncing')
+        echo('Syncing')
 
 Here is what this looks like:
 
@@ -83,7 +84,7 @@ script like this:
 
 .. code-block:: python
 
-    from quo import tether, app
+    from quo import tether, app, echo
     @tether()
     @app('--debug/--no-debug', default=False)
     @quo.pass_context
@@ -97,7 +98,7 @@ script like this:
     @cli.command()
     @quo.pass_context
     def sync(ctx):
-        quo.echo(f"Debug is {'on' if ctx.obj['DEBUG'] else 'off'}")
+        echo(f"Debug is {'on' if ctx.obj['DEBUG'] else 'off'}")
 
     if __name__ == '__main__':
         cli(obj={})
@@ -186,13 +187,13 @@ And how it works in practice:
 Custom Multi Commands
 ---------------------
 
-In addition to using :func:`quo.group`, you can also build your own
+In addition to using :func:`quo.tether`, you can also build your own
 custom multi commands.  This is useful when you want to support commands
 being loaded lazily from plugins.
 
 A custom multi command just needs to implement a list and load method:
 
-.. quo:example::
+.. code-block:: python
 
     import quo
     import os
