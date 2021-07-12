@@ -25,7 +25,7 @@ from quo.shortcuts import button_dialog
 from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
-from quo.shortcuts import PromptSession
+from quo.shortcuts import ElicitSession
 from quo.styles import Style
 from quo.decorators.decorate import argument
 from quo.decorators.decorate import command
@@ -54,22 +54,20 @@ from .parser import AppParser
 from quo.output.vitals import clear
 from quo.output.vitals import confirm
 from quo.output import generator
-#from quo.output import vitals
-#from quo.ui.termui import scrollable
 from quo.output import echo
+from quo.shortcuts import print_container
+from quo.widgets import TextArea, Frame
 from quo.output.vitals import edit
 from quo.output.vitals import terminalsize
 from quo.output import pager
 from quo.output.vitals import interpose 
 from quo.output.vitals import launch
 from quo.output.vitals import pause
-#from quo.ui.ter import progressbar
 from quo.output import flair
 from quo.output import style
 from quo.output import unstyle
 from quo.input.vitals import prompt
-#from quo.output.vitals import prompt
-#from quo.output.vitals import flair
+from quo.shortcuts import elicit
 #from quo.output.vitals import style
 #from quo.output.vitals import unstyle
 from .types import BOOL

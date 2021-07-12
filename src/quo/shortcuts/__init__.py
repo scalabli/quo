@@ -8,12 +8,12 @@ from .dialogs import (
     yes_no_dialog,
 )
 from quo.indicators import ProgressBar, ProgressBarCounter
-from .prompt import (
+from .elicit import (
     CompleteStyle,
-    PromptSession,
-    confirm,
+    ElicitSession,
+   # confirm,
     create_confirm_session,
-    prompt,
+    elicit,
 )
 from .utils import clear, clear_title, print_container, print_formatted_text, set_title
 
