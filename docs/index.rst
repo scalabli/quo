@@ -45,7 +45,7 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
     import quo
-    quo.echo('Hello, World!')
+    quo.echo(f'Hello, World!')
     
 
 **Example 2**
@@ -60,8 +60,8 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
    import quo
-   from quo import echo
-   answer = quo.prompt("How old are you?")
+   from quo import echo, prompt
+   answer = prompt("How old are you?")
    echo(f"I am: {answer}")
 
 
@@ -83,7 +83,7 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
     import quo
-    from quo import command, app
+    from quo import command, app, echo
     @command()
     @app("--count", default=1, help="The number of times the feedback is printed.")
     @app("--name", prompt="What is your name", help="This prompts the user to input their name.")
@@ -91,7 +91,7 @@ The most simple example of the library would look like this:
     def survey(count, name, proffession):
        
         for _ in range(count):
-            quo.echo(f"Thank you for your time, {name}!")
+            echo(f"Thank you for your time, {name}!")
 
     if __name__ == '__main__':
         survey
