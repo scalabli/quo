@@ -170,7 +170,7 @@ class KeepOpenFile:
         return iter(self._file)
 
 
-#def echo(message=None, file=None, newline=True, err=False, color=None):
+def echo(message=None, file=None, nl=True, err=False, color=None):
     """Prints a message plus a newline to the given file or stdout.  On
     first sight, this looks like the print function, but it has improved
     support for handling Unicode and binary data that does not fail no
@@ -202,56 +202,56 @@ class KeepOpenFile:
     :param color: controls if the terminal supports ANSI colors or not.  The
                   default is autodetection.
     """
-#    if file is None:
-#        if err:
- #           file = _default_text_stderr()
- #       else:
- #           file = _default_text_stdout()
+    if file is None:
+        if err:
+            file = _default_text_stderr()
+        else:
+            file = _default_text_stdout()
 
     """
     Convert non bytes/text into the native string type.
     """
 
-#    if message is not None and not isinstance(message, echo_functionality):
-#        message = str(message)
+    if message is not None and not isinstance(message, echo_functionality):
+        message = str(message)
 
-#    if newline:
- #       message = message or ""
- #       if isinstance(message, str):
- #           message += "\n"
-#        else:
-#            message += b"\n"
+    if nl:
+        message = message or ""
+        if isinstance(message, str):
+            message += "\n"
+        else:
+            message += b"\n"
 
     # If there is a message and the value looks like bytes, we manually
     # need to find the binary stream and write the message in there.
     # This is done separately so that most stream types will work as you
     # would expect. Eg: you can write to StringIO for other cases.
-#    if message and is_bytes(message):
-#        binary_file = _find_binary_writer(file)
-#        if binary_file is not None:
-#            file.flush()
-#            binary_file.write(message)
-#            binary_file.flush()
-#            return
+    if message and is_bytes(message):
+        binary_file = _find_binary_writer(file)
+        if binary_file is not None:
+            file.flush()
+            binary_file.write(message)
+            binary_file.flush()
+            return
 
     # ANSI-style support.  If there is no message or we are dealing with
     # bytes nothing is happening.  If we are connected to a file we want
     # to strip colors.  If we are on windows we either wrap the stream
     # to strip the color or we use the colorama support to translate the
     # ansi codes to API calls.
-   # if message and not is_bytes(message):
-#        color = resolve_color_default(color)
-   #     if should_strip_ansi_colors(file, color):
-#            message = strip_ansi_colors(message)
-#        elif WIN:
-#            if auto_wrap_for_ansi is not None:
-#                file = auto_wrap_for_ansi(file)
-#            elif not color:
- #               message = strip_ansi_colors(message)
+    if message and not is_bytes(message):
+        color = resolve_color_default(color)
+        if should_strip_ansi_colors(file, color):
+            message = strip_ansi_colors(message)
+        elif WIN:
+            if auto_wrap_for_ansi is not None:
+                file = auto_wrap_for_ansi(file)
+            elif not color:
+                message = strip_ansi_colors(message)
 
-#    if message:
-#        file.write(message)
-#    file.flush()
+    if message:
+        file.write(message)
+    file.flush()
 
 
 def get_binary_stream(name):

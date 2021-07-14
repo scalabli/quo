@@ -9,12 +9,12 @@ background are independent of each other.
 """
 from pygments.lexers.html import HtmlLexer
 
-from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.filters import Condition
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.lexers import PygmentsLexer
+from quo.shortcuts import elicit
+from quo.completion import WordCompleter
+from quo.filters import Condition
+from quo.text import HTML
+from quo.key_binding import KeyBindings
+from quo.lexers import PygmentsLexer
 
 html_completer = WordCompleter(
     [
@@ -62,7 +62,7 @@ def main():
             % on
         )
 
-    text = prompt(
+    text = elicit(
         HTML('<style fg="#aaaaaa">Give some animals</style>: '),
         completer=html_completer,
         complete_while_typing=True,

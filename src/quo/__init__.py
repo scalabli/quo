@@ -20,7 +20,7 @@ from .core import Parameter
 from .core import ShellDetectionFailure
 from .text import ANSI, HTML
 from quo.output import ColorDepth
-from quo.shortcuts import prompt
+#from quo.shortcuts import prompt
 from quo.shortcuts import button_dialog
 from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
@@ -51,25 +51,12 @@ from .setout import HelpFormatter
 from .setout import wraptext
 from quo.context.current import currentcontext
 from .parser import AppParser
-from quo.output.vitals import clear
-from quo.output.vitals import confirm
 from quo.output import generator
-from quo.output import echo
+from quo.expediency import echo, appdir, formatfilename, get_os_args, get_text_stream, get_binary_stream, openfile
+from quo.i_o import flair, confirm, launch, interpose, edit, terminalsize, pause, style, unstyle, prompt, clear
 from quo.shortcuts import print_container
 from quo.widgets import TextArea, Frame
-from quo.output.vitals import edit
-from quo.output.vitals import terminalsize
-from quo.output import pager
-from quo.output.vitals import interpose 
-from quo.output.vitals import launch
-from quo.output.vitals import pause
-from quo.output import flair
-from quo.output import style
-from quo.output import unstyle
-from quo.input.vitals import prompt
 from quo.shortcuts import elicit
-#from quo.output.vitals import style
-#from quo.output.vitals import unstyle
 from .types import BOOL
 from .types import Choice
 from .types import DateTime
@@ -84,12 +71,5 @@ from .types import STRING
 from .types import Tuple
 from .types import UNPROCESSED
 from .types import UUID
-from quo.expediency.utilities import formatfilename
-from quo.expediency.utilities import appdir
-from quo.expediency.utilities import get_binary_stream
-from quo.expediency.utilities import get_os_args
-from quo.expediency.utilities import get_text_stream
-from quo.expediency.utilities import openfile
-
 
 __version__ = "2021.2"

@@ -10,16 +10,16 @@ See:
 - https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1111
 """
 import datetime
-
-from prompt_toolkit import prompt
-from prompt_toolkit.application import get_app
-from prompt_toolkit.formatted_text import (
+from quo import prompt, echo
+from quo.shortcuts import elicit
+from quo.application import get_app
+from quo.text import (
     HTML,
     fragment_list_width,
     merge_formatted_text,
     to_formatted_text,
 )
-from prompt_toolkit.styles import Style
+from quo.styles import Style
 
 style = Style.from_dict(
     {
@@ -72,7 +72,7 @@ def get_prompt() -> HTML:
 def main() -> None:
     while True:
         answer = prompt(get_prompt, style=style, refresh_interval=1)
-        print("You said: %s" % answer)
+        echo("You said: %s" % answer)
 
 
 if __name__ == "__main__":

@@ -6,9 +6,9 @@ is long enough to cover the right side of the terminal.
 
 This is similar to RPROMPT is Zsh.
 """
-from prompt_toolkit import prompt
-from prompt_toolkit.formatted_text import ANSI, HTML
-from prompt_toolkit.styles import Style
+from quo.shortcuts import elicit as prompt
+from quo.text import ANSI, HTML
+from quo.styles import Style
 
 example_style = Style.from_dict(
     {

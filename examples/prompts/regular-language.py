@@ -13,14 +13,14 @@ This example shows how you can define the grammar of a regular language and how
 to use variables in this grammar with completers and tokens attached.
 """
 import math
-
-from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.contrib.regular_languages.compiler import compile
-from prompt_toolkit.contrib.regular_languages.completion import GrammarCompleter
-from prompt_toolkit.contrib.regular_languages.lexer import GrammarLexer
-from prompt_toolkit.lexers import SimpleLexer
-from prompt_toolkit.styles import Style
+from quo import flair, echo
+from quo.shortcuts import elicit
+from quo.completion import WordCompleter
+from quo.contrib.regular_languages.compiler import compile
+from quo.contrib.regular_languages.completion import GrammarCompleter
+from quo.contrib.regular_languages.lexer import GrammarLexer
+from quo.lexers import SimpleLexer
+from quo.styles import Style
 
 operators1 = ["add", "sub", "div", "mul"]
 operators2 = ["cos", "sin"]
@@ -76,10 +76,10 @@ if __name__ == "__main__":
             if m:
                 vars = m.variables()
             else:
-                print("Invalid command\n")
+                echo(f"Invalid command")
                 continue
 
-            print(vars)
+            echo(vars)
             if vars.get("operator1") or vars.get("operator2"):
                 try:
                     var1 = float(vars.get("var1", 0))
@@ -99,6 +99,7 @@ if __name__ == "__main__":
                 }[vars.get("operator1") or vars.get("operator2")]
 
                 # Execute and print the result.
+                flair(f"Result: {(operator(var1, var2))}")
                 print("Result: %s\n" % (operator(var1, var2)))
 
             elif vars.get("operator2"):
