@@ -64,4 +64,5 @@ Released 2021-06-18
 -  ``prompt``
 -  ``flair``
 -   Added support for ``ANSI colors`` for better coloring of the terminal
+-   Ability to Print both ``text`` and ``binary`` to stdout 
 
