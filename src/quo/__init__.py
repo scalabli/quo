@@ -20,7 +20,6 @@ from .core import Parameter
 from .core import ShellDetectionFailure
 from .text import ANSI, HTML
 from quo.output import ColorDepth
-#from quo.shortcuts import prompt
 from quo.shortcuts import button_dialog
 from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
