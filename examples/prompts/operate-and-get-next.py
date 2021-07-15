@@ -2,16 +2,15 @@
 """
 Demo of "operate-and-get-next".
 
-(Actually, this creates one prompt application, and keeps running the same app
-over and over again. -- For now, this is the only way to get this working.)
+(This creates one prompt application that keeps running over and over again.)
 """
-from prompt_toolkit.shortcuts import PromptSession
+from quo.shortcuts import Elicit
 
 
 def main():
-    session = PromptSession("prompt> ")
+    session = Elicit("Type anything:> ")
     while True:
-        session.prompt()
+        session.elicit()
 
 
 if __name__ == "__main__":
