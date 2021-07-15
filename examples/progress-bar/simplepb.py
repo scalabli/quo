@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 """
-A very simple progress bar which keep track of the progress as we consume an
-iterator.
+A very simple progress bar which keep track of the progress as we consume an iterator.
 """
+import quo
 import time
-
-from prompt_toolkit.shortcuts import ProgressBar
-
+from quo import ProgressBar
 
 def main():
     with ProgressBar() as pb:

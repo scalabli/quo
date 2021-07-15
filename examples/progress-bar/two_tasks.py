@@ -2,10 +2,10 @@
 """
 Two progress bars that run in parallel.
 """
+import quo
 import threading
 import time
-#from quo import ProgressBar<F11><F11>
-from quo.indicators import ProgressBar
+from quo import ProgressBar
 
 
 def main():

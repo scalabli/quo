@@ -38,15 +38,6 @@ from quo.decorators.decorate import objectualize
 from quo.decorators import autopswd
 from quo.decorators import autoversion
 from quo.outliers import Abort, BadArgumentUsage, BadAppUsage, BadParameter, QuoException, FileError, MissingParameter, NoSuchApp, UsageError
-#from quo.outliers.exceptions import Abort
-#from quo.outliers.exceptions import BadArgumentUsage
-#from quo.outliers.exceptions import BadOptionUsage
-#from quo.outliers.exceptions import BadParameter
-#from quo.outliers.exceptions import QuoException
-#from quo.outliers.exceptions import FileError
-#from quo.outliers.exceptions import MissingParameter
-#from quo.outliers.exceptions import NoSuchOption
-#from quo.outliers.exceptions import UsageError
 from .setout import HelpFormatter
 from .setout import wraptext
 from quo.context.current import currentcontext
@@ -56,19 +47,19 @@ from quo.i_o import flair, confirm, launch, interpose, edit, terminalsize, pause
 from quo.shortcuts import print_container
 from quo.widgets import TextArea, Frame
 from quo.shortcuts import elicit
-from .types import BOOL
-from .types import Choice
-from .types import DateTime
-from .types import File
-from .types import FLOAT
-from .types import FloatRange
-from .types import INT
-from .types import IntRange
-from .types import ParamType
-from .types import Path
-from .types import STRING
-from .types import Tuple
-from .types import UNPROCESSED
-from .types import UUID
+from .types import BOOL, Choice, DataTime, File, FLOAT, FloatRange, INT, IntRange, ParamType, Path, STRING, Tuple, UNPROCESSED, UUID
+#from .types import Choice
+#from .types import DateTime
+#from .types import File
+#from .types import FLOAT
+#from .types import FloatRange
+#from .types import INT
+#from .types import IntRange
+#from .types import ParamType
+#from .types import Path
+#from .types import STRING
+#from .types import Tuple
+#from .types import UNPROCESSED
+#from .types import UUID
 
 __version__ = "2021.2"

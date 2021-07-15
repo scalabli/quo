@@ -4,9 +4,9 @@ Styled just like an apt-get installation.
 """
 import time
 
-from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.styles import Style
+from quo import ProgressBar
+from quo.indicators import formatters
+from quo.styles import Style
 
 style = Style.from_dict(
     {

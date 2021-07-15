@@ -200,8 +200,9 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
     :alt: Downloads
     :target: https://pepy.tech/badge/quo/month
 
-.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=main
-    :target: https://codecov.io/github/secretum-inc/quo?branch=main
+.. |coverage| image:: https://snyk.io/advisor/python/quo/badge.svg
+    :alt: Package Health
+    :target: https://snyk.io/advisor/python/quo
 
 .. |license| image:: https://img.shields.io/pypi/l/quo.svg
     :alt: MIT License

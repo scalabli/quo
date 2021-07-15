@@ -2,17 +2,16 @@
 """
 More complex demonstration of what's possible with the progress bar.
 """
+import quo
 import random
 import threading
 import time
-
-from prompt_toolkit import HTML
-from prompt_toolkit.shortcuts import ProgressBar
-
+from quo import HTML, ProgressBar, flair
 
 def main():
     with ProgressBar(
-        title=HTML("<b>Example of many parallel tasks.</b>"),
+        title = flair(f"Example of many parallel tasks", reverse=True),
+
         bottom_toolbar=HTML("<b>[Control-L]</b> clear  <b>[Control-C]</b> abort"),
     ) as pb:
 

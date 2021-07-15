@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 """
-A simple progress bar, visualised with rainbow colors (for fun).
+A simple progress bar, visualised with rainbow colors.
 """
+import quo
 import time
+from quo import ColorDepth, ProgressBar, pause
+from quo.indicators import formatters
 
-from prompt_toolkit.output import ColorDepth
-from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.shortcuts.prompt import confirm
 
 
 def main():
-    true_color = confirm("Yes true colors? (y/n) ")
-
+    forward = pause()
     custom_formatters = [
         formatters.Label(),
         formatters.Text(" "),
@@ -21,7 +19,7 @@ def main():
         formatters.Rainbow(formatters.TimeLeft()),
     ]
 
-    if true_color:
+    if forward:
         color_depth = ColorDepth.DEPTH_24_BIT
     else:
         color_depth = ColorDepth.DEPTH_8_BIT

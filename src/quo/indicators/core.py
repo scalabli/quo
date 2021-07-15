@@ -1,15 +1,12 @@
 """
-Progress bar implementation on top of prompt_toolkit.
+Progress bar implementation.
 
-::
-
-    with ProgressBar(...) as pb:
-        for item in pb(data):
-            ...
+quo v2021.3
 """
+
+import os
 import datetime
 import functools
-import os
 import signal
 import threading
 import traceback
@@ -43,14 +40,6 @@ from quo.layout.containers import VSplit
 from quo.layout.containers import Window
 from quo.layout.containers import HSplit
 from quo.layout.layout import Layout
-#from quo.layout import (
-   # ConditionalContainer,
-   # FormattedTextControl,
-    #HSplit,
-   # Layout,
-   # VSplit,
-  #  Window,
-#)
 from quo.layout.controls import UIContent, UIControl
 from quo.layout.dimension import AnyDimension, D
 from quo.output import ColorDepth, Output

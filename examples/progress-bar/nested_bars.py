@@ -2,15 +2,15 @@
 """
 Example of nested progress bars.
 """
+import quo
 import time
-
-from prompt_toolkit import HTML
-from prompt_toolkit.shortcuts import ProgressBar
+from quo import HTML, ProgressBar, flair
 
 
 def main():
     with ProgressBar(
-        title=HTML('<b fg="#aa00ff">Nested progress bars</b>'),
+        title = flair(f"Nested progress bars", fg="blue", bold=True),
+      #  title=HTML('<b fg="#aa00ff">Nested progress bars</b>'),
         bottom_toolbar=HTML(" <b>[Control-L]</b> clear  <b>[Control-C]</b> abort"),
     ) as pb:
 
