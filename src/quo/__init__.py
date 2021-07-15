@@ -25,7 +25,7 @@ from quo.shortcuts import button_dialog
 from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
-from quo.shortcuts import ElicitSession
+from quo.shortcuts import Elicit
 from quo.styles import Style
 from quo.decorators.decorate import argument
 from quo.decorators.decorate import command
