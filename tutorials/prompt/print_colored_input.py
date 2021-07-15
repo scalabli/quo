@@ -1,3 +1,4 @@
 import quo
-answer = quo("How old are you?")
-quo.flair(f"I am: %s" % answer, foreground="cyan")
+from quo import prompt, flair
+answer = prompt("How old are you?")
+flair(f"I am: {answer}", fg="cyan")
