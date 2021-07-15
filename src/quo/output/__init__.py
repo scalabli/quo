@@ -1,13 +1,13 @@
 from .core import DummyOutput
 from .core import Output
 from .color import ColorDepth
-from .generator import pager
-from .inscribe import echo
+#rom .generator import pager
+#from .inscribe import echo
 from .defaults import create_output
-from .vitals import flair
-from .vitals import interpose
-from .vitals import style
-from .vitals import unstyle
+#from .vitals import flair
+#from .vitals import interpose
+#from .vitals import style
+#from .vitals import unstyle
 
 
 __all__ = [

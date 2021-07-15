@@ -3,7 +3,7 @@ from typing import Generator, List, Optional
 from quo.output.videoterminal import BG_ANSI_COLORS, FG_ANSI_COLORS
 from quo.output.videoterminal import _256_colors as _256_colors_table
 
-from .core import StyleAndTextTuples
+from quo.text.core import StyleAndTextTuples
 
 __all__ = [
     "ANSI",

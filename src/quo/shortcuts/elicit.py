@@ -1385,12 +1385,12 @@ def elicit(
     pre_run: Optional[Callable[[], None]] = None,
 ) -> str:
     """
-    The global `elicit` function. This will create a new `ElicitSession`
+    The global `elicit` function. This will create a new `Elicit`
     instance for every call.
     """
     # The history is the only attribute that has to be passed to the
     # `ElicitSession`, it can't be passed into the `elicit()` method.
-    session: ElicitSession[str] = ElicitSession(history=history)
+    session: Elicit[str] = Elicit(history=history)
 
     return session.elicit(
         message,
@@ -1435,14 +1435,14 @@ def elicit(
     )
 
 
-elicit.__doc__ = ElicitSession.elicit.__doc__
+elicit.__doc__ = Elicit.elicit.__doc__
 
 
 def create_confirm_session(
     message: str, suffix: str = " (y/n) "
-) -> ElicitSession[bool]:
+) -> Elicit[bool]:
     """
-    Create a `ElicitSession` object for the 'confirm' function.
+    Create a `Elicit` object for the 'confirm' function.
     """
     bindings = KeyBindings()
 
@@ -1464,7 +1464,7 @@ def create_confirm_session(
         pass
 
     complete_message = merge_formatted_text([message, suffix])
-    session: ElicitSession[bool] = ElicitSession(
+    session: Elicit[bool] = Elicit(
         complete_message, key_bindings=bindings
     )
     return session

@@ -12,7 +12,7 @@ from .elicit import CompleteStyle, Elicit, elicit
 # confirm,
 #create_confirm_session,
  
-from .utils import clear, clear_title, print_container, print_formatted_text, set_title
+from .utils import clear, clear_title, print_container, print_formatted_text, terminal_title
 
 __all__ = [
     # Dialogs.

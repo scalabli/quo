@@ -2,10 +2,10 @@
 # maintained by the Python Software Foundation.
 from collections import deque
 
-from quo.outliers.exceptions import BadArgumentUsage
-from quo.outliers.exceptions import BadOptionUsage
-from quo.outliers.exceptions import NoSuchOption
-from quo.outliers.exceptions import UsageError
+from quo.outliers import BadArgumentUsage, BadAppUsage, NoSuchApp, UsageError
+#from quo.outliers.exceptions import BadOptionUsage
+#from quo.outliers.exceptions import NoSuchOption
+#from quo.outliers.exceptions import UsageError
 
 # Sentinel value that indicates an app was passed as a flag without a
 # value but is not a flag app. App.consume_value uses this to
@@ -310,7 +310,7 @@ class AppParser:
             from difflib import get_close_matches
 
             possibilities = get_close_matches(opt, self._long_opt)
-            raise NoSuchOption(opt, possibilities=possibilities, clime=self.clime)
+            raise NoSuchApp(opt, possibilities=possibilities, clime=self.clime)
 
         app = self._long_opt[opt]
         if app.takes_value:
@@ -324,7 +324,7 @@ class AppParser:
             value = self._get_value_from_state(opt, app, state)
 
         elif explicit_value is not None:
-            raise BadOptionUsage(opt, f"{opt} app does not take a value")
+            raise BadAppUsage(opt, f"{opt} app does not take a value")
 
         else:
             value = None
@@ -346,7 +346,7 @@ class AppParser:
                 if self.ignore_unknown_apps:
                     unknown_apps.append(ch)
                     continue
-                raise NoSuchOption(opt, clime=self.clime)
+                raise NoSuchApp(opt, clime=self.clime)
             if app.takes_value:
                 # Any characters left in arg?  Pretend they're the
                 # next arg, and stop consuming characters of arg.
@@ -380,7 +380,7 @@ class AppParser:
                 value = _flag_needs_value
             else:
                 n_str = "an argument" if nargs == 1 else f"{nargs} arguments"
-                raise BadOptionUsage(
+                raise BadAppUsage(
                     app_name, f"{app_name} app requires {n_str}."
                 )
         elif nargs == 1:
@@ -419,7 +419,7 @@ class AppParser:
         # like "-foo" to be matched as long apps.
         try:
             self._match_long_opt(norm_long_opt, explicit_value, state)
-        except NoSuchOption:
+        except NoSuchApp:
             # At this point the long app matching failed, and we need
             # to try with short apps.  However there is a special rule
             # which says, that if we have a two character apps prefix

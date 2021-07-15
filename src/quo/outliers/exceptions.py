@@ -1,8 +1,10 @@
+#
+#
+#
 from quo.accordance import filename_to_ui
 from quo.accordance import get_text_stderr
 from quo.expediency.vitals import echo
-from quo.i_o.termui import flair
-
+#from quo.i_o.termui import flair
 from typing import Any, Dict, Optional, Sequence, Type
 
 
@@ -32,16 +34,14 @@ class QuoException(Exception):
     def show(self, file=None):
         if file is None:
             file = get_text_stderr()
-        flair(f"Error: {self.format_message()}", file=file, fg="red", bold=True)
+        echo(f"Error: {self.format_message()}", file=file)
 
 
 class UsageError(QuoException):
-    """An internal exception that signals a usage error.  This typically
-    aborts any further handling.
+    """An internal exception that signals a usage error.This typically aborts any further handling.
 
     :param message: the error message to display.
-    :param clime: optionally the context that caused this error.  Quo will
-                fill in the context automatically in some situations.
+    :param clime: optionally the context that caused this error.  Quo will fill in the context automatically in some situations.
     """
 
     exit_code = 2
@@ -64,7 +64,7 @@ class UsageError(QuoException):
         if self.clime is not None:
             color = self.clime.color
             echo(f"{self.clime.get_usage()}\n{hint}", file=file, color=color)
-        flair(f"Error: {self.format_message()}", file=file, color=color, fg="red", bold=True)
+        echo(f"Error: {self.format_message()}", file=file, color=color)
 
 
 class BadParameter(UsageError):
@@ -148,7 +148,7 @@ class MissingParameter(BadParameter):
             return self.message
 
 
-class NoSuchOption(UsageError):
+class NoSuchApp(UsageError):
     """Raised if Quo attempted to handle an app that does not
     exist.
 
@@ -173,7 +173,7 @@ class NoSuchOption(UsageError):
         return "  ".join(bits)
 
 
-class BadOptionUsage(UsageError):
+class BadAppUsage(UsageError):
     """Raised if an app is generally supplied but the use of the app
     was incorrect.  This is for instance raised if the number of arguments
     for an app is not correct.

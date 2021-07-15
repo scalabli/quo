@@ -202,11 +202,11 @@ def terminal_title(text: str) -> None:
     Set the terminal title.
     """
     output = get_app_session().output
-    output.set_title(text)
+    output.terminal_title(text)
 
 
 def clear_title() -> None:
     """
     Erase the current title.
     """
-    set_title("")
+    terminal_title("")

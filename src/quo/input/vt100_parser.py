@@ -6,7 +6,7 @@ from typing import Callable, Dict, Generator, Tuple, Union
 
 from ..key_binding.key_processor import KeyPress
 from ..keys import Keys
-from .ansi_escape_sequences import ANSI_SEQUENCES
+from quo.i_o.output.ansi_escape_sequences import ANSI_SEQUENCES
 
 __all__ = [
     "Vt100Parser",

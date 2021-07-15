@@ -12,7 +12,7 @@ Some useful docs:
 """
 from typing import Dict, Tuple, Union
 
-from ..keys import Keys
+from quo.keys import Keys
 
 __all__ = [
     "ANSI_SEQUENCES",
@@ -319,8 +319,7 @@ ANSI_SEQUENCES: Dict[str, Union[Keys, Tuple[Keys, ...]]] = {
 
 def _get_reverse_ansi_sequences() -> Dict[Keys, str]:
     """
-    Create a dictionary that maps prompt_toolkit keys back to the VT100 escape
-    sequences.
+    Create a dictionary that maps Quo keys back to the VT100 escape sequences.
     """
     result: Dict[Keys, str] = {}
 

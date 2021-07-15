@@ -11,6 +11,7 @@ from quo.accordance import is_bytes
 from quo.accordance import isatty
 from quo.accordance import strip_ansi_colors
 from quo.accordance import WIN
+from quo.outliers import exceptions
 from quo.outliers.exceptions import Abort
 from quo.outliers.exceptions import UsageError
 from quo.context.current import resolve_color_default

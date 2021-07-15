@@ -2,7 +2,7 @@
 """
 Demonstration of how to print using the HTML class.
 """
-from prompt_toolkit import HTML, print_formatted_text
+from quo import HTML, print_formatted_text
 
 print = print_formatted_text
 
@@ -18,7 +18,6 @@ def main():
     print(HTML("    <i>Italic</i>"))
     print(HTML("    <reverse>Reverse</reverse>"))
     print(HTML("    <u>Underline</u>"))
-    print(HTML("    <hidden>Hidden</hidden> (hidden)"))
 
     # Ansi colors.
     title("ANSI colors")

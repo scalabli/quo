@@ -8,7 +8,8 @@ from functools import update_wrapper
 from itertools import repeat
 
 from .universal import python_environment
-from quo.outliers.exceptions import Abort
+from quo.outliers import Abort
+#from quo.outliers.exceptions import Abort
 from quo.outliers.exceptions import BadParameter
 from quo.outliers.exceptions import QuoException
 from quo.outliers.exceptions import Exit
@@ -21,22 +22,23 @@ from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
-from quo.output import inscribe
-from quo.output.vitals import confirm
-from quo.output.vitals import flair
-from quo.output.vitals import prompt
-from quo.output.vitals import flair
-from quo.output.vitals import style
+#from quo.expediency.vitals import echo
+#from quo.output import inscribe
+from quo.i_o import confirm, flair, prompt, style
+#from quo.output.vitals import flair
+#from quo.output.vitals import prompt
+#from quo.output.vitals import flair
+#from quo.output.vitals import style
 from .types import _NumberRangeBase
 from .types import BOOL
 from .types import convert_type
 from .types import IntRange
-from quo.expediency.utilities import _detect_program_name
-from quo.output.inscribe import echo
-#from quo.expediency.utilities import echo
-from quo.expediency.utilities import make_default_short_help
-from quo.expediency.utilities import make_str
-from quo.expediency.utilities import PacifyFlushWrapper
+from quo.expediency.vitals import _detect_program_name
+#from quo.output.inscribe import echo
+from quo.expediency.vitals import echo
+from quo.expediency.vitals import make_default_short_help
+from quo.expediency.vitals import make_str
+from quo.expediency.vitals import PacifyFlushWrapper
 
 _missing = object()
 
