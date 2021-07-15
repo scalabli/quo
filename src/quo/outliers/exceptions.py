@@ -1,6 +1,7 @@
 from quo.accordance import filename_to_ui
 from quo.accordance import get_text_stderr
 from quo.expediency.utilities import echo
+from quo.i_o.vitals import flair
 
 from typing import Any, Dict, Optional, Sequence, Type
 
