@@ -34,7 +34,7 @@ Released 2021-06-28
 -   Fix type checking for iterating over ``ProgressBar`` object.
     :issue:`1892`
 -   ``importlib_metadata`` backport package is installed on Python <
-    3.8 therefore will be be delisted as part of Quo's depencies in later versions
+    3.8 therefore will be be delisted as part of Quo's external dependency in later versions of Quo
 -   Arguments with ``nargs=-1`` only use env var value if no command
     line values are given. :issue:`1903`
 -   Flag options guess their type from ``flag_value`` if given, like
@@ -57,3 +57,11 @@ Released 2021-06-28
 Version 2021.1
 ---------------
 Released 2021-06-18
+
++  ``command``
+-  ``app``
+-  ``confirm``
+-  ``prompt``
+-  ``flair``
+-  ``ANSI colors`` Added support for ANSI colors
+
