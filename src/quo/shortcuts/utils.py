@@ -197,7 +197,7 @@ def clear() -> None:
     output.flush()
 
 
-def set_title(text: str) -> None:
+def terminal_title(text: str) -> None:
     """
     Set the terminal title.
     """
