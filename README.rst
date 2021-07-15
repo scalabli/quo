@@ -6,7 +6,7 @@
  Quo
 ===========================
 
-|build-status| |coverage| |license| |wheel| |pyimp|
+|build-status| |coverage| |license| |wheel| |pyimp| |RTD|
 
 :Version: 2021.3
 :Web: http://quo.readthedocs.io/
@@ -219,3 +219,6 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 .. |pyimp| image:: https://img.shields.io/pypi/implementation/quo.svg
     :alt: Support Python implementations.
     :target: http://pypi.org/project/quo/
+
+.. |RTD| image:: https://readthedocs.org/projects/quo/badge/
+    :target: https://quo.readthedocs.io/
