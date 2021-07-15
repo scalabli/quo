@@ -6,7 +6,7 @@
  Quo
 ===========================
 
-|build-status| |coverage| |license| |wheel| |pyimp| |RTD| |PyPI|
+|build-status| |coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
 
 :Version: 2021.3
 :Web: http://quo.readthedocs.io/
@@ -226,3 +226,6 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 .. |PyPI| image:: https://img.shields.io/pypi/v/quo.svg
     :target: https://pypi.python.org/pypi/quo/
     :alt: Latest Version
+
+..  |PyStats| image:: https://static.pepy.tech/personalized-badge/quo?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
+ :target: https://pepy.tech/project/quo
