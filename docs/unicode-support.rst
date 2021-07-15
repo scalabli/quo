@@ -13,9 +13,9 @@ Unicode is an information technology standard for the consistent encoding, repre
 
     Misconfigured environments can cause a wide range of Unicode
     problems due to the lack of support for roundtripping surrogate
-    escapes. This will not be fixed in Click itself!
+    escapes. This will not be fixed in Quo itself!
 
-*   Standard input and output is opened in text mode by default. Click
+*   Standard input and output is opened in text mode by default. Quo
     has to reopen the stream in binary mode in certain situations.
     Because there is no standard way to do this, it might not always
     work. Primarily this can become a problem when testing command-line
@@ -39,11 +39,11 @@ Unicode is an information technology standard for the consistent encoding, repre
     contents as the wrapper will not forward that method.
 
 *   ``sys.stdin``, ``sys.stdout`` and ``sys.stderr`` are by default
-    text-based. When Click needs a binary stream, it attempts to
+    text-based. When Quo needs a binary stream, it attempts to
     discover the underlying binary stream.
 
 *   ``sys.argv`` is always text. This means that the native type for
-    input values to the types in Click is Unicode, not bytes.
+    input values to the types in Quo is Unicode, not bytes.
 
     This causes problems if the terminal is incorrectly set and Python
     does not figure out the encoding. In that case, the Unicode string
@@ -65,12 +65,12 @@ this is that the encoding detection is done in the interpreter, and on
 Linux and certain other operating systems, its encoding handling is
 problematic.
 
-The biggest source of frustration is that Click scripts invoked by init
+The biggest source of frustration is that Quo scripts invoked by init
 systems, deployment tools, or cron jobs will refuse to work unless a
 Unicode locale is exported.
 
 If Quo encounters such an environment it will prevent further
-execution to force you to set a locale. This is done because Click
+execution to force you to set a locale. This is done because Quo
 cannot know about the state of the system once it's invoked and restore
 the values before Python's Unicode handling kicked in.
 
@@ -105,8 +105,3 @@ On some systems it was reported that ``UTF-8`` has to be written as
 invoke ``locale -a``.
 
 You need to export the values before you invoke your Python script.
-
-In Python 3.7 and later you will no longer get a ``RuntimeError`` in
-many cases thanks to :pep:`538` and :pep:`540`, which changed the
-default assumption in unconfigured environments. This doesn't change the
-general issue that your locale may be misconfigured.
