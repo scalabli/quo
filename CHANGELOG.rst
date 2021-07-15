@@ -63,5 +63,5 @@ Released 2021-06-18
 -  ``confirm``
 -  ``prompt``
 -  ``flair``
--  ``ANSI colors`` Added support for ANSI colors
+-   Added support for``ANSI colors`` for better coloring of the terminal
 
