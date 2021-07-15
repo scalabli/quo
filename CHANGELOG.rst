@@ -20,6 +20,7 @@ Unreleased
 -   Fixed changelong link on PyPI
 
 
+
 Version 2021.2
 -------------
 
@@ -32,8 +33,8 @@ Released 2021-06-28
 -   Fix some types that weren't available in Python 3.6.0. :issue:`1882`
 -   Fix type checking for iterating over ``ProgressBar`` object.
     :issue:`1892`
--   The ``importlib_metadata`` backport package is installed on Python <
-    3.8. :issue:`1889`
+-   ``importlib_metadata`` backport package is installed on Python <
+    3.8 therefore will be be delisted as part of Quo's depencies in later versions
 -   Arguments with ``nargs=-1`` only use env var value if no command
     line values are given. :issue:`1903`
 -   Flag options guess their type from ``flag_value`` if given, like
