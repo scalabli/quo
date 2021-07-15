@@ -223,9 +223,9 @@ ElicitContinuationText = Union[
 _T = TypeVar("_T")
 
 
-class ElicitSession(Generic[_T]):
+class Elicit(Generic[_T]):
     """
-    ElicitSession for a elicit application, which can be used as a GNU Readline
+    Elicit for a elicit application, which can be used as a GNU Readline
     replacement.
 
     This is a wrapper around a lot of ``quo`` functionality and can
@@ -236,7 +236,7 @@ class ElicitSession(Generic[_T]):
 
     Example usage::
 
-        s = ElicitSession(message='>')
+        s = Elicit(message='>')
         text = s.elicit()
 
     :param message: Plain text or formatted text to be shown before the elicit.
