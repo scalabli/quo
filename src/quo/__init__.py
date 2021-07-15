@@ -48,18 +48,5 @@ from quo.shortcuts import print_container
 from quo.widgets import TextArea, Frame
 from quo.shortcuts import elicit
 from .types import BOOL, Choice, DataTime, File, FLOAT, FloatRange, INT, IntRange, ParamType, Path, STRING, Tuple, UNPROCESSED, UUID
-#from .types import Choice
-#from .types import DateTime
-#from .types import File
-#from .types import FLOAT
-#from .types import FloatRange
-#from .types import INT
-#from .types import IntRange
-#from .types import ParamType
-#from .types import Path
-#from .types import STRING
-#from .types import Tuple
-#from .types import UNPROCESSED
-#from .types import UUID
 
-__version__ = "2021.2"
+__version__ = "2021.3"
