@@ -9,7 +9,7 @@ def autopswd(*param_decls, **kwargs):
     Example::
 
     @quo.app('--password', prompt=True, autoconfirm=True,
-              hide_input=True)
+              hide=True)
      def changeadmin(password):
      pass
     """
@@ -19,7 +19,7 @@ def autopswd(*param_decls, **kwargs):
 
     kwargs.setdefault("prompt", True)
     kwargs.setdefault("autoconfirm", True)
-    kwargs.setdefault("hide_input", True)
+    kwargs.setdefault("hide", True)
     return app(*param_decls, **kwargs)
 
 
