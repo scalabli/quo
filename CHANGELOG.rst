@@ -1,6 +1,6 @@
 .. currentmodule:: quo
 
-Version 2021.2
+Version 2021.4
 -------------
 
 Unreleased
@@ -17,8 +17,7 @@ Unreleased
 
 -   Minimal implementation of ``HTML`` module to easy formating
 
--   Fix shell completion for arguments that start with a forward slash
-    such as absolute file paths. :issue:`1929`
+-   Fixed changelong link on PyPI
 
 
 Version 2021.2
