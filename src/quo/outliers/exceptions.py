@@ -32,7 +32,7 @@ class QuoException(Exception):
     def show(self, file=None):
         if file is None:
             file = get_text_stderr()
-        echo(f"Error: {self.format_message()}", file=file)
+        flair(f"Error: {self.format_message()}", file=file, fg="red", bold=True)
 
 
 class UsageError(QuoException):
@@ -64,7 +64,7 @@ class UsageError(QuoException):
         if self.clime is not None:
             color = self.clime.color
             echo(f"{self.clime.get_usage()}\n{hint}", file=file, color=color)
-        echo(f"Error: {self.format_message()}", file=file, color=color)
+        flair(f"Error: {self.format_message()}", file=file, color=color, fg="red", bold=True)
 
 
 class BadParameter(UsageError):
