@@ -6,7 +6,7 @@
  Quo
 ===========================
 
-|build-status| |coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
+|coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
 
 :Version: 2021.3
 :Web: http://quo.readthedocs.io/
