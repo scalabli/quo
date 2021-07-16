@@ -22,19 +22,12 @@ from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
-#from quo.expediency.vitals import echo
-#from quo.output import inscribe
 from quo.i_o import confirm, flair, prompt, style
-#from quo.output.vitals import flair
-#from quo.output.vitals import prompt
-#from quo.output.vitals import flair
-#from quo.output.vitals import style
 from .types import _NumberRangeBase
 from .types import BOOL
 from .types import convert_type
 from .types import IntRange
 from quo.expediency.vitals import _detect_program_name
-#from quo.output.inscribe import echo
 from quo.expediency.vitals import echo
 from quo.expediency.vitals import make_default_short_help
 from quo.expediency.vitals import make_str
@@ -2453,15 +2446,12 @@ class App(Parameter):
         return value, source
 
 
-class Argument(Parameter):
-    """Arguments are positional parameters to a command.  They generally
-    provide fewer features than apps but can have infinite ``nargs``
-    and are required by default.
-
-    All parameters are passed onwards to the parameter constructor.
+class Arg(Parameter):
+    """Args are positional parameters(arguments to a command.  They generally  provide fewer features than apps but can have infinite ``nargs`` and are required by default.
+ All parameters are passed onwards to the parameter constructor.
     """
 
-    param_type_name = "argument"
+    param_type_name = "arg"
 
     def __init__(self, param_decls, required=None, **attrs):
         if required is None:
@@ -2499,13 +2489,13 @@ class Argument(Parameter):
         if not decls:
             if not expose_value:
                 return None, [], []
-            raise TypeError("Could not determine name for argument")
+            raise TypeError("Could not determine name for arg")
         if len(decls) == 1:
             name = arg = decls[0]
             name = name.replace("-", "_").lower()
         else:
             raise TypeError(
-                "Arguments take exactly one parameter declaration, got"
+                "Args take exactly one parameter declaration, got"
                 f" {len(decls)}."
             )
         return name, [arg], []

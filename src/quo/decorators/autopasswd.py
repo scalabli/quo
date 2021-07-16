@@ -1,4 +1,6 @@
-def autopswd(*param_decls, **kwargs):
+from quo.decorators import core
+
+def autopasswd(*param_decls, **kwargs):
     """Add a ``--password`` option which prompts for a password, hiding
     input and asking to enter the value again for confirmation.
 

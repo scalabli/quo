@@ -3,18 +3,22 @@
 #
 import inspect
 import asyncio
+from .autoversion import autoversion
+from .autohelp import autohelp
+from .autoconfirm import autoconfirm
+from .autopasswd import autopasswd
+from .tether import tether
 from functools import update_wrapper
-from quo.core import Argument
+from quo.core import Arg
 from quo.core import Command
 from quo.core import Tether
 from quo.core import App
 from quo.context.current import currentcontext
-from quo.output import inscribe
-#from quo.expediency.utilities import echo
-from quo.decorators import autoconfirm
-from quo.decorators import autopswd
-from quo.decorators import autoversion
-from quo.decorators import autohelp
+from quo.expediency.vitals import echo
+#from quo.decorators import autoconfirm
+#from quo.decorators import autopswd
+#from quo.decorators import autoversion
+#from quo.decorators import autohelp
 
 #Marks a callback as wanting to receive current context
 def contextualize(f):
@@ -166,38 +170,33 @@ def app(*param_decls, **attrs):
 
     def decorator(f):
         # Issue 926, copy attrs, so pre-defined options can re-use the same cls=
-        option_attrs = attrs.copy()
+        app_attrs = attrs.copy()
 
-        if "help" in option_attrs:
-            option_attrs["help"] = inspect.cleandoc(option_attrs["help"])
-        OptionClass = option_attrs.pop("cls", App)
-        _param_memo(f, OptionClass(param_decls, **option_attrs))
+        if "help" in app_attrs:
+            app_attrs["help"] = inspect.cleandoc(app_attrs["help"])
+        AppClass = app_attrs.pop("cls", App)
+        _param_memo(f, AppClass(param_decls, **app_attrs))
         return f
 
     return decorator
 
 
-def argument(*param_decls, **attrs):
-    """Attaches an argument to the command.  All positional arguments are
-    passed as parameter declarations to :class:`Argument`; all keyword
-    arguments are forwarded unchanged (except ``cls``).
-    This is equivalent to creating an :class:`Argument` instance manually
-    and attaching it to the :attr:`Command.params` list.
+def arg(*param_decls, **attrs):
+    """Attaches an argument to the command.  All positional arguments are passed as parameter declarations to :class:`Arg`; all keyword args are forwarded unchanged (except ``cls``).  This is equivalent to creating an :class:`Arg` instance manually and attaching it to the :attr:`Command.params` list.
 
-    :param cls: the argument class to instantiate.  This defaults to
-                :class:`Argument`.
+    :param cls: the arg class to instantiate.  This defaults to
+                :class:`Arg`.
     """
 
     def decorator(f):
-        ArgumentClass = attrs.pop("cls", Argument)
-        _param_memo(f, ArgumentClass(param_decls, **attrs))
+        ArgClass = attrs.pop("cls", Arg)
+        _param_memo(f, ArgClass(param_decls, **attrs))
         return f
 
     return decorator
 
 def tether(name=None, **attrs):
-    """Creates a new :class:`Tether` with a function as callback.  This
-    works otherwise the same as :func:`command` just that the `cls`
+    """Creates a new :class:`Tether` with a function as callback.  This works otherwise the same as :func:`command` just that the `cls`
     parameter is set to :class:`Tether`.
     """
     attrs.setdefault("cls", Tether)

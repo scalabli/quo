@@ -1,7 +1,6 @@
-
+from quo.decorators import core
 def autoconfirm(*param_decls, **kwargs):
-    """Add a ``--yes`` option which shows a prompt before continuing if
-    not passed. If the prompt is declined, the program will exit.
+    """Add a ``--yes`` option which shows a prompt before continuing if not passed. If the prompt is declined, the program will exit.
 
     :param param_decls: One or more option names. Defaults to the single
         value ``"--yes"``.

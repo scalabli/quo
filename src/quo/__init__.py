@@ -8,7 +8,7 @@ import importlib
 import os
 import subprocess
 from .application import Application
-from .core import Argument
+from .core import Arg
 from .core import BaseCommand
 from .core import Command
 from .core import CommandCollection
@@ -26,18 +26,20 @@ from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
 from quo.shortcuts import Elicit
 from quo.styles import Style
-from quo.decorators.decorate import argument
-from quo.decorators.decorate import command
-from quo.decorators import autoconfirm
-from quo.decorators.decorate import tether
-from quo.decorators import autohelp
-from quo.decorators.decorate import make_pass_decorator
-from quo.decorators.decorate import app
-from quo.decorators.decorate import contextualize
-from quo.decorators.decorate import objectualize
-from quo.decorators import autopswd
-from quo.decorators import autoversion
-from quo.outliers import Abort, BadArgumentUsage, BadAppUsage, BadParameter, QuoException, FileError, MissingParameter, NoSuchApp, UsageError
+from quo.decorators import arg, command, tether, app
+#from quo.decorators.decorate import arg
+#from quo.decorators.decorate import command
+#from quo.decorators import autoconfirm
+#from quo.decorators.decorate import tether
+#from quo.decorators import autohelp
+#from quo.decorators.decorate import make_pass_decorator
+#from quo.decorators.decorate import app
+from quo.decorators import contextualize, objectualize, make_pass_decorator, autoversion, autopasswd, autohelp, autoconfirm
+#from quo.decorators.decorate import contextualize
+#from quo.decorators.decorate import objectualize
+#from quo.decorators import autopasswd, autoversion
+#from quo.decorators import autoversion
+from quo.outliers import Abort, BadArgUsage, BadAppUsage, BadParameter, QuoException, FileError, MissingParameter, NoSuchApp, UsageError
 from .setout import HelpFormatter
 from .setout import wraptext
 from quo.context.current import currentcontext
@@ -47,6 +49,6 @@ from quo.i_o import flair, confirm, launch, interpose, edit, terminalsize, pause
 from quo.shortcuts import print_container
 from quo.widgets import TextArea, Frame
 from quo.shortcuts import elicit
-from .types import BOOL, Choice, DataTime, File, FLOAT, FloatRange, INT, IntRange, ParamType, Path, STRING, Tuple, UNPROCESSED, UUID
+from .types import BOOL, Choice, DateTime, File, FLOAT, FloatRange, INT, IntRange, ParamType, Path, STRING, Tuple, UNPROCESSED, UUID
 
 __version__ = "2021.3"

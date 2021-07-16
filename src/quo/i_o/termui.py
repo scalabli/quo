@@ -11,14 +11,14 @@ from quo.accordance import is_bytes
 from quo.accordance import isatty
 from quo.accordance import strip_ansi_colors
 from quo.accordance import WIN
-from quo.outliers import exceptions
-from quo.outliers.exceptions import Abort
-from quo.outliers.exceptions import UsageError
+from quo.outliers import Abort, UsageError
+#from quo.outliers.exceptions import Abort
+#from quo.outliers.exceptions import UsageError
 from quo.context.current import resolve_color_default
-from quo.types import Choice
-from quo.types import convert_type
-from quo.expediency import echo
-from quo.expediency import LazyFile
+from quo.types import Choice, convert_type
+#from quo.types import convert_type
+from quo.expediency import echo, LazyFile
+#from quo.expediency import LazyFile
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.

@@ -4,7 +4,6 @@
 from quo.accordance import filename_to_ui
 from quo.accordance import get_text_stderr
 from quo.expediency.vitals import echo
-#from quo.i_o.termui import flair
 from typing import Any, Dict, Optional, Sequence, Type
 
 
@@ -186,10 +185,8 @@ class BadAppUsage(UsageError):
         self.appname = appname
 
 
-class BadArgumentUsage(UsageError):
-    """Raised if an argument is generally supplied but the use of the argument
-    was incorrect.  This is for instance raised if the number of values
-    for an argument is not correct.
+class BadArgUsage(UsageError):
+    """Raised if an arg is generally supplied but the use of the argument was incorrect.  This is for instance raised if the number of values for an arg is not correct.
 
     """
 

@@ -1,3 +1,5 @@
+from quo.decorators import core
+
 def autoversion(
     version=None,
     *param_decls,
@@ -9,14 +11,10 @@ def autoversion(
     """Add a ``--version`` option which immediately prints the version
     number and exits the program.
 
-    If ``version`` is not provided, quo will try to detect it using
-    :func:`importlib.metadata.version` to get the version for the
-    ``package_name``. On Python < 3.8, the ``importlib_metadata``
-    backport must be installed.
+    If ``version`` is not provided, quo will try to detect it using :func:`importlib.metadata.version` to get the version for the
+    ``package_name``. On Python < 3.8, the ``importlib_metadata`` backport must be installed.
 
-    If ``package_name`` is not provided, quo will try to detect it by
-    inspecting the stack frames. This will be used to detect the
-    version, so it must match the name of the installed package.
+    If ``package_name`` is not provided, quo will try to detect it by inspecting the stack frames. This will be used to detect the  version, so it must match the name of the installed package.
 
     :param version: The version number to show. If not provided, quo
         will try to detect it.
