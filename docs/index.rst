@@ -248,6 +248,7 @@ usage patterns.
    exceptions
    unicode-support
    wincmd
+   changes
 
 API Reference
 -------------
@@ -263,7 +264,7 @@ Donate
 ------------
 .. note:: Sponsoring our cause enables us to keep finding ways to contribute to communities, both in code/tools, and in community work. 
 
-`Donate <https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54>`_
+`Donate <https://ko-fi/gerrishon`_
 
 .. toctree::
    :maxdepth: 2
@@ -274,14 +275,12 @@ Donate
    facebook
    
 
-Miscellaneous Pages
--------------------
 
 .. toctree::
    :maxdepth: 2
 
-   contrib
-   changes
-   upgrading
-   license
+    contrib
+    changes
+    upgrading
+    license
 
