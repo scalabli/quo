@@ -264,7 +264,9 @@ Donate
 ------------
 .. note:: Sponsoring our cause enables us to keep finding ways to contribute to communities, both in code/tools, and in community work. 
 
-`Donate <https://ko-fi/gerrishon`_
+Donate
+
+.. _Donate: http://ko-fi/gerrishon/
 
 .. toctree::
    :maxdepth: 2
