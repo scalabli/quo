@@ -3,7 +3,7 @@
 #
 from quo.accordance import filename_to_ui
 from quo.accordance import get_text_stderr
-from quo.expediency.vitals import echo
+from quo.expediency import inscribe
 from typing import Any, Dict, Optional, Sequence, Type
 
 
@@ -33,7 +33,7 @@ class QuoException(Exception):
     def show(self, file=None):
         if file is None:
             file = get_text_stderr()
-        echo(f"Error: {self.format_message()}", file=file)
+        inscribe(f"Error: {self.format_message()}", file=file)
 
 
 class UsageError(QuoException):
@@ -62,8 +62,8 @@ class UsageError(QuoException):
             )
         if self.clime is not None:
             color = self.clime.color
-            echo(f"{self.clime.get_usage()}\n{hint}", file=file, color=color)
-        echo(f"Error: {self.format_message()}", file=file, color=color)
+            inscribe(f"{self.clime.get_usage()}\n{hint}", file=file, color=color)
+        inscribe(f"Error: {self.format_message()}", file=file, color=color)
 
 
 class BadParameter(UsageError):

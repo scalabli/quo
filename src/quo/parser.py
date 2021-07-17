@@ -160,7 +160,7 @@ class App:
         state.order.append(self.obj)
 
 
-class Argument:
+class Arg:
     def __init__(self, dest, nargs=1, obj=None):
         self.dest = dest
         self.nargs = nargs
@@ -172,7 +172,7 @@ class Argument:
             if holes == len(value):
                 value = None
             elif holes != 0:
-                raise BadArgumentUsage(
+                raise BadArgUsage(
                     f"argument {self.dest} takes {self.nargs} values"
                 )
 
@@ -246,15 +246,15 @@ class AppParser:
         for opt in app._long_opts:
             self._long_opt[opt] = app
 
-    def add_argument(self, dest, nargs=1, obj=None):
-        """Adds a positional argument named `dest` to the parser.
+    def add_arg(self, dest, nargs=1, obj=None):
+        """Adds a positional arg named `dest` to the parser.
 
         The `obj` can be used to identify the app in the order list
         that is returned from the parser.
         """
         if obj is None:
             obj = dest
-        self._args.append(Argument(dest=dest, nargs=nargs, obj=obj))
+        self._args.append(Arg(dest=dest, nargs=nargs, obj=obj))
 
     def parse_args(self, args):
         """Parses positional arguments and returns ``(values, args, order)``

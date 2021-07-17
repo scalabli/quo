@@ -12,13 +12,9 @@ from quo.accordance import isatty
 from quo.accordance import strip_ansi_colors
 from quo.accordance import WIN
 from quo.outliers import Abort, UsageError
-#from quo.outliers.exceptions import Abort
-#from quo.outliers.exceptions import UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
-#from quo.types import convert_type
-from quo.expediency import echo, LazyFile
-#from quo.expediency import LazyFile
+from quo.expediency import inscribe, LazyFile
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
@@ -74,7 +70,7 @@ def _format_default(default):
 def prompt(
     text,
     default=None,
-    hide_input=False,
+    hide=False,
     autoconfirm=False,
     type=None,
     value_proc=None,
@@ -111,18 +107,18 @@ def prompt(
     result = None
 
     def prompt_func(text):
-        f = hidden_prompt_func if hide_input else visible_prompt_func
+        f = hidden_prompt_func if hide else visible_prompt_func
         try:
             # Write the prompt separately so that we get nice
             # coloring through colorama on Windows
-            echo(text, nl=False, err=err)
+            inscribe(text, nl=False, err=err)
             return f("")
         except (KeyboardInterrupt, EOFError):
             # getpass doesn't print a newline if the user aborts input with ^C.
             # Allegedly this behavior is inherited from getpass(3).
             # A doc bug has been filed at https://bugs.python.org/issue24711
-            if hide_input:
-                echo(None, err=err)
+            if hide:
+                inscribe(None, err=err)
             raise Abort()
 
     if value_proc is None:
@@ -143,10 +139,10 @@ def prompt(
         try:
             result = value_proc(value)
         except UsageError as e:
-            if hide_input:
-                echo("Error: the value you entered was invalid", err=err)
+            if hide:
+                inscribe("Error: the value you entered was invalid", err=err)
             else:
-                echo(f"Error: {e.message}", err=err)  # noqa: B306
+                inscribe(f"Error: {e.message}", err=err)  # noqa: B306
             continue
         if not autoconfirm:
             return result
@@ -183,7 +179,7 @@ def confirm(
         try:
             # Write the prompt separately so that we get nice
             # coloring through colorama on Windows
-            flair(prompt, nl=False, err=err, fg="cyan")
+            echo(prompt, nl=False, err=err, fg="cyan")
             value = visible_prompt_func("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
@@ -194,7 +190,7 @@ def confirm(
         elif default is not None and value == "":
             rv = default
         else:
-            flair("Error: invalid input", bg="yellow", fg="black", err=err)
+            echo("Error: invalid input", bg="yellow", fg="black", err=err)
             continue
         break
     if abort and not rv:
@@ -438,11 +434,14 @@ def _interpret_color(color, offset=0):
 def style(
     text,
     fg=None,
+    foreground=None,
     bg=None,
+    background=None,
     bold=None,
     dim=None,
     underline=None,
     blink=None,
+    italic=None,
     reverse=None,
     reset=True,
 ):
@@ -516,11 +515,23 @@ def style(
         except KeyError:
             raise TypeError(f"Unknown color {fg!r}")
 
+    if foreground:
+        try:
+            bits.append(f"\033[{_interpret_color(foreground)}m")
+        except KeyError:
+            raise TypeError(f"Unknown color {foreground!r}")
+
+
     if bg:
         try:
             bits.append(f"\033[{_interpret_color(bg, 10)}m")
         except KeyError:
             raise TypeError(f"Unknown color {bg!r}")
+    if background:
+        try:
+            bits.append(f"\033[{_interpret_color(background, 10)}")
+        except KeyError:
+            raise TypeError(f"Unknown color {background!r}")
 
     if bold is not None:
         bits.append(f"\033[{1 if bold else 22}m")
@@ -531,7 +542,9 @@ def style(
     if blink is not None:
         bits.append(f"\033[{5 if blink else 25}m")
     if reverse is not None:
-        bits.append(f"\033[{7 if reverse else 27}m")
+        bits.append(f"\033[{7 if reverse else 27}m") 
+    if italic is not None:
+        bits.append(f"\x1B[3m")
     bits.append(text)
     if reset:
         bits.append(_ansi_reset_all)
@@ -548,18 +561,18 @@ def unstyle(text):
     return strip_ansi_colors(text)
 
 
-def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
+def echo(message=None, file=None, nl=True, err=False, color=None, **styles):
     """This function combines :func:`echo` and :func:`style` into one
     call.  As such the following two calls are the same::
 
-        quo.flair('Hello World!', fg='green')
-        quo.echo(quo.style('Hello World!', fg='green'))
+        quo.echo('Hello World!', fg='green')
+        quo.inscribe(quo.style('Hello World!', fg='green'))
 
     All keyword arguments are forwarded to the underlying functions
     depending on which one they go with.
 
     Non-string types will be converted to :class:`str`. However,
-    :class:`bytes` are passed directly to :meth:`echo` without applying
+    :class:`bytes` are passed directly to :meth:`inscribe` without applying
     style. If you want to style bytes that represent text, call
     :meth:`bytes.decode` first.
 
@@ -567,7 +580,7 @@ def flair(message=None, file=None, nl=True, err=False, color=None, **styles):
     if message is not None and not is_bytes(message):
         message = style(message, **styles)
 
-    return echo(message, file=file, nl=nl, err=err, color=color)
+    return inscribe(message, file=file, nl=nl, err=err, color=color)
 
 
 def edit(
@@ -642,7 +655,7 @@ def launch(url, wait=False, locate=False):
 _interpose = None
 
 
-def interpose(echo=False):
+def interpose(inscribe=False):
     """Fetches a single character from the terminal and returns it.  This
     will always return a unicode character and under certain rare
     circumstances this might return more than one character.  The
@@ -658,13 +671,13 @@ def interpose(echo=False):
     This is because certain Unicode characters look like special-key markers.
 
 
-    :param echo: if set to `True`, the character read will also show up on
+    :param inscribe: if set to `True`, the character read will also show up on
                  the terminal.  The default is to not show it.
     """
     f = _interpose
     if f is None:
         from quo.implementation import interpose as f
-    return f(echo)
+    return f(inscribe)
 
 
 def raw_terminal():
@@ -687,11 +700,11 @@ def pause(info="Press any key to proceed >> ...", err=False):
         return
     try:
         if info:
-            flair(info, nl=False, err=err, fg="cyan")
+            echo(info, nl=False, err=err, fg="cyan")
         try:
             interpose()
         except (KeyboardInterrupt, EOFError):
             pass
     finally:
         if info:
-            echo(err=err)
+            inscribe(err=err)

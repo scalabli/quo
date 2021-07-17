@@ -1,6 +1,3 @@
-#
-#
-#
 import textwrap
 from contextlib import contextmanager
 

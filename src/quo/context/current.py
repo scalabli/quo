@@ -1,7 +1,3 @@
-#
-#
-#
-
 from threading import local
 
 _local = local()

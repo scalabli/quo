@@ -11,7 +11,9 @@ Version 2021.3
 
 Unreleased
 
--   ``foreground`` and ``background`` changed to ``fg`` and ``bg`` 
+-   Added ``foreground`` and ``background`` which can be used in place of ``fg`` and ``bg`` however ``fg`` abd ``bg`` can still be used no pressure!
+
+-   You can now print in ``italics``!! 
 
 -   Added support for lively ``ProgressBars``
 
@@ -33,8 +35,7 @@ Released 2021-06-28
 -   Fix some types that weren't available in Python 3.6.0. :issue:`1882`
 -   Fix type checking for iterating over ``ProgressBar`` object.
     :issue:`1892`
--   ``importlib_metadata`` backport package is installed on Python <
-    3.8 therefore will be be delisted as part of Quo's external dependency in later versions of Quo
+-   ``importlib_metadata`` backport package is installed on Python < 3.8 therefore will be be delisted as part of Quo's external dependency in later versions of Quo
 -   Arguments with ``nargs=-1`` only use env var value if no command
     line values are given. :issue:`1903`
 -   Flag options guess their type from ``flag_value`` if given, like

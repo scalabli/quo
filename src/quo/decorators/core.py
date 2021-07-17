@@ -7,14 +7,13 @@ from .autoversion import autoversion
 from .autohelp import autohelp
 from .autoconfirm import autoconfirm
 from .autopasswd import autopasswd
-from .tether import tether
 from functools import update_wrapper
 from quo.core import Arg
 from quo.core import Command
 from quo.core import Tether
 from quo.core import App
 from quo.context.current import currentcontext
-from quo.expediency.vitals import echo
+from quo.expediency import inscribe
 #from quo.decorators import autoconfirm
 #from quo.decorators import autopswd
 #from quo.decorators import autoversion

@@ -8,13 +8,15 @@ from functools import update_wrapper
 from itertools import repeat
 
 from .universal import python_environment
-from quo.outliers import Abort
-#from quo.outliers.exceptions import Abort
-from quo.outliers.exceptions import BadParameter
-from quo.outliers.exceptions import QuoException
-from quo.outliers.exceptions import Exit
-from quo.outliers.exceptions import MissingParameter
-from quo.outliers.exceptions import UsageError
+from quo.outliers import (
+                   Abort,
+                   BadParameter,
+                   Exit,
+                   MissingParameter,
+                   UsageError,
+                   QuoException
+                   )
+
 from .setout import HelpFormatter
 from .setout import join_apps
 from quo.context.current import pop_context
@@ -22,16 +24,27 @@ from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
-from quo.i_o import confirm, flair, prompt, style
-from .types import _NumberRangeBase
-from .types import BOOL
-from .types import convert_type
-from .types import IntRange
-from quo.expediency.vitals import _detect_program_name
-from quo.expediency.vitals import echo
-from quo.expediency.vitals import make_default_short_help
-from quo.expediency.vitals import make_str
-from quo.expediency.vitals import PacifyFlushWrapper
+from quo.i_o import (
+           confirm,
+           echo,
+           prompt,
+           style
+           )
+
+from .types import (
+        _NumberRangeBase,
+        BOOL,
+        convert_type,
+        IntRange
+        )
+
+from quo.expediency import (
+        _detect_program_name,
+        inscribe,
+        make_default_short_help,
+        make_str,
+        PacifyFlushWrapper
+        )
 
 _missing = object()
 
@@ -44,7 +57,7 @@ DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
 def deprecated_notice(cmd):
     if cmd.deprecated:
-        flair(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), foreground="black", background="yellow", err=True)
+        echo(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow", err=True)
 
 
 def quick_exit(code):
@@ -146,11 +159,9 @@ def iter_params_for_processing(invocation_order, declaration_order):
 
 
 class ParameterSource(enum.Enum):
-    """This is an :class:`~enum.Enum` that indicates the source of a
-    parameter's value.
+    """This is an :class:`~enum.Enum` that indicates the source of a parameter's value.
 
-    Use :meth:`quo.Context.get_parameter_source` to get the
-    source for a parameter by name.
+    Use :meth:`quo.Context.get_parameter_source` to get the source for a parameter by name.
 
     """
 
@@ -433,14 +444,10 @@ class Context:
 
     @contextmanager
     def scope(self, cleanup=True):
-        """This helper method can be used with the context object to promote
-        it to the current thread local (see :func:`currentcontext`).
-        The default behavior of this is to invoke the cleanup functions which
-        can be disabled by setting `cleanup` to `False`.  The cleanup
-        functions are typically used for things such as closing file handles.
+        """This helper method can be used with the context object to promote it to the current thread local (see :func:`currentcontext`).
+        The default behavior of this is to invoke the cleanup functions which can be disabled by setting `cleanup` to `False`.  The cleanup  functions are typically used for things such as closing file handles.
 
-        If the cleanup is intended the context object can also be directly
-        used as a context manager.
+        If the cleanup is intended the context object can also be directly used as a context manager.
 
         Example usage::
 
@@ -453,11 +460,7 @@ class Context:
                 assert currentcontext() is clime
 
 
-        :param cleanup: controls if the cleanup functions should be run or
-                        not.  The default is to run these functions.  In
-                        some situations the context only wants to be
-                        temporarily pushed in which case this can be disabled.
-                        Nested pushes automatically defer the cleanup.
+        :param cleanup: controls if the cleanup functions should be run or not.  The default is to run these functions.  In some situations the context only wants to be temporarily pushed in which case this can be disabled. Nested pushes automatically defer the cleanup.
         """
         if not cleanup:
             self._depth += 1
@@ -470,16 +473,9 @@ class Context:
 
     @property
     def meta(self):
-        """This is a dictionary which is shared with all the contexts
-        that are nested.  It exists so that Quo utilities can store some
-        state here if they need to.  It is however the responsibility of
-        that code to manage this dictionary well.
-
-        The keys are supposed to be unique dotted strings.  For instance
-        module paths are a good choice for it.  What is stored in there is
-        irrelevant for the operation of Quo.  However what is important is
-        that code that places data here adheres to the general semantics of
-        the system.
+        """This is a dictionary which is shared with all the contexts that are nested.  It exists so that Quo utilities can store some state here if they need to.  It is however the responsibility of that code to manage this dictionary well.
+   
+   The keys are supposed to be unique dotted strings.  For instance module paths are a good choice for it.  What is stored in there is  irrelevant for the operation of Quo.  However what is important is that code that places data here adheres to the general semantics ofthe system.
 
         Example usage::
 
@@ -496,11 +492,9 @@ class Context:
         return self._meta
 
     def make_formatter(self):
-        """Creates the :class:`~quo.HelpFormatter` for the help and
-        usage output.
+        """Creates the :class:`~quo.HelpFormatter` for the help and usage output.
 
-        To quickly customize the formatter class used without overriding
-        this method, set the :attr:`formatter_class` attribute.
+        To quickly customize the formatter class used without overriding this method, set the :attr:`formatter_class` attribute.
 
         """
         return self.formatter_class(
@@ -629,20 +623,17 @@ class Context:
         raise Exit(code)
 
     def get_usage(self):
-        """Helper method to get formatted usage string for the current
-        context and command.
+        """Helper method to get formatted usage string for the current context and command.
         """
         return self.command.get_usage(self)
 
     def get_help(self):
-        """Helper method to get formatted help page for the current
-        context and command.
+        """Helper method to get formatted help page for the current context and command.
         """
         return self.command.get_help(self)
 
     def _make_sub_context(self, command):
-        """Create a new context of the same type as this context, but
-        for a new command.
+        """Create a new context of the same type as this context, but for a new command.
 
         :meta private:
         """
@@ -932,7 +923,7 @@ class BaseCommand:
                     # by its truthiness/falsiness
                     clime.exit()
             except (EOFError, KeyboardInterrupt):
-                flair(file=sys.stderr,fg="red")
+                echo(file=sys.stderr,fg="red")
                 raise Abort()
             except QuoException as e:
                 if not standalone_mode:
@@ -1623,7 +1614,7 @@ class Tether(MultiCommand):
         :attr:`command_class` attribute.
 
         """
-        from .decorate import command
+        from quo.decorators.core import command
 
         if self.command_class is not None and "cls" not in kwargs:
             kwargs["cls"] = self.command_class
@@ -1636,16 +1627,12 @@ class Tether(MultiCommand):
         return decorator
 
     def tether(self, *args, **kwargs):
-        """A shortcut decorator for declaring and attaching a tether to
-        the tether. This takes the same arguments as :func:`tether` and
-        immediately registers the created tether with this tether by
-        calling :meth:`addcommand`.
+        """A shortcut decorator for declaring and attaching a tether to the tether. This takes the same arguments as :func:`tether` and immediately registers the created tether with this tether by calling :meth:`addcommand`.
 
-        To customize the tether class used, set the :attr:`group_class`
-        attribute.
+        To customize the tether class used, set the :attr:`group_class` attribute.
 
         """
-        from .decorators import tether
+        from quo.decorators.core import tether
 
         if self.group_class is not None and "cls" not in kwargs:
             if self.group_class is type:
@@ -1849,12 +1836,9 @@ class Parameter:
         :meth:`Context.lookup_value` first, then the local default.
 
         :param clime: Current context.
-        :param call: If the default is a callable, call it. Disable to
-            return the callable instead.
-
-            Looks at ``clime.default_map`` first.
-
-            Added the ``call`` parameter.
+        :param call: If the default is a callable, call it.
+        Disable to return the callable instead.
+        Looks at ``clime.default_map`` first. Added the ``call``        parameter.
         """
         value = clime.lookup_default(self.name, call=False)
 
@@ -1892,9 +1876,7 @@ class Parameter:
         return value, source
 
     def type_cast_value(self, clime, value):
-        """Given a value this runs it properly through the type system.
-        This automatically handles things like `nargs` and `multiple` as
-        well as composite types.
+        """Given a value this runs it properly through the type system. This automatically handles things like `nargs` and `multiple` as  well as composite types.
         """
         if value is None:
             return () if self.multiple or self.nargs == -1 else None
@@ -2095,7 +2077,7 @@ class App(Parameter):
         prompt=False,
         autoconfirm=False,
         prompt_required=True,
-        hide_input=False,
+        hide=False,
         is_flag=None,
         flag_value=None,
         multiple=False,
@@ -2120,7 +2102,7 @@ class App(Parameter):
         self.prompt = prompt_text
         self.autoconfirm = autoconfirm
         self.prompt_required = prompt_required
-        self.hide_input = hide_input
+        self.hide = hide
         self.hidden = hidden
 
         # If prompt is enabled but not required, then the app can be
@@ -2180,7 +2162,7 @@ class App(Parameter):
                 raise TypeError("Cannot prompt for flags that are not bools.")
             if not self.is_bool_flag and self.secondary_opts:
                 raise TypeError("Got secondary app for non boolean flag.")
-            if self.is_bool_flag and self.hide_input and self.prompt is not None:
+            if self.is_bool_flag and self.hide and self.prompt is not None:
                 raise TypeError("Hidden input does not work with boolean flag prompts.")
             if self.count:
                 if self.multiple:
@@ -2383,7 +2365,7 @@ class App(Parameter):
             self.prompt,
             default=default,
             type=self.type,
-            hide_input=self.hide_input,
+            hide=self.hide,
             show_choices=self.show_choices,
             autoconfirm=self.autoconfirm,
             value_proc=lambda x: self.process_value(clime, x),

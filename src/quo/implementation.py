@@ -1,4 +1,4 @@
-#This module contains implementations for the ui module
+#This module contains implementations for the module
 #Some infrequently used functionality are
 #placed in this module and only imported as needed.
 
@@ -17,8 +17,8 @@ from .accordance import strip_ansi_colors
 from .accordance import term_len
 from .accordance import WIN
 from quo.outliers.exceptions import QuoException
-#from quo.expediency.utilities import echo
-from quo.output import inscribe
+from quo.expediency import inscribe
+from quo.i_o import echo
 
 if os.name == "nt":
     BEFORE_BAR = "\r"
@@ -44,81 +44,36 @@ def _length_hint(obj):
         if hint is NotImplemented or not isinstance(hint, int) or hint < 0:
             return None
         return hint
+################################################################
 
-
-class ProgressBar:
-    def __init__(
-        self,
-        iterable,
-        length=None,
-        fill_char="#",
-        empty_char=" ",
-        bar_template="%(bar)s",
-        info_sep="  ",
-        show_eta=True,
-        show_percent=None,
-        show_pos=False,
-        item_show_func=None,
-        label=None,
-        file=None,
-        color=None,
-        update_min_steps=1,
-        width=30,
-    ):
-        self.fill_char = fill_char
-        self.empty_char = empty_char
-        self.bar_template = bar_template
-        self.info_sep = info_sep
-        self.show_eta = show_eta
-        self.show_percent = show_percent
-        self.show_pos = show_pos
-        self.item_show_func = item_show_func
-        self.label = label or ""
-        if file is None:
-            file = _default_text_stdout()
-        self.file = file
-        self.color = color
-        self.update_min_steps = update_min_steps
-        self._completed_intervals = 0
-        self.width = width
-        self.autowidth = width == 0
-
-        if length is None:
-            length = _length_hint(iterable)
-        if iterable is None:
-            if length is None:
-                raise TypeError("iterable or length is required")
-            iterable = range(length)
-        self.iter = iter(iterable)
-        self.length = length
-        self.length_known = length is not None
-        self.pos = 0
-        self.avg = []
-        self.start = self.last_eta = time.time()
-        self.eta_known = False
-        self.finished = False
-        self.max_width = None
-        self.entered = False
-        self.current_item = None
-        self.is_hidden = not isatty(self.file)
-        self._last_line = None
-        self.short_limit = 0.5
-
-    def __enter__(self):
-        self.entered = True
-        self.render_progress()
-        return self
-
-    def __exit__(self, exc_type, exc_value, tb):
-        self.render_finish()
-
-    def __iter__(self):
-        if not self.entered:
-            raise RuntimeError("You need to use progress bars in a with block.")
-        self.render_progress()
-        return self.generator()
-
-    def __next__(self):
+#class ProgressBar:
+#    def __init__(
+#       self,
+#        iterable,
+#        length=None,
+#        fill_char="#",
+#        empty_char=" ",
+#        bar_template="%(bar)s",
+#        info_sep="  ",
+#        show_eta=True,
+#        show_percent=None,
+#        show_pos=False,
+#        item_show_func=None,
+#        label=None,
+#        file=None,
+#        color=None,
+#        update_min_steps=1,
+#        width=30,
+#    ):
+#fill_char
+#        self.empty_char = empty_char
+#        self.bar_template = bar_template
+#        self.info_sep = info_sep
+#        self.show_eta = show_eta
+#        self.show_percent = show_percent
+#        self.show_pos = show_pos
+#        self.item_show_func = item_show_func
+#   def __next__(self):
         # Iteration is defined in terms of a generator function,
         # returned by iter(self); use that to define next(). This works
         # because `self.iter` is an iterable consumed by that generator,
@@ -275,16 +230,7 @@ class ProgressBar:
         # self.avg is a rolling list of length <= 7 of steps where steps are
         # defined as time elapsed divided by the total progress through
         # self.length.
-        if self.pos:
-            step = (time.time() - self.start) / self.pos
-        else:
-            step = time.time() - self.start
-
-        self.avg = self.avg[-6:] + [step]
-
-        self.eta_known = self.length_known
-
-    def update(self, n_steps, current_item=None):
+    
         """Update the progress bar by advancing a specified number of
         steps, and optionally set the ``current_item`` for this new
         position.
@@ -298,27 +244,6 @@ class ProgressBar:
             Only render when the number of steps meets the
             ``update_min_steps`` threshold.
         """
-        self._completed_intervals += n_steps
-
-        if self._completed_intervals >= self.update_min_steps:
-            self.make_step(self._completed_intervals)
-
-            if current_item is not None:
-                self.current_item = current_item
-
-            self.render_progress()
-            self._completed_intervals = 0
-
-    def finish(self):
-        self.eta_known = 0
-        self.current_item = None
-        self.finished = True
-
-    def generator(self):
-        """Return a generator which yields the items added to the bar
-        during construction, and updates the progress bar *after* the
-        yielded block returns.
-        """
         # WARNING: the iterator interface for `ProgressBar` relies on
         # this and only works because this is a simple generator which
         # doesn't create or manage additional state. If this function
@@ -326,19 +251,10 @@ class ProgressBar:
         # `iter(bar)` and `next(bar)`. `next()` in particular may call
         # `self.generator()` repeatedly, and this must remain safe in
         # order for that interface to work.
-        if not self.entered:
-            raise RuntimeError("You need to use progress bars in a with block.")
 
-        if self.is_hidden:
-            yield from self.iter
-        else:
-            for rv in self.iter:
-                self.current_item = rv
-                yield rv
-                self.update(1)
-            self.finish()
-            self.render_progress()
 
+
+################################################################
 
 def scrollable(generator, color=None):
     """Decide what method to use for paging through text."""

@@ -18,7 +18,7 @@ from quo.accordance import WIN
 from quo.context.current import resolve_color_default
 
 
-echo_functionality = (bytes, bytearray, str)
+inscribe_functionality = (bytes, bytearray, str)
 
 
 def _posixify(name):
@@ -121,7 +121,8 @@ class LazyFile:
                 self.name, self.mode, self.encoding, self.errors, atomic=self.atomic
             )
         except OSError as e:  # noqa: E402
-            from quo.outliers.file_error import FileError
+            from quo.outliers import FileError
+            #from quo.outliers.file_error import FileError
 
             raise FileError(self.name, hint=get_strerror(e))
         self._f = rv
@@ -170,7 +171,7 @@ class KeepOpenFile:
         return iter(self._file)
 
 
-def echo(message=None, file=None, nl=True, err=False, color=None):
+def inscribe(message=None, file=None, nl=True, err=False, color=None):
     """Prints a message plus a newline to the given file or stdout.  On
     first sight, this looks like the print function, but it has improved
     support for handling Unicode and binary data that does not fail no
@@ -212,7 +213,7 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
     Convert non bytes/text into the native string type.
     """
 
-    if message is not None and not isinstance(message, echo_functionality):
+    if message is not None and not isinstance(message, inscribe_functionality):
         message = str(message)
 
     if nl:
