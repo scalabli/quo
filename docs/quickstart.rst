@@ -154,22 +154,25 @@ implements two commands for managing databases:
 
 .. code-block:: python
 
-    @quo.tether() 
+    import quo
+    from quo import tether, command, echo
+
+    @tether() 
     def cli():
         pass
 
-    @quo.command()
+    @command()
     def initdb():
         quo.echo('Initialized the database')
 
-    @quo.command()
+    @command()
     def dropdb():
-        quo.echo('Dropped the database')
+        echo('Dropped the database')
 
     cli.addcommand(initdb)
     cli.addcommand(dropdb)
 
-As you can see, the :func:`group` decorator works like the :func:`command`
+As you can see, the :func:`tether` decorator works like the :func:`command`
 decorator, but creates a :class:`Tether` object instead which can be given
 multiple subcommands that can be attached with :meth:`Tether.addcommand`.
 
@@ -179,6 +182,8 @@ script can instead be written like this:
 
 .. code-block:: python
 
+    import quo
+    from quo import tether, command, echo
     @quo.tether() 
     def cli():
         pass
@@ -189,7 +194,7 @@ script can instead be written like this:
 
     @cli.command()
     def dropdb():
-        quo.echo('Dropped the database')
+        echo('Dropped the database')
 
 You would then invoke the :class:`Tether` in your setuptools entry points or
 other invocations::
@@ -201,9 +206,8 @@ other invocations::
 Registering Commands Later
 --------------------------
 
-Instead of using the ``@group.command()`` decorator, commands can be
-decorated with the plain ``@quo.command()`` decorator and registered
-with a group later with ``group.addcommand()``. This could be used to
+Commands can be decorated with the plain ``@quo.command()`` decorator and registered
+with a tether later with ``tether.addcommand()``. This could be used to
 split commands into multiple Python modules.
 
 .. code-block:: python
@@ -224,16 +228,18 @@ split commands into multiple Python modules.
 Adding Parameters
 -----------------
 
-To add parameters, use the :func:`app` and :func:`argument` decorators:
+To add parameters, use the :func:`app` and :func:`arg` decorators:
 
 .. code-block:: python
-
-    @quo.command()
-    @quo.app('--count', default=1, help='number of greetings')
-    @quo.argument('name')
+   
+    import quo
+    from quo import command, app, arg, echo
+    @command()
+    @app('--count', default=1, help='number of greetings')
+    @arg('name')
     def hello(count, name):
         for x in range(count):
-            quo.echo(f"Hello {name}!")
+            echo(f"Hello {name}!")
 
 What it looks like:
 

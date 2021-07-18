@@ -67,20 +67,15 @@ To install `colorama`, run this command::
 
     $ pip install colorama
 
-For styling a string, the :func:`style` function can be used::
+For styling and adding more flair to  a string, :meth: fg or :meth: bg; amongst others, can be attached to the :func:`echo` :
+
+.. code:: python
 
     import quo
-
-    quo.echo(quo.style('Hello World!', fg='green'))
-    quo.echo(quo.style('Some more text', bg='blue', fg='white'))
-    quo.echo(quo.style('ATTENTION', blink=True, bold=True))
-
-The :func:`echo` and :func:`style` can also be combined to single function called :func:`flair`:: to add a little sparkle❇ in your code::
-
-    quo.flair('Hello World!', fg='green')
-    quo.flair('Some more text', bg='blue', fg='white')
-    quo.flair('ATTENTION', blink=True, bold=True)
-
+    from quo import echo
+    echo('Hello World!', fg='green')
+    echo('Some more text', bg='blue', fg='white')
+    echo('ATTENTION', blink= True, bold= True, italic= True)
 
 .. _colorama: https://pypi.org/project/colorama/
 
@@ -115,10 +110,11 @@ Screen Clearing
 To clear the terminal screen, you can use the :func:`clear` function. It does what the name suggests: it
 clears the entire visible screen in a platform-agnostic way:
 
-::
+.. code:: python
 
     import quo
-    quo.clear()
+    from quo import clear
+    clear()
 
 
 Getting Characters from Terminal
@@ -135,19 +131,19 @@ character from the terminal buffer and returns it as a Unicode character.
 Note that this function will always read from the terminal, even if stdin
 is instead a pipe.
 
-Example::
+.. code:: python
 
     import quo
-
-    quo.echo('Continue? [yn] ', nl=False)
-    c = quo.interpose()
+    from quo import echo, interpose, confirm
+    confirm(f"Start Interpose")
+    c = interpose()
     quo.echo()
     if c == 'y':
-        quo.echo('We will go on')
+        echo('We will go on')
     elif c == 'n':
-        quo.echo('Abort!')
+        echo('Abort!')
     else:
-        quo.echo('Invalid input :(')
+        echo('Invalid input :(')
 
 Note that this reads raw input, which means that things like arrow keys
 will show up in the platform's native escape format.  The only characters
@@ -171,10 +167,11 @@ customized) and wait for the user to press a key.  In addition to that,
 it will also become a NOP (no operation instruction) if the script is not
 run interactively.
 
-Example::
+.. code:: python
 
     import quo
-    quo.pause()
+    from quo import pause
+    pause()
 
 
 Launching Editors
@@ -186,23 +183,23 @@ automatically open the user's defined editor or fall back to a sensible
 default.  If the user closes the editor without saving, the return value
 will be ``None``, otherwise the entered text.
 
-Example usage::
+.. code:: python
 
     import quo
-
+    from quo import edit
     def get_commit_message():
         MARKER = '# Everything below is ignored\n'
-        message = quo.edit('\n\n' + MARKER)
+        message = edit('\n\n' + MARKER)
         if message is not None:
             return message.split(MARKER, 1)[0].rstrip('\n')
 
-Alternatively, the function can also be used to launch editors for files by
-a specific filename.  In this case, the return value is always `None`.
+Alternatively, the function can also be used to launch editors for files by a specific filename.  In this case, the return value is always `None`.
 
-Example usage::
+.. code:: python
 
     import quo
-    quo.edit(filename='/etc/passwd')
+    from quo import edit
+    edit(filename='/etc/passwd')
 
 
 Launching Applications
@@ -214,10 +211,12 @@ This can be used to launch web browsers or picture viewers, for instance.
 In addition to this, it can also launch the file manager and automatically
 select the provided file.
 
-Example usage::
-
-    quo.launch("https://quo.rtfd.io/")
-    quo.launch("/home/downloads/file.txt", locate=True)
+.. code:: python
+  
+   import quo
+   from quo import launch
+   launch("https://quo.rtfd.io/")
+   launch("/home/downloads/file.txt", locate=True)
 
 
 Printing Filenames
@@ -226,14 +225,16 @@ Printing Filenames
 Because filenames might not be Unicode, formatting them can be a bit
 tricky.
 
-The way this works with quo is through the :func:`format_filename`
+The way this works with quo is through the :func:`formatfilename`
 function.  It does a best-effort conversion of the filename to Unicode and
 will never fail.  This makes it possible to use these filenames in the
 context of a full Unicode string.
 
-Example::
+.. code:: python
 
-    quo.echo(f"Path: {quo.format_filename(b'foo.txt')}")
+   import quo
+   from quo import echo, formatfilename
+   echo(f"Path: {formatfilename(b'foo.txt')}")
 
 
 Standard Streams
@@ -252,12 +253,12 @@ different Python versions and for a wide variety of terminal configurations.
 The end result is that these functions will always return a functional
 stream object (except in very odd cases; see :doc:`/unicode-support`).
 
-Example::
+.. code:: python
 
     import quo
-
-    stdin_text = quo.get_text_stream('stdin')
-    stdout_binary = quo.get_binary_stream('stdout')
+    from quo import get_text_stream, get_binary_stream
+    stdin_text = get_text_stream('stdin')
+    stdout_binary = get_binary_stream('stdout')
 
 Quo now emulates output streams on Windows to support unicode to the
 Windows console through separate APIs.  For more information see
@@ -268,23 +269,27 @@ Intelligent File Opening
 ------------------------
 
 The logic for opening files from the :class:`File`
-type is exposed through the :func:`open_file` function.  It can
+type is exposed through the :func:`openfile` function.  It can
 intelligently open stdin/stdout as well as any other file.
 
-Example::
+.. code:: python
 
     import quo
+    from quo openfile
 
-    stdout = quo.open_file('-', 'w')
-    test_file = quo.open_file('test.txt', 'w')
+    stdout = openfile('-', 'w')
+    test_file = openfile('test.txt', 'w')
 
 If stdin or stdout are returned, the return value is wrapped in a special
 file where the context manager will prevent the closing of the file.  This
 makes the handling of standard streams transparent and you can always use
-it like this::
+it like this:
 
-    with quo.open_file(filename, 'w') as f:
-        f.write('Hello World!\n')
+.. code:: python
+
+   from quo import openfile
+   with openfile(filename, 'w') as f:
+   f.write('Hello World!\n')
 
 
 Finding Application Folders
@@ -293,19 +298,20 @@ Finding Application Folders
 Very often, you want to open a configuration file that belongs to your
 application.  However, different operating systems store these configuration
 files in different locations depending on their standards.  Quo provides
-a :func:`get_app_dir` function which returns the most appropriate location
+a :func:`appdir` function which returns the most appropriate location
 for per-user config files for your application depending on the OS.
 
-Example usage::
+.. code:: python
 
     import os
-    import quo
+    import qu
+    from quo import appdir
     import ConfigParser
 
     APP_NAME = 'My Application'
 
     def read_config():
-        cfg = os.path.join(click.get_app_dir(APP_NAME), 'config.ini')
+        cfg = os.path.join(appdir(APP_NAME), 'config.ini')
         parser = ConfigParser.RawConfigParser()
         parser.read([cfg])
         rv = {}

@@ -67,8 +67,8 @@ from quo.expediency import (
                   appdir,
                   formatfilename,
                   get_os_args,
-                  get_text_stream,
-                  get_binary_stream,
+                  textstream,
+                  binarystream,
                   openfile
                   )
         

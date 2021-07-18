@@ -3,14 +3,11 @@ Parameters
 
 .. currentmodule:: quo
 
-quo supports two types of parameters for scripts: apps and arguments.
-There is generally some confusion among authors of command line scripts of
-when to use which, so here is a quick overview of the differences.  As its
-name indicates, an option is optional.  While arguments can be optional
+quo supports two types of parameters for scripts: apps and args.
+ An app is optional, while args can be optional
 within reason, they are much more restricted in how optional they can be.
 
-To help you decide between apps and arguments, the recommendation is
-to use arguments exclusively for things like going to subcommands or input
+Args should be exclusively used for things like going to subcommands or input
 filenames / URLs, and have everything else be an option instead.
 
 Differences

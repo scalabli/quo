@@ -122,7 +122,6 @@ class LazyFile:
             )
         except OSError as e:  # noqa: E402
             from quo.outliers import FileError
-            #from quo.outliers.file_error import FileError
 
             raise FileError(self.name, hint=get_strerror(e))
         self._f = rv
@@ -255,7 +254,7 @@ def inscribe(message=None, file=None, nl=True, err=False, color=None):
     file.flush()
 
 
-def get_binary_stream(name):
+def binarystream(name):
     """Returns a system stream for byte processing.
 
     :param name: the name of the stream to open.  Valid names are ``'stdin'``,
@@ -267,7 +266,7 @@ def get_binary_stream(name):
     return opener()
 
 
-def get_text_stream(name, encoding=None, errors="strict"):
+def textstream(name, encoding=None, errors="strict"):
     """Returns a system stream for text processing.  This usually returns
     a wrapped stream around a binary stream returned from
     :func:`get_binary_stream` but it also can take shortcuts for already

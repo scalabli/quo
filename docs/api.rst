@@ -19,17 +19,17 @@ Parameters
 
                                                         * ``cls`` – the command class to instantiate. This defaults to Command.
 
-**quo.group** *(name=None, **attrs)*
-Creates a new Group with a function as callback. This works otherwise the same as command() just that the cls parameter is set to Group.
+**quo.tether** *(name=None, **attrs)*
+Creates a new Tether with a function as callback. This works otherwise the same as command() just that the cls parameter is set to Tether.
 
-**quo.argument** *(*param_decls, **attrs)*
-Attaches an argument to the command. All positional arguments are passed as parameter declarations to Argument; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Argument instance manually and attaching it to the Command.params list.
+**quo.arg** *(*param_decls, **attrs)*
+Attaches an argument to the command. All positional arguments are passed as parameter declarations to Arg; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Argument instance manually and attaching it to the Command.params list.
 
 Parameters
-                                                         * ``cls`` – the argument class to instantiate. This defaults to Argument.
+                                                         * ``cls`` – the argument class to instantiate. This defaults to Arg.
 
-**quo.option** *(*param_decls, **attrs)*
-Attaches an option to the command. All positional arguments are passed as parameter declarations to Option; all keyword arguments are forwarded unchanged (except cls). This is equivalent to creating an Option instance manually and attaching it to the Command.params list.
+**quo.apl** *(*param_decls, **attrs)*
+Attaches an app to the command. All positional args are passed as parameter declarations to App; all keyword args are forwarded unchanged (except cls). This is equivalent to creating an App instance manually and attaching it to the Command.params list.
 
 Parameters
                                                          * ``cls`` – the option class to instantiate. This defaults to Option.
@@ -37,12 +37,18 @@ Parameters
 **quo.password_option** *(*param_decls, **attrs)*
 Shortcut for password prompts. This is equivalent to decorating a function with option() with the following parameters:
 
-@quo.command()
-@quo.option('--password', prompt=True, confirmation_prompt=True,
-              hide_input=True)
-def changeadmin(password):
+.. code:: python
+
+   from quo import command, app
+   @command()
+   @app('--password', prompt=True, autoconfirm=True, hide=True)
+   def changeadmin(password):
     pass
-``quo.confirmation_option`` (*param_decls, **attrs)
+
+
+``quo.confirmation_option`` (*param_decls, **attrs
+
+
 Shortcut for confirmation prompts that can be ignored by passing --yes as parameter.
 This is equivalent to decorating a function with option() with the following parameters:
 

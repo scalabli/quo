@@ -22,11 +22,12 @@ data, exit code, and optional exception attached:
    :caption: hello.py
 
    import quo
+   from quo import command, arg, echo
 
-   @quo.command()
-   @quo.argument('name')
+   @command()
+   @arg('name')
    def hello(name):
-      quo.echo(f'Hello {name}!')
+      echo(f'Hello {name}!')
 
 .. code-block:: python
    :caption: test_hello.py
@@ -46,15 +47,16 @@ For subcommand testing, a subcommand name must be specified in the `args` parame
    :caption: sync.py
 
    import quo
+   from quo import tether, app, echo
 
-   @quo.group()
-   @quo.option('--debug/--no-debug', default=False)
+   @tether()
+   @app('--debug/--no-debug', default=False)
    def cli(debug):
-      quo.echo(f"Debug mode is {'on' if debug else 'off'}")
+      echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
    def sync():
-      quo.echo('Syncing')
+      echo('Syncing')
 
 .. code-block:: python
    :caption: test_sync.py
@@ -86,11 +88,12 @@ current working directory to a new, empty folder.
    :caption: cat.py
 
    import quo
+   from quo import app, arg, echo
 
-   @quo.command()
-   @quo.argument('f', type=quo.File())
+   @command()
+   @arg('f', type=quo.File())
    def cat(f):
-      quo.echo(f.read())
+      echo(f.read())
 
 .. code-block:: python
    :caption: test_cat.py
@@ -118,11 +121,12 @@ stream (stdin).  This is very useful for testing prompts, for instance:
    :caption: prompt.py
 
    import quo
+   from quo import command, app, echo
 
-   @quo.command()
-   @quo.option('--foo', prompt=True)
+   @command()
+   @app('--foo', prompt=True)
    def prompt(foo):
-      quo.echo(f"foo={foo}")
+      echo(f"foo={foo}")
 
 .. code-block:: python
    :caption: test_prompt.py
