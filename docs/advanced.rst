@@ -13,7 +13,7 @@ Command Aliases
 ---------------
 
 Many tools support aliases for commands (see `Command alias example
-<https://github.com/viewerdiscretion/quo/tree/master/examples/aliases>`_).
+<https://github.com/secretum-inc/quo/tree/main/examples/aliases>`_).
 For instance, you can configure ``git`` to accept ``git ci`` as alias for
 ``git commit``.  Other tools also support auto-discovery for aliases by
 automatically shortening them.
@@ -67,7 +67,7 @@ And it can then be used like this:
 Parameter Modifications
 -----------------------
 
-Parameters (apps and arguments) are forwarded to the command callbacks
+Parameters (apps and args) are forwarded to the command callbacks
 as you have seen.  One common way to prevent a parameter from being passed
 to the callback is the `expose_value` argument to a parameter which hides
 the parameter entirely.  The way this works is that the :class:`Context`
@@ -178,34 +178,14 @@ Example:
         clime.forward(test)
         clime.invoke(test, count=42)
 
-And what it looks like:
-
-.. quo:run::
-
-    invoke(cli, prog_name='cli', args=['dist'])
-
 
 .. _callback-evaluation-order:
 
 Callback Evaluation Order
 -------------------------
 
-Quo works a bit differently than some other command line parsers in that
-it attempts to reconcile the order of arguments as defined by the
-programmer with the order of arguments as defined by the user before
-invoking any callbacks.
-
-This is an important concept to understand when porting complex
-patterns to Quo from optparse or other systems.  A parameter
-callback invocation in optparse happens as part of the parsing step,
-whereas a callback invocation in Quo happens after the parsing.
-
-The main difference is that in optparse, callbacks are invoked with the raw
-value as it happens, whereas a callback in Quo is invoked after the
-value has been fully converted.
-
 Generally, the order of invocation is driven by the order in which the user
-provides the arguments to the script; if there is an app called ``--foo``
+provides the args to the script; if there is an app called ``--foo``
 and an app called ``--bar`` and the user calls it as ``--bar
 --foo``, then the callback for ``bar`` will fire before the one for ``foo``.
 
@@ -236,11 +216,7 @@ Repeated parameters:
 
 Missing parameters:
     If a parameter is not defined on the command line, the callback will
-    still fire.  This is different from how it works in optparse where
-    undefined values do not fire the callback.  Missing parameters fire
-    their callbacks at the very end which makes it possible for them to
-    default to values from a parameter that came before.
-
+    still fire.
 Most of the time you do not need to be concerned about any of this,
 but it is important to know how it works for some advanced cases.
 
@@ -275,7 +251,7 @@ options:
     command will abort with an error that there are leftover arguments.
     If you go with this solution, the extra arguments will be collected in
     :attr:`Context.args`.
-2.  You can attach a :func:`argument` with ``nargs`` set to `-1` which
+2.  You can attach a :func:`arg` with ``nargs`` set to `-1` which
     will eat up all leftover arguments.  In this case it's recommended to
     set the `type` to :data:`UNPROCESSED` to avoid any string processing
     on those arguments as otherwise they are forced into unicode strings
@@ -292,7 +268,7 @@ In the end you end up with something like this:
         ignore_unknown_apps=True,
     ))
     @quo.app('-v', '--verbose', is_flag=True, help='Enables verbose mode')
-    @quo.argument('timeit_args', nargs=-1, type=quo.UNPROCESSED)
+    @quo.arg('timeit_args', nargs=-1, type=quo.UNPROCESSED
     def cli(verbose, timeit_args):
         """A fake wrapper around Python's timeit."""
         cmdline = ['echo', 'python', '-mtimeit'] + list(timeit_args)
@@ -300,15 +276,6 @@ In the end you end up with something like this:
             quo.echo(f"Invoking: {' '.join(cmdline)}")
         call(cmdline)
 
-And what it looks like:
-
-.. quo:run::
-
-    invoke(cli, prog_name='cli', args=['--help'])
-    println()
-    invoke(cli, prog_name='cli', args=['-n', '100', 'a = 1; b = 2; a * b'])
-    println()
-    invoke(cli, prog_name='cli', args=['-v', 'a = 1; b = 2; a * b'])
 
 As you can see the verbosity flag is handled by Quo, everything else
 ends up in the `timeit_args` variable for further processing which then
@@ -329,7 +296,7 @@ are important to know about how this ignoring of unhandled flag happens:
 *   Depending on what you plan on doing you might have some success by
     disabling interspersed arguments
     (:attr:`~Context.allow_interspersed_args`) which instructs the parser
-    to not allow arguments and apps to be mixed.  Depending on your
+    to not allow args and apps to be mixed.  Depending on your
     situation this might improve your results.
 
 Generally though the combinated handling of apps and arguments from
@@ -344,22 +311,27 @@ Global Context Access
 
 It is possible to access the current context from
 anywhere within the same thread through the use of the
-:func:`get_current_context` function which returns it.  This is primarily
+:func:`currentcontext` function which returns it.  This is primarily
 useful for accessing the context bound object as well as some flags that
 are stored on it to customize the runtime behavior.  For instance the
 :func:`echo` function does this to infer the default value of the `color`
 flag.
 
-Example usage::
+Example usage:
 
+.. code:: python
+
+   from quo import currentcontext
     def get_current_command_name():
-        return quo.get_current_context().info_name
+        return currentcontext().info_name
 
 It should be noted that this only works within the current thread.  If you
 spawn additional threads then those threads will not have the ability to
 refer to the current context.  If you want to give another thread the
 ability to refer to this context you need to use the context within the
-thread as a context manager::
+thread as a context manager:
+
+.. code:: python
 
     def spawn_thread(clime, func):
         def wrapper():
@@ -386,23 +358,16 @@ value, or :attr:`Context.default_map`. The
 out. It will return a member of the :class:`~quo.core.ParameterSource`
 enum.
 
-.. quo:example::
+.. code:: python
 
-    @quo.command()
-    @quo.argument('port', nargs=1, default=8080, envvar="PORT")
+    import quo
+    from quo import command, arg, echo
+    @command()
+    @arg('port', nargs=1, default=8080, envvar="PORT")
     @quo.pass_context
     def cli(clime, port):
         source = clime.get_parameter_source("port")
-        quo.echo(f"Port came from {source.name}")
-
-.. quo:run::
-
-    invoke(cli, prog_name='cli', args=['8080'])
-    println()
-    invoke(cli, prog_name='cli', args=[], env={"PORT": "8080"})
-    println()
-    invoke(cli, prog_name='cli', args=[])
-    println()
+        echo(f"Port came from {source.name}")
 
 
 Managing Resources
@@ -446,8 +411,10 @@ any subcommands finish, the context's resources are cleaned up.
 
 .. code-block:: python
 
-    @quo.tether()
-    @quo.app("--repo-home", default=".repo")
+    import quo
+    from quo import tether, app, echo
+    @tether()
+    @app("--repo-home", default=".repo")
     @quo.pass_context
     def cli(clime, repo_home):
         clime.obj = clime.with_resource(Repo(repo_home))
@@ -457,7 +424,7 @@ any subcommands finish, the context's resources are cleaned up.
     def log(obj):
         # obj is the repo opened in the cli tether
         for entry in obj.db.query(...):
-            quo.echo(entry)
+            echo(entry)
 
 If the resource isn't a context manager, usually it can be wrapped in
 one using something from :mod:`contextlib`. If that's not possible, use
@@ -466,8 +433,10 @@ cleanup function.
 
 .. code-block:: python
 
-    @quo.tether()
-    @quo.app("--name", default="repo.db")
+    import quo
+    from quo import tether, app
+    @tether()
+    @app("--name", default="repo.db")
     @quo.pass_context
     def cli(clime, repo_home):
         clime.obj = db = open_db(repo_home)

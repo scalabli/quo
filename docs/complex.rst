@@ -3,16 +3,16 @@
 Complex Applications
 ====================
 
-.. currentmodule:: click
+.. currentmodule:: quo
 
-Click is designed to assist with the creation of complex and simple CLI tools
+Quo is designed to assist with the creation of complex and simple CLI tools
 alike.  However, the power of its design is the ability to arbitrarily nest
 systems together.  For instance, if you have ever used Django, you will
 have realized that it provides a command line utility, but so does Celery.
 When using Celery with Django, there are two tools that need to interact with
 each other and be cross-configured.
 
-In a theoretical world of two separate Click command line utilities, they
+In a theoretical world of two separate Quo command line utilities, they
 could solve this problem by nesting one inside the other.  For instance, the
 web framework could also load the commands for the message queue framework.
 
@@ -25,7 +25,7 @@ and the calling convention.
 Contexts
 ````````
 
-Whenever a Click command is executed, a :class:`Context` object is created
+Whenever a Quo command is executed, a :class:`Context` object is created
 which holds state for this particular invocation.  It remembers parsed
 parameters, what command created it, which resources need to be cleaned up
 at the end of the function, and so forth.  It can also optionally hold an
@@ -45,7 +45,7 @@ complex applications it comes in handy.  This brings us to the next point.
 Calling Convention
 ``````````````````
 
-When a Click command callback is executed, it's passed all the non-hidden
+When a Quo command callback is executed, it's passed all the non-hidden
 parameters as keyword arguments.  Notably absent is the context.  However,
 a callback can opt into being passed to the context object by marking itself
 with :func:`pass_context`.
@@ -68,31 +68,30 @@ The Root Command
 ````````````````
 
 At the top level, we need a group that can hold all our commands.  In this
-case, we use the basic :func:`click.group` which allows us to register
-other Click commands below it.
+case, we use the basic :func:`quo.tether` which allows us to register
+other Quo commands below it.
 
 For this command, we also want to accept some parameters that configure the
 state of our tool:
 
-.. click:example::
+.. code:: python
 
     import os
-    import click
-
+    import quo
+    from quo import tether, command, app, arg, echo
 
     class Repo(object):
         def __init__(self, home=None, debug=False):
-            self.home = os.path.abspath(home or '.')
-            self.debug = debug
+        self.home = os.path.abspath(home or '.')
+        self.debug = debug
 
 
-    @click.group()
-    @click.option('--repo-home', envvar='REPO_HOME', default='.repo')
-    @click.option('--debug/--no-debug', default=False,
-                  envvar='REPO_DEBUG')
-    @click.pass_context
-    def cli(ctx, repo_home, debug):
-        ctx.obj = Repo(repo_home, debug)
+    @tether()
+    @app('--repo-home', envvar='REPO_HOME', default='.repo')
+    @app('--debug/--no-debug', default=False, envvar='REPO_DEBUG')
+    @quo.pass_context
+    def cli(clime, repo_home, debug):
+        clime.obj = Repo(repo_home, debug)
 
 
 Let's understand what this does.  We create a group command which can
@@ -114,11 +113,11 @@ The First Child Command
 
 Let's add our first child command to it, the clone command:
 
-.. click:example::
+.. code:: python
 
     @cli.command()
-    @click.argument('src')
-    @click.argument('dest', required=False)
+    @arg('src')
+    @arg('dest', required=False)
     def clone(src, dest):
         pass
 
@@ -129,12 +128,12 @@ memorized the repo.  However, there is a second version of this decorator
 called :func:`pass_obj` which will just pass the stored object, (in our case
 the repo):
 
-.. click:example::
+.. code:: python
 
     @cli.command()
-    @click.argument('src')
-    @click.argument('dest', required=False)
-    @click.pass_obj
+    @arg('src')
+    @arg('dest', required=False)
+    @quo.pass_obj
     def clone(repo, src, dest):
         pass
 
@@ -164,18 +163,18 @@ internally calls into :meth:`Context.find_object`).  In our case, we
 know that we want to find the closest ``Repo`` object, so let's make a
 decorator for this:
 
-.. click:example::
+.. code:: python
 
-    pass_repo = click.make_pass_decorator(Repo)
+   pass_repo = quo.make_pass_decorator(Repo)
 
 If we now use ``pass_repo`` instead of ``pass_obj``, we will always get a
 repo instead of something else:
 
-.. click:example::
+.. code:: python
 
     @cli.command()
-    @click.argument('src')
-    @click.argument('dest', required=False)
+    @arg('src')
+    @arg('dest', required=False)
     @pass_repo
     def clone(repo, src, dest):
         pass
@@ -194,9 +193,9 @@ which will find the object, and if it cannot find it, will create one and
 store it in the innermost context.  This behavior can also be enabled for
 :func:`make_pass_decorator` by passing ``ensure=True``:
 
-.. click:example::
+.. code:: python
 
-    pass_repo = click.make_pass_decorator(Repo, ensure=True)
+    pass_repo = quo.make_pass_decorator(Repo, ensure=True)
 
 In this case, the innermost context gets an object created if it is
 missing.  This might replace objects being placed there earlier.  In this
@@ -206,15 +205,11 @@ no arguments.
 
 As such it runs standalone:
 
-.. click:example::
+.. code:: python
 
-    @click.command()
+    @command()
     @pass_repo
     def cp(repo):
-        click.echo(isinstance(repo, Repo))
+        echo(isinstance(repo, Repo))
 
-As you can see:
 
-.. click:run::
-
-    invoke(cp, [])

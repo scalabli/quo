@@ -29,7 +29,7 @@ def encoding_filesystem():
 def text_flow(
     stream, encoding, errors, force_readable=False, force_writable=False):
     if encoding is None:
-        encoding = get_best_encoding(stream)
+        encoding = default_system_encoding(stream)
     if errors is None:
         errors = "replace"
     return _NonClosingTextIOWrapper(
@@ -255,7 +255,7 @@ def _force_correct_text_stream(
 
     # Wrap the binary stream in a text stream with the correct
     # encoding parameters.
-    return _make_text_stream(
+    return text_flow(
         binary_reader,
         encoding,
         errors,
@@ -330,7 +330,7 @@ def get_text_stderr(encoding=None, errors=None):
 
 def filename_to_ui(value):
     if isinstance(value, bytes):
-        value = value.decode(get_filesystem_encoding(), "replace")
+        value = value.decode(encoding_filesystem(), "replace")
     else:
         value = value.encode("utf-8", "surrogateescape").decode("utf-8", "replace")
     return value

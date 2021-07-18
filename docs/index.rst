@@ -236,7 +236,7 @@ usage patterns.
    setuptools
    parameters
    apps
-   arguments
+   args
    commands
    prompts
    documentation

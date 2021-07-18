@@ -256,9 +256,9 @@ stream object (except in very odd cases; see :doc:`/unicode-support`).
 .. code:: python
 
     import quo
-    from quo import get_text_stream, get_binary_stream
-    stdin_text = get_text_stream('stdin')
-    stdout_binary = get_binary_stream('stdout')
+    from quo import textstream, binarystream
+    stdin_t = textstream('stdin')
+    stdout_b = binarystream('stdout')
 
 Quo now emulates output streams on Windows to support unicode to the
 Windows console through separate APIs.  For more information see
@@ -304,7 +304,7 @@ for per-user config files for your application depending on the OS.
 .. code:: python
 
     import os
-    import qu
+    import quo
     from quo import appdir
     import ConfigParser
 

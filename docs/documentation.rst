@@ -18,20 +18,16 @@ Simple example:
 
 .. code-block:: python
 
-    from quo import command, app, argument, echo
+    from quo import command, app, arg, echo
     @command()
     @app('--count', default=1, help='number of greetings')
-    @argument('name')
+    @arg('name')
     def hello(count, name):
         """This script prints hello NAME COUNT times."""
         for x in range(count):
             echo(f"Hello {name}!")
 
-And what it looks like:
 
-.. code-block:: python
-
-    invoke(hello, args=['--help'])
 
 
 .. _documenting-arguments:
@@ -39,7 +35,7 @@ And what it looks like:
 Documenting Arguments
 ~~~~~~~~~~~~~~~~~~~~~
 
-:func:`quo.argument` does not take a ``help`` parameter. This is to
+:func:`quo.arg` does not take a ``help`` parameter. This is to
 follow the general convention of Unix tools of using arguments for only
 the most necessary things, and to document them in the command help text
 by referring to them by name.
@@ -48,26 +44,21 @@ You might prefer to reference the argument in the description:
 
 .. code-block:: python
 
-    from quo import command, argument, echo
+    from quo import command, arg, echo
     @command()
-    @argument('filename')
+    @arg('filename')
     def touch(filename):
         """Print FILENAME."""
         echo(filename)
 
-And what it looks like:
-
-.. code-block:: python
-
-    invoke(touch, args=['--help'])
 
 Or you might prefer to explicitly provide a description of the argument:
 
 .. code-block:: python
     
-    from quo import command, argument, echo
+    from quo import command, arg, echo
     @command()
-    @argument('filename')
+    @arg('filename')
     def touch(filename):
         """Print FILENAME.
 
@@ -75,13 +66,8 @@ Or you might prefer to explicitly provide a description of the argument:
         """
         echo(filename)
 
-And what it looks like:
 
-.. code-block:: python
-
-    invoke(touch, args=['--help'])
-
-For more examples, see the examples in :doc:`/arguments`.
+For more examples, see the examples in :doc:`/args`.
 
 
 Preventing Rewrapping
@@ -118,11 +104,6 @@ Example:
         that will be rewrapped again.
         """
 
-And what it looks like:
-
-.. code-block:: python
-
-    invoke(cli, args=['--help'])
 
 .. _doc-meta-variables:
 
@@ -144,7 +125,7 @@ Example:
     from quo import command
     @command()
     @quo.pass_context
-    def cli(ctx):
+    def cli(clime):
         """First paragraph.
 
         This is a very long second
@@ -152,41 +133,29 @@ Example:
         wrapped but it will be rewrapped.
         \f
 
-        :param quo.core.Context ctx: quo context.
+        :param quo.core.Context clime: quo clime(context)
         """
-
-And what it looks like:
-
-.. code-block:: python
-
-    invoke(cli, args=['--help'])
 
 
 Meta Variables
 --------------
 
-Options and parameters accept a ``metavar`` argument that can change the
+Apps and parameters accept a ``metavar`` argument that can change the
 meta variable in the help page.  The default version is the parameter name
 in uppercase with underscores, but can be annotated differently if
 desired.  This can be customized at all levels:
 
 .. code-block:: python
 
-    from quo import command, app, argument, echo
+    from quo import command, app, arg, echo
     @command(options_metavar='<options>')
-    @app('--count', default=1, help='number of greetings',
-                  metavar='<int>')
-    @argument('name', metavar='<name>')
+    @app('--count', default=1, help='number of greetings', metavar='<int>')
+    @arg('name', metavar='<name>')
     def hello(count, name):
         """This script prints hello <name> <int> times."""
         for x in range(count):
             echo(f"Hello {name}!")
 
-Example:
-
-.. code-block:: python
-
-    invoke(hello, args=['--help'])
 
 
 Command Short Help
@@ -198,24 +167,17 @@ also be overridden:
 
 .. code-block:: python
 
-
+    from quo import tether, command
     @quo.tether()
     def cli():
         """A simple command line tool."""
-
     @cli.command('init', short_help='init the repo')
     def init():
         """Initializes the repository."""
-
     @cli.command('delete', short_help='delete the repo')
     def delete():
         """Deletes the repository."""
 
-And what it looks like:
-
-.. code-block:: python
-
-    invoke(cli, prog_name='repo.py')
 
 
 Help Parameter Customization

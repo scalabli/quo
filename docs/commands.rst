@@ -5,7 +5,7 @@ Commands and Tethers
 
 The most important feature of quo is the concept of arbitrarily nesting
 command line utilities.  This is implemented through the :class:`Command`
-and :class:`Group` (actually :class:`MultiCommand`).
+and :class:`Tether` (actually :class:`MultiCommand`).
 
 Callback Invocation
 -------------------
@@ -15,7 +15,7 @@ If the script is the only command, it will always fire (unless a parameter
 callback prevents it.  This for instance happens if someone passes
 ``--help`` to the script).
 
-For groups and multi commands, the situation looks different.  In this case,
+For tethers and multi commands, the situation looks different.  In this case,
 the callback fires whenever a subcommand fires (unless this behavior is
 changed).  What this means in practice is that an outer command runs
 when an inner command runs:
@@ -32,13 +32,6 @@ when an inner command runs:
     def sync():
         echo('Syncing')
 
-Here is what this looks like:
-
-.. quo:run::
-
-    invoke(cli, prog_name='tool.py')
-    println()
-    invoke(cli, prog_name='tool.py', args=['--debug', 'sync'])
 
 Passing Parameters
 ------------------
@@ -88,7 +81,7 @@ script like this:
     @tether()
     @app('--debug/--no-debug', default=False)
     @quo.pass_context
-    def cli(ctx, debug):
+    def cli(clime, debug):
         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
         # by means other than the `if` block below)
         ctx.ensure_object(dict)
@@ -97,8 +90,8 @@ script like this:
 
     @cli.command()
     @quo.pass_context
-    def sync(ctx):
-        echo(f"Debug is {'on' if ctx.obj['DEBUG'] else 'off'}")
+    def sync(clime):
+        echo(f"Debug is {'on' if clime.obj['DEBUG'] else 'off'}")
 
     if __name__ == '__main__':
         cli(obj={})
@@ -128,18 +121,18 @@ argument.
 
 For instance, the :func:`pass_obj` decorator can be implemented like this:
 
-.. quo:example::
+.. code:: python
 
     from functools import update_wrapper
 
     def pass_obj(f):
         @quo.pass_context
-        def new_func(clime, *args, **kwargs):
-            return ctx.invoke(f, ctx.obj, *args, **kwargs)
+        def new_func(clime, ×args, ××kwargs):
+            return clime.invoke(f, ctx.obj, ×args, ××kwargs)
         return update_wrapper(new_func, f)
 
 The :meth:`Context.invoke` command will automatically invoke the function
-in the correct way, so the function will either be called with ``f(ctx,
+in the correct way, so the function will either be called with ``f(clime,
 obj)`` or ``f(obj)`` depending on whether or not it itself is decorated with
 :func:`pass_context`.
 
@@ -150,7 +143,7 @@ nested applications; see :ref:`complex-guide` for more information.
 Tether Invocation Without Command
 --------------------------------
 
-By default, a group or multi command is not invoked unless a subcommand is
+By default, a tether or multi command is not invoked unless a subcommand is
 passed.  In fact, not providing a command automatically passes ``--help``
 by default.  This behavior can be changed by passing
 ``invoke_without_command=True`` to a group.  In that case, the callback is
@@ -169,18 +162,12 @@ Example:
         if clime.invoked_subcommand is None:
             echo('I was invoked without subcommand')
         else:
-            echo(f"I am about to invoke {ctx.invoked_subcommand}")
+            echo(f"I am about to invoke {clime.invoked_subcommand}")
 
     @cli.command()
     def sync():
         echo('The subcommand')
 
-And how it works in practice:
-
-.. quo:run::
-
-    invoke(cli, prog_name='tool', args=[])
-    invoke(cli, prog_name='tool', args=['sync'])
 
 .. _custom-multi-commands:
 
@@ -210,7 +197,7 @@ A custom multi command just needs to implement a list and load method:
             rv.sort()
             return rv
 
-        def get_command(self, ctx, name):
+        def get_command(self, clime, name):
             ns = {}
             fn = os.path.join(plugin_folder, name + '.py')
             with open(fn) as f:
@@ -226,9 +213,10 @@ A custom multi command just needs to implement a list and load method:
 
 These custom classes can also be used with decorators:
 
-.. quo:example::
+.. code:: python
 
-    @quo.command(cls=MyCLI)
+    from quo import command
+    @command(cls=MyCLI)
     def cli():
         pass
 
@@ -270,11 +258,6 @@ Example usage:
     if __name__ == '__main__':
         cli()
 
-And what it looks like:
-
-.. quo:run::
-
-    invoke(cli, prog_name='cli', args=['--help'])
 
 In case a command exists in more than one source, the first source wins.
 
@@ -308,18 +291,13 @@ All you have to do is to pass ``chain=True`` to your multicommand:
     def bdist_wheel():
         echo('bdist_wheel called')
 
-Now you can invoke it like this:
-
-.. quo:run::
-
-    invoke(cli, prog_name='setup.py', args=['sdist', 'bdist_wheel'])
 
 When using multi command chaining you can only have one command (the last)
 use ``nargs=-1`` on an argument.  It is also not possible to nest multi
 commands below chained multicommands.  Other than that there are no
-restrictions on how they work.  They can accept options and arguments as
-normal. The order between options and arguments is limited for chained
-commands. Currently only ``--options argument`` order is allowed.
+restrictions on how they work.  They can accept apps and args as
+normal. The order between apps and args is limited for chained
+commands. Currently only ``--apps args`` order is allowed.
 
 Another note: the :attr:`Context.invoked_subcommand` attribute is a bit
 useless for multi commands as it will give ``'*'`` as value if more than
@@ -355,10 +333,11 @@ these functions and then invoke them.
 
 To make this a bit more concrete consider this example:
 
-.. quo:example::
+.. code:: python
 
-    @quo.group(chain=True, invoke_without_command=True)
-    @quo.option('-i', '--input', type=quo.File('r'))
+    from quo import tether, app, echo, command
+    @tether(chain=True, invoke_without_command=True)
+    @app('-i', '--input', type=quo.File('r'))
     def cli(input):
         pass
 
@@ -368,7 +347,7 @@ To make this a bit more concrete consider this example:
         for processor in processors:
             iterator = processor(iterator)
         for item in iterator:
-            quo.echo(item)
+            echo(item)
 
     @cli.command('uppercase')
     def make_uppercase():
@@ -393,13 +372,13 @@ To make this a bit more concrete consider this example:
 
 That's a lot in one go, so let's go through it step by step.
 
-1.  The first thing is to make a :func:`group` that is chainable.  In
+1.  The first thing is to make a :func:`tether` that is chainable.  In
     addition to that we also instruct quo to invoke even if no
     subcommand is defined.  If this would not be done, then invoking an
     empty pipeline would produce the help page instead of running the
     result callbacks.
-2.  The next thing we do is to register a result callback on our group.
-    This callback will be invoked with an argument which is the list of
+2.  The next thing we do is to register a result callback on our tether
+    This callback will be invoked with an arg which is the list of
     all return values of all subcommands and then the same keyword
     parameters as our group itself.  This means we can access the input
     file easily there without having to use the context object.
@@ -417,11 +396,11 @@ cannot be accessed in the `processor` functions as the files will already
 be closed there.  This limitation is unlikely to change because it would
 make resource handling much more complicated.  For such it's recommended
 to not use the file type and manually open the file through
-:func:`open_file`.
+:func:`openfile`.
 
 For a more complex example that also improves upon handling of the
 pipelines have a look at the `imagepipe multi command chaining demo
-<https://github.com/viewerdiscretion/quo/tree/master/examples/imagepipe>`__ in
+<https://github.com/secretum-inc/quo/tree/maim/examples/imagepipe>`__ in
 the quo repository.  It implements a pipeline based image editing tool
 that has a nice internal structure for the pipelines.
 
@@ -473,15 +452,7 @@ Example usage:
             }
         })
 
-And in action:
 
-.. quo:run::
-
-    invoke(cli, prog_name='cli', args=['runserver'], default_map={
-        'runserver': {
-            'port': 5000
-        }
-    })
 
 Context Defaults
 ----------------
@@ -493,31 +464,27 @@ command.  For instance given the previous example which defines a custom
 
 This example does the same as the previous example:
 
-.. quo:example::
+.. code:: python
 
     import quo
+    from quo import tether, command, app, echo
 
     CONTEXT_SETTINGS = dict(
         default_map={'runserver': {'port': 5000}}
     )
 
-    @quo.group(context_settings=CONTEXT_SETTINGS)
+    @tether(context_settings=CONTEXT_SETTINGS)
     def cli():
         pass
 
     @cli.command()
-    @quo.option('--port', default=8000)
+    @app('--port', default=8000)
     def runserver(port):
-        quo.echo(f"Serving on http://127.0.0.1:{port}/")
+        echo(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli()
 
-And again the example in action:
-
-.. quo:run::
-
-    invoke(cli, prog_name='cli', args=['runserver'])
 
 
 Command Return Values
@@ -537,9 +504,9 @@ know:
 
 -   The return value of a command callback is generally returned from the
     :meth:`BaseCommand.invoke` method.  The exception to this rule has to
-    do with :class:`Group`\s:
+    do with :class:`Tether`\s:
 
-    *   In a group the return value is generally the return value of the
+    *   In a tether, the return value is generally the return value of the
         subcommand invoked.  The only exception to this rule is that the
         return value is the return value of the group callback if it's
         invoked without arguments and `invoke_without_command` is enabled.

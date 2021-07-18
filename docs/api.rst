@@ -9,7 +9,7 @@ classes and functions.
 Decorators
 ----------
 **quo.command** *(name=None, cls=None, **attrs)*
-Creates a new Command and uses the decorated function as callback. This will also automatically attach all decorated option()s and argument()s as parameters to the command.
+Creates a new Command and uses the decorated function as callback. This will also automatically attach all decorated apps()s and arg()s as parameters to the command.
 The name of the command defaults to the name of the function with underscores replaced by dashes. If you want to change that, you can pass the intended name as the first argument.
 All keyword arguments are forwarded to the underlying command class.
 Once decorated the function turns into a Command instance that can be invoked as a command line utility or be attached to a command Group.
@@ -28,13 +28,13 @@ Attaches an argument to the command. All positional arguments are passed as para
 Parameters
                                                          * ``cls`` – the argument class to instantiate. This defaults to Arg.
 
-**quo.apl** *(*param_decls, **attrs)*
+**quo.app** *(*param_decls, **attrs)*
 Attaches an app to the command. All positional args are passed as parameter declarations to App; all keyword args are forwarded unchanged (except cls). This is equivalent to creating an App instance manually and attaching it to the Command.params list.
 
 Parameters
                                                          * ``cls`` – the option class to instantiate. This defaults to Option.
 
-**quo.password_option** *(*param_decls, **attrs)*
+**quo.autopasswd** *(*param_decls, **attrs)*
 Shortcut for password prompts. This is equivalent to decorating a function with option() with the following parameters:
 
 .. code:: python
@@ -43,67 +43,76 @@ Shortcut for password prompts. This is equivalent to decorating a function with 
    @command()
    @app('--password', prompt=True, autoconfirm=True, hide=True)
    def changeadmin(password):
-    pass
+   pass
 
 
-``quo.confirmation_option`` (*param_decls, **attrs
-
+**quo.autoconfirm** *(*param_decls, **attrs)*
 
 Shortcut for confirmation prompts that can be ignored by passing --yes as parameter.
-This is equivalent to decorating a function with option() with the following parameters:
+This is equivalent to decorating a function with app() with the following parameters:
 
-def callback(ctx, param, value):
-    if not value:
-        ctx.abort()
 
-@quo.command()
-@quo.option('--yes', is_flag=True, callback=callback,
-              expose_value=False, prompt='Do you want to continue?')
-def dropdb():
-    pass
-``quo.version_option`` (version=None, *param_decls, **attrs)
-Adds a --version option which immediately ends the program printing out the version number. This is implemented as an eager option that prints the version and exits the program in the callback.
+.. code:: python
+   
+   from quo import command, app
+
+   def callback(clime, param, value):
+   if not value:
+        clime.abort()
+
+   @command()
+   @app('--yes', is_flag=True, callback=callback, expose_value=False, prompt='Do you want to continue?')
+   def dropdb():
+   pass
+
+
+**quo.autoversion** *(version=None, *param_decls, **attrs)*
+
+Adds a `--version`  option which immediately ends the program printing out the version number. This is implemented as an eager app that prints the version and exits the program in the callback.
 
 Parameters
-version – the version number to show. If not provided quo attempts an auto discovery via setuptools.
+   * ``version`` – the version number to show. If not provided quo attempts an auto discovery via setuptools.
 
-prog_name – the name of the program (defaults to autodetection)
+   * ``prog_name`` – the name of the program (defaults to autodetection)
 
-message – custom message to show instead of the default ('%(prog)s, version %(version)s')
+   * ``message`` – custom message to show instead of the default ('%(prog)s, version %(version)s')
 
-others – everything else is forwarded to option().
 
-**quo.help_option** *(*param_decls, **attrs)*
-Adds a --help option which immediately ends the program printing out the help page. This is usually unnecessary to add as this is added by default to all commands unless suppressed.
+**quo.autohelp** *(*param_decls, **attrs)*
+Adds a `--help` app which immediately ends the program printing out the help page. This is usually unnecessary to add as this is added by default to all commands unless suppressed.
 
-Like version_option(), this is implemented as eager option that prints in the callback and exits.
+Like version_option(), this is implemented as eager app that prints in the callback and exits.
 
-All arguments are forwarded to option().
+All args are forwarded to app().
 
-quo.pass_context(f)
+
+**quo.pass_context(f)**
 Marks a callback as wanting to receive the current context object as first argument.
 
-quo.pass_obj(f)
+**quo.pass_obj(f)**
 Similar to pass_context(), but only pass the object on the context onwards (Context.obj). This is useful if that object represents the state of a nested system.
 
-**quo.make_pass_decorator** *(object_type, ensure=False)
-Given an object type this creates a decorator that will work similar to pass_obj() but instead of passing the object of the current context, it will find the innermost context of type object_type().
+**quo.make_pass_decorator** *(object_type, ensure=False)*
+Given an object type this creates a decorator that will work similar to `pass_obj()` but instead of passing the object of the current context, it will find the innermost context of type object_type().
 
 This generates a decorator that works roughly like this:
 
-from functools import update_wrapper
+.. code:: python
 
-def decorator(f):
-    @pass_context
-    def new_func(ctx, *args, **kwargs):
-        obj = ctx.find_object(object_type)
-        return ctx.invoke(f, obj, *args, **kwargs)
-    return update_wrapper(new_func, f)
-return decorator
+  from functools import update_wrapper
+  def decorator(f):
+  @pass_context
+  def new_func(clime, *args, **kwargs):
+  obj = ctx.find_object(object_type)
+  return ctx.invoke(f, obj, *args, **kwargs)
+  return update_wrapper(new_func, f)
+  return decorator
+
+
 Parameters
-object_type – the type of the object to pass.
+   * ``object_type`` – the type of the object to pass.
 
-ensure – if set to True, a new object will be created and remembered on the context if it’s not there yet.
+   * ``ensure`` – if set to True, a new object will be created and remembered on the context if it’s not there yet.
 
 .. autofunction:: command
 
@@ -144,17 +153,16 @@ add transparent handling of ANSI color codes on Windows.
 
 hide ANSI codes automatically if the destination file is not a terminal.
 
-Changelog
 Parameters
-message – the message to print
+   * ``message`` – the message to print
 
-file – the file to write to (defaults to stdout)
+   * ``file`` – the file to write to (defaults to stdout)
 
-err – if set to true the file defaults to stderr instead of stdout. This is faster and easier than calling get_text_stderr() yourself.
+   * ``err`` – if set to true the file defaults to stderr instead of stdout. This is faster and easier than calling get_text_stderr() yourself.
 
-nl – if set to True (the default) a newline is printed afterwards.
+   * ``nl`` – if set to True (the default) a newline is printed afterwards.
 
-color – controls if the terminal supports ANSI colors or not. The default is autodetection.
+   * ``color`` – controls if the terminal supports ANSI colors or not. The default is autodetection.
 
 quo.echo_via_pager(text_or_generator, color=None)
 This function takes a text and shows it via an environment specific pager on stdout.
@@ -165,34 +173,31 @@ text_or_generator – the text to page, or alternatively, a generator emitting t
 
 color – controls if the pager supports ANSI colors or not. The default is autodetection.
 
-quo.prompt(text, default=None, hide_input=False, confirmation_prompt=False, type=None, value_proc=None, prompt_suffix=': ', show_default=True, err=False, show_choices=True)
+**quo.prompt** *(text, default=None, hide=False, autoconfirm=False, type=None, value_proc=None, prompt_suffix=': ', show_default=True, err=False, show_choices=True)*
 Prompts a user for input. This is a convenience function that can be used to prompt a user for input later.
 
 If the user aborts the input by sending a interrupt signal, this function will catch it and raise a Abort exception.
 
-New in version 7.0: Added the show_choices parameter.
-
-Changelog
 Parameters
-text – the text to show for the prompt.
+   * ``text`` – the text to show for the prompt.
 
-default – the default value to use if no input happens. If this is not given it will prompt until it’s aborted.
+   * ``default`` – the default value to use if no input happens. If this is not given it will prompt until it’s aborted.
 
-hide_input – if this is set to true then the input value will be hidden.
+   * ``hide`` – if this is set to true then the input value will be hidden.
 
-confirmation_prompt – asks for confirmation for the value.
+   * ``autoconfirm`` – asks for confirmation for the value.
 
-type – the type to use to check the value against.
+   * ``type`` – the type to use to check the value against.
 
-value_proc – if this parameter is provided it’s a function that is invoked instead of the type conversion to convert a value.
+   * ``value_proc`` – if this parameter is provided it’s a function that is invoked instead of the type conversion to convert a value.
 
-prompt_suffix – a suffix that should be added to the prompt.
+   * ``prompt_suffix`` – a suffix that should be added to the prompt.
 
-show_default – shows or hides the default value in the prompt.
+   * ``show_default`` – shows or hides the default value in the prompt.
 
-err – if set to true the file defaults to stderr instead of stdout, the same as with echo.
+   * ``err`` – if set to true the file defaults to stderr instead of stdout, the same as with echo.
 
-show_choices – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
+   * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
 
 quo.confirm(text, default=False, abort=False, prompt_suffix=': ', show_default=True, err=False)
 Prompts for confirmation (yes/no question).

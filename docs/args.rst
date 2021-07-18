@@ -5,55 +5,52 @@ Arguments
 
 .. currentmodule:: quo
 
-Arguments work similarly to :ref:`options <options>` but are positional.
-They also only support a subset of the features of options due to their
-syntactical nature. quo will also not attempt to document arguments for
-you and wants you to :ref:`document them manually <documenting-arguments>`
-in order to avoid ugly help pages.
+Arguments work similarly to :ref:`apps <apps>` but are positional.
+They also only support a subset of the features ofapps  due to their syntactical nature.
 
-Basic Arguments
+Basic Args
 ---------------
 
-The most basic option is a simple string argument of one value.  If no
+The most basic option is a simple string arg of one value.  If no
 type is provided, the type of the default value is used, and if no default
 value is provided, the type is assumed to be :data:`STRING`.
 
-Example::
+.. code:: python
 
-    @quo.command()
-    @quo.argument('filename')
+    import quo
+    from quo import command, arg, echo
+    @command()
+    @arg('filename')
     def touch(filename):
         """Print FILENAME."""
-        quo.echo(filename)
+        echo(filename)
 
-And what it looks like::
 
-    invoke(touch, args=['foo.txt'])
-
-Variadic Arguments
+Variadic Args
 ------------------
 
-The second most common version is variadic arguments where a specific (or
-unlimited) number of arguments is accepted.  This can be controlled with
+The second most common version is variadic args where a specific (or
+unlimited) number of args is accepted.  This can be controlled with
 the ``nargs`` parameter.  If it is set to ``-1``, then an unlimited number
-of arguments is accepted.
+of args is accepted.
 
 The value is then passed as a tuple.  Note that only one argument can be
-set to ``nargs=-1``, as it will eat up all arguments.
+set to ``nargs=-1``, as it will eat up all args.
 
-Example::
+Example
 
-    @quo.command()
-    @quo.argument('src', nargs=-1)
-    @quo.argument('dst', nargs=1)
-    def copy(src, dst):
+.. code:: python
+
+     import quo
+     from quo import command, arg, echo
+     @command()
+     @arg('src', nargs=-1)
+     @arg('dst', nargs=1)
+     def copy(src, dst):
         """Move file SRC to DST."""
         for fn in src:
-            quo.echo(f"move {fn} to folder {dst}")
+            echo(f"move {fn} to folder {dst}")
 
-And what it looks like::
-
-    invoke(copy, args=['foo.txt', 'bar.txt', 'my_folder'])
 
 Note that this is not how you would write this application.  The reason
 for this is that in this particular example the arguments are defined as
@@ -236,7 +233,4 @@ True to avoid checking unknown options::
         for filename in files:
             quo.echo(filename)
 
-And from the command line::
 
-
-    invoke(touch, ['-foo.txt', 'bar.txt'])
