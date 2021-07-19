@@ -1,15 +1,17 @@
 
 
 
+.. 
+
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/pics/quo.png
 
 ===========================
  Quo
 ===========================
 
-|build-status| |coverage| |license| |wheel| |pyimp|
+|coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
 
-:Version: 2021.2
+:Version: 2021.3
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
@@ -26,12 +28,6 @@ Quo improves programmer's productivity because it's easy to use and supports aut
 Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointment brought about by the failure to execute a CLI API.
 
 Quo requires Python `3.6` or later. 
-
-
-.. note::
-
-   We're currently working on the documentation
-
 
 Installation
 ============
@@ -59,9 +55,18 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
   import quo
-  quo.flair(f'Hello, World!', fg="red", bold=True)
+  quo.echo(f'Hello, World!', fg="red", bold=True)
 
 **Example 3**
+
+.. sourcecode:: python
+
+   import quo
+   from quo import echo
+   echo(f"Hello, World in italics!", italic=True")
+
+
+**Example 4**
 
 .. sourcecode:: python
 
@@ -71,36 +76,19 @@ The most simple example of the library would look like this:
    echo(f"I am: {answer}")
 
 
-**Example 4**
-
-.. sourcecode:: python
-
-  import quo
-  @quo.command()
-  @quo.app("--name", prompt="What is your name?:")
-  def hello(name):
-  quo.echo(f'Hello {name}!')
-  if __name__ == '__main__':
-      hello() 
-
-
 **Example 5**
 
 .. sourcecode:: python
 
-    import quo
-    from quo import command, app, echo
-    @command()
-    @app("--count", default=1, help="The number of times the feedback is printed.")
-    @app("--name", prompt="What is your name", help="This prompts the user to input their name.")
-    @app("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
-    def survey(count, name, proffession):
-       
-        for _ in range(count):
-            echo(f"Thank you for your time, {name}!")
+  import quo
+  from quo import command, app, echo
+  @command()
+  @app("--name", prompt="What is your name?:")
+  def hello(name):
+  echo(f'Hello {name}!')
 
-    if __name__ == '__main__':
-        survey
+  if __name__ == '__main__':
+      hello() 
 
 
 For more examples, have a look in the tutorials directory.
@@ -207,8 +195,9 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
     :alt: Downloads
     :target: https://pepy.tech/badge/quo/month
 
-.. |coverage| image:: https://codecov.io/github/secretum-inc/quo/coverage.svg?branch=main
-    :target: https://codecov.io/github/secretum-inc/quo?branch=main
+.. |coverage| image:: https://snyk.io/advisor/python/quo/badge.svg
+    :alt: Package Health
+    :target: https://snyk.io/advisor/python/quo
 
 .. |license| image:: https://img.shields.io/pypi/l/quo.svg
     :alt: MIT License
@@ -226,7 +215,15 @@ version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
     :alt: Support Python implementations.
     :target: http://pypi.org/project/quo/
 
+.. |RTD| image:: https://readthedocs.org/projects/quo/badge/
+    :target: https://quo.readthedocs.io/
 
+.. |PyPI| image:: https://img.shields.io/pypi/v/quo.svg
+    :target: https://pypi.python.org/pypi/quo/
+    :alt: Latest Version
+
+..  |PyStats| image:: https://static.pepy.tech/personalized-badge/quo?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads
+ :target: https://pepy.tech/project/quo
 
 Documentation
 -------------
