@@ -59,41 +59,32 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
    import quo
-   from quo import echo, prompt
-   answer = prompt("How old are you?")
-   echo(f"I am: {answer}")
+   from quo import echo
+   echo(f"Hello, World in italics!", italic=True")
 
 
 **Example 4**
 
 .. sourcecode:: python
 
-  import quo
-  @quo.command()
-  @quo.app("--name", prompt="What is your name?:")
-  def hello(name):
-  quo.echo(f'Hello {name}!')
-  if __name__ == '__main__':
-      hello() 
+   import quo
+   from quo import echo, prompt
+   answer = prompt("How old are you?")
+   echo(f"I am: {answer}")
 
 
 **Example 5**
 
 .. sourcecode:: python
 
-    import quo
-    from quo import command, app, echo
-    @command()
-    @app("--count", default=1, help="The number of times the feedback is printed.")
-    @app("--name", prompt="What is your name", help="This prompts the user to input their name.")
-    @app("--profession", prompt="What is your profession", help="This prompts user to input their proffession")
-    def survey(count, name, proffession):
-       
-        for _ in range(count):
-            echo(f"Thank you for your time, {name}!")
-
-    if __name__ == '__main__':
-        survey
+  import quo
+  from quo import command, app, echo
+  @command()
+  @app("--name", prompt="What is your name?:")
+  def hello(name):
+  echo(f'Hello {name}!')
+  if __name__ == '__main__':
+      hello() 
 
 
 For more examples, have a look in the tutorials directory.
