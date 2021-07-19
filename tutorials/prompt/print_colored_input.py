@@ -1,4 +1,4 @@
 import quo
-from quo import prompt, flair
+from quo import prompt, echo
 answer = prompt("How old are you?")
-flair(f"I am: {answer}", fg="cyan")
+echo(f"I am: {answer}", fg="cyan")

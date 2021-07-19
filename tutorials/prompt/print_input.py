@@ -1,4 +1,4 @@
 import quo
 from quo import prompt, echo
-answer = prompt("How old are you?")
+answer = prompt(f"What is your name?)
 echo(f"I am {answer}") 

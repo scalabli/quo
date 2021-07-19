@@ -133,50 +133,14 @@ function that converts the token to lowercase:
 
 .. code-block:: python
 
+    import quo
+    from quo import command, app, echo
     CONTEXT_SETTINGS = dict(token_normalize_func=lambda x: x.lower())
 
-    @quo.command(context_settings=CONTEXT_SETTINGS)
-    @quo.app('--name', default='Pete')
+    @command(context_settings=CONTEXT_SETTINGS)
+    @app('--name', default='Pete')
     def cli(name):
-        quo.echo(f"Name: {name}")
-
-And how it works on the command line:
-
-.. code-block:: python
-
-    invoke(cli, prog_name='cli', args=['--NAME=Pete'])
-
-Invoking Other Commands
------------------------
-
-Sometimes, it might be interesting to invoke one command from another
-command.  This is a pattern that is generally discouraged with Quo, but
-possible nonetheless.  For this, you can use the :func:`Context.invoke`
-or :func:`Context.forward` methods.
-
-They work similarly, but the difference is that :func:`Context.invoke` merely
-invokes another command with the arguments you provide as a caller,
-whereas :func:`Context.forward` fills in the arguments from the current
-command.  Both accept the command as the first argument and everything else
-is passed onwards as you would expect.
-
-Example:
-
-.. code-block:: python
-
-    cli = quo.tether()
-
-    @cli.command()
-    @quo.app('--count', default=1)
-    def test(count):
-        quo.echo(f'Count: {count}')
-
-    @cli.command()
-    @quo.app('--count', default=1)
-    @quo.pass_context
-    def dist(clime, count):
-        clime.forward(test)
-        clime.invoke(test, count=42)
+        echo(f"Name: {name}")
 
 
 .. _callback-evaluation-order:
@@ -232,11 +196,7 @@ problem.  The support for this is provided through a parser flag called
 unknown apps and to put them to the leftover argument instead of
 triggering a parsing error.
 
-This can generally be activated in two different ways:
-
-1.  It can be enabled on custom :class:`Command` subclasses by changing
-    the :attr:`~BaseCommand.ignore_unknown_apps` attribute.
-2.  It can be enabled by changing the attribute of the same name on the
+It can be enabled by changing the attribute of the same name on the
     context class (:attr:`Context.ignore_unknown_apps`).  This is best
     changed through the ``context_settings`` dictionary on the command.
 
@@ -353,7 +313,7 @@ Detecting the Source of a Parameter
 
 In some situations it's helpful to understand whether or not an app
 or parameter came from the command line, the environment, the default
-value, or :attr:`Context.default_map`. The
+<F11>value, or :attr:`Context.default_map`. The
 :meth:`Context.get_parameter_source` method can be used to find this
 out. It will return a member of the :class:`~quo.core.ParameterSource`
 enum.

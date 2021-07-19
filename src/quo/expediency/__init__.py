@@ -3,7 +3,7 @@ from .vitals import (
         _detect_program_name,
         formatfilename,
         binarystream,
-        get_os_args,
+        os_args,
         textstream,
         inscribe,
         LazyFile,

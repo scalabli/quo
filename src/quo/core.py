@@ -2,8 +2,7 @@ import enum
 import errno
 import os
 import sys
-from contextlib import contextmanager
-from contextlib import ExitStack
+from contextlib import contextmanager, ExitStack
 from functools import update_wrapper
 from itertools import repeat
 

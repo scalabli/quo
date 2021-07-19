@@ -314,7 +314,7 @@ def openfile(
     return f
 
 
-def get_os_args():
+def os_args():
     """Returns the argument part of ``sys.argv``, removing the first
     value which is the name of the script.
 

@@ -50,9 +50,9 @@ def print_formatted_text(
 
     Print text to stdout. This is supposed to be compatible with Python's print
     function, but supports printing of formatted text. You can pass a
-    :class:`~prompt_toolkit.formatted_text.FormattedText`,
-    :class:`~prompt_toolkit.formatted_text.HTML` or
-    :class:`~prompt_toolkit.formatted_text.ANSI` object to print formatted
+    :class:`~quo.text.FormattedText`,
+    :class:`~quo.text.HTML` or
+    :class:`~quo.formtext.ANSI` object to print formatted
     text.
 
     * Print HTML as follows::
@@ -136,7 +136,7 @@ def print_formatted_text(
         output.flush()
 
 
-def print_container(
+def container(
     container: "AnyContainer",
     file: Optional[TextIO] = None,
     style: Optional[BaseStyle] = None,
@@ -147,8 +147,8 @@ def print_container(
 
     Example usage::
 
-        from prompt_toolkit.widgets import Frame, TextArea
-        print_container(
+        from quo.widgets import Frame, TextArea
+        container(
             Frame(TextArea(text='Hello world!')))
     """
     if file:

@@ -14,10 +14,6 @@ from quo.core import Tether
 from quo.core import App
 from quo.context.current import currentcontext
 from quo.expediency import inscribe
-#from quo.decorators import autoconfirm
-#from quo.decorators import autopswd
-#from quo.decorators import autoversion
-#from quo.decorators import autohelp
 
 #Marks a callback as wanting to receive current context
 def contextualize(f):

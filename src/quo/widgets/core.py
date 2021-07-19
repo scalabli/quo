@@ -102,20 +102,20 @@ class TextArea:
     This widget does have the most common options, but it does not intend to
     cover every single use case. For more configurations options, you can
     always build a text area manually, using a
-    :class:`~prompt_toolkit.buffer.Buffer`,
-    :class:`~prompt_toolkit.layout.BufferControl` and
-    :class:`~prompt_toolkit.layout.Window`.
+    :class:`~quo.buffer.Buffer`,
+    :class:`~quo.layout.BufferControl` and
+    :class:`~quo.layout.Window`.
 
     Buffer attributes:
 
     :param text: The initial text.
     :param multiline: If True, allow multiline input.
-    :param completer: :class:`~prompt_toolkit.completion.Completer` instance
+    :param completer: :class:`~quo.ompletion.Completer` instance
         for auto completion.
     :param complete_while_typing: Boolean.
     :param accept_handler: Called when `Enter` is pressed (This should be a
         callable that takes a buffer as input).
-    :param history: :class:`~prompt_toolkit.history.History` instance.
+    :param history: :class:`~quo.history.History` instance.
     :param auto_suggest: :class:`~prompt_toolkit.auto_suggest.AutoSuggest`
         instance for input suggestions.
 
@@ -125,13 +125,13 @@ class TextArea:
     :param focusable: When `True`, allow this widget to receive the focus.
     :param focus_on_click: When `True`, focus after mouse click.
     :param input_processors: `None` or a list of
-        :class:`~prompt_toolkit.layout.Processor` objects.
-    :param validator: `None` or a :class:`~prompt_toolkit.validation.Validator`
+        :class:`~quo.layout.Processor` objects.
+    :param validator: `None` or a :class:`~quo.validation.Validator`
         object.
 
     Window attributes:
 
-    :param lexer: :class:`~prompt_toolkit.lexers.Lexer` instance for syntax
+    :param lexer: :class:`~quo.lexers.Lexer` instance for syntax
         highlighting.
     :param wrap_lines: When `True`, don't scroll horizontally, but wrap lines.
     :param width: Window width. (:class:`~prompt_toolkit.layout.Dimension` object.)

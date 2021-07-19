@@ -58,15 +58,14 @@ from quo.outliers import (
                    UsageError
                    )
                    
-from .setout import HelpFormatter
-from .setout import wraptext
+from .setout import HelpFormatter, wraptext
 from quo.context.current import currentcontext
 from .parser import AppParser
 from quo.expediency import (
                   inscribe,
                   appdir,
                   formatfilename,
-                  get_os_args,
+                  os_args,
                   textstream,
                   binarystream,
                   openfile
@@ -87,7 +86,7 @@ from quo.i_o import (
               clear
               )
     
-from quo.shortcuts import print_container
+from quo.shortcuts import container
 from quo.widgets import TextArea, Frame
 from quo.shortcuts import elicit
 from .types import (

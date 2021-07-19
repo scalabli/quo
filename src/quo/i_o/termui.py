@@ -5,12 +5,15 @@ import os
 import struct
 import sys
 
-from quo.accordance import DEFAULT_COLUMNS
-from quo.accordance import get_winterm_size
-from quo.accordance import is_bytes
-from quo.accordance import isatty
-from quo.accordance import strip_ansi_colors
-from quo.accordance import WIN
+from quo.accordance import (
+        DEFAULT_COLUMNS,
+        get_winterm_size,
+        is_bytes,
+        isatty,
+        strip_ansi_colors,
+        WIN
+        )
+
 from quo.outliers import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
@@ -269,140 +272,6 @@ def scrollable(text_or_generator, color=None):
     return pager(itertools.chain(text_generator, "\n"), color)
 
 
-#def progressbar(
-#    iterable=None,
-#    length=None,
-#    label=None,
-#    show_eta=True,
-#    show_percent=None,
-#    show_pos=False,
-#    item_show_func=None,
-#    fill_char="#",
-#    empty_char="-",
-#    bar_template="%(label)s  [%(bar)s]  %(info)s",
-#    info_sep="  ",
-#    width=36,
-#    file=None,
-#    color=None,
-#    update_min_steps=1,
-#):
-    """This function creates an iterable context manager that can be used
-    to iterate over something while showing a progress bar.  It will
-    either iterate over the `iterable` or `length` items (that are counted
-    up).  While iteration happens, this function will print a rendered
-    progress bar to the given `file` (defaults to stdout) and will attempt
-    to calculate remaining time and more.  By default, this progress bar
-    will not be rendered if the file is not a terminal.
-
-    The context manager creates the progress bar.  When the context
-    manager is entered the progress bar is already created.  With every
-    iteration over the progress bar, the iterable passed to the bar is
-    advanced and the bar is updated.  When the context manager exits,
-    a newline is printed and the progress bar is finalized on screen.
-
-    Note: The progress bar is currently designed for use cases where the
-    total progress can be expected to take at least several seconds.
-    Because of this, the ProgressBar class object won't display
-    progress that is considered too fast, and progress where the time
-    between steps is less than a second.
-
-    No printing must happen or the progress bar will be unintentionally
-    destroyed.
-
-    Example usage::
-
-        with progressbar(items) as bar:
-            for item in bar:
-                do_something_with(item)
-
-    Alternatively, if no iterable is specified, one can manually update the
-    progress bar through the `update()` method instead of directly
-    iterating over the progress bar.  The update method accepts the number
-    of steps to increment the bar with::
-
-        with progressbar(length=chunks.total_bytes) as bar:
-            for chunk in chunks:
-                process_chunk(chunk)
-                bar.update(chunks.bytes)
-
-    The ``update()`` method also takes an optional value specifying the
-    ``current_item`` at the new position. This is useful when used
-    together with ``item_show_func`` to customize the output for each
-    manual step::
-
-        with quo.progressbar(
-            length=total_size,
-            label='Unzipping archive',
-            item_show_func=lambda a: a.filename
-        ) as bar:
-            for archive in zip_file:
-                archive.extract()
-                bar.update(archive.size, archive)
-
-    :param iterable: an iterable to iterate over.  If not provided the length
-                     is required.
-    :param length: the number of items to iterate over.  By default the
-                   progressbar will attempt to ask the iterator about its
-                   length, which might or might not work.  If an iterable is
-                   also provided this parameter can be used to override the
-                   length.  If an iterable is not provided the progress bar
-                   will iterate over a range of that length.
-    :param label: the label to show next to the progress bar.
-    :param show_eta: enables or disables the estimated time display.  This is
-                     automatically disabled if the length cannot be
-                     determined.
-    :param show_percent: enables or disables the percentage display.  The
-                         default is `True` if the iterable has a length or
-                         `False` if not.
-    :param show_pos: enables or disables the absolute position display.  The
-                     default is `False`.
-    :param item_show_func: a function called with the current item which
-                           can return a string to show the current item
-                           next to the progress bar.  Note that the current
-                           item can be `None`!
-    :param fill_char: the character to use to show the filled part of the
-                      progress bar.
-    :param empty_char: the character to use to show the non-filled part of
-                       the progress bar.
-    :param bar_template: the format string to use as template for the bar.
-                         The parameters in it are ``label`` for the label,
-                         ``bar`` for the progress bar and ``info`` for the
-                         info section.
-    :param info_sep: the separator between multiple info items (eta etc.)
-    :param width: the width of the progress bar in characters, 0 means full
-                  terminal width
-    :param file: the file to write to.  If this is not a terminal then
-                 only the label is printed.
-    :param color: controls if the terminal supports ANSI colors or not.  The
-                  default is autodetection.  This is only needed if ANSI
-                  codes are included anywhere in the progress bar output
-                  which is not the case by default.
-    :param update_min_steps: Render only when this many updates have
-        completed. This allows tuning for very fast iterators.
-
-    """
-#    from .implementation import ProgressBar
-
-#    color = resolve_color_default(color)
-#    return ProgressBar(
-#        iterable=iterable,
-#        length=length,
-#        show_eta=show_eta,
-#        show_percent=show_percent,
-#        show_pos=show_pos,
-#        item_show_func=item_show_func,
-#        fill_char=fill_char,
-#        empty_char=empty_char,
-#        bar_template=bar_template,
-#        info_sep=info_sep,
-#        file=file,
-#        label=label,
-#        width=width,
-#        color=color,
-#        update_min_steps=update_min_steps,
-#    )
-
-
 def clear():
     """Clears the terminal screen.  This will have the effect of clearing
     the whole visible space of the terminal and moving the cursor to the
@@ -439,6 +308,7 @@ def style(
     background=None,
     bold=None,
     dim=None,
+    lowercase=None,
     underline=None,
     blink=None,
     italic=None,
@@ -545,6 +415,7 @@ def style(
         bits.append(f"\033[{7 if reverse else 27}m") 
     if italic is not None:
         bits.append(f"\x1B[3m")
+
     bits.append(text)
     if reset:
         bits.append(_ansi_reset_all)
@@ -562,7 +433,7 @@ def unstyle(text):
 
 
 def echo(message=None, file=None, nl=True, err=False, color=None, **styles):
-    """This function combines :func:`echo` and :func:`style` into one
+    """This function combines :func:`inscribe` and :func:`style` into one
     call.  As such the following two calls are the same::
 
         quo.echo('Hello World!', fg='green')
@@ -708,3 +579,4 @@ def pause(info="Press any key to proceed >> ...", err=False):
     finally:
         if info:
             inscribe(err=err)
+
