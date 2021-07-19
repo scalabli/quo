@@ -52,7 +52,7 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
   import quo
-  quo.flair(f'Hello, World!', fg="red", bold=True)
+  quo.echo(f'Hello, World!', fg="red", bold=True)
 
 **Example 3**
 
