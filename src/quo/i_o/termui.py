@@ -322,7 +322,7 @@ def style(
 
     Examples::
 
-        quo.echo(quo.style('Hello World!', foreground='green'))
+        quo.inscribe(quo.style('Hello World!', foreground='green'))
         quo.echo(quo.style('ATTENTION!', blink=True))
         quo.echo(quo.style('Some things', reverse=True, foreground='cyan'))
         quo.echo(quo.style('More colors', foreground=(255, 12, 128), background=117))
@@ -399,7 +399,7 @@ def style(
             raise TypeError(f"Unknown color {bg!r}")
     if background:
         try:
-            bits.append(f"\033[{_interpret_color(background, 10)}")
+            bits.append(f"\033[{_interpret_color(background, 10)}m")
         except KeyError:
             raise TypeError(f"Unknown color {background!r}")
 
