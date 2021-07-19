@@ -83,6 +83,7 @@ The most simple example of the library would look like this:
   @app("--name", prompt="What is your name?:")
   def hello(name):
   echo(f'Hello {name}!')
+
   if __name__ == '__main__':
       hello() 
 
