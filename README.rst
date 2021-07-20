@@ -76,15 +76,15 @@ The most simple example of the library would look like this:
 
 .. sourcecode:: python
 
-  import quo
-  from quo import command, app, echo
-  @command()
-  @app("--name", prompt="What is your name?:")
-  def hello(name):
-  echo(f'Hello {name}!')
-
-  if __name__ == '__main__':
-      hello() 
+   import quo
+   from quo import command, app, echo                                                                  
+   
+   @command()
+   @app("--name", prompt="What is your name?", type=str)
+   @app("--age", prompt="How old are you?", type=int)
+   def hello(name, age):
+        echo(f"Hello {name}, nice to meet ya")
+        echo(f"{name}, {age} is not that bad")
 
 **Example 6**
 
