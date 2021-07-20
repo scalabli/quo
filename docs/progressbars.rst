@@ -2,29 +2,18 @@
 
 Progress bars
 =============
-
-Prompt_toolkit ships with a high level API for displaying progress bars,
-inspired by `tqdm <https://github.com/tqdm/tqdm>`_ 
-
-.. warning::
-
-    The API for the prompt_toolkit progress bars is still very new and can
-    possibly change in the future. It is usable and tested, but keep this in
-    mind when upgrading.
-
-Remember that the `examples directory <https://github.com/prompt-toolkit/python-prompt-toolkit/tree/master/examples>`_
-of the prompt_toolkit repository ships with many progress bar examples as well.
+A progress bar is a user interface element that indicates the progress of an operation. Progress bar supports two modes to represent progress: determinate, and indeterminate.
 
 
 Simple progress bar
 -------------------
 
 Creating a new progress bar can be done by calling the
-:class:`~quo.ProgressBar` context manager.
+:class:`~quo.ProgressBar`
 
 The progress can be displayed for any iterable. This works by wrapping the
 iterable (like ``range``) with the
-:class:`~quo.ProgressBar` context manager itself. This
+:class:`~quo.ProgressBar`. This
 way, the progress bar knows when the next item is consumed by the forloop and
 when progress happens.
 
@@ -106,7 +95,7 @@ Adding a title and label
 ------------------------
 
 Each progress bar can have one title, and for each task an individual label.
-Both the title and the labels can be :ref:`formatted text <formatted_text>`.
+
 
 .. code:: python
 
@@ -127,12 +116,11 @@ Formatting the progress bar
 ---------------------------
 
 The visualisation of a :class:`~quo.ProgressBar` can be
-customized by using a different sequence of formatters. The default formatting
-looks something like this:
+customized by using a different sequence of formatters. The default formatting looks something like this:
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts.progress_bar.formatters import *
+    from quo.indicators.formatters import *
 
     default_formatting = [
         Label(),
@@ -157,9 +145,9 @@ modify the progress bar to look like an apt-get style progress bar:
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import ProgressBar
-    from prompt_toolkit.styles import Style
-    from prompt_toolkit.shortcuts.progress_bar import formatters
+    from quo import ProgressBar
+    from quo.styles import Style
+    from quo.indicators import formatters
     import time
 
     style = Style.from_dict({

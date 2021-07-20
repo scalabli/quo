@@ -22,6 +22,11 @@
     # Quo
     # Forever scalable
 
+
+
+.. note::
+   We're currently cleaning up the docs 📄
+
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
 Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage
 
@@ -63,7 +68,7 @@ The most simple example of the library would look like this:
 
    import quo
    from quo import echo
-   echo(f"Hello, World in italics!", italic=True")
+   echo(f"Hello, World in italics!", italic=True)
 
 
 **Example 4**
