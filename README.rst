@@ -87,7 +87,17 @@ The most simple example of the library would look like this:
   if __name__ == '__main__':
       hello() 
 
+**Example 6**
 
+.. sourcecode:: python
+
+  import quo
+  from quo import container, Frame, TextArea
+  container(
+    Frame(
+    TextArea(text="Hello world!\n"),
+    title="Quo: ♥", )
+    )
 For more examples, have a look in the tutorials directory.
 
 
