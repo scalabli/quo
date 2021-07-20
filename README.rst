@@ -20,9 +20,8 @@
     # Forever scalable
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
-Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage
-
 Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointment brought about by the failure to execute a CLI API.
+Simple to code, easy to learn, and does not come with needless baggage. 
 
 Quo requires Python `3.6` or later. 
 
@@ -156,46 +155,7 @@ file in the top distribution directory for the full license text.
 
 Code of Conduct
 ================
-
-Everyone interacting in the project's code bases, issue trackers, chat rooms,
-and mailing lists is expected to follow Quo's Code of Conduct.
-
-As contributors and maintainers of these projects, and in the interest of fostering
-an open and welcoming community, we pledge to respect all people who contribute
-through reporting issues, posting feature requests, updating documentation,
-submitting pull requests or patches, and other activities.
-
-We are committed to making participation in these projects a harassment-free
-experience for everyone, regardless of level of experience, gender,
-gender identity and expression, sexual orientation, disability,
-personal appearance, body size, race, ethnicity, age,
-religion, or nationality.
-
-Examples of unacceptable behavior by participants include:
-
-* The use of sexualized language or imagery
-* Personal attacks
-* Trolling or insulting/derogatory comments
-* Public or private harassment
-* Publishing other's private information, such as physical
-  or electronic addresses, without explicit permission
-* Other unethical or unprofessional conduct.
-
-Project maintainers have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct. By adopting this Code of Conduct,
-project maintainers commit themselves to fairly and consistently applying
-these principles to every aspect of managing this project. Project maintainers
-who do not follow or enforce the Code of Conduct may be permanently removed from
-the project team.
-
-This code of conduct applies both within project spaces and in public spaces
-when an individual is representing the project or its community.
-
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by opening an issue or contacting one or more of the project maintainers.
-
-This Code of Conduct is adapted from the Contributor Covenant,
+Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at http://contributor-covenant.org/version/1/2/0/.
 
 .. |build-status| image:: https://pepy.tech/badge/quo/month
