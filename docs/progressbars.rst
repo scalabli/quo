@@ -3,11 +3,17 @@
 Progress bars
 =============
 A progress bar is a user interface element that indicates the progress of an operation. Progress bar supports two modes to represent progress: determinate, and indeterminate.
+Showing Progress Bars
+Sometimes, you have command line scripts that need to process a lot of data,
+but you want to quickly show the user some progress about how long that
+will take.  Quo supports simple progress bar rendering for that.
 
+The basic usage is very simple: the idea is that you have an iterable that
+you want to operate on.  For each item in the iterable it might take some
+time to do processing.
 
 Simple progress bar
 -------------------
-
 Creating a new progress bar can be done by calling the
 :class:`~quo.ProgressBar`
 
