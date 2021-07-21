@@ -1,5 +1,18 @@
-from ctypes import Structure, Union, c_char, c_long, c_short, c_ulong
-from ctypes.wintypes import BOOL, DWORD, LPVOID, WCHAR, WORD
+from ctypes import (
+        Structure,
+        Union,
+        c_char,
+        c_long,
+        c_short,
+        c_ulong
+        )
+from ctypes.wintypes import (
+        BOOL,
+        DWORD,
+        LPVOID,
+        WCHAR,
+        WORD
+        )
 
 # Input/Output standard device numbers. Note that these are not handle objects.
 # It's the `windll.kernel32.GetStdHandle` system call that turns them into a

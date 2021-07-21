@@ -110,4 +110,4 @@ from .types import (
               UUID
               )
 
-__version__ = "2021.3"
+__version__ = "2021.3a"
