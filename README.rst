@@ -109,7 +109,7 @@ Features
 - Nesting of commands
 - A function that displays asterisks instead of the actual characters, helpful when typing passwords
 - Automatic help page generation
-- Lighweight
+- Lightweight
 
 
 Donate🎁
