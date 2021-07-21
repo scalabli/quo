@@ -321,66 +321,14 @@ for per-user config files for your application depending on the OS.
         return rv
 
 
-Showing Progress Bars
----------------------
+Checking if a character is a bool
+-----------------------------------
 
-Sometimes, you have command line scripts that need to process a lot of data,
-but you want to quickly show the user some progress about how long that
-will take.  Quo supports simple progress bar rendering for that through
-the :func:`progressbar` function.
 
-The basic usage is very simple: the idea is that you have an iterable that
-you want to operate on.  For each item in the iterable it might take some
-time to do processing.  So say you have a loop like this::
 
-    for user in all_the_users_to_process:
-        modify_the_user(user)
+Checking if a character is a number
+-------------------------------------
 
-To hook this up with an automatically updating progress bar, all you need
-to do is to change the code to this::
 
-    import quo
-
-    with quo.progressbar(all_the_users_to_process) as bar:
-        for user in bar:
-            modify_the_user(user)
-
-Quo will then automatically print a progress bar to the terminal and
-calculate the remaining time for you.  The calculation of remaining time
-requires that the iterable has a length.  If it does not have a length
-but you know the length, you can explicitly provide it::
-
-    with quo.progressbar(all_the_users_to_process,
-                           length=number_of_users) as bar:
-        for user in bar:
-            modify_the_user(user)
-
-Note that :func:`progressbar` updates the bar *after* each iteration of the
-loop. So code like this will render correctly::
-
-    import time
-
-    with quo.progressbar([1, 2, 3]) as bar:
-        for x in bar:
-            print(f"sleep({x})...")
-            time.sleep(x)
-
-Another useful feature is to associate a label with the progress bar which
-will be shown preceding the progress bar::
-
-    with quo.progressbar(all_the_users_to_process,
-                           label='Modifying user accounts',
-                           length=number_of_users) as bar:
-        for user in bar:
-            modify_the_user(user)
-
-Sometimes, one may need to iterate over an external iterator, and advance the
-progress bar irregularly. To do so, you need to specify the length (and no
-iterable), and use the update method on the context return value instead of
-iterating directly over it::
-
-    with quo.progressbar(length=total_size,
-                           label='Unzipping archive') as bar:
-        for archive in zip_file:
-            archive.extract()
-            bar.update(archive.size)
+Checking if a character is a integer
+-------------------------------------
