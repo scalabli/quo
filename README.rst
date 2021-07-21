@@ -51,7 +51,8 @@ The most simple examples of would look like this:
 .. sourcecode:: python
 
   import quo
-  quo.echo(f'Hello, World!', fg="red", bold=True)
+  from quo import echo
+  echo(f'Hello, World!', fg="red", bold=True)
 
 **Example 3**
 
