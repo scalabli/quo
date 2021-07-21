@@ -23,26 +23,41 @@ Input Prompts
 
 To manually ask for user input, you can use the :func:`prompt` function.
 By default, it accepts any Unicode string, but you can ask for any other
-type.  For instance, you can ask for a valid integer::
+type.  For instance, you can ask for a valid integer:
 
-    value = quo.prompt('Please enter a valid integer', type=int)
+.. code:: python
+
+   import quo
+   from quo import prompt, echo
+   prompt('Please enter a valid integer', type=int)
 
 Additionally, the type will be determined automatically if a default value is
-provided.  For instance, the following will only accept floats::
+provided.  For instance, the following will only accept floats:
 
-    value = quo.prompt('Please enter a number', default=42.0)
+.. code:: python
+
+   from quo import prompt
+   prompt('Please enter a number', default=42.0)
 
 Confirmation Prompts
 --------------------
 
 To ask if a user wants to continue with an action, the :func:`confirm`
 function comes in handy.  By default, it returns the result of the prompt
-as a boolean value::
+as a boolean value:
 
-    if quo.confirm('Do you want to continue?'):
-        quo.echo('Well done!')
+.. code:: python
+
+   from quo import confirm, echo
+   
+   if confirm('Do you want to continue?'):
+   echo('Well done!')
 
 There is also the option to make the function automatically abort the
-execution of the program if it does not return ``True``::
+execution of the program if it does not return ``True``:
 
-    quo.confirm('Do you want to continue?', abort=True)
+.. code:: python
+
+   from quo import confirm
+   
+   confirm('Do you want to continue?', abort=True)

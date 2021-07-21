@@ -95,19 +95,19 @@ To show the default values when showing command help, use ``show_default=True``
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--n', default=1, show_default=True)
+
+   from quo import command, app, echo
+
+    @command()
+    @app('--n', default=1, show_default=True)
     def dots(n):
-        quo.echo('.' * n)
+        echo('.' * n)
 
-.. quo:run::
-
-   invoke(dots, args=['--help'])
 
 Multi Value Apps
 -------------------
 
-Sometimes, you have options that take more than one argument.  For options,
+Sometimes, you have apps that take more than one arg.  For options,
 only a fixed number of arguments is supported.  This can be configured by
 the ``nargs`` parameter.  The values are then stored as a tuple.
 
@@ -120,11 +120,7 @@ the ``nargs`` parameter.  The values are then stored as a tuple.
         a, b = pos
         echo(f"{a} / {b}")
 
-And on the command line:
 
-.. quo:run::
-
-    invoke(findme, args=['--pos', '2.0', '3.0'])
 
 .. _tuple-type:
 
@@ -139,17 +135,13 @@ the tuple.  For this you can directly specify a tuple as type:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--item', type=(str, int))
+    from quo import command, app, echo
+    @command()
+    @app('--item', type=(str, int))
     def putitem(item):
         name, id = item
-        quo.echo(f"name={name} id={id}")
+        echo(f"name={name} id={id}")
 
-And on the command line:
-
-.. quo:run::
-
-    invoke(putitem, args=['--item', 'peter', '1338'])
 
 By using a tuple literal as type, `nargs` gets automatically set to the
 length of the tuple and the :class:`quo.Tuple` type is automatically
@@ -606,10 +598,12 @@ replaced with the :func:`autoconfirm` decorator:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.autoconfirm(prompt='Are you sure you want to drop the db?')
+    from command, autoconfirm, echo
+
+    @command()
+    @autoconfirm(prompt='Are you sure you want to drop the db?')
     def dropdb():
-        quo.echo('Dropped all tables!')
+        echo('Dropped all tables!')
 
 .. admonition:: Callback Signature Changes
 
@@ -636,10 +630,12 @@ Example usage:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('--username')
+    from quo import command, app, echo
+
+    @command()
+    @app('--username')
     def greet(username):
-        quo.echo(f'Hello {username}!')
+        echo(f'Hello {username}!')
 
     if __name__ == '__main__':
         greet(auto_envvar_prefix='GREETER')

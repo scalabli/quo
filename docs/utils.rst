@@ -15,16 +15,20 @@ The most obvious helper is the :func:`echo` function, which in many ways
 works like the Python ``print`` statement or function.  The main difference is
 that it works the same in many different terminal environments.
 
-Example::
+Example:
+
+.. code:: python
 
     import quo
-
     quo.echo('Hello World!')
 
 It can output both text and binary data. It will emit a trailing newline
-by default, which needs to be suppressed by passing ``nl=False``::
+by default, which needs to be suppressed by passing ``nl=False``:
 
-    quo.echo(b'\xe2\x98\x83', nl=False)
+.. code:: python
+
+   import quo
+   quo.echo(b'\xe2\x98\x83', nl=False)
 
 Last but not least :func:`echo` uses quo's intelligent internal output
 streams to stdout and stderr which support unicode output on the Windows
@@ -36,9 +40,14 @@ Quo emulates output streams on Windows to support unicode to the
 Windows console through separate APIs.  For more information see
 :doc:`wincmd`.
 
-You can also easily print to standard error by passing ``err=True``::
+Printing to Standard error
+---------------------------
+You can easily print to standard error by passing ``err=True``:
 
-    quo.echo('Hello World!', err=True)
+.. code:: python
+
+   import quo
+   quo.echo('Hello World!', err=True)
 
 
 .. _ansi-colors:
@@ -246,8 +255,8 @@ streams through ``sys.stdout`` and friends, but unfortunately, there are
 API differences between 2.x and 3.x, especially with regards to how these
 streams respond to Unicode and binary data.
 
-Because of this, quo provides the :func:`get_binary_stream` and
-:func:`get_text_stream` functions, which produce consistent results with
+Because of this, quo provides the :func:`binarystream` and
+:func:`textstream` functions, which produce consistent results with
 different Python versions and for a wide variety of terminal configurations.
 
 The end result is that these functions will always return a functional

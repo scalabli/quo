@@ -116,27 +116,17 @@ Here's an easy example:
 .. code-block:: python
 
     import quo
+    from quo import command, echo
 
-    @quo.command()
+    @command()
     def love():
-        quo.flair('I love quo!', bold=True, background="white", foreground="black")
+        echo('I love quo!', bold=True, background="white", foreground="black")
 
 The function can then be made into a callable script like so::
 
     if __name__ == '__main__':
         love()
 
-And what it looks like:
-
-.. code-block:: console
-
-    invoke(hello, args=[], prog_name='python hello.py')
-
-And the corresponding help page:
-
-.. code-block:: console
-
-    invoke(hello, args=['--help'], prog_name='python hello.py')
 
 Echoing
 -------
@@ -163,7 +153,7 @@ implements two commands for managing databases:
 
     @command()
     def initdb():
-        quo.echo('Initialized the database')
+        echo('Initialized the database')
 
     @command()
     def dropdb():
@@ -184,13 +174,13 @@ script can instead be written like this:
 
     import quo
     from quo import tether, command, echo
-    @quo.tether() 
+    @tether() 
     def cli():
         pass
 
     @cli.command()
     def initdb():
-        quo.echo('Initialized the database')
+        echo('Initialized the database')
 
     @cli.command()
     def dropdb():
@@ -212,17 +202,17 @@ split commands into multiple Python modules.
 
 .. code-block:: python
 
-    @quo.command()
+    import quo
+    from quo import command, echo, tether
+    @command()
     def greet():
-        quo.echo("Hello, World!")
-
-.. code-block:: python
-
-    @quo.tether() 
-    def tether() :
+        echo("Hello, World!")
+    
+    @tether() 
+    def tether():
         pass
 
-    tether.addcommand(greet)
+        tether.addcommand(greet)
 
 
 Adding Parameters
@@ -241,11 +231,6 @@ To add parameters, use the :func:`app` and :func:`arg` decorators:
         for x in range(count):
             echo(f"Hello {name}!")
 
-What it looks like:
-
-.. code-block:: python
-
-    invoke(hello, args=['--help'], prog_name='python hello.py')
 
 .. _switching-to-setuptools:
 
