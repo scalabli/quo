@@ -88,7 +88,7 @@ want this depends on the application.
             while t.is_alive():
                 t.join(timeout=.5)
 
-.. image:: ../images/progress-bars/two-tasks.png
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/two_tasks.png
 
 
 Adding a title and label
