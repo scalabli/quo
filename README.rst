@@ -8,7 +8,7 @@
 
 |coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
 
-:Version: 2021.3
+:Version: 2021.3.5
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
