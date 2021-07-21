@@ -239,7 +239,6 @@ usage patterns.
 .. toctree::
    :maxdepth: 2
 
-   why
    quickstart
    setuptools
    parameters
@@ -252,6 +251,8 @@ usage patterns.
    advanced
    testing
    utils
+   tabular
+   progressbars
    shell-completion
    exceptions
    unicode-support
