@@ -1,4 +1,7 @@
 from .termui import (
+        checkbool,
+        checkinteger,
+        checknumber,
         echo,
         pause, 
         style,

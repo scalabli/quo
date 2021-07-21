@@ -4,6 +4,7 @@ import itertools
 import os
 import struct
 import sys
+import math
 
 from quo.accordance import (
         DEFAULT_COLUMNS,
@@ -18,6 +19,7 @@ from quo.outliers import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
+from quo.systematize.tabulate import _isconvertible, _binary_type, _text_type, _bool_type
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
@@ -270,6 +272,58 @@ def scrollable(text_or_generator, color=None):
     from quo.implementation import pager
 
     return pager(itertools.chain(text_generator, "\n"), color)
+
+
+
+def checknumber(string):
+    """
+    >>> checknumber("123.45")
+    True
+    >>> chenumber("123")
+    True
+    >>> checknumber("spam")
+    False
+    >>> checknumber("123e45678")
+    False
+    >>> checknumber("inf")
+    True
+    """
+    if not _isconvertible(float, string):
+        return False
+    elif isinstance(string, (_text_type, _binary_type)) and (
+        math.isinf(float(string)) or math.isnan(float(string))
+    ):
+        return string.lower() in ["inf", "-inf", "nan"]
+    return True
+
+
+def checkinteger(string, inttype=int):
+    """
+    >>> checkinteger("123")
+    True
+    >>> checkinteger("123.45")
+    False
+    """
+    return (
+        type(string) is inttype
+        or (isinstance(string, _binary_type) or isinstance(string, _text_type))
+        and _isconvertible(inttype, string)
+    )
+
+
+def checkbool(string):
+    """
+    >>> checkbool(True)
+    True
+    >>> checkbool("False")
+    True
+    >>> checkbool(1)
+    False
+    """
+    return type(string) is _bool_type or (
+        isinstance(string, (_binary_type, _text_type)) and string in ("True", "False")
+    )
+
 
 
 def clear():

@@ -73,6 +73,9 @@ from quo.expediency import (
         
 
 from quo.i_o import (
+              checknumber,
+              checkbool,
+              checkinteger,
               echo,
               confirm,
               launch,
@@ -88,6 +91,7 @@ from quo.i_o import (
     
 from quo.shortcuts import container
 from quo.widgets import TextArea, Frame
+from quo.systematize import tabular
 from quo.shortcuts import elicit
 from .types import (
               BOOL,

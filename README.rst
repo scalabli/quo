@@ -36,7 +36,7 @@ You can install quo via the Python Package Index (PyPI)
 
 Getting Started
 ================
-The most simple example of the library would look like this:
+The most simple examples of would look like this:
 
 **Example 1**
 
@@ -59,7 +59,7 @@ The most simple example of the library would look like this:
 
    import quo
    from quo import echo
-   echo(f"Hello, World in italics!", italic=True")
+   echo(f"Hello, World in italics!", italic=True)
 
 
 **Example 4**
@@ -97,12 +97,23 @@ The most simple example of the library would look like this:
     TextArea(text="Hello world!\n"),
     title="Quo: ♥", )
     )
-For more examples, have a look in the tutorials directory.
 
+
+For more inricate  examples, have a look in the ``tutorials`` directory and the documentation.
+
+Features
+==========
+- Support for ANSI and RGB color models
+- Support for tabular presentation of data
+- Interactive progressbars
+- Nesting of commands
+- A function that displays asterisks instead of the actual characters, helpful when typing passwords
+- Automatic help page generation
+- Lighweight
 
 
 Donate🎁
-=======
+=========
 
 In order to for us to maintain this project and grow our community of contributors, `please consider donating today`_.
 
@@ -147,7 +158,7 @@ to our issue tracker at https://github.com/secretum-inc/quo/issues/
 .. _license:
 
 License📑
-========
+==========
 
 This software is licensed under the `MIT License`. See the ``LICENSE``
 file in the top distribution directory for the full license text.
