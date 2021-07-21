@@ -1,8 +1,3 @@
-
-# To update, run:
-#
-#    pip-compile requirements/tests.in
-#
 attrs==21.2.0
 iniconfig==1.1.1
 packaging==20.9
