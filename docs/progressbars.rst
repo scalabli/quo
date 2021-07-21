@@ -109,7 +109,7 @@ Each progress bar can have one title, and for each task an individual label.
         for i in pb(range(800), label=label):
             time.sleep(.01)
 
-.. image:: ../images/progress-bars/colored-title-and-label.png
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/coloredlabel.png
 
 
 Formatting the progress bar
