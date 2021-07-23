@@ -4,25 +4,20 @@
 Changelog
 =========
 
-Version 2021.4
--------------
+Version 2021.3.5
+-----------------
 
 2021-07-19
 
-
-Version 2021.3
--------------
-
-Unreleased
-
--   ``foreground`` and ``background`` changed to ``fg`` and ``bg`` 
+-   Addes ``fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``.
 
 -   Added support for lively ``ProgressBars``
 
 -   Minimal implementation of ``HTML`` module to easy formating
 
 -   Fixed changelong link on PyPI
--
+
+-   Fixed wcwidth dependancy :issue:`18`
 -
 -
 -
