@@ -85,7 +85,6 @@ simply pass in `required=True` as an argument to the decorator.
     def reserved_param_name(from_, to):
         echo(f"from {from_} to {to}")
 
-And on the command line:
 
 
 In this case the option is of type :data:`INT` because the default value
@@ -149,11 +148,12 @@ used.  The above example is thus equivalent to this:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--item', nargs=2, type=quo.Tuple([str, int]))
+    from quo import command, app, echo
+    @command()
+    @app('--item', nargs=2, type=quo.Tuple([str, int]))
     def putitem(item):
         name, id = item
-        quo.echo(f"name={name} id={id}")
+        echo(f"name={name} id={id}")
 
 .. _multiple-options:
 
@@ -169,17 +169,13 @@ accomplished with the ``multiple`` flag:
 Example:
 
 .. code-block:: python
-
-    @quo.command()
-    @quo.option('--message', '-m', multiple=True)
+    
+    from quo command, app, echo
+    @command()
+    @app('--message', '-m', multiple=True)
     def commit(message):
-        quo.echo('\n'.join(message))
+        echo('\n'.join(message))
 
-And on the command line:
-
-.. quo:run::
-
-    invoke(commit, args=['-m', 'foo', '-m', 'bar'])
 
 When passing a ``default`` with ``multiple=True``, the default value
 must be a list or tuple, otherwise it will be interpreted as a list of
@@ -187,7 +183,8 @@ single characters.
 
 .. code-block:: python
 
-    @quo.option("--format", multiple=True, default=["json"])
+    from quo import app
+    @app("--format", multiple=True, default=["json"])
 
 
 Counting
@@ -199,16 +196,12 @@ for instance:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('-v', '--verbose', count=True)
+    from quo import command, app, echo
+    @command()
+    @app('-v', '--verbose', count=True)
     def log(verbose):
-        quo.echo(f"Verbosity: {verbose}")
+        echo(f"Verbosity: {verbose}")
 
-And on the command line:
-
-.. quo:run::
-
-    invoke(log, args=['-vvv'])
 
 Boolean Flags
 -------------
@@ -225,44 +218,32 @@ Example:
 .. code-block:: python
 
     import sys
+    from quo import comnand, app, echo
 
-    @quo.command()
-    @quo.option('--shout/--no-shout', default=False)
+    @command()
+    @app('--shout/--no-shout', default=False)
     def info(shout):
         rv = sys.platform
         if shout:
             rv = rv.upper() + '!!!!111'
-        quo.echo(rv)
+        echo(rv)
 
-And on the command line:
-
-.. quo:run::
-
-    invoke(info, args=['--shout'])
-    invoke(info, args=['--no-shout'])
-    invoke(info)
-
+        
 If you really don't want an off-switch, you can just define one and
 manually inform quo that something is a flag:
 
 .. code-block:: python
 
     import sys
+    from quo import command, tether, echo
 
-    @quo.command()
-    @quo.option('--shout', is_flag=True)
+    @command()
+    @app('--shout', is_flag=True)
     def info(shout):
         rv = sys.platform
         if shout:
             rv = rv.upper() + '!!!!111'
-        quo.echo(rv)
-
-And on the command line:
-
-.. quo:run::
-
-    invoke(info, args=['--shout'])
-    invoke(info)
+        echo(rv)
 
 Note that if a slash is contained in your option already (for instance, if
 you use Windows-style parameters where ``/`` is the prefix character), you
@@ -270,15 +251,15 @@ can alternatively split the parameters through ``;`` instead:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('/debug;/no-debug')
+    from quo import command, app, echo
+    @command()
+    @app('/debug;/no-debug')
     def log(debug):
-        quo.echo(f"debug={debug}")
+        echo(f"debug={debug}")
 
     if __name__ == '__main__':
         log()
 
-.. versionchanged:: 6.0
 
 If you want to define an alias for the second option only, then you will
 need to use leading whitespace to disambiguate the format string:
@@ -288,18 +269,16 @@ Example:
 .. code-block:: python
 
     import sys
+    from quo import command, app, echo
 
-    @quo.command()
-    @quo.option('--shout/--no-shout', ' /-S', default=False)
+    @command()
+    @app('--shout/--no-shout', ' /-S', default=False)
     def info(shout):
         rv = sys.platform
         if shout:
             rv = rv.upper() + '!!!!111'
-        quo.echo(rv)
+        echo(rv)
 
-.. quo:run::
-
-    invoke(info, args=['--help'])
 
 Feature Switches
 ----------------
@@ -315,21 +294,15 @@ the default.
 .. code-block:: python
 
     import sys
+    from quo import command, app, echo
 
-    @quo.command()
-    @quo.option('--upper', 'transformation', flag_value='upper',
-                  default=True)
-    @quo.option('--lower', 'transformation', flag_value='lower')
+
+    @command()
+    @app('--upper', 'transformation', flag_value='upper',default=True)
+    @app('--lower', 'transformation', flag_value='lower')
     def info(transformation):
-        quo.echo(getattr(sys.platform, transformation)())
+        echo(getattr(sys.platform, transformation)())
 
-And on the command line:
-
-.. quo:run::
-
-    invoke(info, args=['--upper'])
-    invoke(info, args=['--lower'])
-    invoke(info)
 
 .. _choice-opts:
 
@@ -346,37 +319,25 @@ Example:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--hash-type',
-                  type=quo.Choice(['MD5', 'SHA1'], case_sensitive=False))
+    from quo import command, app, Choice, echo
+
+    @command()
+    @app('--hash-type',
+                  type= Choice(['MD5', 'SHA1'], case_sensitive=False))
     def digest(hash_type):
-        quo.echo(hash_type)
+        echo(hash_type)
 
-What it looks like:
-
-.. quo:run::
-
-    invoke(digest, args=['--hash-type=MD5'])
-    println()
-    invoke(digest, args=['--hash-type=md5'])
-    println()
-    invoke(digest, args=['--hash-type=foo'])
-    println()
-    invoke(digest, args=['--help'])
 
 Only pass the choices as list or tuple. Other iterables (like
 generators) may lead to unexpected results.
 
-Choices work with options that have ``multiple=True``. If a ``default``
+Choices work with l apps that have ``multiple=True``. If a ``default``
 value is given with ``multiple=True``, it should be a list or tuple of
 valid choices.
 
 Choices should be unique after considering the effects of
 ``case_sensitive`` and any specified token normalization function.
 
-.. versionchanged:: 7.1
-    The resulting value from an option will always be one of the
-    originally passed choices regardless of ``case_sensitive``.
 
 .. _option-prompting:
 
@@ -391,17 +352,13 @@ Example:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--name', prompt=True)
+    from quo import command, app, echo
+
+    @command()
+    @app('--name', prompt=True)
     def hello(name):
-        quo.echo(f"Hello {name}!")
+        echo(f"Hello {name}!")
 
-And what it looks like:
-
-.. quo:run::
-
-    invoke(hello, args=['--name=John'])
-    invoke(hello, input=['John'])
 
 If you are not happy with the default prompt string, you can ask for
 a different one:
@@ -749,20 +706,15 @@ POSIX semantics.  However in certain situations this can be useful:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('+w/-w')
+    from quo import command, app, echo
+
+    @command()
+    @app('+w/-w')
     def chmod(w):
-        quo.echo(f"writable={w}")
+        echo(f"writable={w}")
 
     if __name__ == '__main__':
         chmod()
-
-And from the command line:
-
-.. quo:run::
-
-    invoke(chmod, args=['+w'])
-    invoke(chmod, args=['-w'])
 
 Note that if you are using ``/`` as prefix character and you want to use a
 boolean flag you need to separate it with ``;`` instead of ``/``:
@@ -821,7 +773,9 @@ type conversion. It is called for all sources, including prompts.
 
 .. code-block:: python
 
-    def validate_rolls(ctx, param, value):
+    from quo import command, app, BadParameter, UNPROCESSED
+
+    def validate_rolls(clime, param, value):
         if isinstance(value, tuple):
             return value
 
@@ -829,24 +783,17 @@ type conversion. It is called for all sources, including prompts.
             rolls, _, dice = value.partition("d")
             return int(dice), int(rolls)
         except ValueError:
-            raise quo.BadParameter("format must be 'NdM'")
+            raise BadParameter("format must be 'NdM'")
 
-    @quo.command()
-    @quo.app(
-        "--rolls", type=quo.UNPROCESSED, callback=validate_rolls,
+    @command()
+    @app(
+        "--rolls", type= UNPROCESSED, callback=validate_rolls,
         default="1d6", prompt=True,
     )
     def roll(rolls):
         sides, times = rolls
-        quo.echo(f"Rolling a {sides}-sided dice {times} time(s)")
+        echo(f"Rolling a {sides}-sided dice {times} time(s)")
 
-.. quo:run::
-
-    invoke(roll, args=["--rolls=42"])
-    println()
-    invoke(roll, args=["--rolls=2d12"])
-    println()
-    invoke(roll, input=["42", "2d12"])
 
 
 .. _optional-value:
@@ -864,16 +811,13 @@ can still be passed a value, but if only the flag is given the
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app("--name", is_flag=False, flag_value="Flag", default="Default")
+    from quo import command, app, echo
+
+    @command()
+    @app("--name", is_flag=False, flag_value="Flag", default="Default")
     def hello(name):
-        quo.echo(f"Hello, {name}!")
+        echo(f"Hello, {name}!")
 
-.. code-block:: python
-
-    invoke(hello, args=[])
-    invoke(hello, args=["--name", "Value"])
-    invoke(hello, args=["--name"])
 
 If the app has ``prompt`` enabled, then setting
 ``prompt_required=False`` tells quo to only show the prompt if the
@@ -881,16 +825,13 @@ app's flag is given, instead of if the app is not provided at all.
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('--name', prompt=True, prompt_required=False, default="Default")
+    from quo imporr command, app, echo
+
+    @command()
+    @app('--name', prompt=True, prompt_required=False, default="Default")
     def hello(name):
-        quo.echo(f"Hello {name}!")
+        echo(f"Hello {name}!")
 
-.. quo:run::
-
-    invoke(hello)
-    invoke(hello, args=["--name", "Value"])
-    invoke(hello, args=["--name"], input="Prompt")
 
 If ``required=True``, then the option will still prompt if it is not
 given, but it will also prompt if only the flag is given.
