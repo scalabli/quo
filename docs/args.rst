@@ -1,11 +1,11 @@
 .. _arguments:
 
-Arguments
+Args
 =========
 
 .. currentmodule:: quo
 
-Arguments work similarly to :ref:`apps <apps>` but are positional.
+Args work similarly to :ref:`apps <apps>` but are positional.
 They also only support a subset of the features ofapps  due to their syntactical nature.
 
 Basic Args

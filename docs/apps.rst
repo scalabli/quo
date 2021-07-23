@@ -365,16 +365,11 @@ a different one:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.option('--name', prompt='Your name please')
+    from quo import command, app, echo
+    @command()
+    @app('--name', prompt='Your name please')
     def hello(name):
-        quo.echo(f"Hello {name}!")
-
-What it looks like:
-
-.. quo:run::
-
-    invoke(hello, input=['John'])
+        echo(f"Hello {name}!")
 
 It is advised that prompt not be used in conjunction with the multiple
 flag set to True. Instead, prompt in the function interactively.
@@ -393,28 +388,25 @@ useful for password input:
 .. code-block:: python
 
     import codecs
+    from quo import command, app, echo
 
-    @quo.command()
-    @quo.option(
-        "--password", prompt=True, hide_input=True,
-        confirmation_prompt=True
-    )
+    @command()
+    @app("--password", prompt=True, hide=True, autoconfirm=True)
     def encode(password):
-        quo.echo(f"encoded: {codecs.encode(password, 'rot13')}")
+        echo(f"encoded: {codecs.encode(password, 'rot13')}")
 
-.. quo:run::
-
-    invoke(encode, input=['secret', 'secret'])
 
 Because this combination of parameters is quite common, this can also be
-replaced with the :func:`autopswd` decorator:
+replaced with the :func:`autopasswd` decorator:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.autopswd()
+    from quo import command, autopasswd, echo
+
+    @command()
+    @autopasswd()
     def encrypt(password):
-        quo.echo(f"encoded: to {codecs.encode(password, 'rot13')}")
+        echo(f"encoded: to {codecs.encode(password, 'rot13')}")
 
 
 Dynamic Defaults for Prompts
@@ -433,33 +425,28 @@ from the environment:
 .. code-block:: python
 
     import os
+    from quo import command, app, echo
 
-    @quo.command()
-    @quo.app(
-        "--username", prompt=True,
-        default=lambda: os.environ.get("USER", "")
-    )
+    @command()
+    @app("--username", prompt= True, default=lambda: os.environ.get("USER", ""))
     def hello(username):
-        quo.echo(f"Hello, {username}!")
+        echo(f"Hello, {username}!")
 
 To describe what the default value will be, set it in ``show_default``.
 
 .. code-block:: python
 
     import os
+    from quo import command, app, echo
 
-    @quo.command()
-    @quo.app(
+    @command()
+    @app(
         "--username", prompt=True,
         default=lambda: os.environ.get("USER", ""),
         show_default="current user"
     )
     def hello(username):
-        quo.echo(f"Hello, {username}!")
-
-.. quo:run::
-
-   invoke(hello, args=["--help"])
+        echo(f"Hello, {username}!")
 
 
 Callbacks and Eager Options
@@ -470,7 +457,7 @@ For instance, this is the case when you want to have a ``--version``
 parameter that prints out the version and then exits the application.
 
 Note: an actual implementation of a ``--version`` parameter that is
-reusable is available in quo as :func:`quo.version_option`.  The code
+reusable is available in quo as :func:`quo.autoversion`.  The code
 here is merely an example of how to implement such a flag.
 
 In such cases, you need two concepts: eager parameters and a callback.  An
@@ -490,18 +477,19 @@ processed parameters.
 Here an example for a ``--version`` flag:
 
 .. code-block:: python
+   
+   from quo import command, app, echo
 
-    def print_version(ctx, param, value):
-        if not value or ctx.resilient_parsing:
-            return
-        quo.echo('Version 1.0')
-        ctx.exit()
+    def print_version(clime, param, value):
+    if not value or clime.resilient_parsing:
+    return
+    echo('Version 1.0')
+        clime.exit()
 
-    @quo.command()
-    @quo.app('--version', is_flag=True, callback=print_version,
-                  expose_value=False, is_eager=True)
+    @command()
+    @app('--version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
     def hello():
-        quo.echo('Hello World!')
+        echo('Hello World!')
 
 The `expose_value` parameter prevents the pretty pointless ``version``
 parameter from being passed to the callback.  If that was not specified, a
@@ -510,17 +498,6 @@ flag is applied to the context if quo wants to parse the command line
 without any destructive behavior that would change the execution flow.  In
 this case, because we would exit the program, we instead do nothing.
 
-What it looks like:
-
-.. quo:run::
-
-    invoke(hello)
-    invoke(hello, args=['--version'])
-
-.. admonition:: Callback Signature Changes
-
-    In quo 2.0 the signature for callbacks changed.  For more
-    information about these changes see :ref:`upgrade-to-2.0`.
 
 Yes Parameters
 --------------
@@ -532,23 +509,16 @@ callback:
 
 .. code-block:: python
 
-    def abort_if_false(ctx, param, value):
+    from quo import command, app, echo
+
+    def abort_if_false(clime, param, value):
         if not value:
-            ctx.abort()
+            clime.abort()
 
-    @quo.command()
-    @quo.app('--yes', is_flag=True, callback=abort_if_false,
-                  expose_value=False,
-                  prompt='Are you sure you want to drop the db?')
+    @command()
+    @app('--yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
     def dropdb():
-        quo.echo('Dropped all tables!')
-
-And what it looks like on the command line:
-
-.. quo:run::
-
-    invoke(dropdb, input=['n'])
-    invoke(dropdb, args=['--yes'])
+        echo('Dropped all tables!')
 
 Because this combination of parameters is quite common, this can also be
 replaced with the :func:`autoconfirm` decorator:
@@ -597,12 +567,6 @@ Example usage:
     if __name__ == '__main__':
         greet(auto_envvar_prefix='GREETER')
 
-And from the command line:
-
-.. quo:run::
-
-    invoke(greet, env={'GREETER_USERNAME': 'john'},
-           auto_envvar_prefix='GREETER')
 
 When using ``auto_envvar_prefix`` with command groups, the command name
 needs to be included in the environment variable, between the prefix and
@@ -614,24 +578,20 @@ Example:
 
 .. code-block:: python
 
-   @quo.group()
-   @quo.app('--debug/--no-debug')
+   from quo import tether, app, echo, command
+
+   @tether()
+   @app('--debug/--no-debug')
    def cli(debug):
-       quo.echo(f"Debug mode is {'on' if debug else 'off'}")
+       echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
-   @quo.app('--username')
+   @app('--username')
    def greet(username):
-       quo.echo(f"Hello {username}!")
+       echo(f"Hello {username}!")
 
    if __name__ == '__main__':
        cli(auto_envvar_prefix='GREETER')
-
-.. quo:run::
-
-   invoke(cli, args=['greet',],
-          env={'GREETER_GREET_USERNAME': 'John', 'GREETER_DEBUG': 'false'},
-          auto_envvar_prefix='GREETER')
 
 
 The second option is to manually pull values in from specific environment
@@ -641,19 +601,14 @@ Example usage:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('--username', envvar='USERNAME')
+    from quo import command, app, echo
+    @command()
+    @app('--username', envvar='USERNAME')
     def greet(username):
-       quo.echo(f"Hello {username}!")
+       echo(f"Hello {username}!")
 
     if __name__ == '__main__':
         greet()
-
-And from the command line:
-
-.. quo:run::
-
-    invoke(greet, env={'USERNAME': 'john'})
 
 In that case it can also be a list of different environment variables
 where the first one is picked.
@@ -678,22 +633,18 @@ Example usage:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('paths', '--path', envvar='PATHS', multiple=True,
-                  type=quo.Path())
+    import quo
+    from quo import command, app, echo, Path
+
+    @command()
+    @app('paths', '--path', envvar='PATHS', multiple=True, type=quo.Path())
     def perform(paths):
         for path in paths:
-            quo.echo(path)
+            echo(path)
 
     if __name__ == '__main__':
         perform()
 
-And from the command line:
-
-.. quo:run::
-
-    import os
-    invoke(perform, env={"PATHS": f"./foo/bar{os.path.pathsep}./test"})
 
 Other Prefix Characters
 -----------------------
@@ -721,10 +672,12 @@ boolean flag you need to separate it with ``;`` instead of ``/``:
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app('/debug;/no-debug')
+    from quo import command, app, echo
+
+    @command()
+    @app('/debug;/no-debug')
     def log(debug):
-        quo.echo(f"debug={debug}")
+        echo(f"debug={debug}")
 
     if __name__ == '__main__':
         log()
@@ -751,16 +704,13 @@ bounds are *closed* (the default).
 
 .. code-block:: python
 
-    @quo.command()
-    @quo.app("--count", type=quo.IntRange(0, 20, clamp=True))
-    @quo.app("--digit", type=quo.IntRange(0, 9))
+    from quo import command, app, echo, IntRange
+
+    @command()
+    @app("--count", type= IntRange(0, 20, clamp=True))
+    @app("--digit", type= IntRange(0, 9))
     def repeat(count, digit):
-        quo.echo(str(digit) * count)
-
-.. quo:run::
-
-    invoke(repeat, args=['--count=100', '--digit=5'])
-    invoke(repeat, args=['--count=6', '--digit=12'])
+        echo(str(digit) * count)
 
 
 Callbacks for Validation
@@ -825,7 +775,7 @@ app's flag is given, instead of if the app is not provided at all.
 
 .. code-block:: python
 
-    from quo imporr command, app, echo
+    from quo import command, app, echo
 
     @command()
     @app('--name', prompt=True, prompt_required=False, default="Default")
