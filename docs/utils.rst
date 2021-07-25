@@ -329,6 +329,8 @@ for per-user config files for your application depending on the OS.
                 rv[f"{section}.{key}"] = value
         return rv
 
+Display tabular data
+---------------------
 
 Checking if a character is a bool
 -----------------------------------

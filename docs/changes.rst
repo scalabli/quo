@@ -9,7 +9,7 @@ Version 2021.3.5
 
 2021-07-19
 
--   Addes ``fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``.
+-   Added ``fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``. foreground and background still works.
 
 -   Added support for lively ``ProgressBars``
 
@@ -17,8 +17,8 @@ Version 2021.3.5
 
 -   Fixed changelong link on PyPI
 
--   Fixed wcwidth dependancy :issue:`18`
--
+-   Fixed wcwidth dependancy issue :issue:`18`
+-   Added ability to display tabular which comes with several themes/formats
 -
 -
 

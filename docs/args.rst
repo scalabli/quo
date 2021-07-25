@@ -57,18 +57,7 @@ for this is that in this particular example the arguments are defined as
 strings.  Filenames, however, are not strings!  They might be on certain
 operating systems, but not necessarily on all.  For better ways to write
 this, see the next sections.
-
-.. admonition:: Note on Non-Empty Variadic Arguments
-
-   If you come from ``argparse``, you might be missing support for setting
-   ``nargs`` to ``+`` to indicate that at least one argument is required.
-
-   This is supported by setting ``required=True``.  However, this should
-   not be used if you can avoid it as we believe scripts should gracefully
-   degrade into becoming noops if a variadic argument is empty.  The
-   reason for this is that very often, scripts are invoked with wildcard
-   inputs from the command line and they should not error out if the
-   wildcard is empty.
+ 
 
 .. _file-args:
 
@@ -84,11 +73,14 @@ quo supports this through the :class:`quo.File` type which
 intelligently handles files for you.  It also deals with Unicode and bytes
 correctly for all versions of Python so your script stays very portable.
 
-Example::
+Example:
 
-    @quo.command()
-    @quo.argument('input', type=quo.File('rb'))
-    @quo.argument('output', type=quo.File('wb'))
+.. code:: python
+
+    from quo import command, arg
+    @command()
+    @arg('input', type=quo.File('rb'))
+    @arg('output', type=quo.File('wb'))
     def inout(input, output):
         """Copy contents of INPUT to OUTPUT."""
         while True:
@@ -97,12 +89,6 @@ Example::
                 break
             output.write(chunk)
 
-And what it does::
-
-    with isolated_filesystem():
-        invoke(inout, args=['-', 'hello.txt'], input=['hello'],
-               terminate_input=True)
-        invoke(inout, args=['hello.txt', '-'])
 
 File Path Arguments
 -------------------
@@ -119,22 +105,17 @@ handles this ambiguity.  Not only will it return either bytes or Unicode
 depending on what makes more sense, but it will also be able to do some
 basic checks for you such as existence checks.
 
-Example::
+Example:
 
-    @quo.command()
-    @quo.argument('filename', type=quo.Path(exists=True))
+.. code:: python
+
+    from quo import command, arg, echo, formatfilename, Path
+
+    @command()
+    @arg('filename', type= Path(exists=True))
     def touch(filename):
         """Print FILENAME if the file exists."""
-        quo.echo(quo.format_filename(filename))
-
-And what it does::
-
-    with isolated_filesystem():
-        with open('hello.txt', 'w') as f:
-            f.write('Hello World!\n')
-        invoke(touch, args=['hello.txt'])
-        println()
-        invoke(touch, args=['missing.txt'])
+        echo(formatfilename(filename))
 
 
 File Opening Safety
@@ -164,8 +145,7 @@ necessary for manually prompting with the :func:`prompt` function as you
 do not know if a stream like stdout was opened (which was already open
 before) or a real file that needs closing.
 
-Starting with quo 2.0, it is also possible to open files in atomic mode by
-passing ``atomic=True``.  In atomic mode, all writes go into a separate
+It is also possible to open files in atomic mode by passing ``atomic=True``.  In atomic mode, all writes go into a separate
 file in the same folder, and upon completion, the file will be moved over to
 the original location.  This is useful if a file regularly read by other
 users is modified.
@@ -177,20 +157,18 @@ Like options, arguments can also grab values from an environment variable.
 Unlike options, however, this is only supported for explicitly named
 environment variables.
 
-Example usage::
+Example usage:
 
-    @quo.command()
-    @quo.argument('src', envvar='SRC', type=quo.File('r'))
+.. code:: python
+
+    from quo import command, app, arg, echo
+
+    @command()
+    @arg('src', envvar='SRC', type=quo.File('r'))
     def echo(src):
         """Print value of SRC environment variable."""
-        quo.echo(src.read())
+        echo(src.read())
 
-And from the command line::
-
-    with isolated_filesystem():
-        with open('hello.txt', 'w') as f:
-            f.write('Hello World!')
-        invoke(echo, env={'SRC': 'hello.txt'})
 
 In that case, it can also be a list of different environment variables
 where the first one is picked.
@@ -198,39 +176,44 @@ where the first one is picked.
 Generally, this feature is not recommended because it can cause the user
 a lot of confusion.
 
-Option-Like Arguments
+App-Like Args
 ---------------------
 
 Sometimes, you want to process arguments that look like options.  For
 instance, imagine you have a file named ``-foo.txt``.  If you pass this as
-an argument in this manner, quo will treat it as an option.
+an arg in this manner, quo will treat it as an app.
 
 To solve this, quo does what any POSIX style command line script does,
 and that is to accept the string ``--`` as a separator for options and
 arguments.  After the ``--`` marker, all further parameters are accepted as
 arguments.
 
-Example usage::
+Example usage:
 
-    @quo.command()
-    @quo.argument('files', nargs=-1, type=quo.Path())
+.. code:: python
+
+    from quo import command, arg, echo, Path
+
+    @command()
+    @arg('files', nargs=-1, type= Path())
     def touch(files):
         """Print all FILES file names."""
         for filename in files:
-            quo.echo(filename)
+            echo(filename)
 
-And from the command line::
-
-    invoke(touch, ['--', '-foo.txt', 'bar.txt'])
 
 If you don't like the ``--`` marker, you can set ignore_unknown_options to
-True to avoid checking unknown options::
+True to avoid checking unknown options:
 
-    @quo.command(context_settings={"ignore_unknown_options": True})
-    @quo.argument('files', nargs=-1, type=quo.Path())
+.. code:: python
+
+    from quo import command, arg, echo, Path
+
+    @command(context_settings={"ignore_unknown_options": True})
+    @arg('files', nargs=-1, type= Path())
     def touch(files):
         """Print all FILES file names."""
         for filename in files:
-            quo.echo(filename)
+            echo(filename)
 
 

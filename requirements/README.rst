@@ -2,14 +2,14 @@
       Quo Requirement Files
 ====================================
 
-+ ``dev.quo``
++ ``dev.txt``
 
     Core dependencies for the development suite. 
 
-+ ``docs.quo``
++ ``docs.txt``
 
     Requirements necessary to build the documentation.
 
-+ ``test.quo``
++ ``test.txt``
 
     Requirements that are necessary to run the test suite.
