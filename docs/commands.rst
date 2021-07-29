@@ -84,9 +84,9 @@ script like this:
     def cli(clime, debug):
         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
         # by means other than the `if` block below)
-        ctx.ensure_object(dict)
+        clime.ensure_object(dict)
 
-        ctx.obj['DEBUG'] = debug
+        clime.obj['DEBUG'] = debug
 
     @cli.command()
     @quo.pass_context
