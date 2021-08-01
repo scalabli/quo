@@ -289,12 +289,12 @@ def checknumber(string):
     True
     """
     if not _isconvertible(float, string):
-        return echo(f"The input is not a number")
+        return echo(f"The input is not a number", err=err)
     elif isinstance(string, (_text_type, _binary_type)) and (
         math.isinf(float(string)) or math.isnan(float(string))
     ):
         return string.lower() in ["inf", "-inf", "nan"]
-    return echo(f"The input is a number") 
+    return echo(f"The input is a number", err=err)
 
 
 def checkinteger(string, inttype=int):
@@ -374,13 +374,7 @@ def style(
     of the string a reset code is issued.  This can be prevented by
     passing ``reset=False``.
 
-    Examples::
-
-        quo.inscribe(quo.style('Hello World!', foreground='green'))
-        quo.echo(quo.style('ATTENTION!', blink=True))
-        quo.echo(quo.style('Some things', reverse=True, foreground='cyan'))
-        quo.echo(quo.style('More colors', foreground=(255, 12, 128), background=117))
-
+    
   Note: v as in vblack or vred stands for vivid black or vivid red
   Supported color names:
 
@@ -489,9 +483,13 @@ def unstyle(text):
 def echo(message=None, file=None, nl=True, err=False, color=None, **styles):
     """This function combines :func:`inscribe` and :func:`style` into one
     call.  As such the following two calls are the same::
+Examples::
 
-        quo.echo('Hello World!', fg='green')
-        quo.inscribe(quo.style('Hello World!', fg='green'))
+        quo.echo('Hello World!', foreground='green')
+        quo.echo('ATTENTION!', blink=True)
+        quo.echo('Some things', reverse=True, foreground='cyan')
+        quo.echo('RGB colors', foreground=(255, 12, 128), background=117)
+
 
     All keyword arguments are forwarded to the underlying functions
     depending on which one they go with.
