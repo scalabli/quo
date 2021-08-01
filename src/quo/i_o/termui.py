@@ -289,12 +289,12 @@ def checknumber(string):
     True
     """
     if not _isconvertible(float, string):
-        return False
+        return echo(f"The input is not a number")
     elif isinstance(string, (_text_type, _binary_type)) and (
         math.isinf(float(string)) or math.isnan(float(string))
     ):
         return string.lower() in ["inf", "-inf", "nan"]
-    return True
+    return echo(f"The input is a number") 
 
 
 def checkinteger(string, inttype=int):
