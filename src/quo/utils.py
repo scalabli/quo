@@ -16,7 +16,7 @@ from typing import (
     Union,
 )
 
-from wcwidth import wcwidth
+from quo.layout.width import width
 
 __all__ = [
     "Event",

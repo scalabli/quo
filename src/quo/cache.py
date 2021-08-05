@@ -1,6 +1,15 @@
 from collections import deque
 from functools import wraps
-from typing import Any, Callable, Deque, Dict, Generic, Hashable, Tuple, cast
+from typing import (
+        Any,
+        Callable,
+        Deque,
+        Dict,
+        Generic,
+        Hashable,
+        Tuple,
+        cast
+        )
 
 __all__ = [
         "SimpleCache",
@@ -16,8 +25,7 @@ _U = TypeVar("_U")
 
 class SimpleCache(Generic[_T, _U]):
     """
-    Very simple cache that discards the oldest item when the cache size is
-    exceeded.
+    Very simple cache that discards the oldest item when the cache size is exceeded.
 
     :param maxsize: Maximum size of the cache. (Don't make it too big.)
     """
@@ -33,8 +41,7 @@ class SimpleCache(Generic[_T, _U]):
     def get(self, key: _T, getter_func: Callable[[], _U]) -> _U:
         """
         Get object from the cache.
-        If not found, call `getter_func` to resolve it, and put that on the top
-        of the cache instead.
+        If not found, call `getter_func` to resolve it, and put that on the top of the cache instead.
         """
         # Look in cache first.
         try:
@@ -116,9 +123,9 @@ def memoized(maxsize: int = 1024) -> Callable[[_F], _F]:
         cache: SimpleCache[Hashable, Any] = SimpleCache(maxsize=maxsize)
 
         @wraps(obj)
-        def new_callable(*a: Any, **kw: Any) -> Any:
+        def new_callable(*args: Any, **kwargs: Any) -> Any:
             def create_new() -> Any:
-                return obj(*a, **kw)
+                return obj(*args, **kwargs)
 
             key = (a, tuple(sorted(kw.items())))
             return cache.get(key, create_new)

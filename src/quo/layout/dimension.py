@@ -1,9 +1,14 @@
 """
-Layout dimensions are used to give the minimum, maximum and preferred
-dimensions for containers and controls.
+Layout dimensions are used to give the minimum, maximum and preferred dimensions for containers and controls.
 """
 
-from typing import Any, Callable, List, Optional, Union
+from typing import (
+        Any,
+        Callable, 
+        List, 
+        Optional,
+        Union
+        )
 
 __all__ = [
     "Dimension",
@@ -19,15 +24,11 @@ __all__ = [
 class Dimension:
     """
     Specified dimension (width/height) of a user control or window.
-
-    The layout engine tries to honor the preferred size. If that is not
-    possible, because the terminal is larger or smaller, it tries to keep in
-    between min and max.
+    The layout engine tries to honor the preferred size. If that is not possible, because the terminal is larger or smaller, it tries to keep in between min and max.
 
     :param min: Minimum size.
     :param max: Maximum size.
-    :param weight: For a VSplit/HSplit, the actual size will be determined
-                   by taking the proportion of weights from all the children.
+    :param weight: For a VSplit/HSplit, the actual size will be determined by taking the proportion of weights from all the children.
                    E.g. When there are two children, one with a weight of 1,
                    and the other with a weight of 2, the second will always be
                    twice as big as the first, if the min/max values allow it.

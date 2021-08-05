@@ -8,8 +8,8 @@ except ImportError:
     from quo.eventloop.dummy_contextvars import ContextVar  # type: ignore
 
 if TYPE_CHECKING:
-    from quo.input.base import Input
-    from quo.output.base import Output
+    from quo.input.core import Input
+    from quo.output.core import Output
 
     from .application import Application
 
