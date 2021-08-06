@@ -152,7 +152,7 @@ with the incomplete value.
             ]
 
     @quo.command()
-    @quo.option("--ev", type=EnvVarType())
+    @quo.app("--ev", type=EnvVarType())
     def cli(ev):
         quo.echo(os.environ[ev])
 
@@ -182,7 +182,7 @@ start with the incomplete value.
         return [k for k in os.environ if k.startswith(incomplete)]
 
     @quo.command()
-    @quo.argument("name", shell_complete=complete_env_vars)
+    @quo.arg("name", shell_complete=complete_env_vars)
     def cli(name):
         quo.echo(f"Name: {name}")
         quo.echo(f"Value: {os.environ[name]}")

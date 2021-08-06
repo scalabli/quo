@@ -144,9 +144,9 @@ customized by using a different sequence of formatters. The default formatting l
     ]
 
 That sequence of
-:class:`~prompt_toolkit.shortcuts.progress_bar.formatters.Formatter` can be
+:class:`~quo.shortcuts.progress_bar.formatters.Formatter` can be
 passed to the `formatter` argument of
-:class:`~prompt_toolkit.shortcuts.ProgressBar`. So, we could change this and
+:class:`~quo.indicator.ProgressBar`. So, we could change this and
 modify the progress bar to look like an apt-get style progress bar:
 
 .. code:: python
@@ -184,15 +184,13 @@ modify the progress bar to look like an apt-get style progress bar:
 Adding key bindings and toolbar
 -------------------------------
 
-Like other prompt_toolkit applications, we can add custom key bindings, by
-passing a :class:`~prompt_toolkit.key_binding.KeyBindings` object:
+Like other quo  applications, we can add custom key bindings, by passing a :class:`~quo.key_binding.KeyBindings` object:
 
 .. code:: python
 
-    from prompt_toolkit import HTML
-    from prompt_toolkit.key_binding import KeyBindings
-    from prompt_toolkit.patch_stdout import patch_stdout
-    from prompt_toolkit.shortcuts import ProgressBar
+    from quo import HTML, ProgressBar
+    from quo.key_binding import KeyBindings
+    from quo.patch_stdout import patch_stdout
 
     import os
     import time
@@ -225,8 +223,7 @@ passing a :class:`~prompt_toolkit.key_binding.KeyBindings` object:
                 if cancel[0]:
                     break
 
-Notice that we use :func:`~prompt_toolkit.patch_stdout.patch_stdout` to make
-printing text possible while the progress bar is displayed. This ensures that
+Notice that we use :func:`~quo.patch_stdout.patch_stdout` to make printing text possible while the progress bar is displayed. This ensures that
 printing happens above the progress bar.
 
 Further, when "x" is pressed, we set a cancel flag, which stops the progress.

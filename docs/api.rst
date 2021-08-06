@@ -204,7 +204,6 @@ Prompts for confirmation (yes/no question).
 
 If the user aborts the input by sending a interrupt signal this function will catch it and raise a Abort exception.
 
-Changelog
 Parameters
 text – the question to ask.
 
@@ -266,9 +265,11 @@ width – the width of the progress bar in characters, 0 means full terminal wid
 
 file – the file to write to. If this is not a terminal then only the label is printed.
 
-color – controls if the terminal supports ANSI colors or not. The default is autodetection. This is only needed if ANSI codes are included anywhere in the progress bar output which is not the case by default.
+color – controls if the terminal supports ANSI colors or not. The default is autodetection. This is only needed if ANSI codes are included anywhere in the progress bar output which is not the case 
 
-quo.clear()
+
+
+**quo.clear()**
 Clears the terminal screen. This will have the effect of clearing the whole visible space of the terminal and moving the cursor to the top left. This does not do anything if not connected to a terminal.
 
 Changelog
@@ -316,21 +317,22 @@ Supported color names:
 
 reset (reset the color code only)
 
-New in version 7.0: Added support for bright colors.
-
-Changelog
 Parameters
 text – the string to style with ansi codes.
 
 fg – if provided this will become the foreground color.
+foreground - If provided this will become the foreground color 
 
 bg – if provided this will become the background color.
+background - if provided this will become the background data
 
 bold – if provided this will enable or disable bold mode.
 
 dim – if provided this will enable or disable dim mode. This is badly supported.
 
-underline – if provided this will enable or disable underline.
+underline – if provided this will enable or disable underline
+
+italic - if provided this will print data in italics
 
 blink – if provided this will enable or disable blinking.
 
@@ -346,13 +348,11 @@ Parameters
 text – the text to remove style information from.
 
 quo.flair(message=None, file=None, nl=True, err=False, color=None, **styles)
-This function combines echo() and style() into one call. As such the following two calls are the same:
+This function combines echo() and style() into one call. As 
 
-quo.flair('Hello World!', fg='green')
-click.echo(quo.style('Hello World!', fg='green'))
+**quo.echo('Hello World!', fg='green')**
 All keyword arguments are forwarded to the underlying functions depending on which one they go with.
 
-Changelog
 quo.edit(text=None, editor=None, env=None, require_save=True, extension='.txt', filename=None)
 Edits the given text in the defined editor. If an editor is given (should be the full path to the executable but the regular operating system search path is used for finding the executable) it overrides the detected editor. Optionally, some environment variables can be used. If the editor is closed without changes, None is returned. In case a file is edited directly the return value is always None and require_save and extension are ignored.
 
@@ -373,22 +373,27 @@ extension – the extension to tell the editor about. This defaults to .txt but 
 
 filename – if provided it will edit this file instead of the provided text contents. It will not use a temporary file as an indirection in that case.
 
-quo.launch(url, wait=False, locate=False)
+**quo.launch(url, wait=False, locate=False)**
 This function launches the given URL (or filename) in the default viewer application for this file type. If this is an executable, it might launch the executable in a new session. The return value is the exit code of the launched application. Usually, 0 indicates success.
 
 Examples:
 
-quo.launch('https://quo.palletsprojects.com/')
-quo.launch('/my/downloaded/file', locate=True)
-Changelog
+.. code:: python
+
+   from quo import launch
+   
+   launch('https://quo.palletsprojects.com/')
+   launch('/my/downloaded/file', locate=True)
+
+
 Parameters
-url – URL or filename of the thing to launch.
+   * ``url`` – URL or filename of the thing to launch.
 
-wait – waits for the program to stop.
+   * ``wait`` – waits for the program to stop.
 
-locate – if this is set to True then instead of launching the application associated with the URL it will attempt to launch a file manager with the file located. This might have weird effects if the URL does not point to the filesystem.
+   * ``locate`` – if this is set to True then instead of launching the application associated with the URL it will attempt to launch a file manager with the file located. This might have weird effects if the URL does not point to the filesystem.
 
-quo.getchar(echo=False)
+**quo.interpose(echo=False)**
 Fetches a single character from the terminal and returns it. This will always return a unicode character and under certain rare circumstances this might return more than one character. The situations which more than one character is returned is when for whatever reason multiple characters end up in the terminal buffer or standard input was not actually a terminal.
 
 Note that this will always read from the terminal, even if something is piped into the standard input.
@@ -399,25 +404,25 @@ Changelog
 Parameters
 echo – if set to True, the character read will also show up on the terminal. The default is to not show it.
 
-quo.pause(info='Press any key to continue ...', err=False)
+**quo.pause(info='Press any key to continue ...', err=False)**
 This command stops execution and waits for the user to press any key to continue. This is similar to the Windows batch “pause” command. If the program is not run through a terminal, this command will instead do nothing.
 
-Changelog
+
 Parameters
-info – the info string to print before pausing.
+   * ``info`` – the info string to print before pausing.
 
-err – if set to message goes to stderr instead of stdout, the same as with echo.
+   * ``err``  – if set to message goes to stderr instead of stdout, the same as with echo.
 
-quo.get_terminal_size()
+**quo.terminalsize()**
 Returns the current size of the terminal as tuple in the form (width, height) in columns and rows.
 
-quo.get_binary_stream(name)
+**quo.binarystream(name)**
 Returns a system stream for byte processing. This essentially returns the stream from the sys module with the given name but it solves some compatibility issues between different Python versions. Primarily this function is necessary for getting binary streams on Python 3.
 
 Parameters
-name – the name of the stream to open. Valid names are 'stdin', 'stdout' and 'stderr'
+   * ``name`` – the name of the stream to open. Valid names are 'stdin', 'stdout' and 'stderr'
 
-quo.get_text_stream(name, encoding=None, errors='strict')
+**quo.textstream(name, encoding=None, errors='strict')**
 Returns a system stream for text processing. This usually returns a wrapped stream around a binary stream returned from get_binary_stream() but it also can take shortcuts on Python 3 for already correctly configured streams.
 
 Parameters
@@ -508,7 +513,7 @@ shorten – this optionally shortens the filename to strip of the path that lead
 
 .. autofunction:: unstyle
 
-.. autofunction:: flair
+.. autofunction:: echo
 
 .. autofunction:: edit
 
@@ -520,15 +525,15 @@ shorten – this optionally shortens the filename to strip of the path that lead
 
 .. autofunction:: terminalsize
 
-.. autofunction:: get_binary_stream
+.. autofunction:: binarystream
 
-.. autofunction:: get_text_stream
+.. autofunction:: textstream
 
-.. autofunction:: open_file
+.. autofunction:: openfile
 
-.. autofunction:: get_app_dir
+.. autofunction:: appdir
 
-.. autofunction:: format_filename
+.. autofunction:: formatfilename
 
 Commands
 --------

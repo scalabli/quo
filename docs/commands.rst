@@ -28,7 +28,7 @@ when an inner command runs:
     def cli(debug):
         echo(f"Debug mode is {'on' if debug else 'off'}")
 
-    @cli.command()  # @cli, not @quo!
+    @cli.command()
     def sync():
         echo('Syncing')
 
@@ -127,8 +127,8 @@ For instance, the :func:`pass_obj` decorator can be implemented like this:
 
     def pass_obj(f):
         @quo.pass_context
-        def new_func(clime, ×args, ××kwargs):
-            return clime.invoke(f, ctx.obj, ×args, ××kwargs)
+        def new_func(clime, **args, **kwargs):
+            return clime.invoke(f, clime.obj, *args, **kwargs)
         return update_wrapper(new_func, f)
 
 The :meth:`Context.invoke` command will automatically invoke the function

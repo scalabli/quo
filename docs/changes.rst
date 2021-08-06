@@ -4,6 +4,17 @@
 Changelog
 =========
 
+Version 2021.4.5
+----------------
+
+Unreleased
+
+- Phasing out module ``wcwidth`` to reduce the need for external dependencies.
+
+- Intoducing the ``clipboard`` feature to copy and paste data flawlessly.
+
+
+
 Version 2021.3.5
 -----------------
 
