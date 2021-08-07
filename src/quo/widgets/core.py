@@ -1,19 +1,17 @@
 """
 Collection of reusable components for building full screen applications.
-
-All of these widgets implement the ``__pt_container__`` method, which makes
-them usable in any situation where we are expecting a `prompt_toolkit`
-container object.
-
-.. warning::
-
-    At this point, the API for these widgets is considered unstable, and can
-    potentially change between minor releases (we try not too, but no
-    guarantees are made yet). The public API in
-    `prompt_toolkit.shortcuts.dialogs` on the other hand is considered stable.
 """
 from functools import partial
-from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
+from typing import (
+        Callable, 
+        Generic, 
+        List,
+        Optional,
+        Sequence,
+        Tuple, 
+        TypeVar, 
+        Union
+        )
 
 from quo.application.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
@@ -36,8 +34,8 @@ from quo.text import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-from quo.key_binding.key_bindings import KeyBindings
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_bindings import KeyBindings
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys import Keys
 from quo.layout.containers import (
     AnyContainer,

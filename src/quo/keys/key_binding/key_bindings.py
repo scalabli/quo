@@ -1,9 +1,7 @@
 """
 Key bindings registry.
 
-A `KeyBindings` object is a container that holds a list of key bindings. It has a
-very efficient internal data structure for checking which key bindings apply
-for a pressed key.
+A `KeyBindings` object is a container that holds alist of key bindings. It has a very efficient internal data structure for checking which key bindings apply for a pressed key.
 
 Typical usage::
 
@@ -14,17 +12,14 @@ Typical usage::
         # Handle ControlX-ControlC key sequence.
         pass
 
-It is also possible to combine multiple KeyBindings objects. We do this in the
-default key bindings. There are some KeyBindings objects that contain the Emacs
-bindings, while others contain the Vi bindings. They are merged together using
+It is also possible to combine multiple KeyBindings objects. We do this in the default key bindings. There are some KeyBindings objects that contain the Emacs bindings, while others contain the Vi bindings. They are merged together using
 `merge_key_bindings`.
 
 We also have a `ConditionalKeyBindings` object that can enable/disable a group of
 key bindings at once.
 
 
-It is also possible to add a filter to a function, before a key binding has
-been assigned, through the `key_binding` decorator.::
+It is also possible to add a filter to a function, before a key binding has been assigned, through the `key_binding` decorator.::
 
     # First define a key handler with the `filter`.
     @key_binding(filter=condition)
@@ -51,7 +46,7 @@ from typing import (
 
 from quo.cache import SimpleCache
 from quo.filters import FilterOrBool, Never, to_filter
-from quo.keys import KEY_ALIASES, Keys
+from quo.keys.list import KEY_ALIASES, Keys
 
 # Avoid circular imports.
 if TYPE_CHECKING:

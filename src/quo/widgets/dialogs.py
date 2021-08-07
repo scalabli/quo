@@ -1,22 +1,31 @@
 """
 Collection of reusable components for building full screen applications.
 """
-from typing import Optional, Sequence, Union
+from typing import (
+        Optional,
+        Sequence, 
+        Union
+        )
 
 from quo.filters import has_completions, has_focus
 from quo.text import AnyFormattedText
-from quo.key_binding.bindings.focus import focus_next, focus_previous
-from quo.key_binding.key_bindings import KeyBindings
+from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
+from quo.keys.key_binding.key_bindings import KeyBindings
 from quo.layout.containers import (
     AnyContainer,
     DynamicContainer,
     HSplit,
     VSplit,
-)
+    )
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 
-from .core import Box, Button, Frame, Shadow
+from .core import (
+        Box,
+        Button, 
+        Frame, 
+        Shadow
+        )
 
 __all__ = [
         "Dialog",

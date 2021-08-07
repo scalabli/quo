@@ -1,11 +1,10 @@
 """
 Key bindings, for scrolling up and down through pages.
 
-This are separate bindings, because GNU readline doesn't have them, but
-they are very useful for navigating through long multiline buffers, like in
+This are separate bindings, because GNU readline doesn't have them, but they are very useful for navigating through long multiline buffers, like in
 Vi, Emacs, etc...
 """
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPressEvent
 
 __all__ = [
     "scroll_forward",

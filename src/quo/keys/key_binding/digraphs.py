@@ -1,8 +1,7 @@
 # encoding: utf-8
 """
 Vi Digraphs.
-This is a list of special characters that can be inserted in Vi insert mode by
-pressing Control-K followed by to normal characters.
+This is a list of special characters that can be inserted in Vi insert mode by pressing Control-K followed by to normal characters.
 
 Taken from Neovim and translated to Python:
 https://raw.githubusercontent.com/neovim/neovim/master/src/nvim/digraph.c
@@ -803,10 +802,10 @@ DIGRAPHS: Dict[Tuple[str, str], int] = {
     ("L", "i"): 0x20A4,
     ("P", "t"): 0x20A7,
     ("W", "="): 0x20A9,
-    ("=", "e"): 0x20AC,  # euro
-    ("E", "u"): 0x20AC,  # euro
-    ("=", "R"): 0x20BD,  # rouble
-    ("=", "P"): 0x20BD,  # rouble
+    ("=", "e"): 0x20AC,  # (Euro €)
+    ("E", "u"): 0x20AC,  # (Euro €)
+    ("=", "R"): 0x20BD,  # (Russian Ruble)
+    ("=", "P"): 0x20BD,  # Russian Ruble)
     ("o", "C"): 0x2103,
     ("c", "o"): 0x2105,
     ("o", "F"): 0x2109,

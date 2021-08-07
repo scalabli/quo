@@ -1,8 +1,7 @@
 """
 Utilities for manipulating formatted text.
 
-When ``to_formatted_text`` has been called, we get a list of ``(style, text)``
-tuples. This file contains functions for manipulating such a list.
+When ``to_formatted_text`` has been called, we get a list of ``(style, text)`` tuples. This file contains functions for manipulating such a list.
 """
 from typing import Iterable, cast
 
@@ -59,11 +58,9 @@ def fragment_list_to_text(fragments: StyleAndTextTuples) -> str:
 
 def split_lines(fragments: StyleAndTextTuples) -> Iterable[StyleAndTextTuples]:
     """
-    Take a single list of (style_str, text) tuples and yield one such list for each
-    line. Just like str.split, this will yield at least one item.
+    Take a single list of (style_str, text) tuples and yield one such list for each line. Just like str.split, this will yield at least one item.
 
-    :param fragments: List of (style_str, text) or (style_str, text, mouse_handler)
-                      tuples.
+    :param fragments: List of (style_str, text) or (style_str, text, mouse_handler) tuples.
     """
     line: StyleAndTextTuples = []
 

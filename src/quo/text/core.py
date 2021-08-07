@@ -1,4 +1,13 @@
-from typing import TYPE_CHECKING, Any, Callable, Iterable, List, Tuple, Union, cast
+from typing import (
+        TYPE_CHECKING, 
+        Any,
+        Callable,
+        Iterable, 
+        List,
+        Tuple, 
+        Union, 
+        cast
+        )
 
 from quo.mouse_events import MouseEvent
 
@@ -29,8 +38,7 @@ if TYPE_CHECKING:
 
     class MagicFormattedText(Protocol):
         """
-        Any object that implements ``__pt_formatted_text__`` represents formatted
-        text.
+        Any object that implements ``__pt_formatted_text__`` represents formatted text.
         """
 
         def __pt_formatted_text__(self) -> StyleAndTextTuples:
@@ -51,18 +59,12 @@ def to_formatted_text(
     value: AnyFormattedText, style: str = "", auto_convert: bool = False
 ) -> "FormattedText":
     """
-    Convert the given value (which can be formatted text) into a list of text
-    fragments. (Which is the canonical form of formatted text.) The outcome is
-    always a `FormattedText` instance, which is a list of (style, text) tuples.
+    Convert the given value (which can be formatted text) into a list of text  fragments. (Which is the canonical form of formatted text.) The outcome is always a `FormattedText` instance, which is a list of (style, text) tuples.
 
-    It can take a plain text string, an `HTML` or `ANSI` object, anything that
-    implements `__pt_formatted_text__` or a callable that takes no arguments and
-    returns one of those.
+    It can take a plain text string, an `HTML` or `ANSI` object, anything that implements `__pt_formatted_text__` or a callable that takes no arguments and returns one of those.
 
-    :param style: An additional style string which is applied to all text
-        fragments.
-    :param auto_convert: If `True`, also accept other types, and convert them
-        to a string first.
+    :param style: An additional style string which is applied to all text fragments.
+    :param auto_convert: If `True`, also accept other types, and convert them to a string first.
     """
     result: Union[FormattedText, StyleAndTextTuples]
 
@@ -102,8 +104,7 @@ def to_formatted_text(
 
 def is_formatted_text(value: object) -> bool:
     """
-    Check whether the input is valid formatted text (for use in assert
-    statements).
+    Check whether the input is valid formatted text (for use in assert  statements).
     In case of a callable, it doesn't check the return type.
     """
     if callable(value):
@@ -119,8 +120,7 @@ class FormattedText(StyleAndTextTuples):
     """
     A list of ``(style, text)`` tuples.
 
-    (In some situations, this can also be ``(style, text, mouse_handler)``
-    tuples.)
+    (In some situations, this can also be ``(style, text, mouse_handler)`` tuples.)
     """
 
     def __pt_formatted_text__(self) -> StyleAndTextTuples:

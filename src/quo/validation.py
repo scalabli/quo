@@ -1,6 +1,5 @@
 """
-Input validation for a `Buffer`.
-(Validators will be called before accepting input.)
+Input validation for a `Buffer`. (Validators will be called before accepting input.)
 """
 from abc import ABCMeta, abstractmethod
 from typing import Callable, Optional
@@ -44,14 +43,12 @@ class ValidationError(Exception):
 class Validator(metaclass=ABCMeta):
     """
     Abstract base class for an input validator.
-
-    A validator is typically created in one of the following two ways:
+A validator is typically created in one of the following two ways:
 
     - Either by overriding this class and implementing the `validate` method.
     - Or by passing a callable to `Validator.from_callable`.
 
-    If the validation takes some time and needs to happen in a background
-    thread, this can be wrapped in a :class:`.ThreadedValidator`.
+    If the validation takes some time and needs to happen in a background thread, this can be wrapped in a :class:`.ThreadedValidator`.
     """
 
     @abstractmethod
@@ -60,7 +57,7 @@ class Validator(metaclass=ABCMeta):
         Validate the input.
         If invalid, this should raise a :class:`.ValidationError`.
 
-        :param document: :class:`~prompt_toolkit.document.Document` instance.
+        :param document: :class:`~quo.document.Document` instance.
         """
         pass
 
@@ -161,8 +158,7 @@ class DummyValidator(Validator):
 
 class ConditionalValidator(Validator):
     """
-    Validator that can be switched on/off according to
-    a filter. (This wraps around another validator.)
+    Validator that can be switched on/off according to a filter.
     """
 
     def __init__(self, validator: Validator, filter: FilterOrBool) -> None:

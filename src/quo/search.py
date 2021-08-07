@@ -2,7 +2,7 @@
 Search operations.
 
 For the key bindings implementation with attached filters, check
-`prompt_toolkit.key_binding.bindings.search`. (Use these for new key bindings
+`quo.key_binding.bindings.search`. (Use these for new key bindings
 instead of calling these function directly.)
 """
 from enum import Enum
@@ -91,7 +91,7 @@ def start_search(
     :param buffer_control: Start search for this `BufferControl`. If not given,
         search through the current control.
     """
-    from prompt_toolkit.layout.controls import BufferControl
+    from quo.layout.controls import BufferControl
 
     assert buffer_control is None or isinstance(buffer_control, BufferControl)
 

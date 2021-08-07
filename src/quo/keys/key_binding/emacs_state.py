@@ -1,5 +1,4 @@
 from typing import List, Optional
-
 from .key_processor import KeyPress
 
 __all__ = [

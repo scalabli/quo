@@ -1,10 +1,8 @@
 """
-Collection of reusable components for building full screen applications.
-These are higher level abstractions on top of the `prompt_toolkit.layout`
-module.
+Assortment of reusable components  for building full-screen applications.
 
-Most of these widgets implement the ``__pt_container__`` method, which makes it
-possible to embed these in the layout like any other container.
+Most of these widget use the __pt_container__ method, so they can be included in the layout like any other container.
+
 """
 from .core import (
     Box,
@@ -22,7 +20,14 @@ from .core import (
 )
 from .dialogs import Dialog
 from .menus import MenuContainer, MenuItem
-from .toolbars import ArgToolbar, CompletionsToolbar, FormattedTextToolbar, SearchToolbar, SystemToolbar, ValidationToolbar
+from .toolbars import (
+        ArgToolbar,
+        CompletionsToolbar,
+        FormattedTextToolbar,
+        SearchToolbar,
+        SystemToolbar, 
+        ValidationToolbar
+        )
 
 #__all__ = [
     # Base.

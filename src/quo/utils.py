@@ -171,7 +171,7 @@ _CHAR_SIZES_CACHE = _CharSizesCache()
 
 def get_cwidth(string: str) -> int:
     """
-    Return width of a string. Wrapper around ``wcwidth``.
+    Return width of a string.
     """
     return _CHAR_SIZES_CACHE[string]
 
@@ -219,7 +219,7 @@ def get_bell_environment_variable() -> bool:
     """
     True if env variable is set to true (true, TRUE, TrUe, 1).
     """
-    value = os.environ.get("PROMPT_TOOLKIT_BELL", "true")
+    value = os.environ.get("QUO_BELL", "true")
     return value.lower() in ("1", "true")
 
 
@@ -243,8 +243,7 @@ def take_using_weights(
         take_using_weights(['A', 'B', 'C'], [5, 10, 20])
 
     :param items: List of items to take from.
-    :param weights: Integers representing the weight. (Numbers have to be
-                    integers, not floats.)
+    :param weights: Integers representing the weight. (Numbers have to be integers, not floats.)
     """
     assert len(items) == len(weights)
     assert len(items) > 0
@@ -262,7 +261,7 @@ def take_using_weights(
 
     # Make sure that we have some items left.
     if not items:
-        raise ValueError("Did't got any items with a positive weight.")
+        raise ValueError("Did't get any items with a positive weight.")
 
     #
     already_taken = [0 for i in items]
@@ -316,8 +315,7 @@ def is_dumb_terminal(term: Optional[str] = None) -> bool:
     """
     True if this terminal type is considered "dumb".
 
-    If so, we should fall back to the simplest possible form of line editing,
-    without cursor positioning and color support.
+    If so, we should fall back to the simplest possible form of line editing, without cursor positioning and color support.
     """
     if term is None:
         return is_dumb_terminal(os.environ.get("TERM", ""))
