@@ -2,10 +2,8 @@
 patch_stdout
 ============
 
-This implements a context manager that ensures that print statements within
-it won't destroy the user interface. The context manager will replace
-`sys.stdout` by something that draws the output above the current prompt,
-rather than overwriting the UI.
+This implements a context manager that ensures that print statements within it won't destroy the user interface. The context manager will replace
+`sys.stdout` by something that draws the output over the current prompt, rather than overwriting the UI.
 
 Usage::
 
@@ -23,7 +21,14 @@ import sys
 import threading
 import time
 from contextlib import contextmanager
-from typing import Generator, List, Optional, TextIO, Union, cast
+from typing import (
+        Generator,
+        List,
+        Optional, 
+        TextIO,
+        Union,
+        cast
+        )
 
 from .application import get_app_session, run_in_terminal
 from .output import Output
@@ -40,18 +45,11 @@ def patch_stdout(raw: bool = False) -> Generator[None, None, None]:
     """
     Replace `sys.stdout` by an :class:`_StdoutProxy` instance.
 
-    Writing to this proxy will make sure that the text appears above the
-    prompt, and that it doesn't destroy the output from the renderer.  If no
-    application is curring, the behaviour should be identical to writing to
-    `sys.stdout` directly.
+    Writing to this proxy will make sure that the text appears above the prompt, and that it doesn't destroy the output from the renderer.  If no  application is curring, the behaviour should be identical to writing to `sys.stdout` directly.
 
-    Warning: If a new event loop is installed using `asyncio.set_event_loop()`,
-        then make sure that the context manager is applied after the event loop
-        is changed. Printing to stdout will be scheduled in the event loop
-        that's active when the context manager is created.
+    Warning: If a new event loop is installed using `asyncio.set_event_loop()`, then make sure that the context manager is applied after the event loop is changed. Printing to stdout will be scheduled in the event loop that's active when the context manager is created.
 
-    :param raw: (`bool`) When True, vt100 terminal escape sequences are not
-                removed/escaped.
+    :param raw: (`bool`) When True, vt100 terminal escape sequences are not removed/escaped.
     """
     with StdoutProxy(raw=raw) as proxy:
         original_stdout = sys.stdout
@@ -74,20 +72,14 @@ class _Done:
 
 class StdoutProxy:
     """
-    File-like object, which prints everything written to it, output above the
-    current application/prompt. This class is compatible with other file
-    objects and can be used as a drop-in replacement for `sys.stdout` or can
-    for instance be passed to `logging.StreamHandler`.
+    File-like object, which prints everything written to it, output above the current application/prompt. This class is compatible with other file
+    objects and can be used as a drop-in replacement for `sys.stdout` or can for instance be passed to `logging.StreamHandler`.
 
-    The current application, above which we print, is determined by looking
-    what application currently runs in the `AppSession` that is active during
-    the creation of this instance.
+    The current application, above which we print, is determined by looking what application currently runs in the `AppSession` that is active during the creation of this instance.
 
     This class can be used as a context manager.
 
-    In order to avoid having to repaint the prompt continuously for every
-    little write, a short delay of `sleep_between_writes` seconds will be added
-    between writes in order to bundle many smaller writes in a short timespan.
+    In order to avoid having to repaint the prompt continuously for every little write, a short delay of `sleep_between_writes` seconds will be added between writes in order to bundle many smaller writes in a short timespan.
     """
 
     def __init__(
@@ -128,8 +120,7 @@ class StdoutProxy:
         """
         Stop `StdoutProxy` proxy.
 
-        This will terminate the write thread, make sure everything is flushed
-        and wait for the write thread to finish.
+        This will terminate the write thread, make sure everything is flushed and wait for the write thread to finish.
         """
         if not self.closed:
             self._flush_queue.put(_Done())
@@ -226,12 +217,7 @@ class StdoutProxy:
     def _write(self, data: str) -> None:
         """
         Note: print()-statements cause to multiple write calls.
-              (write('line') and write('\n')). Of course we don't want to call
-              `run_in_terminal` for every individual call, because that's too
-              expensive, and as long as the newline hasn't been written, the
-              text itself is again overwritten by the rendering of the input
-              command line. Therefor, we have a little buffer which holds the
-              text until a newline is written to stdout.
+              (write('line') and write('\n')). Of course we don't want to call `run_in_terminal` for every individual call, because that's too expensive, and as long as the newline hasn't been written, the text itself is again overwritten by the rendering of the input command line. Therefor, we have a little buffer which holds the text until a newline is written to stdout.
         """
         if "\n" in data:
             # When there is a newline in the data, write everything before the

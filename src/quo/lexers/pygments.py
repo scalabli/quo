@@ -1,8 +1,7 @@
 """
-Adaptor classes for using Pygments lexers within prompt_toolkit.
+Adaptor classes for using Pygments lexers within quo.
 
-This includes syntax synchronization code, so that we don't have to start
-lexing at the beginning of a document, when displaying a very large text.
+This includes syntax synchronization code, so that we don't have to start lexing at the beginning of a document, when displaying a very large text.
 """
 import re
 from abc import ABCMeta, abstractmethod
@@ -38,10 +37,7 @@ __all__ = [
 
 class SyntaxSync(metaclass=ABCMeta):
     """
-    Syntax synchroniser. This is a tool that finds a start position for the
-    lexer. This is especially important when editing big documents; we don't
-    want to start the highlighting by running the lexer from the beginning of
-    the file. That is very slow when editing.
+    Syntax synchroniser. This is a tool that finds a start position for the lexer. This is especially important when editing big documents; we don't want to start the highlighting by running the lexer from the beginning of the file. That is very slow when editing.
     """
 
     @abstractmethod
@@ -49,12 +45,10 @@ class SyntaxSync(metaclass=ABCMeta):
         self, document: Document, lineno: int
     ) -> Tuple[int, int]:
         """
-        Return the position from where we can start lexing as a (row, column)
-        tuple.
+        Return the position from where we can start lexing as a (row, column) tuple.
 
         :param document: `Document` instance that contains all the lines.
-        :param lineno: The line that we want to highlight. (We need to return
-            this line, or an earlier position.)
+        :param lineno: The line that we want to highlight. (We need to return this line, or an earlier position.)
         """
 
 
@@ -157,17 +151,12 @@ class PygmentsLexer(Lexer):
 
     Note: Don't forget to also load a Pygments compatible style. E.g.::
 
-        from prompt_toolkit.styles.from_pygments import style_from_pygments_cls
+        from quo.styles.from_pygments import style_from_pygments_cls
         from pygments.styles import get_style_by_name
         style = style_from_pygments_cls(get_style_by_name('monokai'))
 
     :param pygments_lexer_cls: A `Lexer` from Pygments.
-    :param sync_from_start: Start lexing at the start of the document. This
-        will always give the best results, but it will be slow for bigger
-        documents. (When the last part of the document is display, then the
-        whole document will be lexed by Pygments on every key stroke.) It is
-        recommended to disable this for inputs that are expected to be more
-        than 1,000 lines.
+    :param sync_from_start: Start lexing at the start of the document. This  will always give the best results, but it will be slow for bigger documents. (When the last part of the document is display, then the whole document will be lexed by Pygments on every key stroke.) It is recommended to disable this for inputs that are expected to be more than 1,000 lines.
     :param syntax_sync: `SyntaxSync` object.
     """
 
@@ -223,8 +212,7 @@ class PygmentsLexer(Lexer):
 
     def lex_document(self, document: Document) -> Callable[[int], StyleAndTextTuples]:
         """
-        Create a lexer function that takes a line number and returns the list
-        of (style_str, text) tuples as the Pygments lexer returns for that line.
+        Create a lexer function that takes a line number and returns the list of (style_str, text) tuples as the Pygments lexer returns for that line.
         """
         LineGenerator = Generator[Tuple[int, StyleAndTextTuples], None, None]
 

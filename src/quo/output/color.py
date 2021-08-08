@@ -35,16 +35,14 @@ class ColorDepth(str, Enum):
     @classmethod
     def from_env(cls) -> Optional["ColorDepth"]:
         """
-        Return the color depth if the $PROMPT_TOOLKIT_COLOR_DEPTH environment
-        variable has been set.
+        Return the color depth if the $QUO_COLOR_DEPTH environment variable has been set.
 
-        This is a way to enforce a certain color depth in all prompt_toolkit
-        applications.
+        This is a way to enforce a certain color depth in all quo applications.
         """
-        # Check the `PROMPT_TOOLKIT_COLOR_DEPTH` environment variable.
+        # Check the `QUO_COLOR_DEPTH` environment variable.
         all_values = [i.value for i in ColorDepth]
-        if os.environ.get("PROMPT_TOOLKIT_COLOR_DEPTH") in all_values:
-            return cls(os.environ["PROMPT_TOOLKIT_COLOR_DEPTH"])
+        if os.environ.get("QUO_COLOR_DEPTH") in all_values:
+            return cls(os.environ["QUO_COLOR_DEPTH"])
 
         return None
 

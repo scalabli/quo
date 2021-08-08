@@ -18,11 +18,11 @@ __all__ = [
 class Output(metaclass=ABCMeta):
     """
     Base class defining the output interface for a
-    :class:`~prompt_toolkit.renderer.Renderer`.
+    :class:`~quo.renderer.Renderer`.
 
     Actual implementations are
-    :class:`~prompt_toolkit.output.vt100.Vt100_Output` and
-    :class:`~prompt_toolkit.output.win32.Win32Output`.
+    :class:`~quo.output.videoterminal.Vt100_Output` and
+    :class:`~quo.output.win32.Win32Output`.
     """
 
     stdout: Optional[TextIO] = None
@@ -63,8 +63,7 @@ class Output(metaclass=ABCMeta):
     @abstractmethod
     def erase_screen(self) -> None:
         """
-        Erases the screen with the background colour and moves the cursor to
-        home.
+        Erases the screen with the background colour and moves the cursor to  home.
         """
 
     @abstractmethod
@@ -92,8 +91,7 @@ class Output(metaclass=ABCMeta):
     @abstractmethod
     def erase_down(self) -> None:
         """
-        Erases the screen from the current line down to the bottom of the
-        screen.
+        Erases the screen from the current line down to the bottom of the screen.
         """
 
     @abstractmethod
@@ -149,13 +147,9 @@ class Output(metaclass=ABCMeta):
     @property
     def responds_to_cpr(self) -> bool:
         """
-        `True` if the `Application` can expect to receive a CPR response after
-        calling `ask_for_cpr` (this will come back through the corresponding
-        `Input`).
+        `True` if the `Application` can expect to receive a CPR response after  calling `ask_for_cpr` (this will come back through the corresponding `Input`).
 
-        This is used to determine the amount of available rows we have below
-        the cursor position. In the first place, we have this so that the drop
-        down autocompletion menus are sized according to the available space.
+        This is used to determine the amount of available rows we have below the cursor position. In the first place, we have this so that the drop down autocompletion menus are sized according to the available space.
 
         On Windows, we don't need this, there we have
         `get_rows_below_cursor_position`.
@@ -195,16 +189,11 @@ class Output(metaclass=ABCMeta):
         """
         Get default color depth for this output.
 
-        This value will be used if no color depth was explicitely passed to the
-        `Application`.
+        This value will be used if no color depth was explicitely passed to the `Application`.
 
         .. note::
 
-            If the `$PROMPT_TOOLKIT_COLOR_DEPTH` environment variable has been
-            set, then `outputs.defaults.create_output` will pass this value to
-            the implementation as the default_color_depth, which is returned
-            here. (This is not used when the output corresponds to a
-            prompt_toolkit SSH/Telnet session.)
+            If the `$QUO_COLOR_DEPTH` environment variable has been  set, then `outputs.defaults.create_output` will pass this value to the implementation as the default_color_depth, which is returned here. (This is not used when the output corresponds to a quo SSH/Telnet session.)
         """
 
 

@@ -2,17 +2,37 @@
 Renders the command line on the console.
 (Redraws parts of the input line that were changed.)
 """
-from asyncio import FIRST_COMPLETED, Future, ensure_future, sleep, wait
+from asyncio import (
+        FIRST_COMPLETED, 
+        Future,
+        ensure_future, 
+        sleep,
+        wait
+        )
 from collections import deque
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Callable, Deque, Dict, Hashable, Optional, Tuple
+from typing import (
+        TYPE_CHECKING,
+        Any,
+        Callable,
+        Deque,
+        Dict,
+        Hashable,
+        Optional, 
+        Tuple
+        )
 
 from quo.application.current import get_app
 from quo.data_structures import Point, Size
 from quo.filters import FilterOrBool, to_filter
 from quo.text import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
-from quo.layout.screen import Char, Screen, WritePosition
+from quo.layout.screen import (
+        Char,
+        Screen,
+        WritePosition
+        )
+
 from quo.output import ColorDepth, Output
 from quo.styles import (
     Attrs,

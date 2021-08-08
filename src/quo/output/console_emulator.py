@@ -1,4 +1,8 @@
-from typing import Any, Optional, TextIO
+from typing import (
+        Any,
+        Optional, 
+        TextIO
+        )
 
 from quo.data_structures import Size
 

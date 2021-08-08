@@ -1,8 +1,12 @@
 """
-Base classes for prompt_toolkit lexers.
+Classes for quo lexers.
 """
 from abc import ABCMeta, abstractmethod
-from typing import Callable, Hashable, Optional
+from typing import (
+        Callable,
+        Hashable,
+        Optional
+        )
 
 from quo.document import Document
 from quo.text.core import StyleAndTextTuples
@@ -22,12 +26,9 @@ class Lexer(metaclass=ABCMeta):
     @abstractmethod
     def lex_document(self, document: Document) -> Callable[[int], StyleAndTextTuples]:
         """
-        Takes a :class:`~prompt_toolkit.document.Document` and returns a
-        callable that takes a line number and returns a list of
-        ``(style_str, text)`` tuples for that line.
+        Takes a :class:`~quo.document.Document` and returns a callable that takes a line number and returns a list of ``(style_str, text)`` tuples for that line.
 
-        XXX: Note that in the past, this was supposed to return a list
-             of ``(Token, text)`` tuples, just like a Pygments lexer.
+        XXX: Note that in the past, this was supposed to return a list of ``(Token, text)`` tuples, just like a Pygments lexer.
         """
 
     def invalidation_hash(self) -> Hashable:
@@ -40,8 +41,7 @@ class Lexer(metaclass=ABCMeta):
 
 class SimpleLexer(Lexer):
     """
-    Lexer that doesn't do any tokenizing and returns the whole input as one
-    token.
+    Lexer that doesn't do any tokenizing and returns the whole input as one token.
 
     :param style: The style string for this lexer.
     """
@@ -65,7 +65,6 @@ class SimpleLexer(Lexer):
 class DynamicLexer(Lexer):
     """
     Lexer class that can dynamically returns any Lexer.
-
     :param get_lexer: Callable that returns a :class:`.Lexer` instance.
     """
 

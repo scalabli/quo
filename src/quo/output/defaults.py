@@ -1,5 +1,9 @@
 import sys
-from typing import Optional, TextIO, cast
+from typing import (
+        Optional, 
+        TextIO, 
+        cast
+        )
 
 from quo.utils import (
     get_bell_environment_variable,
@@ -20,17 +24,13 @@ def create_output(
     stdout: Optional[TextIO] = None, always_prefer_tty: bool = True
 ) -> Output:
     """
-    Return an :class:`~quo.output.Output` instance for the command
-    line.
+    Return an :class:`~quo.output.Output` instance for the command line.
 
     :param stdout: The stdout object
-    :param always_prefer_tty: When set, look for `sys.stderr` if `sys.stdout`
-        is not a TTY. (The prompt_toolkit render output is not meant to be
-        consumed by something other then a terminal, so this is a reasonable
-        default.)
+    :param always_prefer_tty: When set, look for `sys.stderr` if `sys.stdout` is not a TTY. (The prompt_toolkit render output is not meant to be consumed by something other then a terminal, so this is a reasonable default.)
     """
-    # Consider TERM, PROMPT_TOOLKIT_BELL, and PROMPT_TOOLKIT_COLOR_DEPTH
-    # environment variables. Notice that PROMPT_TOOLKIT_COLOR_DEPTH value is
+    # Consider TERM, QUO_BELL, and QUO_COLOR_DEPTH
+    # environment variables. Notice that QUO_COLOR_DEPTH value is
     # the default that's used if the Application doesn't override it.
     term_from_env = get_term_environment_variable()
     bell_from_env = get_bell_environment_variable()
@@ -48,7 +48,7 @@ def create_output(
                     break
 
     # If the patch_stdout context manager has been used, then sys.stdout is
-    # replaced by this proxy. For prompt_toolkit applications, we want to use
+    # replaced by this proxy. For quo applications, we want to use
     # the real stdout.
     from quo.patch_stdout import StdoutProxy
 

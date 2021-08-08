@@ -1,6 +1,10 @@
 from ctypes import byref, windll
 from ctypes.wintypes import DWORD, HANDLE
-from typing import Any, Optional, TextIO
+from typing import (
+        Any, 
+        Optional, 
+        TextIO
+        )
 
 from quo.data_structures import Size
 from quo.utils import is_windows
@@ -15,7 +19,20 @@ __all__ = [
     "Windows10_Output",
 ]
 
-# See: https://msdn.microsoft.com/pl-pl/library/windows/desktop/ms686033(v=vs.85).aspx
+#Check out: https://docs.microsoft.com/en-us/windows/console/setconsolemode?redirectedfrom=MSDN
+
+"""
+    ENABLE_PROCESSED_INPUT
+   -----------------------
+CTRL+C is processed by the system and is not placed in the input buffer. If the input buffer is being read by ReadFile or ReadConsole, other control keys are processed by the system and are not returned in the ReadFile or ReadConsole buffer. If the ENABLE_LINE_INPUT mode is also enabled, backspace, carriage return, and line feed characters are handled by the system.
+
+   ENABLE_VIRTUAL_TERMINAL_PROCESSING
+  -----------------------------------
+When writing with WriteFile or WriteConsole, characters are parsed for VT100 and similar control character sequences that control cursor movement, color/font mode, and other operations that can also be performed via the existing Console APIs.
+
+  """
+
+
 ENABLE_PROCESSED_INPUT = 0x0001
 ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
 
@@ -81,8 +98,7 @@ Output.register(Windows10_Output)
 
 def is_win_vt100_enabled() -> bool:
     """
-    Returns True when we're running Windows and VT100 escape sequences are
-    supported.
+    Returns True when we're running Windows and VT100 escape sequences are supported.
     """
     if not is_windows():
         return False

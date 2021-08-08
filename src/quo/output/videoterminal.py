@@ -39,7 +39,6 @@ __all__ = [
 
 FG_ANSI_COLORS = {
     "ansidefault": 39,
-    # Low intensity.
     "ansiblack": 30,
     "ansired": 31,
     "ansigreen": 32,
@@ -48,7 +47,7 @@ FG_ANSI_COLORS = {
     "ansimagenta": 35,
     "ansicyan": 36,
     "ansigray": 37,
-    # High intensity.
+    # Bright colors
     "ansibrightblack": 90,
     "ansibrightred": 91,
     "ansibrightgreen": 92,
@@ -61,7 +60,6 @@ FG_ANSI_COLORS = {
 
 BG_ANSI_COLORS = {
     "ansidefault": 49,
-    # Low intensity.
     "ansiblack": 40,
     "ansired": 41,
     "ansigreen": 42,
@@ -70,7 +68,7 @@ BG_ANSI_COLORS = {
     "ansimagenta": 45,
     "ansicyan": 46,
     "ansigray": 47,
-    # High intensity.
+    # Bright colors
     "ansibrightblack": 100,
     "ansibrightred": 101,
     "ansibrightgreen": 102,
@@ -92,14 +90,13 @@ ANSI_COLORS_TO_RGB = {
     "ansigray": (0xE5, 0xE5, 0xE5),
     "ansibrightblack": (0x7F, 0x7F, 0x7F),
     "ansiwhite": (0xFF, 0xFF, 0xFF),
-    # Low intensity.
     "ansired": (0xCD, 0x00, 0x00),
     "ansigreen": (0x00, 0xCD, 0x00),
     "ansiyellow": (0xCD, 0xCD, 0x00),
     "ansiblue": (0x00, 0x00, 0xCD),
     "ansimagenta": (0xCD, 0x00, 0xCD),
     "ansicyan": (0x00, 0xCD, 0xCD),
-    # High intensity.
+    # Bright colors
     "ansibrightred": (0xFF, 0x00, 0x00),
     "ansibrightgreen": (0x00, 0xFF, 0x00),
     "ansibrightyellow": (0xFF, 0xFF, 0x00),
@@ -388,8 +385,7 @@ class Vt100(Output):
     :param get_size: A callable which returns the `Size` of the output terminal.
     :param stdout: Any object with has a `write` and `flush` method + an 'encoding' property.
     :param term: The terminal environment variable. (xterm, xterm-256color, linux, ...)
-    :param write_binary: Encode the output before writing it. If `True` (the
-        default), the `stdout` object is supposed to expose an `encoding` attribute.
+    :param write_binary: Encode the output before writing it. If `True` (the default), the `stdout` object is supposed to expose an `encoding` attribute.
     """
 
     # For the error messages. Only display "Output is not a terminal" once per
@@ -437,8 +433,7 @@ class Vt100(Output):
     ) -> "Vt100_Output":
         """
         Create an Output class from a pseudo terminal.
-        (This will take the dimensions by reading the pseudo
-        terminal attributes.)
+        (This will take the dimensions by reading the pseudo terminal attributes.)
         """
         fd: Optional[int]
         # Normally, this requires a real TTY device, but people instantiate
@@ -464,8 +459,7 @@ class Vt100(Output):
 
             # It is possible that `stdout` is no longer a TTY device at this
             # point. In that case we get an `OSError` in the ioctl call in
-            # `get_size`. See:
-            # https://github.com/prompt-toolkit/python-prompt-toolkit/pull/1021
+            # `get_size`. 
             try:
                 rows, columns = _get_size(stdout.fileno())
             except OSError:
@@ -521,8 +515,7 @@ class Vt100(Output):
 
     def erase_screen(self) -> None:
         """
-        Erases the screen with the background colour and moves the cursor to
-        home.
+        Erases the screen with the background colour and moves the cursor to home.
         """
         self.write_raw("\x1b[2J")
 
@@ -557,8 +550,7 @@ class Vt100(Output):
 
     def erase_down(self) -> None:
         """
-        Erases the screen from the current line down to the bottom of the
-        screen.
+        Erases the screen from the current line down to the bottom of the screen.
         """
         self.write_raw("\x1b[J")
 
@@ -721,11 +713,9 @@ class Vt100(Output):
 
     def get_default_color_depth(self) -> ColorDepth:
         """
-        Return the default color depth for a vt100 terminal, according to the
-        our term value.
+        Return the default color depth for a vt100 terminal, according to the our term value.
 
-        We prefer 256 colors almost always, because this is what most terminals
-        support these days, and is a good default.
+        We prefer 256 colors almost always, because this is what most terminals support these days, and is a good default.
         """
         if self.default_color_depth is not None:
             return self.default_color_depth

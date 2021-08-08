@@ -1,5 +1,13 @@
 import os
-from ctypes import ArgumentError, byref, c_char, c_long, c_uint, c_ulong, pointer
+from ctypes import (
+        ArgumentError,
+        byref,
+        c_char,
+        c_long, 
+        c_uint, 
+        c_ulong, 
+        pointer
+        )
 
 from ..utils import SPHINX_AUTODOC_RUNNING
 
@@ -9,7 +17,17 @@ if not SPHINX_AUTODOC_RUNNING:
     from ctypes import windll
 
 from ctypes.wintypes import DWORD, HANDLE
-from typing import Callable, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, Union
+from typing import (
+        Callable,
+        Dict,
+        List, 
+        Optional,
+        TextIO,
+        Tuple,
+        Type,
+        TypeVar,
+        Union
+        )
 
 from quo.data_structures import Size
 from quo.styles import ANSI_COLOR_NAMES, Attrs

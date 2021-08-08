@@ -4,7 +4,13 @@
 from quo.accordance import filename_to_ui
 from quo.accordance import get_text_stderr
 from quo.expediency import inscribe
-from typing import Any, Dict, Optional, Sequence, Type
+from typing import (
+        Any,
+        Dict, 
+        Optional,
+        Sequence, 
+        Type
+        )
 
 
 
@@ -67,18 +73,11 @@ class UsageError(QuoException):
 
 
 class BadParameter(UsageError):
-    """This exception formats out a standardized error message for a
-    bad parameter.
+    """This exception formats out a standardized error message for a bad parameter.
 
 
-    :param param: the parameter object that caused this error.  This can
-                  be left out, and Quo will attach this info itself
-                  if possible.
-    :param param_hint: a string that shows up as parameter name.  This
-                       can be used as alternative to `param` in cases
-                       where custom validation should happen.  If it is
-                       a string it's used as such, if it's a list then
-                       each item is quoted and separated.
+    :param param: the parameter object that caused this error.  This can be left out, and Quo will attach this info itself if possible.
+    :param param_hint: a string that shows up as parameter name.This can be used as alternative to `param` in cases where custom validation should happen.  If it is a string it's used as such, if it's a list then each item is quoted and separated.
     """
 
     def __init__(self, message, clime=None, param=None, param_hint=None):
@@ -99,13 +98,9 @@ class BadParameter(UsageError):
 
 
 class MissingParameter(BadParameter):
-    """This parameter is raised if Quo required an app or argument but it was not
-    provided.
+    """This parameter is raised if Quo required an app or argument but it was not provided.
 
-    :param param_type: a string that indicates the type of the parameter.
-                       The default is to inherit the parameter type from
-                       the given `param`.  Valid values are ``'parameter'``,
-                       ``'app'`` or ``'argument'``.
+    :param param_type: a string that indicates the type of the parameter.The default is to inherit the parameter type from the given `param`.  Valid values are ``'parameter'``,``'app'`` or ``'arg'``.
     """
 
     def __init__(
@@ -173,9 +168,7 @@ class NoSuchApp(UsageError):
 
 
 class BadAppUsage(UsageError):
-    """Raised if an app is generally supplied but the use of the app
-    was incorrect.  This is for instance raised if the number of arguments
-    for an app is not correct.
+    """Raised if an app is generally supplied but the use of the app was incorrect.  This is for instance raised if the number of arguments for an app is not correct.
 
     :param appname: the name of the app being used incorrectly.
     """
@@ -212,8 +205,7 @@ class Abort(RuntimeError):
 
 
 class Exit(RuntimeError):
-    """An exception that indicates that the application should exit with some
-    status code.
+    """An exception that indicates that the application should exit with some status code.
 
     :param code: the status code to exit with.
     """
