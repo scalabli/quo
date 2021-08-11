@@ -2,7 +2,12 @@
 from typing import Dict, Union
 
 from quo.application.current import get_app
-from quo.buffer import Buffer, indent, unindent
+from quo.buffer import (
+        Buffer, 
+        indent,
+        unindent
+        )
+
 from quo.completion import CompleteEvent
 from quo.filters import (
     Condition,
@@ -16,12 +21,17 @@ from quo.filters import (
     shift_selection_mode,
     vi_search_direction_reversed,
 )
-from quo.key_binding.key_bindings import Binding
-from quo.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys
+from quo.keys.key_binding.key_bindings import Binding
+from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.keys.list import Keys
 from quo.selection import SelectionType
 
-from ..key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
+from ..key_bindings import (
+        ConditionalKeyBindings,
+        KeyBindings,
+        KeyBindingsBase
+        )
+
 from .named_commands import get_by_name
 
 __all__ = [

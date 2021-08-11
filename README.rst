@@ -8,7 +8,7 @@
 
 |coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
 
-:Version: 2021.3.5
+:Version: 2021.4.5
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
@@ -50,7 +50,6 @@ The most simple examples of would look like this:
 
 .. sourcecode:: python
 
-  import quo
   from quo import echo
   echo(f'Hello, World!', fg="red", bold=True)
 
@@ -58,7 +57,6 @@ The most simple examples of would look like this:
 
 .. sourcecode:: python
 
-   import quo
    from quo import echo
    echo(f"Hello, World in italics!", italic=True)
 
@@ -67,7 +65,6 @@ The most simple examples of would look like this:
 
 .. sourcecode:: python
 
-   import quo
    from quo import echo, prompt
    answer = prompt("How old are you?")
    echo(f"I am: {answer}")
@@ -77,7 +74,6 @@ The most simple examples of would look like this:
 
 .. sourcecode:: python
 
-   import quo
    from quo import command, app, echo                                                                  
    
    @command()
@@ -91,7 +87,6 @@ The most simple examples of would look like this:
 
 .. sourcecode:: python
 
-  import quo
   from quo import container, Frame, TextArea
   container(
     Frame(

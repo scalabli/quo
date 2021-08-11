@@ -48,7 +48,7 @@ from .processors import (
 )
 
 if TYPE_CHECKING:
-    from quo.key_binding.key_bindings import KeyBindingsBase
+    from quo.keys.key_binding.key_bindings import KeyBindingsBase
     from quo.utils import Event
 
     # The only two return values for a mouse hander are `None` and

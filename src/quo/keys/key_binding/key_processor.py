@@ -1,15 +1,21 @@
 # *** encoding: utf-8 ***
 """
-An :class:`~.KeyProcessor` receives callbacks for the keystrokes parsed from
-the input in the :class:`~prompt_toolkit.inputstream.InputStream` instance.
+An :class:`~.KeyProcessor` receives callbacks for the keystrokes parsed from the input in the :class:`~quo.inputstream.InputStream` instance.
 
-The `KeyProcessor` will according to the implemented keybindings call the
-correct callbacks when new key presses are feed through `feed`.
+The `KeyProcessor` will according to the implemented keybindings call the correct callbacks when new key presses are feed through `feed`.
 """
 import weakref
 from asyncio import Task, sleep
 from collections import deque
-from typing import TYPE_CHECKING, Any, Deque, Generator, List, Optional, Union
+from typing import (
+        TYPE_CHECKING, 
+        Any,
+        Deque, 
+        Generator,
+        List, 
+        Optional, 
+        Union
+        )
 
 from quo.application.current import get_app
 from quo.enums import EditingMode

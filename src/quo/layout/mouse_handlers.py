@@ -1,6 +1,10 @@
 from collections import defaultdict
 from itertools import product
-from typing import Callable, DefaultDict, Tuple
+from typing import (
+        Callable, 
+        DefaultDict,
+        Tuple
+        )
 
 from quo.mouse_events import MouseEvent
 

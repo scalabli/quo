@@ -1,6 +1,11 @@
 from typing import Dict
 
-from quo.filters.core import Always, Filter, FilterOrBool, Never
+from quo.filters.core import (
+        Always,
+        Filter, 
+        FilterOrBool, 
+        Never
+        )
 
 __all__ = [
     "to_filter",

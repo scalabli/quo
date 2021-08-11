@@ -1,8 +1,12 @@
 """
-Margin implementations for a :class:`~prompt_toolkit.layout.containers.Window`.
+Margin implementations for a :class:`~quo.layout.containers.Window`.
 """
 from abc import ABCMeta, abstractmethod
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import (
+        TYPE_CHECKING, 
+        Callable,
+        Optional
+        )
 
 from quo.filters import FilterOrBool, to_filter
 from quo.text import (

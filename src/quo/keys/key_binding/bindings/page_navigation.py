@@ -2,7 +2,12 @@
 Key bindings for extra page navigation: bindings for up/down scrolling through
 long pages, like in Emacs or Vi.
 """
-from quo.filters import buffer_has_focus, emacs_mode, vi_mode
+from quo.filters import (
+        buffer_has_focus, 
+        emacs_mode, 
+        vi_mode
+        )
+
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     KeyBindings,

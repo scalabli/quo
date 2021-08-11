@@ -1,7 +1,14 @@
 """
 Wrapper for the layout.
 """
-from typing import Dict, Generator, Iterable, List, Optional, Union
+from typing import (
+        Dict, 
+        Generator, 
+        Iterable,
+        List,
+        Optional,
+        Union
+        )
 
 from quo.buffer import Buffer
 
@@ -12,7 +19,11 @@ from .containers import (
     Window,
     to_container,
 )
-from .controls import BufferControl, SearchBufferControl, UIControl
+from .controls import (
+        BufferControl,
+        SearchBufferControl,
+        UIControl
+        )
 
 __all__ = [
     "Layout",

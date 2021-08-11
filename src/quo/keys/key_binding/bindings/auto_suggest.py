@@ -5,8 +5,8 @@ import re
 
 from quo.application.current import get_app
 from quo.filters import Condition, emacs_mode
-from quo.key_binding.key_bindings import KeyBindings
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_bindings import KeyBindings
+from quo.keys.key_binding.key_processor import KeyPressEvent
 
 __all__ = [
     "load_auto_suggest_bindings",

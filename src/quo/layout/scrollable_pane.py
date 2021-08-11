@@ -1,14 +1,27 @@
-from typing import Dict, List, Optional
+from typing import (
+        Dict, 
+        List, 
+        Optional
+        )
 
 from quo.data_structures import Point
 from quo.filters import FilterOrBool, to_filter
-from quo.key_binding import KeyBindingsBase
+from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent
 
 from .containers import Container, ScrollOffsets
-from .dimension import AnyDimension, Dimension, sum_layout_dimensions, to_dimension
+from .dimension import (
+        AnyDimension,
+        Dimension,
+        sum_layout_dimensions,
+        to_dimension
+        )
 from .mouse_handlers import MouseHandler, MouseHandlers
-from .screen import Char, Screen, WritePosition
+from .screen import (
+        Char,
+        Screen, 
+        WritePosition
+        )
 
 __all__ = ["ScrollablePane"]
 

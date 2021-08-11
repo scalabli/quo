@@ -17,7 +17,7 @@ from typing import (
     Union,
 )
 
-from ..key_binding import KeyPress
+from quo.keys.key_binding import KeyPress
 from .core import Input
 from .posix_utils import PosixStdinReader
 from .vt100_parser import Vt100Parser

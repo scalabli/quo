@@ -129,7 +129,7 @@ def _bisearch(ucs, table, ubound):
     return 0
 
 
-def width(wc):  # pylint: disable=invalid-name
+def wcwidth(wc):  # pylint: disable=invalid-name
     r"""
     Given one unicode character, return its printable length on a terminal.
 

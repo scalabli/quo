@@ -45,7 +45,12 @@ from typing import (
 )
 
 from quo.cache import SimpleCache
-from quo.filters import FilterOrBool, Never, to_filter
+from quo.filters import (
+        FilterOrBool,
+        Never, 
+        to_filter
+        )
+
 from quo.keys.list import KEY_ALIASES, Keys
 
 # Avoid circular imports.

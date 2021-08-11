@@ -12,9 +12,9 @@ from quo.completion import (
     get_common_complete_suffix,
 )
 from quo.text import StyleAndTextTuples
-from quo.key_binding.key_bindings import KeyBindings
-from quo.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys
+from quo.keys.key_binding.key_bindings import KeyBindings
+from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.keys.list import Keys
 from quo.utils import get_cwidth
 
 if TYPE_CHECKING:
@@ -87,8 +87,8 @@ def _display_completions_like_readline(
     This will ask for a confirmation if there are too many completions to fit
     on a single page and provide a paginator to walk through them.
     """
-    from prompt_toolkit.formatted_text import to_formatted_text
-    from prompt_toolkit.shortcuts.prompt import create_confirm_session
+    from quo.text import to_formatted_text
+    from quo.shortcuts.prompt import create_confirm_session
 
     # Get terminal dimensions.
     term_size = app.output.get_size()

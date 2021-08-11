@@ -2,10 +2,16 @@
 Parser for VT100 input stream.
 """
 import re
-from typing import Callable, Dict, Generator, Tuple, Union
+from typing import (
+        Callable, 
+        Dict, 
+        Generator, 
+        Tuple, 
+        Union
+        )
 
-from ..key_binding.key_processor import KeyPress
-from ..keys import Keys
+from quo.keys.key_binding.key_processor import KeyPress
+from quo.keys.list import Keys
 from quo.i_o.output.ansi_escape_sequences import ANSI_SEQUENCES
 
 __all__ = [

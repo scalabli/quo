@@ -12,7 +12,14 @@ import datetime
 import os
 import threading
 from abc import ABCMeta, abstractmethod
-from typing import AsyncGenerator, Iterable, List, Optional, Sequence, Tuple
+from typing import (
+        AsyncGenerator,
+        Iterable, 
+        List, 
+        Optional, 
+        Sequence,
+        Tuple
+        )
 
 __all__ = [
         "History",

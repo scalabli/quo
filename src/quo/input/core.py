@@ -1,11 +1,21 @@
 """
 Abstraction of CLI Input.
 """
-from abc import ABCMeta, abstractmethod, abstractproperty
-from contextlib import contextmanager
-from typing import Callable, ContextManager, Generator, List
+from abc import (
+        ABCMeta,
+        abstractmethod,
+        abstractproperty
+        )
 
-from quo.key_binding import KeyPress
+from contextlib import contextmanager
+from typing import ( 
+        Callable,
+        ContextManager,
+        Generator,
+        List
+        )
+
+from quo.keys.key_binding import KeyPress
 
 __all__ = [
     "Input",

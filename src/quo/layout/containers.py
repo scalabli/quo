@@ -35,9 +35,14 @@ from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
 )
-from quo.key_binding import KeyBindingsBase
+from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import get_cwidth, take_using_weights, to_int, to_str
+from quo.utils import (
+        get_cwidth,
+        take_using_weights,
+        to_int, 
+        to_str
+        )
 
 from .controls import (
     DummyControl,
