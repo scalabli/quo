@@ -1,6 +1,5 @@
 import os
 from typing import Callable, Iterable, List, Optional
-
 from quo.completion import CompleteEvent, Completer, Completion
 from quo.document import Document
 
