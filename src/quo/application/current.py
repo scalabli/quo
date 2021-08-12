@@ -25,18 +25,12 @@ __all__ = [
 
 class AppSession:
     """
-    An AppSession is an interactive session, usually connected to one terminal.
-    Within one such session, interaction with many applications can happen, one
-    after the other.
-
+    An AppSession is an interactive session, usually connected to one terminal. Within one such session, interaction with many applications can happen, one after the other.
     The input/output device is not supposed to change during one session.
 
-    Warning: Always use the `create_app_session` function to create an
-    instance, so that it gets activated correctly.
+    Warning: Always use the `create_app_session` function to create an instance, so that it gets activated correctly.
 
-    :param input: Use this as a default input for all applications
-        running in this session, unless an input is passed to the `Application`
-        explicitely.
+    :param input: Use this as a default input for all applications running in this session, unless an input is passed to the `Application` explicitely.
     :param output: Use this as a default output.
     """
 
@@ -47,8 +41,7 @@ class AppSession:
         self._input = input
         self._output = output
 
-        # The application will be set dynamically by the `set_app` context
-        # manager. This is called in the application itself.
+        # The application will be set dynamically by the `set_app` context manager. This is called in the application itself.
         self.app: Optional["Application[Any]"] = None
 
     def __repr__(self) -> str:
