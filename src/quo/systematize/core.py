@@ -67,7 +67,6 @@ except ImportError:
 
 
 __all__ = ["tabular", "tabular_formats", "simple_separated_format"]
-__version__ = "0.8.10"
 
 
 # minimum extra space in headers
