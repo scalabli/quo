@@ -21,13 +21,13 @@ from .core import (
              Tether
              )
 
-from .text import ANSI, HTML
+from quo.text import ANSI, HTML
 from quo.output import ColorDepth
 from quo.shortcuts import button_dialog
 from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
-from quo.shortcuts import Elicit
+from quo.shortcuts import Elicit, elicit
 from quo.styles import Style
 from quo.decorators import (
                        app,
@@ -92,7 +92,6 @@ from quo.i_o import (
 from quo.shortcuts import container
 from quo.widgets import TextArea, Frame
 from quo.systematize import tabular
-from quo.shortcuts import elicit
 from .types import (
               BOOL,
               Choice,
