@@ -4,15 +4,14 @@
 Modified code from Sergey Astanin and Contributors
 """
 
-
+from __future__ import print_function
+from __future__ import unicode_literals
 import math
 import re
 import sys
 import textwrap
-from quo.i_o import echo
+from quo.expediency.vitals import inscribe as echo
 from collections import namedtuple
-from __future__ import print_function
-from __future__ import unicode_literals
 
 
 
