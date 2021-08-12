@@ -52,7 +52,7 @@ def print_formatted_text(
     function, but supports printing of formatted text. You can pass a
     :class:`~quo.text.FormattedText`,
     :class:`~quo.text.HTML` or
-    :class:`~quo.formtext.ANSI` object to print formatted
+    :class:`~quo.text.ANSI` object to print formatted
     text.
 
     * Print HTML as follows::
