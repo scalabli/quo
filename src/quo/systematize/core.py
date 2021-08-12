@@ -56,7 +56,7 @@ else:
 
 
 try:
-    import wcwidth  # optional wide-character (CJK) support
+    from quo.width import wcwidth  # optional wide-character (CJK) support
 except ImportError:
     wcwidth = None
 
