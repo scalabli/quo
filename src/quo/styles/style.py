@@ -15,7 +15,7 @@ from typing import (
         )
 
 from quo.cache import SimpleCache
-
+from quo.i_o import termui
 from .core import (
     ANSI_COLOR_NAMES,
     ANSI_COLOR_NAMES_ALIASES,
