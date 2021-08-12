@@ -180,7 +180,7 @@ class Completer(metaclass=ABCMeta):
         background thread and completions will be displayed as soon as they
         arrive.
 
-        :param document: :class:`~prompt_toolkit.document.Document` instance.
+        :param document: :class:`~quo.document.Document` instance.
         :param complete_event: :class:`.CompleteEvent` instance.
         """
         while False:
