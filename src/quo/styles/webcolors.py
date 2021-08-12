@@ -2,7 +2,7 @@
 Web colors are colors used in displaying web pages on the World Wide Web, and the methods for describing and specifying those colors. Colors may be specified as an RGB triplet or in hexadecimal format (a hex triplet) or according to their common English names in some cases. A color tool or other graphics software is often used to generate color values.A color tool or other graphics software is often used to generate color values. In some uses, hexadecimal color codes are specified with notation using aleading number sign (#)
 """
 from typing import Dict
-
+from quo.i_o import termui
 __all__ = [
     "NAMED_COLORS",
 ]
