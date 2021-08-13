@@ -1,6 +1,5 @@
 """
-Mappings from VT100 (ANSI) escape sequences to the corresponding prompt_toolkit
-keys.
+Mappings from VT100 (ANSI) escape sequences.
 
 We are not using the terminfo/termcap databases to detect the ANSI escape
 sequences for the input. Instead, we recognize 99% of the most common
