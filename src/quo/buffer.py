@@ -29,7 +29,7 @@ from typing import (
 )
 
 from quo.application.current import get_app
-from .application.run_in_terminal import run_in_terminal
+from quo.application.run_in_terminal import run_in_terminal
 from .auto_suggest import AutoSuggest, Suggestion
 from .cache import FastDictCache
 from quo.clipboard import Data
