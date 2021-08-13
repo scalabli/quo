@@ -7,7 +7,7 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import importlib
 import os
 import subprocess
-from .application import Application
+from quo.application import Application
 from .core import (
              App,
              Arg,
