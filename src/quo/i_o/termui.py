@@ -20,6 +20,7 @@ from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
 from quo.systematize.core import _isconvertible, _binary_type, _text_type, _bool_type
+from quo.shortcuts import Elicit
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
