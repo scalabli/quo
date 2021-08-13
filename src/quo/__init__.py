@@ -27,7 +27,9 @@ from quo.shortcuts import button_dialog
 from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
-from quo.shortcuts import Elicit, elicit
+from quo.shortcuts import Elicit
+from quo.filters import Condition
+from quo.keys.key_binding import KeyBindings
 from quo.styles import Style
 from quo.decorators import (
                        app,
