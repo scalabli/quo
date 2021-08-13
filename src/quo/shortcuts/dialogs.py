@@ -2,7 +2,7 @@ import functools
 from asyncio import get_event_loop
 from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
-from quo.application.application import Application
+#from quo.application.application import Application
 from quo.application.current import get_app
 from quo.buffer import Buffer
 from quo.completion import Completer
