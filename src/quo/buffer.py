@@ -33,7 +33,7 @@ from .application.run_in_terminal import run_in_terminal
 from .auto_suggest import AutoSuggest, Suggestion
 from .cache import FastDictCache
 from quo.clipboard import Data
-from .completion import (
+from quo.completion import (
     CompleteEvent,
     Completer,
     Completion,
