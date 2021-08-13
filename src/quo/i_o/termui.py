@@ -312,6 +312,12 @@ def prompt(
             return result
         echo("Error: the two entered values do not match", err=err)
 ###########################################################################
+def evoke():
+  """
+  
+  """
+  s = Elicit()
+  return s.elicit()
 
 def confirm(
         text, default=False, abort=False, prompt_suffix=":>", show_default=True, err=False
