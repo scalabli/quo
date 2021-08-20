@@ -16,12 +16,12 @@ from typing import (
     Union,
 )
 
-from quo.width import wcwidth
+from quo.width import width
 
 __all__ = [
     "Event",
     "DummyContext",
-    "get_cwidth",
+    "get_width",
     "suspend_to_background_supported",
     "is_conemu_ansi",
     "is_windows",
@@ -169,7 +169,7 @@ class _CharSizesCache(Dict[str, int]):
 _CHAR_SIZES_CACHE = _CharSizesCache()
 
 
-def get_cwidth(string: str) -> int:
+def get_width(string: str) -> int:
     """
     Return width of a string. Wrapper around ``wcwidth``.
     """

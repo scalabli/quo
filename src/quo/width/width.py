@@ -70,8 +70,8 @@ Latest version: http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
 """
 
 from __future__ import division
-from .table_wide import WIDE_EASTASIAN
-from .table_zero import ZERO_WIDTH
+from .estasian_table import WIDE_EASTASIAN
+from .zero_width_table import ZERO_WIDTH
 
 
 # NOTE: created by hand, there isn't anything identifiable other than

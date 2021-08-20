@@ -5,17 +5,10 @@ import itertools
 import re
 import sys
 from enum import Enum
-from typing import (
-        Dict, 
-        Hashable,
-        List,
-        Set,
-        Tuple, 
-        TypeVar
-        )
+from typing import Dict, Hashable, List, Set, Tuple, TypeVar
 
 from quo.cache import SimpleCache
-from quo.i_o import termui
+
 from .core import (
     ANSI_COLOR_NAMES,
     ANSI_COLOR_NAMES_ALIASES,

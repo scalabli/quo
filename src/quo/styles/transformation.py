@@ -1,28 +1,21 @@
 """
-Assortment of style transformation.
+Collection of style transformations.
 
-Consider it a sort of shading/color  post processing  after the rendering is finished. This could be utilized to change the contrast/immersion; swap light and dull shadings or even change certain color  tones for different colors.
+Think of it as a kind of color post processing after the rendering is done.
+This could be used for instance to change the contrast/saturation; swap light
+and dark colors or even change certain colors for other colors.
 
-At the point when the UI is rendered, these changes can be applied just after style strings are transformed into 'Attrs' objects that address the actual designing
+When the UI is rendered, these transformations can be applied right after the
+style strings are turned into `Attrs` objects that represent the actual
+formatting.
 """
 from abc import ABCMeta, abstractmethod
 from colorsys import hls_to_rgb, rgb_to_hls
-from typing import (
-        Callable, 
-        Hashable,
-        Optional,
-        Sequence,
-        Tuple,
-        Union
-        )
+from typing import Callable, Hashable, Optional, Sequence, Tuple, Union
 
 from quo.cache import memoized
 from quo.filters import FilterOrBool, to_filter
-from quo.utils import (
-        AnyFloat, 
-        to_float,
-        to_str
-        )
+from quo.utils import AnyFloat, to_float, to_str
 
 from .core import ANSI_COLOR_NAMES, Attrs
 from .style import parse_color
@@ -64,11 +57,19 @@ class StyleTransformation(metaclass=ABCMeta):
 class SwapLightAndDarkStyleTransformation(StyleTransformation):
     """
     Turn dark colors into light colors and the other way around.
-    This is meant to make color schemes that work on a dark background usable on a light background (and the other way around).
 
-    Notice that this doesn't swap foreground and background like "reverse"  does. It turns light green into dark green and the other way around.  Foreground and background colors are considered individually.
+    This is meant to make color schemes that work on a dark background usable
+    on a light background (and the other way around).
 
-    Also notice that when <reverse> is used somewhere and no colors are givenvin particular (like what is the default for the bottom toolbar), then this doesn't change anything. This is what makes sense, because when the 'default' color is chosen, it's what works best for the terminal, and reverse works good with that.
+    Notice that this doesn't swap foreground and background like "reverse"
+    does. It turns light green into dark green and the other way around.
+    Foreground and background colors are considered individually.
+
+    Also notice that when <reverse> is used somewhere and no colors are given
+    in particular (like what is the default for the bottom toolbar), then this
+    doesn't change anything. This is what makes sense, because when the
+    'default' color is chosen, it's what works best for the terminal, and
+    reverse works good with that.
     """
 
     def transform_attrs(self, attrs: Attrs) -> Attrs:
@@ -95,9 +96,11 @@ class ReverseStyleTransformation(StyleTransformation):
 
 class SetDefaultColorStyleTransformation(StyleTransformation):
     """
-    Set default foreground/background color for output that doesn't specify  anything. This is useful for overriding the terminal default colors.
+    Set default foreground/background color for output that doesn't specify
+    anything. This is useful for overriding the terminal default colors.
 
-    :param fg: Color string or callable that returns a color string for the foreground.
+    :param fg: Color string or callable that returns a color string for the
+        foreground.
     :param bg: Like `fg`, but for the background.
     """
 
@@ -127,16 +130,26 @@ class SetDefaultColorStyleTransformation(StyleTransformation):
 
 class AdjustBrightnessStyleTransformation(StyleTransformation):
     """
-    Adjust the brightness to improve the rendering on either dark or light backgrounds.
+    Adjust the brightness to improve the rendering on either dark or light
+    backgrounds.
 
-    For dark backgrounds, it's best to increase `min_brightness`. For light backgrounds it's best to decrease `max_brightness`. Usually, only one  setting is adjusted.
+    For dark backgrounds, it's best to increase `min_brightness`. For light
+    backgrounds it's best to decrease `max_brightness`. Usually, only one
+    setting is adjusted.
 
-    This will only change the brightness for text that has a foreground color defined, but no background color. It works best for 256 or true color output.
+    This will only change the brightness for text that has a foreground color
+    defined, but no background color. It works best for 256 or true color
+    output.
 
-    .. note:: Notice that there is no universal way to detect whether the application is running in a light or dark terminal. As a developer of an command line application, you'll have to make this configurable for the user.
+    .. note:: Notice that there is no universal way to detect whether the
+              application is running in a light or dark terminal. As a
+              developer of an command line application, you'll have to make
+              this configurable for the user.
 
-    :param min_brightness: Float between 0.0 and 1.0 or a callable that returns  a float.
-    :param max_brightness: Float between 0.0 and 1.0 or a callable that returns a float.
+    :param min_brightness: Float between 0.0 and 1.0 or a callable that returns
+        a float.
+    :param max_brightness: Float between 0.0 and 1.0 or a callable that returns
+        a float.
     """
 
     def __init__(
@@ -229,9 +242,11 @@ class DummyStyleTransformation(StyleTransformation):
 
 class DynamicStyleTransformation(StyleTransformation):
     """
-    StyleTransformation class that can dynamically returns any  `StyleTransformation`.
+    StyleTransformation class that can dynamically returns any
+    `StyleTransformation`.
 
-    :param get_style_transformation: Callable that returns a  :class:`.StyleTransformation` instance.
+    :param get_style_transformation: Callable that returns a
+        :class:`.StyleTransformation` instance.
     """
 
     def __init__(

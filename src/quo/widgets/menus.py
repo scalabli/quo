@@ -1,29 +1,14 @@
-from typing import (
-        Callable,
-        Iterable,
-        List,
-        Optional,
-        Sequence,
-        Union
-        )
+from typing import Callable, Iterable, List, Optional, Sequence, Union
 from quo.application.current import get_app
 from quo.filters import Condition
 from quo.text.core import OneStyleAndTextTuple, StyleAndTextTuples
-from quo.keys.key_binding.key_bindings import KeyBindings, KeyBindingsBase
-from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.key_binding.key_bindings import KeyBindings, KeyBindingsBase
+from quo.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
-from quo.layout.containers import (
-        AnyContainer,
-        ConditionalContainer, 
-        Container, 
-        Float, 
-        FloatContainer, 
-        HSplit, 
-        Window
-        )
+from quo.layout.containers import AnyContainer, ConditionalContainer, Container, Float, FloatContainer, HSplit, Window
 from quo.layout.controls import FormattedTextControl
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import get_cwidth
+from quo.utils import get_width as get_cwidth
 from quo.widgets import Shadow
 from .core import Border
 

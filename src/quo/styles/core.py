@@ -105,7 +105,7 @@ assert not (set(ANSI_COLOR_NAMES_ALIASES.keys()) & set(ANSI_COLOR_NAMES))
 
 class BaseStyle(metaclass=ABCMeta):
     """
-    Abstract base class for quo styles.
+    Abstract base class for prompt_toolkit styles.
     """
 
     @abstractmethod

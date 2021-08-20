@@ -68,21 +68,21 @@ from quo.text import (
 )
 from quo.history import History, InMemoryHistory
 from quo.input.core import Input
-from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
-from quo.keys.key_binding.bindings.completion import (
+from quo.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
+from quo.key_binding.bindings.completion import (
     display_completions_like_readline,
 )
-from quo.keys.key_binding.bindings.open_in_editor import (
+from quo.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
-from quo.keys.key_binding.key_bindings import (
+from quo.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
     KeyBindings,
     KeyBindingsBase,
     merge_key_bindings,
 )
-from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
 from quo.layout.containers import Float, FloatContainer, HSplit, Window
 from quo.layout.containers import ConditionalContainer, WindowAlign
@@ -119,8 +119,8 @@ from quo.styles import (
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
 )
+from quo.utils import get_width as get_cwdith
 from quo.utils import (
-    get_cwidth,
     is_dumb_terminal,
     suspend_to_background_supported,
     to_str,
@@ -133,7 +133,7 @@ from quo.widgets.toolbars import (
 )
 
 if TYPE_CHECKING:
-    from quo.text.core import MagicFormattedText
+    from quo.formatted_text.base import MagicFormattedText
 
 __all__ = [
     "ElicitSession",

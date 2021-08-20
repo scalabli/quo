@@ -13,7 +13,7 @@ __all__ = [
 ]
 
 #: Default styling. Mapping from classnames to their style definition.
-PROMPT_TOOLKIT_STYLE = [
+QUO_STYLE = [
     # Highlighting of search matches in document.
     ("search", "bg:ansibrightyellow ansiblack"),
     ("search.current", ""),
@@ -212,7 +212,7 @@ def default_ui_style() -> BaseStyle:
     """
     return merge_styles(
         [
-            Style(PROMPT_TOOLKIT_STYLE),
+            Style(QUO_STYLE),
             Style(COLORS_STYLE),
             Style(WIDGETS_STYLE),
         ]

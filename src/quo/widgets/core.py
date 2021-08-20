@@ -1,17 +1,19 @@
 """
 Collection of reusable components for building full screen applications.
+
+All of these widgets implement the ``__pt_container__`` method, which makes
+them usable in any situation where we are expecting a `prompt_toolkit`
+container object.
+
+.. warning::
+
+    At this point, the API for these widgets is considered unstable, and can
+    potentially change between minor releases (we try not too, but no
+    guarantees are made yet). The public API in
+    `quo.shortcuts.dialogs` on the other hand is considered stable.
 """
 from functools import partial
-from typing import (
-        Callable, 
-        Generic, 
-        List,
-        Optional,
-        Sequence,
-        Tuple, 
-        TypeVar, 
-        Union
-        )
+from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
 from quo.application.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
@@ -34,9 +36,9 @@ from quo.text import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-from quo.keys.key_binding.key_bindings import KeyBindings
-from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys.list import Keys
+from quo.key_binding.key_bindings import KeyBindings
+from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys import Keys
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
@@ -57,7 +59,7 @@ from quo.layout.margins import ConditionalMargin, NumberedMargin, ScrollbarMargi
 from quo.layout.processors import AppendAutoSuggestion, BeforeInput, ConditionalProcessor, PasswordProcessor, Processor
 from quo.lexers import DynamicLexer, Lexer
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import get_cwidth
+from quo.utils import get_width as get_cwidth
 from quo.validation import DynamicValidator, Validator
 
 from .toolbars import SearchToolbar

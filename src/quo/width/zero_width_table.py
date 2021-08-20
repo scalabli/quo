@@ -1,4 +1,4 @@
-"""Zero_Width table. Created by setup.py."""
+"""Zero_Width table."""
 # Source: DerivedGeneralCategory-13.0.0.txt
 # Date:  2019-10-21, 14:30:32 GMT
 ZERO_WIDTH = (

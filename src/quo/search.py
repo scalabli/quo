@@ -2,24 +2,15 @@
 Search operations.
 
 For the key bindings implementation with attached filters, check
-`quo.keys.key_binding.bindings.search`. (Use these for new key bindings
+`quo.key_binding.bindings.search`. (Use these for new key bindings
 instead of calling these function directly.)
 """
 from enum import Enum
-from typing import (
-        TYPE_CHECKING, 
-        Dict, 
-        Optional
-        )
+from typing import TYPE_CHECKING, Dict, Optional
 
-from .application.current import get_app
-from .filters import (
-        FilterOrBool, 
-        is_searching, 
-        to_filter
-        )
-
-from quo.keys.key_binding.vi_state import InputMode
+from quo.application.current import get_app
+from quo.filters import FilterOrBool, is_searching, to_filter
+from quo.key_binding.vi_state import InputMode
 
 if TYPE_CHECKING:
     from quo.layout.controls import BufferControl, SearchBufferControl
@@ -100,7 +91,7 @@ def start_search(
     :param buffer_control: Start search for this `BufferControl`. If not given,
         search through the current control.
     """
-    from quo.layout.controls import BufferControl
+    from prompt_toolkit.layout.controls import BufferControl
 
     assert buffer_control is None or isinstance(buffer_control, BufferControl)
 
