@@ -38,7 +38,7 @@ from quo.text.utils import fragment_list_to_text
 from quo.history import History
 from quo.key_binding.key_bindings import KeyBindings
 from quo.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys
+from quo.keys.list import Keys
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,

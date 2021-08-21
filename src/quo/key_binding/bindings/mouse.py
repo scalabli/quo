@@ -1,6 +1,6 @@
 from quo.data_structures import Point
 from quo.key_binding.key_processor import KeyPress, KeyPressEvent
-from quo.keys import Keys
+from quo.keys.list import Keys
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils import is_windows
 

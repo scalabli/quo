@@ -14,7 +14,7 @@ from quo.completion import (
 from quo.text import StyleAndTextTuples
 from quo.key_binding.key_bindings import KeyBindings
 from quo.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys
+from quo.keys.list import Keys
 from quo.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:

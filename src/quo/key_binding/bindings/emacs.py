@@ -18,7 +18,7 @@ from quo.filters import (
 )
 from quo.key_binding.key_bindings import Binding
 from quo.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys
+from quo.keys.list import Keys
 from quo.selection import SelectionType
 
 from ..key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase

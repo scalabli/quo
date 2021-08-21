@@ -9,7 +9,7 @@ from quo.filters import (
     vi_insert_mode,
 )
 from quo.key_binding.key_processor import KeyPress, KeyPressEvent
-from quo.keys import Keys
+from quo.keys.list import Keys
 
 from ..key_bindings import KeyBindings
 from .named_commands import get_by_name

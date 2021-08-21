@@ -28,7 +28,7 @@ from typing import (
 from quo.eventloop import run_in_executor_with_context
 from quo.eventloop.win32 import create_win32_event, wait_for_handles
 from quo.key_binding.key_processor import KeyPress
-from quo.keys import Keys
+from quo.keys.list import Keys
 from quo.mouse_events import MouseEventType
 from quo.win32_types import (
     INPUT_RECORD,

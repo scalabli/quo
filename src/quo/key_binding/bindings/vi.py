@@ -36,7 +36,7 @@ from quo.input.vt100_parser import Vt100Parser
 from quo.key_binding.digraphs import DIGRAPHS
 from quo.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.key_binding.vi_state import CharacterFind, InputMode
-from quo.keys import Keys
+from quo.keys.list import Keys
 from quo.search import SearchDirection
 from quo.selection import PasteMode, SelectionState, SelectionType
 

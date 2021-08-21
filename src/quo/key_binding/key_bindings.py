@@ -51,7 +51,7 @@ from typing import (
 
 from quo.cache import SimpleCache
 from quo.filters import FilterOrBool, Never, to_filter
-from quo.keys import KEY_ALIASES, Keys
+from quo.keys.list import KEY_ALIASES, Keys
 
 # Avoid circular imports.
 if TYPE_CHECKING:

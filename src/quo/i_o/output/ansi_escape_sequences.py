@@ -12,7 +12,7 @@ Some useful docs:
 """
 from typing import Dict, Tuple, Union
 
-from quo.keys import Keys
+from quo.keys.list import Keys
 
 __all__ = [
     "ANSI_SEQUENCES",
