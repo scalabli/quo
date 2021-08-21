@@ -34,7 +34,7 @@ the next prompt_toolkit `Application`.
 from collections import defaultdict
 from typing import Dict, List
 
-from quo.keys.key_binding import KeyPress
+from ..key_binding import KeyPress
 from .core import Input
 
 __all__ = [

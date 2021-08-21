@@ -29,10 +29,10 @@ from quo.text import (
     fragment_list_width,
     to_formatted_text,
 )
-from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.key_binding.key_processor import KeyPressEvent
 from quo.layout.utils import explode_text_fragments
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import get_cwidth
+from quo.utils import get_width
 
 from .containers import ConditionalContainer, HSplit, ScrollOffsets, Window
 from .controls import GetLinePrefixCallable, UIContent, UIControl
@@ -40,7 +40,7 @@ from .dimension import Dimension
 from .margins import ScrollbarMargin
 
 if TYPE_CHECKING:
-    from quo.keys.key_binding.key_bindings import KeyBindings
+    from quo.key_binding.key_bindings import KeyBindings
 
     NotImplementedOrNone = object
 
@@ -145,7 +145,7 @@ class CompletionsMenuControl(UIControl):
             max_width,
             max(
                 self.MIN_WIDTH,
-                max(get_cwidth(c.display_text) for c in complete_state.completions) + 2,
+                max(get_width(c.display_text) for c in complete_state.completions) + 2,
             ),
         )
 
@@ -157,7 +157,7 @@ class CompletionsMenuControl(UIControl):
         """
 
         def meta_width(completion: Completion) -> int:
-            return get_cwidth(completion.display_meta_text)
+            return get_width(completion.display_meta_text)
 
         if self._show_meta(complete_state):
             return min(
@@ -250,7 +250,7 @@ def _trim_formatted_text(
         remaining_width = max_width - 3
 
         for style_and_ch in explode_text_fragments(formatted_text):
-            ch_width = get_cwidth(style_and_ch[1])
+            ch_width = get_width(style_and_ch[1])
 
             if ch_width <= remaining_width:
                 result.append(style_and_ch)
@@ -510,7 +510,7 @@ class MultiColumnCompletionMenuControl(UIControl):
         """
         Return the width of each column.
         """
-        return max(get_cwidth(c.display_text) for c in complete_state.completions) + 1
+        return max(get_width(c.display_text) for c in complete_state.completions) + 1
 
     def mouse_handler(self, mouse_event: MouseEvent) -> "NotImplementedOrNone":
         """
@@ -680,7 +680,7 @@ class _SelectedCompletionMetaControl(UIControl):
         app = get_app()
         if app.current_buffer.complete_state:
             state = app.current_buffer.complete_state
-            return 2 + max(get_cwidth(c.display_meta_text) for c in state.completions)
+            return 2 + max(get_width(c.display_meta_text) for c in state.completions)
         else:
             return 0
 

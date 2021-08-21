@@ -1,12 +1,4 @@
-from typing import (
-        TYPE_CHECKING, 
-        Iterable,
-        List,
-        TypeVar,
-        Union,
-        cast,
-        overload
-        )
+from typing import TYPE_CHECKING, Iterable, List, TypeVar, Union, cast, overload
 
 from quo.text.core import OneStyleAndTextTuple
 

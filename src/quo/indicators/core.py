@@ -32,8 +32,8 @@ from quo.text import (
     to_formatted_text,
 )
 from quo.input import Input
-from quo.keys.key_binding import KeyBindings
-from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.key_binding import KeyBindings
+from quo.key_binding.key_processor import KeyPressEvent
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
 from quo.layout.containers import VSplit

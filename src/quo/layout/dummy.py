@@ -1,9 +1,10 @@
 """
-Dummy layout. Used when somebody creates an `Application` without specifying a `Layout`.
+Dummy layout. Used when somebody creates an `Application` without specifying a
+`Layout`.
 """
 from quo.text import HTML
-from quo.keys.key_binding import KeyBindings
-from quo.keys.key_binding.key_processor import KeyPressEvent
+from quo.key_binding import KeyBindings
+from quo.key_binding.key_processor import KeyPressEvent
 
 from .containers import Window
 from .controls import FormattedTextControl
@@ -19,7 +20,8 @@ E = KeyPressEvent
 
 def create_dummy_layout() -> Layout:
     """
-    Create a dummy layout for use in an 'Application' that doesn't have a layout specified. When ENTER is pressed, the application quits.
+    Create a dummy layout for use in an 'Application' that doesn't have a
+    layout specified. When ENTER is pressed, the application quits.
     """
     kb = KeyBindings()
 

@@ -35,7 +35,7 @@ from quo.lexers import Lexer, SimpleLexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.search import SearchState
 from quo.selection import SelectionType
-from quo.utils import get_cwidth
+from quo.utils import get_width as get_cwidth
 
 from .processors import (
     DisplayMultipleCursors,
@@ -48,7 +48,7 @@ from .processors import (
 )
 
 if TYPE_CHECKING:
-    from quo.keys.key_binding.key_bindings import KeyBindingsBase
+    from quo.key_binding.key_bindings import KeyBindingsBase
     from quo.utils import Event
 
     # The only two return values for a mouse hander are `None` and

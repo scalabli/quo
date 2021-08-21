@@ -35,14 +35,10 @@ from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
 )
-from quo.keys.key_binding import KeyBindingsBase
+from quo.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import (
-        get_cwidth,
-        take_using_weights,
-        to_int, 
-        to_str
-        )
+from quo.utils import get_width as get_cwidth
+from quo.utils import take_using_weights, to_int, to_str
 
 from .controls import (
     DummyControl,
@@ -105,14 +101,14 @@ class Container(metaclass=ABCMeta):
     @abstractmethod
     def preferred_width(self, max_available_width: int) -> Dimension:
         """
-        Return a :class:`~prompt_toolkit.layout.Dimension` that represents the
+        Return a :class:`~quo.layout.Dimension` that represents the
         desired width for this container.
         """
 
     @abstractmethod
     def preferred_height(self, width: int, max_available_height: int) -> Dimension:
         """
-        Return a :class:`~prompt_toolkit.layout.Dimension` that represents the
+        Return a :class:`~quo.layout.Dimension` that represents the
         desired height for this container.
         """
 
@@ -129,8 +125,8 @@ class Container(metaclass=ABCMeta):
         """
         Write the actual content to the screen.
 
-        :param screen: :class:`~prompt_toolkit.layout.screen.Screen`
-        :param mouse_handlers: :class:`~prompt_toolkit.layout.mouse_handlers.MouseHandlers`.
+        :param screen: :class:`~quo.layout.screen.Screen`
+        :param mouse_handlers: :class:`~quo.layout.mouse_handlers.MouseHandlers`.
         :param parent_style: Style string to pass to the :class:`.Window`
             object. This will be applied to all content of the windows.
             :class:`.VSplit` and :class:`.HSplit` can use it to pass their
@@ -382,7 +378,7 @@ class HSplit(_Split):
         """
         Render the prompt to a `Screen` instance.
 
-        :param screen: The :class:`~prompt_toolkit.layout.screen.Screen` class
+        :param screen: The :class:`~quo.layout.screen.Screen` class
             to which the output has to be written.
         """
         sizes = self._divide_heights(write_position)
@@ -686,7 +682,7 @@ class VSplit(_Split):
         """
         Render the prompt to a `Screen` instance.
 
-        :param screen: The :class:`~prompt_toolkit.layout.screen.Screen` class
+        :param screen: The :class:`~quo.layout.screen.Screen` class
             to which the output has to be written.
         """
         if not self.children:
@@ -1115,7 +1111,7 @@ class WindowRenderInfo:
     """
     Render information for the last render time of this control.
     It stores mapping information between the input buffers (in case of a
-    :class:`~prompt_toolkit.layout.controls.BufferControl`) and the actual
+    :class:`~quo.layout.controls.BufferControl`) and the actual
     render position on the output screen.
 
     (Could be used for implementation of the Vi 'H' and 'L' key bindings as
@@ -1422,7 +1418,7 @@ class Window(Container):
     :param ignore_content_height: A `bool` or :class:`.Filter` instance. Ignore
         the :class:`.UIContent` height when calculating the dimensions.
     :param left_margins: A list of :class:`.Margin` instance to be displayed on
-        the left. For instance: :class:`~prompt_toolkit.layout.NumberedMargin`
+        the left. For instance: :class:`~quo.layout.NumberedMargin`
         can be one of them in order to show line numbers.
     :param right_margins: Like `left_margins`, but on the other side.
     :param scroll_offsets: :class:`.ScrollOffsets` instance, representing the

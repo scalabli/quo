@@ -1,17 +1,9 @@
 from collections import defaultdict
-from typing import (
-        TYPE_CHECKING,
-        Callable,
-        DefaultDict,
-        Dict, 
-        List,
-        Optional, 
-        Tuple
-        )
+from typing import TYPE_CHECKING, Callable, DefaultDict, Dict, List, Optional, Tuple
 
 from quo.cache import FastDictCache
 from quo.data_structures import Point
-from quo.utils import get_cwidth
+from quo.utils import get_width
 
 if TYPE_CHECKING:
     from .containers import Window
@@ -125,7 +117,7 @@ class Char:
 
         # Calculate width. (We always need this, so better to store it directly
         # as a member for performance.)
-        self.width = get_cwidth(char)
+        self.width = get_width(char)
 
     def __eq__(self, other) -> bool:
         return self.char == other.char and self.style == other.style

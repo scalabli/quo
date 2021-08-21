@@ -16,7 +16,7 @@ from quo.text import (
 from quo.text.utils import fragment_list_width
 from quo.layout.dimension import AnyDimension, D
 from quo.layout.utils import explode_text_fragments
-from quo.utils import get_cwidth
+from quo.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
     from .core import ProgressBar, ProgressBarCounter

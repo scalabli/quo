@@ -1,12 +1,8 @@
 """
-Margin implementations for a :class:`~quo.layout.containers.Window`.
+Margin implementations for a :class:`~prompt_toolkit.layout.containers.Window`.
 """
 from abc import ABCMeta, abstractmethod
-from typing import (
-        TYPE_CHECKING, 
-        Callable,
-        Optional
-        )
+from typing import TYPE_CHECKING, Callable, Optional
 
 from quo.filters import FilterOrBool, to_filter
 from quo.text import (
@@ -14,7 +10,7 @@ from quo.text import (
     fragment_list_to_text,
     to_formatted_text,
 )
-from quo.utils import get_cwidth
+from quo.utils import get_width as g_w
 
 from .controls import UIContent
 
@@ -284,7 +280,7 @@ class PromptMargin(Margin):
         "Width to report to the `Window`."
         # Take the width from the first line.
         text = fragment_list_to_text(self.get_prompt())
-        return get_cwidth(text)
+        return g_w(text)
 
     def create_margin(
         self, window_render_info: "WindowRenderInfo", width: int, height: int
