@@ -27,10 +27,14 @@ def run_in_terminal(
 ) -> Awaitable[_T]:
     """
     Run function on the terminal above the current application or prompt.
-    What this does is first hiding the prompt, then running this callable
-    (which can safely output to the terminal), and then again rendering the prompt which causes the output of this function to scroll above the prompt.
 
-    ``func`` is supposed to be a synchronous function. If you need an asynchronous version of this function, use the ``in_terminal`` context
+    What this does is first hiding the prompt, then running this callable
+    (which can safely output to the terminal), and then again rendering the
+    prompt which causes the output of this function to scroll above the
+    prompt.
+
+    ``func`` is supposed to be a synchronous function. If you need an
+    asynchronous version of this function, use the ``in_terminal`` context
     manager directly.
 
     :param func: The callable to execute.

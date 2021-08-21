@@ -1,5 +1,7 @@
 from typing import Iterable, Set
+
 from quo.document import Document
+
 from .core import CompleteEvent, Completer, Completion
 
 __all__ = ["DeduplicateCompleter"]

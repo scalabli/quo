@@ -41,7 +41,7 @@ from quo.completion import (
     get_common_complete_suffix,
 )
 from .document import Document
-from .filters import FilterOrBool, to_filter
+from quo.filters import FilterOrBool, to_filter
 from .history import History, InMemoryHistory
 from .search import SearchDirection, SearchState
 from .selection import PasteMode, SelectionState, SelectionType
@@ -174,19 +174,31 @@ BufferAcceptHandler = Callable[["Buffer"], bool]
 
 class Buffer:
     """
-    The core data structure that holds the text and cursor position of the current input line and implements all text manipulations on top of it. It also implements the history, undo stack and the completion state.
+    The core data structure that holds the text and cursor position of the
+    current input line and implements all text manipulations on top of it. It
+    also implements the history, undo stack and the completion state.
 
-    :param completer: :class:`~quo.completion.Completer` instance.
-    :param history: :class:`~quo.history.History` instance.
+    :param completer: :class:`~prompt_toolkit.completion.Completer` instance.
+    :param history: :class:`~prompt_toolkit.history.History` instance.
+    :param tempfile_suffix: The tempfile suffix (extension) to be used for the
+        "open in editor" function. For a Python REPL, this would be ".py", so
+        that the editor knows the syntax highlighting to use. This can also be
+        a callable that returns a string.
+    :param tempfile: For more advanced tempfile situations where you need
+        control over the subdirectories and filename. For a Git Commit Message,
+        this would be ".git/COMMIT_EDITMSG", so that the editor knows the syntax
+        highlighting to use. This can also be a callable that returns a string.
+    :param name: Name for this buffer. E.g. DEFAULT_BUFFER. This is mostly
+        useful for key bindings where we sometimes prefer to refer to a buffer
+        by their name instead of by reference.
+    :param accept_handler: Called when the buffer input is accepted. (Usually
+        when the user presses `enter`.) The accept handler receives this
+        `Buffer` as input and should return True when the buffer text should be
+        kept instead of calling reset.
 
-    :param tempfile_suffix: The tempfile suffix (extension) to be used for the "open in editor" function.
-
-    :param tempfile: For more advanced tempfile situations where you need control over the subdirectories and filename. For a Git Commit Message, this would be ".git/COMMIT_EDITMSG", so that the editor knows the syntax highlighting to use. This can also be a callable that returns a string.
-
-    :param name: Name for this buffer. E.g. DEFAULT_BUFFER. This is mostly useful for key bindings where we sometimes prefer to refer to a buffer by their name instead of by reference.
-    :param accept_handler: Called when the buffer input is accepted. (Usually when the user presses `enter`.) The accept handler receives this `Buffer` as input and should return True when the buffer text should be kept instead of calling reset.
-
-    In case of a `Elicitsession` for instance, we want to keep the text, because we will exit the application, and only reset it during the next run.
+        In case of a `PromptSession` for instance, we want to keep the text,
+        because we will exit the application, and only reset it during the next
+        run.
 
     Events:
 
@@ -198,16 +210,23 @@ class Buffer:
 
     Filters:
 
-    :param complete_while_typing: :class:`~quo.filters.Filter`
-    or `bool`. Decide whether or not to do asynchronous autocompleting while typing.
-
-    :param validate_while_typing: :class:`~quo.filters.Filter`
-    or `bool`. Decide whether or not to do asynchronous validation while typing.
-
-    :param enable_history_search: :class:`~quo.filters.Filter` or `bool` to indicate when up-arrow partial string matching is enabled. It is advised to not enable this at the same time as `complete_while_typing`, because when there is an autocompletion found, the up arrows usually browse through the completions, rather than through the history.
-    :param read_only: :class:`~quo.filters.Filter`. When True,
-    changes will not be allowed.
-    :param multiline: :class:`~quo.filters.Filter` or `bool`. When not set, pressing `Enter` will call the `accept_handler`.  Otherwise,  pressing `Esc-Enter` is required.
+    :param complete_while_typing: :class:`~prompt_toolkit.filters.Filter`
+        or `bool`. Decide whether or not to do asynchronous autocompleting while
+        typing.
+    :param validate_while_typing: :class:`~prompt_toolkit.filters.Filter`
+        or `bool`. Decide whether or not to do asynchronous validation while
+        typing.
+    :param enable_history_search: :class:`~prompt_toolkit.filters.Filter` or
+        `bool` to indicate when up-arrow partial string matching is enabled. It
+        is advised to not enable this at the same time as
+        `complete_while_typing`, because when there is an autocompletion found,
+        the up arrows usually browse through the completions, rather than
+        through the history.
+    :param read_only: :class:`~prompt_toolkit.filters.Filter`. When True,
+        changes will not be allowed.
+    :param multiline: :class:`~prompt_toolkit.filters.Filter` or `bool`. When
+        not set, pressing `Enter` will call the `accept_handler`.  Otherwise,
+        pressing `Esc-Enter` is required.
     """
 
     def __init__(

@@ -1,19 +1,23 @@
 """
-While a user types input in a certain buffer, suggestions are generated asynchronously. When the cursor presses the right arrow and the cursor is at the end of the input, the
+`Fish-style <http://fishshell.com/>`_  like auto-suggestion.
+
+While a user types input in a certain buffer, suggestions are generated
+(asynchronously.) Usually, they are displayed after the input. When the cursor
+presses the right arrow and the cursor is at the end of the input, the
 suggestion will be inserted.
 
-If you want the auto suggestions to be asynchronous (in a background thread), because they take too much time, and could potentially block the event loop, then wrap the :class:`.AutoSuggest` instance into a :class:`.ThreadedAutoSuggest`.
+If you want the auto suggestions to be asynchronous (in a background thread),
+because they take too much time, and could potentially block the event loop,
+then wrap the :class:`.AutoSuggest` instance into a
+:class:`.ThreadedAutoSuggest`.
 """
 from abc import ABCMeta, abstractmethod
-from typing import (
-        TYPE_CHECKING,
-        Callable,
-        Optional,
-        Union
-        )
+from typing import TYPE_CHECKING, Callable, Optional, Union
+
 from quo.eventloop import run_in_executor_with_context
+
 from .document import Document
-from .filters import Filter, to_filter
+from quo.filters import Filter, to_filter
 
 if TYPE_CHECKING:
     from .buffer import Buffer

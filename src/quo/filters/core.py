@@ -1,13 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import (
-        Callable,
-        Dict,
-        Iterable, 
-        List,
-        Tuple,
-        Union,
-        cast
-        )
+from typing import Callable, Dict, Iterable, List, Tuple, Union, cast
 
 __all__ = ["Filter", "Never", "Always", "Condition", "FilterOrBool"]
 

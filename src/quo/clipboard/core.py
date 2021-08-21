@@ -33,6 +33,8 @@ class Data:
 class Clipboard(metaclass=ABCMeta):
     """
     Abstract baseclass for clipboards.
+    (An implementation can be in memory, it can share the X11 or Windows
+    keyboard, or can be persistent.)
     """
 
     @abstractmethod

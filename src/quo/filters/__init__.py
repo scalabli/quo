@@ -17,13 +17,7 @@ Filters can be chained using ``&`` and ``|`` operations, and inverted using the
     filter = has_focus('default') & ~ has_selection
 """
 from quo.filters.app import *
-from quo.filters.core import (
-        Always, 
-        Condition, 
-        Filter,
-        FilterOrBool,
-        Never
-        )
+from quo.filters.core import Always, Condition, Filter, FilterOrBool, Never
 from quo.filters.cli import *
 from quo.filters.utils import is_true, to_filter
 from quo.filters.app import vi_mode

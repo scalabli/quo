@@ -1,5 +1,5 @@
 from typing import Optional
-from quo.clipboard import copypaste
+import pyperclip
 from quo.selection import SelectionType
 
 from .core import Clipboard, Data

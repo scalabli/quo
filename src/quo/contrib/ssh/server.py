@@ -3,13 +3,7 @@ Utility for running a prompt_toolkit application in an asyncssh server.
 """
 import asyncio
 import traceback
-from typing import (
-        Awaitable, 
-        Callable, 
-        Optional, 
-        TextIO,
-        cast
-        )
+from typing import Awaitable, Callable, Optional, TextIO, cast
 
 import asyncssh
 
