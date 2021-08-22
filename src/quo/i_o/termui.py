@@ -132,95 +132,7 @@ def prompt(
     ) -> _T:
 
 
-        if message is not None:
-            self.message = message
-        if editing_mode is not None:
-            self.editing_mode = editing_mode
-        if refresh_interval is not None:
-            self.refresh_interval = refresh_interval
-        if vi_mode:
-            self.editing_mode = EditingMode.VI
-        if lexer is not None:
-            self.lexer = lexer
-        if completer is not None:
-            self.completer = completer
-        if complete_in_thread is not None:
-            self.complete_in_thread = complete_in_thread
-        if is_password is not None:
-            self.is_password = is_password
-        if key_bindings is not None:
-            self.key_bindings = key_bindings
-        if bottom_toolbar is not None:
-            self.bottom_toolbar = bottom_toolbar
-        if style is not None:
-            self.style = style
-        if color_depth is not None:
-            self.color_depth = color_depth
-        if include_default_pygments_style is not None:
-            self.include_default_pygments_style = include_default_pygments_style
-        if style_transformation is not None:
-            self.style_transformation = style_transformation
-        if swap_light_and_dark_colors is not None:
-            self.swap_light_and_dark_colors = swap_light_and_dark_colors
-        if r_elicit is not None:
-            self.r_elicit = r_elicit
-        if multiline is not None:
-            self.multiline = multiline
-        if elicit_continuation is not None:
-            self.elicit_continuation = elicit_continuation
-        if wrap_lines is not None:
-            self.wrap_lines = wrap_lines
-        if enable_history_search is not None:
-            self.enable_history_search = enable_history_search
-        if search_ignore_case is not None:
-            self.search_ignore_case = search_ignore_case
-        if complete_while_typing is not None:
-            self.complete_while_typing = complete_while_typing
-        if validate_while_typing is not None:
-            self.validate_while_typing = validate_while_typing
-        if complete_style is not None:
-            self.complete_style = complete_style
-        if auto_suggest is not None:
-            self.auto_suggest = auto_suggest
-        if validator is not None:
-            self.validator = validator
-        if clipboard is not None:
-            self.clipboard = clipboard
-        if mouse_support is not None:
-            self.mouse_support = mouse_support
-        if input_processors is not None:
-            self.input_processors = input_processors
-        if placeholder is not None:
-            self.placeholder = placeholder
-        if reserve_space_for_menu is not None:
-            self.reserve_space_for_menu = reserve_space_for_menu
-        if enable_system_elicit is not None:
-            self.enable_system_elicit = enable_system_elicit
-        if enable_suspend is not None:
-            self.enable_suspend = enable_suspend
-        if enable_open_in_editor is not None:
-            self.enable_open_in_editor = enable_open_in_editor
-        if tempfile_suffix is not None:
-            self.tempfile_suffix = tempfile_suffix
-        if tempfile is not None:
-            self.tempfile = tempfile
-
-        self._add_pre_run_callables(pre_run, accept_default)
-        self.default_buffer.reset(
-            default if isinstance(default, Document) else Document(default)
-        )
-        self.app.refresh_interval = self.refresh_interval  # This is not reactive.
-
-        # If we are using the default output, and have a dumb terminal. Use the
-        # dumb elicit.
-        if self._output is None and is_dumb_terminal():
-            with self._dumb_elicit(self.message) as dump_app:
-                return dump_app.run(in_thread=in_thread)
-
-        return self.app.run(
-            set_exception_handler=set_exception_handler, in_thread=in_thread
-        )
-
+     
 """Prompts a user for input.  This is a convenience function that can
     be used to prompt a user for input later.
 
@@ -295,6 +207,7 @@ def prompt(
         if value == value2:
             return result
         echo("Error: the two entered values do not match", err=err)
+
 ###########################################################################
 
 def confirm(
