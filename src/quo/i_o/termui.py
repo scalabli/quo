@@ -73,7 +73,6 @@ def _format_default(default):
 
 ##################################################################
 def prompt(
-    self,
     text,
     default=None,
     hide=False,
@@ -84,79 +83,23 @@ def prompt(
     show_default=True,
     err=False,
     show_choices=True,
-    message: Optional[AnyFormattedText] = None,
-        # `message` should go first, because people call it as
-        # positional argument.
-    *,
-    editing_mode: Optional[EditingMode] = None,
-    refresh_interval: Optional[float] = None,
-    vi_mode: Optional[bool] = None,
-    lexer: Optional[Lexer] = None,
-    completer: Optional[Completer] = None,
-    complete_in_thread: Optional[bool] = None,
-    is_password: Optional[bool] = None,
-    key_bindings: Optional[KeyBindingsBase] = None,
-    bottom_toolbar: Optional[AnyFormattedText] = None,
-    style: Optional[BaseStyle] = None,
-    color_depth: Optional[ColorDepth] = None,
-    include_default_pygments_style: Optional[FilterOrBool] = None,
-    style_transformation: Optional[StyleTransformation] = None,
-    swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-    r_elicit: Optional[AnyFormattedText] = None,
-    multiline: Optional[FilterOrBool] = None,
-    elicit_continuation: Optional[ElicitContinuationText] = None,
-    wrap_lines: Optional[FilterOrBool] = None,
-    enable_history_search: Optional[FilterOrBool] = None,
-    search_ignore_case: Optional[FilterOrBool] = None,
-    complete_while_typing: Optional[FilterOrBool] = None,
-    validate_while_typing: Optional[FilterOrBool] = None,
-    complete_style: Optional[CompleteStyle] = None,
-    auto_suggest: Optional[AutoSuggest] = None,
-    validator: Optional[Validator] = None,
-    clipboard: Optional[Clipboard] = None,
-    mouse_support: Optional[FilterOrBool] = None,
-    input_processors: Optional[List[Processor]] = None,
-    placeholder: Optional[AnyFormattedText] = None,
-    reserve_space_for_menu: Optional[int] = None,
-    enable_system_elicit: Optional[FilterOrBool] = None,
-    enable_suspend: Optional[FilterOrBool] = None,
-    enable_open_in_editor: Optional[FilterOrBool] = None,
-    tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
-        tempfile: Optional[Union[str, Callable[[], str]]] = None,
-        # Following arguments are specific to the current `elicit()` call.
-    default: Union[str, Document] = "",
-    accept_default: bool = False,
-    pre_run: Optional[Callable[[], None]] = None,
-    set_exception_handler: bool = True,
-    in_thread: bool = False,
-    ) -> _T:
+):
 
+    """Prompts a user for input.  This is a convenience function that can be used to prompt a user for input later.
 
-     
-"""Prompts a user for input.  This is a convenience function that can
-    be used to prompt a user for input later.
-
-    If the user aborts the input by sending a interrupt signal, this
-    function will catch it and raise a :exc:`Abort` exception.
+    If the user aborts the input by sending a interrupt signal, this  function will catch it and raise a :exc:`Abort` exception.
 
     :param text: the text to show for the prompt.
-    :param default: the default value to use if no input happens.  If this
-                    is not given it will prompt until it's aborted.
-    :param hide_input: if this is set to true then the input value will
-                       be hidden.
+    :param default: the default value to use if no input happens.  If this  is not given it will prompt until it's aborted.
+    :param hide_input: if this is set to true then the input value will  be hidden.
     :param autoconfirm: asks for confirmation for the value.
     :param type: the type to use to check the value against.
-    :param value_proc: if this parameter is provided it's a function that
-                       is invoked instead of the type conversion to
-                       convert a value.
+    :param value_proc: if this parameter is provided it's a function that is invoked instead of the type conversion to convert a value.
     :param prompt_suffix: a suffix that should be added to the prompt.
     :param show_default: shows or hides the default value in the prompt.
-    :param err: if set to true the file defaults to ``stderr`` instead of
-                ``stdout``, the same as with echo.
-    :param show_choices: Show or hide choices if the passed type is a Choice.
-                         For example if type is a Choice of either day or week,
-                         show_choices is true and text is "Group by" then the
-                         prompt will be "Group by (day, week): ".
+    :param err: if set to true the file defaults to ``stderr`` instead of ``stdout``, the same as with echo.
+    :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
+
     """
     result = None
 
@@ -207,7 +150,6 @@ def prompt(
         if value == value2:
             return result
         echo("Error: the two entered values do not match", err=err)
-
 ###########################################################################
 
 def confirm(
