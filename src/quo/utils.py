@@ -17,6 +17,7 @@ from typing import (
 )
 
 from quo.width import width
+from quo.width.width import wcwidth
 
 __all__ = [
     "Event",
@@ -196,7 +197,7 @@ def is_windows_vt100_supported() -> bool:
     True when we are using Windows, but VT100 escape sequences are supported.
     """
     # Import needs to be inline. Windows libraries are not always available.
-    from prompt_toolkit.output.windows10 import is_win_vt100_enabled
+    from quo.output.windows10 import is_win_vt100_enabled
 
     return is_windows() and is_win_vt100_enabled()
 

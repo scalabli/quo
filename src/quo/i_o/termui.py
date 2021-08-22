@@ -202,7 +202,16 @@ def confirm(
         raise Abort()
     return rv
 
-###########################################################################
+##########################################################################
+
+
+
+
+def evoke():
+    session = Elicit()
+
+    session.elicit
+#
 
 def terminalsize():
     """Returns the current size of the terminal as tuple in the form
