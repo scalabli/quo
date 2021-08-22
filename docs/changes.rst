@@ -4,10 +4,15 @@
 Changelog
 =========
 
+Version 2021.5.5
+-----------------
+
+Unreleased
+
 Version 2021.4.5
 ----------------
 
-Unreleased
+2021-08-22
 
 - Phasing out module ``wcwidth`` to reduce the need for external dependencies.
 
