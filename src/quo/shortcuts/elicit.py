@@ -133,7 +133,7 @@ from quo.widgets.toolbars import (
 )
 
 if TYPE_CHECKING:
-    from quo.formatted_text.base import MagicFormattedText
+    from quo.text.core import MagicFormattedText
 
 __all__ = [
     "ElicitSession",
