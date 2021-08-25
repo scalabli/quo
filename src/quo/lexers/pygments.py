@@ -1,5 +1,5 @@
 """
-Adaptor classes for using Pygments lexers within prompt_toolkit.
+Adaptor classes for using Pygments lexers within quo.
 
 This includes syntax synchronization code, so that we don't have to start
 lexing at the beginning of a document, when displaying a very large text.
@@ -131,7 +131,7 @@ class RegexSync(SyntaxSync):
 
 class _TokenCache(Dict[Tuple[str, ...], str]):
     """
-    Cache that converts Pygments tokens into `prompt_toolkit` style objects.
+    Cache that converts Pygments tokens into `quo` style objects.
 
     ``Token.A.B.C`` will be converted into:
     ``class:pygments,pygments.A,pygments.A.B,pygments.A.B.C``
@@ -157,7 +157,7 @@ class PygmentsLexer(Lexer):
 
     Note: Don't forget to also load a Pygments compatible style. E.g.::
 
-        from prompt_toolkit.styles.from_pygments import style_from_pygments_cls
+        from quo.styles.from_pygments import style_from_pygments_cls
         from pygments.styles import get_style_by_name
         style = style_from_pygments_cls(get_style_by_name('monokai'))
 

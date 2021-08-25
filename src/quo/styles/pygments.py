@@ -29,7 +29,7 @@ def style_from_pygments_cls(pygments_style_cls: Type["PygmentsStyle"]) -> Style:
 
     Example::
 
-        from prompt_toolkit.styles.from_pygments import style_from_pygments_cls
+        from quo.styles.from_pygments import style_from_pygments_cls
         from pygments.styles import get_style_by_name
         style = style_from_pygments_cls(get_style_by_name('monokai'))
 
@@ -60,8 +60,7 @@ def pygments_token_to_classname(token: "Token") -> str:
     """
     Turn e.g. `Token.Name.Exception` into `'pygments.name.exception'`.
 
-    (Our Pygments lexer will also turn the tokens that pygments produces in a
-    prompt_toolkit list of fragments that match these styling rules.)
+    (Our Pygments lexer will also turn the tokens that pygments produces in a quo list of fragments that match these styling rules.)
     """
     parts = ("pygments",) + token
     return ".".join(parts).lower()

@@ -121,14 +121,14 @@ class SSHServer(asyncssh.SSHServer):
 
     .. code:: python
 
-        async def interact(ssh_session: PromptToolkitSSHSession) -> None:
+        async def interact(ssh_session: QuoSSHSession) -> None:
             await yes_no_dialog("my title", "my text").run_async()
 
             prompt_session = PromptSession()
             text = await prompt_session.prompt_async("Type something: ")
             print_formatted_text('You said: ', text)
 
-        server = PromptToolkitSSHServer(interact=interact)
+        server = QuoSSHServer(interact=interact)
         loop = get_event_loop()
         loop.run_until_complete(
             asyncssh.create_server(

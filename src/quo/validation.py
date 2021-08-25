@@ -60,7 +60,7 @@ class Validator(metaclass=ABCMeta):
         Validate the input.
         If invalid, this should raise a :class:`.ValidationError`.
 
-        :param document: :class:`~prompt_toolkit.document.Document` instance.
+        :param document: :class:`~quo.document.Document` instance.
         """
         pass
 

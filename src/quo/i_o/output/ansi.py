@@ -23,7 +23,7 @@ class ANSI:
     Characters between ``\\001`` and ``\\002`` are supposed to have a zero width
     when printed, but these are literally sent to the terminal output. This can
     be used for instance, for inserting Final Term prompt commands.  They will
-    be translated into a prompt_toolkit '[ZeroWidthEscape]' fragment.
+    be translated into a quo '[ZeroWidthEscape]' fragment.
     """
 
     def __init__(self, value: str) -> None:

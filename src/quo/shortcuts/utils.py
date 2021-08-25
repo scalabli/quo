@@ -25,7 +25,6 @@ if TYPE_CHECKING:
 __all__ = [
     "print_formatted_text",
     "print_container",
-    "clear",
     "set_title",
     "clear_title",
 ]
@@ -79,7 +78,7 @@ def print_formatted_text(
         print_formatted_text(fragments, style=style)
 
     If you want to print a list of Pygments tokens, wrap it in
-    :class:`~prompt_toolkit.formatted_text.PygmentsTokens` to do the
+    :class:`~quo.text.PygmentsTokens` to do the
     conversion.
 
     :param values: Any kind of printable object, or formatted string.
@@ -185,16 +184,6 @@ def _create_merged_style(
         styles.append(style)
 
     return merge_styles(styles)
-
-
-def clear() -> None:
-    """
-    Clear the screen.
-    """
-    output = get_app_session().output
-    output.erase_screen()
-    output.cursor_goto(0, 0)
-    output.flush()
 
 
 def terminal_title(text: str) -> None:

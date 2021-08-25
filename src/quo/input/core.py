@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 from contextlib import contextmanager
 from typing import Callable, ContextManager, Generator, List
 
-from quo.key_binding import KeyPress
+from quo.keys.key_binding import KeyPress
 
 __all__ = [
     "Input",
@@ -18,8 +18,8 @@ class Input(metaclass=ABCMeta):
     Abstraction for any input.
 
     An instance of this class can be given to the constructor of a
-    :class:`~prompt_toolkit.application.Application` and will also be
-    passed to the :class:`~prompt_toolkit.eventloop.base.EventLoop`.
+    :class:`~quo.application.Application` and will also be
+    passed to the :class:`~quo.eventloop.base.EventLoop`.
     """
 
     @abstractmethod

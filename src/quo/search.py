@@ -2,7 +2,7 @@
 Search operations.
 
 For the key bindings implementation with attached filters, check
-`quo.key_binding.bindings.search`. (Use these for new key bindings
+`quo.keys.key_binding.bindings.search`. (Use these for new key bindings
 instead of calling these function directly.)
 """
 from enum import Enum
@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Dict, Optional
 
 from quo.application.current import get_app
 from quo.filters import FilterOrBool, is_searching, to_filter
-from quo.key_binding.vi_state import InputMode
+from quo.keys.key_binding.vi_state import InputMode
 
 if TYPE_CHECKING:
     from quo.layout.controls import BufferControl, SearchBufferControl

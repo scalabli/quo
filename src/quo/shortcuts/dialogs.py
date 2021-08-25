@@ -9,9 +9,9 @@ from quo.completion import Completer
 from quo.eventloop import run_in_executor_with_context
 from quo.filters import FilterOrBool
 from quo.text import AnyFormattedText
-from quo.key_binding.bindings.focus import focus_next, focus_previous
-from quo.key_binding.defaults import load_key_bindings
-from quo.key_binding.key_bindings import KeyBindings, merge_key_bindings
+from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
+from quo.keys.key_binding.defaults import load_key_bindings
+from quo.keys.key_binding.key_bindings import KeyBindings, merge_key_bindings
 from quo.layout.layout import Layout
 from quo.layout.containers import AnyContainer, HSplit
 from quo.layout.dimension import Dimension as D

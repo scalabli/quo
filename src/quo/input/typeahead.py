@@ -29,12 +29,12 @@ input.
 
 To support type ahead, this module will store all the key strokes that were
 read too early, so that they can be feed into to the next `prompt()` call or to
-the next prompt_toolkit `Application`.
+the next quo `Application`.
 """
 from collections import defaultdict
 from typing import Dict, List
 
-from ..key_binding import KeyPress
+from quo.keys.key_binding import KeyPress
 from .core import Input
 
 __all__ = [

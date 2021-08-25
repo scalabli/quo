@@ -25,8 +25,8 @@ FocusableElement = Union[str, Buffer, UIControl, AnyContainer]
 
 class Layout:
     """
-    The layout for a prompt_toolkit
-    :class:`~prompt_toolkit.application.Application`.
+    The layout for a quo
+    :class:`~quo.application.Application`.
     This also keeps track of which user control is focused.
 
     :param container: The "root" container for the layout.

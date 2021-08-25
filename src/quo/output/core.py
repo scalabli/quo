@@ -18,11 +18,11 @@ __all__ = [
 class Output(metaclass=ABCMeta):
     """
     Base class defining the output interface for a
-    :class:`~prompt_toolkit.renderer.Renderer`.
+    :class:`~quo.renderer.Renderer`.
 
     Actual implementations are
-    :class:`~prompt_toolkit.output.vt100.Vt100_Output` and
-    :class:`~prompt_toolkit.output.win32.Win32Output`.
+    :class:`~quo.output.vt100.Vt100_Output` and
+    :class:`~quo.output.win32.Win32Output`.
     """
 
     stdout: Optional[TextIO] = None
@@ -200,11 +200,11 @@ class Output(metaclass=ABCMeta):
 
         .. note::
 
-            If the `$PROMPT_TOOLKIT_COLOR_DEPTH` environment variable has been
+            If the `$QUO_COLOR_DEPTH` environment variable has been
             set, then `outputs.defaults.create_output` will pass this value to
             the implementation as the default_color_depth, which is returned
             here. (This is not used when the output corresponds to a
-            prompt_toolkit SSH/Telnet session.)
+            quo SSH/Telnet session.)
         """
 
 

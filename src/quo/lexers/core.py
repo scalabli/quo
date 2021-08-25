@@ -1,5 +1,5 @@
 """
-Base classes for prompt_toolkit lexers.
+Base classes for quo lexers.
 """
 from abc import ABCMeta, abstractmethod
 from typing import Callable, Hashable, Optional
@@ -22,7 +22,7 @@ class Lexer(metaclass=ABCMeta):
     @abstractmethod
     def lex_document(self, document: Document) -> Callable[[int], StyleAndTextTuples]:
         """
-        Takes a :class:`~prompt_toolkit.document.Document` and returns a
+        Takes a :class:`~quo.document.Document` and returns a
         callable that takes a line number and returns a list of
         ``(style_str, text)`` tuples for that line.
 

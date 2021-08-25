@@ -210,7 +210,7 @@ def vi_navigation_mode() -> bool:
     """
     Active when the set for Vi navigation key bindings are active.
     """
-    from quo.key_binding.vi_state import InputMode
+    from quo.keys.key_binding.vi_state import InputMode
 
     app = get_app()
 
@@ -231,7 +231,7 @@ def vi_navigation_mode() -> bool:
 
 @Condition
 def vi_insert_mode() -> bool:
-    from quo.key_binding.vi_state import InputMode
+    from quo.keys.key_binding.vi_state import InputMode
 
     app = get_app()
 
@@ -250,7 +250,7 @@ def vi_insert_mode() -> bool:
 
 @Condition
 def vi_insert_multiple_mode() -> bool:
-    from quo.key_binding.vi_state import InputMode
+    from quo.keys.key_binding.vi_state import InputMode
 
     app = get_app()
 
@@ -269,7 +269,7 @@ def vi_insert_multiple_mode() -> bool:
 
 @Condition
 def vi_replace_mode() -> bool:
-    from quo.key_binding.vi_state import InputMode
+    from quo.keys.key_binding.vi_state import InputMode
 
     app = get_app()
 
@@ -288,7 +288,7 @@ def vi_replace_mode() -> bool:
 
 @Condition
 def vi_replace_single_mode() -> bool:
-    from quo.key_binding.vi_state import InputMode
+    from quo.keys.key_binding.vi_state import InputMode
 
     app = get_app()
 

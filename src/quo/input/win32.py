@@ -27,7 +27,7 @@ from typing import (
 
 from quo.eventloop import run_in_executor_with_context
 from quo.eventloop.win32 import create_win32_event, wait_for_handles
-from quo.key_binding.key_processor import KeyPress
+from quo.keys.key_binding.key_processor import KeyPress
 from quo.keys.list import Keys
 from quo.mouse_events import MouseEventType
 from quo.win32_types import (
@@ -346,10 +346,6 @@ class ConsoleInputReader:
         u_char = ev.uChar.UnicodeChar
         ascii_char = u_char.encode("utf-8")
 
-        # NOTE: We don't use `ev.uChar.AsciiChar`. That appears to be latin-1
-        #       encoded. See also:
-        # https://github.com/ipython/ipython/issues/10004
-        # https://github.com/jonathanslenders/python-prompt-toolkit/issues/389
 
         if u_char == "\x00":
             if ev.VirtualKeyCode in self.keycodes:
@@ -517,7 +513,6 @@ class _Win32Handles:
     NOTE: We use this technique, so that we don't have to use the
           `ProactorEventLoop` on Windows and we can wait for things like stdin
           in a `SelectorEventLoop`. This is important, because our inputhook
-          mechanism (used by IPython), only works with the `SelectorEventLoop`.
     """
 
     def __init__(self) -> None:
@@ -597,7 +592,7 @@ def attach_win32_input(input: _Win32InputBase, callback: Callable[[], None]):
     """
     Context manager that makes this input active in the current event loop.
 
-    :param input: :class:`~prompt_toolkit.input.Input` object.
+    :param input: :class:`~quo.input.Input` object.
     :param input_ready_callback: Called when the input is ready to read.
     """
     win32_handles = input.win32_handles

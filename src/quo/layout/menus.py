@@ -29,7 +29,7 @@ from quo.text import (
     fragment_list_width,
     to_formatted_text,
 )
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.utils import explode_text_fragments
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils import get_width
@@ -40,7 +40,7 @@ from .dimension import Dimension
 from .margins import ScrollbarMargin
 
 if TYPE_CHECKING:
-    from quo.key_binding.key_bindings import KeyBindings
+    from quo.keys.key_binding.key_bindings import KeyBindings
 
     NotImplementedOrNone = object
 
@@ -610,7 +610,7 @@ class MultiColumnCompletionMenuControl(UIControl):
 class MultiColumnCompletionsMenu(HSplit):
     """
     Container that displays the completions in several columns.
-    When `show_meta` (a :class:`~prompt_toolkit.filters.Filter`) evaluates
+    When `show_meta` (a :class:`~quo.filters.Filter`) evaluates
     to True, it shows the meta information at the bottom.
     """
 

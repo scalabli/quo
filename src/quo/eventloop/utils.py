@@ -45,7 +45,7 @@ def call_soon_threadsafe(
     the method.
 
     Asyncio runs tasks in first-in-first-out. However, this is not what we
-    want for the render function of the prompt_toolkit UI. Rendering is
+    want for the render function of the quo UI. Rendering is
     expensive, but since the UI is invalidated very often, in some situations
     we render the UI too often, so much that the rendering CPU usage slows down
     the rest of the processing of the application.  (Pymux is an example where

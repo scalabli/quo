@@ -65,7 +65,7 @@ __all__ = [
 class Processor(metaclass=ABCMeta):
     """
     Manipulate the fragments for a given line in a
-    :class:`~prompt_toolkit.layout.controls.BufferControl`.
+    :class:`~quo.layout.controls.BufferControl`.
     """
 
     @abstractmethod
@@ -787,7 +787,7 @@ class ReverseSearchProcessor(Processor):
     def _get_main_buffer(
         self, buffer_control: "BufferControl"
     ) -> Optional["BufferControl"]:
-        from prompt_toolkit.layout.controls import BufferControl
+        from quo.layout.controls import BufferControl
 
         prev_control = get_app().layout.search_target_buffer_control
         if (
@@ -800,7 +800,7 @@ class ReverseSearchProcessor(Processor):
     def _content(
         self, main_control: "BufferControl", ti: TransformationInput
     ) -> "UIContent":
-        from prompt_toolkit.layout.controls import BufferControl
+        from quo.layout.controls import BufferControl
 
         # Emulate the BufferControl through which we are searching.
         # For this we filter out some of the input processors.

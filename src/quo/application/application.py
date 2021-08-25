@@ -57,8 +57,8 @@ from quo.key_binding.bindings.page_navigation import (
     load_page_navigation_bindings,
 )
 from quo.key_binding.defaults import load_key_bindings
-from quo.key_binding.emacs_state import EmacsState
-from quo.key_binding.key_bindings import (
+from quo.keys.key_binding.emacs_state import EmacsState
+from quo.keys.key_binding.key_bindings import (
     Binding,
     ConditionalKeyBindings,
     GlobalOnlyKeyBindings,
@@ -67,8 +67,8 @@ from quo.key_binding.key_bindings import (
     KeysTuple,
     merge_key_bindings,
 )
-from quo.key_binding.key_processor import KeyPressEvent, KeyProcessor
-from quo.key_binding.vi_state import ViState
+from quo.keys.key_binding.key_processor import KeyPressEvent, KeyProcessor
+from quo.keys.key_binding.vi_state import ViState
 from quo.keys.list import Keys
 from quo.layout.containers import Container, Window
 from quo.layout.controls import BufferControl, UIControl
@@ -116,11 +116,11 @@ class Application(Generic[_AppResult]):
     The main Application class!
     This glues everything together.
 
-    :param layout: A :class:`~prompt_toolkit.layout.Layout` instance.
+    :param layout: A :class:`~quo.layout.Layout` instance.
     :param key_bindings:
-        :class:`~prompt_toolkit.key_binding.KeyBindingsBase` instance for
+        :class:`~quo.keys.key_binding.KeyBindingsBase` instance for
         the key bindings.
-    :param clipboard: :class:`~prompt_toolkit.clipboard.Clipboard` to use.
+    :param clipboard: :class:`~quo.clipboard.Clipboard` to use.
     :param full_screen: When True, run the application on the alternate screen buffer.
     :param color_depth: Any :class:`~.ColorDepth` value, a callable that
         returns a :class:`~.ColorDepth` or `None` for default.
@@ -153,10 +153,10 @@ class Application(Generic[_AppResult]):
 
     Filters:
 
-    :param mouse_support: (:class:`~prompt_toolkit.filters.Filter` or
+    :param mouse_support: (:class:`~quo.filters.Filter` or
         boolean). When True, enable mouse support.
-    :param paste_mode: :class:`~prompt_toolkit.filters.Filter` or boolean.
-    :param editing_mode: :class:`~prompt_toolkit.enums.EditingMode`.
+    :param paste_mode: :class:`~quo.filters.Filter` or boolean.
+    :param editing_mode: :class:`~quo.enums.EditingMode`.
 
     :param enable_page_navigation_bindings: When `True`, enable the page
         navigation key bindings. These include both Emacs and Vi bindings like
@@ -166,7 +166,7 @@ class Application(Generic[_AppResult]):
         enabled if `full_screen` is set.
 
     Callbacks (all of these should accept an
-    :class:`~prompt_toolkit.application.Application` object as input.)
+    :class:`~quo.application.Application` object as input.)
 
     :param on_reset: Called during reset.
     :param on_invalidate: Called when the UI has been invalidated.
@@ -179,8 +179,8 @@ class Application(Generic[_AppResult]):
     applications running at the same time, you have to create a separate
     `AppSession` using a `with create_app_session():` block.
 
-    :param input: :class:`~prompt_toolkit.input.Input` instance.
-    :param output: :class:`~prompt_toolkit.output.Output` instance. (Probably
+    :param input: :class:`~quo.input.Input` instance.
+    :param output: :class:`~quo.output.Output` instance. (Probably
                    Vt100_Output or Win32Output.)
 
     Usage:
@@ -454,9 +454,7 @@ class Application(Generic[_AppResult]):
         Thread safe way of sending a repaint trigger to the input event loop.
         """
         if not self._is_running:
-            # Don't schedule a redraw if we're not running.
-            # Otherwise, `get_event_loop()` in `call_soon_threadsafe` can fail.
-            # See: https://github.com/dbcli/mycli/issues/797
+
             return
 
         # `invalidate()` called if we don't have a loop yet (not running?), or
@@ -633,13 +631,13 @@ class Application(Generic[_AppResult]):
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
-        Run the prompt_toolkit :class:`~prompt_toolkit.application.Application`
-        until :meth:`~prompt_toolkit.application.Application.exit` has been
+        Run the quo :class:`~quo.application.Application`
+        until :meth:`~quo.application.Application.exit` has been
         called. Return the value that was passed to
-        :meth:`~prompt_toolkit.application.Application.exit`.
+        :meth:`~quo.application.Application.exit`.
 
         This is the main entry point for a prompt_toolkit
-        :class:`~prompt_toolkit.application.Application` and usually the only
+        :class:`~quo.application.Application` and usually the only
         place where the event loop is actually running.
 
         :param pre_run: Optional callable, which is called right after the

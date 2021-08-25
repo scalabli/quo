@@ -17,7 +17,7 @@ from typing import (
     Union,
 )
 
-from ..key_binding import KeyPress
+from quo.keys.key_binding import KeyPress
 from .core import Input
 from .posix_utils import PosixStdinReader
 from .vt100_parser import Vt100Parser
@@ -161,7 +161,7 @@ def _attached_input(
         """Wrapper around the callback that already removes the reader when
         the input is closed. Otherwise, we keep continuously calling this
         callback, until we leave the context manager (which can happen a bit
-        later). This fixes issues when piping /dev/null into a prompt_toolkit
+        later). This fixes issues when piping /dev/null into a quo
         application."""
         if input.closed:
             loop.remove_reader(fd)
@@ -210,20 +210,6 @@ class raw_mode:
     We ignore errors when executing `tcgetattr` fails.
     """
 
-    # There are several reasons for ignoring errors:
-    # 1. To avoid the "Inappropriate ioctl for device" crash if somebody would
-    #    execute this code (In a Python REPL, for instance):
-    #
-    #         import os; f = open(os.devnull); os.dup2(f.fileno(), 0)
-    #
-    #    The result is that the eventloop will stop correctly, because it has
-    #    to logic to quit when stdin is closed. However, we should not fail at
-    #    this point. See:
-    #      https://github.com/jonathanslenders/python-prompt-toolkit/pull/393
-    #      https://github.com/jonathanslenders/python-prompt-toolkit/issues/392
-
-    # 2. Related, when stdin is an SSH pipe, and no full terminal was allocated.
-    #    See: https://github.com/jonathanslenders/python-prompt-toolkit/pull/165
     def __init__(self, fileno: int) -> None:
         self.fileno = fileno
         self.attrs_before: Optional[List[Union[int, List[Union[bytes, int]]]]]

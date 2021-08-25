@@ -13,7 +13,6 @@ from .elicit import CompleteStyle, Elicit, elicit
 #create_confirm_session,
  
 from .utils import (
-        clear,
         clear_title,
         container,
         print_formatted_text,

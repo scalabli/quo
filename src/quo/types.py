@@ -1,6 +1,3 @@
-#
-#
-#
 import os
 import stat
 from datetime import datetime
@@ -12,7 +9,6 @@ from .accordance import get_strerror
 from .accordance import openstream
 from quo.outliers import BadParameter
 from quo.expediency.vitals import LazyFile
-#from quo.expediency.utilities import safecall
 from typing import Any, Callable, TypeVar
 
 DecoratedCallable = TypeVar("DecoratedCallable", bound=Callable[..., Any])

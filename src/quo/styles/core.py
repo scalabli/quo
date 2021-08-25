@@ -82,10 +82,6 @@ ANSI_COLOR_NAMES = [
 ]
 
 
-# People don't use the same ANSI color names everywhere. In prompt_toolkit 1.0
-# we used some unconventional names (which were contributed like that to
-# Pygments). This is fixed now, but we still support the old names.
-
 # The table below maps the old aliases to the current names.
 ANSI_COLOR_NAMES_ALIASES: Dict[str, str] = {
     "ansidarkgray": "ansibrightblack",
@@ -105,7 +101,7 @@ assert not (set(ANSI_COLOR_NAMES_ALIASES.keys()) & set(ANSI_COLOR_NAMES))
 
 class BaseStyle(metaclass=ABCMeta):
     """
-    Abstract base class for prompt_toolkit styles.
+    Abstract base class for quo  styles.
     """
 
     @abstractmethod

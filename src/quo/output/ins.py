@@ -68,21 +68,21 @@ from quo.text import (
 )
 from quo.history import History, InMemoryHistory
 from quo.input.core import Input
-from quo.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
-from quo.key_binding.bindings.completion import (
+from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
+from quo.keys.key_binding.bindings.completion import (
     display_completions_like_readline,
 )
-from quo.key_binding.bindings.open_in_editor import (
+from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
-from quo.key_binding.key_bindings import (
+from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
     KeyBindings,
     KeyBindingsBase,
     merge_key_bindings,
 )
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
 from quo.layout.containers import Float, FloatContainer, HSplit, Window
 from quo.layout.containers import ConditionalContainer, WindowAlign
@@ -243,7 +243,7 @@ class PromptSession(Generic[_T]):
 
     :param message: Plain text or formatted text to be shown before the prompt.
         This can also be a callable that returns formatted text.
-    :param multiline: `bool` or :class:`~prompt_toolkit.filters.Filter`.
+    :param multiline: `bool` or :class:`~quo.filters.Filter`.
         When True, prefer a layout that is more adapted for multiline input.
         Text after newlines is automatically indented, and search/arg input is
         shown below the input, instead of replacing the prompt.
@@ -257,40 +257,40 @@ class PromptSession(Generic[_T]):
         :class:`~prompt_toolkit.filters.Filter`. Enable autocompletion while
         typing.
     :param validate_while_typing: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Enable input validation while
+        :class:`~quo.filters.Filter`. Enable input validation while
         typing.
     :param enable_history_search: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Enable up-arrow parting
+        :class:`~quo.filters.Filter`. Enable up-arrow parting
         string matching.
     :param search_ignore_case:
-        :class:`~prompt_toolkit.filters.Filter`. Search case insensitive.
-    :param lexer: :class:`~prompt_toolkit.lexers.Lexer` to be used for the
+        :class:`~quo.filters.Filter`. Search case insensitive.
+    :param lexer: :class:`~quo.lexers.Lexer` to be used for the
         syntax highlighting.
-    :param validator: :class:`~prompt_toolkit.validation.Validator` instance
+    :param validator: :class:`~quo.validation.Validator` instance
         for input validation.
-    :param completer: :class:`~prompt_toolkit.completion.Completer` instance
+    :param completer: :class:`~quo.completion.Completer` instance
         for input completion.
     :param complete_in_thread: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Run the completer code in a
+        :class:`~quo.filters.Filter`. Run the completer code in a
         background thread in order to avoid blocking the user interface.
         For ``CompleteStyle.READLINE_LIKE``, this setting has no effect. There
         we always run the completions in the main thread.
     :param reserve_space_for_menu: Space to be reserved for displaying the menu.
         (0 means that no space needs to be reserved.)
-    :param auto_suggest: :class:`~prompt_toolkit.auto_suggest.AutoSuggest`
+    :param auto_suggest: :class:`~quo.auto_suggest.AutoSuggest`
         instance for input suggestions.
     :param style: :class:`.Style` instance for the color scheme.
     :param include_default_pygments_style: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Tell whether the default
+        :class:`~quo.filters.Filter`. Tell whether the default
         styling for Pygments lexers has to be included. By default, this is
         true, but it is recommended to be disabled if another Pygments style is
         passed as the `style` argument, otherwise, two Pygments styles will be
         merged.
     :param style_transformation:
-        :class:`~prompt_toolkit.style.StyleTransformation` instance.
+        :class:`~quo.style.StyleTransformation` instance.
     :param swap_light_and_dark_colors: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. When enabled, apply
-        :class:`~prompt_toolkit.style.SwapLightAndDarkStyleTransformation`.
+        :class:`~quo.filters.Filter`. When enabled, apply
+        :class:`~quo.style.SwapLightAndDarkStyleTransformation`.
         This is useful for switching between dark and light terminal
         backgrounds.
     :param enable_system_prompt: `bool` or
@@ -299,11 +299,11 @@ class PromptSession(Generic[_T]):
     :param enable_suspend: `bool` or :class:`~prompt_toolkit.filters.Filter`.
         Enable Control-Z style suspension.
     :param enable_open_in_editor: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Pressing 'v' in Vi mode or
+        :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
         C-X C-E in emacs mode will open an external editor.
-    :param history: :class:`~prompt_toolkit.history.History` instance.
-    :param clipboard: :class:`~prompt_toolkit.clipboard.Clipboard` instance.
-        (e.g. :class:`~prompt_toolkit.clipboard.InMemoryClipboard`)
+    :param history: :class:`~quo.history.History` instance.
+    :param clipboard: :class:`~quo.clipboard.Clipboard` instance.
+        (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
     :param rprompt: Text or formatted text to be displayed on the right side.
         This can also be a callable that returns (formatted) text.
     :param bottom_toolbar: Formatted text or callable which is supposed to
@@ -315,7 +315,7 @@ class PromptSession(Generic[_T]):
         `prompt_width` spaces will be used.
     :param complete_style: ``CompleteStyle.COLUMN``,
         ``CompleteStyle.MULTI_COLUMN`` or ``CompleteStyle.READLINE_LIKE``.
-    :param mouse_support: `bool` or :class:`~prompt_toolkit.filters.Filter`
+    :param mouse_support: `bool` or :class:`~quo.filters.Filter`
         to enable mouse support.
     :param placeholder: Text to be displayed when no input has been given
         yet. Unlike the `default` parameter, this won't be returned as part of

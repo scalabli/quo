@@ -18,9 +18,9 @@ stuff to do. There are two ways to detect when to return:
   becomes readable. (But don't read from it.)
 
   Note that this is not the same as checking for `sys.stdin.fileno()`. The
-  eventloop of prompt-toolkit allows thread-based executors, for example for
+  eventloop of quo allows thread-based executors, for example for
   asynchronous autocompletion. When the completion for instance is ready, we
-  also want prompt-toolkit to gain control again in order to display that.
+  also want quo to gain control again in order to display that.
 """
 import asyncio
 import os

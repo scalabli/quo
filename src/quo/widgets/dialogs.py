@@ -5,8 +5,8 @@ from typing import Optional, Sequence, Union
 
 from quo.filters import has_completions, has_focus
 from quo.text import AnyFormattedText
-from quo.key_binding.bindings.focus import focus_next, focus_previous
-from quo.key_binding.key_bindings import KeyBindings
+from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
+from quo.keys.key_binding.key_bindings import KeyBindings
 from quo.layout.containers import (
     AnyContainer,
     DynamicContainer,

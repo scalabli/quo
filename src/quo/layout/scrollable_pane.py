@@ -2,7 +2,7 @@ from typing import Dict, List, Optional
 
 from quo.data_structures import Point
 from quo.filters import FilterOrBool, to_filter
-from quo.key_binding import KeyBindingsBase
+from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent
 
 from .containers import Container, ScrollOffsets
@@ -123,7 +123,7 @@ class ScrollablePane(Container):
     ) -> None:
         """
         Render scrollable pane content.
-
+<F11>
         This works by rendering on an off-screen canvas, and copying over the
         visible region.
         """

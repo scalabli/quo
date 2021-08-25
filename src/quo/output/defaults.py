@@ -29,8 +29,8 @@ def create_output(
         consumed by something other then a terminal, so this is a reasonable
         default.)
     """
-    # Consider TERM, PROMPT_TOOLKIT_BELL, and PROMPT_TOOLKIT_COLOR_DEPTH
-    # environment variables. Notice that PROMPT_TOOLKIT_COLOR_DEPTH value is
+    # Consider TERM, QUO_BELL, and QUO_COLOR_DEPTH
+    # environment variables. Notice that QUO_COLOR_DEPTH value is
     # the default that's used if the Application doesn't override it.
     term_from_env = get_term_environment_variable()
     bell_from_env = get_bell_environment_variable()

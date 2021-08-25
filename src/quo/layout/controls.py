@@ -48,7 +48,7 @@ from .processors import (
 )
 
 if TYPE_CHECKING:
-    from quo.key_binding.key_bindings import KeyBindingsBase
+    from quo.keys.key_binding.key_bindings import KeyBindingsBase
     from quo.utils import Event
 
     # The only two return values for a mouse hander are `None` and
@@ -269,11 +269,11 @@ class UIContent:
 class FormattedTextControl(UIControl):
     """
     Control that displays formatted text. This can be either plain text, an
-    :class:`~prompt_toolkit.formatted_text.HTML` object an
-    :class:`~prompt_toolkit.formatted_text.ANSI` object, a list of ``(style_str,
+    :class:`~quo.text.HTML` object an
+    :class:`~quo.text.ANSI` object, a list of ``(style_str,
     text)`` tuples or a callable that takes no argument and returns one of
     those, depending on how you prefer to do the formatting. See
-    ``prompt_toolkit.layout.formatted_text`` for more information.
+    ``quo.layout.formatted_text`` for more information.
 
     (It's mostly optimized for rather small widgets, like toolbars, menus, etc...)
 
@@ -302,8 +302,8 @@ class FormattedTextControl(UIControl):
 
     :param text: Text or formatted text to be displayed.
     :param style: Style string applied to the content. (If you want to style
-        the whole :class:`~prompt_toolkit.layout.Window`, pass the style to the
-        :class:`~prompt_toolkit.layout.Window` instead.)
+        the whole :class:`~quo.layout.Window`, pass the style to the
+        :class:`~quo.layout.Window` instead.)
     :param key_bindings: a :class:`.KeyBindings` object.
     :param get_cursor_position: A callable that returns the cursor position as
         a `Point` instance.
@@ -446,7 +446,7 @@ class FormattedTextControl(UIControl):
         (When the fragment list contained mouse handlers and the user clicked on
         on any of these, the matching handler is called. This handler can still
         return `NotImplemented` in case we want the
-        :class:`~prompt_toolkit.layout.Window` to handle this particular
+        :class:`~quo.layout.Window` to handle this particular
         event.)
         """
         if self._fragments:
@@ -489,7 +489,7 @@ class DummyControl(UIControl):
     """
     A dummy control object that doesn't paint any content.
 
-    Useful for filling a :class:`~prompt_toolkit.layout.Window`. (The
+    Useful for filling a :class:`~quo.layout.Window`. (The
     `fragment` and `char` attributes of the `Window` class can be used to
     define the filling.)
     """
@@ -522,7 +522,7 @@ class BufferControl(UIControl):
 
     :param buffer: The :class:`.Buffer` object to be displayed.
     :param input_processors: A list of
-        :class:`~prompt_toolkit.layout.processors.Processor` objects.
+        :class:`~quo.layout.processors.Processor` objects.
     :param include_default_input_processors: When True, include the default
         processors for highlighting of selection, search and displaying of
         multiple cursors.

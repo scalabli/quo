@@ -6,12 +6,12 @@ This provides a UI for a line input, similar to GNU Readline, libedit and
 linenoise.
 
 Either call the `elicit` function for every line input. Or create an instance
-of the :class:`.ElicitSession` class and call the `elicit` method from that
+of the :class:`.Elicit` class and call the `elicit` method from that
 class. In the second case, we'll have a 'session' that keeps all the state like
 the history in between several calls.
 
 There is a lot of overlap between the arguments taken by the `elicit` function
-and the `ElicitSession` (like `completer`, `style`, etcetera). There we have
+and the `Elicit` (like `completer`, `style`, etcetera). There we have
 the freedom to decide which settings we want for the whole 'session', and which
 we want for an individual `elicit`.
 
@@ -21,7 +21,7 @@ Example::
         result = elicit('Say something: ')
 
         # Using a 'session'.
-        s = ElicitSession()
+        s = Elicit()
         result = s.elicit('Say something: ')
 """
 from asyncio import get_event_loop
@@ -68,21 +68,21 @@ from quo.text import (
 )
 from quo.history import History, InMemoryHistory
 from quo.input.core import Input
-from quo.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
-from quo.key_binding.bindings.completion import (
+from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
+from quo.keys.key_binding.bindings.completion import (
     display_completions_like_readline,
 )
-from quo.key_binding.bindings.open_in_editor import (
+from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
-from quo.key_binding.key_bindings import (
+from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
     KeyBindings,
     KeyBindingsBase,
     merge_key_bindings,
 )
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
 from quo.layout.containers import Float, FloatContainer, HSplit, Window
 from quo.layout.containers import ConditionalContainer, WindowAlign

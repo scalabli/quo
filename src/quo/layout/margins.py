@@ -1,5 +1,5 @@
 """
-Margin implementations for a :class:`~prompt_toolkit.layout.containers.Window`.
+Margin implementations for a :class:`~quo.layout.containers.Window`.
 """
 from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, Callable, Optional
@@ -51,14 +51,14 @@ class Margin(metaclass=ABCMeta):
         This should return a list of (style_str, text) tuples.
 
         :param window_render_info:
-            :class:`~prompt_toolkit.layout.containers.WindowRenderInfo`
+            :class:`~quo.layout.containers.WindowRenderInfo`
             instance, generated after rendering and copying the visible part of
-            the :class:`~prompt_toolkit.layout.controls.UIControl` into the
-            :class:`~prompt_toolkit.layout.containers.Window`.
+            the :class:`~quo.layout.controls.UIControl` into the
+            :class:`~quo.layout.containers.Window`.
         :param width: The width that's available for this margin. (As reported
             by :meth:`.get_width`.)
         :param height: The height that's available for this margin. (The height
-            of the :class:`~prompt_toolkit.layout.containers.Window`.)
+            of the :class:`~quo.layout.containers.Window`.)
         """
         return []
 

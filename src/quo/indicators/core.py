@@ -32,8 +32,8 @@ from quo.text import (
     to_formatted_text,
 )
 from quo.input import Input
-from quo.key_binding import KeyBindings
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding import KeyBindings
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
 from quo.layout.containers import VSplit
@@ -100,13 +100,13 @@ class ProgressBar:
     :param formatters: List of :class:`.Formatter` instances.
     :param bottom_toolbar: Text to be displayed in the bottom toolbar. This
         can be a callable or formatted text.
-    :param style: :class:`prompt_toolkit.styles.BaseStyle` instance.
+    :param style: :class:`quo.styles.BaseStyle` instance.
     :param key_bindings: :class:`.KeyBindings` instance.
     :param file: The file object used for rendering, by default `sys.stderr` is used.
 
-    :param color_depth: `prompt_toolkit` `ColorDepth` instance.
-    :param output: :class:`~prompt_toolkit.output.Output` instance.
-    :param input: :class:`~prompt_toolkit.input.Input` instance.
+    :param color_depth: `quo` `ColorDepth` instance.
+    :param output: :class:`~quo.output.Output` instance.
+    :param input: :class:`~quo.input.Input` instance.
     """
 
     def __init__(

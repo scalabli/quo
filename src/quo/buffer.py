@@ -178,8 +178,8 @@ class Buffer:
     current input line and implements all text manipulations on top of it. It
     also implements the history, undo stack and the completion state.
 
-    :param completer: :class:`~prompt_toolkit.completion.Completer` instance.
-    :param history: :class:`~prompt_toolkit.history.History` instance.
+    :param completer: :class:`~quo.completion.Completer` instance.
+    :param history: :class:`~quo.history.History` instance.
     :param tempfile_suffix: The tempfile suffix (extension) to be used for the
         "open in editor" function. For a Python REPL, this would be ".py", so
         that the editor knows the syntax highlighting to use. This can also be
@@ -210,21 +210,21 @@ class Buffer:
 
     Filters:
 
-    :param complete_while_typing: :class:`~prompt_toolkit.filters.Filter`
+    :param complete_while_typing: :class:`~quo.filters.Filter`
         or `bool`. Decide whether or not to do asynchronous autocompleting while
         typing.
-    :param validate_while_typing: :class:`~prompt_toolkit.filters.Filter`
+    :param validate_while_typing: :class:`~quo.filters.Filter`
         or `bool`. Decide whether or not to do asynchronous validation while
         typing.
-    :param enable_history_search: :class:`~prompt_toolkit.filters.Filter` or
+    :param enable_history_search: :class:`~quo.filters.Filter` or
         `bool` to indicate when up-arrow partial string matching is enabled. It
         is advised to not enable this at the same time as
         `complete_while_typing`, because when there is an autocompletion found,
         the up arrows usually browse through the completions, rather than
         through the history.
-    :param read_only: :class:`~prompt_toolkit.filters.Filter`. When True,
+    :param read_only: :class:`~quo.filters.Filter`. When True,
         changes will not be allowed.
-    :param multiline: :class:`~prompt_toolkit.filters.Filter` or `bool`. When
+    :param multiline: :class:`~quo.filters.Filter` or `bool`. When
         not set, pressing `Enter` will call the `accept_handler`.  Otherwise,
         pressing `Esc-Enter` is required.
     """
@@ -573,7 +573,7 @@ class Buffer:
     @property
     def document(self) -> Document:
         """
-        Return :class:`~prompt_toolkit.document.Document` instance from the
+        Return :class:`~quo.document.Document` instance from the
         current text, cursor position and selection state.
         """
         return self._document_cache[
