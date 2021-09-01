@@ -1,4 +1,4 @@
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPressEvent
 
 __all__ = [
     "focus_next",

@@ -33,14 +33,14 @@ from quo.filters.app import (
     vi_waiting_for_text_object_mode,
 )
 from quo.input.vt100_parser import Vt100Parser
-from quo.key_binding.digraphs import DIGRAPHS
-from quo.key_binding.key_processor import KeyPress, KeyPressEvent
-from quo.key_binding.vi_state import CharacterFind, InputMode
+from quo.keys.key_binding.digraphs import DIGRAPHS
+from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
+from quo.keys.key_binding.vi_state import CharacterFind, InputMode
 from quo.keys.list import Keys
 from quo.search import SearchDirection
 from quo.selection import PasteMode, SelectionState, SelectionType
 
-from ..key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
+from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
 from .named_commands import get_by_name
 
 __all__ = [

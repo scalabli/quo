@@ -1,7 +1,7 @@
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
 
-from ..key_bindings import KeyBindings
+from quo.keys.key_binding.key_bindings import KeyBindings
 
 __all__ = [
     "load_cpr_bindings",

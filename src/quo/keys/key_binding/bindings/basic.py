@@ -8,10 +8,10 @@ from quo.filters import (
     is_multiline,
     vi_insert_mode,
 )
-from quo.key_binding.key_processor import KeyPress, KeyPressEvent
+from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.list import Keys
 
-from ..key_bindings import KeyBindings
+from quo.keys.key_binding.key_bindings import KeyBindings
 from .named_commands import get_by_name
 
 __all__ = [
@@ -228,10 +228,6 @@ def load_basic_bindings() -> KeyBindings:
         Pasting from clipboard.
         """
         data = event.data
-
-        # Be sure to use \n as line ending.
-        # Some terminals (Like iTerm2) seem to paste \r\n line endings in a
-        # bracketed paste. See: https://github.com/ipython/ipython/issues/9737
         data = data.replace("\r\n", "\n")
         data = data.replace("\r", "\n")
 

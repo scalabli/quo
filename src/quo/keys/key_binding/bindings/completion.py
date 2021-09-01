@@ -12,14 +12,14 @@ from quo.completion import (
     get_common_complete_suffix,
 )
 from quo.text import StyleAndTextTuples
-from quo.key_binding.key_bindings import KeyBindings
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_bindings import KeyBindings
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
 from quo.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
     from quo.application import Application
-    from quo.shortcuts import PromptSession
+    from quo.shortcuts import Elicit
 
 __all__ = [
     "generate_completions",
@@ -87,8 +87,8 @@ def _display_completions_like_readline(
     This will ask for a confirmation if there are too many completions to fit
     on a single page and provide a paginator to walk through them.
     """
-    from prompt_toolkit.formatted_text import to_formatted_text
-    from prompt_toolkit.shortcuts.prompt import create_confirm_session
+    from quo.text import to_formatted_text
+    from quo.shortcuts.elicit import create_confirm_session
 
     # Get terminal dimensions.
     term_size = app.output.get_size()
@@ -171,11 +171,11 @@ def _display_completions_like_readline(
     return app.create_background_task(run_compl())
 
 
-def _create_more_session(message: str = "--MORE--") -> "PromptSession[bool]":
+def _create_more_session(message: str = "--MORE--") -> "Elicit[bool]":
     """
-    Create a `PromptSession` object for displaying the "--MORE--".
+    Create an `Elicit` object for displaying the "--MORE--".
     """
-    from prompt_toolkit.shortcuts import PromptSession
+    from quo.shortcuts import Elicit
 
     bindings = KeyBindings()
 
@@ -200,4 +200,4 @@ def _create_more_session(message: str = "--MORE--") -> "PromptSession[bool]":
     def _ignore(event: E) -> None:
         "Disable inserting of text."
 
-    return PromptSession(message, key_bindings=bindings, erase_when_done=True)
+    return Elicit(message, key_bindings=bindings, erase_when_done=True)

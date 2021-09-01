@@ -16,12 +16,12 @@ from quo.filters import (
     shift_selection_mode,
     vi_search_direction_reversed,
 )
-from quo.key_binding.key_bindings import Binding
-from quo.key_binding.key_processor import KeyPressEvent
+from quo.keys.key_binding.key_bindings import Binding
+from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
 from quo.selection import SelectionType
 
-from ..key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
+from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
 from .named_commands import get_by_name
 
 __all__ = [

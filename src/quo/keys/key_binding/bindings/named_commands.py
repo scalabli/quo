@@ -7,8 +7,8 @@ from typing import Callable, Dict, TypeVar, Union, cast
 
 from quo.document import Document
 from quo.enums import EditingMode
-from quo.key_binding.key_bindings import Binding, key_binding
-from quo.key_binding.key_processor import KeyPress, KeyPressEvent
+from quo.keys.key_binding.key_bindings import Binding, key_binding
+from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.list import Keys
 from quo.layout.controls import BufferControl
 from quo.search import SearchDirection
