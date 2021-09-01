@@ -1,7 +1,7 @@
 # *** encoding: utf-8 ***
 """
 An :class:`~.KeyProcessor` receives callbacks for the keystrokes parsed from
-the input in the :class:`~prompt_toolkit.inputstream.InputStream` instance.
+the input in the :class:`~quo.inputstream.InputStream` instance.
 
 The `KeyProcessor` will according to the implemented keybindings call the
 correct callbacks when new key presses are feed through `feed`.
@@ -17,7 +17,7 @@ from quo.filters.app import vi_navigation_mode
 from quo.keys.list import Keys
 from quo.utils import Event
 
-from .key_bindings import Binding, KeyBindingsBase
+from quo.keys.key_binding.key_bindings import Binding, KeyBindingsBase
 
 if TYPE_CHECKING:
     from quo.application import Application

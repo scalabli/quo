@@ -23,7 +23,7 @@ from quo.text.core import StyleAndTextTuples
 from quo.text.utils import split_lines
 from quo.styles.pygments import pygments_token_to_classname
 
-from .base import Lexer, SimpleLexer
+from .core import Lexer, SimpleLexer
 
 if TYPE_CHECKING:
     from pygments.lexer import Lexer as PygmentsLexerCls

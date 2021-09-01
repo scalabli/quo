@@ -53,10 +53,10 @@ from quo.filters import Condition, Filter, FilterOrBool, to_filter
 from quo.text import AnyFormattedText
 from quo.input.core import Input
 from quo.input.typeahead import get_typeahead, store_typeahead
-from quo.key_binding.bindings.page_navigation import (
+from quo.keys.key_binding.bindings.page_navigation import (
     load_page_navigation_bindings,
 )
-from quo.key_binding.defaults import load_key_bindings
+from quo.keys.key_binding.defaults import load_key_bindings
 from quo.keys.key_binding.emacs_state import EmacsState
 from quo.keys.key_binding.key_bindings import (
     Binding,
