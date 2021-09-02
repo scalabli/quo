@@ -2,7 +2,7 @@
 
 import os
 
-import cloup
+import quo
 
 
 PROJ_DIR = os.path.abspath(os.path.join(__file__, '..', '..'))
@@ -135,7 +135,7 @@ htmlhelp_basename = 'cloupdoc'
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'cloup.tex',
+    (master_doc, 'quo.tex',
      'cloup Documentation',
      'Gianluca Gippetto', 'manual'),
 ]
