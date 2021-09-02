@@ -78,7 +78,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output ---------------------------------------------------
-html_title = f"cloup v{version}"
+#html_title = f"cloup v{version}"
+html_title = f"quo"
 html_theme = "furo"
 html_theme_options = {
     "light_logo": "logo.svg",
