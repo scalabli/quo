@@ -110,7 +110,7 @@ def _make_command(f, name, attrs, cls):
 def command(name=None, cls=None, **attrs):
     r"""Creates a new :class:`Command` and uses the decorated function as
     callback.  This will also automatically attach all decorated
-    :func:`app`\s and :func:`argument`\s as parameters to the command.
+    :func:`app`\s and :func:`arg`\s as parameters to the command.
 
     The name of the command defaults to the name of the function with
     underscores replaced by dashes.  If you want to change that, you can

@@ -22,6 +22,6 @@ def autohelp(*param_decls, **kwargs):
     kwargs.setdefault("is_flag", True)
     kwargs.setdefault("expose_value", False)
     kwargs.setdefault("is_eager", True)
-    kwargs.setdefault("help", "Show this message and exit.")
+    kwargs.setdefault("help", "Help page.Check the documentation for further mitigation steps")
     kwargs["callback"] = callback
     return app(*param_decls, **kwargs)

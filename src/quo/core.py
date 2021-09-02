@@ -1020,7 +1020,7 @@ class Command(BaseCommand):
         help=None,
         epilog=None,
         short_help=None,
-        apps_metavar="[OPTIONS]",
+        apps_metavar="[HELP PAGE]",
         add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
@@ -1120,7 +1120,7 @@ class Command(BaseCommand):
             is_eager=True,
             expose_value=False,
             callback=show_help,
-            help="Show this message and exit.",
+            help="Check the documentation for more mitigation steps.",
         )
 
     def make_parser(self, clime):
@@ -1686,7 +1686,7 @@ class CommandCollection(MultiCommand):
 
 class Parameter:
     r"""A parameter to a command comes in two versions: they are either
-    :class:`App`\s or :class:`Argument`\s.  Other subclasses are currently
+    :class:`App`\s or :class:`Arg`\s.  Other subclasses are currently
     not supported by design as some of the internals for parsing are
     intentionally not finalized.
 

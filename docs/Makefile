@@ -3,8 +3,8 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = Jinja
+SPHINXBUILD   = python -msphinx
+SPHINXPROJ    = cloup
 SOURCEDIR     = .
 BUILDDIR      = _build
 
