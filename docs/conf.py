@@ -1,119 +1,141 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
-import sys
 import os
-import re
 
-# If we are building locally, or the build on Read the Docs looks like a PR
-# build, prefer to use the version of the theme in this repo, not the installed
-# version of the theme.
-def is_development_build():
-    # PR builds have an interger version
-    re_version = re.compile(r'^[\d]+$')
-    if 'READTHEDOCS' in os.environ:
-        version = os.environ.get('READTHEDOCS_VERSION', '')
-        if re_version.match(version):
-            return True
-        return False
-    return True
+import cloup
 
-if is_development_build():
-    sys.path.insert(0, os.path.abspath('..'))
-sys.path.append(os.path.abspath('./demo/'))
 
-import sphinx_rtd_theme
-from sphinx.locale import _
-
-project = u'Quo Documentation'
-slug = re.sub(r'\W+', '-', project.lower())
-version = '2021.3'
-release = '2021.3'
-author = u'2021, Gerrishon Sirere, Secretum Inc.'
-copyright = author
-language = 'en'
+PROJ_DIR = os.path.abspath(os.path.join(__file__, '..', '..'))
 
 extensions = [
-    'sphinx.ext.intersphinx',
     'sphinx.ext.autodoc',
-    'sphinx.ext.mathjax',
+    'sphinx.ext.autodoc.typehints',
+    'autoapi.extension',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
-    'sphinx_rtd_theme',
+    'sphinx_panels',
+    'sphinx_copybutton',  # adds a copy button to code blocks
+    'versionwarning.extension',
+    'sphinx_issues',  # link to GitHub issues and PRs
 ]
 
-templates_path = ['_templates']
-source_suffix = '.rst'
-exclude_patterns = []
-locale_dirs = ['locale/']
-gettext_compact = False
+# General information about the project.
+project = 'cloup'
+copyright = "2020, Gianluca Gippetto"
+author = "Gianluca Gippetto"
+issues_github_path = "janLuke/cloup"
 
-master_doc = 'index'
-suppress_warnings = ['image.nonlocal_uri']
-pygments_style = 'default'
+extlinks = {
+    "issue": ("https://github.com/janLuke/cloup/issues/%s", "issue "),
+    "pr": ("https://github.com/janLuke/cloup/pull/%s", "pull request "),
+}
+
+# The version info for the project you're documenting, acts as replacement
+# for |version| and |release|.
+_version = tuple(map(str, cloup.__version_tuple__))
+version = '.'.join(_version[:2])
+release = '.'.join(_version[:3])
+
+language = "en"
+
+# Autodoc
+autoclass_content = 'both'
+autodoc_typehints = 'description'
+set_type_checking_flag = True
+typehints_fully_qualified = False
+
+# Autoapi
+autoapi_type = 'python'
+autoapi_dirs = [os.path.join(PROJ_DIR, 'cloup')]
+autoapi_template_dir = '_autoapi_templates'
+templates_path = [autoapi_template_dir]
+autoapi_keep_files = True
+autoapi_add_toctree_entry = False
+autoapi_python_class_content = 'both'
+autoapi_options = [
+    'members',
+    'undoc-members',
+    'show-inheritance',
+    'show-module-summary',
+    'special-members',
+    'imported-members',
+]
 
 intersphinx_mapping = {
-    'rtd': ('https://docs.readthedocs.io/en/stable/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/stable/', None),
+    'python': ('https://docs.python.org/', None),
+    'Click': ('https://click.palletsprojects.com', None)
 }
 
-html_theme = 'sphinx_rtd_theme'
+# The suffix(es) of source filenames.
+# You can specify multiple suffix as a list of string:
+source_suffix = '.rst'
+master_doc = 'index'
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This patterns also effect to html_static_path and html_extra_path
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+
+# -- Options for HTML output ---------------------------------------------------
+html_title = f"cloup v{version}"
+html_theme = "furo"
 html_theme_options = {
-    'logo_only': True,
-    'navigation_depth': 5,
+    "light_logo": "logo.svg",
+    "dark_logo": "logo-dark-mode.svg",
+    "sidebar_hide_name": True,
 }
-html_context = {}
+html_css_files = [
+    'styles/extensions-overrides.css',
+    'styles/theme-overrides.css',
+]
+pygments_style = 'default'  # name of the Pygments (syntax highlighting) style
 
-if not 'READTHEDOCS' in os.environ:
-    html_static_path = ['_static/']
-    html_js_files = ['debug.js']
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+html_static_path = ['_static']
 
-    # Add fake versions for local QA of the menu
-    html_context['test_versions'] = list(map(
-        lambda x: str(x / 10),
-        range(1, 100)
-    ))
+primary_color = "#0094ff"
+darker_primary_color = "#007bd3"
+def primary_color_alpha(alpha):
+    return "#2a5adf" + "{:02x}".format(int(alpha * 255))
 
-html_logo = "_/static/quo.png"
-html_show_sourcelink = False
+panels_css_variables = {
+    "tabs-color-label-active": darker_primary_color,
+    "tabs-color-label-inactive": "var(--color-foreground-muted)",
+    "tabs-color-overline": "var(--tabs--border)",
+    "tabs-color-underline": "var(--tabs--border)",
+}
+panels_add_bootstrap_css = False
 
-htmlhelp_basename = slug
 
+# -- Version warning -----------------------------------------------------------
+versionwarning_messages = {
+    "latest": (
+        'This is the documentation for the main development branch of Cloup. '
+        'The documentation for the latest stable release is '
+        '<a href="/en/stable/">here</a>.'
+    ),
+}
+# versionwarning_project_version = "latest"    # For debugging locally
+versionwarning_body_selector = 'article[role="main"]'
 
+# Whether to render to-do notes.
+todo_include_todos = False
+
+# -- Options for HTMLHelp output ---------------------------------------
+
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'cloupdoc'
+
+# -- Options for LaTeX output ------------------------------------------
+
+# Grouping the document tree into LaTeX files. List of tuples
+# (source start file, target name, title, author, documentclass
+# [howto, manual, or own class]).
 latex_documents = [
-  ('index', '{0}.tex'.format(slug), project, author, 'manual'),
+    (master_doc, 'cloup.tex',
+     'cloup Documentation',
+     'Gianluca Gippetto', 'manual'),
 ]
-
-man_pages = [
-    ('index', slug, project, [author], 1)
-]
-
-texinfo_documents = [
-  ('index', slug, project, author, slug, project, 'Miscellaneous'),
-]
-
-
-# Extensions to theme docs
-def setup(app):
-    from sphinx.domains.python import PyField
-    from sphinx.util.docfields import Field
-
-    app.add_object_type(
-        'confval',
-        'confval',
-        objname='configuration value',
-        indextemplate='pair: %s; configuration value',
-        doc_field_types=[
-            PyField(
-                'type',
-                label=_('Type'),
-                has_arg=False,
-                names=('type',),
-                bodyrolename='class'
-            ),
-            Field(
-                'default',
-                label=_('Default'),
-                has_arg=False,
-                names=('default',),
-            ),
-        ]
-    )
