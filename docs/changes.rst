@@ -9,8 +9,6 @@ Version 2021.5.5
 
 Unreleased
 
-- Formatting ``--help`` command
-
 Version 2021.4.5
 ----------------
 
