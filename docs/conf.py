@@ -32,7 +32,7 @@ extlinks = {
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|.
-_version = tuple(map(str, quo.__version_tuple__))
+#_version = tuple(map(str, quo.__version_tuple__))
 version = '.'.join(_version[:2])
 release = '.'.join(_version[:3])
 
