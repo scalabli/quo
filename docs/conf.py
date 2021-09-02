@@ -33,8 +33,8 @@ extlinks = {
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|.
 #_version = tuple(map(str, quo.__version_tuple__))
-version = '.'.join(_version[:2])
-release = '.'.join(_version[:3])
+#version = '.'.join(_version[:2])
+#release = '.'.join(_version[:3])
 
 language = "en"
 
@@ -46,7 +46,7 @@ typehints_fully_qualified = False
 
 # Autoapi
 autoapi_type = 'python'
-autoapi_dirs = [os.path.join(PROJ_DIR, 'cloup')]
+autoapi_dirs = [os.path.join(PROJ_DIR, 'quo')]
 autoapi_template_dir = '_autoapi_templates'
 templates_path = [autoapi_template_dir]
 autoapi_keep_files = True
