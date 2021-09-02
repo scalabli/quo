@@ -380,7 +380,7 @@ class Application(Generic[_AppResult]):
         - Otherwise, fall back to the color depth that is reported by the
           :class:`.Output` implementation. If the :class:`.Output` class was
           created using `output.defaults.create_output`, then this value is
-          coming from the $QUO_COLOR_DEPTH environment variable.
+          coming from the $PROMPT_TOOLKIT_COLOR_DEPTH environment variable.
         """
         depth = self._color_depth
 
