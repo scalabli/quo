@@ -115,6 +115,35 @@ In order to for us to maintain this project and grow our community of contributo
 
 
 
+## Getting Help
+
+### Gitter
+
+For discussions about the usage, development, and future of quo, please join our Gitter community
+
+* [Join](https://gitter.im/secretum-inc/quo)
+
+## Resources
+
+### Bug tracker
+
+If you have any suggestions, bug reports, or annoyances please report them
+to our issue tracker at 
+[Bug tracker](https://github.com/secretum-inc/quo/issues/)
+
+
+## License📑
+
+This software is licensed under the `MIT License`. See the ``LICENSE`` file in the top distribution directory for the full license text.
+
+
+## Code of Conduct
+Code of Conduct is adapted from the Contributor Covenant,
+version 1.2.0 available at
+[Code of Conduct](http://contributor-covenant.org/version/1/2/0/)
+
+
+
 The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
 
 ![Features](https://github.com/willmcgugan/rich/raw/master/imgs/features.png)
