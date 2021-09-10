@@ -20,6 +20,84 @@
 
 Rich is a Python library for _rich_ text and beautiful formatting in the terminal.
 
+
+
+**Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
+Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API.
+Simple to code, easy to learn, and does not come with needless baggage. 
+
+Quo requires Python `3.6.1` or later. 
+
+## Installation
+You can install quo via the Python Package Index (PyPI)
+
+```
+pip install -U quo
+```
+
+
+## Getting Started
+The most simple examples of would look like this:
+
+**Example 1**
+
+```python
+   import quo
+   quo.echo(f'Hello, World!'
+```
+    
+
+**Example 2**
+
+```python
+  from quo import echo
+  echo(f'Hello, World!', fg="red", bold=True)
+```
+
+**Example 3**
+
+.. sourcecode:: python
+
+   from quo import echo
+   echo(f"Hello, World in italics!", italic=True)
+
+
+**Example 4**
+
+.. sourcecode:: python
+
+   from quo import echo, prompt
+   answer = prompt("How old are you?")
+   echo(f"I am: {answer}")
+
+
+**Example 5**
+
+.. sourcecode:: python
+
+   from quo import command, app, echo                                                                  
+   
+   @command()
+   @app("--name", prompt="What is your name?", type=str)
+   @app("--age", prompt="How old are you?", type=int)
+   def hello(name, age):
+        echo(f"Hello {name}, nice to meet ya")
+        echo(f"{name}, {age} is not that bad")
+
+**Example 6**
+
+.. sourcecode:: python
+
+  from quo import container, Frame, TextArea
+  container(
+    Frame(
+    TextArea(text="Hello world!\n"),
+    title="Quo: ♥", )
+    )
+
+
+For more intricate  examples, have a look in the ``tutorials`` directory and the documentation.
+
 The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
 
 ![Features](https://github.com/willmcgugan/rich/raw/master/imgs/features.png)
