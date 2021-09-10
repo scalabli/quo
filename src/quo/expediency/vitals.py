@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import Optional, TYPE_CHECKING
 
 from quo.accordance import _default_text_stderr
 from quo.accordance import _default_text_stdout
@@ -9,7 +10,7 @@ from quo.accordance import binary_streams
 from quo.accordance import filename_to_ui
 from quo.accordance import encoding_filesystem
 from quo.accordance import get_strerror
-from quo.accordance import is_bytes
+from quo.accordance import bit_bytes
 from quo.accordance import openstream
 from quo.accordance import should_strip_ansi_colors
 from quo.accordance import strip_ansi_colors
@@ -19,6 +20,8 @@ from quo.context.current import resolve_color_default
 
 
 inscribe_functionality = (bytes, bytearray, str)
+
+_console: Optional["Terminal"] = None
 
 
 def _posixify(name):
@@ -226,7 +229,7 @@ def inscribe(message=None, file=None, nl=True, err=False, color=None):
     # need to find the binary stream and write the message in there.
     # This is done separately so that most stream types will work as you
     # would expect. Eg: you can write to StringIO for other cases.
-    if message and is_bytes(message):
+    if message and bit_bytes(message):
         binary_file = _find_binary_writer(file)
         if binary_file is not None:
             file.flush()
@@ -239,7 +242,7 @@ def inscribe(message=None, file=None, nl=True, err=False, color=None):
     # to strip colors.  If we are on windows we either wrap the stream
     # to strip the color or we use the colorama support to translate the
     # ansi codes to API calls.
-    if message and not is_bytes(message):
+    if message and not bit_bytes(message):
         color = resolve_color_default(color)
         if should_strip_ansi_colors(file, color):
             message = strip_ansi_colors(message)
@@ -253,6 +256,18 @@ def inscribe(message=None, file=None, nl=True, err=False, color=None):
         file.write(message)
     file.flush()
 
+
+
+if TYPE_CHECKING:
+    from .terminal import Terminal
+def terminal_ui() -> "Terminal":
+    """Get a global :class:`~quo.terminal.Terminal` instance. This function is used when Rich requires a Console, and hasn't been explicitly given one.
+    Returns A Console: A console instance.                                """
+    global _console
+    if _console is None:
+        from quo.terminal import Terminal
+        _console = Terminal()
+    return _console
 
 def binarystream(name):
     """Returns a system stream for byte processing.

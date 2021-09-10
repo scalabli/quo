@@ -21,7 +21,8 @@ from .core import (
     merge_formatted_text,
     to_formatted_text,
 )
-#from quo.i_o_output.html import HTML
+
+from .core import Text, TextType
 from .pygments import PygmentsTokens
 from .utils import (
     fragment_list_len,
@@ -31,10 +32,11 @@ from .utils import (
 )
 
 __all__ = [
-    # Base.
+    # Core
     "AnyFormattedText",
     "to_formatted_text",
     "is_formatted_text",
+    "Text"
     "Template",
     "merge_formatted_text",
     "FormattedText",

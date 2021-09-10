@@ -4,6 +4,7 @@ from .vitals import (
         formatfilename,
         binarystream,
         os_args,
+        terminal_ui,
         textstream,
         inscribe,
         LazyFile,

@@ -1,119 +1,71 @@
-# -*- coding: utf-8 -*-
+# Configuration file for the Sphinx documentation builder.
+#
+# This file only contains a selection of the most common options. For a full
+# list see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import sys
-import os
-import re
+# -- Path setup --------------------------------------------------------------
 
-# If we are building locally, or the build on Read the Docs looks like a PR
-# build, prefer to use the version of the theme in this repo, not the installed
-# version of the theme.
-def is_development_build():
-    # PR builds have an interger version
-    re_version = re.compile(r'^[\d]+$')
-    if 'READTHEDOCS' in os.environ:
-        version = os.environ.get('READTHEDOCS_VERSION', '')
-        if re_version.match(version):
-            return True
-        return False
-    return True
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+#
+# import os
+# import sys
+# sys.path.insert(0, os.path.abspath('.'))
 
-if is_development_build():
-    sys.path.insert(0, os.path.abspath('..'))
-sys.path.append(os.path.abspath('./demo/'))
+
+# -- Project information -----------------------------------------------------
+
+
+import pkg_resources
 
 import sphinx_rtd_theme
-from sphinx.locale import _
 
-project = u'Quo Documentation'
-slug = re.sub(r'\W+', '-', project.lower())
-version = '2021.3'
-release = '2021.3'
-author = u'2021, Gerrishon Sirere, Secretum Inc.'
-copyright = author
-language = 'en'
+html_theme = "sphinx_rtd_theme"
 
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
+project = "Quo"
+copyright = "2021, Gerrishon Sirere"
+author = "Gerrishon Sirere"
+
+# The full version, including alpha/beta/rc tags
+release = pkg_resources.get_distribution("quo").version
+
+
+# -- General configuration ---------------------------------------------------
+
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# ones.
 extensions = [
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinx_rtd_theme',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.autosectionlabel",
+    "sphinx_copybutton",
 ]
 
-templates_path = ['_templates']
-source_suffix = '.rst'
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ["_templates"]
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-locale_dirs = ['locale/']
-gettext_compact = False
-
-master_doc = 'index'
-suppress_warnings = ['image.nonlocal_uri']
-pygments_style = 'default'
-
-intersphinx_mapping = {
-    'rtd': ('https://docs.readthedocs.io/en/stable/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/stable/', None),
-}
-
-html_theme = 'sphinx_rtd_theme'
-html_theme_options = {
-    'logo_only': True,
-    'navigation_depth': 5,
-}
-html_context = {}
-
-if not 'READTHEDOCS' in os.environ:
-    html_static_path = ['_static/']
-    html_js_files = ['debug.js']
-
-    # Add fake versions for local QA of the menu
-    html_context['test_versions'] = list(map(
-        lambda x: str(x / 10),
-        range(1, 100)
-    ))
-
-html_logo = "_/static/quo.png"
-html_show_sourcelink = False
-
-htmlhelp_basename = slug
 
 
-latex_documents = [
-  ('index', '{0}.tex'.format(slug), project, author, 'manual'),
-]
+# -- Options for HTML output -------------------------------------------------
 
-man_pages = [
-    ('index', slug, project, [author], 1)
-]
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+#
+# html_theme = "alabaster"
 
-texinfo_documents = [
-  ('index', slug, project, author, slug, project, 'Miscellaneous'),
-]
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+html_static_path = ["_static"]
 
-
-# Extensions to theme docs
-def setup(app):
-    from sphinx.domains.python import PyField
-    from sphinx.util.docfields import Field
-
-    app.add_object_type(
-        'confval',
-        'confval',
-        objname='configuration value',
-        indextemplate='pair: %s; configuration value',
-        doc_field_types=[
-            PyField(
-                'type',
-                label=_('Type'),
-                has_arg=False,
-                names=('type',),
-                bodyrolename='class'
-            ),
-            Field(
-                'default',
-                label=_('Default'),
-                has_arg=False,
-                names=('default',),
-            ),
-        ]
-    )
+intersphinx_mapping = {"python": ("http://docs.python.org/3", None)}

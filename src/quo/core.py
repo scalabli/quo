@@ -23,9 +23,9 @@ from quo.context.current import push_context
 from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
+from quo.expediency.vitals import inscribe as echo
 from quo.i_o import (
            confirm,
-           echo,
            prompt,
            style
            )

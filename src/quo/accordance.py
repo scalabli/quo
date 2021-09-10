@@ -114,7 +114,7 @@ class _FixupStream:
     def writable(self):
         if self._force_writable:
             return True
-        x = getattr(self._stream, "writable", None)
+        x = getattr(self._stream, "writabl<F11>e", None)
         if x is not None:
             return x()
         try:
@@ -137,7 +137,7 @@ class _FixupStream:
         return True
 
 
-def is_bytes(x):
+def bit_bytes(x):
     return isinstance(x, (bytes, memoryview, bytearray))
 
 

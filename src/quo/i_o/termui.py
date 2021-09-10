@@ -5,14 +5,14 @@ import os
 import struct
 import sys
 import math
+from typing import Any, IO, Optional
 
 from quo.accordance import (
         DEFAULT_COLUMNS,
         get_winterm_size,
-        is_bytes,
+        bit_bytes,
         isatty,
         strip_ansi_colors,
-        WIN
         )
 
 from quo.outliers import Abort, UsageError
@@ -197,13 +197,140 @@ def confirm(
 ##########################################################################
 
 
+def confirm(
+        text,
+        default=False, 
+        abort=False,
+        prompt_suffix=":>", 
+        show_default=True, 
+        err=False
+        ):
+    """Prompts for confirmation (yes/no question).
+
+    If the user aborts the input by sending a interrupt signal this
+    function will catch it and raise a :exc:`Abort` exception.
+
+    :param text: the question to ask.
+    :param default: the default for the prompt.
+    :param abort: if this is set to `True` a negative answer aborts the
+                  exception by raising :exc:`Abort`.
+    :param prompt_suffix: a suffix that should be added to the prompt.
+    :param show_default: shows or hides the default value in the prompt.
+    :param err: if set to true the file defaults to ``stderr`` instead of
+                ``stdout``, the same as with echo.
+    """
+    prompt = _build_prompt(
+        text, prompt_suffix, show_default, "Yes/no" if default else "yes/No"
+    )
+    while 1:
+        try:
+            echo(prompt, nl=False, err=err, fg="cyan")
+            value = visible_prompt_func("").lower().strip()
+        except (KeyboardInterrupt, EOFError):
+            raise Abort()
+        if value in ("y", "yes"):
+            rv = True
+        elif value in ("n", "no"):
+            rv = False
+        elif default is not None and value == "":
+            rv = default
+        else:
+            echo("Error: invalid input", bg="yellow", fg="black", err=err)
+            continue
+        break
+    if abort and not rv:
+        raise Abort()
+    return rv
 
 
 def evoke():
     session = Elicit()
 
     session.elicit
-#
+########################################################
+
+def prompt(
+    text,
+    default=None,
+    hide=False,
+    autoconfirm=False,
+    type=None,
+    value_proc=None,
+    prompt_suffix=":> ",
+    show_default=True,
+    err=False,
+    show_choices=True,
+):
+
+    """Prompts a user for input.  This is a convenience function that can be used to prompt a user for input later.
+
+    If the user aborts the input by sending a interrupt signal, this  function will catch it and raise a :exc:`Abort` exception.
+
+    :param text: the text to show for the prompt.
+    :param default: the default value to use if no input happens.  If this  is not given it will prompt until it's aborted.
+    :param hide_input: if this is set to true then the input value will  be hidden.
+    :param autoconfirm: asks for confirmation for the value.
+    :param type: the type to use to check the value against.
+    :param value_proc: if this parameter is provided it's a function that is invoked instead of the type conversion to convert a value.
+    :param prompt_suffix: a suffix that should be added to the prompt.
+    :param show_default: shows or hides the default value in the prompt.
+    :param err: if set to true the file defaults to ``stderr`` instead of ``stdout``, the same as with echo.
+    :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
+
+    """
+    result = None
+
+    def prompt_func(text):
+        f = hidden_prompt_func if hide else visible_prompt_func
+        try:
+            # Write the prompt separately so that we get nice
+            # coloring through colorama on Windows
+            inscribe(text, nl=False, err=err)
+            return f("")
+        except (KeyboardInterrupt, EOFError):
+            # getpass doesn't print a newline if the user aborts input with ^C.
+            # Allegedly this behavior is inherited from getpass(3).
+            # A doc bug has been filed at https://bugs.python.org/issue24711
+            if hide:
+                inscribe(None, err=err)
+            raise Abort()
+
+    if value_proc is None:
+        value_proc = convert_type(type, default)
+
+    prompt = _build_prompt(
+        text, prompt_suffix, show_default, default, show_choices, type
+    )
+
+    while 1:
+        while 1:
+            value = prompt_func(prompt)
+            if value:
+                break
+            elif default is not None:
+                value = default
+                break
+        try:
+            result = value_proc(value)
+        except UsageError as e:
+            if hide:
+                inscribe("Error: the value you entered was invalid", err=err)
+            else:
+                inscribe(f"Error: {e.message}", err=err)  # noqa: B306
+            continue
+        if not autoconfirm:
+            return result
+        while 1:
+            value2 = prompt_func("Repeat for confirmation: ")
+            if value2:
+                break
+        if value == value2:
+            return result
+        echo("Error: the two entered values do not match", err=err)
+
+
+
+
 
 def terminalsize():
     """Returns the current size of the terminal as tuple in the form
@@ -326,24 +453,6 @@ def checkbool(string):
     )
 
 
-
-def clear():
-    """Clears the terminal screen.  This will have the effect of clearing
-    the whole visible space of the terminal and moving the cursor to the
-    top left.  This does not do anything if not connected to a terminal.
-
-    """
-    if not isatty(sys.stdout):
-        return
-    # If we're on Windows and we don't have colorama available, then we
-    # clear the screen by shelling out.  Otherwise we can use an escape
-    # sequence.
-    if WIN:
-        os.system("class")
-    else:
-        sys.stdout.write("\033[2J\033[1;1H")
-
-
 def _interpret_color(color, offset=0):
     if isinstance(color, int):
         return f"{38 + offset};5;{color:d}"
@@ -364,6 +473,7 @@ def style(
     bold=None,
     dim=None,
     lowercase=None,
+    ul=None,
     underline=None,
     blink=None,
     italic=None,
@@ -434,6 +544,7 @@ def style(
 
     bits = []
 
+
     if fg:
         try:
             bits.append(f"\033[{_interpret_color(fg)}m")
@@ -452,6 +563,7 @@ def style(
             bits.append(f"\033[{_interpret_color(bg, 10)}m")
         except KeyError:
             raise TypeError(f"Unknown color {bg!r}")
+
     if background:
         try:
             bits.append(f"\033[{_interpret_color(background, 10)}m")
@@ -462,6 +574,9 @@ def style(
         bits.append(f"\033[{1 if bold else 22}m")
     if dim is not None:
         bits.append(f"\033[{2 if dim else 22}m")
+
+    if ul is not None:
+        bits.append(f"\033[{4 if ul else 24}m")
     if underline is not None:
         bits.append(f"\033[{4 if underline else 24}m")
     if blink is not None:
@@ -487,30 +602,7 @@ def unstyle(text):
     return strip_ansi_colors(text)
 
 
-def echo(message=None, file=None, nl=True, err=False, color=None, **styles):
-    """This function combines :func:`inscribe` and :func:`style` into one
-    call.  As such the following two calls are the same::
-
-        quo.echo('Hello World!', fg='green')
-        quo.inscribe(quo.style('Hello World!', fg='green'))
-
-    All keyword arguments are forwarded to the underlying functions
-    depending on which one they go with.
-
-    Non-string types will be converted to :class:`str`. However,
-    :class:`bytes` are passed directly to :meth:`inscribe` without applying
-    style. If you want to style bytes that represent text, call
-    :meth:`bytes.decode` first.
-
-    """
-    if message is not None and not is_bytes(message):
-        message = style(message, **styles)
-
-    return inscribe(message, file=file, nl=nl, err=err, color=color)
-
-
-def edit(
-    text=None, editor=None, env=None, require_save=True, extension=".txt", filename=None
+def edit(text=None, editor=None, env=None, require_save=True, extension=".txt", filename=None
 ):
     r"""Edits the given text in the defined editor.  If an editor is given
     (should be the full path to the executable but the regular operating
@@ -576,62 +668,31 @@ def launch(url, wait=False, locate=False):
     return open_url(url, wait=wait, locate=locate)
 
 
-# If this is provided, interpose() calls into this instead.  This is used
-# for unittesting purposes.
-_interpose = None
-
-
-def interpose(inscribe=False):
-    """Fetches a single character from the terminal and returns it.  This
-    will always return a unicode character and under certain rare
-    circumstances this might return more than one character.  The
-    situations which more than one character is returned is when for
-    whatever reason multiple characters end up in the terminal buffer or
-    standard input was not actually a terminal.
-
-    Note that this will always read from the terminal, even if something
-    is piped into the standard input.
-
-    Note for Windows: in rare cases when typing non-ASCII characters, this
-    function might wait for a second character and then return both at once.
-    This is because certain Unicode characters look like special-key markers.
-
-
-    :param inscribe: if set to `True`, the character read will also show up on
-                 the terminal.  The default is to not show it.
-    """
-    f = _interpose
-    if f is None:
-        from quo.implementation import interpose as f
-    return f(inscribe)
-
-
 def raw_terminal():
     from quo.implementation import raw_terminal as f
-
     return f()
 
 
-def pause(info="Press any key to proceed >> ...", err=False):
-    """This command stops execution and waits for the user to press any
-    key to continue.  This is similar to the Windows batch "pause"
-    command.  If the program is not run through a terminal, this command
-    will instead do nothing.
-
-    :param info: the info string to print before pausing.
-    :param err: if set to message goes to ``stderr`` instead of
-                ``stdout``, the same as with echo.
+def echo(
+        message=None,
+        file: Optional[IO[str]] = None,
+        nl=True,
+        err=False,
+        color=None,
+        **styles):
+    """This function combines :func:`inscribe` and :func:`style` into one
+    call.  As such the following two calls are the same::
+        quo.echo('Hello World!', fg='green')
+        quo.inscribe(quo.style('Hello World!', fg='green'))
+    All keyword arguments are forwarded to the underlying functions
+    depending on which one they go with.
+    Non-string types will be converted to :class:`str`. However,
+    :class:`bytes` are passed directly to :meth:`inscribe` without applying
+    style. If you want to style bytes that represent text, call
+    :meth:`bytes.decode` first.
     """
-    if not isatty(sys.stdin) or not isatty(sys.stdout):
-        return
-    try:
-        if info:
-            echo(info, nl=False, err=err, fg="cyan")
-        try:
-            interpose()
-        except (KeyboardInterrupt, EOFError):
-            pass
-    finally:
-        if info:
-            inscribe(err=err)
 
+    if message is not None and not bit_bytes(message):
+        message = style(message, **styles)
+
+    return inscribe(message, file=file, nl=nl, err=err, color=color)

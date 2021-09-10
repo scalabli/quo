@@ -7,6 +7,8 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import importlib
 import os
 import subprocess
+from quo.i_o.termui import ansi_color_codes, _ansi_reset_all
+from quo.outliers import Abort, UsageError
 from quo.application import Application
 from .core import (
              App,
@@ -20,6 +22,23 @@ from .core import (
              ShellDetectionFailure,
              Tether
              )
+
+
+
+from quo.accordance import (
+        DEFAULT_COLUMNS,
+        get_winterm_size,
+        strip_ansi_colors
+        )
+
+from quo.outliers import Abort, UsageError
+from quo.context.current import resolve_color_default
+from quo.types import Choice, convert_type
+from quo.expediency import inscribe, LazyFile
+from quo.outliers import Abort, UsageError
+from quo.context.current import resolve_color_default
+from quo.types import Choice, convert_type
+from quo.expediency import inscribe, LazyFile
 
 from quo.text import ANSI, HTML
 from quo.output import ColorDepth
@@ -72,23 +91,40 @@ from quo.expediency import (
                   )
         
 
+def clear():
+    import sys
+    import os
+    from .accordance import isatty, WIN
+    """Clears the terminal screen.  This will have the effect of clearing
+    the whole visible space of the terminal and moving the cursor to the
+    top left.  This does not do anything if not connected to a terminal.
+
+    """
+    if not isatty(sys.stdout):
+        return
+
+    if WIN:
+        os.system("class")
+    else:
+        sys.stdout.write("\033[2J\033[1;1H")
+
+
 from quo.i_o import (
               checknumber,
               checkbool,
               checkinteger,
-              echo,
               confirm,
               launch,
-              interpose,
+              echo,
+        #      interpose,
               edit,
               terminalsize,
-              pause,
+           #   pause,
               style,
               unstyle,
-              prompt,
-              clear
+             # prompt,
               )
-    
+
 from quo.shortcuts import container
 from quo.widgets import TextArea, Frame
 from quo.systematize import tabular
