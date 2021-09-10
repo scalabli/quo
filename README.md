@@ -1,17 +1,16 @@
 [![Downloads](https://pepy.tech/badge/quo/month)](https://pepy.tech/project/quo)
 [![PyPI version](https://badge.fury.io/py/quo.svg)](https://badge.fury.io/py/quo)
-[![codecov](https://codecov.io/gh/willmcgugan/rich/branch/master/graph/badge.svg)](https://codecov.io/gh/willmcgugan/rich)
-[![Rich blog](https://img.shields.io/badge/blog-rich%20news-yellowgreen)](https://www.willmcgugan.com/tag/rich/)
-[![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/willmcgugan)
+[![Wheel](https://img.shields.io/pypi/wheel/quo.svg)
+[![RTD](https://readthedocs.org/projects/quo/badge/)](https://quo.readthedocs.io)
+[![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
 
-![Logo](https://github.com/secretum_inc/quo/raw/master/imgs/logo.svg)
+![Logo](https://github.com/secretum-inc/quo/images/logo.svg)
 
-[English readme](https://github.com/willmcgugan/rich/blob/master/README.md)
  • [中文 readme](https://github.com/willmcgugan/rich/blob/master/README.cn.md)
  • [Lengua española readme](https://github.com/willmcgugan/rich/blob/master/README.es.md)
  • [Deutsche readme](https://github.com/willmcgugan/rich/blob/master/README.de.md)
  • [Läs på svenska](https://github.com/willmcgugan/rich/blob/master/README.sv.md)
- • [日本語 readme](https://github.com/willmcgugan/rich/blob/master/README.ja.md)
+ • [日本語 readme](https://github.com/willmcg
  • [한국어 readme](https://github.com/willmcgugan/rich/blob/master/README.kr.md)
  • [Français readme](https://github.com/willmcgugan/rich/blob/master/README.fr.md)
  • [Schwizerdütsch readme](https://github.com/willmcgugan/rich/blob/master/README.de-ch.md)
@@ -43,7 +42,7 @@ The most simple examples of would look like this:
 
 ```python
    import quo
-   quo.echo(f'Hello, World!'
+   quo.echo(f'Hello, World!'>
 ```
     
 
@@ -56,44 +55,36 @@ The most simple examples of would look like this:
 
 **Example 3**
 
-.. sourcecode:: python
-
+```python
    from quo import echo
-   echo(f"Hello, World in italics!", italic=True)
+   echo(f"Hello, World in italics!", italic=True
+```
 
 
 **Example 4**
 
-.. sourcecode:: python
-
+```python
    from quo import echo, prompt
    answer = prompt("How old are you?")
-   echo(f"I am: {answer}")
+   echo(f"I am: {answer}"
+```
 
 
 **Example 5**
 
-.. sourcecode:: python
+```python
+   from quo import command, app, echo
 
-   from quo import command, app, echo                                                                  
-   
    @command()
    @app("--name", prompt="What is your name?", type=str)
    @app("--age", prompt="How old are you?", type=int)
    def hello(name, age):
         echo(f"Hello {name}, nice to meet ya")
-        echo(f"{name}, {age} is not that bad")
+        echo(f"{name}, {age} is not that bad"
+```
 
 **Example 6**
 
-.. sourcecode:: python
-
-  from quo import container, Frame, TextArea
-  container(
-    Frame(
-    TextArea(text="Hello world!\n"),
-    title="Quo: ♥", )
-    )
 
 
 For more intricate  examples, have a look in the ``tutorials`` directory and the documentation.
