@@ -4,21 +4,18 @@
 [![RTD](https://readthedocs.org/projects/quo/badge/)](https://quo.readthedocs.io)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
 
-![Logo](https://github.com/secretum-inc/quo/images/logo.svg)
+![Logo](https://github.com/secretum-inc/quo/pics/quo.png)
 
  • [中文 readme](https://github.com/willmcgugan/rich/blob/master/README.cn.md)
  • [Lengua española readme](https://github.com/willmcgugan/rich/blob/master/README.es.md)
  • [Deutsche readme](https://github.com/willmcgugan/rich/blob/master/README.de.md)
  • [Läs på svenska](https://github.com/willmcgugan/rich/blob/master/README.sv.md)
  • [日本語 readme](https://github.com/willmcg
- • [한국어 readme](https://github.com/willmcgugan/rich/blob/master/README.kr.md)
- • [Français readme](https://github.com/willmcgugan/rich/blob/master/README.fr.md)
+ • [한국/willmcgugan/rich/blob/master/README.kr.md)
+ • [Français readme](https://github.com/willmcgugan/rich/blob/maste
  • [Schwizerdütsch readme](https://github.com/willmcgugan/rich/blob/master/README.de-ch.md)
  • [हिन्दी readme](https://github.com/willmcgugan/rich/blob/master/README.hi.md)
  • [Português brasileiro readme](https://github.com/willmcgugan/rich/blob/master/README.pt-br.md)
-
-Rich is a Python library for _rich_ text and beautiful formatting in the terminal.
-
 
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
@@ -88,6 +85,33 @@ The most simple examples of would look like this:
 
 
 For more intricate  examples, have a look in the ``tutorials`` directory and the documentation.
+
+
+
+## Features
+- Support for ANSI and RGB color models
+- Support for tabular presentation of data
+- Interactive progressbars
+- Nesting of commands
+- A function that displays asterisks instead of the actual characters, helpful when typing passwords
+- Automatic help page generation
+- Lightweight
+
+
+## Donate🎁
+
+In order to for us to maintain this project and grow our community of contributors, `please consider donating today`
+[Donate](https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54)
+
+
+
+## Quo is...
+
+**Simple**
+     If you know Python you can  easily use quo and it can integrate with just about anything.
+
+
+
 
 The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
 
