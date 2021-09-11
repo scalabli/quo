@@ -5,8 +5,8 @@ from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 from .text import Text, TextType
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleRenderable, RenderableType
-    from .table import Table
+    from quo.terminal import Terminal, ConsoleRenderable, RenderableType
+    from quo.table import Table
 
 FormatTimeCallable = Callable[[datetime], Text]
 
@@ -31,7 +31,7 @@ class LogRender:
 
     def __call__(
         self,
-        console: "Console",
+        console: "Terminal",
         renderables: Iterable["ConsoleRenderable"],
         log_time: Optional[datetime] = None,
         time_format: Optional[Union[str, FormatTimeCallable]] = None,
@@ -40,8 +40,8 @@ class LogRender:
         line_no: Optional[int] = None,
         link_path: Optional[str] = None,
     ) -> "Table":
-        from .containers import Renderables
-        from .table import Table
+        from quo.containers import Renderables
+        from quo.table import Table
 
         output = Table.grid(padding=(0, 1))
         output.expand = True

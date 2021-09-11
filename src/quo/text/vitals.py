@@ -2,7 +2,7 @@ import re
 from functools import partial, reduce
 from math import gcd
 from operator import attrgetter, itemgetter
-from rich.emoji import EmojiVariant
+from quo.emoji import EmojiVariant
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -17,21 +17,21 @@ from typing import (
     cast,
 )
 
-from ._loop import loop_last
-from ._pick import pick_bool
-from ._wrap import divide_line
-from .align import AlignMethod
-from .cells import cell_len, set_cell_size
-from .containers import Lines
-from .control import strip_control_codes
-from .emoji import EmojiVariant
-from .jupyter import JupyterMixin
-from .measure import Measurement
-from .segment import Segment
-from .style import Style, StyleType
+from quo._loop import loop_last
+from quo._pick import pick_bool
+from quo._wrap import divide_line
+from quo.align import AlignMethod
+from quo.cells import cell_len, set_cell_size
+from quo.containers import Lines
+from quo.control import strip_control_codes
+from quo.emoji import EmojiVariant
+from quo.jupyter import JupyterMixin
+from quo.measure import Measurement
+from quo.segment import Segment
+from quo.style import Style, StyleType
 
 if TYPE_CHECKING:  # pragma: no cover
-    from .console import Console, ConsoleOptions, JustifyMethod, OverflowMethod
+    from quo.terminal import Terminal, ConsoleOptions, JustifyMethod, OverflowMethod
 
 DEFAULT_JUSTIFY: "JustifyMethod" = "default"
 DEFAULT_OVERFLOW: "OverflowMethod" = "fold"

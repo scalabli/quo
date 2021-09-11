@@ -4,6 +4,7 @@ from .termui import (
         checknumber, 
         style,
         echo,
+        get_terminal,
         unstyle,
         confirm,
         terminalsize,

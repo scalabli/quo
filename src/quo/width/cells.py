@@ -2,7 +2,7 @@ from functools import lru_cache
 from typing import Dict, List
 
 from ._cell_widths import CELL_WIDTHS
-from ._lru_cache import LRUCache
+from quo.cache import LRUCache
 
 
 def cell_len(text: str, _cache: Dict[str, int] = LRUCache(1024 * 4)) -> int:

@@ -5,8 +5,8 @@ from typing import Any
 
 from rich import box
 from rich.color import Color
-from rich.console import (
-    Console,
+from quo.terminal import (
+    Terminal,
     ConsoleOptions,
     ConsoleRenderable,
     Group,
@@ -19,13 +19,13 @@ from rich.pretty import Pretty
 from rich.segment import Segment
 from rich.style import Style
 from rich.syntax import Syntax
-from rich.table import Table
-from rich.text import Text
+from quo.tabulate import Table
+from quo.text import Text
 
 
 class ColorBox:
     def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
         for y in range(0, 5):
             for x in range(options.max_width):
@@ -39,7 +39,7 @@ class ColorBox:
             yield Segment.line()
 
     def __rich_measure__(
-        self, console: "Console", options: ConsoleOptions
+        self, console: "Terminal", options: ConsoleOptions
     ) -> Measurement:
         return Measurement(1, options.max_width)
 

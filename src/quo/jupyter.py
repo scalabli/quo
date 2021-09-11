@@ -1,6 +1,6 @@
 from typing import Any, Dict, Iterable, List
 
-from . import get_console
+from quo.i_o import get_terminal
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
 
@@ -36,7 +36,7 @@ class JupyterMixin:
     def _repr_mimebundle_(
         self, include: Iterable[str], exclude: Iterable[str], **kwargs: Any
     ) -> Dict[str, str]:
-        console = get_console()
+        console = get_terminal()
         segments = list(console.render(self, console.options))  # type: ignore
         html = _render_segments(segments)
         text = console._render_buffer(segments)
@@ -84,5 +84,5 @@ def display(segments: Iterable[Segment], text: str) -> None:
 
 def print(*args: Any, **kwargs: Any) -> None:
     """Proxy for Console print."""
-    console = get_console()
+    console = get_terminal()
     return console.print(*args, **kwargs)

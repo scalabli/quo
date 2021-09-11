@@ -14,7 +14,7 @@ from quo.accordance import (
         isatty,
         strip_ansi_colors,
         )
-
+from quo.color import ansi_color_codes, _ansi_reset_all
 from quo.outliers import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
@@ -26,26 +26,26 @@ from quo.systematize.core import _isconvertible, _binary_type, _text_type, _bool
 visible_prompt_func = input
 #American National Standard Institute colors
 
-ansi_color_codes = {
-    "black": 30,
-    "red": 31,
-    "green": 32,
-    "yellow": 33,
-    "blue": 34,
-    "magenta": 35,
-    "cyan": 36,
-    "white": 37,
-    "reset": 39,
-    "vblack": 90,
-    "vred": 91,
-    "vgreen": 92,
-    "vyellow": 93,
-    "vblue": 94,
-    "vmagenta": 95,
-    "vcyan": 96,
-    "vwhite": 97,
-}
-_ansi_reset_all = "\033[0m"
+#ansi_color_codes = {
+#    "black": 30,
+#    "red": 31,
+#    "green": 32,
+#    "yellow": 33,
+#    "blue": 34,
+#    "magenta": 35,
+#    "cyan": 36,
+#    "white": 37,
+#    "reset": 39,
+#    "vblack": 90,
+#    "vred": 91,
+#    "vgreen": 92,
+#    "vyellow": 93,
+#    "vblue": 94,
+#    "vmagenta": 95,
+#    "vcyan": 96,
+#    "vwhite": 97,
+#}
+#_ansi_reset_all = "\033[0m"
 
 
 def hidden_prompt_func(prompt):
@@ -150,7 +150,17 @@ def prompt(
         if value == value2:
             return result
         echo("Error: the two entered values do not match", err=err)
-###########################################################################
+##############################################
+
+def get_terminal() -> "Terminal":
+    """Get a global :class:`~quo.terminal.Terminal` instance. This function is used when Rich requires a Console,               and hasn't been explicitly given one.                               Returns:                                   Console: A console instance.         """
+    global _console
+    if _console is None:
+        from quo.terminal import Terminal
+        _console = Terminal()
+    return _console
+
+#############################
 
 def confirm(
         text, default=False, abort=False, prompt_suffix=":>", show_default=True, err=False

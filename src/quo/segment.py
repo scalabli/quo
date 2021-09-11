@@ -15,14 +15,14 @@ from typing import (
     Union,
 )
 
-from .cells import cell_len, get_character_cell_size, set_cell_size
-from .repr import Result, rich_repr
-from .style import Style
+from quo.width import cell_len, get_character_cell_size, set_cell_size
+from quo.repr import Result, rich_repr
+from quo.style import Style
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult
+    from quo.terminal import Terminal, ConsoleOptions, RenderResult
 
-log = getLogger("rich")
+log = getLogger("quo")
 
 
 class ControlType(IntEnum):
@@ -549,7 +549,7 @@ class Segments:
         self.new_lines = new_lines
 
     def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         if self.new_lines:
             line = Segment.line()
@@ -573,7 +573,7 @@ class SegmentLines:
         self.new_lines = new_lines
 
     def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         if self.new_lines:
             new_line = Segment.line()
@@ -588,20 +588,20 @@ class SegmentLines:
 if __name__ == "__main__":
 
     if __name__ == "__main__":  # pragma: no cover
-        from rich.console import Console
-        from rich.syntax import Syntax
-        from rich.text import Text
+        from quo.terminal import Terminal
+        from quo.syntax import Syntax
+        from quo.text import Text
 
-        code = """from rich.console import Console
-    console = Console()
+        code = """from quo.terminal import Terminal
+    console = Terminal()
     text = Text.from_markup("Hello, [bold magenta]World[/]!")
     console.print(text)"""
 
         text = Text.from_markup("Hello, [bold magenta]World[/]!")
 
-        console = Console()
+        console = Terminal()
 
-        console.rule("rich.Segment")
+        console.rule("quo.Segment")
         console.print(
             "A Segment is the last step in the Rich render process before generating text with ANSI codes."
         )

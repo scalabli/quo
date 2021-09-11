@@ -14,7 +14,7 @@ else:
 
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult
+    from .terminal import Terminal, ConsoleOptions, RenderResult
 
 
 EmojiVariant = Literal["emoji", "text"]
@@ -73,7 +73,7 @@ class Emoji(JupyterMixin):
         return self._char
 
     def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         yield Segment(self._char, console.get_style(self.style))
 
@@ -81,10 +81,10 @@ class Emoji(JupyterMixin):
 if __name__ == "__main__":  # pragma: no cover
     import sys
 
-    from rich.columns import Columns
-    from rich.console import Console
+    from quo.columns import Columns
+    from quo.terminal import Terminal
 
-    console = Console(record=True)
+    console = Terminal(record=True)
 
     columns = Columns(
         (f":{name}: {name}" for name in sorted(EMOJI.keys()) if "\u200D" not in name),

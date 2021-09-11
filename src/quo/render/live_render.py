@@ -7,12 +7,12 @@ else:
     from typing_extensions import Literal  # pragma: no cover
 
 
-from ._loop import loop_last
-from .console import Console, ConsoleOptions, RenderableType, RenderResult
-from .control import Control
-from .segment import ControlType, Segment
-from .style import StyleType
-from .text import Text
+from rich._loop import loop_last
+from quo.terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
+from rich.control import Control
+from rich.segment import ControlType, Segment
+from rich.style import StyleType
+from quo.text import Text
 
 VerticalOverflowMethod = Literal["crop", "ellipsis", "visible"]
 
@@ -80,7 +80,7 @@ class LiveRender:
         return Control()
 
     def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
 
         renderable = self.renderable

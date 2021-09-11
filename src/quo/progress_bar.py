@@ -3,9 +3,9 @@ from functools import lru_cache
 from time import monotonic
 from typing import Iterable, List, Optional
 
-from .color import Color, blend_rgb
+from quo.color import Color, blend_rgb
 from .color_triplet import ColorTriplet
-from .console import Console, ConsoleOptions, RenderResult
+from quo.terminal import Terminal, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
@@ -122,7 +122,7 @@ class ProgressBar(JupyterMixin):
         self.total = total if total is not None else self.total
 
     def _render_pulse(
-        self, console: Console, width: int, ascii: bool = False
+        self, console: Terminal, width: int, ascii: bool = False
     ) -> Iterable[Segment]:
         """Renders the pulse animation.
 
@@ -152,7 +152,7 @@ class ProgressBar(JupyterMixin):
         yield from segments
 
     def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
 
         width = min(self.width or options.max_width, options.max_width)
@@ -191,7 +191,7 @@ class ProgressBar(JupyterMixin):
                     yield _Segment(bar * remaining_bars, style)
 
     def __rich_measure__(
-        self, console: Console, options: ConsoleOptions
+            self, console: Terminal, options: ConsoleOptions
     ) -> Measurement:
         return (
             Measurement(self.width, self.width)

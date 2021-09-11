@@ -1,11 +1,11 @@
 from types import TracebackType
 from typing import Optional, Type
 
-from .console import Console, RenderableType
-from .jupyter import JupyterMixin
-from .live import Live
-from .spinner import Spinner
-from .style import StyleType
+from quo.terminal import Terminal, RenderableType
+from quo.jupyter import JupyterMixin
+from quo.live import Live
+from quo.animate import Animate
+from quo.style import StyleType
 
 
 class Status(JupyterMixin):
@@ -46,7 +46,7 @@ class Status(JupyterMixin):
         return self._spinner
 
     @property
-    def console(self) -> "Console":
+    def console(self) -> "Terminal":
         """Get the Console used by the Status objects."""
         return self._live.console
 

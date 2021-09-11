@@ -43,10 +43,10 @@ else:
 
 from rich import errors, themes
 from rich._emoji_replace import _emoji_replace
-from rich._log_render import FormatTimeCallable, LogRender
+from quo.render import FormatTimeCallable, LogRender
 from rich.align import Align, AlignMethod
 from rich.color import ColorSystem
-from rich.control import Control
+from quo.control import Control
 from rich.emoji import EmojiVariant
 from rich.highlighter import NullHighlighter, ReprHighlighter
 from rich.markup import render as render_markup
@@ -66,7 +66,7 @@ from rich.theme import Theme, ThemeStack
 if TYPE_CHECKING:
     from rich._windows import WindowsConsoleFeatures
     from rich.live import Live
-    from rich.status import Status
+    from quo.status import Status
 
 WINDOWS = platform.system() == "Windows"
 
@@ -457,7 +457,7 @@ class Group:
             return Measurement(options.max_width, options.max_width)
 
     def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> RenderResult:
         yield from self.renderables
 

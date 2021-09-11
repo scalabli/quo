@@ -6,7 +6,8 @@
 [![licence](https://img.shields.io/pypi/l/quo.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
 
-![Logo](https://github.com/secretum-inc/quo/pics/quo.png)
+
+[![Logo](pics/quo.png)](https://github.com/secretum-inc/quo)
 
 
 
