@@ -1,7 +1,7 @@
 [![Downloads](https://pepy.tech/badge/quo/month)](https://pepy.tech/project/quo)
 [![PyPI version](https://badge.fury.io/py/quo.svg)](https://badge.fury.io/py/quo)
-[![Wheel](https://img.shields.io/pypi/wheel/quo.svg)]
-[![pyimp](https://img.shields.io/pypi/implementation/quo.svg)]
+[![Wheel](https://img.shields.io/pypi/wheel/quo.svg)](https://pypi.com/project/quo)
+[![pyimp](https://img.shields.io/pypi/implementation/quo.svg)](https://pypi.com/project/quo)
 [![RTD](https://readthedocs.org/projects/quo/badge/)](https://quo.readthedocs.io)
 [![licence](https://img.shields.io/pypi/l/quo.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
