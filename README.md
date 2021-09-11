@@ -8,16 +8,6 @@
 
 ![Logo](https://github.com/secretum-inc/quo/pics/quo.png)
 
- • [中文 readme](https://github.com/willmcgugan/rich/blob/master/README.cn.md)
- • [Lengua española readme](https://github.com/willmcgugan/rich/blob/master/README.es.md)
- • [Deutsche readme](https://github.com/willmcgugan/rich/blob/master/README.de.md)
- • [Läs på svenska](https://github.com/willmcgugan/rich/blob/master/README.sv.md)
- • [日本語 readme](https://github.com/willmcg
- • [한국/willmcgugan/rich/blob/master/README.kr.md)
- • [Français readme](https://github.com/willmcgugan/rich/blob/maste
- • [Schwizerdütsch readme](https://github.com/willmcgugan/rich/blob/master/README.de-ch.md)
- • [हिन्दी readme](https://github.com/willmcgugan/rich/blob/master/README.hi.md)
- • [Português brasileiro readme](https://github.com/willmcgugan/rich/blob/master/README.pt-br.md)
 
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
@@ -102,7 +92,7 @@ For more intricate  examples, have a look in the ``tutorials`` directory and the
 
 ## Donate🎁
 
-In order to for us to maintain this project and grow our community of contributors, `please consider donating today`
+In order to for us to maintain this project and grow our community of contributors.
 [Donate](https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54)
 
 
