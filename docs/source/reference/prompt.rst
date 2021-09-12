@@ -1,5 +1,5 @@
-rich.prompt
+quo.prompt
 ===========
 
-.. automodule:: rich.prompt
+.. automodule:: quo.prompt
     :members:

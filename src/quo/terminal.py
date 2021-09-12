@@ -41,31 +41,32 @@ else:
         runtime_checkable,
     )  # pragma: no cover
 
-from rich import errors, themes
-from rich._emoji_replace import _emoji_replace
+from quo.errors import *
+from quo.themes import themes
+from quo.emojis._emoji_replace import _emoji_replace
 from quo.render import FormatTimeCallable, LogRender
-from rich.align import Align, AlignMethod
-from rich.color import ColorSystem
+from quo.align import Align, AlignMethod
+from quo.color import ColorSystem
 from quo.control import Control
-from rich.emoji import EmojiVariant
-from rich.highlighter import NullHighlighter, ReprHighlighter
-from rich.markup import render as render_markup
-from rich.measure import Measurement, measure_renderables
-from rich.pager import Pager, SystemPager
+from quo.emoji import EmojiVariant
+from quo.highlighter import NullHighlighter, ReprHighlighter
+from quo.markup import render as render_markup
+from quo.width.measure import Measurement, measure_renderables
+from quo.pager import Pager, SystemPager
 from rich.pretty import Pretty, is_expandable
-from rich.region import Region
+from quo.region import Region
 from rich.scope import render_scope
 from rich.screen import Screen
 from rich.segment import Segment
-from rich.style import Style, StyleType
-from rich.styled import Styled
-from rich.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
+from quo.style import Style, StyleType
+from quo.styled import Styled
+from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
 from quo.text import Text, TextType
-from rich.theme import Theme, ThemeStack
+from quo.theme.theme import Theme, ThemeStack
 
 if TYPE_CHECKING:
-    from rich._windows import WindowsConsoleFeatures
-    from rich.live import Live
+    from quo._windows import WindowsConsoleFeatures
+    from quo.live import Live
     from quo.status import Status
 
 WINDOWS = platform.system() == "Windows"

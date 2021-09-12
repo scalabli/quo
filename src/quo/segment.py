@@ -50,7 +50,7 @@ ControlCode = Union[
 ]
 
 
-@rich_repr()
+@quo_repr()
 class Segment(NamedTuple):
     """A piece of text with associated style. Segments are produced by the Console render process and
     are ultimately converted in to strings to be written to the terminal.
@@ -68,7 +68,7 @@ class Segment(NamedTuple):
     control: Optional[Sequence[ControlCode]] = None
     """Optional sequence of control codes."""
 
-    def __rich_repr__(self) -> Result:
+    def __quo_repr__(self) -> Result:
         yield self.text
         if self.control is None:
             if self.style is not None:
@@ -548,7 +548,7 @@ class Segments:
         self.segments = list(segments)
         self.new_lines = new_lines
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         if self.new_lines:
@@ -572,7 +572,7 @@ class SegmentLines:
         self.lines = list(lines)
         self.new_lines = new_lines
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         if self.new_lines:

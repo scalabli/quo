@@ -10,7 +10,6 @@
 [![Logo](pics/quo.png)](https://github.com/secretum-inc/quo)
 
 
-`Quo`
 `Forever Scalable`
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.

@@ -1,7 +1,7 @@
-rich.columns
+quo.columns
 ============
 
-.. automodule:: rich.columns
+.. automodule:: quo.columns
     :members:
 
 
