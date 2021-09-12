@@ -67,7 +67,7 @@ def auto(
             else:
                 return f"{self.__class__.__name__}({', '.join(repr_str)})"
 
-        def auto_rich_repr(self: Type[T]) -> Result:
+        def auto_quo_repr(self: Type[T]) -> Result:
             """Auto generate __rich_rep__ from signature of __init__"""
             try:
                 signature = inspect.signature(self.__init__)  ## type: ignore
@@ -87,14 +87,14 @@ def auto(
                     f"Failed to auto generate __rich_repr__; {error}"
                 ) from None
 
-        if not hasattr(cls, "__rich_repr__"):
-            auto_rich_repr.__doc__ = "Build a rich repr"
-            cls.__rich_repr__ = auto_rich_repr  # type: ignore
+        if not hasattr(cls, "__quo_repr__"):
+            auto_quo_repr.__doc__ = "Build a quo repr"
+            cls.__quo_repr__ = auto_quo_repr  # type: ignore
 
         auto_repr.__doc__ = "Return repr(self)"
         cls.__repr__ = auto_repr  # type: ignore
         if angular is not None:
-            cls.__rich_repr__.angular = angular  # type: ignore
+            cls.__quo_repr__.angular = angular  # type: ignore
         return cls
 
     if cls is None:
@@ -104,16 +104,16 @@ def auto(
 
 
 @overload
-def rich_repr(cls: Optional[T]) -> T:
+def quo_repr(cls: Optional[T]) -> T:
     ...
 
 
 @overload
-def rich_repr(*, angular: bool = False) -> Callable[[T], T]:
+def quo_repr(*, angular: bool = False) -> Callable[[T], T]:
     ...
 
 
-def rich_repr(
+def quo_repr(
     cls: Optional[T] = None, *, angular: bool = False
 ) -> Union[T, Callable[[T], T]]:
     if cls is None:
@@ -126,15 +126,15 @@ if __name__ == "__main__":
 
     @auto
     class Foo:
-        def __rich_repr__(self) -> Result:
+        def __quo_repr__(self) -> Result:
             yield "foo"
             yield "bar", {"shopping": ["eggs", "ham", "pineapple"]}
             yield "buy", "hand sanitizer"
 
     foo = Foo()
-    from rich.console import Console
+    from quo.terminal import Terminal
 
-    console = Console()
+    console = Terminal()
 
     console.rule("Standard repr")
     console.print(foo)
@@ -143,7 +143,7 @@ if __name__ == "__main__":
     console.print(foo, width=30)
 
     console.rule("Angular repr")
-    Foo.__rich_repr__.angular = True  # type: ignore
+    Foo.__quo_repr__.angular = True  # type: ignore
 
     console.print(foo)
 

@@ -1,11 +1,9 @@
 import sys
-import re
-import platform
 from functools import lru_cache
 from marshal import loads, dumps
 from random import randint
 from enum import IntEnum
-from typing import Any, cast, Dict, Iterable, List, Optional, Type, Union, NamedTuple, Tuple
+from typing import Any, cast, Dict, Iterable, List, Optional, Type, Union, NamedTuple
 from quo.color.color_triplet import ColorTriplet
 from quo.color._palettes import EIGHT_BIT_PALETTE, STANDARD_PALETTE, WINDOWS_PALETTE
 from quo.outliers import exceptions
@@ -18,19 +16,7 @@ StyleType = Union[str, "Style"]
 
 
 WINDOWS = platform.system() == "Windows"
-######
 
-class ColorType(IntEnum):
-    """Type of color stored in Color class."""
-
-    DEFAULT = 0
-    STANDARD = 1
-    EIGHT_BIT = 2
-    TRUECOLOR = 3
-    WINDOWS = 4
-
-    def __repr__(self) -> str:
-        return f"ColorType.{self.name}"
 
 
 ###
@@ -62,7 +48,6 @@ rgb\(([\d\s,]+)\)$
 )
 
 #########
-from quo.color.ansi import ANSI_COLOR_NAMES
 @quo_repr
 class Color(NamedTuple):
     """Terminal color definition."""
@@ -349,7 +334,7 @@ class _Bit:
         return None
 
 
-@quo_repr
+@rich_repr
 class Style:
     """A terminal style.
 

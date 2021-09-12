@@ -3,7 +3,7 @@ import io
 from time import process_time
 from typing import Any
 
-from rich import box
+from quo import box
 from quo.color import Color
 from quo.terminal import (
     Terminal,
@@ -14,7 +14,7 @@ from quo.terminal import (
     RenderableType,
 )
 from quo.markdown import Markdown
-from rich.measure import Measurement
+from quo.width import Measurement
 from rich.pretty import Pretty
 from rich.segment import Segment
 from rich.style import Style
@@ -24,7 +24,7 @@ from quo.text import Text
 
 
 class ColorBox:
-    def __rich_console__(
+    def __quo_console__(
         self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
         for y in range(0, 5):
@@ -38,7 +38,7 @@ class ColorBox:
                 yield Segment("▄", Style(color=color, bgcolor=bgcolor))
             yield Segment.line()
 
-    def __rich_measure__(
+    def __quo_measure__(
         self, console: "Terminal", options: ConsoleOptions
     ) -> Measurement:
         return Measurement(1, options.max_width)
@@ -47,7 +47,7 @@ class ColorBox:
 def make_test_card() -> Table:
     """Get a renderable that demonstrates a number of features."""
     table = Table.grid(padding=1, pad_edge=True)
-    table.title = "Rich features"
+    table.title = "Quo features"
     table.add_column("Feature", no_wrap=True, justify="center", style="bold red")
     table.add_column("Demonstration")
 

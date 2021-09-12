@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, NamedTuple, Optional, Tuple
 
 from ._palettes import EIGHT_BIT_PALETTE, STANDARD_PALETTE, WINDOWS_PALETTE
 from .color_triplet import ColorTriplet
-from quo.repr import rich_repr, Result
+from quo.repr import quo_repr, Result
 from quo.theme import DEFAULT_TERMINAL_THEME
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -264,7 +264,7 @@ rgb\(([\d\s,]+)\)$
 )
 
 
-@rich_repr
+@quo_repr
 class Color(NamedTuple):
     """Terminal color definition."""
 
@@ -277,7 +277,7 @@ class Color(NamedTuple):
     triplet: Optional[ColorTriplet] = None
     """A triplet of color components, if an RGB color."""
 
-    def __rich__(self) -> "Text":
+    def __quo__(self) -> "Text":
         """Dispays the actual color if Rich printed."""
         from .text import Text
         from .style import Style
@@ -288,7 +288,7 @@ class Color(NamedTuple):
             " >",
         )
 
-    def __rich_repr__(self) -> Result:
+    def __quo_repr__(self) -> Result:
         yield self.name
         yield self.type
         yield "number", self.number, None
