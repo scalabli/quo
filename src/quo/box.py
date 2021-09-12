@@ -433,11 +433,11 @@ LEGACY_WINDOWS_SUBSTITUTIONS = {
 if __name__ == "__main__":  # pragma: no cover
 
     from quo.columns import Columns
-    from rich.panel import Panel
+    from quo.panel import Panel
 
     from . import box
-    from .terminal import Terminal
-    from .tabulate import Table
+    from quo.terminal import Terminal
+    from quo.tabulate import Table
     from quo.text import Text
 
     console = Terminal(record=True)
