@@ -3,13 +3,13 @@ from __future__ import absolute_import
 from inspect import cleandoc, getdoc, getfile, isclass, ismodule, signature
 from typing import Any, Iterable, Optional, Tuple
 
-from .console import RenderableType, Group
-from .highlighter import ReprHighlighter
-from .jupyter import JupyterMixin
-from .panel import Panel
-from .pretty import Pretty
-from .table import Table
-from .text import Text, TextType
+from quo.terminal import RenderableType, Group
+from quo.highlighter import ReprHighlighter
+from quo.jupyter import JupyterMixin
+from quo.panel import Panel
+from quo.pretty import Pretty
+from quo.tabulate import Table
+from quo.text import Text, TextType
 
 
 def _first_paragraph(doc: str) -> str:
@@ -77,7 +77,7 @@ class Inspect(JupyterMixin):
         title_text = self.highlighter(title_str)
         return title_text
 
-    def __rich__(self) -> Panel:
+    def __quo__(self) -> Panel:
         return Panel.fit(
             Group(*self._render()),
             title=self.title,
