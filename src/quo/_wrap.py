@@ -48,8 +48,8 @@ def divide_line(text: str, width: int, fold: bool = True) -> List[int]:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from .console import Console
+    from quo.terminal import Terminal
 
-    console = Console(width=10)
+    console = Terminal(width=10)
     console.print("12345 abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ 12345")
     print(chop_cells("abcdefghijklmnopqrstuvwxyz", 10, position=2))
