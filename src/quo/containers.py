@@ -38,13 +38,13 @@ class Renderables:
             list(renderables) if renderables is not None else []
         )
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._renderables
 
-    def __rich_measure__(
+    def __quo_measure__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         dimensions = [
@@ -94,7 +94,7 @@ class Lines:
     def __len__(self) -> int:
         return self._lines.__len__()
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
