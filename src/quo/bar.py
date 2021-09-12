@@ -1,11 +1,11 @@
 from typing import Optional, Union
 
-from .color import Color
-from .console import Console, ConsoleOptions, RenderResult
-from .jupyter import JupyterMixin
-from .measure import Measurement
-from .segment import Segment
-from .style import Style
+from quo.color import Color
+from quo.terminal import Terminal, ConsoleOptions, RenderResult
+from quo.jupyter import JupyterMixin
+from quo.width import Measurement
+from quo.segment import Segment
+from quo.style import Style
 
 # There are left-aligned characters for 1/8 to 7/8, but
 # the right-aligned characters exist only for 1/8 and 4/8.
@@ -45,8 +45,8 @@ class Bar(JupyterMixin):
     def __repr__(self) -> str:
         return f"Bar({self.size}, {self.begin}, {self.end})"
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
 
         width = min(
@@ -84,8 +84,8 @@ class Bar(JupyterMixin):
         yield Segment(prefix + body[len(prefix) :] + suffix, self.style)
         yield Segment.line()
 
-    def __rich_measure__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_measure__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> Measurement:
         return (
             Measurement(self.width, self.width)
