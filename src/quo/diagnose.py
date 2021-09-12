@@ -1,6 +1,6 @@
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
-    from rich import inspect
+    from quo import Terminal
+    from quo import inspect
 
-    console = Console()
+    console = Terminal()
     inspect(console)
