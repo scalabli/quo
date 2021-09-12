@@ -6,7 +6,15 @@ from .exceptions import (
         MissingParameter,
         NoSuchApp,
         BadAppUsage, 
-        BadArgUsage, 
+        BadArgUsage,
         FileError,
-        Exit
-        )
+        Exit,
+        ConsoleError,
+        StyleError,
+        StyleSyntaxError,
+        MissingStyle,
+        StyleStackError,
+        NotRenderableError,
+        MarkupError,
+        LiveError,
+        NoAltScreen                                       )

@@ -110,9 +110,9 @@ if __name__ == "__main__":  # pragma: no cover
 
     from time import sleep
 
-    from .console import Console
+    from quo.terminal import Terminal
 
-    console = Console()
+    console = Terminal()
     with console.status("[magenta]Covid detector booting up") as status:
         sleep(3)
         console.log("Importing advanced AI")

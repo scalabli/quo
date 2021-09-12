@@ -1200,15 +1200,15 @@ class Terminal:
             # No space to render anything. This prevents potential recursion errors.
             return
         render_iterable: RenderResult
-        if hasattr(renderable, "__rich__") and not isclass(renderable):
+        if hasattr(renderable, "__quo__") and not isclass(renderable):
             renderable = renderable.__rich__()  # type: ignore
-        if hasattr(renderable, "__rich_console__") and not isclass(renderable):
-            render_iterable = renderable.__rich_console__(self, _options)  # type: ignore
+        if hasattr(renderable, "__quo_console__") and not isclass(renderable):
+            render_iterable = renderable.__quo_console__(self, _options)  # type: ignore
         elif isinstance(renderable, str):
             text_renderable = self.render_str(
                 renderable, highlight=_options.highlight, markup=_options.markup
             )
-            render_iterable = text_renderable.__rich_console__(self, _options)
+            render_iterable = text_renderable.__quo_console__(self, _options)
         else:
             raise errors.NotRenderableError(
                 f"Unable to render {renderable!r}; "

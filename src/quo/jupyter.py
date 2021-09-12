@@ -2,7 +2,7 @@ from typing import Any, Dict, Iterable, List
 
 from quo.i_o import get_terminal
 from .segment import Segment
-from .terminal_theme import DEFAULT_TERMINAL_THEME
+from quo.theme import DEFAULT_TERMINAL_THEME
 
 
 JUPYTER_HTML_FORMAT = """\

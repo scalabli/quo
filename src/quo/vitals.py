@@ -8,10 +8,12 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Iterator,
     Iterable,
     List,
     NamedTuple,
     Optional,
+    overload,
     Tuple,
     Union,
     cast,
@@ -21,8 +23,8 @@ from quo._loop import loop_last
 from quo.expediency import pick_bool
 from quo._wrap import divide_line
 from quo.width import AlignMethod
-from quo.width.cells import cell_len, set_cell_size
-from quo.containers import Lines
+from quo.width.cells import set_cell_size
+#from .containers import Lines
 from quo.control import strip_control_codes
 from quo.emoji import EmojiVariant
 from quo.jupyter import JupyterMixin
@@ -42,6 +44,144 @@ _re_whitespace = re.compile(r"\s+$")
 TextType = Union[str, "Text"]
 
 GetStyleCallable = Callable[[str], Optional[StyleType]]
+
+##
+
+from functools import lru_cache
+from typing import Dict, List
+from quo.cache import LRUCache
+
+def cell_len(text: str, _cache: Dict[str, int] = LRUCache(1024 * 4)) -> int:
+    """Get the number of cells required to display text:
+    Args:
+    text (str): Text to display.
+    Returns:
+    int: Number of cells required to display the text.
+    """
+
+    cached_result = _cache.get(text, None)
+    if cached_result is not None:
+        return cached_result
+    _get_size = get_character_cell_size
+    total_size = sum(_get_size(character) for character in text)
+    if len(text) <= 64:
+        _cache[text] = total_size
+    return total_size
+
+
+
+
+###
+
+
+
+
+
+class Lines:
+    """A list subclass which can render to the console."""
+
+    def __init__(self, lines: Iterable["Text"] = ()) -> None:
+        self._lines: List["Text"] = list(lines)
+
+    def __repr__(self) -> str:
+        return f"Lines({self._lines!r})"
+
+    def __iter__(self) -> Iterator["Text"]:
+        return iter(self._lines)
+
+    @overload
+    def __getitem__(self, index: int) -> "Text":
+        ...
+
+    @overload
+    def __getitem__(self, index: slice) -> List["Text"]:
+        ...
+
+    def __getitem__(self, index: Union[slice, int]) -> Union["Text", List["Text"]]:
+        return self._lines[index]
+
+    def __setitem__(self, index: int, value: "Text") -> "Lines":
+        self._lines[index] = value
+        return self
+
+    def __len__(self) -> int:
+        return self._lines.__len__()
+
+    def __rich_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
+    ) -> "RenderResult":
+        """Console render method to insert line-breaks."""
+        yield from self._lines
+
+    def append(self, line: "Text") -> None:
+        self._lines.append(line)
+
+    def extend(self, lines: Iterable["Text"]) -> None:
+        self._lines.extend(lines)
+
+    def pop(self, index: int = -1) -> "Text":
+        return self._lines.pop(index)
+
+    def justify(
+        self,
+        console: "Terminal",
+        width: int,
+        justify: "JustifyMethod" = "left",
+        overflow: "OverflowMethod" = "fold",
+    ) -> None:
+        """Justify and overflow text to a given width.
+
+        Args:
+            console (Console): Console instance.
+            width (int): Number of characters per line.
+            justify (str, optional): Default justify method for text: "left", "center", "full" or "right". Defaults to "left".
+            overflow (str, optional): Default overflow for text: "crop", "fold", or "ellipsis". Defaults to "fold".
+
+        """
+        from quo.text import Text
+
+        if justify == "left":
+            for line in self._lines:
+                line.truncate(width, overflow=overflow, pad=True)
+        elif justify == "center":
+            for line in self._lines:
+                line.rstrip()
+                line.truncate(width, overflow=overflow)
+                line.pad_left((width - cell_len(line.plain)) // 2)
+                line.pad_right(width - cell_len(line.plain))
+        elif justify == "right":
+            for line in self._lines:
+                line.rstrip()
+                line.truncate(width, overflow=overflow)
+                line.pad_left(width - cell_len(line.plain))
+        elif justify == "full":
+            for line_index, line in enumerate(self._lines):
+                if line_index == len(self._lines) - 1:
+                    break
+                words = line.split(" ")
+                words_size = sum(cell_len(word.plain) for word in words)
+                num_spaces = len(words) - 1
+                spaces = [1 for _ in range(num_spaces)]
+                index = 0
+                if spaces:
+                    while words_size + num_spaces < width:
+                        spaces[len(spaces) - index - 1] += 1
+                        num_spaces += 1
+                        index = (index + 1) % len(spaces)
+                tokens: List[Text] = []
+                for index, (word, next_word) in enumerate(
+                    zip_longest(words, words[1:])
+                ):
+                    tokens.append(word)
+                    if index < len(spaces):
+                        style = word.get_style_at_offset(console, -1)
+                        next_style = next_word.get_style_at_offset(console, 0)
+                        space_style = style if style == next_style else line.style
+                        tokens.append(Text(" " * spaces[index], style=space_style))
+                self[line_index] = Text("").join(tokens)
+
+##
+
 
 
 class Span(NamedTuple):

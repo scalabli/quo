@@ -31,11 +31,9 @@ from quo.accordance import (
         strip_ansi_colors
         )
 
-from quo.outliers import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
-from quo.outliers import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
@@ -65,18 +63,6 @@ from quo.decorators import (
              autoconfirm
              )
 
-from quo.outliers import (
-                   Abort,
-                   BadArgUsage,
-                   BadAppUsage,
-                   BadParameter,
-                   QuoException,
-                   FileError,
-                   MissingParameter,
-                   NoSuchApp,
-                   UsageError
-                   )
-                   
 from .setout import HelpFormatter, wraptext
 from quo.context.current import currentcontext
 from .parser import AppParser

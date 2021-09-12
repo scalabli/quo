@@ -15,7 +15,7 @@ from typing import (
     Union,
 )
 
-from quo.width import cell_len, get_character_cell_size, set_cell_size
+from quo.width.cells import cell_len, get_character_cell_size, set_cell_size
 from quo.repr import Result, rich_repr
 from quo.style import Style
 

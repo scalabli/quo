@@ -12,18 +12,18 @@ from typing import (
 )
 
 if TYPE_CHECKING:
-    from .console import (
-        Console,
+    from quo.terminal import (
+        Terminal,
         ConsoleOptions,
         JustifyMethod,
         OverflowMethod,
         RenderResult,
         RenderableType,
     )
-    from .text import Text
 
-from .cells import cell_len
-from .measure import Measurement
+from quo.vitals import Text
+from quo.width.cells import cell_len
+from quo.width.measure import Measurement
 
 T = TypeVar("T")
 
@@ -39,13 +39,13 @@ class Renderables:
         )
 
     def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._renderables
 
     def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         dimensions = [
             Measurement.get(console, options, renderable)
@@ -95,7 +95,7 @@ class Lines:
         return self._lines.__len__()
 
     def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._lines
@@ -111,7 +111,7 @@ class Lines:
 
     def justify(
         self,
-        console: "Console",
+        console: "Terminal",
         width: int,
         justify: "JustifyMethod" = "left",
         overflow: "OverflowMethod" = "fold",
@@ -125,7 +125,7 @@ class Lines:
             overflow (str, optional): Default overflow for text: "crop", "fold", or "ellipsis". Defaults to "fold".
 
         """
-        from .text import Text
+        from quo.text import Text
 
         if justify == "left":
             for line in self._lines:

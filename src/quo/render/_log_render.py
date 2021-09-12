@@ -2,11 +2,11 @@ from datetime import datetime
 from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 
 
-from .text import Text, TextType
+from quo.text import Text, TextType
 
 if TYPE_CHECKING:
     from quo.terminal import Terminal, ConsoleRenderable, RenderableType
-    from quo.table import Table
+    from quo.tabulate import Table
 
 FormatTimeCallable = Callable[[datetime], Text]
 
@@ -41,7 +41,7 @@ class LogRender:
         link_path: Optional[str] = None,
     ) -> "Table":
         from quo.containers import Renderables
-        from quo.table import Table
+        from quo.tabulate import Table
 
         output = Table.grid(padding=(0, 1))
         output.expand = True
@@ -83,8 +83,8 @@ class LogRender:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
+    from quo.terminal import Terminal
 
-    c = Console()
+    c = Terminal()
     c.print("[on blue]Hello", justify="right")
     c.log("[on blue]hello", justify="right")

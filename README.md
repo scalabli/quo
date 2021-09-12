@@ -10,6 +10,8 @@
 [![Logo](pics/quo.png)](https://github.com/secretum-inc/quo)
 
 
+`Quo`
+`Forever Scalable`
 
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
 Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API.

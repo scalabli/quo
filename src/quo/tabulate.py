@@ -10,12 +10,25 @@ from typing import (
     Union,
 )
 
-from . import box, errors
+from quo.outliers import (
+        ConsoleError,
+        StyleError,
+        StyleSyntaxError,
+        MissingStyle,
+        StyleStackError,
+        NotRenderableError,
+        MarkupError,
+        LiveError,
+        NoAltScreen
+        )
+
+from . import box
 from ._loop import loop_first_last, loop_last
-from ._pick import pick_bool
+from quo.expediency import pick_bool
 from ._ratio import ratio_distribute, ratio_reduce
 from .jupyter import JupyterMixin
-from .width import Width
+from quo.span import Width
+from quo.width import Measurement
 from .padding import Padding, PaddingDimensions
 from .protocol import is_renderable
 from .segment import Segment

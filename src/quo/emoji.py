@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING, Optional, Union
 from .jupyter import JupyterMixin
 from .segment import Segment
 from .style import Style
-from ._emoji_codes import EMOJI
-from ._emoji_replace import _emoji_replace
+from quo.emojis._emoji_codes import EMOJI
+from quo.emojis._emoji_replace import _emoji_replace
 
 if sys.version_info >= (3, 8):
     from typing import Literal

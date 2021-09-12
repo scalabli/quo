@@ -4,7 +4,7 @@ from time import process_time
 from typing import Any
 
 from rich import box
-from rich.color import Color
+from quo.color import Color
 from quo.terminal import (
     Terminal,
     ConsoleOptions,
@@ -13,7 +13,7 @@ from quo.terminal import (
     RenderResult,
     RenderableType,
 )
-from rich.markdown import Markdown
+from quo.markdown import Markdown
 from rich.measure import Measurement
 from rich.pretty import Pretty
 from rich.segment import Segment

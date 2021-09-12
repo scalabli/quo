@@ -3,7 +3,9 @@ from .vitals import (
         _detect_program_name,
         formatfilename,
         binarystream,
+        openfile,
         os_args,
+        pick_bool,
         terminal_ui,
         textstream,
         inscribe,
@@ -11,7 +13,6 @@ from .vitals import (
         KeepOpenFile,
         make_default_short_help,
         make_str,
-        openfile, 
         PacifyFlushWrapper
         )
 

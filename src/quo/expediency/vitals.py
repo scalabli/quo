@@ -173,6 +173,20 @@ class KeepOpenFile:
         return iter(self._file)
 
 
+
+def pick_bool(*values: Optional[bool]) -> bool:
+    """Pick the first non-none bool or return the last value.
+    Args
+    *values (bool): Any number of boolean or None values.
+    Returns:
+    bool: First non-none boolean.
+    """
+    assert values, "1 or more values required"
+    for value in values:
+        if value is not None:
+            return value
+        return bool(value)
+
 def inscribe(message=None, file=None, nl=True, err=False, color=None):
     """Prints a message plus a newline to the given file or stdout.  On
     first sight, this looks like the print function, but it has improved
