@@ -1,13 +1,13 @@
 from typing import cast, List, Optional, TYPE_CHECKING
 
 from quo.animation import ANIMATION
-from .measure import Measurement
-from .tabulate import Table
+from quo.width import Measurement
+from quo.tabulate import Table
 from quo.text import Text
 
 if TYPE_CHECKING:
-    from .terminal import Terminal, ConsoleOptions, RenderResult, RenderableType
-    from .style import StyleType
+    from quo.terminal import Terminal, ConsoleOptions, RenderResult, RenderableType
+    from quo.style import StyleType
 
 
 class Animate:
@@ -22,7 +22,7 @@ class Animate:
         """A spinner animation.
 
         Args:
-            name (str): Name of spinner (run python -m rich.spinner).
+            name (str): Name of spinner (run python -m quo.animate).
             text (RenderableType, optional): A renderable to display at the right of the spinner (str or Text typically). Defaults to "".
             style (StyleType, optional): Style for spinner animation. Defaults to None.
             speed (float, optional): Speed factor for animation. Defaults to 1.0.
@@ -43,12 +43,12 @@ class Animate:
         self.frame_no_offset: float = 0.0
         self._update_speed = 0.0
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         yield self.render(console.get_time())
 
-    def __rich_measure__(
+    def __quo_measure__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> Measurement:
         text = self.render(0)
@@ -113,9 +113,9 @@ class Animate:
 if __name__ == "__main__":  # pragma: no cover
     from time import sleep
 
-    from .columns import Columns
-    from .panel import Panel
-    from .live import Live
+    from quo.columns import Columns
+    from quo.panel import Panel
+    from quo.live import Live
 
     all_spinners = Columns(
         [
