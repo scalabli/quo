@@ -2,7 +2,7 @@ from contextlib import suppress
 import re
 from typing import Iterable, NamedTuple
 
-from .color import Color
+from quo.color import Color
 from .style import Style
 from .text import Text
 
@@ -215,9 +215,9 @@ if __name__ == "__main__":  # pragma: no cover
 
     pty.spawn(sys.argv[1:], read)
 
-    from .console import Console
+    from quo.terminal import Terminal
 
-    console = Console(record=True)
+    console = Terminal(record=True)
 
     stdout_result = stdout.getvalue().decode("utf-8")
     print(stdout_result)
