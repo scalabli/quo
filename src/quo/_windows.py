@@ -69,7 +69,7 @@ if __name__ == "__main__":
     import platform
 
     features = get_windows_console_features()
-    from rich import print
+    from quo import print
 
     print(f'platform="{platform.system()}"')
     print(repr(features))
