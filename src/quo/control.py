@@ -3,7 +3,7 @@ from typing import Any, Callable, Dict, Iterable, List, TYPE_CHECKING, Union
 from .segment import ControlCode, ControlType, Segment
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult
+    from quo.terminal import Terminal, ConsoleOptions, RenderResult
 
 STRIP_CONTROL_CODES = [
     8,  # Backspace
@@ -37,7 +37,7 @@ class Control:
     """A renderable that inserts a control code (non printable but may move cursor).
 
     Args:
-        *codes (str): Positional arguments are either a :class:`~rich.segment.ControlType` enum or a
+        *codes (str): Positional arguments are either a :class:`~quo.segment.ControlType` enum or a
             tuple of ControlType and an integer parameter
     """
 
@@ -150,8 +150,8 @@ class Control:
     def __str__(self) -> str:
         return self.segment.text
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         if self.segment.text:
             yield self.segment
