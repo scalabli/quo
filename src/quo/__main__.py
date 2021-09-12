@@ -15,10 +15,10 @@ from quo.terminal import (
 )
 from quo.markdown import Markdown
 from quo.width import Measurement
-from rich.pretty import Pretty
-from rich.segment import Segment
-from rich.style import Style
-from rich.syntax import Syntax
+from quo.pretty import Pretty
+from quo.segment import Segment
+from quo.style import Style
+from quo.syntax import Syntax
 from quo.tabulate import Table
 from quo.text import Text
 
@@ -109,7 +109,7 @@ def make_test_card() -> Table:
     )
 
     markup_example = (
-        "[bold magenta]Rich[/] supports a simple [i]bbcode[/i]-like [b]markup[/b] for [yellow]color[/], [underline]style[/], and emoji! "
+        "[bold magenta]Quo[/] supports a simple [i]bbcode[/i]-like [b]markup[/b] for [yellow]color[/], [underline]style[/], and emoji! "
         ":+1: :apple: :ant: :bear: :baguette_bread: :bus: "
     )
     table.add_row("Markup", markup_example)
@@ -217,7 +217,7 @@ Supports much of the *markdown*, __syntax__!
 
 if __name__ == "__main__":  # pragma: no cover
 
-    console = Console(
+    console = Terminal(
         file=io.StringIO(),
         force_terminal=True,
     )
@@ -238,9 +238,9 @@ if __name__ == "__main__":  # pragma: no cover
 
     print(f"rendered in {taken}ms")
 
-    from rich.panel import Panel
+    from quo.panel import Panel
 
-    console = Console()
+    console = Terminal()
 
     sponsor_message = Table.grid(padding=1)
     sponsor_message.add_column(style="green", justify="right")
@@ -263,7 +263,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     intro_message = Text.from_markup(
         """\
-It takes a lot of time to develop Rich and to provide support.
+It takes a lot of time to develop Quo and to provide support.
 
 Consider supporting my work via Github Sponsors (ask your company / organization), or buy me a coffee to say thanks.
 
@@ -280,7 +280,7 @@ Consider supporting my work via Github Sponsors (ask your company / organization
             message,
             box=box.ROUNDED,
             padding=(1, 2),
-            title="[b red]Thanks for trying out Rich!",
+            title="[b red]Thanks for trying out Quo!",
             border_style="bright_blue",
         ),
         justify="center",
