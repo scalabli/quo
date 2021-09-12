@@ -14,12 +14,12 @@ class RichRenderable(ABC):
 
     @classmethod
     def __subclasshook__(cls, other: type) -> bool:
-        """Check if this class supports the rich render protocol."""
-        return hasattr(other, "__rich_console__") or hasattr(other, "__rich__")
+        """Check if this class supports quo render protocol."""
+        return hasattr(other, "__rich_console__") or hasattr(other, "__quo__")
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.text import Text
+    from quo.text import Text
 
     t = Text()
     print(isinstance(Text, RichRenderable))
