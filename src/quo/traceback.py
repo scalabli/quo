@@ -16,8 +16,8 @@ from pygments.token import Token
 from . import pretty
 from ._loop import loop_first, loop_last
 from .columns import Columns
-from .console import (
-    Console,
+from .terminal import (
+    Terminal,
     ConsoleOptions,
     ConsoleRenderable,
     RenderResult,
@@ -48,9 +48,9 @@ def install(
     show_locals: bool = False,
     indent_guides: bool = True,
 ) -> Callable[[Type[BaseException], BaseException, Optional[TracebackType]], Any]:
-    """Install a rich traceback handler.
+    """Install a quo traceback handler.
 
-    Once installed, any tracebacks will be printed with syntax highlighting and rich formatting.
+    Once installed, any tracebacks will be printed with syntax highlighting and quo formatting.
 
 
     Args:
@@ -67,7 +67,7 @@ def install(
         Callable: The previous exception handler that was replaced.
 
     """
-    traceback_console = Console(file=sys.stderr) if console is None else console
+    traceback_console = Terminal(file=sys.stderr) if console is None else console
 
     def excepthook(
         type_: Type[BaseException],
@@ -267,11 +267,11 @@ class Traceback:
         Returns:
             Traceback: A Traceback instance that may be printed.
         """
-        rich_traceback = cls.extract(
+        quo_traceback = cls.extract(
             exc_type, exc_value, traceback, show_locals=show_locals
         )
         return cls(
-            rich_traceback,
+            quo_traceback,
             width=width,
             extra_lines=extra_lines,
             theme=theme,
@@ -310,7 +310,7 @@ class Traceback:
         stacks: List[Stack] = []
         is_cause = False
 
-        from rich import _IMPORT_CWD
+        from quo import _IMPORT_CWD
 
         def safe_str(_object: Any) -> str:
             """Don't allow exceptions from __str__ to propegate."""
@@ -359,7 +359,7 @@ class Traceback:
                     else None,
                 )
                 append(frame)
-                if "_rich_traceback_guard" in frame_summary.f_locals:
+                if "_quo_traceback_guard" in frame_summary.f_locals:
                     del stack.frames[:]
 
             cause = getattr(exc_value, "__cause__", None)
@@ -389,8 +389,8 @@ class Traceback:
         trace = Trace(stacks=stacks)
         return trace
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
         theme = self.theme
         background_style = theme.get_background_style()
@@ -592,9 +592,9 @@ class Traceback:
 
 if __name__ == "__main__":  # pragma: no cover
 
-    from .console import Console
+    from .terminal import Terminal
 
-    console = Console()
+    console = Terminal()
     import sys
 
     def bar(a: Any) -> None:  # 这是对亚洲语言支持的测试。面对模棱两可的想法，拒绝猜测的诱惑
@@ -602,7 +602,7 @@ if __name__ == "__main__":  # pragma: no cover
         print(one / a)
 
     def foo(a: Any) -> None:
-        _rich_traceback_guard = True
+        _quo_traceback_guard = True
         zed = {
             "characters": {
                 "Paul Atreides",
