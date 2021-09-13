@@ -1,7 +1,7 @@
-rich.abc
+quo.abc
 ========
 
-.. automodule:: rich.abc
+.. automodule:: quo.abc
     :members:
 
 
