@@ -119,7 +119,7 @@ class JSONHighlighter(RegexHighlighter):
 if __name__ == "__main__":  # pragma: no cover
     from .terminal import Terminal
 
-    console = Console()
+    console = Terminal()
     console.print("[bold green]hello world![/bold green]")
     console.print("'[bold green]hello world![/bold green]'")
 
