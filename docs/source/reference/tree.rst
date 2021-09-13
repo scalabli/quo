@@ -1,5 +1,5 @@
-rich.tree
+quo.tree
 =========
 
-.. automodule:: rich.tree
+.. automodule:: quo.tree
     :members: 
