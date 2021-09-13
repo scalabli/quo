@@ -233,8 +233,8 @@ if __name__ == "__main__":  # pragma: no cover
         ":warning-emoji: [bold red blink] DANGER![/]",
     ]
 
-    from rich.table import Table
-    from rich import print
+    from quo.tabulate import Table
+    from quo import print
 
     grid = Table("Markup", "Result", padding=(0, 1))
 
