@@ -41,7 +41,7 @@ else:
         runtime_checkable,
     )  # pragma: no cover
 
-from quo.errors import *
+from quo.outliers import expediency
 from quo.themes import themes
 from quo.emojis._emoji_replace import _emoji_replace
 from quo.render import FormatTimeCallable, LogRender
@@ -53,11 +53,11 @@ from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
 from quo.width.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
-from rich.pretty import Pretty, is_expandable
+from quo.pretty import Pretty, is_expandable
 from quo.region import Region
-from rich.scope import render_scope
-from rich.screen import Screen
-from rich.segment import Segment
+from quo.scope import render_scope
+from quo.screen import Screen
+from quo.segment import Segment
 from quo.style import Style, StyleType
 from quo.styled import Styled
 from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
