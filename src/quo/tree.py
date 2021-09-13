@@ -3,7 +3,7 @@ from typing import Iterator, List, Optional, Tuple
 from ._loop import loop_first, loop_last
 from .terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.width import Measurement
 from .segment import Segment
 from .style import Style, StyleStack, StyleType
 from .styled import Styled
