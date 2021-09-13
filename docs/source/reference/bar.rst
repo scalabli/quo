@@ -1,7 +1,7 @@
-rich.bar
+quo.bar
 ========
 
-.. automodule:: rich.bar
+.. automodule:: quo.bar
     :members:
 
 
