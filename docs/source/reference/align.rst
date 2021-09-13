@@ -1,7 +1,7 @@
-rich.align
+quo.align
 ==========
 
-.. automodule:: rich.align
+.. automodule:: align.align
     :members:
 
 
