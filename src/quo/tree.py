@@ -1,7 +1,7 @@
 from typing import Iterator, List, Optional, Tuple
 
 from ._loop import loop_first, loop_last
-from .console import Console, ConsoleOptions, RenderableType, RenderResult
+from .terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
@@ -67,8 +67,8 @@ class Tree(JupyterMixin):
         self.children.append(node)
         return node
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
 
         stack: List[Iterator[Tuple[bool, Tree]]] = []
@@ -158,8 +158,8 @@ class Tree(JupyterMixin):
                 guide_style_stack.push(get_style(node.guide_style))
                 push(iter(loop_last(node.children)))
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_measure__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         stack: List[Iterator[Tree]] = [iter([self])]
         pop = stack.pop
@@ -188,11 +188,11 @@ class Tree(JupyterMixin):
 
 if __name__ == "__main__":  # pragma: no cover
 
-    from rich.console import Group
-    from rich.markdown import Markdown
-    from rich.panel import Panel
-    from rich.syntax import Syntax
-    from rich.table import Table
+    from quo.terminal import Group
+    from quo.markdown import Markdown
+    from quo.panel import Panel
+    from quo.syntax import Syntax
+    from quo.tabulate import Table
 
     table = Table(row_styles=["", "dim"])
 
@@ -222,7 +222,7 @@ class Segment(NamedTuple):
 """
     )
 
-    root = Tree("🌲 [b green]Rich Tree", highlight=True)
+    root = Tree("🌲 [b green]Quo Tree", highlight=True)
 
     node = root.add(":file_folder: Renderables", guide_style="red")
     simple_node = node.add(":file_folder: [bold yellow]Atomic", guide_style="uu green")
@@ -238,5 +238,5 @@ class Segment(NamedTuple):
 
     containers_node.add(Group("📄 [b magenta]Table", table))
 
-    console = Console()
+    console = Terminal()
     console.print(root)
