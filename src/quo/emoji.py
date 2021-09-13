@@ -72,7 +72,7 @@ class Emoji(JupyterMixin):
     def __str__(self) -> str:
         return self._char
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         yield Segment(self._char, console.get_style(self.style))
