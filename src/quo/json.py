@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     from quo.terminal import Terminal
 
-    console = Console()
+    console = Terminal()
     error_console = Console(stderr=True)
 
     try:
