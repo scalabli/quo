@@ -5,7 +5,7 @@ from commonmark.blocks import Parser
 from . import box
 from ._loop import loop_first
 from ._stack import Stack
-from .console import Console, ConsoleOptions, JustifyMethod, RenderResult
+from .terminal import Console, ConsoleOptions, JustifyMethod, RenderResult
 from .containers import Renderables
 from .jupyter import JupyterMixin
 from .panel import Panel
@@ -70,7 +70,7 @@ class MarkdownElement:
         """
         return True
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Console", options: "ConsoleOptions"
     ) -> "RenderResult":
         return ()
@@ -114,7 +114,7 @@ class Paragraph(TextElement):
     def __init__(self, justify: JustifyMethod) -> None:
         self.justify = justify
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         self.text.justify = self.justify
@@ -138,7 +138,7 @@ class Heading(TextElement):
         self.style_name = f"markdown.h{level}"
         super().__init__()
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         text = self.text
@@ -172,7 +172,7 @@ class CodeBlock(TextElement):
         self.lexer_name = lexer_name
         self.theme = theme
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         code = str(self.text).rstrip()
@@ -198,7 +198,7 @@ class BlockQuote(TextElement):
         self.elements.append(child)
         return False
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         render_options = options.update(width=options.max_width - 4)
@@ -217,7 +217,7 @@ class HorizontalRule(MarkdownElement):
 
     new_line = False
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         style = console.get_style("markdown.hr", default="none")
@@ -244,7 +244,7 @@ class ListElement(MarkdownElement):
         self.items.append(child)
         return False
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         if self.list_type == "bullet":
@@ -331,7 +331,7 @@ class ImageItem(TextElement):
         self.text = Text(justify="left")
         super().on_enter(context)
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         link_style = Style(link=self.link or self.destination or None)
@@ -436,8 +436,8 @@ class Markdown(JupyterMixin):
         self.inline_code_lexer = inline_code_lexer
         self.inline_code_theme = inline_code_theme or code_theme
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
         """Render markdown to the console."""
         style = console.get_style(self.style, default="none")
@@ -535,7 +535,7 @@ if __name__ == "__main__":  # pragma: no cover
     import sys
 
     parser = argparse.ArgumentParser(
-        description="Render Markdown to the console with Rich"
+        description="Render Markdown to the console with quo"
     )
     parser.add_argument(
         "path",
@@ -595,7 +595,7 @@ if __name__ == "__main__":  # pragma: no cover
     )
     args = parser.parse_args()
 
-    from rich.console import Console
+    from quo.terminal import Terminal
 
     if args.path == "-":
         markdown_body = sys.stdin.read()
@@ -613,12 +613,12 @@ if __name__ == "__main__":  # pragma: no cover
         import pydoc
         import io
 
-        console = Console(
+        console = Terminal(
             file=io.StringIO(), force_terminal=args.force_color, width=args.width
         )
         console.print(markdown)
         pydoc.pager(console.file.getvalue())  # type: ignore
 
     else:
-        console = Console(force_terminal=args.force_color, width=args.width)
+        console = Terminal(force_terminal=args.force_color, width=args.width)
         console.print(markdown)
