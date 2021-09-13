@@ -3,8 +3,8 @@ from threading import Event, RLock, Thread
 from types import TracebackType
 from typing import IO, Any, Callable, List, Optional, TextIO, Type, cast
 
-from . import get_console
-from .console import Console, ConsoleRenderable, RenderableType, RenderHook
+from quo.i_o import get_terminal
+from .terminal import Terminal, ConsoleRenderable, RenderableType, RenderHook
 from .control import Control
 from .file_proxy import FileProxy
 from .jupyter import JupyterMixin
@@ -52,7 +52,7 @@ class Live(JupyterMixin, RenderHook):
         self,
         renderable: Optional[RenderableType] = None,
         *,
-        console: Optional[Console] = None,
+        console: Optional[Terminal] = None,
         screen: bool = False,
         auto_refresh: bool = True,
         refresh_per_second: float = 4,
@@ -275,14 +275,14 @@ if __name__ == "__main__":  # pragma: no cover
     from typing import Dict, List, Tuple
 
     from .align import Align
-    from .console import Console
+    from .terminal import Terminal
     from .live import Live
     from .panel import Panel
     from .rule import Rule
     from .syntax import Syntax
-    from .table import Table
+    from .tabulate import Table
 
-    console = Console()
+    console = Terminal()
 
     syntax = Syntax(
         '''def loop_last(values: Iterable[T]) -> Iterable[Tuple[bool, T]]:
