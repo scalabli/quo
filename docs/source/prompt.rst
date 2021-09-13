@@ -1,33 +1,63 @@
-Prompt
-======
+User Input Prompts
+==================
 
-Rich has a number of :class:`~rich.prompt.Prompt` classes which ask a user for input and loop until a valid response is received. Here's a simple example::
+.. currentmodule:: quo
 
-    >>> from rich.prompt import Prompt
-    >>> name = Prompt.ask("Enter your name")
+quo supports prompts in two different places.  The first is automated
+prompts when the parameter handling happens, and the second is to ask for
+prompts at a later point independently.
 
-The prompt may be given as a string (which may contain :ref:`console_markup` and emoji code) or as a :class:`~rich.text.Text` instance.
+This can be accomplished with the :func:`prompt` function, which asks for
+valid input according to a type, or the :func:`confirm` function, which asks
+for confirmation (yes/no).
 
-You can set a default value which will be returned if the user presses return without entering any text::
+App Prompts
+--------------
 
-    >>> from rich.prompt import Prompt
-    >>> name = Prompt.ask("Enter your name", default="Paul Atreides")
+App prompts are integrated into the app interface.  See
+:ref:`app-prompting` for more information.  Internally, it
+automatically calls either :func:`prompt` or :func:`confirm` as necessary.
 
-If you supply a list of choices, the prompt will loop until the user enters one of the choices::
+Input Prompts
+-------------
 
-    >>> from rich.prompt import Prompt
-    >>> name = Prompt.ask("Enter your name", choices=["Paul", "Jessica", "Duncan"], default="Paul")
+To manually ask for user input, you can use the :func:`prompt` function.
+By default, it accepts any Unicode string, but you can ask for any other
+type.  For instance, you can ask for a valid integer:
 
-In addition to :class:`~rich.prompt.Prompt` which returns strings, you can also use :class:`~rich.prompt.IntPrompt` which asks the user for an integer, and :class:`~rich.prompt.FloatPrompt` for floats.
+.. code:: python
 
-The :class:`~rich.prompt.Confirm` class is a specialized prompt which may be used to ask the user a simple yes / no question. Here's an example::
+   import quo
+   from quo import prompt, echo
+   prompt('Please enter a valid integer', type=int)
 
-    >>> from rich.prompt import Confirm
-    >>> is_rich_great = Confirm.ask("Do you like rich?")
-    >>> assert is_rich_great
+Additionally, the type will be determined automatically if a default value is
+provided.  For instance, the following will only accept floats:
 
-The Prompt class was designed to be customizable via inheritance. See `prompt.py <https://github.com/willmcgugan/rich/blob/master/rich/prompt.py>`_ for examples.
+.. code:: python
 
-To see some of the prompts in action, run the following command from the command line::
+   from quo import prompt
+   prompt('Please enter a number', default=42.0)
 
-    python -m rich.prompt
+Confirmation Prompts
+--------------------
+
+To ask if a user wants to continue with an action, the :func:`confirm`
+function comes in handy.  By default, it returns the result of the prompt
+as a boolean value:
+
+.. code:: python
+
+   from quo import confirm, echo
+   
+   if confirm('Do you want to continue?'):
+   echo('Well done!')
+
+There is also the option to make the function automatically abort the
+execution of the program if it does not return ``True``:
+
+.. code:: python
+
+   from quo import confirm
+   
+   confirm('Do you want to continue?', abort=True)
