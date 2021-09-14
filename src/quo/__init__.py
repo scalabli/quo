@@ -96,19 +96,14 @@ def clear():
 
 
 from quo.i_o import (
-              checknumber,
-              checkbool,
-              checkinteger,
               confirm,
               launch,
               echo,
-        #      interpose,
               edit,
               terminalsize,
-           #   pause,
               style,
               unstyle,
-             # prompt,
+              prompt,
               )
 
 from quo.shortcuts import container
