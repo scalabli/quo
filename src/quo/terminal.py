@@ -41,11 +41,11 @@ else:
         runtime_checkable,
     )  # pragma: no cover
 
-from quo.outliers import expediency
-from quo.themes import themes
+from quo.outliers import exceptions
+from quo.theme import themes
 from quo.emojis._emoji_replace import _emoji_replace
 from quo.render import FormatTimeCallable, LogRender
-from quo.align import Align, AlignMethod
+from quo.width.align import Align, AlignMethod
 from quo.color import ColorSystem
 from quo.control import Control
 from quo.emoji import EmojiVariant

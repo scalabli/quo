@@ -8,7 +8,7 @@ Reference
    reference/bar.rst
    reference/color.rst
    reference/columns.rst
-   reference/console.rst
+   reference/terminals.rst
    reference/emoji.rst
    reference/highlighter.rst
    reference/init.rst
