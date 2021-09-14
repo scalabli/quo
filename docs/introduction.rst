@@ -1,18 +1,13 @@
 Introduction
 ============
+Quo is a Python based toolkit for writing Command-Line Interface(CLI) applications. Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API. Simple to code, easy to learn, and does not come with needless baggage.
 
-Rich is a Python library for writing *rich* text (with color and style) to the terminal, and for displaying advanced content such as tables, markdown, and syntax highlighted code. 
-
-Use Rich to make your command line applications visually appealing and present data in a more readable way. Rich can also be a useful debugging aid by pretty printing and syntax highlighting data structures.
 
 Requirements
 ------------
 
-Rich works with OSX, Linux and Windows.
-
-On Windows both the (ancient) cmd.exe terminal is supported and the new `Windows Terminal <https://github.com/microsoft/terminal/releases>`_. The later has much improved support for color and style.
-
-Rich requires Python 3.6.1 and above. Note that Python 3.6.0 is *not* supported due to lack of support for methods on NamedTuples.
+Quo works flawlessly with Linux, OSX and Windows.
+Rich requires Python `3.6.1` or later
 
 .. note::
     PyCharm users will need to enable "emulate terminal" in output console option in run/debug configuration to see styled output.
@@ -34,7 +29,8 @@ If you intend to use Rich with Jupyter then there are some additional dependenci
 Quick Start
 -----------
 
-The quickest way to get up and running with Rich is to import the alternative ``print`` function which takes the same arguments as the built-in ``print`` and may be used as a drop-in replacement. Here's how you would do that::
+The quickest way to get up and running with Rich is to import the alternative ``print`` function which takes the same arguments as the built-in ``print`` and may be used as a drop-in replacement. Here's how you would do that
+
 
     from rich import print
 
