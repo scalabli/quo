@@ -33,10 +33,6 @@ from quo.accordance import (
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
-from quo.context.current import resolve_color_default
-from quo.types import Choice, convert_type
-from quo.expediency import inscribe, LazyFile
-
 from quo.text import ANSI, HTML
 from quo.output import ColorDepth
 from quo.shortcuts import button_dialog
