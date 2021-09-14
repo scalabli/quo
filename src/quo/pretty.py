@@ -39,7 +39,7 @@ def _get_attr_fields(obj: Any) -> Iterable["_attr_module.Attribute[Any]"]:
 
 
 from .highlighter import ReprHighlighter
-from . import get_console
+from quo.expediency import get_terminal
 from ._loop import loop_last
 from ._pick import pick_bool
 from .abc import RichRenderable
@@ -84,7 +84,7 @@ def install(
         max_string (int, optional): Maximum length of string before truncating, or None to disable. Defaults to None.
         expand_all (bool, optional): Expand all containers. Defaults to False
     """
-    from quo.expediency import get_console
+    from quo.expediency import get_terminal
 
     from .terminal import ConsoleRenderable  # needed here to prevent circular import
 

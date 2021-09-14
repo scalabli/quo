@@ -22,7 +22,7 @@ from .core import (
     to_formatted_text,
 )
 
-from .vitals import Text, TextType
+from .vitals import Span, Text, TextType
 from .pygments import PygmentsTokens
 from .utils import (
     fragment_list_len,

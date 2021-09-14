@@ -3,11 +3,11 @@ from operator import attrgetter
 import re
 from typing import Callable, Iterable, List, Match, NamedTuple, Optional, Tuple, Union
 
-from .errors import MarkupError
-from .style import Style
-from .text import Span, Text
-from .emoji import EmojiVariant
-from ._emoji_replace import _emoji_replace
+from quo.outliers.exceptions import MarkupError
+from quo.style import Style
+from quo.text import Span, Text
+from quo.emoji import EmojiVariant
+from quo.emojis._emoji_replace import _emoji_replace
 
 
 RE_TAGS = re.compile(
