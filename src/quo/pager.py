@@ -28,8 +28,8 @@ class SystemPager(Pager):
 
 if __name__ == "__main__":  # pragma: no cover
     from .__main__ import make_test_card
-    from .console import Console
+    from .terminal import Terminal
 
-    console = Console()
+    console = Terminal()
     with console.pager(styles=True):
         console.print(make_test_card())
