@@ -7,7 +7,8 @@ Requirements
 ------------
 
 Quo works flawlessly with Linux, OSX and Windows.
-Rich requires Python `3.6.1` or later
+
+Quo requires Python ``3.6.1`` or later
 
 .. note::
     PyCharm users will need to enable "emulate terminal" in output console option in run/debug configuration to see styled output.
@@ -15,11 +16,11 @@ Rich requires Python `3.6.1` or later
 Installation
 ------------
 
-You can install Rich from PyPi with `pip` or your favorite package manager::
+You can install Quo from PyPi with `pip`
 
-    pip install rich
+.. code-block:: console
 
-Add the ``-U`` switch to update to the current version, if Rich is already installed.
+    pip install -U quo
 
 If you intend to use Rich with Jupyter then there are some additional dependencies which you can install with the following command::
 
@@ -31,16 +32,15 @@ Quick Start
 
 The quickest way to get up and running with Rich is to import the alternative ``print`` function which takes the same arguments as the built-in ``print`` and may be used as a drop-in replacement. Here's how you would do that
 
+.. code-block:: python
 
-    from rich import print
+    from quo import echo
 
-You can then print strings or objects to the terminal in the usual way. Rich will do some basic syntax highlighting and format data structures to make them easier to read.
+    echo(f"Hello world", fg="red", italic=True)
 
-Strings may contain :ref:`console_markup` which can be used to insert color and styles in to the output.
 
 The following demonstrates both console markup and pretty formatting of Python objects::
 
-    >>> print("[italic red]Hello[/italic red] World!", locals())
 
 This writes the following output to the terminal (including all the colors and styles):
 
