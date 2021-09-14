@@ -108,22 +108,5 @@ from quo.i_o import (
 
 from quo.shortcuts import container
 from quo.widgets import TextArea, Frame
-from quo.systematize import tabular
-from .types import (
-              BOOL,
-              Choice,
-              DateTime,
-              File,
-              FLOAT,
-              FloatRange,
-              INT,
-              IntRange,
-              ParamType,
-              Path,
-              STRING,
-              Tuple,
-              UNPROCESSED,
-              UUID
-              )
 
 __version__ = "2021.5.5"
