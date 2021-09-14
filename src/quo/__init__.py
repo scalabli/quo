@@ -8,7 +8,6 @@ import importlib
 import os
 import subprocess
 from quo.i_o.termui import ansi_color_codes, _ansi_reset_all
-from quo.outliers import Abort, UsageError
 from quo.application import Application
 from .core import (
              App,
