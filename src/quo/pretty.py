@@ -51,7 +51,7 @@ from quo.text import Text
 
 if TYPE_CHECKING:
     from .console import (
-        Console,
+        Terminal,
         ConsoleOptions,
         HighlighterType,
         JustifyMethod,
@@ -64,7 +64,7 @@ _re_jupyter_repr = re.compile(f"^_repr_.+_$")
 
 
 def install(
-    console: Optional["Console"] = None,
+    console: Optional["Terminal"] = None,
     overflow: "OverflowMethod" = "ignore",
     crop: bool = False,
     indent_guides: bool = False,
@@ -75,7 +75,7 @@ def install(
     """Install automatic pretty printing in the Python REPL.
 
     Args:
-        console (Console, optional): Console instance or ``None`` to use global console. Defaults to None.
+        console (Terminal, optional): Terminal instance or ``None`` to use global console. Defaults to None.
         overflow (Optional[OverflowMethod], optional): Overflow method. Defaults to "ignore".
         crop (Optional[bool], optional): Enable cropping of long lines. Defaults to False.
         indent_guides (bool, optional): Enable indentation guides. Defaults to False.
@@ -88,7 +88,7 @@ def install(
 
     from .terminal import ConsoleRenderable  # needed here to prevent circular import
 
-    console = console or get_console()
+    console = console or get_terminal()
     assert console is not None
 
     def display_hook(value: Any) -> None:
@@ -203,7 +203,7 @@ class Pretty(JupyterMixin):
         self.insert_line = insert_line
 
     def __quo_console__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         pretty_str = pretty_repr(
             self._object,
@@ -237,7 +237,7 @@ class Pretty(JupyterMixin):
         yield pretty_text
 
     def __quo_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         pretty_str = pretty_repr(
             self._object,
@@ -719,7 +719,7 @@ def pretty_repr(
 def pprint(
     _object: Any,
     *,
-    console: Optional["Console"] = None,
+    console: Optional["Terminal"] = None,
     indent_guides: bool = True,
     max_length: Optional[int] = None,
     max_string: Optional[int] = None,
@@ -729,14 +729,14 @@ def pprint(
 
     Args:
         _object (Any): Object to pretty print.
-        console (Console, optional): Console instance, or None to use default. Defaults to None.
+        console (Terminal, optional): Terminal instance, or None to use default. Defaults to None.
         max_length (int, optional): Maximum length of containers before abbreviating, or None for no abbreviation.
             Defaults to None.
         max_string (int, optional): Maximum length of strings before truncating, or None to disable. Defaults to None.
         indent_guides (bool, optional): Enable indentation guides. Defaults to True.
         expand_all (bool, optional): Expand all containers. Defaults to False.
     """
-    _console = get_console() if console is None else console
+    _console = get_terminal() if console is None else console
     _console.print(
         Pretty(
             _object,
