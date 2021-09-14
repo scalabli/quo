@@ -1,7 +1,0 @@
-quo
-====
-
-.. automodule:: quo
-    :members:
-    
-
