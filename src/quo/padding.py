@@ -1,14 +1,14 @@
 from typing import cast, List, Optional, Tuple, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
-    from .console import (
-        Console,
+    from .terminal import (
+        Terminal,
         ConsoleOptions,
         RenderableType,
         RenderResult,
     )
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.width import Measurement
 from .style import Style
 from .segment import Segment
 
@@ -76,8 +76,8 @@ class Padding(JupyterMixin):
     def __repr__(self) -> str:
         return f"Padding({self.renderable!r}, ({self.top},{self.right},{self.bottom},{self.left}))"
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         style = console.get_style(self.style)
         if self.expand:
@@ -120,8 +120,8 @@ class Padding(JupyterMixin):
             blank_line = blank_line or [_Segment(f'{" " * width}\n', style)]
             yield from blank_line * self.bottom
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_measure__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         max_width = options.max_width
         extra_width = self.left + self.right
@@ -134,6 +134,6 @@ class Padding(JupyterMixin):
 
 
 if __name__ == "__main__":  #  pragma: no cover
-    from rich import print
+    from quo import print
 
     print(Padding("Hello, World", (2, 4), style="on blue"))
