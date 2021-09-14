@@ -4,14 +4,14 @@ from .box import Box, ROUNDED
 
 from .align import AlignMethod
 from .jupyter import JupyterMixin
-from .measure import Measurement, measure_renderables
+from quo.width import Measurement, measure_renderables
 from .padding import Padding, PaddingDimensions
 from .style import StyleType
-from .text import Text, TextType
+from quo.text import Text, TextType
 from .segment import Segment
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderableType, RenderResult
+    from .terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
 
 
 class Panel(JupyterMixin):
@@ -132,8 +132,8 @@ class Panel(JupyterMixin):
             return subtitle_text
         return None
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         _padding = Padding.unpack(self.padding)
         renderable = (
@@ -207,8 +207,8 @@ class Panel(JupyterMixin):
 
         yield new_line
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_measure__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         _title = self._title
         _, right, _, left = Padding.unpack(self.padding)
@@ -231,16 +231,16 @@ class Panel(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from .console import Console
+    from .terminal import Terminal
 
-    c = Console()
+    c = Terminal()
 
     from .padding import Padding
     from .box import ROUNDED, DOUBLE
 
     p = Panel(
         "Hello, World!",
-        title="rich.Panel",
+        title="quo.Panel",
         style="white on blue",
         box=DOUBLE,
         padding=1,
