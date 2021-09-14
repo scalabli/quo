@@ -43,11 +43,11 @@ from . import get_console
 from ._loop import loop_last
 from ._pick import pick_bool
 from .abc import RichRenderable
-from .cells import cell_len
+from quo.width.cells import cell_len
 from .highlighter import ReprHighlighter
 from .jupyter import JupyterMixin, JupyterRenderable
-from .measure import Measurement
-from .text import Text
+from quo.width import Measurement
+from quo.text import Text
 
 if TYPE_CHECKING:
     from .console import (
@@ -84,15 +84,15 @@ def install(
         max_string (int, optional): Maximum length of string before truncating, or None to disable. Defaults to None.
         expand_all (bool, optional): Expand all containers. Defaults to False
     """
-    from rich import get_console
+    from quo.expediency import get_console
 
-    from .console import ConsoleRenderable  # needed here to prevent circular import
+    from .terminal import ConsoleRenderable  # needed here to prevent circular import
 
     console = console or get_console()
     assert console is not None
 
     def display_hook(value: Any) -> None:
-        """Replacement sys.displayhook which prettifies objects with Rich."""
+        """Replacement sys.displayhook which prettifies objects with quo."""
         if value is not None:
             assert console is not None
             builtins._ = None  # type: ignore
@@ -113,10 +113,10 @@ def install(
 
     def ipy_display_hook(value: Any) -> None:  # pragma: no cover
         assert console is not None
-        # always skip rich generated jupyter renderables or None values
+        # always skip quo generated jupyter renderables or None values
         if isinstance(value, JupyterRenderable) or value is None:
             return
-        # on jupyter rich display, if using one of the special representations don't use rich
+        # on jupyter quo display, if using one of the special representations don't use quo
         if console.is_jupyter and any(
             _re_jupyter_repr.match(attr) for attr in dir(value)
         ):
@@ -146,16 +146,16 @@ def install(
         ip = get_ipython()  # type: ignore
         from IPython.core.formatters import BaseFormatter
 
-        # replace plain text formatter with rich formatter
-        rich_formatter = BaseFormatter()
-        rich_formatter.for_type(object, func=ipy_display_hook)
-        ip.display_formatter.formatters["text/plain"] = rich_formatter
+        # replace plain text formatter with quo formatter
+        quo_formatter = BaseFormatter()
+        quo_formatter.for_type(object, func=ipy_display_hook)
+        ip.display_formatter.formatters["text/plain"] = quo_formatter
     except Exception:
         sys.displayhook = display_hook
 
 
 class Pretty(JupyterMixin):
-    """A rich renderable that pretty prints an object.
+    """A quo renderable that pretty prints an object.
 
     Args:
         _object (Any): An object to pretty print.
@@ -202,7 +202,7 @@ class Pretty(JupyterMixin):
         self.margin = margin
         self.insert_line = insert_line
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Console", options: "ConsoleOptions"
     ) -> "RenderResult":
         pretty_str = pretty_repr(
@@ -236,7 +236,7 @@ class Pretty(JupyterMixin):
             yield ""
         yield pretty_text
 
-    def __rich_measure__(
+    def __quo_measure__(
         self, console: "Console", options: "ConsoleOptions"
     ) -> "Measurement":
         pretty_str = pretty_repr(
@@ -288,7 +288,7 @@ def is_expandable(obj: Any) -> bool:
     return (
         isinstance(obj, _CONTAINERS)
         or (is_dataclass(obj))
-        or (hasattr(obj, "__rich_repr__"))
+        or (hasattr(obj, "__quo_repr__"))
         or _is_attr_object(obj)
     ) and not isclass(obj)
 
@@ -487,8 +487,8 @@ def traverse(
         py_version = (sys.version_info.major, sys.version_info.minor)
         children: List[Node]
 
-        def iter_rich_args(rich_args: Any) -> Iterable[Union[Any, Tuple[str, Any]]]:
-            for arg in rich_args:
+        def iter_quo_args(quo_args: Any) -> Iterable[Union[Any, Tuple[str, Any]]]:
+            for arg in quo_args:
                 if isinstance(arg, tuple):
                     if len(arg) == 3:
                         key, child, default = arg
@@ -503,9 +503,9 @@ def traverse(
                 else:
                     yield arg
 
-        if hasattr(obj, "__rich_repr__") and not isclass(obj):
-            angular = getattr(obj.__rich_repr__, "angular", False)
-            args = list(iter_rich_args(obj.__rich_repr__()))
+        if hasattr(obj, "__quo_repr__") and not isclass(obj):
+            angular = getattr(obj.__quo_repr__, "angular", False)
+            args = list(iter_quo_args(obj.__quo_repr__()))
             class_name = obj.__class__.__name__
 
             if args:
@@ -787,6 +787,6 @@ if __name__ == "__main__":  # pragma: no cover
     }
     data["foo"].append(data)  # type: ignore
 
-    from rich import print
+    from quo import print
 
     print(Pretty(data, indent_guides=True, max_string=20))
