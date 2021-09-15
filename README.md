@@ -54,9 +54,8 @@ pip install -U quo
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
-This will print ``"Hello World!"`` plus a new line to the terminal. 
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
-If ![colorama](https://pypi.org/project/colorama/) is installed, the echo function will also support handling of ANSI color sequences.
+It also support handling of ANSI color sequences.
 
 ### Quo prompt
 ```python
