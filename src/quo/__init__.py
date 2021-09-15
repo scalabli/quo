@@ -96,7 +96,7 @@ from quo.i_o import (
               echo,
               edit,
               terminalsize,
-              style,
+             # style,
               unstyle,
               prompt,
               )
