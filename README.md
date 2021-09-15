@@ -30,12 +30,15 @@ pip install -U quo
 ## Getting Started
 The most simple examples of would look like this:
 
+
+
 **Example 1**
 
 ```python
    import quo
-   quo.echo(f'Hello, World!'>
+   quo.echo(f'Hello, World!')
 ```
+![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
     
 
 **Example 2**
@@ -152,17 +155,6 @@ Quo works with [Jupyter notebooks](https://jupyter.org/) with no additional conf
 
 
 
-## Rich Print
-
-To effortlessly add rich output to your application, you can import the [rich print](https://rich.readthedocs.io/en/latest/introduction.html#quick-start) method, which has the same signature as the builtin Python function. Try this:
-
-```python
-from rich import print
-
-print("Hello, [bold magenta]World[/bold magenta]!", ":vampire:", locals())
-```
-
-![Hello World](https://github.com/willmcgugan/rich/raw/master/imgs/print.png)
 
 ## Rich REPL
 
