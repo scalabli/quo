@@ -36,10 +36,13 @@ The most simple examples of would look like this:
 
 ```python
    import quo
-   quo.echo(f'Hello, World!')
+   quo.echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
-    
+
+This will print ``"Hello World!"`` plus a new line to the terminal. 
+Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
+If ![colorama](https://pypi.org/project/colorama/) is installed, the echo function will also support handling of ANSI color sequences.
 
 **Example 2**
 
