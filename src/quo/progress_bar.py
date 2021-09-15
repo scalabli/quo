@@ -4,10 +4,10 @@ from time import monotonic
 from typing import Iterable, List, Optional
 
 from quo.color import Color, blend_rgb
-from .color_triplet import ColorTriplet
+from quo.color.color_triplet import ColorTriplet
 from quo.terminal import Terminal, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.width import Measurement
 from .segment import Segment
 from .style import Style, StyleType
 
@@ -127,7 +127,7 @@ class ProgressBar(JupyterMixin):
         """Renders the pulse animation.
 
         Args:
-            console (Console): Console instance.
+            console (Terminal): Terminal instance.
             width (int): Width in characters of pulse animation.
 
         Returns:
@@ -151,7 +151,7 @@ class ProgressBar(JupyterMixin):
         segments = segments[offset : offset + width]
         yield from segments
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
 
@@ -190,7 +190,7 @@ class ProgressBar(JupyterMixin):
                 if remaining_bars:
                     yield _Segment(bar * remaining_bars, style)
 
-    def __rich_measure__(
+    def __quo_measure__(
             self, console: Terminal, options: ConsoleOptions
     ) -> Measurement:
         return (
@@ -201,7 +201,7 @@ class ProgressBar(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    console = Console()
+    console = Terminal()
     bar = ProgressBar(width=50, total=100)
 
     import time
