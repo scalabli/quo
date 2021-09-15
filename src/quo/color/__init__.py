@@ -7,3 +7,4 @@ from .core import (
         )
 from .color_triplet import ColorTriplet
 from .palette import Palette
+from .rbg import *

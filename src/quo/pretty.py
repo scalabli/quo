@@ -39,9 +39,9 @@ def _get_attr_fields(obj: Any) -> Iterable["_attr_module.Attribute[Any]"]:
 
 
 from .highlighter import ReprHighlighter
-from quo.expediency import get_terminal
+from quo.expediency import terminal_ui
 from ._loop import loop_last
-from ._pick import pick_bool
+from quo.expediency import pick_bool
 from .abc import RichRenderable
 from quo.width.cells import cell_len
 from .highlighter import ReprHighlighter
@@ -50,7 +50,7 @@ from quo.width import Measurement
 from quo.text import Text
 
 if TYPE_CHECKING:
-    from .console import (
+    from quo.terminal import (
         Terminal,
         ConsoleOptions,
         HighlighterType,
@@ -84,11 +84,11 @@ def install(
         max_string (int, optional): Maximum length of string before truncating, or None to disable. Defaults to None.
         expand_all (bool, optional): Expand all containers. Defaults to False
     """
-    from quo.expediency import get_terminal
+#    from quo.expediency import get_terminal
 
     from .terminal import ConsoleRenderable  # needed here to prevent circular import
 
-    console = console or get_terminal()
+    console = console or terminal_ui()
     assert console is not None
 
     def display_hook(value: Any) -> None:

@@ -19,33 +19,12 @@ from quo.outliers import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
-from quo.systematize.core import _isconvertible, _binary_type, _text_type, _bool_type
+
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
-visible_prompt_func = input
-#American National Standard Institute colors
 
-#ansi_color_codes = {
-#    "black": 30,
-#    "red": 31,
-#    "green": 32,
-#    "yellow": 33,
-#    "blue": 34,
-#    "magenta": 35,
-#    "cyan": 36,
-#    "white": 37,
-#    "reset": 39,
-#    "vblack": 90,
-#    "vred": 91,
-#    "vgreen": 92,
-#    "vyellow": 93,
-#    "vblue": 94,
-#    "vmagenta": 95,
-#    "vcyan": 96,
-#    "vwhite": 97,
-#}
-#_ansi_reset_all = "\033[0m"
+insert = input
 
 
 def hidden_prompt_func(prompt):
@@ -72,7 +51,7 @@ def _format_default(default):
     return default
 
 ##################################################################
-def prompt(
+def prompiht(
     text,
     default=None,
     hide=False,
@@ -162,7 +141,7 @@ def get_terminal() -> "Terminal":
 
 #############################
 
-def confirm(
+def confirmij(
         text, default=False, abort=False, prompt_suffix=":>", show_default=True, err=False
 ):
     """Prompts for confirmation (yes/no question).
@@ -187,7 +166,7 @@ def confirm(
             # Write the prompt separately so that we get nice
             # coloring through colorama on Windows
             echo(prompt, nl=False, err=err, fg="cyan")
-            value = visible_prompt_func("").lower().strip()
+            value = insert("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
         if value in ("y", "yes"):
@@ -211,7 +190,7 @@ def confirm(
         text,
         default=False, 
         abort=False,
-        prompt_suffix=":>", 
+        suffix=":>", 
         show_default=True, 
         err=False
         ):
@@ -224,18 +203,18 @@ def confirm(
     :param default: the default for the prompt.
     :param abort: if this is set to `True` a negative answer aborts the
                   exception by raising :exc:`Abort`.
-    :param prompt_suffix: a suffix that should be added to the prompt.
+    :param suffix: a suffix that should be added to the prompt.
     :param show_default: shows or hides the default value in the prompt.
     :param err: if set to true the file defaults to ``stderr`` instead of
                 ``stdout``, the same as with echo.
     """
     prompt = _build_prompt(
-        text, prompt_suffix, show_default, "Yes/no" if default else "yes/No"
+        text, suffix, show_default, "Yes/no" if default else "yes/No"
     )
     while 1:
         try:
-            echo(prompt, nl=False, err=err, fg="cyan")
-            value = visible_prompt_func("").lower().strip()
+            echo(prompt, nl=False, err=err)
+            value = insert("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
         if value in ("y", "yes"):
@@ -245,7 +224,8 @@ def confirm(
         elif default is not None and value == "":
             rv = default
         else:
-            echo("Error: invalid input", bg="yellow", fg="black", err=err)
+            echo(f"ERROR:", bg="red", fg="black", nl=False)
+            echo(f"invalid input", bg="yellow", fg="black", err=err)
             continue
         break
     if abort and not rv:
@@ -263,10 +243,10 @@ def prompt(
     text,
     default=None,
     hide=False,
-    autoconfirm=False,
+    affirm=False,
     type=None,
     value_proc=None,
-    prompt_suffix=":> ",
+    suffix=":> ",
     show_default=True,
     err=False,
     show_choices=True,
@@ -278,11 +258,11 @@ def prompt(
 
     :param text: the text to show for the prompt.
     :param default: the default value to use if no input happens.  If this  is not given it will prompt until it's aborted.
-    :param hide_input: if this is set to true then the input value will  be hidden.
-    :param autoconfirm: asks for confirmation for the value.
+    :param hide: if this is set to true then the input value will  be hidden.
+    :param affirm: asks for confirmation for the value.
     :param type: the type to use to check the value against.
     :param value_proc: if this parameter is provided it's a function that is invoked instead of the type conversion to convert a value.
-    :param prompt_suffix: a suffix that should be added to the prompt.
+    :param suffix: a suffix that should be added to the prompt.
     :param show_default: shows or hides the default value in the prompt.
     :param err: if set to true the file defaults to ``stderr`` instead of ``stdout``, the same as with echo.
     :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
@@ -291,10 +271,8 @@ def prompt(
     result = None
 
     def prompt_func(text):
-        f = hidden_prompt_func if hide else visible_prompt_func
+        f = hidden_prompt_func if hide else insert
         try:
-            # Write the prompt separately so that we get nice
-            # coloring through colorama on Windows
             inscribe(text, nl=False, err=err)
             return f("")
         except (KeyboardInterrupt, EOFError):
@@ -309,7 +287,7 @@ def prompt(
         value_proc = convert_type(type, default)
 
     prompt = _build_prompt(
-        text, prompt_suffix, show_default, default, show_choices, type
+        text, suffix, show_default, default, show_choices, type
     )
 
     while 1:
@@ -324,11 +302,11 @@ def prompt(
             result = value_proc(value)
         except UsageError as e:
             if hide:
-                inscribe("Error: the value you entered was invalid", err=err)
+                inscribe("ERROR: the value you entered was invalid", err=err)
             else:
                 inscribe(f"Error: {e.message}", err=err)  # noqa: B306
             continue
-        if not autoconfirm:
+        if not affirm:
             return result
         while 1:
             value2 = prompt_func("Repeat for confirmation: ")
@@ -336,7 +314,8 @@ def prompt(
                 break
         if value == value2:
             return result
-        echo("Error: the two entered values do not match", err=err)
+        echo(f"ERROR:", nl=False, fg="black", bg="red")
+        echo(f"The two entered values do not match", err=err, fg="black", bg="yellow")
 
 
 
@@ -411,56 +390,6 @@ def scrollable(text_or_generator, color=None):
 
     return pager(itertools.chain(text_generator, "\n"), color)
 
-
-
-def checknumber(string):
-    """
-    >>> checknumber("123.45")
-    True
-    >>> chenumber("123")
-    True
-    >>> checknumber("spam")
-    False
-    >>> checknumber("123e45678")
-    False
-    >>> checknumber("inf")
-    True
-    """
-    if not _isconvertible(float, string):
-        return False
-    elif isinstance(string, (_text_type, _binary_type)) and (
-        math.isinf(float(string)) or math.isnan(float(string))
-    ):
-        return string.lower() in ["inf", "-inf", "nan"]
-    return True
-
-
-def checkinteger(string, inttype=int):
-    """
-    >>> checkinteger("123")
-    True
-    >>> checkinteger("123.45")
-    False
-    """
-    return (
-        type(string) is inttype
-        or (isinstance(string, _binary_type) or isinstance(string, _text_type))
-        and _isconvertible(inttype, string)
-    )
-
-
-def checkbool(string):
-    """
-    >>> checkbool(True)
-    True
-    >>> checkbool("False")
-    True
-    >>> checkbool(1)
-    False
-    """
-    return type(string) is _bool_type or (
-        isinstance(string, (_binary_type, _text_type)) and string in ("True", "False")
-    )
 
 
 def _interpret_color(color, offset=0):
@@ -612,7 +541,13 @@ def unstyle(text):
     return strip_ansi_colors(text)
 
 
-def edit(text=None, editor=None, env=None, require_save=True, extension=".txt", filename=None
+def edit(
+        text=None, 
+        editor=None, 
+        env=None, 
+        require_save=True, 
+        extension=".txt", 
+        filename=None
 ):
     r"""Edits the given text in the defined editor.  If an editor is given
     (should be the full path to the executable but the regular operating
@@ -677,7 +612,6 @@ def launch(url, wait=False, locate=False):
 
     return open_url(url, wait=wait, locate=locate)
 
-
 def raw_terminal():
     from quo.implementation import raw_terminal as f
     return f()
@@ -689,10 +623,11 @@ def echo(
         nl=True,
         err=False,
         color=None,
-        **styles):
-    """This function combines :func:`inscribe` and :func:`style` into one
-    call.  As such the following two calls are the same::
-        quo.echo('Hello World!', fg='green')
+        **styles
+        ):
+    from quo.color.rgb import teal
+    """
+    quo.echo('Hello World!', fg='green')
         quo.inscribe(quo.style('Hello World!', fg='green'))
     All keyword arguments are forwarded to the underlying functions
     depending on which one they go with.

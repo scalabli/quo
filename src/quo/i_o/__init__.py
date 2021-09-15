@@ -1,13 +1,10 @@
-from .termui import (
-        checkbool,
-        checkinteger,
-        checknumber, 
-        style,
+from .termui import ( 
         echo,
         get_terminal,
-        unstyle,
         confirm,
+        style,
         terminalsize,
+        unstyle,
         launch, 
         raw_terminal,
         edit, 

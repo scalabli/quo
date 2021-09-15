@@ -60,7 +60,7 @@ from quo.screen import Screen
 from quo.segment import Segment
 from quo.style import Style, StyleType
 from quo.styled import Styled
-from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
+from quo.theme.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
 from quo.text import Text, TextType
 from quo.theme.theme import Theme, ThemeStack
 
@@ -1211,7 +1211,7 @@ class Terminal:
             )
             render_iterable = text_renderable.__quo_console__(self, _options)
         else:
-            raise errors.NotRenderableError(
+            raise exceptions.NotRenderableError(
                 f"Unable to render {renderable!r}; "
                 "A str, Segment or object with __rich_console__ method is required"
             )
@@ -1219,7 +1219,7 @@ class Terminal:
         try:
             iter_render = iter(render_iterable)
         except TypeError:
-            raise errors.NotRenderableError(
+            raise exceptions.NotRenderableError(
                 f"object {render_iterable!r} is not renderable"
             )
         _Segment = Segment

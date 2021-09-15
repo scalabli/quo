@@ -6,9 +6,11 @@ from quo.i_o.termui import echo
 
 
 
-def pause(info="Press any key to proceed >> ...", err=False):
-    """This command stops execution and waits for the user to press any
-    key to continue.  This is similar to the Windows batch "pause"
+def pause(
+        info="Press any key to proceed >> ...", 
+        err=False
+        ):
+    """This command stops execution and waits for the user to press any key to continue.  This is similar to the Windows batch "pause"
     command.  If the program is not run through a terminal, this command
     will instead do nothing.
 
@@ -20,7 +22,7 @@ def pause(info="Press any key to proceed >> ...", err=False):
         return
     try:
         if info:
-            echo(info, nl=False, err=err, fg="cyan")
+            echo(info, nl=False, err=err)
         try:
             interpose()
         except (KeyboardInterrupt, EOFError):

@@ -10,7 +10,7 @@ from .cells import (
         get_character_cell_size,
         set_cell_size
         )
-from .measure import Measurement
+from .measure import Measurement, measure_renderables
 from .width import wcwidth, wcswidth  # noqa
 
 __all__ = ('cell_len', 'get_character_cell_size', 'wcwidth', 'wcswidth',)

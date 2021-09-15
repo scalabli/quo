@@ -23,7 +23,9 @@ ansi_color_codes = {
         }
 
 
-
+OTHER_COLORS = {
+        "teal": (0, 128, 128),
+        }
 
 
 ANSI_COLOR_NAMES = {
