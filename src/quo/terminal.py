@@ -118,7 +118,7 @@ class ConsoleDimensions(NamedTuple):
 
 @dataclass
 class ConsoleOptions:
-    """Options for __rich_console__ method."""
+    """Options for __quo_console__ method."""
 
     size: ConsoleDimensions
     """Size of console."""
@@ -232,7 +232,7 @@ class ConsoleOptions:
 class RichCast(Protocol):
     """An object that may be 'cast' to a console renderable."""
 
-    def __rich__(self) -> Union["ConsoleRenderable", str]:  # pragma: no cover
+    def __quo__(self) -> Union["ConsoleRenderable", str]:  # pragma: no cover
         ...
 
 
@@ -240,8 +240,8 @@ class RichCast(Protocol):
 class ConsoleRenderable(Protocol):
     """An object that supports the console protocol."""
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":  # pragma: no cover
         ...
 
@@ -250,7 +250,7 @@ RenderableType = Union[ConsoleRenderable, RichCast, str]
 """A type that may be rendered by Console."""
 
 RenderResult = Iterable[Union[RenderableType, Segment]]
-"""The result of calling a __rich_console__ method."""
+"""The result of calling a __quo_console__ method."""
 
 
 _null_highlighter = NullHighlighter()
@@ -266,8 +266,8 @@ class NewLine:
     def __init__(self, count: int = 1) -> None:
         self.count = count
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> Iterable[Segment]:
         yield Segment("\n" * self.count)
 
@@ -280,8 +280,8 @@ class ScreenUpdate:
         self.x = x
         self.y = y
 
-    def __rich_console__(
-        self, console: "Console", options: ConsoleOptions
+    def __quo_console__(
+        self, console: "Terminal", options: ConsoleOptions
     ) -> RenderResult:
         x = self.x
         move_to = Control.move_to
@@ -292,13 +292,13 @@ class ScreenUpdate:
 
 class Capture:
     """Context manager to capture the result of printing to the console.
-    See :meth:`~rich.console.Console.capture` for how to use.
+    See :meth:`~quo.console.Terminal.capture` for how to use.
 
     Args:
         console (Console): A console instance to capture output.
     """
 
-    def __init__(self, console: "Console") -> None:
+    def __init__(self, console: "Terminal") -> None:
         self._console = console
         self._result: Optional[str] = None
 
@@ -324,9 +324,9 @@ class Capture:
 
 
 class ThemeContext:
-    """A context manager to use a temporary theme. See :meth:`~rich.console.Console.use_theme` for usage."""
+    """A context manager to use a temporary theme. See :meth:`~quo.terminal.Terminal.use_theme` for usage."""
 
-    def __init__(self, console: "Console", theme: Theme, inherit: bool = True) -> None:
+    def __init__(self, console: "Terminal", theme: Theme, inherit: bool = True) -> None:
         self.console = console
         self.theme = theme
         self.inherit = inherit
@@ -345,11 +345,11 @@ class ThemeContext:
 
 
 class PagerContext:
-    """A context manager that 'pages' content. See :meth:`~rich.console.Console.pager` for usage."""
+    """A context manager that 'pages' content. See :meth:`~quo.terminal.Terminal.pager` for usage."""
 
     def __init__(
         self,
-        console: "Console",
+        console: "Terminal",
         pager: Optional[Pager] = None,
         styles: bool = False,
         links: bool = False,
@@ -384,10 +384,10 @@ class PagerContext:
 
 
 class ScreenContext:
-    """A context manager that enables an alternative screen. See :meth:`~rich.console.Console.screen` for usage."""
+    """A context manager that enables an alternative screen. See :meth:`~quo.terminal.Terminal.screen` for usage."""
 
     def __init__(
-        self, console: "Console", hide_cursor: bool, style: StyleType = ""
+        self, console: "Terminal", hide_cursor: bool, style: StyleType = ""
     ) -> None:
         self.console = console
         self.hide_cursor = hide_cursor
@@ -449,15 +449,15 @@ class Group:
             self._render = list(self._renderables)
         return self._render
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_measure__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         if self.fit:
             return measure_renderables(console, options, self.renderables)
         else:
             return Measurement(options.max_width, options.max_width)
 
-    def __rich_console__(
+    def __quo_console__(
         self, console: "Terminal", options: "ConsoleOptions"
     ) -> RenderResult:
         yield from self.renderables
@@ -724,7 +724,7 @@ class Terminal:
     def file(self) -> IO[str]:
         """Get the file object to write to."""
         file = self._file or (sys.stderr if self.stderr else sys.stdout)
-        file = getattr(file, "rich_proxied_file", file)
+        file = getattr(file, "quo_proxied_file", file)
         return file
 
     @file.setter
@@ -816,7 +816,7 @@ class Terminal:
         """Pop the last renderhook from the stack."""
         self._render_hooks.pop()
 
-    def __enter__(self) -> "Console":
+    def __enter__(self) -> "Terminal":
         """Own context manager to enter buffer context."""
         self._enter_buffer()
         return self
@@ -842,7 +842,7 @@ class Terminal:
 
     def push_theme(self, theme: Theme, *, inherit: bool = True) -> None:
         """Push a new theme on to the top of the stack, replacing the styles from the previous theme.
-        Generally speaking, you should call :meth:`~rich.console.Console.use_theme` to get a context manager, rather
+        Generally speaking, you should call :meth:`~quo.terminal.Terminal.use_theme` to get a context manager, rather
         than calling this method directly.
 
         Args:
@@ -1018,7 +1018,7 @@ class Terminal:
         rather than writing it to the console.
 
         Example:
-            >>> from rich.console import Console
+            >>> from quo.terminal import Console
             >>> console = Console()
             >>> with console.capture() as capture:
             ...     console.print("[bold magenta]Hello World[/]")
@@ -1037,13 +1037,13 @@ class Terminal:
         is defined by the system and will typically support at least pressing a key to scroll.
 
         Args:
-            pager (Pager, optional): A pager object, or None to use :class:~rich.pager.SystemPager`. Defaults to None.
+            pager (Pager, optional): A pager object, or None to use :class:~quo.pager.SystemPager`. Defaults to None.
             styles (bool, optional): Show styles in pager. Defaults to False.
             links (bool, optional): Show links in pager. Defaults to False.
 
         Example:
-            >>> from rich.console import Console
-            >>> from rich.__main__ import make_test_card
+            >>> from quo.terminal import Console
+            >>> from quo.__main__ import make_test_card
             >>> console = Console()
             >>> with console.pager():
                     console.print(make_test_card())
@@ -1087,7 +1087,7 @@ class Terminal:
 
         Args:
             status (RenderableType): A status renderable (str or Text typically).
-            spinner (str, optional): Name of spinner animation (see python -m rich.spinner). Defaults to "dots".
+            spinner (str, optional): Name of spinner animation (see python -m quo.spinner). Defaults to "dots".
             spinner_style (StyleType, optional): Style of spinner. Defaults to "status.spinner".
             speed (float, optional): Speed factor for spinner animation. Defaults to 1.0.
             refresh_per_second (float, optional): Number of refreshes per second. Defaults to 12.5.
@@ -1122,7 +1122,7 @@ class Terminal:
         """Enables alternative screen mode.
 
         Note, if you enable this mode, you should ensure that is disabled before
-        the application exits. See :meth:`~rich.Console.screen` for a context manager
+        the application exits. See :meth:`~quo.Terminal.screen` for a context manager
         that handles this for you.
 
         Args:
@@ -1165,7 +1165,7 @@ class Terminal:
     def measure(
         self, renderable: RenderableType, *, options: Optional[ConsoleOptions] = None
     ) -> Measurement:
-        """Measure a renderable. Returns a :class:`~rich.measure.Measurement` object which contains
+        """Measure a renderable. Returns a :class:`~quo.measure.Measurement` object which contains
         information regarding the number of characters required to print the renderable.
 
         Args:
@@ -1202,7 +1202,7 @@ class Terminal:
             return
         render_iterable: RenderResult
         if hasattr(renderable, "__quo__") and not isclass(renderable):
-            renderable = renderable.__rich__()  # type: ignore
+            renderable = renderable.__quo__()  # type: ignore
         if hasattr(renderable, "__quo_console__") and not isclass(renderable):
             render_iterable = renderable.__quo_console__(self, _options)  # type: ignore
         elif isinstance(renderable, str):
@@ -1213,7 +1213,7 @@ class Terminal:
         else:
             raise exceptions.NotRenderableError(
                 f"Unable to render {renderable!r}; "
-                "A str, Segment or object with __rich_console__ method is required"
+                "A str, Segment or object with __quo_console__ method is required"
             )
 
         try:
@@ -1315,16 +1315,16 @@ class Terminal:
         highlight_enabled = highlight or (highlight is None and self._highlight)
 
         if markup_enabled:
-            rich_text = render_markup(
+            quo_text = render_markup(
                 text,
                 style=style,
                 emoji=emoji_enabled,
                 emoji_variant=self._emoji_variant,
             )
-            rich_text.justify = justify
-            rich_text.overflow = overflow
+            quo_text.justify = justify
+            quo_text.overflow = overflow
         else:
-            rich_text = Text(
+            quo_text = Text(
                 _emoji_replace(text, default_variant=self._emoji_variant)
                 if emoji_enabled
                 else text,
@@ -1335,11 +1335,11 @@ class Terminal:
 
         _highlighter = (highlighter or self.highlighter) if highlight_enabled else None
         if _highlighter is not None:
-            highlight_text = _highlighter(str(rich_text))
-            highlight_text.copy_styles(rich_text)
+            highlight_text = _highlighter(str(quo_text))
+            highlight_text.copy_styles(quo_text)
             return highlight_text
 
-        return rich_text
+        return quo_text
 
     def get_style(
         self, name: Union[str, Style], *, default: Optional[Union[Style, str]] = None
@@ -1385,7 +1385,7 @@ class Terminal:
         """Combine a number of renderables and text into one renderable.
 
         Args:
-            objects (Iterable[Any]): Anything that Rich can render.
+            objects (Iterable[Any]): Anything that quo can render.
             sep (str): String to write between print data.
             end (str): String to write at end of print data.
             justify (str, optional): One of "left", "right", "center", or "full". Defaults to ``None``.
@@ -1426,9 +1426,9 @@ class Terminal:
                 renderable, "jwevpw_eors4dfo6mwo345ermk7kdnfnwerwer"
             ):  # pragma: no cover
                 renderable = repr(renderable)
-            rich_cast = getattr(renderable, "__rich__", None)
-            if rich_cast:
-                renderable = rich_cast()
+            quo_cast = getattr(renderable, "__quo__", None)
+            if quo_cast:
+                renderable = quo_cast()
             if isinstance(renderable, str):
                 append_text(
                     self.render_str(
@@ -1493,7 +1493,7 @@ class Terminal:
         highlight: Optional[bool] = None,
     ) -> None:
         """Output to the terminal. This is a low-level way of writing to the terminal which unlike
-        :meth:`~rich.console.Console.print` won't pretty print, wrap text, or apply markup, but will
+        :meth:`~quo.terminal.Console.print` won't pretty print, wrap text, or apply markup, but will
         optionally apply highlighting and a basic style.
 
         Args:
@@ -1631,7 +1631,7 @@ class Terminal:
             indent (int, optional): Number of spaces to indent. Defaults to 2.
             highlight (bool, optional): Enable highlighting of output: Defaults to True.
         """
-        from rich.json import JSON
+        from quo.json import JSON
 
         if json is None:
             json_renderable = JSON.from_data(data, indent=indent, highlight=highlight)
@@ -1653,13 +1653,13 @@ class Terminal:
         """Update the screen at a given offset.
 
         Args:
-            renderable (RenderableType): A Rich renderable.
+            renderable (RenderableType): A quo renderable.
             region (Region, optional): Region of screen to update, or None for entire screen. Defaults to None.
             x (int, optional): x offset. Defaults to 0.
             y (int, optional): y offset. Defaults to 0.
 
         Raises:
-            errors.NoAltScreen: If the Console isn't in alt screen mode.
+            errors.NoAltScreen: If the Terminal isn't in alt screen mode.
 
         """
         if not self.is_alt_screen:
@@ -1683,7 +1683,7 @@ class Terminal:
         """Update lines of the screen at a given offset.
 
         Args:
-            lines (List[List[Segment]]): Rendered lines (as produced by :meth:`~rich.Console.render_lines`).
+            lines (List[List[Segment]]): Rendered lines (as produced by :meth:`~quo.Terminal.render_lines`).
             x (int, optional): x offset (column no). Defaults to 0.
             y (int, optional): y offset (column no). Defaults to 0.
 
@@ -1706,7 +1706,7 @@ class Terminal:
         word_wrap: bool = False,
         show_locals: bool = False,
     ) -> None:
-        """Prints a rich render of the last exception and traceback.
+        """Prints a quo render of the last exception and traceback.
 
         Args:
             width (Optional[int], optional): Number of characters used to render code. Defaults to 88.
@@ -1774,7 +1774,7 @@ class Terminal:
         log_locals: bool = False,
         _stack_offset: int = 1,
     ) -> None:
-        """Log rich content to the terminal.
+        """Log quo content to the terminal.
 
         Args:
             objects (positional args): Objects to log to the terminal.
