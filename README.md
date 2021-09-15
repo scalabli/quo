@@ -29,7 +29,8 @@ Quo requires Python `3.6.1` or later.
 - Automatic help page generation
 - Lightweight
 
-## Installation
+## Getting Started
+### Installation
 You can install quo via the Python Package Index (PyPI)
 
 ```
@@ -37,7 +38,7 @@ pip install -U quo
 ```
 
 
-## Quo print
+### Quo print
 ```python
    from quo import quo
    echo(f"Hello, World!", fg="red", italic=True, bold=True))
@@ -48,7 +49,7 @@ This will print ``"Hello World!"`` plus a new line to the terminal.
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
 If ![colorama](https://pypi.org/project/colorama/) is installed, the echo function will also support handling of ANSI color sequences.
 
-## Quo prompt
+### Quo prompt
 ```python
    from quo import prompt
    prompt("What is your name?")
