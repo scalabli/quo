@@ -4,11 +4,11 @@ from typing import TYPE_CHECKING, Any, Optional, Tuple
 from .highlighter import ReprHighlighter
 from .panel import Panel
 from .pretty import Pretty
-from .table import Table
-from .text import Text, TextType
+from quo.tabulate import Table
+from quo.text import Text, TextType
 
 if TYPE_CHECKING:
-    from .console import ConsoleRenderable
+    from .terminal import ConsoleRenderable
 
 
 def render_scope(
@@ -68,7 +68,7 @@ def render_scope(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich import print
+    from quo import print
 
     print()
 
