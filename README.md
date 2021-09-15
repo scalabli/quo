@@ -19,6 +19,16 @@ Simple to code, easy to learn, and does not come with needless baggage.
 
 Quo requires Python `3.6.1` or later. 
 
+
+## Features
+- Support for ANSI and RGB color models
+- Support for tabular presentation of data
+- Interactive progressbars
+- Nesting of commands
+- A function that displays asterisks instead of the actual characters, helpful when typing passwords
+- Automatic help page generation
+- Lightweight
+
 ## Installation
 You can install quo via the Python Package Index (PyPI)
 
@@ -27,16 +37,10 @@ pip install -U quo
 ```
 
 
-## Getting Started
-The most simple examples of would look like this:
-
-
-
-**Example 1**
-
+## Quo print
 ```python
-   import quo
-   quo.echo(f"Hello, World!", fg="red", italic=True, bold=True))
+   from quo import quo
+   echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
 
@@ -44,29 +48,12 @@ This will print ``"Hello World!"`` plus a new line to the terminal.
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
 If ![colorama](https://pypi.org/project/colorama/) is installed, the echo function will also support handling of ANSI color sequences.
 
-**Example 2**
-
+## Quo prompt
 ```python
-  from quo import echo
-  echo(f'Hello, World!', fg="red", bold=True)
+   from quo import prompt
+   prompt("What is your name?")
 ```
-
-**Example 3**
-
-```python
-   from quo import echo
-   echo(f"Hello, World in italics!", italic=True
-```
-
-
-**Example 4**
-
-```python
-   from quo import echo, prompt
-   answer = prompt("How old are you?")
-   echo(f"I am: {answer}"
-```
-
+![prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
 **Example 5**
 
@@ -87,16 +74,6 @@ If ![colorama](https://pypi.org/project/colorama/) is installed, the echo functi
 
 For more intricate  examples, have a look in the ``tutorials`` directory and the documentation.
 
-
-
-## Features
-- Support for ANSI and RGB color models
-- Support for tabular presentation of data
-- Interactive progressbars
-- Nesting of commands
-- A function that displays asterisks instead of the actual characters, helpful when typing passwords
-- Automatic help page generation
-- Lightweight
 
 
 ## Donate🎁
