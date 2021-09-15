@@ -39,11 +39,20 @@ pip install -U quo
 
 
 ### Quo print
+**Example 1**
 ```python
    from quo import echo
    echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
+
+**Example 2**
+```python
+   from quo import echo
+   echo(f"Quo is ", nl=False)
+   echo(f"scalable", bg="red", fg="black") 
+```
+![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
 This will print ``"Hello World!"`` plus a new line to the terminal. 
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
