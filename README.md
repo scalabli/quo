@@ -40,7 +40,7 @@ pip install -U quo
 
 ### Quo print
 ```python
-   from quo import quo
+   from quo import echo
    echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
@@ -498,34 +498,3 @@ Available as part of the Tidelift Subscription.
 
 The maintainers of Rich and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/pypi-rich?utm_source=pypi-rich&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
 
-# Projects using Rich
-
-Here are a few projects using Rich:
-
-- [BrancoLab/BrainRender](https://github.com/BrancoLab/BrainRender)
-  a python package for the visualization of three dimensional neuro-anatomical data
-- [Ciphey/Ciphey](https://github.com/Ciphey/Ciphey)
-  Automated decryption tool
-- [emeryberger/scalene](https://github.com/emeryberger/scalene)
-  a high-performance, high-precision CPU and memory profiler for Python
-- [hedythedev/StarCli](https://github.com/hedythedev/starcli)
-  Browse GitHub trending projects from your command line
-- [intel/cve-bin-tool](https://github.com/intel/cve-bin-tool)
-  This tool scans for a number of common, vulnerable components (openssl, libpng, libxml2, expat and a few others) to let you know if your system includes common libraries with known vulnerabilities.
-- [nf-core/tools](https://github.com/nf-core/tools)
-  Python package with helper tools for the nf-core community.
-- [cansarigol/pdbr](https://github.com/cansarigol/pdbr)
-  pdb + Rich library for enhanced debugging
-- [plant99/felicette](https://github.com/plant99/felicette)
-  Satellite imagery for dummies.
-- [seleniumbase/SeleniumBase](https://github.com/seleniumbase/SeleniumBase)
-  Automate & test 10x faster with Selenium & pytest. Batteries included.
-- [smacke/ffsubsync](https://github.com/smacke/ffsubsync)
-  Automagically synchronize subtitles with video.
-- [tryolabs/norfair](https://github.com/tryolabs/norfair)
-  Lightweight Python library for adding real-time 2D object tracking to any detector.
-- [ansible/ansible-lint](https://github.com/ansible/ansible-lint) Ansible-lint checks playbooks for practices and behaviour that could potentially be improved
-- [ansible-community/molecule](https://github.com/ansible-community/molecule) Ansible Molecule testing framework
-- +[Many more](https://github.com/willmcgugan/rich/network/dependents)!
-
-<!-- This is a test, no need to translate -->
