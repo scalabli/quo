@@ -1,6 +1,6 @@
 import os.path
 import platform
-from rich.containers import Lines
+from quo.containers import Lines
 import textwrap
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple, Type, Union
@@ -23,13 +23,13 @@ from pygments.token import (
 from pygments.util import ClassNotFound
 
 from ._loop import loop_first
-from .color import Color, blend_rgb
-from .console import Console, ConsoleOptions, JustifyMethod, RenderResult
+from quo.color.color import Color, blend_rgb
+from quo.terminal import Terminal, ConsoleOptions, JustifyMethod, RenderResult
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.width import Measurement
 from .segment import Segment
 from .style import Style
-from .text import Text
+from quo.text import Text
 
 TokenType = Tuple[str, ...]
 
@@ -97,7 +97,7 @@ ANSI_DARK: Dict[TokenType, Style] = {
     Error: Style(color="red", underline=True),
 }
 
-RICH_SYNTAX_THEMES = {"ansi_light": ANSI_LIGHT, "ansi_dark": ANSI_DARK}
+QUO_SYNTAX_THEMES = {"ansi_light": ANSI_LIGHT, "ansi_dark": ANSI_DARK}
 
 
 class SyntaxTheme(ABC):
@@ -217,8 +217,8 @@ class Syntax(JupyterMixin):
         if isinstance(name, SyntaxTheme):
             return name
         theme: SyntaxTheme
-        if name in RICH_SYNTAX_THEMES:
-            theme = ANSISyntaxTheme(RICH_SYNTAX_THEMES[name])
+        if name in QUO_SYNTAX_THEMES:
+            theme = ANSISyntaxTheme(QUO_SYNTAX_THEMES[name])
         else:
             theme = PygmentsSyntaxTheme(name)
         return theme
@@ -449,7 +449,7 @@ class Syntax(JupyterMixin):
             column_width = len(str(self.start_line + self.code.count("\n"))) + 2
         return column_width
 
-    def _get_number_styles(self, console: Console) -> Tuple[Style, Style, Style]:
+    def _get_number_styles(self, console: Terminal) -> Tuple[Style, Style, Style]:
         """Get background, number, and highlight styles for line numbers."""
         background_style = self._get_base_style()
         if background_style.transparent_background:
@@ -472,16 +472,16 @@ class Syntax(JupyterMixin):
             highlight_number_style = background_style + Style(dim=False)
         return background_style, number_style, highlight_number_style
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_measure__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         if self.code_width is not None:
             width = self.code_width + self._numbers_column_width
             return Measurement(self._numbers_column_width, width)
         return Measurement(self._numbers_column_width, options.max_width)
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
 
         transparent_background = self._get_base_style().transparent_background
@@ -617,7 +617,7 @@ if __name__ == "__main__":  # pragma: no cover
     import sys
 
     parser = argparse.ArgumentParser(
-        description="Render syntax to the console with Rich"
+        description="Render syntax to the console with quo"
     )
     parser.add_argument(
         "path",
@@ -690,9 +690,9 @@ if __name__ == "__main__":  # pragma: no cover
     )
     args = parser.parse_args()
 
-    from rich.console import Console
+    from quo.terminal import Terminal
 
-    console = Console(force_terminal=args.force_color, width=args.width)
+    console = Terminal(force_terminal=args.force_color, width=args.width)
 
     if args.path == "-":
         code = sys.stdin.read()
