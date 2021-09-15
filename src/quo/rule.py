@@ -1,11 +1,11 @@
 from typing import Union
 
-from .align import AlignMethod
-from .cells import cell_len, set_cell_size
-from .console import Console, ConsoleOptions, RenderResult
+from quo.width import AlignMethod
+from quo.width.cells import cell_len, set_cell_size
+from quo.terminal import Terminal, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .style import Style
-from .text import Text
+from quo.text import Text
 
 
 class Rule(JupyterMixin):
@@ -45,8 +45,8 @@ class Rule(JupyterMixin):
     def __repr__(self) -> str:
         return f"Rule({self.title!r}, {self.characters!r})"
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
         width = options.max_width
 
@@ -104,12 +104,12 @@ class Rule(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
+    from quo.terminal import Terminal
     import sys
 
     try:
         text = sys.argv[1]
     except IndexError:
         text = "Hello, World"
-    console = Console()
+    console = Terminal()
     console.print(Rule(title=text))
