@@ -29,17 +29,14 @@ If you intend to use Rich with Jupyter then there are some additional dependenci
 
 Quick Start
 -----------
-
-The quickest way to get up and running with Rich is to import the alternative ``print`` function which takes the same arguments as the built-in ``print`` and may be used as a drop-in replacement. Here's how you would do that
-
 .. code-block:: python
 
     from quo import echo
 
-    echo(f"Hello world", fg="red", italic=True)
+    echo(f"Hello World!", fg="red", italic=True, bold=True)
 
+This will print ``"Hello World!"`` plus a new line to the terminal. Unlike the builtin print function, echo function has improved support for handling Unicode and binary data. If colorama is installed, the echo function will also support handling of ANSI color sequences.
 
-The following demonstrates both console markup and pretty formatting of Python objects::
 
 
 This writes the following output to the terminal (including all the colors and styles):
