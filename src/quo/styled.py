@@ -35,7 +35,7 @@ class Styled:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich import print
+    from quo import print
     from quo.panel import Panel
 
     panel = Styled(Panel("hello"), "on blue")
