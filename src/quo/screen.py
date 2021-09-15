@@ -1,6 +1,6 @@
 from typing import Optional, TYPE_CHECKING
 
-from quo.measure import Measurement
+from quo.width import Measurement
 from quo.segment import Segment
 from quo.style import StyleType
 from ._loop import loop_last
