@@ -55,7 +55,7 @@ pip install -U quo
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
-It also support handling of ANSI color sequences.
+It also supports handling of ANSI color sequences.
 
 ### Quo prompt
 ```python
