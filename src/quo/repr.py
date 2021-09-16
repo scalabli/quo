@@ -43,12 +43,12 @@ def auto(
 
     def do_replace(cls: Type[T], angular: Optional[bool] = None) -> Type[T]:
         def auto_repr(self: Type[T]) -> str:
-            """Create repr string from __rich_repr__"""
+            """Create repr string from __quo_repr__"""
             repr_str: List[str] = []
             append = repr_str.append
 
-            angular = getattr(self.__rich_repr__, "angular", False)  # type: ignore
-            for arg in self.__rich_repr__():  # type: ignore
+            angular = getattr(self.__quo_repr__, "angular", False)  # type: ignore
+            for arg in self.__quo_repr__():  # type: ignore
                 if isinstance(arg, tuple):
                     if len(arg) == 1:
                         append(repr(arg[0]))

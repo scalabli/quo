@@ -31,12 +31,12 @@ from quo.widgets import (
 
 __all__ = [
     "yes_no_dialog",
-    "button_dialog",
-    "input_dialog",
-    "message_dialog",
+    "button",
+    "evoke",
+    "message",
     "radiolist_dialog",
-    "checkboxlist_dialog",
-    "progress_dialog",
+    "checkbox",
+    "progress",
 ]
 
 
@@ -74,7 +74,7 @@ def yes_no_dialog(
 _T = TypeVar("_T")
 
 
-def button_dialog(
+def button(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     buttons: List[Tuple[str, _T]] = [],
@@ -101,7 +101,7 @@ def button_dialog(
     return _create_app(dialog, style)
 
 
-def input_dialog(
+def evoke(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "OK",
@@ -151,7 +151,7 @@ def input_dialog(
     return _create_app(dialog, style)
 
 
-def message_dialog(
+def message(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -208,7 +208,7 @@ def radiolist_dialog(
     return _create_app(dialog, style)
 
 
-def checkboxlist_dialog(
+def checkbox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -246,7 +246,7 @@ def checkboxlist_dialog(
     return _create_app(dialog, style)
 
 
-def progress_dialog(
+def progress(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (

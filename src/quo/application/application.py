@@ -40,6 +40,7 @@ from typing import (
 )
 
 from quo.buffer import Buffer
+from quo.i_o.termui import echo
 from quo.cache import SimpleCache
 from quo.clipboard import Clipboard, InMemoryClipboard
 from quo.data_structures import Size
@@ -105,7 +106,10 @@ except ImportError:
 
 E = KeyPressEvent
 _AppResult = TypeVar("_AppResult")
-ApplicationEventHandler = Callable[["Application[_AppResult]"], None]
+
+
+# event handler
+onApplication = Callable[["Application[_AppResult]"], None]
 
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 _SIGTSTP = getattr(signal, "SIGTSTP", None)
@@ -216,10 +220,10 @@ class Application(Generic[_AppResult]):
         max_render_postpone_time: Union[float, int, None] = 0.01,
         refresh_interval: Optional[float] = None,
         terminal_size_polling_interval: Optional[float] = 0.5,
-        on_reset: Optional[ApplicationEventHandler] = None,
-        on_invalidate: Optional[ApplicationEventHandler] = None,
-        before_render: Optional[ApplicationEventHandler] = None,
-        after_render: Optional[ApplicationEventHandler] = None,
+        on_reset: Optional[onApplication] = None,
+        on_invalidate: Optional[onApplication] = None,
+        before_render: Optional[onApplication] = None,
+        after_render: Optional[onApplication] = None,
         # I/O.
         input: Optional[Input] = None,
         output: Optional[Output] = None,
@@ -908,8 +912,10 @@ class Application(Generic[_AppResult]):
             async with in_terminal():
                 # Print output. Similar to 'loop.default_exception_handler',
                 # but don't use logger. (This works better on Python 2.)
-                print("\nUnhandled exception in event loop:")
-                print(formatted_tb)
+                echo(f"Unhandled ", nl=False)
+                echo(f"exception", fg="black", bg="yellow", nl=False)
+                echo(f"in the event loop:")
+                echo(formatted_tb)
                 print("Exception %s" % (context.get("exception"),))
 
                 await _do_wait_for_enter("Press ENTER to continue...")
@@ -1268,7 +1274,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
     - This will share the same input/output I/O.
     - This doesn't block the event loop.
     """
-    from quo.shortcuts import PromptSession
+    from quo.shortcuts import Elicit
 
     key_bindings = KeyBindings()
 
@@ -1281,7 +1287,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
         "Disallow typing."
         pass
 
-    session: PromptSession[None] = PromptSession(
+    session: Elicit[None] = Elicit(
         message=wait_text, key_bindings=key_bindings
     )
     await session.app.run_async()

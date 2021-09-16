@@ -1,9 +1,9 @@
 from .dialogs import (
-    button_dialog,
-    checkboxlist_dialog,
-    input_dialog,
-    message_dialog,
-    progress_dialog,
+    button,
+    checkbox,
+    evoke,
+    message,
+    progress,
     radiolist_dialog,
     yes_no_dialog,
 )

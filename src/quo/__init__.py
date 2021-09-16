@@ -35,8 +35,6 @@ from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
 from quo.text import ANSI, HTML
 from quo.output import ColorDepth
-from quo.shortcuts import button_dialog
-from quo.shortcuts import message_dialog
 from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
 from quo.shortcuts import Elicit

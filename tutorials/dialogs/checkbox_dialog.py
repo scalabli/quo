@@ -2,9 +2,9 @@
 """
 Example of a checkbox-list-based dialog.
 """
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import checkboxlist_dialog, message_dialog
-from prompt_toolkit.styles import Style
+from quo import HTML
+from quo.shortcuts import checkboxlist_dialog, message_dialog
+from quo.styles import Style
 
 results = checkboxlist_dialog(
     title="CheckboxList dialog",

@@ -24,9 +24,11 @@ Quo requires Python `3.6.1` or later.
 - Support for ANSI and RGB color models
 - Support for tabular presentation of data
 - Interactive progressbars
+- Code completions
 - Nesting of commands
 - A function that displays asterisks instead of the actual characters, helpful when typing passwords
 - Automatic help page generation
+- Highlighting
 - Lightweight
 
 ## Getting Started
