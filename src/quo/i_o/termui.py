@@ -231,12 +231,29 @@ def confirm(
     if abort and not rv:
         raise Abort()
     return rv
+############
+def evoke(
+    *objects: Any,
+    sep: str = " ",
+    end: str = "\n",
+    file: Optional[IO[str]] = None,
+    flush: bool = False,
+) -> None:
+    r"""Print object(s) supplied via positional arguments.
+    This function has an identical signature to the built-in print.
+    For more advanced features, see the :class:`~rich.console.Console` class.
 
+    Args:
+        sep (str, optional): Separator between printed objects. Defaults to " ".
+        end (str, optional): Character to write at end of output. Defaults to "\\n".
+        file (IO[str], optional): File to write to, or None for stdout. Defaults to None.
+        flush (bool, optional): Has no effect as Rich always flushes output. Defaults to False.
 
-def evoke():
-    session = Elicit()
+    """
+    from quo.terminal import Terminal
 
-    session.elicit
+    write_console = get_terminal() if file is None else Terminal(file=file)
+    return write_console.evoke(*objects, sep=sep, end=end)
 ########################################################
 
 def prompt(
