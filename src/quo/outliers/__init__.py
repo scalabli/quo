@@ -17,4 +17,5 @@ from .exceptions import (
         NotRenderableError,
         MarkupError,
         LiveError,
-        NoAltScreen                                       )
+        NoAltScreen,
+        ValidationError
