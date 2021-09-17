@@ -41,6 +41,24 @@ class QuoException(Exception):
             file = get_text_stderr()
         inscribe(f"Error: {self.format_message()}", file=file)
 
+class ValidationError(Exception):
+    """
+    Error raised by :meth:`.Validator.validate`.
+    :param cursor_position: The cursor position where the error occurred.
+    :param message: Text.
+    """
+
+    def __init__(self, cursor_position: int = 0, message: str = "") -> None:
+        super().__init__(message)
+        self.cursor_position = cursor_position
+        self.message = message
+
+    def __repr__(self) -> str:
+        return "%s(cursor_position=%r, message=%r)" % (
+            self.__class__.__name__,
+            self.cursor_position,
+            self.message,
+        )
 
 class UsageError(QuoException):
     """An internal exception that signals a usage error.This typically aborts any further handling.
