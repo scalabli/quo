@@ -66,7 +66,7 @@ It also supports handling of ANSI color sequences.
 ```
 ![prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
-**Example 5**
+### Quo key bind
 
 ```python
    from quo import command, app, echo
