@@ -11,7 +11,8 @@ from quo.filters import FilterOrBool
 from quo.text import AnyFormattedText
 from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
 from quo.keys.key_binding.defaults import load_key_bindings
-from quo.keys.key_binding.key_bindings import KeyBindings, merge_key_bindings
+from quo.keys import KeyBinder
+from quo.keys.key_binding.key_bindings import merge_key_bindings
 from quo.layout.layout import Layout
 from quo.layout.containers import AnyContainer, HSplit
 from quo.layout.dimension import Dimension as D
@@ -306,7 +307,7 @@ def progress(
 
 def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Application[Any]:
     # Key bindings.
-    bindings = KeyBindings()
+    bindings = KeyBinder()
     bindings.add("tab")(focus_next)
     bindings.add("s-tab")(focus_previous)
 

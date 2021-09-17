@@ -3,7 +3,13 @@ Layout dimensions are used to give the minimum, maximum and preferred
 dimensions for containers and controls.
 """
 
-from typing import Any, Callable, List, Optional, Union
+from typing import (
+        Any,
+        Callable, 
+        List, 
+        Optional,
+        Union
+        )
 
 __all__ = [
     "Dimension",

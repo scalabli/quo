@@ -39,8 +39,8 @@ from quo.keys.key_binding.vi_state import CharacterFind, InputMode
 from quo.keys.list import Keys
 from quo.search import SearchDirection
 from quo.selection import PasteMode, SelectionState, SelectionType
-
-from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
+from quo.keys import KeyBinder
+from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase
 from .named_commands import get_by_name
 
 __all__ = [
@@ -173,7 +173,7 @@ _TOF = TypeVar("_TOF", bound=TextObjectFunction)
 
 
 def create_text_object_decorator(
-    key_bindings: KeyBindings,
+    key_bindings: KeyBinder,
 ) -> Callable[..., Callable[[_TOF], _TOF]]:
     """
     Create a decorator that can be used to register Vi text object implementations.
@@ -296,7 +296,7 @@ _OF = TypeVar("_OF", bound=OperatorFunction)
 
 
 def create_operator_decorator(
-    key_bindings: KeyBindings,
+    key_bindings: KeyBinder,
 ) -> Callable[..., Callable[[_OF], _OF]]:
     """
     Create a decorator that can be used for registering Vi operators.
@@ -386,7 +386,7 @@ def load_vi_bindings() -> KeyBindingsBase:
     #       handled correctly. There is no need to add "~IsReadOnly" to all key
     #       bindings that do text manipulation.
 
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
 
     # (Note: Always take the navigation bindings in read-only mode, even when
@@ -2173,7 +2173,7 @@ def load_vi_bindings() -> KeyBindingsBase:
 
 
 def load_vi_search_bindings() -> KeyBindingsBase:
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
     from . import search
 

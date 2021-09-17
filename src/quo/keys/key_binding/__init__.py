@@ -1,7 +1,7 @@
 from .key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
-    KeyBindings,
+    KeyBinder,
     KeyBindingsBase,
     merge_key_bindings,
 )

@@ -1,2 +1,2 @@
 from .list import Keys
-from .key_binding import KeyBindings
+from .key_binding import KeyBinder

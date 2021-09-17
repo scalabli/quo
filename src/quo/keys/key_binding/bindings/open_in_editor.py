@@ -3,7 +3,8 @@ Open in editor key bindings.
 """
 from quo.filters import emacs_mode, has_selection, vi_navigation_mode
 
-from quo.keys.key_binding.key_bindings import KeyBindings, KeyBindingsBase, merge_key_bindings
+from quo.keys import KeyBinder
+from quo.keys.key_binding.key_bindings import KeyBindingsBase, merge_key_bindings
 from .named_commands import get_by_name
 
 __all__ = [
@@ -25,11 +26,11 @@ def load_open_in_editor_bindings() -> KeyBindingsBase:
     )
 
 
-def load_emacs_open_in_editor_bindings() -> KeyBindings:
+def load_emacs_open_in_editor_bindings() -> KeyBinder:
     """
     Pressing C-X C-E will open the buffer in an external editor.
     """
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
 
     key_bindings.add("c-x", "c-e", filter=emacs_mode & ~has_selection)(
         get_by_name("edit-and-execute-command")
@@ -38,11 +39,11 @@ def load_emacs_open_in_editor_bindings() -> KeyBindings:
     return key_bindings
 
 
-def load_vi_open_in_editor_bindings() -> KeyBindings:
+def load_vi_open_in_editor_bindings() -> KeyBinder:
     """
     Pressing 'v' in navigation mode will open the buffer in an external editor.
     """
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     key_bindings.add("v", filter=vi_navigation_mode)(
         get_by_name("edit-and-execute-command")
     )

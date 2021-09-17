@@ -12,9 +12,8 @@ from quo.completion import (
     get_common_complete_suffix,
 )
 from quo.text import StyleAndTextTuples
-from quo.keys.key_binding.key_bindings import KeyBindings
+from quo.keys import Keys, KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys.list import Keys
 from quo.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
@@ -177,7 +176,7 @@ def _create_more_session(message: str = "--MORE--") -> "Elicit[bool]":
     """
     from quo.shortcuts import Elicit
 
-    bindings = KeyBindings()
+    bindings = KeyBinder()
 
     @bindings.add(" ")
     @bindings.add("y")

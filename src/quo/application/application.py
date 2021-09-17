@@ -63,14 +63,13 @@ from quo.keys.key_binding.key_bindings import (
     Binding,
     ConditionalKeyBindings,
     GlobalOnlyKeyBindings,
-    KeyBindings,
     KeyBindingsBase,
     KeysTuple,
     merge_key_bindings,
 )
 from quo.keys.key_binding.key_processor import KeyPressEvent, KeyProcessor
 from quo.keys.key_binding.vi_state import ViState
-from quo.keys.list import Keys
+from quo.keys import Keys
 from quo.layout.containers import Container, Window
 from quo.layout.controls import BufferControl, UIControl
 from quo.layout.dummy import create_dummy_layout
@@ -1275,8 +1274,9 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
     - This doesn't block the event loop.
     """
     from quo.shortcuts import Elicit
+    from quo.keys import KeyBinder
 
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
 
     @key_bindings.add("enter")
     def _ok(event: E) -> None:

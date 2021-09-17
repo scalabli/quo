@@ -75,15 +75,14 @@ from quo.keys.key_binding.bindings.completion import (
 from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
+from quo.keys import Keys, KeyBinder
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
-    KeyBindings,
     KeyBindingsBase,
     merge_key_bindings,
 )
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys.list import Keys
 from quo.layout.containers import Float, FloatContainer, HSplit, Window
 from quo.layout.containers import ConditionalContainer, WindowAlign
 from quo.layout.controls import (
@@ -776,11 +775,11 @@ class Elicit(Generic[_T]):
 
         return application
 
-    def _create_elicit_bindings(self) -> KeyBindings:
+    def _create_elicit_bindings(self) -> KeyBinder:
         """
         Create the KeyBindings for a elicit application.
         """
-        kb = KeyBindings()
+        kb = KeyBinder()
         handle = kb.add
         default_focused = has_focus(DEFAULT_BUFFER)
 
@@ -1444,7 +1443,7 @@ def create_confirm_session(
     """
     Create a `Elicit` object for the 'confirm' function.
     """
-    bindings = KeyBindings()
+    bindings = KeyBinder()
 
     @bindings.add("y")
     @bindings.add("Y")

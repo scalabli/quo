@@ -4,7 +4,7 @@ from quo.keys.list import Keys
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils import is_windows
 
-from ..key_bindings import KeyBindings
+from quo.keys import KeyBinder
 
 __all__ = [
     "load_mouse_bindings",
@@ -13,12 +13,12 @@ __all__ = [
 E = KeyPressEvent
 
 
-def load_mouse_bindings() -> KeyBindings:
+def load_mouse_bindings() -> KeyBinder:
     """
     Key bindings, required for mouse support.
     (Mouse events enter through the key binding system.)
     """
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
 
     @key_bindings.add(Keys.Vt100MouseEvent)
     def _(event: E) -> None:

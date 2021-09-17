@@ -18,10 +18,10 @@ from quo.filters import (
 )
 from quo.keys.key_binding.key_bindings import Binding
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys.list import Keys
+from quo.keys import Keys, KeyBinder
 from quo.selection import SelectionType
 
-from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase
+from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase
 from .named_commands import get_by_name
 
 __all__ = [
@@ -39,7 +39,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
     """
     # Overview of Readline emacs commands:
     # http://www.catonmat.net/download/readline-emacs-editing-mode-cheat-sheet.pdf
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
 
     insert_mode = emacs_insert_mode
@@ -336,7 +336,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
 
 
 def load_emacs_search_bindings() -> KeyBindingsBase:
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
     from . import search
 
@@ -406,7 +406,7 @@ def load_emacs_shift_selection_bindings() -> KeyBindingsBase:
     Bindings to select text with shift + cursor movements
     """
 
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
 
     def unshift_move(event: E) -> None:

@@ -3,9 +3,9 @@ Key bindings for extra page navigation: bindings for up/down scrolling through
 long pages, like in Emacs or Vi.
 """
 from quo.filters import buffer_has_focus, emacs_mode, vi_mode
+from quo.keys import KeyBinder
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
-    KeyBindings,
     KeyBindingsBase,
     merge_key_bindings,
 )
@@ -51,7 +51,7 @@ def load_emacs_page_navigation_bindings() -> KeyBindingsBase:
     Key bindings, for scrolling up and down through pages.
     This are separate bindings, because GNU readline doesn't have them.
     """
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
 
     handle("c-v")(scroll_page_down)
@@ -67,7 +67,7 @@ def load_vi_page_navigation_bindings() -> KeyBindingsBase:
     Key bindings, for scrolling up and down through pages.
     This are separate bindings, because GNU readline doesn't have them.
     """
-    key_bindings = KeyBindings()
+    key_bindings = KeyBinder()
     handle = key_bindings.add
 
     handle("c-f")(scroll_forward)

@@ -32,7 +32,7 @@ from quo.text import (
     to_formatted_text,
 )
 from quo.input import Input
-from quo.keys.key_binding import KeyBindings
+from quo.keys import KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
@@ -63,12 +63,12 @@ E = KeyPressEvent
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 
 
-def create_key_bindings() -> KeyBindings:
+def create_key_bindings() -> KeyBinder:
     """
     Key bindings handled by the progress bar.
     (The main thread is not supposed to handle any key bindings.)
     """
-    kb = KeyBindings()
+    kb = KeyBinder()
 
     @kb.add("c-l")
     def _clear(event: E) -> None:
@@ -115,7 +115,7 @@ class ProgressBar:
         formatters: Optional[Sequence[Formatter]] = None,
         bottom_toolbar: AnyFormattedText = None,
         style: Optional[BaseStyle] = None,
-        key_bindings: Optional[KeyBindings] = None,
+        key_bindings: Optional[KeyBinder] = None,
         file: Optional[TextIO] = None,
         color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
@@ -290,7 +290,7 @@ class _ProgressControl(UIControl):
     def is_focusable(self) -> bool:
         return True  # Make sure that the key bindings work.
 
-    def get_key_bindings(self) -> KeyBindings:
+    def get_key_bindings(self) -> KeyBinder:
         return self._key_bindings
 
 

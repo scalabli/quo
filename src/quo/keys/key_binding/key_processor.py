@@ -14,7 +14,7 @@ from typing import TYPE_CHECKING, Any, Deque, Generator, List, Optional, Union
 from quo.application.current import get_app
 from quo.enums import EditingMode
 from quo.filters.app import vi_navigation_mode
-from quo.keys.list import Keys
+from quo.keys import Keys
 from quo.utils import Event
 
 from quo.keys.key_binding.key_bindings import Binding, KeyBindingsBase

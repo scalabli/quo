@@ -431,6 +431,7 @@ def style(
     background=None,
     bold=None,
     dim=None,
+    hidden=None,
     lowercase=None,
     ul=None,
     underline=None,
@@ -438,6 +439,7 @@ def style(
     italic=None,
     reverse=None,
     reset=True,
+    strike=None,
 ):
     """Styles a text with ANSI styles and returns the new string.  By
     default the styling is self contained which means that at the end
@@ -544,6 +546,10 @@ def style(
         bits.append(f"\033[{7 if reverse else 27}m") 
     if italic is not None:
         bits.append(f"\x1B[3m")
+    if hidden is not None:
+        bits.append(f"\x1b[8m")
+    if strike is not None:
+        bits.append(f"\x1b[9m")
 
     bits.append(text)
     if reset:

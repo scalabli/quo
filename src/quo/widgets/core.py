@@ -36,9 +36,8 @@ from quo.text import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-from quo.keys.key_binding.key_bindings import KeyBindings
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys.list import Keys
+from quo.keys import Keys, KeyBinder
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
@@ -433,9 +432,9 @@ class Button:
             ("class:button.arrow", self.right_symbol, handler),
         ]
 
-    def _get_key_bindings(self) -> KeyBindings:
+    def _get_key_bindings(self) -> KeyBinder:
         "Key bindings for the Button."
-        kb = KeyBindings()
+        kb = KeyBinder()
 
         @kb.add(" ")
         @kb.add("enter")
@@ -468,7 +467,7 @@ class Frame:
         style: str = "",
         width: AnyDimension = None,
         height: AnyDimension = None,
-        key_bindings: Optional[KeyBindings] = None,
+        key_bindings: Optional[KeyBinder] = None,
         modal: bool = False,
     ) -> None:
 
@@ -613,7 +612,7 @@ class Box:
         style: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
-        key_bindings: Optional[KeyBindings] = None,
+        key_bindings: Optional[KeyBinder] = None,
     ) -> None:
 
         if padding is None:

@@ -556,14 +556,14 @@ class MultiColumnCompletionMenuControl(UIControl):
 
         return None
 
-    def get_key_bindings(self) -> "KeyBindings":
+    def get_key_bindings(self) -> "KeyBinder":
         """
         Expose key bindings that handle the left/right arrow keys when the menu
         is displayed.
         """
-        from quo.key_binding.key_bindings import KeyBindings
+        from quo.keys import KeyBinder
 
-        kb = KeyBindings()
+        kb = KeyBinder()
 
         @Condition
         def filter() -> bool:

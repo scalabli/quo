@@ -5,10 +5,10 @@ from quo.buffer import Buffer
 from quo.enums import SYSTEM_BUFFER
 from quo.filters import Condition, FilterOrBool, emacs_mode, has_arg, has_completions, has_focus, has_validation_error, to_filter, vi_mode, vi_navigation_mode
 from quo.text import AnyFormattedText, StyleAndTextTuples, fragment_list_len, to_formatted_text
-from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindings, KeyBindingsBase, merge_key_bindings
+from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase, merge_key_bindings
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.key_binding.vi_state import InputMode
-from quo.keys.list import Keys
+from quo.keys import Keys, KeyBinder
 from quo.layout.containers import ConditionalContainer, Container, Window
 from quo.layout.controls import BufferControl, FormattedTextControl, SearchBufferControl, UIContent, UIControl
 from quo.layout.dimension import Dimension
@@ -88,7 +88,7 @@ class SystemToolbar:
         focused = has_focus(self.system_buffer)
 
         # Emacs
-        emacs_bindings = KeyBindings()
+        emacs_bindings = KeyBinder()
         handle = emacs_bindings.add
 
         @handle("escape", filter=focused)
@@ -110,7 +110,7 @@ class SystemToolbar:
             event.app.layout.focus_last()
 
         # Vi.
-        vi_bindings = KeyBindings()
+        vi_bindings = KeyBinder()
         handle = vi_bindings.add
 
         @handle("escape", filter=focused)
@@ -134,7 +134,7 @@ class SystemToolbar:
 
         # Global bindings. (Listen to these bindings, even when this widget is
         # not focussed.)
-        global_bindings = KeyBindings()
+        global_bindings = KeyBinder()
         handle = global_bindings.add
 
         @handle(Keys.Escape, "!", filter=~focused & emacs_mode, is_global=True)

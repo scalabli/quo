@@ -51,6 +51,7 @@ from typing import (
 
 from quo.cache import SimpleCache
 from quo.filters import FilterOrBool, Never, to_filter
+from quo.i_o import echo
 from quo.keys.list import KEY_ALIASES, Keys
 
 # Avoid circular imports.
@@ -168,7 +169,7 @@ class KeyBindingsBase(metaclass=ABCMeta):
 T = TypeVar("T", bound=Union[KeyHandlerCallable, Binding])
 
 
-class KeyBindings(KeyBindingsBase):
+class KeyBinder(KeyBindingsBase):
     """
     A container for a set of key bindings.
 
@@ -225,9 +226,9 @@ class KeyBindings(KeyBindingsBase):
         """
         Decorator for adding a key bindings.
 
-        :param filter: :class:`~prompt_toolkit.filters.Filter` to determine
+        :param filter: :class:`~quo.filters.Filter` to determine
             when this key binding is active.
-        :param eager: :class:`~prompt_toolkit.filters.Filter` or `bool`.
+        :param eager: :class:`~quo.filters.Filter` or `bool`.
             When True, ignore potential longer matches when this key binding is
             hit. E.g. when there is an active eager key binding for Ctrl-X,
             execute the handler immediately and ignore the key binding for
@@ -417,7 +418,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        raise ValueError("Invalid key: %s" % (key,))
+        return echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
 
     return key
 
@@ -463,7 +464,7 @@ class _Proxy(KeyBindingsBase):
 
     def __init__(self) -> None:
         # `KeyBindings` to be synchronized with all the others.
-        self._bindings2: KeyBindingsBase = KeyBindings()
+        self._bindings2: KeyBindingsBase = KeyBinder()
         self._last_version: Hashable = ()
 
     def _update_cache(self) -> None:
@@ -496,7 +497,7 @@ class _Proxy(KeyBindingsBase):
 
 class ConditionalKeyBindings(_Proxy):
     """
-    Wraps around a `KeyBindings`. Disable/enable all the key bindings according to
+    Wraps around a `KeyBinder`. Disable/enable all the key bindings according to
     the given (additional) filter.::
 
         @Condition
@@ -526,7 +527,7 @@ class ConditionalKeyBindings(_Proxy):
         expected_version = self.key_bindings._version
 
         if self._last_version != expected_version:
-            bindings2 = KeyBindings()
+            bindings2 = KeyBinder()
 
             # Copy all bindings from `self.key_bindings`, adding our condition.
             for b in self.key_bindings.bindings:
@@ -568,7 +569,7 @@ class _MergedKeyBindings(_Proxy):
         expected_version = tuple(r._version for r in self.registries)
 
         if self._last_version != expected_version:
-            bindings2 = KeyBindings()
+            bindings2 = KeyBinder()
 
             for reg in self.registries:
                 bindings2.bindings.extend(reg.bindings)
@@ -601,7 +602,7 @@ class DynamicKeyBindings(_Proxy):
         self.get_key_bindings = get_key_bindings
         self.__version = 0
         self._last_child_version = None
-        self._dummy = KeyBindings()  # Empty key bindings.
+        self._dummy = KeyBinder()  # Empty key bindings.
 
     def _update_cache(self) -> None:
         key_bindings = self.get_key_bindings() or self._dummy
@@ -614,7 +615,7 @@ class DynamicKeyBindings(_Proxy):
 
 class GlobalOnlyKeyBindings(_Proxy):
     """
-    Wrapper around a :class:`.KeyBindings` object that only exposes the global
+    Wrapper around a :class:`.KeyBinder` object that only exposes the global
     key bindings.
     """
 
@@ -630,7 +631,7 @@ class GlobalOnlyKeyBindings(_Proxy):
         expected_version = self.key_bindings._version
 
         if self._last_version != expected_version:
-            bindings2 = KeyBindings()
+            bindings2 = KeyBinder()
 
             for b in self.key_bindings.bindings:
                 if b.is_global():
