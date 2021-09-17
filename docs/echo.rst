@@ -1,3 +1,5 @@
+echo
+=====
 **quo.echo** *(message=None, file=None, n
 l=True, err=False, color=None)*
 This function prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode and binary data.

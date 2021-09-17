@@ -293,7 +293,7 @@ def _interpret_color(color, offset=0):
     return str(ansi_color_codes[color] + offset)
 
 
-def style(
+def flair(
     text,
     fg=None,
     foreground=None,
@@ -302,7 +302,6 @@ def style(
     bold=None,
     dim=None,
     hidden=None,
-    lowercase=None,
     ul=None,
     underline=None,
     blink=None,

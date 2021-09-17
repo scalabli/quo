@@ -34,10 +34,13 @@ it would accept ``pus`` as an alias (so long as it was unique):
 
 .. code-block:: python
 
-    class AliasedTether(quo.Tether):
+   from quo import Tether
+
+    
+   class AliasedTether(Tether):
 
         def get_command(self, clime, cmd_name):
-            rv = quo.Tether.get_command(self, clime, cmd_name)
+            rv = Tether.get_command(self, clime, cmd_name)
             if rv is not None:
                 return rv
             matches = [x for x in self.list_commands(clime)
@@ -45,7 +48,7 @@ it would accept ``pus`` as an alias (so long as it was unique):
             if not matches:
                 return None
             elif len(matches) == 1:
-                return quo.Tether.get_command(self, clime, matches[0])
+                return Tether.get_command(self, clime, matches[0])
             clime.fail(f"Too many matches: {', '.join(sorted(matches))}")
 
 And it can then be used like this:
@@ -75,32 +78,11 @@ object has a :attr:`~Context.params` attribute which is a dictionary of
 all parameters.  Whatever is in that dictionary is being passed to the
 callbacks.
 
-This can be used to make up addition parameters.  Generally this pattern
-is not recommended but in some cases it can be useful.  At the very least
-it's good to know that the system works this way.
-
+This can be used to make up addition parameters.
 .. code-block:: python
 
     import urllib
-
-    def open_url(clime, param, value):
-        if value is not None:
-            clime.params['fp'] = urllib.urlopen(value)
-            return value
-
-    @quo.command()
-    @quo.app('--url', callback=open_url)
-    def cli(url, fp=None):
-        if fp is not None:
-            quo.echo(f"{url}: {fp.code}")
-
-In this case the callback returns the URL unchanged but also passes a
-second ``fp`` value to the callback.  What's more recommended is to pass
-the information in a wrapper however:
-
-.. code-block:: python
-
-    import urllib
+    from quo import app command, echo
 
     class URL(object):
 
@@ -112,11 +94,11 @@ the information in a wrapper however:
         if value is not None:
             return URL(value, urllib.urlopen(value))
 
-    @quo.command()
-    @quo.app('--url', callback=open_url)
+    @command()
+    @app('--url', callback=open_url)
     def cli(url):
         if url is not None:
-            quo.echo(f"{url.url}: {url.fp.code}")
+            echo(f"{url.url}: {url.fp.code}")
 
 
 Token Normalization
