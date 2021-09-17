@@ -72,7 +72,6 @@ from quo.expediency import (
 
 def clear():
     import sys
-    import os
     from .accordance import isatty, WIN
     """Clears the terminal screen.  This will have the effect of clearing
     the whole visible space of the terminal and moving the cursor to the
