@@ -9,6 +9,7 @@ from quo.eventloop import run_in_executor_with_context
 
 from .document import Document
 from quo.filters import FilterOrBool, to_filter
+from quo.outliers import ValidationError
 
 #__all__ = [
  #   "ConditionalValidator",
@@ -19,26 +20,6 @@ from quo.filters import FilterOrBool, to_filter
   #  "DynamicValidator",
 #]
 
-
-class ValidationError(Exception):
-    """
-    Error raised by :meth:`.Validator.validate`.
-
-    :param cursor_position: The cursor position where the error occurred.
-    :param message: Text.
-    """
-
-    def __init__(self, cursor_position: int = 0, message: str = "") -> None:
-        super().__init__(message)
-        self.cursor_position = cursor_position
-        self.message = message
-
-    def __repr__(self) -> str:
-        return "%s(cursor_position=%r, message=%r)" % (
-            self.__class__.__name__,
-            self.cursor_position,
-            self.message,
-        )
 
 
 class Validator(metaclass=ABCMeta):
