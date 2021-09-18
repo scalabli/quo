@@ -1,6 +1,6 @@
 from .exceptions import (
         Abort, 
-        QuoException, 
+        Outlier, 
         UsageError,
         BadParameter,
         MissingParameter,

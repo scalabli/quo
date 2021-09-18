@@ -20,7 +20,7 @@ def _join_param_hints(param_hint):
     return param_hint
 
 
-class QuoException(Exception):
+class Outlier(Exception):
     """An exception that Quo can handle and show to the user."""
 
     #: The exit code for this exception.
@@ -60,7 +60,7 @@ class ValidationError(Exception):
             self.message,
         )
 
-class UsageError(QuoException):
+class UsageError(Outlier):
     """An internal exception that signals a usage error.This typically aborts any further handling.
 
     :param message: the error message to display.
@@ -202,7 +202,7 @@ class BadArgUsage(UsageError):
     """
 
 
-class FileError(QuoException):
+class FileError(Outlier):
     """Raised if a file cannot be opened."""
 
     def __init__(self, filename, hint=None):

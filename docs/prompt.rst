@@ -39,6 +39,30 @@ provided.  For instance, the following will only accept floats:
    from quo import prompt
    prompt('Please enter a number', default=42.0)
 
+
+
+Parameters
+   * ``text`` – the text to show for the prompt.
+
+   * ``default`` – the default value to use if no input happens. If this is not given it will prompt until it’s aborted.
+
+   * ``hide`` – if this is set to true then the input value will be hidden.
+
+   * ``affirm`` – asks for confirmation for the value.
+
+   * ``type`` – the type to use to check the value against.
+
+   * ``value_proc`` – if this parameter is provided it’s a function that is invoked instead of the type conversion to convert a value.
+
+   * ``suffix`` – a suffix that should be added to the prompt.
+
+   * ``show_default`` – shows or hides the default value in the prompt.
+
+   * ``err`` – if set to true the file defaults to stderr instead of stdout, the same as with echo.
+
+   * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
+
+
 Confirmation Prompts
 --------------------
 
@@ -53,11 +77,4 @@ as a boolean value:
    if confirm('Do you want to continue?'):
    echo('Well done!')
 
-There is also the option to make the function automatically abort the
-execution of the program if it does not return ``True``:
-
-.. code:: python
-
-   from quo import confirm
-   
-   confirm('Do you want to continue?', abort=True)
+There is also the option to make the function auto

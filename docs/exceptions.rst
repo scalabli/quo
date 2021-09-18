@@ -52,7 +52,7 @@ So you can do something like this::
 Which Exceptions Exist?
 -----------------------
 
-Quo has two exception bases: :exc:`QuoException` which is raised for
+Quo has two exception bases: :exc:`Outlier` which is raised for
 all exceptions that quo wants to signal to the user and :exc:`Abort`
 which is used to instruct quo to abort the execution.
 

@@ -12,6 +12,7 @@ Quo's Documentation
    commands.rst
    apps.rst
    args.rst
+   confirm.rst.
    terminal.rst
    style.rst
    markup.rst
