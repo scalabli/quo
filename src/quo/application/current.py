@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from quo.input.core import Input
     from quo.output.core import Output
 
-    from .application import Application
+    from .application import Suite
 
 __all__ = [
         "AppSession",
@@ -80,16 +80,16 @@ def get_app_session() -> AppSession:
     return _current_app_session.get()
 
 
-def get_app() -> "Application[Any]":
+def get_app() -> "Suite[Any]":
     """
     Get the current active (running) Application.
-    An :class:`.Application` is active during the
-    :meth:`.Application.run_async` call.
+    An :class:`.Suite` is active during the
+    :meth:`.Suite.run_async` call.
 
     We assume that there can only be one :class:`.Application` active at the
     same time. There is only one terminal window, with only one stdin and
     stdout. This makes the code significantly easier than passing around the
-    :class:`.Application` everywhere.
+    :class:`.Suite` everywhere.
 
     If no :class:`.Application` is running, then return by default a
     :class:`.DummyApplication`. For practical reasons, we prefer to not raise
@@ -108,7 +108,7 @@ def get_app() -> "Application[Any]":
     return DummyApplication()
 
 
-def get_app_or_none() -> Optional["Application[Any]"]:
+def get_app_or_none() -> Optional["Suite[Any]"]:
     """
     Get the current active (running) Application, or return `None` if no
     application is running.
@@ -118,9 +118,9 @@ def get_app_or_none() -> Optional["Application[Any]"]:
 
 
 @contextmanager
-def set_app(app: "Application[Any]") -> Generator[None, None, None]:
+def set_app(app: "Suite[Any]") -> Generator[None, None, None]:
     """
-    Context manager that sets the given :class:`.Application` active in an
+    Context manager that sets the given :class:`.Suite` active in an
     `AppSession`.
 
     This should only be called by the `Application` itself.
@@ -151,7 +151,7 @@ def create_app_session(
     contextvars and requires at least Python 3.7.
     """
     if sys.version_info <= (3, 6):
-        raise RuntimeError("Application sessions require Python 3.7.")
+        raise RuntimeError("This session requires Python 3.7 or later.")
 
     # If no input/output is specified, fall back to the current input/output,
     # whatever that is.
