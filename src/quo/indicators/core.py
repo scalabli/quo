@@ -23,7 +23,7 @@ from typing import (
     cast,
 )
 
-from quo.application import Application
+from quo.application import Suite
 from quo.application.current import get_app_session
 from quo.filters import Condition, is_done, renderer_height_is_known
 from quo.text import (
@@ -143,7 +143,7 @@ class ProgressBar:
         self._app_started = threading.Event()
 
     def __enter__(self) -> "ProgressBar":
-        # Create UI Application.
+        # Create UI Suite.
         title_toolbar = ConditionalContainer(
             Window(
                 FormattedTextControl(lambda: self.title),
@@ -179,7 +179,7 @@ class ProgressBar:
             for f in self.formatters
         ]
 
-        self.app: Application[None] = Application(
+        self.app: Suite[None] = Suite(
             min_redraw_interval=0.05,
             layout=Layout(
                 HSplit(
