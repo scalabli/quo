@@ -99,7 +99,7 @@ except ImportError:
 
 
 #__all__ = [
-#    "Application",
+#    "Suite",
 #]
 
 
@@ -108,15 +108,15 @@ _AppResult = TypeVar("_AppResult")
 
 
 # event handler
-onApplication = Callable[["Application[_AppResult]"], None]
+onSuite = Callable[["Suite[_AppResult]"], None]
 
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 _SIGTSTP = getattr(signal, "SIGTSTP", None)
 
 
-class Application(Generic[_AppResult]):
+class Suite(Generic[_AppResult]):
     """
-    The main Application class!
+    The main Suite class!
     This glues everything together.
 
     :param layout: A :class:`~quo.layout.Layout` instance.
@@ -169,7 +169,7 @@ class Application(Generic[_AppResult]):
         enabled if `full_screen` is set.
 
     Callbacks (all of these should accept an
-    :class:`~quo.application.Application` object as input.)
+    :class:`~quo.application.Suite` object as input.)
 
     :param on_reset: Called during reset.
     :param on_invalidate: Called when the UI has been invalidated.
@@ -188,7 +188,7 @@ class Application(Generic[_AppResult]):
 
     Usage:
 
-        app = Application(...)
+        app = Suite(...)
         app.run()
 
         # Or
@@ -219,10 +219,10 @@ class Application(Generic[_AppResult]):
         max_render_postpone_time: Union[float, int, None] = 0.01,
         refresh_interval: Optional[float] = None,
         terminal_size_polling_interval: Optional[float] = 0.5,
-        on_reset: Optional[onApplication] = None,
-        on_invalidate: Optional[onApplication] = None,
-        before_render: Optional[onApplication] = None,
-        after_render: Optional[onApplication] = None,
+        on_reset: Optional[onSuite] = None,
+        on_invalidate: Optional[onSuite] = None,
+        before_render: Optional[onSuite] = None,
+        after_render: Optional[onSuite] = None,
         # I/O.
         input: Optional[Input] = None,
         output: Optional[Output] = None,
@@ -280,7 +280,7 @@ class Application(Generic[_AppResult]):
         self.output = output or session.output
         self.input = input or session.input
 
-        # List of 'extra' functions to execute before a Application.run.
+        # List of 'extra' functions to execute before a Suite.run.
         self.pre_run_callables: List[Callable[[], None]] = []
 
         self._is_running = False
@@ -511,7 +511,7 @@ class Application(Generic[_AppResult]):
     def _redraw(self, render_as_done: bool = False) -> None:
         """
         Render the command line again. (Not thread safe!) (From other threads,
-        or if unsure, use :meth:`.Application.invalidate`.)
+        or if unsure, use :meth:`.Suite.invalidate`.)
 
         :param render_as_done: make sure to put the cursor after the UI.
         """
@@ -542,7 +542,7 @@ class Application(Generic[_AppResult]):
 
                 self._update_invalidate_events()
 
-        # NOTE: We want to make sure this Application is the active one. The
+        # NOTE: We want to make sure this Suite is the active one. The
         #       invalidate function is often called from a context where this
         #       application is not the active one. (Like the
         #       `PromptSession._auto_refresh_context`).
@@ -617,7 +617,7 @@ class Application(Generic[_AppResult]):
         `self.future` should be set to the new future at the point where this
         is called in order to avoid data races. `pre_run` can be used to set a
         `threading.Event` to synchronize with UI termination code, running in
-        another thread that would call `Application.exit`. (See the progress
+        another thread that would call `Suite.exit`. (See the progress
         bar code for an example.)
         """
         if pre_run:
@@ -634,13 +634,13 @@ class Application(Generic[_AppResult]):
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
-        Run the quo :class:`~quo.application.Application`
-        until :meth:`~quo.application.Application.exit` has been
+        Run the quo :class:`~quo.application.Suite`
+        until :meth:`~quo.application.Suite.exit` has been
         called. Return the value that was passed to
-        :meth:`~quo.application.Application.exit`.
+        :meth:`~quo.application.Suite.exit`.
 
         This is the main entry point for a prompt_toolkit
-        :class:`~quo.application.Application` and usually the only
+        :class:`~quo.application.Suite` and usually the only
         place where the event loop is actually running.
 
         :param pre_run: Optional callable, which is called right after the
@@ -649,7 +649,7 @@ class Application(Generic[_AppResult]):
             of the alternate screen and hide the application, display the
             exception, and wait for the user to press ENTER.
         """
-        assert not self._is_running, "Application is already running."
+        assert not self._is_running, "Suite is already running."
 
         async def _run_async() -> _AppResult:
             "Coroutine."
@@ -926,11 +926,11 @@ class Application(Generic[_AppResult]):
     ) -> "asyncio.Task[None]":
         """
         Start a background task (coroutine) for the running application. When
-        the `Application` terminates, unfinished background tasks will be
+        the `Suite` terminates, unfinished background tasks will be
         cancelled.
 
         If asyncio had nurseries like Trio, we would create a nursery in
-        `Application.run_async`, and run the given coroutine in that nursery.
+        `Suite.run_async`, and run the given coroutine in that nursery.
 
         Not threadsafe.
         """
@@ -1018,9 +1018,9 @@ class Application(Generic[_AppResult]):
 
         .. note::
 
-            If `Application.exit` is called before `Application.run()` is
-            called, then the `Application` won't exit (because the
-            `Application.future` doesn't correspond to the current run). Use a
+            If `Suite.exit` is called before `Suite.run()` is
+            called, then the `Suite` won't exit (because the
+            `Suite.future` doesn't correspond to the current run). Use a
             `pre_run` hook and an event to synchronize the closing if there's a
             chance this can happen.
 
@@ -1034,10 +1034,10 @@ class Application(Generic[_AppResult]):
         assert result is None or exception is None
 
         if self.future is None:
-            raise Exception("Application is not running. Application.exit() failed.")
+            raise Exception("Suite is not running. Suite.exit() failed.")
 
         if self.future.done():
-            raise Exception("Return value already set. Application.exit() failed.")
+            raise Exception("Return value already set. Suite.exit() failed.")
 
         self.exit_style = style
 
@@ -1173,12 +1173,12 @@ class Application(Generic[_AppResult]):
 
 class _CombinedRegistry(KeyBindingsBase):
     """
-    The `KeyBindings` of key bindings for a `Application`.
+    The `KeyBindings` of key bindings for a `Suite`.
     This merges the global key bindings with the one of the current user
     control.
     """
 
-    def __init__(self, app: Application[_AppResult]) -> None:
+    def __init__(self, app: Suite[_AppResult]) -> None:
         self.app = app
         self._cache: SimpleCache[
             Tuple[Window, FrozenSet[UIControl]], KeyBindingsBase
@@ -1301,7 +1301,7 @@ def attach_winch_signal_handler(
     Attach the given callback as a WINCH signal handler within the context
     manager. Restore the original signal handler when done.
 
-    The `Application.run` method will register SIGWINCH, so that it will
+    The `Suite.run` method will register SIGWINCH, so that it will
     properly repaint when the terminal window resizes. However, using
     `run_in_terminal`, we can temporarily send an application to the
     background, and run an other app in between, which will then overwrite the
