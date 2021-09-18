@@ -4,16 +4,16 @@ from quo.text import AnyFormattedText
 from quo.input import DummyInput
 from quo.output import DummyOutput
 
-from .application import Application
+from .application import Suite
 
 #__all__ = [
 #    "DummyApplication",
 #]
 
 
-class DummyApplication(Application[None]):
+class DummyApplication(Suite[None]):
     """
-    When no :class:`.Application` is running,
+    When no :class:`.Suite` is running,
     :func:`.get_app` will run an instance of this :class:`.DummyApplication` instead.
     """
 
