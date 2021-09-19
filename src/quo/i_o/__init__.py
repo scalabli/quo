@@ -1,12 +1,11 @@
-from .termui import ( 
-        echo,
-        get_terminal,
+from .termui import (
         confirm,
+        echo,
+        edit,
+        launch,
+        prompt,
+        raw_terminal,
         style,
         terminalsize,
         unstyle,
-        launch, 
-        raw_terminal,
-        edit, 
-        prompt
         )

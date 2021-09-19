@@ -37,6 +37,7 @@ from quo.output import ColorDepth
 from quo.shortcuts.utils import print_formatted_text
 from quo.indicators import ProgressBar
 from quo.shortcuts import Elicit
+from quo.pause import pause
 from quo.styles import Style
 from quo.decorators import (
                        app,

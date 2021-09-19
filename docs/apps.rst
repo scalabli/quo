@@ -5,8 +5,9 @@ Apps
 
 .. currentmodule:: quo
 
-Options can be added/nested to commands using the :func:`app` decorator.  Since apps can come in various different versions, there
-Options in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
+Apps can be added/nested to commands using the :func:`app` decorator.
+
+Apps in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
 
 How to name Apps
 -----------------
@@ -47,15 +48,15 @@ NB: Options are given as position arguments to the decorator.
 -   ``"--f", "--foo-bar"``, the name is ``f``
 -   ``"---f"``, the name is ``_f``
 
-Basic Value Options
+Basic Value Apps
 -------------------
 
-The most basic option is a value option.  These options accept one
+The most basic app is a value app.  These apps accept one
 argument which is a value.  If no type is provided, the type of the default
 value is used.  If no default value is provided, the type is assumed to be
 :data:`STRING`.  Unless a name is explicitly specified, the name of the
 parameter is the first long option defined; otherwise the first short one is
-used. By default, options are not required, however to make an option required,
+used. By default, apps are not required, however to make an app required,
 simply pass in `required=True` as an argument to the decorator.
 
 .. code-block:: python
@@ -87,7 +88,7 @@ simply pass in `required=True` as an argument to the decorator.
 
 
 
-In this case the option is of type :data:`INT` because the default value
+In this case the app is of type :data:`INT` because the default value
 is an integer.
 
 To show the default values when showing command help, use ``show_default=True``
@@ -106,7 +107,7 @@ To show the default values when showing command help, use ``show_default=True``
 Multi Value Apps
 -------------------
 
-Sometimes, you have apps that take more than one arg.  For options,
+Sometimes, you have apps that take more than one arg.  For apps,
 only a fixed number of arguments is supported.  This can be configured by
 the ``nargs`` parameter.  The values are then stored as a tuple.
 
@@ -149,13 +150,14 @@ used.  The above example is thus equivalent to this:
 .. code-block:: python
 
     from quo import command, app, echo
+    from quo.types import Tuple
     @command()
-    @app('--item', nargs=2, type=quo.Tuple([str, int]))
+    @app('--item', nargs=2, type=Tuple([str, int]))
     def putitem(item):
         name, id = item
         echo(f"name={name} id={id}")
 
-.. _multiple-options:
+.. _multiple-apps:
 
 Multiple Apps
 ----------------
@@ -191,7 +193,7 @@ Counting
 --------
 
 In some very rare circumstances, it is interesting to use the repetition
-of options to count an integer up.  This can be used for verbosity flags,
+of apps to count an integer up.  This can be used for verbosity flags,
 for instance:
 
 .. code-block:: python
@@ -206,11 +208,11 @@ for instance:
 Boolean Flags
 -------------
 
-Boolean flags are options that can be enabled or disabled.  This can be
+Boolean flags are apps that can be enabled or disabled.  This can be
 accomplished by defining two flags in one go separated by a slash (``/``)
-for enabling or disabling the option.  (If a slash is in an option string,
+for enabling or disabling the app.  (If a slash is in an app string,
 quo automatically knows that it's a boolean flag and will pass
-``is_flag=True`` implicitly.)  quo always wants you to provide an enable
+``is_flag=True``.)  quo always wants you to provide an enable
 and disable flag so that you can change the default later.
 
 Example:
@@ -245,7 +247,7 @@ manually inform quo that something is a flag:
             rv = rv.upper() + '!!!!111'
         echo(rv)
 
-Note that if a slash is contained in your option already (for instance, if
+Note that if a slash is contained in your app  already (for instance, if
 you use Windows-style parameters where ``/`` is the prefix character), you
 can alternatively split the parameters through ``;`` instead:
 
@@ -261,7 +263,7 @@ can alternatively split the parameters through ``;`` instead:
         log()
 
 
-If you want to define an alias for the second option only, then you will
+If you want to define an alias for the second apo only, then you will
 need to use leading whitespace to disambiguate the format string:
 
 Example:
@@ -284,7 +286,7 @@ Feature Switches
 ----------------
 
 In addition to boolean flags, there are also feature switches.  These are
-implemented by setting multiple options to the same parameter name and
+implemented by setting multiple apps to the same parameter name and
 defining a flag value.  Note that by providing the ``flag_value`` parameter,
 quo will implicitly set ``is_flag=True``.
 
@@ -304,9 +306,9 @@ the default.
         echo(getattr(sys.platform, transformation)())
 
 
-.. _choice-opts:
+.. _choice-apps:
 
-Choice Options
+Choice Apps
 --------------
 
 Sometimes, you want to have a parameter be a choice of a list of values.
@@ -331,7 +333,7 @@ Example:
 Only pass the choices as list or tuple. Other iterables (like
 generators) may lead to unexpected results.
 
-Choices work with l apps that have ``multiple=True``. If a ``default``
+Choices work with apps that have ``multiple=True``. If a ``default``
 value is given with ``multiple=True``, it should be a list or tuple of
 valid choices.
 
@@ -391,7 +393,7 @@ useful for password input:
     from quo import command, app, echo
 
     @command()
-    @app("--password", prompt=True, hide=True, autoconfirm=True)
+    @app("--password", prompt=True, hide=True, affirm==True)
     def encode(password):
         echo(f"encoded: {codecs.encode(password, 'rot13')}")
 
@@ -412,10 +414,10 @@ replaced with the :func:`autopasswd` decorator:
 Dynamic Defaults for Prompts
 ----------------------------
 
-The ``auto_envvar_prefix`` and ``default_map`` options for the context
+The ``auto_envvar_prefix`` and ``default_map`` apps for the context
 allow the program to read option values from the environment or a
 configuration file.  However, this overrides the prompting mechanism, so
-that the user does not get the option to change the value interactively.
+that the user does not get the app to change the value interactively.
 
 If you want to let the user configure the default value, but still be
 prompted if the app isn't specified on the command line, you can do so
@@ -449,7 +451,7 @@ To describe what the default value will be, set it in ``show_default``.
         echo(f"Hello, {username}!")
 
 
-Callbacks and Eager Options
+Callbacks and Eager Apps
 ---------------------------
 
 Sometimes, you want a parameter to completely change the execution flow.
@@ -634,10 +636,11 @@ Example usage:
 .. code-block:: python
 
     import quo
-    from quo import command, app, echo, Path
+    from quo import command, app, echo, 
+    from quo.types import Path
 
     @command()
-    @app('paths', '--path', envvar='PATHS', multiple=True, type=quo.Path())
+    @app('paths', '--path', envvar='PATHS', multiple=True, type=Path())
     def perform(paths):
         for path in paths:
             echo(path)
@@ -684,7 +687,7 @@ boolean flag you need to separate it with ``;`` instead of ``/``:
 
 .. _ranges:
 
-Range Options
+Range Apps
 -------------
 
 The :class:`IntRange` type extends the :data:`INT` type to ensure the

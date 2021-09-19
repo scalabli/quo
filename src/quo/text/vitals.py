@@ -2,7 +2,6 @@ import re
 from functools import partial, reduce
 from math import gcd
 from operator import attrgetter, itemgetter
-from quo.emoji import EmojiVariant
 from typing import (
     TYPE_CHECKING,
     Any,

@@ -1199,7 +1199,7 @@ class _CombinedRegistry(KeyBindingsBase):
         self, current_window: Window, other_controls: List[UIControl]
     ) -> KeyBindingsBase:
         """
-        Create a `KeyBindings` object that merges the `KeyBindings` from the
+        Create a `KeyBinder` object that merges the `KeyBindings` from the
         `UIControl` with all the parent controls and the global key bindings.
         """
         key_bindings = []

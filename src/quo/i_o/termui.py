@@ -6,7 +6,6 @@ import struct
 import sys
 import math
 from typing import Any, IO, Optional
-
 from quo.accordance import (
         DEFAULT_COLUMNS,
         get_winterm_size,
@@ -172,7 +171,7 @@ def prompt(
             # A doc bug has been filed at https://bugs.python.org/issue24711
             if hide:
                 inscribe(None, err=err)
-            raise Abort()
+            raise Abort("You've aborted input")
 
     if value_proc is None:
         value_proc = convert_type(type, default)
@@ -522,7 +521,6 @@ def echo(
         color=None,
         **styles
         ):
-    from quo.color.rgb import teal
     """
     quo.echo('Hello World!', fg='green')
         quo.inscribe(quo.style('Hello World!', fg='green'))

@@ -18,4 +18,5 @@ from .exceptions import (
         MarkupError,
         LiveError,
         NoAltScreen,
-        ValidationError
+        ValidationError,
+        )

@@ -1,7 +1,7 @@
 from asyncio import get_event_loop
 from typing import TYPE_CHECKING, Any, Optional, TextIO
 
-from quo.application import Application
+from quo.application import Suite
 from quo.application.current import get_app_session
 from quo.text import FormattedText, StyleAndTextTuples, to_formatted_text
 from quo.input import DummyInput
@@ -160,7 +160,7 @@ def container(
         # initial time, before exiting the application.
         get_event_loop().call_soon(lambda: app.exit())
 
-    app: Application[None] = Application(
+    app: Suite[None] = Suite(
         layout=Layout(container=container),
         output=output,
         input=DummyInput(),

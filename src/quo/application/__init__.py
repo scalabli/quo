@@ -1,4 +1,4 @@
-from .application import Application
+from .application import Suite
 from .current import (
     AppSession,
     create_app_session,

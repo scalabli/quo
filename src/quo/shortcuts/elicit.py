@@ -41,7 +41,8 @@ from typing import (
     cast,
 )
 
-from quo.application import Application
+
+from quo.application import Suite
 from quo.application.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
@@ -491,7 +492,7 @@ class Elicit(Generic[_T]):
         def accept(buff: Buffer) -> bool:
             """Accept the content of the default buffer. This is called when
             the validation succeeds."""
-            cast(Application[str], get_app()).exit(result=buff.document.text)
+            cast(Suite[str], get_app()).exit(result=buff.document.text)
             return True  # Keep text, we call 'reset' later on.
 
         return Buffer(
@@ -701,7 +702,7 @@ class Elicit(Generic[_T]):
 
     def _create_application(
         self, editing_mode: EditingMode, erase_when_done: bool
-    ) -> Application[_T]:
+    ) -> Suite[_T]:
         """
         Create the `Application` object.
         """
@@ -713,7 +714,7 @@ class Elicit(Generic[_T]):
         elicit_bindings = self._create_elicit_bindings()
 
         # Create application
-        application: Application[_T] = Application(
+        application: Suite[_T] = Suite(
             layout=self.layout,
             style=DynamicStyle(lambda: self.style),
             style_transformation=merge_style_transformations(
@@ -1019,7 +1020,7 @@ class Elicit(Generic[_T]):
         )
 
     @contextmanager
-    def _dumb_elicit(self, message: AnyFormattedText = "") -> Iterator[Application[_T]]:
+    def _dumb_elicit(self, message: AnyFormattedText = "") -> Iterator[Suite[_T]]:
         """
         Create elicit `Application` for elicit function for dumb terminals.
 
@@ -1043,8 +1044,8 @@ class Elicit(Generic[_T]):
 
         # Create and run application.
         application = cast(
-            Application[_T],
-            Application(
+            Suite[_T],
+            Suite(
                 input=self.input,
                 output=DummyOutput(),
                 layout=self.layout,

@@ -2,7 +2,7 @@ import functools
 from asyncio import get_event_loop
 from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
-from quo.application import Application
+from quo.application import Suite
 from quo.application.current import get_app
 from quo.buffer import Buffer
 from quo.completion import Completer
@@ -47,7 +47,7 @@ def yes_no_dialog(
     yes_text: str = "Yes",
     no_text: str = "No",
     style: Optional[BaseStyle] = None,
-) -> Application[bool]:
+) -> Suite[bool]:
     """
     Display a Yes/No dialog.
     Return a boolean.
@@ -80,7 +80,7 @@ def button(
     text: AnyFormattedText = "",
     buttons: List[Tuple[str, _T]] = [],
     style: Optional[BaseStyle] = None,
-) -> Application[_T]:
+) -> Suite[_T]:
     """
     Display a dialog with button choices (given as a list of tuples).
     Return the value associated with button.
@@ -111,7 +111,7 @@ def evoke(
     validator: Optional[Validator] = None,
     password: FilterOrBool = False,
     style: Optional[BaseStyle] = None,
-) -> Application[str]:
+) -> Suite[str]:
     """
     Display a text input box.
     Return the given text, or None when cancelled.
@@ -157,7 +157,7 @@ def message(
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
     style: Optional[BaseStyle] = None,
-) -> Application[None]:
+) -> Suite[None]:
     """
     Display a simple message box and wait until the user presses enter.
     """
@@ -178,7 +178,7 @@ def radiolist_dialog(
     cancel_text: str = "Cancel",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     style: Optional[BaseStyle] = None,
-) -> Application[_T]:
+) -> Suite[_T]:
     """
     Display a simple list of element the user can choose amongst.
 
@@ -216,7 +216,7 @@ def checkbox(
     cancel_text: str = "Cancel",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     style: Optional[BaseStyle] = None,
-) -> Application[List[_T]]:
+) -> Suite[List[_T]]:
     """
     Display a simple list of element the user can choose multiple values amongst.
 
@@ -254,7 +254,7 @@ def progress(
         lambda *a: None
     ),
     style: Optional[BaseStyle] = None,
-) -> Application[None]:
+) -> Suite[None]:
     """
     :param run_callback: A function that receives as input a `set_percentage`
         function and it does the work.
@@ -305,13 +305,13 @@ def progress(
     return app
 
 
-def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Application[Any]:
+def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Suite[Any]:
     # Key bindings.
     bindings = KeyBinder()
     bindings.add("tab")(focus_next)
     bindings.add("s-tab")(focus_previous)
 
-    return Application(
+    return Suit(
         layout=Layout(dialog),
         key_bindings=merge_key_bindings([load_key_bindings(), bindings]),
         mouse_support=True,
