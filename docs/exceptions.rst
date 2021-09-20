@@ -1,17 +1,17 @@
-Exception Handling
-==================
+Exception(Error) Handling
+==========================
 
 .. currentmodule:: quo
 
-quo internally uses exceptions to signal various error conditions that
+Quo internally uses exceptions to signal various error conditions that
 the user of the application might have caused.  Primarily this is things
 like incorrect usage.
 
 Where are Errors Handled?
 -------------------------
 
-quo's main error handling is happening in :meth:`BaseCommand.main`.  In
-there it handles all subclasses of :exc:`quoException` as well as the
+Quo's main error handling is happening in :meth:`BaseCommand.main`.  In
+there it handles all subclasses of :exc:`QuoException` as well as the
 standard :exc:`EOFError` and :exc:`KeyboardInterrupt` exceptions.  The
 latter are internally translated into a :exc:`Abort`.
 
@@ -19,9 +19,9 @@ The logic applied is the following:
 
 1.  If an :exc:`EOFError` or :exc:`KeyboardInterrupt` happens, reraise it
     as :exc:`Abort`.
-2.  If an :exc:`quoException` is raised, invoke the
-    :meth:`quoException.show` method on it to display it and then exit
-    the program with :attr:`quoException.exit_code`.
+2.  If an :exc:`QuoException` is raised, invoke the
+    :meth:`QuoException.show` method on it to display it and then exit
+    the program with :attr:`QuoException.exit_code`.
 3.  If an :exc:`Abort` exception is raised print the string ``Aborted!``
     to standard error and exit the program with exit code ``1``.
 4.  if it goes through well, exit the program with exit code ``0``.
@@ -40,7 +40,7 @@ manually like this::
 In this case exceptions will not be handled at all and bubbled up as you
 would expect.
 
-Starting with quo 3.0 you can also use the :meth:`Command.main` method
+You can also use the :meth:`Command.main` method
 but disable the standalone mode which will do two things: disable
 exception handling and disable the implicit :meth:`sys.exit` at the end.
 
@@ -52,11 +52,11 @@ So you can do something like this::
 Which Exceptions Exist?
 -----------------------
 
-quo has two exception bases: :exc:`quoException` which is raised for
+Quo has two exception bases: :exc:`QuoException` which is raised for
 all exceptions that quo wants to signal to the user and :exc:`Abort`
 which is used to instruct quo to abort the execution.
 
-A :exc:`quoException` has a :meth:`~quoException.show` method which
+A :exc:`QuoException` has a :meth:`~QuoException.show` method which
 can render an error message to stderr or the given file object.  If you
 want to use the exception yourself for doing something check the API docs
 about what else they provide.

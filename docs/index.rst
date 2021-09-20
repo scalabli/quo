@@ -11,7 +11,10 @@ Quo's Documentation
    :caption: Contents:
 
    introduction.rst
+   echo.rst
+   commands.rst
    apps.rst
+   args.rst
    terminal.rst
    style.rst
    markup.rst
@@ -37,6 +40,7 @@ Quo's Documentation
    protocol.rst
 
    reference.rst
+   unicode-support.rst
    appendix.rst
 
 Indices and tables

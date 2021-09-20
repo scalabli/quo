@@ -3,8 +3,7 @@ Commands and Tethers
 
 .. currentmodule:: quo
 
-The most important feature of quo is the concept of arbitrarily nesting
-command line utilities.  This is implemented through the :class:`Command`
+This is implemented through the :class:`Command`
 and :class:`Tether` (actually :class:`MultiCommand`).
 
 Callback Invocation
@@ -37,7 +36,7 @@ Passing Parameters
 ------------------
 
 quo strictly separates parameters between commands and subcommands. What this
-means is that options and arguments for a specific command have to be specified
+means is that apps and args for a specific command have to be specified
 *after* the command name itself, but *before* any other command names.
 
 This behavior is already observable with the predefined ``--help`` option.
@@ -49,7 +48,7 @@ Suppose we have a program called ``tool.py``, containing a subcommand called
 
 - ``tool.py sub --help`` will return the help for the ``sub`` subcommand.
 
-- But ``tool.py --help sub`` will treat ``--help`` as an argument for the main
+- But ``tool.py --help sub`` will treat ``--help`` as an arg for the main
   program. quo then invokes the callback for ``--help``, which prints the
   help and aborts the program before quo can process the subcommand.
 
@@ -57,8 +56,8 @@ Nested Handling and Contexts
 ----------------------------
 
 As you can see from the earlier example, the basic command group accepts a
-debug argument which is passed to its callback, but not to the sync
-command itself.  The sync command only accepts its own arguments.
+debug arg which is passed to its callback, but not to the sync
+command itself.  The sync command only accepts its own args.
 
 This allows tools to act completely independent of each other, but how
 does one command talk to a nested one?  The answer to this is the

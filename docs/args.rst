@@ -69,9 +69,7 @@ to explain how to deal with files properly.  Command line tools are more
 fun if they work with files the Unix way, which is to accept ``-`` as a
 special file that refers to stdin/stdout.
 
-quo supports this through the :class:`quo.File` type which
-intelligently handles files for you.  It also deals with Unicode and bytes
-correctly for all versions of Python so your script stays very portable.
+quo supports this through the :class:`quo.types.File` type which handles files for you.  It also deals with Unicode and bytes.
 
 Example:
 
@@ -90,7 +88,7 @@ Example:
             output.write(chunk)
 
 
-File Path Arguments
+File Path Args
 -------------------
 
 In the previous example, the files were opened immediately.  But what if
@@ -153,8 +151,8 @@ users is modified.
 Environment Variables
 ---------------------
 
-Like options, arguments can also grab values from an environment variable.
-Unlike options, however, this is only supported for explicitly named
+Like apps, args can also grab values from an environment variable.
+Unlike apps, however, this is only supported for explicitly named
 environment variables.
 
 Example usage:
@@ -162,9 +160,10 @@ Example usage:
 .. code:: python
 
     from quo import command, app, arg, echo
+    from quo.types import File
 
     @command()
-    @arg('src', envvar='SRC', type=quo.File('r'))
+    @arg('src', envvar='SRC', type=File('r'))
     def echo(src):
         """Print value of SRC environment variable."""
         echo(src.read())
@@ -179,20 +178,21 @@ a lot of confusion.
 App-Like Args
 ---------------------
 
-Sometimes, you want to process arguments that look like options.  For
+Sometimes, you want to process args that look like apps.  For
 instance, imagine you have a file named ``-foo.txt``.  If you pass this as
 an arg in this manner, quo will treat it as an app.
 
 To solve this, quo does what any POSIX style command line script does,
 and that is to accept the string ``--`` as a separator for options and
 arguments.  After the ``--`` marker, all further parameters are accepted as
-arguments.
+args.
 
 Example usage:
 
 .. code:: python
 
-    from quo import command, arg, echo, Path
+    from quo import command, arg, echo
+    from quo.types import Path
 
     @command()
     @arg('files', nargs=-1, type= Path())
@@ -207,7 +207,8 @@ True to avoid checking unknown options:
 
 .. code:: python
 
-    from quo import command, arg, echo, Path
+    from quo import command, arg, echo
+    from quo.types import Path
 
     @command(context_settings={"ignore_unknown_options": True})
     @arg('files', nargs=-1, type= Path())
