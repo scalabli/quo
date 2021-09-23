@@ -7,9 +7,11 @@ Changelog
 Version 2021.5.5
 -----------------
 
-Unreleased
+2021-09-23
 
-- 
+- Added support for tabular presentation of data.
+
+- Added support for colorful error messages
 
 - Added parameter ``ul`` to ``echo`` function. Its the short form of the ``underline`` positional argumen
 
