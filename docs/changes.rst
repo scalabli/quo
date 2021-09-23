@@ -13,7 +13,7 @@ Version 2021.5.5
 
 - Added support for colorful error messages
 
-- Added parameter ``ul`` to ``echo`` function. Its the short form of the ``underline`` positional argumen
+- Added parameter ``ul`` to ``echo`` function. Its the short form of the ``underline`` parameter
 
 - Added a ``strike`` parameter to print strikethrough text.
 
