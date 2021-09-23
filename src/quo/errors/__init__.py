@@ -4,8 +4,10 @@ from .exceptions import (
         BadParameter,
         MissingParameter,
         NoSuchApp,
+        Outlier,
         BadAppUsage,
         BadArgUsage,
         FileError,
         Exit,
+        ValidationError
         )

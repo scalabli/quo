@@ -9,7 +9,7 @@ from quo.eventloop import run_in_executor_with_context
 
 from .document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.outliers import ValidationError
+from quo.errors import ValidationError
 
 #__all__ = [
  #   "ConditionalValidator",

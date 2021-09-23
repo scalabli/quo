@@ -128,7 +128,7 @@ def evoke(
     write_console = get_terminal() if file is None else Terminal(file=file)
     return write_console.print(*objects, sep=sep, end=end)
 ########################################################
-.
+
 def prompt(
     text,
     default=None,

@@ -17,7 +17,6 @@ from .core import (
              Context,
              MultiCommand,
              Parameter,
-             ShellDetectionFailure,
              Tether
              )
 

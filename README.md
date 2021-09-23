@@ -66,6 +66,14 @@ It also supports handling of ANSI color sequences.
 ```
 ![prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
+### Quo tabular
+```python
+   from quo import echo
+   from quo.tabulate import tabular
+
+   echo(tabular([["Name","Gender", "Age"],["Alice","F",24],["Bob","M",19]]))
+```
+   
 For more intricate  examples, have a look in the [tutorials](https://github.com/secretum-inc/quo/tree/master/tutorials) directory and the documentation.
 
 ## Donate🎁

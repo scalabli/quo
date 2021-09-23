@@ -5,7 +5,7 @@ from .termui import (
         launch,
         prompt,
         raw_terminal,
-        style,
+        flair,
         terminalsize,
         unstyle,
         )

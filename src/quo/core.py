@@ -26,7 +26,7 @@ from quo.expediency.vitals import inscribe as echo
 from quo.i_o import (
            confirm,
            prompt,
-           style
+           flair
            )
 
 from .types import (
