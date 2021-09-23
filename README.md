@@ -26,7 +26,6 @@ Quo requires Python `3.6.1` or later.
 - Interactive progressbars
 - Code completions
 - Nesting of commands
-- A function that displays asterisks instead of the actual characters, helpful when typing passwords
 - Automatic help page generation
 - Highlighting
 - Lightweight
