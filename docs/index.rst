@@ -34,6 +34,7 @@ Quo's Documentation
 
    protocol.rst
 
+   changes.rst
    reference.rst
    unicode-support.rst
    appendix.rst
