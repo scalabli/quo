@@ -8,15 +8,18 @@ import os
 import sys
 import time
 
-from .accordance import _default_text_stdout
-from .accordance import CYGWIN
-from .accordance import default_system_encoding
-from .accordance import isatty
-from .accordance import openstream
-from .accordance import strip_ansi_colors
-from .accordance import term_len
-from .accordance import WIN
-from quo.outliers.exceptions import QuoException
+from quo.accordance import (
+        _default_text_stdout,
+        CYGWIN,
+        default_system_encoding,
+        isatty,
+        openstream,
+        strip_ansi_colors,
+        term_len,
+        WIN
+        )
+
+from quo.errors import Outlier
 from quo.expediency import inscribe
 
 if os.name == "nt":

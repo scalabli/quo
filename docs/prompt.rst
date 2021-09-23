@@ -1,9 +1,9 @@
-User Input Prompts
+Prompts
 ==================
 
 .. currentmodule:: quo
 
-quo supports prompts in two different places.  The first is automated
+Quo supports prompts in two different places.  The first is automated
 prompts when the parameter handling happens, and the second is to ask for
 prompts at a later point independently.
 
@@ -72,9 +72,7 @@ as a boolean value:
 
 .. code:: python
 
-   from quo import confirm, echo
+   from quo import confirm
    
-   if confirm('Do you want to continue?'):
-   echo('Well done!')
-
-There is also the option to make the function auto
+   confirm('Do you want to continue?')
+ 

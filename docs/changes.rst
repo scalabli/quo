@@ -9,10 +9,13 @@ Version 2021.5.5
 
 Unreleased
 
-- Adding support for ``print`` method, which has the same signature as the builti Python function.
+- 
 
-- Added a positonal argument ``ul`` to ``echo`` function. Its a short form of ``underline`` positional argument
+- Added parameter ``ul`` to ``echo`` function. Its the short form of the ``underline`` positional argumen
 
+- Added a ``strike`` parameter to print strikethrough text.
+
+- Added a ``hidden`` parameter to hide printed text
 
 
 Version 2021.4.5

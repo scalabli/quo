@@ -14,7 +14,7 @@ from quo.accordance import (
         strip_ansi_colors,
         )
 from quo.color import ansi_color_codes, _ansi_reset_all
-from quo.outliers import Abort, UsageError
+from quo.errors import Abort, UsageError
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
@@ -128,7 +128,7 @@ def evoke(
     write_console = get_terminal() if file is None else Terminal(file=file)
     return write_console.print(*objects, sep=sep, end=end)
 ########################################################
-
+.
 def prompt(
     text,
     default=None,
@@ -532,6 +532,6 @@ def echo(
     """
 
     if message is not None and not bit_bytes(message):
-        message = style(message, **styles)
+        message = flair(message, **styles)
 
     return inscribe(message, file=file, nl=nl, err=err, color=color)

@@ -2,7 +2,12 @@
 # maintained by the Python Software Foundation.
 from collections import deque
 
-from quo.outliers import BadArgUsage, BadAppUsage, NoSuchApp, UsageError
+from quo.errors import (
+        BadArgUsage, 
+        BadAppUsage, 
+        NoSuchApp,
+        UsageError
+        )
 
 # Sentinel value that indicates an app was passed as a flag without a
 # value but is not a flag app. App.consume_value uses this to

@@ -25,7 +25,6 @@ Parameters
 foreground - If provided this will become the foreground color
 
    * ``bg or background``  – if provided this will become the background color.
-background - if provided this will become the background data
 
    * ``bold``  – if provided this will enable or disable bold mode.
 

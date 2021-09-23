@@ -16,13 +16,16 @@ from ctypes.wintypes import (
 )
 
 
-from .core import Arg
-from .core import MultiCommand
-from .core import App
-from .core import ParameterSource
-from .core import SHELL_NAMES
+from quo.core import (
+        App,
+        Arg, 
+        MultiCommand,
+        ParameterSource,
+        SHELL_NAMES
+        )
+
 from .parser import split_arg_string
-from quo.expediency.vitals import inscribe
+from quo.expediency import inscribe
 
 
 def shell_complete(cli, ctx_args, prog_name, complete_var, instruction):

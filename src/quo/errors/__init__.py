@@ -1,6 +1,5 @@
-from quo.outliers.exceptions import (
+from .exceptions import (
         Abort,
-        Outlier,
         UsageError,
         BadParameter,
         MissingParameter,

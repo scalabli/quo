@@ -1,8 +1,7 @@
 #
 #
 #
-from quo.accordance import filename_to_ui
-from quo.accordance import get_text_stderr
+from quo.accordance import filename_to_ui, get_text_stderr
 from quo.expediency import inscribe
 from typing import (
         Any,

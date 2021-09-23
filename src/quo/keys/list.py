@@ -21,34 +21,34 @@ class Keys(str, Enum):
     Escape = "escape"  # Also Control-[
     ShiftEscape = "s-escape"
 
-    ControlAt = "c-@"  # Also Control-Space.
+    ControlAt = "ctrl-@"  # Also Control-Space.
 
-    ControlA = "c-a"
-    ControlB = "c-b"
-    ControlC = "c-c"
-    ControlD = "c-d"
-    ControlE = "c-e"
-    ControlF = "c-f"
-    ControlG = "c-g"
-    ControlH = "c-h"
-    ControlI = "c-i"  # Tab
-    ControlJ = "c-j"  # Newline
-    ControlK = "c-k"
-    ControlL = "c-l"
-    ControlM = "c-m"  # Carriage return
-    ControlN = "c-n"
-    ControlO = "c-o"
-    ControlP = "c-p"
-    ControlQ = "c-q"
-    ControlR = "c-r"
-    ControlS = "c-s"
-    ControlT = "c-t"
-    ControlU = "c-u"
-    ControlV = "c-v"
-    ControlW = "c-w"
-    ControlX = "c-x"
-    ControlY = "c-y"
-    ControlZ = "c-z"
+    ControlA = "ctrl-a"
+    ControlB = "ctrl-b"
+    ControlC = "ctrl-c"
+    ControlD = "ctrl-d"
+    ControlE = "ctrl-e"
+    ControlF = "ctrl-f"
+    ControlG = "ctrl-g"
+    ControlH = "ctrl-h"
+    ControlI = "ctrl-i"  # Tab
+    ControlJ = "ctrl-j"  # Newline
+    ControlK = "ctrl-k"
+    ControlL = "ctrl-l"
+    ControlM = "ctrl-m"  # Carriage return
+    ControlN = "ctrl-n"
+    ControlO = "ctrl-o"
+    ControlP = "ctrl-p"
+    ControlQ = "ctrl-q"
+    ControlR = "ctrl-r"
+    ControlS = "ctrl-s"
+    ControlT = "ctrl-t"
+    ControlU = "ctrl-u"
+    ControlV = "ctrl-v"
+    ControlW = "ctrl-w"
+    ControlX = "ctrl-x"
+    ControlY = "ctrl-y"
+    ControlZ = "ctrl-z"
 
     Control1 = "c-1"
     Control2 = "c-2"
@@ -72,10 +72,10 @@ class Keys(str, Enum):
     ControlShift9 = "c-s-9"
     ControlShift0 = "c-s-0"
 
-    ControlBackslash = "c-\\"
-    ControlSquareClose = "c-]"
-    ControlCircumflex = "c-^"
-    ControlUnderscore = "c-_"
+    ControlBackslash = "ctrl-\\"
+    ControlSquareClose = "ctrl-]"
+    ControlCircumflex = "ctrl-^"
+    ControlUnderscore = "ctrl-_"
 
     Left = "left"
     Right = "right"
@@ -88,16 +88,16 @@ class Keys(str, Enum):
     PageUp = "pageup"
     PageDown = "pagedown"
 
-    ControlLeft = "c-left"
-    ControlRight = "c-right"
-    ControlUp = "c-up"
-    ControlDown = "c-down"
-    ControlHome = "c-home"
-    ControlEnd = "c-end"
-    ControlInsert = "c-insert"
-    ControlDelete = "c-delete"
-    ControlPageUp = "c-pageup"
-    ControlPageDown = "c-pagedown"
+    ControlLeft = "ctrl-left"
+    ControlRight = "ctrl-right"
+    ControlUp = "ctrl-up"
+    ControlDown = "ctrl-down"
+    ControlHome = "ctrl-home"
+    ControlEnd = "ctrl-end"
+    ControlInsert = "ctrl-insert"
+    ControlDelete = "ctrl-delete"
+    ControlPageUp = "ctrl-pageup"
+    ControlPageDown = "ctrl-pagedown"
 
     ShiftLeft = "s-left"
     ShiftRight = "s-right"
@@ -208,10 +208,10 @@ ALL_KEYS: List[str] = [k.value for k in Keys]
 
 # Aliases.
 KEY_ALIASES: Dict[str, str] = {
-    "backspace": "c-h",
-    "c-space": "c-@",
-    "enter": "c-m",
-    "tab": "c-i",
+    "backspace": "ctrl-h",
+    "c-space": "ctrl-@",
+    "enter": "ctrl-m",
+    "tab": "ctrl-i",
     # ShiftControl was renamed to ControlShift.
     "s-c-left": "c-s-left",
     "s-c-right": "c-s-right",

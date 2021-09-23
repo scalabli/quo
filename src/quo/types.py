@@ -2,14 +2,21 @@ import os
 import stat
 from datetime import datetime
 
-from .accordance import _get_argv_encoding
-from .accordance import filename_to_ui
-from .accordance import encoding_filesystem
-from .accordance import get_strerror
-from .accordance import openstream
-from quo.outliers import BadParameter
+from quo.accordance import (
+        encoding_filesystem,
+        _get_argv_encoding,
+        filename_to_ui,
+        get_strerror,
+        openstream
+        )
+
+from quo.errors import BadParameter
 from quo.expediency.vitals import LazyFile
-from typing import Any, Callable, TypeVar
+from typing import (
+        Any, 
+        Callable, 
+        TypeVar
+        )
 
 DecoratedCallable = TypeVar("DecoratedCallable", bound=Callable[..., Any])
 

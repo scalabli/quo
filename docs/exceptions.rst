@@ -56,7 +56,7 @@ Quo has two exception bases: :exc:`Outlier` which is raised for
 all exceptions that quo wants to signal to the user and :exc:`Abort`
 which is used to instruct quo to abort the execution.
 
-A :exc:`QuoException` has a :meth:`~QuoException.show` method which
+A :exc:`Outlier` has a :meth:`~Outlier.show` method which
 can render an error message to stderr or the given file object.  If you
 want to use the exception yourself for doing something check the API docs
 about what else they provide.

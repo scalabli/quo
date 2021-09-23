@@ -418,7 +418,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        return echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
+        return ValueError, echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
 
     return key
 

@@ -7,17 +7,16 @@ from functools import update_wrapper
 from itertools import repeat
 
 from .universal import python_environment
-from quo.outliers import (
+from quo.errors import (
                    Abort,
                    BadParameter,
                    Exit,
                    MissingParameter,
                    UsageError,
-                   QuoException
+                   Outlier
                    )
 
-from .setout import HelpFormatter
-from .setout import join_apps
+from .setout import HelpFormatter, join_apps
 from quo.context.current import pop_context
 from quo.context.current import push_context
 from .parser import _flag_needs_value
@@ -39,7 +38,6 @@ from .types import (
 
 from quo.expediency import (
         _detect_program_name,
-        inscribe,
         make_default_short_help,
         make_str,
         PacifyFlushWrapper
@@ -78,8 +76,8 @@ SHELL_NAMES = (
 )
 
 
-class ShellDetectionFailure(EnvironmentError):
-    pass
+#class ShellDetectionFailure(EnvironmentError):
+#    pass
 
 
 
@@ -924,7 +922,7 @@ class BaseCommand:
             except (EOFError, KeyboardInterrupt):
                 echo(file=sys.stderr,fg="red")
                 raise Abort()
-            except QuoException as e:
+            except Outlier as e:
                 if not standalone_mode:
                     raise
                 e.show()
