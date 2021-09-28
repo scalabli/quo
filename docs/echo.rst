@@ -18,11 +18,13 @@ Supported color names:
 * ``vgreen``
 * ``vyellow``
 
+RGB color codes
+
+
 Parameters
    * ``text`` – the string to style with ansi codes.
 
    * ``fg or foreground``  – if provided this will become the foreground color.
-foreground - If provided this will become the foreground color
 
    * ``bg or background``  – if provided this will become the background color.
 
