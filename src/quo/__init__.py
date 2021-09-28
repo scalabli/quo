@@ -99,4 +99,4 @@ from quo.i_o import (
 from quo.shortcuts import container
 from quo.widgets import TextArea, Frame
 
-__version__ = "2021.5.5"
+__version__ = "2021.5.5.2"
