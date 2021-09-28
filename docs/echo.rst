@@ -28,7 +28,9 @@ foreground - If provided this will become the foreground color
 
    * ``bold``  – if provided this will enable or disable bold mode.
 
-   * ``dim``  – if provided this will enable or disable dim mode. This is badly supported.
+   * ``dim``  – if provided this will enable or disable dim mode.
+
+   * ``nl or newline`` - if provided this will print a new line.
 
    * ``ul or underline`` – if provided this will enable or disable underline
 
