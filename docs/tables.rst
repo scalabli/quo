@@ -5,18 +5,25 @@ Rich's :class:`~rich.table.Table` class offers a variety of ways to render tabul
 
 To render a table, construct a :class:`~rich.table.Table` object, add columns with :meth:`~rich.table.Table.add_column`, and rows with :meth:`~rich.table.Table.add_row` -- then print it to the console.
 
-Here's an example::
+Here's an example:
 
-    from rich.console import Console
-    from rich.table import Table
+..code-block:: python
 
-    table = Table(title="Star Wars Movies")
-
-    table.add_column("Released", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Title", style="magenta")
+    from quo import echo
+    from quo.tabulate import tabular
+    
+    table = [
+     ["Name", "Gender", "Age"],
+     ["Alice", "F", 24],
+     ["Bob", "M", 19],
+     ["Dave", "M", 24]
+   ]
+   
+   echo(tabular(table))
+   
     table.add_column("Box Office", justify="right", style="green")
 
-    table.add_row("Dec 20, 2019", "Star Wars: The Rise of Skywalker", "$952,110,690")
+    table.addDec 20, 20kywalker", "$952,110,690")
     table.add_row("May 25, 2018", "Solo: A Star Wars Story", "$393,151,347")
     table.add_row("Dec 15, 2017", "Star Wars Ep. V111: The Last Jedi", "$1,332,539,889")
     table.add_row("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889")
@@ -30,7 +37,7 @@ This produces the following output:
 
     <pre style="font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                           Star Wars Movies                           </span>
     ┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
-    ┃<span style="font-weight: bold">     Released </span>┃<span style="font-weight: bold"> Title                             </span>┃<span style="font-weight: bold">     Box Office </span>┃
+    ┃<span style="font-weight: bold">     Released </span>┃<span style="font-weight: bold"> Title                             </span>┃<span style="font"
     ┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
     │<span style="color: #008080"> Dec 20, 2019 </span>│<span style="color: #800080"> Star Wars: The Rise of Skywalker  </span>│<span style="color: #008000">   $952,110,690 </span>│
     │<span style="color: #008080"> May 25, 2018 </span>│<span style="color: #800080"> Solo: A Star Wars Story           </span>│<span style="color: #008000">   $393,151,347 </span>│
