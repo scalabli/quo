@@ -11,7 +11,7 @@ Where are Errors Handled?
 -------------------------
 
 Quo's main error handling is happening in :meth:`BaseCommand.main`.  In
-there it handles all subclasses of :exc:`QuoException` as well as the
+there it handles all subclasses of :exc:`Outlier` as well as the
 standard :exc:`EOFError` and :exc:`KeyboardInterrupt` exceptions.  The
 latter are internally translated into a :exc:`Abort`.
 
@@ -19,9 +19,9 @@ The logic applied is the following:
 
 1.  If an :exc:`EOFError` or :exc:`KeyboardInterrupt` happens, reraise it
     as :exc:`Abort`.
-2.  If an :exc:`QuoException` is raised, invoke the
-    :meth:`QuoException.show` method on it to display it and then exit
-    the program with :attr:`QuoException.exit_code`.
+2.  If an :exc:`Outlier` is raised, invoke the
+    :meth:`Outlier.show` method on it to display it and then exit
+    the program with :attr:`Outlier.exit_code`.
 3.  If an :exc:`Abort` exception is raised print the string ``Aborted!``
     to standard error and exit the program with exit code ``1``.
 4.  if it goes through well, exit the program with exit code ``0``.
