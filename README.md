@@ -8,7 +8,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
 
 
-[![Logo](pics/quo.png)](https://github.com/secretum-inc/quo)
+[![Logo](https://raw.githubusercontent.com/secretum-inc/quo/master/pics/quo.png)](https://github.com/secretum-inc/quo)
 
 
 `Forever Scalable`
