@@ -70,7 +70,14 @@ It also supports handling of ANSI color sequences.
    from quo import echo
    from quo.tabulate import tabular
 
-   echo(tabular([["Name","Gender", "Age"],["Alice","F",24],["Bob","M",19]]))
+   table = [
+     ["Name", "Gender", "Age"],
+     ["Alice", "F", 24],
+     ["Bob", "M", 19],
+     ["Dave", "M", 24]
+   ]
+
+   echo(tabular(table))
 ```
    
 For more intricate  examples, have a look in the [tutorials](https://github.com/secretum-inc/quo/tree/master/tutorials) directory and the documentation.
