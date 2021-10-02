@@ -175,17 +175,17 @@ class KeyBinder(KeyBindingsBase):
 
     Example usage::
 
-        kb = KeyBindings()
+        kb = KeyBinder()
 
-        @kb.add('c-t')
+        @kb.add('ctrl-t')
         def _(event):
             print('Control-T pressed')
 
-        @kb.add('c-a', 'c-b')
+        @kb.add('ctrl-a', 'ctrl-b')
         def _(event):
             print('Control-A pressed, followed by Control-B')
 
-        @kb.add('c-x', filter=is_searching)
+        @kb.add('ctrl-x', filter=is_searching)
         def _(event):
             print('Control-X pressed')  # Works only if we are searching.
 
@@ -418,7 +418,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        return ValueError, echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
+        return ValueError, echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f" ", hidden=True, nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
 
     return key
 

@@ -119,7 +119,7 @@ from quo.styles import (
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
 )
-from quo.utils import get_width as get_cwdith
+from quo.utils import get_width
 from quo.utils import (
     is_dumb_terminal,
     suspend_to_background_supported,
@@ -1299,7 +1299,7 @@ class Elicit(Generic[_T]):
                 return get_elicit_text_2()
 
         # For the next lines, display the appropriate continuation.
-        elicit_width = get_cwidth(fragment_list_to_text(get_elicit_text_2()))
+        elicit_width = get_width(fragment_list_to_text(get_elicit_text_2()))
         return self._get_continuation(elicit_width, line_number, wrap_count)
 
     def _get_arg_text(self) -> StyleAndTextTuples:

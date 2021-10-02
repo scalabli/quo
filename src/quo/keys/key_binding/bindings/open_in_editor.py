@@ -32,7 +32,7 @@ def load_emacs_open_in_editor_bindings() -> KeyBinder:
     """
     key_bindings = KeyBinder()
 
-    key_bindings.add("c-x", "c-e", filter=emacs_mode & ~has_selection)(
+    key_bindings.add("ctrl-x", "ctrl-e", filter=emacs_mode & ~has_selection)(
         get_by_name("edit-and-execute-command")
     )
 

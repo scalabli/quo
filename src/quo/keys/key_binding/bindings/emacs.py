@@ -56,15 +56,15 @@ def load_emacs_bindings() -> KeyBindingsBase:
         """
         pass
 
-    handle("c-a")(get_by_name("beginning-of-line"))
-    handle("c-b")(get_by_name("backward-char"))
-    handle("c-delete", filter=insert_mode)(get_by_name("kill-word"))
-    handle("c-e")(get_by_name("end-of-line"))
-    handle("c-f")(get_by_name("forward-char"))
-    handle("c-left")(get_by_name("backward-word"))
-    handle("c-right")(get_by_name("forward-word"))
-    handle("c-x", "r", "y", filter=insert_mode)(get_by_name("yank"))
-    handle("c-y", filter=insert_mode)(get_by_name("yank"))
+    handle("ctrl-a")(get_by_name("beginning-of-line"))
+    handle("ctrl-b")(get_by_name("backward-char"))
+    handle("ctrl-delete", filter=insert_mode)(get_by_name("kill-word"))
+    handle("ctrl-e")(get_by_name("end-of-line"))
+    handle("ctrl-f")(get_by_name("forward-char"))
+    handle("ctrl-left")(get_by_name("backward-word"))
+    handle("ctrl-right")(get_by_name("forward-word"))
+    handle("ctrl-x", "r", "y", filter=insert_mode)(get_by_name("yank"))
+    handle("ctrl-y", filter=insert_mode)(get_by_name("yank"))
     handle("escape", "b")(get_by_name("backward-word"))
     handle("escape", "c", filter=insert_mode)(get_by_name("capitalize-word"))
     handle("escape", "d", filter=insert_mode)(get_by_name("kill-word"))
@@ -75,14 +75,14 @@ def load_emacs_bindings() -> KeyBindingsBase:
     handle("escape", "backspace", filter=insert_mode)(get_by_name("backward-kill-word"))
     handle("escape", "\\", filter=insert_mode)(get_by_name("delete-horizontal-space"))
 
-    handle("c-home")(get_by_name("beginning-of-buffer"))
-    handle("c-end")(get_by_name("end-of-buffer"))
+    handle("ctrl-home")(get_by_name("beginning-of-buffer"))
+    handle("ctrl-end")(get_by_name("end-of-buffer"))
 
-    handle("c-_", save_before=(lambda e: False), filter=insert_mode)(
+    handle("ctrl-_", save_before=(lambda e: False), filter=insert_mode)(
         get_by_name("undo")
     )
 
-    handle("c-x", "c-u", save_before=(lambda e: False), filter=insert_mode)(
+    handle("ctrl-x", "ctrl-u", save_before=(lambda e: False), filter=insert_mode)(
         get_by_name("undo")
     )
 
@@ -93,23 +93,23 @@ def load_emacs_bindings() -> KeyBindingsBase:
     handle("escape", "_", filter=insert_mode)(get_by_name("yank-last-arg"))
     handle("escape", "c-y", filter=insert_mode)(get_by_name("yank-nth-arg"))
     handle("escape", "#", filter=insert_mode)(get_by_name("insert-comment"))
-    handle("c-o")(get_by_name("operate-and-get-next"))
+    handle("ctrl-o")(get_by_name("operate-and-get-next"))
 
     # ControlQ does a quoted insert. Not that for vt100 terminals, you have to
     # disable flow control by running ``stty -ixon``, otherwise Ctrl-Q and
     # Ctrl-S are captured by the terminal.
-    handle("c-q", filter=~has_selection)(get_by_name("quoted-insert"))
+    handle("ctrl-q", filter=~has_selection)(get_by_name("quoted-insert"))
 
-    handle("c-x", "(")(get_by_name("start-kbd-macro"))
-    handle("c-x", ")")(get_by_name("end-kbd-macro"))
-    handle("c-x", "e")(get_by_name("call-last-kbd-macro"))
+    handle("ctrl-x", "(")(get_by_name("start-kbd-macro"))
+    handle("ctrl-x", ")")(get_by_name("end-kbd-macro"))
+    handle("ctrl-x", "e")(get_by_name("call-last-kbd-macro"))
 
-    @handle("c-n")
+    @handle("ctrl-n")
     def _next(event: E) -> None:
         "Next line."
         event.current_buffer.auto_down()
 
-    @handle("c-p")
+    @handle("ctrl-p")
     def _prev(event: E) -> None:
         "Previous line."
         event.current_buffer.auto_up(count=event.arg)
@@ -167,13 +167,13 @@ def load_emacs_bindings() -> KeyBindingsBase:
         if match is not None:
             buff.cursor_position += match
 
-    @handle("c-]", Keys.Any)
+    @handle("ctrl-]", Keys.Any)
     def _goto_char(event: E) -> None:
         "When Ctl-] + a character is pressed. go to that character."
         # Also named 'character-search'
         character_search(event.current_buffer, event.data, event.arg)
 
-    @handle("escape", "c-]", Keys.Any)
+    @handle("escape", "ctrl-]", Keys.Any)
     def _goto_char_backwards(event: E) -> None:
         "Like Ctl-], but backwards."
         # Also named 'character-search-backward'
@@ -213,7 +213,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
         text_to_insert = " ".join(c.text for c in completions)
         buff.insert_text(text_to_insert)
 
-    @handle("c-x", "c-x")
+    @handle("ctrl-x", "ctrl-x")
     def _toggle_start_end(event: E) -> None:
         """
         Move cursor back and forth between the start and end of the current
@@ -228,7 +228,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
         else:
             buffer.cursor_position += buffer.document.get_end_of_line_position()
 
-    @handle("c-@")  # Control-space or Control-@
+    @handle("ctrl-@")  # Control-space or Control-@
     def _start_selection(event: E) -> None:
         """
         Start of the selection (if the current buffer is not empty).
@@ -238,7 +238,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
         if buff.text:
             buff.start_selection(selection_type=SelectionType.CHARACTERS)
 
-    @handle("c-g", filter=~has_selection)
+    @handle("ctrl-g", filter=~has_selection)
     def _cancel(event: E) -> None:
         """
         Control + G: Cancel completion menu and validation state.
@@ -246,15 +246,15 @@ def load_emacs_bindings() -> KeyBindingsBase:
         event.current_buffer.complete_state = None
         event.current_buffer.validation_error = None
 
-    @handle("c-g", filter=has_selection)
+    @handle("ctrl-g", filter=has_selection)
     def _cancel_selection(event: E) -> None:
         """
         Cancel selection.
         """
         event.current_buffer.exit_selection()
 
-    @handle("c-w", filter=has_selection)
-    @handle("c-x", "r", "k", filter=has_selection)
+    @handle("ctrl-w", filter=has_selection)
+    @handle("ctrl-x", "r", "k", filter=has_selection)
     def _cut(event: E) -> None:
         """
         Cut selected text.
@@ -302,7 +302,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
         else:
             b.start_completion(select_first=True)
 
-    @handle("c-c", ">", filter=has_selection)
+    @handle("ctrl-c", ">", filter=has_selection)
     def _indent(event: E) -> None:
         """
         Indent selected text.
@@ -319,7 +319,7 @@ def load_emacs_bindings() -> KeyBindingsBase:
 
         indent(buffer, from_, to + 1, count=event.arg)
 
-    @handle("c-c", "<", filter=has_selection)
+    @handle("ctrl-c", "<", filter=has_selection)
     def _unindent(event: E) -> None:
         """
         Unindent selected text.
@@ -344,13 +344,13 @@ def load_emacs_search_bindings() -> KeyBindingsBase:
     #       want Alt+Enter to accept input directly in incremental search mode.
     #       Instead, we have double escape.
 
-    handle("c-r")(search.start_reverse_incremental_search)
-    handle("c-s")(search.start_forward_incremental_search)
+    handle("ctrl-r")(search.start_reverse_incremental_search)
+    handle("ctrl-s")(search.start_forward_incremental_search)
 
-    handle("c-c")(search.abort_search)
-    handle("c-g")(search.abort_search)
-    handle("c-r")(search.reverse_incremental_search)
-    handle("c-s")(search.forward_incremental_search)
+    handle("ctrl-c")(search.abort_search)
+    handle("ctrl-g")(search.abort_search)
+    handle("ctrl-r")(search.reverse_incremental_search)
+    handle("ctrl-s")(search.forward_incremental_search)
     handle("up")(search.reverse_incremental_search)
     handle("down")(search.forward_incremental_search)
     handle("enter")(search.accept_search)
@@ -524,7 +524,7 @@ def load_emacs_shift_selection_bindings() -> KeyBindingsBase:
         """
         event.current_buffer.cut_selection()
 
-    @handle("c-y", filter=shift_selection_mode)
+    @handle("ctrl-y", filter=shift_selection_mode)
     def _yank(event: E) -> None:
         """
         In shift selection mode, yanking (pasting) replace the selection.
@@ -541,10 +541,10 @@ def load_emacs_shift_selection_bindings() -> KeyBindingsBase:
     @handle("down", filter=shift_selection_mode)
     @handle("home", filter=shift_selection_mode)
     @handle("end", filter=shift_selection_mode)
-    @handle("c-left", filter=shift_selection_mode)
-    @handle("c-right", filter=shift_selection_mode)
-    @handle("c-home", filter=shift_selection_mode)
-    @handle("c-end", filter=shift_selection_mode)
+    @handle("ctrl-left", filter=shift_selection_mode)
+    @handle("ctrl-right", filter=shift_selection_mode)
+    @handle("ctrl-home", filter=shift_selection_mode)
+    @handle("ctrl-end", filter=shift_selection_mode)
     def _cancel(event: E) -> None:
         """
         Cancel selection.
