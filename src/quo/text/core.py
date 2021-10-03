@@ -1,4 +1,13 @@
-from typing import TYPE_CHECKING, Any, Callable, Iterable, List, Tuple, Union, cast
+from typing import (
+        Any,
+        Callable,
+        cast,
+        Iterable,
+        List,
+        TYPE_CHECKING,
+        Tuple,
+        Union
+        )
 
 from quo.mouse_events import MouseEvent
 

@@ -3,6 +3,13 @@
 
 Changelog
 =========
+Version 2021.6
+---------------
+Unreleased
+
+- Added Support of a placeholder text that is displayed as long as no input is given.
+
+-
 Version 2021.5.5.2
 ------------------
 2021-09-28
