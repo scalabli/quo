@@ -136,7 +136,7 @@ if TYPE_CHECKING:
     from quo.text.core import MagicFormattedText
 
 __all__ = [
-    "ElicitSession",
+    "Elicit",
     "elicit",  # Used by '_display_completions_like_readline'.
     "CompleteStyle",
 ]
@@ -778,7 +778,7 @@ class Elicit(Generic[_T]):
 
     def _create_elicit_bindings(self) -> KeyBinder:
         """
-        Create the KeyBindings for a elicit application.
+        Create the KeyBinder for a elicit application.
         """
         kb = KeyBinder()
         handle = kb.add
@@ -804,7 +804,7 @@ class Elicit(Generic[_T]):
             "Display completions (like Readline)."
             display_completions_like_readline(event)
 
-        @handle("c-c", filter=default_focused)
+        @handle("ctrl-c", filter=default_focused)
         def _keyboard_interrupt(event: E) -> None:
             "Abort when Control-C has been pressed."
             event.app.exit(exception=KeyboardInterrupt, style="class:aborting")
@@ -819,7 +819,7 @@ class Elicit(Generic[_T]):
                 and not app.current_buffer.text
             )
 
-        @handle("c-d", filter=ctrl_d_condition & default_focused)
+        @handle("ctrl-d", filter=ctrl_d_condition & default_focused)
         def _eof(event: E) -> None:
             "Exit when Control-D has been pressed."
             event.app.exit(exception=EOFError, style="class:exiting")
@@ -830,7 +830,7 @@ class Elicit(Generic[_T]):
         def enable_suspend() -> bool:
             return to_filter(self.enable_suspend)()
 
-        @handle("c-z", filter=suspend_supported & enable_suspend)
+        @handle("ctrl-z", filter=suspend_supported & enable_suspend)
         def _suspend(event: E) -> None:
             """
             Suspend process to background.

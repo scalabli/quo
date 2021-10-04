@@ -5,6 +5,7 @@ Here's an example:
 
 ..code-block:: python
 
+
     from quo import echo
     from quo.tabulate import tabular
 
