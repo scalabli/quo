@@ -1,4 +1,6 @@
+..
 
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/pics/quo.png
 
 Quo's Documentation
 ================================
