@@ -4,6 +4,12 @@
 
 Quo's Documentation
 ================================
+:Version: 2021.6
+:Web: http://quo.readthedocs.io/
+:Download: http://pypi.org/project/quo
+:Source: http://github.com/secretum-inc/quo
+
+
 
 .. toctree::
    :maxdepth: 2

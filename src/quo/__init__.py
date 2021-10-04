@@ -30,7 +30,7 @@ from quo.accordance import (
 
 from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
-from quo.expediency import inscribe, LazyFile
+from quo.expediency import LazyFile
 from quo.text import ANSI, HTML
 from quo.output import ColorDepth
 from quo.shortcuts.utils import print_formatted_text
@@ -97,6 +97,6 @@ from quo.i_o import (
               )
 
 from quo.shortcuts import container
-from quo.widgets import TextArea, Frame
+from quo.widget import TextArea, Frame
 
 __version__ = "2021.6"

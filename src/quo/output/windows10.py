@@ -1,6 +1,10 @@
 from ctypes import byref, windll
 from ctypes.wintypes import DWORD, HANDLE
-from typing import Any, Optional, TextIO
+from typing import (
+        Any,
+        Optional, 
+        TextIO
+        )
 
 from quo.data_structures import Size
 from quo.utils import is_windows

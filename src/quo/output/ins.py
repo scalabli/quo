@@ -6,7 +6,7 @@ This provides a UI for a line input, similar to GNU Readline, libedit and
 linenoise.
 
 Either call the `prompt` function for every line input. Or create an instance
-of the :class:`.PromptSession` class and call the `prompt` method from that
+of the :class:`.Elicit` class and call the `elicit` method from that
 class. In the second case, we'll have a 'session' that keeps all the state like
 the history in between several calls.
 
@@ -17,12 +17,12 @@ we want for an individual `prompt`.
 
 Example::
 
-        # Simple `prompt` call.
-        result = prompt('Say something: ')
+        # Simple `elicit` call.
+        result = elicit('Say something: ')
 
         # Using a 'session'.
-        s = PromptSession()
-        result = s.prompt('Say something: ')
+        s = Elicit()
+        result = s.elicit('Say something: ')
 """
 from asyncio import get_event_loop
 from contextlib import contextmanager
@@ -41,7 +41,7 @@ from typing import (
     cast,
 )
 
-from quo.application import Application
+from quo.application import Suite
 from quo.application.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
@@ -78,7 +78,7 @@ from quo.keys.key_binding.bindings.open_in_editor import (
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
-    KeyBindings,
+    KeyBinder,
     KeyBindingsBase,
     merge_key_bindings,
 )
@@ -133,11 +133,11 @@ from quo.widgets.toolbars import (
 )
 
 if TYPE_CHECKING:
-    from quo.formatted_text.base import MagicFormattedText
+    from quo.text.core import MagicFormattedText
 
 __all__ = [
-    "PromptSession",
-    "prompt",
+    "Elicit",
+    "elicit",
     "confirm",
     "create_confirm_session",  # Used by '_display_completions_like_readline'.
     "CompleteStyle",
@@ -225,21 +225,18 @@ PromptContinuationText = Union[
 _T = TypeVar("_T")
 
 
-class PromptSession(Generic[_T]):
+class Elicit(Generic[_T]):
     """
-    PromptSession for a prompt application, which can be used as a GNU Readline
+    Elicit for a prompt application, which can be used as a GNU Readline
     replacement.
-
-    This is a wrapper around a lot of ``prompt_toolkit`` functionality and can
-    be a replacement for `raw_input`.
 
     All parameters that expect "formatted text" can take either just plain text
     (a unicode object), a list of ``(style_str, text)`` tuples or an HTML object.
 
     Example usage::
 
-        s = PromptSession(message='>')
-        text = s.prompt()
+        s = Elicit(message='>')
+        text = s.elicit()
 
     :param message: Plain text or formatted text to be shown before the prompt.
         This can also be a callable that returns formatted text.
@@ -247,14 +244,14 @@ class PromptSession(Generic[_T]):
         When True, prefer a layout that is more adapted for multiline input.
         Text after newlines is automatically indented, and search/arg input is
         shown below the input, instead of replacing the prompt.
-    :param wrap_lines: `bool` or :class:`~prompt_toolkit.filters.Filter`.
+    :param wrap_lines: `bool` or :class:`~quo.filters.Filter`.
         When True (the default), automatically wrap long lines instead of
         scrolling horizontally.
     :param is_password: Show asterisks instead of the actual typed characters.
     :param editing_mode: ``EditingMode.VI`` or ``EditingMode.EMACS``.
     :param vi_mode: `bool`, if True, Identical to ``editing_mode=EditingMode.VI``.
     :param complete_while_typing: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Enable autocompletion while
+        :class:`~quo.filters.Filter`. Enable autocompletion while
         typing.
     :param validate_while_typing: `bool` or
         :class:`~quo.filters.Filter`. Enable input validation while
@@ -294,9 +291,9 @@ class PromptSession(Generic[_T]):
         This is useful for switching between dark and light terminal
         backgrounds.
     :param enable_system_prompt: `bool` or
-        :class:`~prompt_toolkit.filters.Filter`. Pressing Meta+'!' will show
+        :class:`~quo.filters.Filter`. Pressing Meta+'!' will show
         a system prompt.
-    :param enable_suspend: `bool` or :class:`~prompt_toolkit.filters.Filter`.
+    :param enable_suspend: `bool` or :class:`~quo.filters.Filter`.
         Enable Control-Z style suspension.
     :param enable_open_in_editor: `bool` or
         :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
@@ -494,7 +491,7 @@ class PromptSession(Generic[_T]):
         def accept(buff: Buffer) -> bool:
             """Accept the content of the default buffer. This is called when
             the validation succeeds."""
-            cast(Application[str], get_app()).exit(result=buff.document.text)
+            cast(Suite[str], get_app()).exit(result=buff.document.text)
             return True  # Keep text, we call 'reset' later on.
 
         return Buffer(
@@ -704,9 +701,9 @@ class PromptSession(Generic[_T]):
 
     def _create_application(
         self, editing_mode: EditingMode, erase_when_done: bool
-    ) -> Application[_T]:
+    ) -> Suite[_T]:
         """
-        Create the `Application` object.
+        Create the `Suite` object.
         """
         dyncond = self._dyncond
 
@@ -716,7 +713,7 @@ class PromptSession(Generic[_T]):
         prompt_bindings = self._create_prompt_bindings()
 
         # Create application
-        application: Application[_T] = Application(
+        application: Suite[_T] = Suite(
             layout=self.layout,
             style=DynamicStyle(lambda: self.style),
             style_transformation=merge_style_transformations(
@@ -778,11 +775,11 @@ class PromptSession(Generic[_T]):
 
         return application
 
-    def _create_prompt_bindings(self) -> KeyBindings:
+    def _create_prompt_bindings(self) -> KeyBinder:
         """
         Create the KeyBindings for a prompt application.
         """
-        kb = KeyBindings()
+        kb = KeyBinder()
         handle = kb.add
         default_focused = has_focus(DEFAULT_BUFFER)
 
@@ -806,7 +803,7 @@ class PromptSession(Generic[_T]):
             "Display completions (like Readline)."
             display_completions_like_readline(event)
 
-        @handle("c-c", filter=default_focused)
+        @handle("ctrl-c", filter=default_focused)
         def _keyboard_interrupt(event: E) -> None:
             "Abort when Control-C has been pressed."
             event.app.exit(exception=KeyboardInterrupt, style="class:aborting")
@@ -821,7 +818,7 @@ class PromptSession(Generic[_T]):
                 and not app.current_buffer.text
             )
 
-        @handle("c-d", filter=ctrl_d_condition & default_focused)
+        @handle("ctrl-d", filter=ctrl_d_condition & default_focused)
         def _eof(event: E) -> None:
             "Exit when Control-D has been pressed."
             event.app.exit(exception=EOFError, style="class:exiting")
@@ -832,7 +829,7 @@ class PromptSession(Generic[_T]):
         def enable_suspend() -> bool:
             return to_filter(self.enable_suspend)()
 
-        @handle("c-z", filter=suspend_supported & enable_suspend)
+        @handle("ctrl-z", filter=suspend_supported & enable_suspend)
         def _suspend(event: E) -> None:
             """
             Suspend process to background.
@@ -1022,9 +1019,9 @@ class PromptSession(Generic[_T]):
         )
 
     @contextmanager
-    def _dumb_prompt(self, message: AnyFormattedText = "") -> Iterator[Application[_T]]:
+    def _dumb_prompt(self, message: AnyFormattedText = "") -> Iterator[Suite[_T]]:
         """
-        Create prompt `Application` for prompt function for dumb terminals.
+        Create an elicit `Suite` for elicit function for dumb terminals.
 
         Dumb terminals have minimum rendering capabilities. We can only print
         text to the screen. We can't use colors, and we can't do cursor
@@ -1046,8 +1043,8 @@ class PromptSession(Generic[_T]):
 
         # Create and run application.
         application = cast(
-            Application[_T],
-            Application(
+            Suite[_T],
+            Suite(
                 input=self.input,
                 output=DummyOutput(),
                 layout=self.layout,
@@ -1387,12 +1384,12 @@ def prompt(
     pre_run: Optional[Callable[[], None]] = None,
 ) -> str:
     """
-    The global `prompt` function. This will create a new `PromptSession`
+    The global `elicit` function. This will create a new `Elicit`
     instance for every call.
     """
     # The history is the only attribute that has to be passed to the
-    # `PromptSession`, it can't be passed into the `prompt()` method.
-    session: PromptSession[str] = PromptSession(history=history)
+    # `Elicit`, it can't be passed into the `elicit()` method.
+    session: Elicit[str] = Elicit(history=history)
 
     return session.prompt(
         message,
@@ -1437,16 +1434,16 @@ def prompt(
     )
 
 
-prompt.__doc__ = PromptSession.prompt.__doc__
+elicit.__doc__ = Elicit.elicit.__doc__
 
 
 def create_confirm_session(
     message: str, suffix: str = " (y/n) "
-) -> PromptSession[bool]:
+) -> Elicit[bool]:
     """
-    Create a `PromptSession` object for the 'confirm' function.
+    Create an `Elicit` object for the 'confirm' function.
     """
-    bindings = KeyBindings()
+    bindings = KeyBinder()
 
     @bindings.add("y")
     @bindings.add("Y")
@@ -1466,7 +1463,7 @@ def create_confirm_session(
         pass
 
     complete_message = merge_formatted_text([message, suffix])
-    session: PromptSession[bool] = PromptSession(
+    session: Elict[bool] = PromptSession(
         complete_message, key_bindings=bindings
     )
     return session

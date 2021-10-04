@@ -1,4 +1,8 @@
-from typing import TYPE_CHECKING, List, Tuple
+from typing import (
+        List,
+        Tuple,
+        TYPE_CHECKING
+        )
 
 from quo.styles.pygments import pygments_token_to_classname
 
