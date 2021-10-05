@@ -9,7 +9,7 @@ from quo.layout.containers import AnyContainer, ConditionalContainer, Container,
 from quo.layout.controls import FormattedTextControl
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils import get_width as get_cwidth
-from quo.widgets import Shadow
+from quo.widget import Shadow
 from .core import Border
 
 __all__ = [

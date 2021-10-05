@@ -1,4 +1,3 @@
-from quo.i_o.output.widgets import *
 from .termui import (
         confirm,
         echo,

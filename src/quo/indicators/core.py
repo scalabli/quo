@@ -70,11 +70,11 @@ def create_key_bindings() -> KeyBinder:
     """
     kb = KeyBinder()
 
-    @kb.add("c-l")
+    @kb.add("ctrl-l")
     def _clear(event: E) -> None:
         event.app.renderer.clear()
 
-    @kb.add("c-c")
+    @kb.add("ctrl-c")
     def _interrupt(event: E) -> None:
         # Send KeyboardInterrupt to the main thread.
         os.kill(os.getpid(), signal.SIGINT)

@@ -126,7 +126,7 @@ from quo.utils import (
     to_str,
 )
 from quo.validation import DynamicValidator, Validator
-from quo.widgets.toolbars import (
+from quo.widget.toolbars import (
     SearchToolbar,
     SystemToolbar,
     ValidationToolbar,
@@ -371,7 +371,7 @@ class Elicit(Generic[_T]):
         *,
         multiline: FilterOrBool = False,
         wrap_lines: FilterOrBool = True,
-        is_password: FilterOrBool = False,
+        hide: FilterOrBool = False,
         vi_mode: bool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         complete_while_typing: FilterOrBool = True,
@@ -749,7 +749,7 @@ class Elicit(Generic[_T]):
             erase_when_done=erase_when_done,
             reverse_vi_search_direction=True,
             color_depth=lambda: self.color_depth,
-            refresh_interval=self.refresh_interval,
+            refresh=self.refresh,
             input=self._input,
             output=self._output,
         )

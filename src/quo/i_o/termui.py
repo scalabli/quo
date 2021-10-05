@@ -301,6 +301,7 @@ def flair(
     background=None,
     bold=None,
     dim=None,
+    end=None,
     hidden=None,
     ul=None,
     underline=None,
@@ -404,6 +405,8 @@ def flair(
         bits.append(f"\033[{1 if bold else 22}m")
     if dim is not None:
         bits.append(f"\033[{2 if dim else 22}m")
+    if end is not None:
+        pass
 
     if ul is not None:
         bits.append(f"\033[{4 if ul else 24}m")
