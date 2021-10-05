@@ -79,6 +79,7 @@ It also supports handling of ANSI color sequences.
 
    echo(tabular(table))
 ```
+![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
    
 For more intricate  examples, have a look in the [tutorials](https://github.com/secretum-inc/quo/tree/master/tutorials) directory and the documentation.
 
