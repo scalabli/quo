@@ -319,7 +319,7 @@ class Elicit(Generic[_T]):
         yet. Unlike the `default` parameter, this won't be returned as part of
         the output ever. This can be formatted text or a callable that returns
         formatted text.
-    :param refresh_interval: (number; in seconds) When given, refresh the UI
+    :param refresh: (number; in seconds) When given, refresh the UI
         every so many seconds.
     :param input: `Input` object. (Note that the preferred way to change the
         input/output is by creating an `AppSession`.)
@@ -354,7 +354,7 @@ class Elicit(Generic[_T]):
         "auto_suggest",
         "clipboard",
         "validator",
-        "refresh_interval",
+        "refresh",
         "input_processors",
         "placeholder",
         "enable_system_elicit",
@@ -1007,7 +1007,7 @@ class Elicit(Generic[_T]):
         self.default_buffer.reset(
             default if isinstance(default, Document) else Document(default)
         )
-        self.app.refresh_interval = self.refresh_interval  # This is not reactive.
+        self.app.refresh = self.refresh  # This is not reactive.
 
         # If we are using the default output, and have a dumb terminal. Use the
         # dumb elicit.
@@ -1122,8 +1122,8 @@ class Elicit(Generic[_T]):
             self.message = message
         if editing_mode is not None:
             self.editing_mode = editing_mode
-        if refresh_interval is not None:
-            self.refresh_interval = refresh_interval
+        if refresh is not None:
+            self.refresh = refresh
         if vi_mode:
             self.editing_mode = EditingMode.VI
         if lexer is not None:
@@ -1195,7 +1195,7 @@ class Elicit(Generic[_T]):
         self.default_buffer.reset(
             default if isinstance(default, Document) else Document(default)
         )
-        self.app.refresh_interval = self.refresh_interval  # This is not reactive.
+        self.app.refresh = self.refresh  # This is not reactive.
 
         # If we are using the default output, and have a dumb terminal. Use the
         # dumb elicit.
@@ -1468,5 +1468,4 @@ def create_confirm_session(
         complete_message, key_bindings=bindings
     )
     return session
-
 
