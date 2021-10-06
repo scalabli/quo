@@ -100,7 +100,7 @@ def load_basic_bindings() -> KeyBinder:
     @handle("s-end")
     @handle("delete")
     @handle("s-delete")
-    @handle("c-delete")
+    @handle("ctrl-delete")
     @handle("pageup")
     @handle("pagedown")
     @handle("s-tab")

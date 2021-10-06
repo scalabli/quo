@@ -10,7 +10,11 @@ mostly Xterm compatible.
 Some useful docs:
 - Mintty: https://github.com/mintty/mintty/blob/master/wiki/Keycodes.md
 """
-from typing import Dict, Tuple, Union
+from typing import (
+        Dict, 
+        Tuple, 
+        Union
+        )
 
 from quo.keys.list import Keys
 

@@ -1,13 +1,13 @@
 """
 Key bindings registry.
 
-A `KeyBindings` object is a container that holds a list of key bindings. It has a
+A `KeyBinder` object is a container that holds a list of key bindings. It has a
 very efficient internal data structure for checking which key bindings apply
 for a pressed key.
 
 Typical usage::
 
-    kb = KeyBindings()
+    kb = KeyBinder()
 
     @kb.add(Keys.ControlX, Keys.ControlC, filter=INSERT)
     def handler(event):

@@ -7,7 +7,7 @@ from .dialogs import (
     radiolist_dialog,
     yes_no_dialog,
 )
-from quo.indicators import ProgressBar, ProgressBarCounter
+
 from .elicit import CompleteStyle, Elicit, elicit
 # confirm,
 #create_confirm_session,

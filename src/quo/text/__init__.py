@@ -10,7 +10,7 @@ from quo.i_o.output.html import HTML
 from quo.i_o.output.ansi import ANSI
 from .core import (
     AnyFormattedText,
-    FormattedText,
+    RichText,
     StyleAndTextTuples,
     Template,
     is_formatted_text,

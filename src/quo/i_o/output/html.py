@@ -1,7 +1,12 @@
 import xml.dom.minidom as minidom
-from typing import Any, List, Tuple, Union
+from typing import (
+        Any, 
+        List, 
+        Tuple, 
+        Union
+        )
 
-from quo.text.core import FormattedText, StyleAndTextTuples
+from quo.text.core import RichText, StyleAndTextTuples
 
 __all__ = ["HTML"]
 
@@ -93,7 +98,7 @@ class HTML:
 
         process_node(document)
 
-        self.formatted_text = FormattedText(result)
+        self.formatted_text = RichText(result)
 
     def __repr__(self) -> str:
         return "HTML(%r)" % (self.value,)

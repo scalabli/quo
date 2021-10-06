@@ -151,7 +151,7 @@ modify the progress bar to look like an apt-get style progress bar:
 
 .. code:: python
 
-    from quo import ProgressBar
+    from quo.progress import ProgressBar, formatters
     from quo.styles import Style
     from quo.indicators import formatters
     import time

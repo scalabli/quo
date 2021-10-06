@@ -1,9 +1,17 @@
-# pylint: disable=function-redefined
 import codecs
 import string
 from enum import Enum
 from itertools import accumulate
-from typing import Callable, Iterable, List, Optional, Tuple, TypeVar, Union, cast
+from typing import (
+        Callable, 
+        Iterable, 
+        List,
+        Optional, 
+        Tuple,
+        TypeVar,
+        Union,
+        cast
+        )
 
 from quo.application.current import get_app
 from quo.buffer import Buffer, indent, reshape_text, unindent
@@ -38,7 +46,12 @@ from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.key_binding.vi_state import CharacterFind, InputMode
 from quo.keys.list import Keys
 from quo.search import SearchDirection
-from quo.selection import PasteMode, SelectionState, SelectionType
+from quo.selection import (
+        PasteMode,
+        SelectionState,
+        SelectionType
+        )
+
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase
 from .named_commands import get_by_name

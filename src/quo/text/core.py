@@ -23,7 +23,7 @@ __all__ = [
     "is_formatted_text",
     "Template",
     "merge_formatted_text",
-    "FormattedText",
+    "RichText",
 ]
 
 OneStyleAndTextTuple = Union[
@@ -58,11 +58,11 @@ AnyFormattedText = Union[
 
 def to_formatted_text(
     value: AnyFormattedText, style: str = "", auto_convert: bool = False
-) -> "FormattedText":
+) -> "RichText":
     """
     Convert the given value (which can be formatted text) into a list of text
     fragments. (Which is the canonical form of formatted text.) The outcome is
-    always a `FormattedText` instance, which is a list of (style, text) tuples.
+    always a `RichText` instance, which is a list of (style, text) tuples.
 
     It can take a plain text string, an `HTML` or `ANSI` object, anything that
     implements `__pt_formatted_text__` or a callable that takes no arguments and
@@ -73,7 +73,7 @@ def to_formatted_text(
     :param auto_convert: If `True`, also accept other types, and convert them
         to a string first.
     """
-    result: Union[FormattedText, StyleAndTextTuples]
+    result: Union[RichText, StyleAndTextTuples]
 
     if value is None:
         result = []
@@ -103,10 +103,10 @@ def to_formatted_text(
     # Make sure the result is wrapped in a `FormattedText`. Among other
     # reasons, this is important for `print_formatted_text` to work correctly
     # and distinguish between lists and formatted text.
-    if isinstance(result, FormattedText):
+    if isinstance(result, RichText):
         return result
     else:
-        return FormattedText(result)
+        return RichText(result)
 
 
 def is_formatted_text(value: object) -> bool:
@@ -124,7 +124,7 @@ def is_formatted_text(value: object) -> bool:
     return False
 
 
-class FormattedText(StyleAndTextTuples):
+class RichText(StyleAndTextTuples):
     """
     A list of ``(style, text)`` tuples.
 
@@ -136,7 +136,7 @@ class FormattedText(StyleAndTextTuples):
         return self
 
     def __repr__(self) -> str:
-        return "FormattedText(%s)" % super().__repr__()
+        return "RichText(%s)" % super().__repr__()
 
 
 class Template:
@@ -160,7 +160,7 @@ class Template:
             parts = self.text.split("{}")
             assert len(parts) - 1 == len(values)
 
-            result = FormattedText()
+            result = RichText()
             for part, val in zip(parts, values):
                 result.append(("", part))
                 result.extend(to_formatted_text(val))
@@ -176,7 +176,7 @@ def merge_formatted_text(items: Iterable[AnyFormattedText]) -> AnyFormattedText:
     """
 
     def _merge_formatted_text() -> AnyFormattedText:
-        result = FormattedText()
+        result = RichText()
         for i in items:
             result.extend(to_formatted_text(i))
         return result

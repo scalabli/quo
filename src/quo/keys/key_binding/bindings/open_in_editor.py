@@ -1,7 +1,11 @@
 """
 Open in editor key bindings.
 """
-from quo.filters import emacs_mode, has_selection, vi_navigation_mode
+from quo.filters import (
+        emacs_mode, 
+        has_selection, 
+        vi_navigation_mode
+        )
 
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_bindings import KeyBindingsBase, merge_key_bindings

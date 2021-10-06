@@ -3,7 +3,11 @@ from typing import TYPE_CHECKING, Any, Optional, TextIO
 
 from quo.application import Suite
 from quo.application.current import get_app_session
-from quo.text import FormattedText, StyleAndTextTuples, to_formatted_text
+from quo.text import (
+        RichText,
+        StyleAndTextTuples, 
+        to_formatted_text
+        )
 from quo.input import DummyInput
 from quo.layout.layout import Layout
 from quo.output import ColorDepth, Output

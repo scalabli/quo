@@ -1,6 +1,13 @@
 import functools
 from asyncio import get_event_loop
-from typing import Any, Callable, List, Optional, Tuple, TypeVar
+from typing import (
+        Any, 
+        Callable, 
+        List,
+        Optional, 
+        Tuple, 
+        TypeVar
+        )
 
 from quo.application import Suite
 from quo.application.current import get_app

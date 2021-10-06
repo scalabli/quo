@@ -208,13 +208,12 @@ ALL_KEYS: List[str] = [k.value for k in Keys]
 
 # Aliases.
 KEY_ALIASES: Dict[str, str] = {
-    "backspace": "ctrl-h",
-    "ctrl-space": "ctrl-@",
-    "enter": "ctrl-m",
-    "tab": "ctrl-i",
-    # ShiftControl was renamed to ControlShift.
-    "s-c-left": "c-s-left",
-    "s-c-right": "c-s-right",
-    "s-c-home": "c-s-home",
-    "s-c-end": "c-s-end",
-}
+        "backspace": "ctrl-h",
+        "ctrl-space": "ctrl-@",
+        "enter": "ctrl-m",
+        "tab": "ctrl-i",
+        "s-c-left": "c-s-left",
+        "s-c-right": "c-s-right",
+        "s-c-home": "c-s-home",
+        "s-c-end": "c-s-end",
+        }

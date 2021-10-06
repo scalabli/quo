@@ -1,5 +1,9 @@
 import os
-from typing import ContextManager, TextIO, cast
+from typing import (
+        ContextManager, 
+        TextIO,
+        cast
+        )
 
 from ..utils import DummyContext
 from .core import PipeInput

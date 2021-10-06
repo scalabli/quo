@@ -119,7 +119,7 @@ from quo.styles import (
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
 )
-from quo.utils import get_width
+from quo.utils import get_width as get_cwdith
 from quo.utils import (
     is_dumb_terminal,
     suspend_to_background_supported,
@@ -127,16 +127,16 @@ from quo.utils import (
 )
 from quo.validation import DynamicValidator, Validator
 from quo.widget.toolbars import (
-    SearchToolbar,
-    SystemToolbar,
-    ValidationToolbar,
-)
+        SearchToolbar,
+        SystemToolbar,
+        ValidationToolbar
+        )
 
 if TYPE_CHECKING:
     from quo.text.core import MagicFormattedText
 
 __all__ = [
-    "Elicit",
+    "ElicitSession",
     "elicit",  # Used by '_display_completions_like_readline'.
     "CompleteStyle",
 ]
@@ -319,7 +319,7 @@ class Elicit(Generic[_T]):
         yet. Unlike the `default` parameter, this won't be returned as part of
         the output ever. This can be formatted text or a callable that returns
         formatted text.
-    :param refresh: (number; in seconds) When given, refresh the UI
+    :param refresh_interval: (number; in seconds) When given, refresh the UI
         every so many seconds.
     :param input: `Input` object. (Note that the preferred way to change the
         input/output is by creating an `AppSession`.)
@@ -354,7 +354,7 @@ class Elicit(Generic[_T]):
         "auto_suggest",
         "clipboard",
         "validator",
-        "refresh",
+        "refresh_interval",
         "input_processors",
         "placeholder",
         "enable_system_elicit",
@@ -371,7 +371,7 @@ class Elicit(Generic[_T]):
         *,
         multiline: FilterOrBool = False,
         wrap_lines: FilterOrBool = True,
-        hide: FilterOrBool = False,
+        is_password: FilterOrBool = False,
         vi_mode: bool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         complete_while_typing: FilterOrBool = True,
@@ -405,7 +405,7 @@ class Elicit(Generic[_T]):
         erase_when_done: bool = False,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
         tempfile: Optional[Union[str, Callable[[], str]]] = None,
-        refresh: float = 0,
+        refresh_interval: float = 0,
         input: Optional[Input] = None,
         output: Optional[Output] = None,
     ) -> None:
@@ -427,7 +427,7 @@ class Elicit(Generic[_T]):
         self.lexer = lexer
         self.completer = completer
         self.complete_in_thread = complete_in_thread
-        self.hide = hide
+        self.is_password = is_password
         self.key_bindings = key_bindings
         self.bottom_toolbar = bottom_toolbar
         self.style = style
@@ -448,7 +448,7 @@ class Elicit(Generic[_T]):
         self.auto_suggest = auto_suggest
         self.clipboard = clipboard
         self.validator = validator
-        self.refresh = refresh
+        self.refresh_interval = refresh_interval
         self.input_processors = input_processors
         self.placeholder = placeholder
         self.enable_system_elicit = enable_system_elicit
@@ -551,7 +551,7 @@ class Elicit(Generic[_T]):
             ConditionalProcessor(
                 AppendAutoSuggestion(), has_focus(default_buffer) & ~is_done
             ),
-            ConditionalProcessor(PasswordProcessor(), dyncond("hide")),
+            ConditionalProcessor(PasswordProcessor(), dyncond("is_password")),
             DisplayMultipleCursors(),
             # Users can insert processors here.
             DynamicProcessor(lambda: merge_processors(self.input_processors or [])),
@@ -704,7 +704,7 @@ class Elicit(Generic[_T]):
         self, editing_mode: EditingMode, erase_when_done: bool
     ) -> Suite[_T]:
         """
-        Create the `Suite` object.
+        Create the `Application` object.
         """
         dyncond = self._dyncond
 
@@ -749,7 +749,7 @@ class Elicit(Generic[_T]):
             erase_when_done=erase_when_done,
             reverse_vi_search_direction=True,
             color_depth=lambda: self.color_depth,
-            refresh=self.refresh,
+            refresh_interval=self.refresh_interval,
             input=self._input,
             output=self._output,
         )
@@ -778,7 +778,7 @@ class Elicit(Generic[_T]):
 
     def _create_elicit_bindings(self) -> KeyBinder:
         """
-        Create the KeyBinder for a elicit application.
+        Create the KeyBindings for a elicit application.
         """
         kb = KeyBinder()
         handle = kb.add
@@ -804,7 +804,7 @@ class Elicit(Generic[_T]):
             "Display completions (like Readline)."
             display_completions_like_readline(event)
 
-        @handle("ctrl-c", filter=default_focused)
+        @handle("c-c", filter=default_focused)
         def _keyboard_interrupt(event: E) -> None:
             "Abort when Control-C has been pressed."
             event.app.exit(exception=KeyboardInterrupt, style="class:aborting")
@@ -819,7 +819,7 @@ class Elicit(Generic[_T]):
                 and not app.current_buffer.text
             )
 
-        @handle("ctrl-d", filter=ctrl_d_condition & default_focused)
+        @handle("c-d", filter=ctrl_d_condition & default_focused)
         def _eof(event: E) -> None:
             "Exit when Control-D has been pressed."
             event.app.exit(exception=EOFError, style="class:exiting")
@@ -830,7 +830,7 @@ class Elicit(Generic[_T]):
         def enable_suspend() -> bool:
             return to_filter(self.enable_suspend)()
 
-        @handle("ctrl-z", filter=suspend_supported & enable_suspend)
+        @handle("c-z", filter=suspend_supported & enable_suspend)
         def _suspend(event: E) -> None:
             """
             Suspend process to background.
@@ -848,12 +848,12 @@ class Elicit(Generic[_T]):
         # positional argument.
         *,
         editing_mode: Optional[EditingMode] = None,
-        refresh: Optional[float] = None,
+        refresh_interval: Optional[float] = None,
         vi_mode: Optional[bool] = None,
         lexer: Optional[Lexer] = None,
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
-        hide: Optional[bool] = None,
+        is_password: Optional[bool] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
@@ -892,7 +892,7 @@ class Elicit(Generic[_T]):
         """
         Display the elicit.
 
-        The first set of arguments is a subset of the :class:`~.Elicit`
+        The first set of arguments is a subset of the :class:`~.ElicitSession`
         class itself. For these, passing in ``None`` will keep the current
         values that are active in the session. Passing in a value will set the
         attribute for the session, which means that it applies to the current,
@@ -934,8 +934,8 @@ class Elicit(Generic[_T]):
             self.message = message
         if editing_mode is not None:
             self.editing_mode = editing_mode
-        if refresh is not None:
-            self.refresh = refresh
+        if refresh_interval is not None:
+            self.refresh_interval = refresh_interval
         if vi_mode:
             self.editing_mode = EditingMode.VI
         if lexer is not None:
@@ -944,8 +944,8 @@ class Elicit(Generic[_T]):
             self.completer = completer
         if complete_in_thread is not None:
             self.complete_in_thread = complete_in_thread
-        if hide is not None:
-            self.hide = hide
+        if is_password is not None:
+            self.is_password = is_password
         if key_bindings is not None:
             self.key_bindings = key_bindings
         if bottom_toolbar is not None:
@@ -1007,7 +1007,7 @@ class Elicit(Generic[_T]):
         self.default_buffer.reset(
             default if isinstance(default, Document) else Document(default)
         )
-        self.app.refresh = self.refresh  # This is not reactive.
+        self.app.refresh_interval = self.refresh_interval  # This is not reactive.
 
         # If we are using the default output, and have a dumb terminal. Use the
         # dumb elicit.
@@ -1077,12 +1077,12 @@ class Elicit(Generic[_T]):
         # positional argument.
         *,
         editing_mode: Optional[EditingMode] = None,
-        refresh: Optional[float] = None,
+        refresh_interval: Optional[float] = None,
         vi_mode: Optional[bool] = None,
         lexer: Optional[Lexer] = None,
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
-        hide: Optional[bool] = None,
+        is_password: Optional[bool] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
@@ -1122,8 +1122,8 @@ class Elicit(Generic[_T]):
             self.message = message
         if editing_mode is not None:
             self.editing_mode = editing_mode
-        if refresh is not None:
-            self.refresh = refresh
+        if refresh_interval is not None:
+            self.refresh_interval = refresh_interval
         if vi_mode:
             self.editing_mode = EditingMode.VI
         if lexer is not None:
@@ -1132,8 +1132,8 @@ class Elicit(Generic[_T]):
             self.completer = completer
         if complete_in_thread is not None:
             self.complete_in_thread = complete_in_thread
-        if hide is not None:
-            self.hide = hide
+        if is_password is not None:
+            self.is_password = is_password
         if key_bindings is not None:
             self.key_bindings = key_bindings
         if bottom_toolbar is not None:
@@ -1195,7 +1195,7 @@ class Elicit(Generic[_T]):
         self.default_buffer.reset(
             default if isinstance(default, Document) else Document(default)
         )
-        self.app.refresh = self.refresh  # This is not reactive.
+        self.app.refresh_interval = self.refresh_interval  # This is not reactive.
 
         # If we are using the default output, and have a dumb terminal. Use the
         # dumb elicit.
@@ -1299,7 +1299,7 @@ class Elicit(Generic[_T]):
                 return get_elicit_text_2()
 
         # For the next lines, display the appropriate continuation.
-        elicit_width = get_width(fragment_list_to_text(get_elicit_text_2()))
+        elicit_width = get_cwidth(fragment_list_to_text(get_elicit_text_2()))
         return self._get_continuation(elicit_width, line_number, wrap_count)
 
     def _get_arg_text(self) -> StyleAndTextTuples:
@@ -1345,12 +1345,12 @@ def elicit(
     *,
     history: Optional[History] = None,
     editing_mode: Optional[EditingMode] = None,
-    refresh: Optional[float] = None,
+    refresh_interval: Optional[float] = None,
     vi_mode: Optional[bool] = None,
     lexer: Optional[Lexer] = None,
     completer: Optional[Completer] = None,
     complete_in_thread: Optional[bool] = None,
-    hide: Optional[bool] = None,
+    is_password: Optional[bool] = None,
     key_bindings: Optional[KeyBindingsBase] = None,
     bottom_toolbar: Optional[AnyFormattedText] = None,
     style: Optional[BaseStyle] = None,
@@ -1395,12 +1395,12 @@ def elicit(
     return session.elicit(
         message,
         editing_mode=editing_mode,
-        refresh=refresh,
+        refresh_interval=refresh_interval,
         vi_mode=vi_mode,
         lexer=lexer,
         completer=completer,
         complete_in_thread=complete_in_thread,
-        hide=hide,
+        is_password=is_password,
         key_bindings=key_bindings,
         bottom_toolbar=bottom_toolbar,
         style=style,
@@ -1468,4 +1468,5 @@ def create_confirm_session(
         complete_message, key_bindings=bindings
     )
     return session
+
 

@@ -17,7 +17,7 @@ from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
-    from quo.application import Application
+    from quo.application import Suite
     from quo.shortcuts import Elicit
 
 __all__ = [
@@ -79,7 +79,7 @@ def display_completions_like_readline(event: E) -> None:
 
 
 def _display_completions_like_readline(
-    app: "Application[object]", completions: List[Completion]
+    app: "Suite[object]", completions: List[Completion]
 ) -> "asyncio.Task[None]":
     """
     Display the list of completions in columns above the prompt.

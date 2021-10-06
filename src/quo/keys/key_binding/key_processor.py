@@ -20,7 +20,7 @@ from quo.utils import Event
 from quo.keys.key_binding.key_bindings import Binding, KeyBindingsBase
 
 if TYPE_CHECKING:
-    from quo.application import Application
+    from quo.application import Suite
     from quo.buffer import Buffer
 
 
@@ -37,7 +37,11 @@ class KeyPress:
     :param data: The received string on stdin. (Often vt100 escape codes.)
     """
 
-    def __init__(self, key: Union[Keys, str], data: Optional[str] = None) -> None:
+    def __init__(
+            self, 
+            key: Union[Keys, str], 
+            data: Optional[str] = None
+            ) -> None:
         assert isinstance(key, Keys) or len(key) == 1
 
         if data is None:

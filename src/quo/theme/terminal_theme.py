@@ -1,9 +1,13 @@
-from typing import List, Optional, Tuple
+from typing import (
+        List, 
+        Optional,
+        Tuple
+        )
 
 from quo.color.color_triplet import ColorTriplet
 from quo.color.palette  import Palette
 
-_ColorTuple = Tuple[int, int, int]
+_ColorTuple = Tuple[int, int,int]
 
 
 class TerminalTheme:
@@ -18,38 +22,38 @@ class TerminalTheme:
     """
 
     def __init__(
-        self,
-        background: _ColorTuple,
-        foreground: _ColorTuple,
-        normal: List[_ColorTuple],
-        bright: Optional[List[_ColorTuple]] = None,
-    ) -> None:
+            self,
+            background: _ColorTuple,
+            foreground: _ColorTuple,
+            normal: List[_ColorTuple],
+            bright: Optional[List[_ColorTuple]] = None,
+            ) -> None:
         self.background_color = ColorTriplet(*background)
         self.foreground_color = ColorTriplet(*foreground)
         self.ansi_colors = Palette(normal + (bright or normal))
 
 
 DEFAULT_TERMINAL_THEME = TerminalTheme(
-    (255, 255, 255),
-    (0, 0, 0),
-    [
-        (0, 0, 0),
-        (128, 0, 0),
-        (0, 128, 0),
-        (128, 128, 0),
-        (0, 0, 128),
-        (128, 0, 128),
-        (0, 128, 128),
-        (192, 192, 192),
-    ],
-    [
-        (128, 128, 128),
-        (255, 0, 0),
-        (0, 255, 0),
-        (255, 255, 0),
-        (0, 0, 255),
-        (255, 0, 255),
-        (0, 255, 255),
         (255, 255, 255),
-    ],
-)
+        (0, 0, 0),
+        [
+            (0, 0, 0),
+            (128, 0, 0),
+            (0, 128, 0),
+            (128, 128, 0),
+            (0, 0, 128),
+            (128, 0, 128),
+            (0, 128, 128),
+            (192, 192, 192),
+            ],
+        [
+            (128, 128, 128),
+            (255, 0, 0),
+            (0, 255, 0),
+            (255, 255, 0),
+            (0, 0, 255),
+            (255, 0, 255),
+            (0, 255, 255),
+            (255, 255, 255),
+            ],
+        )

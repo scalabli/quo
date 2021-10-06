@@ -5,14 +5,19 @@ Each progress bar consists of a list of these formatters.
 import datetime
 import time
 from abc import ABCMeta, abstractmethod
-from typing import TYPE_CHECKING, List, Tuple
+from typing import (
+        TYPE_CHECKING, 
+        List, 
+        Tuple
+        )
 
 from quo.text import (
-    HTML,
-    AnyFormattedText,
-    StyleAndTextTuples,
-    to_formatted_text,
-)
+        HTML,
+        AnyFormattedText,
+        StyleAndTextTuples,
+        to_formatted_text
+        )
+
 from quo.text.utils import fragment_list_width
 from quo.layout.dimension import AnyDimension, D
 from quo.layout.utils import explode_text_fragments
