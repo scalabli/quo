@@ -1060,7 +1060,7 @@ class Suite(Generic[_AppResult]):
         self,
         command: str,
         wait_for_enter: bool = True,
-        display_before_text: AnyFormattedText = "",
+        display_before_text: Textual = "",
         wait_text: str = "Press ENTER to continue...",
     ) -> None:
         """
@@ -1124,7 +1124,7 @@ class Suite(Generic[_AppResult]):
             run_in_terminal(run)
 
     def print_text(
-        self, text: AnyFormattedText, style: Optional[BaseStyle] = None
+        self, text: Textual, style: Optional[BaseStyle] = None
     ) -> None:
         """
         Print a list of (style_str, text) tuples to the output.
@@ -1266,7 +1266,7 @@ class _CombinedRegistry(KeyBindingsBase):
         return self._key_bindings.get_bindings_starting_with_keys(keys)
 
 
-async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
+async def _do_wait_for_enter(wait_text: Textual) -> None:
     """
     Create a sub application to wait for the enter key press.
     This has two advantages over using 'input'/'raw_input':

@@ -29,11 +29,12 @@ from quo.filters import (
     to_filter,
 )
 from quo.text import (
-    AnyFormattedText,
-    StyleAndTextTuples,
-    Template,
-    to_formatted_text,
-)
+        Textual,
+        StyleAndTextTuples,
+        Template,
+        to_formatted_text
+        )
+
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
 from quo.keys.key_binding.key_processor import KeyPressEvent
@@ -50,7 +51,12 @@ from quo.layout.containers import (
     Window,
     WindowAlign,
 )
-from quo.layout.controls import BufferControl, FormattedTextControl, GetLinePrefixCallable
+from quo.layout.controls import (
+        BufferControl, 
+        FormattedTextControl, 
+        GetLinePrefixCallable
+        )
+
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 from quo.layout.dimension import to_dimension
@@ -178,7 +184,7 @@ class TextArea:
         style: str = "",
         search_field: Optional[SearchToolbar] = None,
         preview_search: FilterOrBool = True,
-        prompt: AnyFormattedText = "",
+        prompt: Textual = "",
         input_processors: Optional[List[Processor]] = None,
     ) -> None:
 
@@ -323,7 +329,7 @@ class Label:
 
     def __init__(
         self,
-        text: AnyFormattedText,
+        text: Textual,
         style: str = "",
         width: AnyDimension = None,
         dont_extend_height: bool = True,
@@ -463,7 +469,7 @@ class Frame:
     def __init__(
         self,
         body: AnyContainer,
-        title: AnyFormattedText = "",
+        title: Textual = "",
         style: str = "",
         width: AnyDimension = None,
         height: AnyDimension = None,
@@ -669,7 +675,7 @@ class _DialogList(Generic[_T]):
     multiple_selection: bool = False
     show_scrollbar: bool = True
 
-    def __init__(self, values: Sequence[Tuple[_T, AnyFormattedText]]) -> None:
+    def __init__(self, values: Sequence[Tuple[_T, Textual]]) -> None:
         assert len(values) > 0
 
         self.values = values
@@ -680,7 +686,7 @@ class _DialogList(Generic[_T]):
         self._selected_index = 0
 
         # Key bindings.
-        kb = KeyBindings()
+        kb = KeyBinder()
 
         @kb.add("up")
         def _up(event: E) -> None:
@@ -840,7 +846,7 @@ class Checkbox(CheckboxList[str]):
 
     show_scrollbar = False
 
-    def __init__(self, text: AnyFormattedText = "", checked: bool = False) -> None:
+    def __init__(self, text: Textual = "", checked: bool = False) -> None:
         values = [("value", text)]
         CheckboxList.__init__(self, values)
         self.checked = checked

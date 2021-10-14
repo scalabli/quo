@@ -22,10 +22,11 @@ from quo.data_structures import Point
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
 from quo.text import (
-    AnyFormattedText,
-    StyleAndTextTuples,
-    to_formatted_text,
-)
+        Textual,
+        StyleAndTextTuples,
+        to_formatted_text
+        )
+
 from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
@@ -75,7 +76,7 @@ __all__ = [
     "UIContent",
 ]
 
-GetLinePrefixCallable = Callable[[int, int], AnyFormattedText]
+GetLinePrefixCallable = Callable[[int, int], Textual]
 
 
 class UIControl(metaclass=ABCMeta):
@@ -311,7 +312,7 @@ class FormattedTextControl(UIControl):
 
     def __init__(
         self,
-        text: AnyFormattedText = "",
+        text: Textual = "",
         style: str = "",
         focusable: FilterOrBool = False,
         key_bindings: Optional["KeyBindingsBase"] = None,

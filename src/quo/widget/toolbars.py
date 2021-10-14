@@ -4,7 +4,13 @@ from quo.application.current import get_app
 from quo.buffer import Buffer
 from quo.enums import SYSTEM_BUFFER
 from quo.filters import Condition, FilterOrBool, emacs_mode, has_arg, has_completions, has_focus, has_validation_error, to_filter, vi_mode, vi_navigation_mode
-from quo.text import AnyFormattedText, StyleAndTextTuples, fragment_list_len, to_formatted_text
+from quo.text import (
+        Textual, 
+        StyleAndTextTuples, 
+        fragment_list_len, 
+        to_formatted_text
+        )
+
 from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase, merge_key_bindings
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.key_binding.vi_state import InputMode
@@ -29,7 +35,7 @@ E = KeyPressEvent
 
 
 class FormattedTextToolbar(Window):
-    def __init__(self, text: AnyFormattedText, style: str = "", **kw: Any) -> None:
+    def __init__(self, text: Textual, style: str = "", **kw: Any) -> None:
         # Note: The style needs to be applied to the toolbar as a whole, not
         #       just the `FormattedTextControl`.
         super().__init__(
@@ -49,7 +55,7 @@ class SystemToolbar:
 
     def __init__(
         self,
-        prompt: AnyFormattedText = "Shell command: ",
+        prompt: Textual = "Shell command: ",
         enable_global_bindings: FilterOrBool = True,
     ) -> None:
 
@@ -190,9 +196,9 @@ class SearchToolbar:
         self,
         search_buffer: Optional[Buffer] = None,
         vi_mode: bool = False,
-        text_if_not_searching: AnyFormattedText = "",
-        forward_search_prompt: AnyFormattedText = "I-search: ",
-        backward_search_prompt: AnyFormattedText = "I-search backward: ",
+        text_if_not_searching: Textual = "",
+        forward_search_prompt: Textual = "I-search: ",
+        backward_search_prompt: Textual = "I-search backward: ",
         ignore_case: FilterOrBool = False,
     ) -> None:
 

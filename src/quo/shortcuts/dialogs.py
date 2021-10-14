@@ -15,7 +15,7 @@ from quo.buffer import Buffer
 from quo.completion import Completer
 from quo.eventloop import run_in_executor_with_context
 from quo.filters import FilterOrBool
-from quo.text import AnyFormattedText
+from quo.text import Textual
 from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
 from quo.keys.key_binding.defaults import load_key_bindings
 from quo.keys import KeyBinder
@@ -49,8 +49,8 @@ __all__ = [
 
 
 def yes_no_dialog(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     yes_text: str = "Yes",
     no_text: str = "No",
     style: Optional[BaseStyle] = None,
@@ -83,8 +83,8 @@ _T = TypeVar("_T")
 
 
 def button(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     buttons: List[Tuple[str, _T]] = [],
     style: Optional[BaseStyle] = None,
 ) -> Suite[_T]:
@@ -110,8 +110,8 @@ def button(
 
 
 def evoke(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     ok_text: str = "OK",
     cancel_text: str = "Cancel",
     completer: Optional[Completer] = None,
@@ -160,8 +160,8 @@ def evoke(
 
 
 def message(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     ok_text: str = "Ok",
     style: Optional[BaseStyle] = None,
 ) -> Suite[None]:
@@ -179,11 +179,11 @@ def message(
 
 
 def radiolist_dialog(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     ok_text: str = "Ok",
     cancel_text: str = "Cancel",
-    values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+    values: Optional[List[Tuple[_T, Textual]]] = None,
     style: Optional[BaseStyle] = None,
 ) -> Suite[_T]:
     """
@@ -217,11 +217,11 @@ def radiolist_dialog(
 
 
 def checkbox(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     ok_text: str = "Ok",
     cancel_text: str = "Cancel",
-    values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+    values: Optional[List[Tuple[_T, Textual]]] = None,
     style: Optional[BaseStyle] = None,
 ) -> Suite[List[_T]]:
     """
@@ -255,8 +255,8 @@ def checkbox(
 
 
 def progress(
-    title: AnyFormattedText = "",
-    text: AnyFormattedText = "",
+    title: Textual = "",
+    text: Textual = "",
     run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (
         lambda *a: None
     ),

@@ -216,8 +216,8 @@ ElicitContinuationText = Union[
     str,
     "MagicFormattedText",
     StyleAndTextTuples,
-    # (elicit_width, line_number, wrap_count) -> AnyFormattedText.
-    Callable[[int, int, int], AnyFormattedText],
+    # (elicit_width, line_number, wrap_count) -> Textual.
+    Callable[[int, int, int], Textual],
 ]
 
 _T = TypeVar("_T")
@@ -397,11 +397,11 @@ class Elicit(Generic[_T]):
         history: Optional[History] = None,
         clipboard: Optional[Clipboard] = None,
         elicit_continuation: Optional[ElicitContinuationText] = None,
-        r_elicit: AnyFormattedText = None,
-        bottom_toolbar: AnyFormattedText = None,
+        r_elicit: Textual = None,
+        bottom_toolbar: Textual = None,
         mouse_support: FilterOrBool = False,
         input_processors: Optional[List[Processor]] = None,
-        placeholder: Optional[AnyFormattedText] = None,
+        placeholder: Optional[Textual] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
         erase_when_done: bool = False,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
@@ -845,7 +845,7 @@ class Elicit(Generic[_T]):
         self,
         # When any of these arguments are passed, this value is overwritten
         # in this ElicitSession.
-        message: Optional[AnyFormattedText] = None,
+        message: Optional[Textual] = None,
         # `message` should go first, because people call it as
         # positional argument.
         *,

@@ -4,7 +4,7 @@ Collection of reusable components for building full screen applications.
 from typing import Optional, Sequence, Union
 
 from quo.filters import has_completions, has_focus
-from quo.text import AnyFormattedText
+from quo.text import Textual
 from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
 from quo.keys import KeyBinder
 from quo.layout.containers import (
@@ -39,7 +39,7 @@ class Dialog:
     def __init__(
         self,
         body: AnyContainer,
-        title: AnyFormattedText = "",
+        title: Textual = "",
         buttons: Optional[Sequence[Button]] = None,
         modal: bool = True,
         width: AnyDimension = None,
@@ -81,7 +81,7 @@ class Dialog:
             frame_body = body
 
         # Key bindings for whole dialog.
-        kb = KeyBindings()
+        kb = KeyBinder()
         kb.add("tab", filter=~has_completions)(focus_next)
         kb.add("s-tab", filter=~has_completions)(focus_previous)
 

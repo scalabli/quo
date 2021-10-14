@@ -1943,7 +1943,7 @@ class Window(Container):
         always_hide_cursor: bool = False,
         has_focus: bool = False,
         align: WindowAlign = WindowAlign.LEFT,
-        get_line_prefix: Optional[Callable[[int, int], AnyFormattedText]] = None,
+        get_line_prefix: Optional[Callable[[int, int], Textual]] = None,
     ) -> Tuple[Dict[int, Tuple[int, int]], Dict[Tuple[int, int], Tuple[int, int]]]:
         """
         Copy the UIContent into the output screen.

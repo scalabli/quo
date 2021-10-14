@@ -1,6 +1,6 @@
 from typing import Callable, Optional
 
-from quo.text import AnyFormattedText
+from quo.text import Textual
 from quo.input import DummyInput
 from quo.output import DummyOutput
 
@@ -39,7 +39,7 @@ class DummyApplication(Suite[None]):
         self,
         command: str,
         wait_for_enter: bool = True,
-        display_before_text: AnyFormattedText = "",
+        display_before_text: Textual = "",
         wait_text: str = "",
     ) -> None:
         raise NotImplementedError
