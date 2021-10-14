@@ -1,4 +1,4 @@
-ANSI COLOR CODES
+ANSI COLORS
 =================
 
 - black (might be a gray)
@@ -15,7 +15,7 @@ ANSI COLOR CODES
 - vyellow
 
 
-RGB COLOR CODES
+RGB COLORS
 ================
 - aquamarine
 - azure
