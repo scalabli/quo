@@ -154,7 +154,6 @@ modify the progress bar to look like an apt-get style progress bar:
 
     from quo.progress import ProgressBar, formatters
     from quo.styles import Style
-    from quo.indicators import formatters
     import time
 
     style = Style.from_dict({
