@@ -61,7 +61,7 @@ from quo.filters import (
     to_filter,
 )
 from quo.text import (
-    AnyFormattedText,
+    Textual,
     StyleAndTextTuples,
     fragment_list_to_text,
     merge_formatted_text,
@@ -136,7 +136,7 @@ if TYPE_CHECKING:
     from quo.text.core import MagicFormattedText
 
 __all__ = [
-    "ElicitSession",
+    "Elicit",
     "elicit",  # Used by '_display_completions_like_readline'.
     "CompleteStyle",
 ]
@@ -190,7 +190,7 @@ class _Relicit(Window):
     The elicit that is displayed on the right side of the Window.
     """
 
-    def __init__(self, text: AnyFormattedText) -> None:
+    def __init__(self, text: Textual) -> None:
         super().__init__(
             FormattedTextControl(text=text),
             align=WindowAlign.RIGHT,
@@ -367,11 +367,12 @@ class Elicit(Generic[_T]):
 
     def __init__(
         self,
-        message: AnyFormattedText = "",
+        message: Textual = "",
         *,
         multiline: FilterOrBool = False,
         wrap_lines: FilterOrBool = True,
         is_password: FilterOrBool = False,
+        hide: FilterOrBool = False,
         vi_mode: bool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         complete_while_typing: FilterOrBool = True,
@@ -428,6 +429,7 @@ class Elicit(Generic[_T]):
         self.completer = completer
         self.complete_in_thread = complete_in_thread
         self.is_password = is_password
+        self.hide = hide
         self.key_bindings = key_bindings
         self.bottom_toolbar = bottom_toolbar
         self.style = style
@@ -804,7 +806,7 @@ class Elicit(Generic[_T]):
             "Display completions (like Readline)."
             display_completions_like_readline(event)
 
-        @handle("c-c", filter=default_focused)
+        @handle("ctrl-c", filter=default_focused)
         def _keyboard_interrupt(event: E) -> None:
             "Abort when Control-C has been pressed."
             event.app.exit(exception=KeyboardInterrupt, style="class:aborting")
@@ -819,7 +821,7 @@ class Elicit(Generic[_T]):
                 and not app.current_buffer.text
             )
 
-        @handle("c-d", filter=ctrl_d_condition & default_focused)
+        @handle("ctrl-d", filter=ctrl_d_condition & default_focused)
         def _eof(event: E) -> None:
             "Exit when Control-D has been pressed."
             event.app.exit(exception=EOFError, style="class:exiting")
@@ -830,7 +832,7 @@ class Elicit(Generic[_T]):
         def enable_suspend() -> bool:
             return to_filter(self.enable_suspend)()
 
-        @handle("c-z", filter=suspend_supported & enable_suspend)
+        @handle("ctrl-z", filter=suspend_supported & enable_suspend)
         def _suspend(event: E) -> None:
             """
             Suspend process to background.
@@ -854,6 +856,7 @@ class Elicit(Generic[_T]):
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
         is_password: Optional[bool] = None,
+        hide: Optional[bool] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
@@ -946,6 +949,8 @@ class Elicit(Generic[_T]):
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
             self.is_password = is_password
+        if hide is not None:
+            self.hide = hide
         if key_bindings is not None:
             self.key_bindings = key_bindings
         if bottom_toolbar is not None:
@@ -1083,6 +1088,7 @@ class Elicit(Generic[_T]):
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
         is_password: Optional[bool] = None,
+        hide: Optional[bool] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
@@ -1134,6 +1140,8 @@ class Elicit(Generic[_T]):
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
             self.is_password = is_password
+        if hide is not None:
+            self.hide = hide
         if key_bindings is not None:
             self.key_bindings = key_bindings
         if bottom_toolbar is not None:
@@ -1313,7 +1321,6 @@ class Elicit(Generic[_T]):
             arg = "-1"
 
         return [("class:arg-toolbar", "Repeat: "), ("class:arg-toolbar.text", arg)]
-
     def _inline_arg(self) -> StyleAndTextTuples:
         "'arg' prefix, for in single line mode."
         app = get_app()
@@ -1351,6 +1358,7 @@ def elicit(
     completer: Optional[Completer] = None,
     complete_in_thread: Optional[bool] = None,
     is_password: Optional[bool] = None,
+    hide: Optional[bool] = None,
     key_bindings: Optional[KeyBindingsBase] = None,
     bottom_toolbar: Optional[AnyFormattedText] = None,
     style: Optional[BaseStyle] = None,
@@ -1401,6 +1409,7 @@ def elicit(
         completer=completer,
         complete_in_thread=complete_in_thread,
         is_password=is_password,
+        hide=hide,
         key_bindings=key_bindings,
         bottom_toolbar=bottom_toolbar,
         style=style,

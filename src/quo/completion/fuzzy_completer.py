@@ -1,9 +1,18 @@
 import re
-from typing import Callable, Dict, Iterable, List, NamedTuple, Optional, Tuple, Union
+from typing import (
+        Callable,
+        Dict, 
+        Iterable, 
+        List,
+        NamedTuple,
+        Optional, 
+        Tuple, 
+        Union
+        )
 
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.text import AnyFormattedText, StyleAndTextTuples
+from quo.text import Textual, StyleAndTextTuples
 
 from .core import CompleteEvent, Completer, Completion
 from .word_completer import WordCompleter
@@ -124,7 +133,7 @@ class FuzzyCompleter(Completer):
 
     def _get_display(
         self, fuzzy_match: "_FuzzyMatch", word_before_cursor: str
-    ) -> AnyFormattedText:
+    ) -> Textual:
         """
         Generate formatted text for the display label.
         """

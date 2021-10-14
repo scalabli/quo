@@ -18,7 +18,7 @@ __all__ = [
     "OneStyleAndTextTuple",
     "StyleAndTextTuples",
     "MagicFormattedText",
-    "AnyFormattedText",
+    "Textual",
     "to_formatted_text",
     "is_formatted_text",
     "Template",
@@ -46,7 +46,7 @@ if TYPE_CHECKING:
             ...
 
 
-AnyFormattedText = Union[
+Textual = Union[
     str,
     "MagicFormattedText",
     StyleAndTextTuples,
@@ -57,7 +57,7 @@ AnyFormattedText = Union[
 
 
 def to_formatted_text(
-    value: AnyFormattedText, style: str = "", auto_convert: bool = False
+    value: Textual, style: str = "", auto_convert: bool = False
 ) -> "RichText":
     """
     Convert the given value (which can be formatted text) into a list of text
@@ -154,8 +154,8 @@ class Template:
         assert "{0}" not in text
         self.text = text
 
-    def format(self, *values: AnyFormattedText) -> AnyFormattedText:
-        def get_result() -> AnyFormattedText:
+    def format(self, *values: Textual) -> Textual:
+        def get_result() -> Textual:
             # Split the template in parts.
             parts = self.text.split("{}")
             assert len(parts) - 1 == len(values)
@@ -170,12 +170,12 @@ class Template:
         return get_result
 
 
-def merge_formatted_text(items: Iterable[AnyFormattedText]) -> AnyFormattedText:
+def merge_formatted_text(items: Iterable[Textual]) -> Textual:
     """
     Merge (Concatenate) several pieces of formatted text together.
     """
 
-    def _merge_formatted_text() -> AnyFormattedText:
+    def _merge_formatted_text() -> Textual:
         result = RichText()
         for i in items:
             result.extend(to_formatted_text(i))

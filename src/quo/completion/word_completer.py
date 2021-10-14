@@ -2,8 +2,7 @@ from typing import Callable, Iterable, List, Mapping, Optional, Pattern, Union
 
 from quo.completion import CompleteEvent, Completer, Completion
 from quo.document import Document
-from quo.text import AnyFormattedText
-
+from quo.text import Textual
 __all__ = [
     "WordCompleter",
 ]
@@ -30,16 +29,16 @@ class WordCompleter(Completer):
     """
 
     def __init__(
-        self,
-        words: Union[List[str], Callable[[], List[str]]],
-        ignore_case: bool = False,
-        display_dict: Optional[Mapping[str, AnyFormattedText]] = None,
-        meta_dict: Optional[Mapping[str, AnyFormattedText]] = None,
-        WORD: bool = False,
-        sentence: bool = False,
-        match_middle: bool = False,
-        pattern: Optional[Pattern[str]] = None,
-    ) -> None:
+            self,
+            words: Union[List[str], Callable[[], List[str]]],
+            ignore_case: bool = False,
+            display_dict: Optional[Mapping[str, Textual]] = None,
+            meta_dict: Optional[Mapping[str, Textual]] = None,
+            WORD: bool = False,
+            sentence: bool = False,
+            match_middle: bool = False,
+            pattern: Optional[Pattern[str]] = None,
+            ) -> None:
 
         assert not (WORD and sentence)
 
@@ -53,8 +52,11 @@ class WordCompleter(Completer):
         self.pattern = pattern
 
     def get_completions(
-        self, document: Document, complete_event: CompleteEvent
-    ) -> Iterable[Completion]:
+            self, 
+            document: Document, complete_event: CompleteEvent
+
+            ) -> Iterable[Completion]:
+
         # Get list of words.
         words = self.words
         if callable(words):

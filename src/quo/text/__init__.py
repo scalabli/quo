@@ -9,14 +9,14 @@ function takes any of these and turns all of them into such a tuple sequence.
 from quo.i_o.output.html import HTML
 from quo.i_o.output.ansi import ANSI
 from .core import (
-    AnyFormattedText,
-    RichText,
-    StyleAndTextTuples,
-    Template,
-    is_formatted_text,
-    merge_formatted_text,
-    to_formatted_text,
-)
+        Textual,
+        RichText,
+        StyleAndTextTuples,
+        Template,
+        is_formatted_text,
+        merge_formatted_text,
+        to_formatted_text,
+        )
 
 from .pygments import PygmentsTokens
 from .utils import (
@@ -28,13 +28,13 @@ from .utils import (
 
 __all__ = [
     # Core
-    "AnyFormattedText",
+    "Textual",
     "to_formatted_text",
     "is_formatted_text",
     "Text"
     "Template",
     "merge_formatted_text",
-    "FormattedText",
+    "RichText",
     "StyleAndTextTuples",
     # HTML.
     "HTML",

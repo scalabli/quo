@@ -60,12 +60,13 @@ from quo.filters import (
     to_filter,
 )
 from quo.text import (
-    AnyFormattedText,
-    StyleAndTextTuples,
-    fragment_list_to_text,
-    merge_formatted_text,
-    to_formatted_text,
-)
+        Textual,
+        StyleAndTextTuples,
+        fragment_list_to_text,
+        merge_formatted_text,
+        to_formatted_text,
+        )
+
 from quo.history import History, InMemoryHistory
 from quo.input.core import Input
 from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
@@ -76,15 +77,22 @@ from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
 from quo.keys.key_binding.key_bindings import (
-    ConditionalKeyBindings,
-    DynamicKeyBindings,
-    KeyBinder,
-    KeyBindingsBase,
-    merge_key_bindings,
-)
+        ConditionalKeyBindings,
+        DynamicKeyBindings,
+        KeyBinder,
+        KeyBindingsBase,
+        merge_key_bindings,
+        )
+
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.list import Keys
-from quo.layout.containers import Float, FloatContainer, HSplit, Window
+from quo.layout.containers import (
+        Float,
+        FloatContainer, 
+        HSplit, 
+        Window
+        )
+
 from quo.layout.containers import ConditionalContainer, WindowAlign
 from quo.layout.controls import (
     BufferControl,
@@ -126,11 +134,11 @@ from quo.utils import (
     to_str,
 )
 from quo.validation import DynamicValidator, Validator
-from quo.widgets.toolbars import (
-    SearchToolbar,
-    SystemToolbar,
-    ValidationToolbar,
-)
+from quo.widget.toolbars import (
+        SearchToolbar,
+        SystemToolbar,
+        ValidationToolbar
+        )
 
 if TYPE_CHECKING:
     from quo.text.core import MagicFormattedText
@@ -192,7 +200,7 @@ class _RPrompt(Window):
     The prompt that is displayed on the right side of the Window.
     """
 
-    def __init__(self, text: AnyFormattedText) -> None:
+    def __init__(self, text: Textual) -> None:
         super().__init__(
             FormattedTextControl(text=text),
             align=WindowAlign.RIGHT,
@@ -219,7 +227,7 @@ PromptContinuationText = Union[
     "MagicFormattedText",
     StyleAndTextTuples,
     # (prompt_width, line_number, wrap_count) -> AnyFormattedText.
-    Callable[[int, int, int], AnyFormattedText],
+    Callable[[int, int, int], Textual],
 ]
 
 _T = TypeVar("_T")

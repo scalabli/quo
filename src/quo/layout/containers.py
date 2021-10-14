@@ -27,10 +27,10 @@ from quo.filters import (
     vi_insert_mode,
 )
 from quo.text import (
-    AnyFormattedText,
-    StyleAndTextTuples,
-    to_formatted_text,
-)
+        Textual,
+        StyleAndTextTuples,
+        to_formatted_text
+        )
 from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
