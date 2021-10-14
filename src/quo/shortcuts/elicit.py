@@ -858,13 +858,13 @@ class Elicit(Generic[_T]):
         is_password: Optional[bool] = None,
         hide: Optional[bool] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
-        bottom_toolbar: Optional[AnyFormattedText] = None,
+        bottom_toolbar: Optional[Textual] = None,
         style: Optional[BaseStyle] = None,
         color_depth: Optional[ColorDepth] = None,
         include_default_pygments_style: Optional[FilterOrBool] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-        r_elicit: Optional[AnyFormattedText] = None,
+        r_elicit: Optional[Textual] = None,
         multiline: Optional[FilterOrBool] = None,
         elicit_continuation: Optional[ElicitContinuationText] = None,
         wrap_lines: Optional[FilterOrBool] = None,
@@ -878,7 +878,7 @@ class Elicit(Generic[_T]):
         clipboard: Optional[Clipboard] = None,
         mouse_support: Optional[FilterOrBool] = None,
         input_processors: Optional[List[Processor]] = None,
-        placeholder: Optional[AnyFormattedText] = None,
+        placeholder: Optional[Textual] = None,
         reserve_space_for_menu: Optional[int] = None,
         enable_system_elicit: Optional[FilterOrBool] = None,
         enable_suspend: Optional[FilterOrBool] = None,
@@ -1025,7 +1025,7 @@ class Elicit(Generic[_T]):
         )
 
     @contextmanager
-    def _dumb_elicit(self, message: AnyFormattedText = "") -> Iterator[Suite[_T]]:
+    def _dumb_elicit(self, message: Textual = "") -> Iterator[Suite[_T]]:
         """
         Create elicit `Application` for elicit function for dumb terminals.
 
@@ -1077,7 +1077,7 @@ class Elicit(Generic[_T]):
         self,
         # When any of these arguments are passed, this value is overwritten
         # in this ElicitSession.
-        message: Optional[AnyFormattedText] = None,
+        message: Optional[Textual] = None,
         # `message` should go first, because people call it as
         # positional argument.
         *,
@@ -1090,13 +1090,13 @@ class Elicit(Generic[_T]):
         is_password: Optional[bool] = None,
         hide: Optional[bool] = None,
         key_bindings: Optional[KeyBindingsBase] = None,
-        bottom_toolbar: Optional[AnyFormattedText] = None,
+        bottom_toolbar: Optional[Textual] = None,
         style: Optional[BaseStyle] = None,
         color_depth: Optional[ColorDepth] = None,
         include_default_pygments_style: Optional[FilterOrBool] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-        r_elicit: Optional[AnyFormattedText] = None,
+        r_elicit: Optional[Textual] = None,
         multiline: Optional[FilterOrBool] = None,
         elicit_continuation: Optional[ElicitContinuationText] = None,
         wrap_lines: Optional[FilterOrBool] = None,
@@ -1110,7 +1110,7 @@ class Elicit(Generic[_T]):
         clipboard: Optional[Clipboard] = None,
         mouse_support: Optional[FilterOrBool] = None,
         input_processors: Optional[List[Processor]] = None,
-        placeholder: Optional[AnyFormattedText] = None,
+        placeholder: Optional[Textual] = None,
         reserve_space_for_menu: Optional[int] = None,
         enable_system_elicit: Optional[FilterOrBool] = None,
         enable_suspend: Optional[FilterOrBool] = None,
@@ -1276,7 +1276,7 @@ class Elicit(Generic[_T]):
         elicit_continuation = self.elicit_continuation
 
         if callable(elicit_continuation):
-            continuation: AnyFormattedText = elicit_continuation(
+            continuation: Textual = elicit_continuation(
                 width, line_number, wrap_count
             )
         else:
@@ -1348,7 +1348,7 @@ class Elicit(Generic[_T]):
 
 
 def elicit(
-    message: Optional[AnyFormattedText] = None,
+    message: Optional[Textual] = None,
     *,
     history: Optional[History] = None,
     editing_mode: Optional[EditingMode] = None,
@@ -1360,13 +1360,13 @@ def elicit(
     is_password: Optional[bool] = None,
     hide: Optional[bool] = None,
     key_bindings: Optional[KeyBindingsBase] = None,
-    bottom_toolbar: Optional[AnyFormattedText] = None,
+    bottom_toolbar: Optional[Textual] = None,
     style: Optional[BaseStyle] = None,
     color_depth: Optional[ColorDepth] = None,
     include_default_pygments_style: Optional[FilterOrBool] = None,
     style_transformation: Optional[StyleTransformation] = None,
     swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-    r_elicit: Optional[AnyFormattedText] = None,
+    r_elicit: Optional[Textual] = None,
     multiline: Optional[FilterOrBool] = None,
     elicit_continuation: Optional[ElicitContinuationText] = None,
     wrap_lines: Optional[FilterOrBool] = None,
@@ -1380,7 +1380,7 @@ def elicit(
     clipboard: Optional[Clipboard] = None,
     mouse_support: Optional[FilterOrBool] = None,
     input_processors: Optional[List[Processor]] = None,
-    placeholder: Optional[AnyFormattedText] = None,
+    placeholder: Optional[Textual] = None,
     reserve_space_for_menu: Optional[int] = None,
     enable_system_elicit: Optional[FilterOrBool] = None,
     enable_suspend: Optional[FilterOrBool] = None,
@@ -1477,5 +1477,4 @@ def create_confirm_session(
         complete_message, key_bindings=bindings
     )
     return session
-
 
