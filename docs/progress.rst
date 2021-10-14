@@ -25,7 +25,7 @@ when progress happens.
 
 .. code:: python
 
-    from quo import ProgressBar
+    from quo.progress import ProgressBar
     import time
 
 
@@ -64,7 +64,7 @@ want this depends on the application.
 
 .. code:: python
 
-    from quo import ProgressBar
+    from quo.progress import ProgressBar
     import time
     import threading
 
@@ -105,7 +105,8 @@ Each progress bar can have one title, and for each task an individual label.
 
 .. code:: python
 
-    from quo import ProgressBar, echo
+    from quo.progress import ProgressBar
+    from quo import echo
     import time
 
     title = echo(f"Downloading 4 files...", bg="yellow", fg="black")
@@ -126,7 +127,7 @@ customized by using a different sequence of formatters. The default formatting l
 
 .. code:: python
 
-    from quo.indicators.formatters import *
+    from quo.progress.formatters import *
 
     default_formatting = [
         Label(),
@@ -144,9 +145,9 @@ customized by using a different sequence of formatters. The default formatting l
     ]
 
 That sequence of
-:class:`~quo.shortcuts.progress_bar.formatters.Formatter` can be
+:class:`~quo.shortcut.formatters.Formatter` can be
 passed to the `formatter` argument of
-:class:`~quo.indicator.ProgressBar`. So, we could change this and
+:class:`~quo.progress.ProgressBar`. So, we could change this and
 modify the progress bar to look like an apt-get style progress bar:
 
 .. code:: python
@@ -188,8 +189,9 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
 
 .. code:: python
 
-    from quo import HTML, ProgressBar
-    from quo.key_binding import KeyBindings
+    from quo import HTML
+    from quo.progress import ProgressBar
+    from quo.keys import KeyBinder
     from quo.patch_stdout import patch_stdout
 
     import os
@@ -199,7 +201,7 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
     bottom_toolbar = HTML(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
 
     # Create custom key bindings first.
-    kb = KeyBindings()
+    kb = KeyBinder()
     cancel = [False]
 
     @kb.add('f')
