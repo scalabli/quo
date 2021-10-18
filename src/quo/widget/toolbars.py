@@ -209,7 +209,7 @@ class SearchToolbar:
         def is_searching() -> bool:
             return self.control in get_app().layout.search_links
 
-        def get_before_input() -> AnyFormattedText:
+        def get_before_input() -> Textual:
             if not is_searching():
                 return text_if_not_searching
             elif (

@@ -1,5 +1,10 @@
 from asyncio import get_event_loop
-from typing import TYPE_CHECKING, Any, Optional, TextIO
+from typing import (
+        TYPE_CHECKING, 
+        Any, 
+        Optional, 
+        TextIO
+        )
 
 from quo.application import Suite
 from quo.application.current import get_app_session
@@ -8,7 +13,7 @@ from quo.text import (
         StyleAndTextTuples, 
         to_formatted_text
         )
-from quo.input import DummyInput
+from quo.i_o.input import DummyInput
 from quo.layout.layout import Layout
 from quo.output import ColorDepth, Output
 from quo.output.defaults import create_output

@@ -51,13 +51,13 @@ __all__ = [
 def yes_no_dialog(
     title: Textual = "",
     text: Textual = "",
-    yes_text: str = "Yes",
-    no_text: str = "No",
+    yes: str = "Yes",
+    no: str = "No",
     style: Optional[BaseStyle] = None,
 ) -> Suite[bool]:
     """
     Display a Yes/No dialog.
-    Return a boolean.
+    This will return a boolean.
     """
 
     def yes_handler() -> None:
@@ -70,10 +70,10 @@ def yes_no_dialog(
         title=title,
         body=Label(text=text, dont_extend_height=True),
         buttons=[
-            Button(text=yes_text, handler=yes_handler),
-            Button(text=no_text, handler=no_handler),
+            Button(text=yes, handler=yes_handler),
+            Button(text=no, handler=no_handler),
         ],
-        with_background=True,
+        background=True,
     )
 
     return _create_app(dialog, style)
@@ -103,7 +103,7 @@ def button(
             Button(text=t, handler=functools.partial(button_handler, v))
             for t, v in buttons
         ],
-        with_background=True,
+        background=True,
     )
 
     return _create_app(dialog, style)
@@ -153,7 +153,7 @@ def evoke(
             padding=D(preferred=1, max=1),
         ),
         buttons=[ok_button, cancel_button],
-        with_background=True,
+        background=True,
     )
 
     return _create_app(dialog, style)
@@ -172,7 +172,7 @@ def message(
         title=title,
         body=Label(text=text, dont_extend_height=True),
         buttons=[Button(text=ok_text, handler=_return_none)],
-        with_background=True,
+        background=True,
     )
 
     return _create_app(dialog, style)
@@ -210,7 +210,7 @@ def radiolist_dialog(
             Button(text=ok_text, handler=ok_handler),
             Button(text=cancel_text, handler=_return_none),
         ],
-        with_background=True,
+        background=True,
     )
 
     return _create_app(dialog, style)
@@ -248,7 +248,7 @@ def checkbox(
             Button(text=ok_text, handler=ok_handler),
             Button(text=cancel_text, handler=_return_none),
         ],
-        with_background=True,
+        background=True,
     )
 
     return _create_app(dialog, style)
@@ -284,7 +284,8 @@ def progress(
             ]
         ),
         title=title,
-        with_background=True,
+
+        background=True,
     )
     app = _create_app(dialog, style)
 
@@ -318,7 +319,7 @@ def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Suite[Any]:
     bindings.add("tab")(focus_next)
     bindings.add("s-tab")(focus_previous)
 
-    return Suit(
+    return Suite(
         layout=Layout(dialog),
         key_bindings=merge_key_bindings([load_key_bindings(), bindings]),
         mouse_support=True,

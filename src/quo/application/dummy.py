@@ -1,7 +1,7 @@
 from typing import Callable, Optional
 
 from quo.text import Textual
-from quo.input import DummyInput
+from quo.i_o.input import DummyInput
 from quo.output import DummyOutput
 
 from .application import Suite

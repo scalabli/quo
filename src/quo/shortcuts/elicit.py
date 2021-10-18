@@ -68,7 +68,7 @@ from quo.text import (
     to_formatted_text,
 )
 from quo.history import History, InMemoryHistory
-from quo.input.core import Input
+from quo.i_o.input.core import Input
 from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
 from quo.keys.key_binding.bindings.completion import (
     display_completions_like_readline,

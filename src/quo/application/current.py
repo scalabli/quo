@@ -1,6 +1,11 @@
 import sys
 from contextlib import contextmanager
-from typing import TYPE_CHECKING, Any, Generator, Optional
+from typing import (
+        TYPE_CHECKING,
+        Any,
+        Generator, 
+        Optional
+        )
 
 try:
     from contextvars import ContextVar
@@ -8,7 +13,7 @@ except ImportError:
     from quo.eventloop.dummy_contextvars import ContextVar  # type: ignore
 
 if TYPE_CHECKING:
-    from quo.input.core import Input
+    from quo.i_o.input.core import Input
     from quo.output.core import Output
 
     from .application import Suite
@@ -49,7 +54,7 @@ class AppSession:
 
         # The application will be set dynamically by the `set_app` context
         # manager. This is called in the application itself.
-        self.app: Optional["Application[Any]"] = None
+        self.app: Optional["Suite[Any]"] = None
 
     def __repr__(self) -> str:
         return "AppSession(app=%r)" % (self.app,)
@@ -57,7 +62,7 @@ class AppSession:
     @property
     def input(self) -> "Input":
         if self._input is None:
-            from quo.input.defaults import create_input
+            from quo.i_o.input.defaults import create_input
 
             self._input = create_input()
         return self._input

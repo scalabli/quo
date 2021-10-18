@@ -50,10 +50,16 @@ from quo.eventloop import (
     run_in_executor_with_context,
 )
 from quo.eventloop.utils import call_soon_threadsafe
-from quo.filters import Condition, Filter, FilterOrBool, to_filter
+from quo.filters import (
+        Condition,
+        Filter, 
+        FilterOrBool,
+        to_filter
+        )
+
 from quo.text import Textual
-from quo.input.core import Input
-from quo.input.typeahead import get_typeahead, store_typeahead
+from quo.i_o.input.core import Input
+from quo.i_o.input.typeahead import get_typeahead, store_typeahead
 from quo.keys.key_binding.bindings.page_navigation import (
     load_page_navigation_bindings,
 )

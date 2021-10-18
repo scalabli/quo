@@ -1,7 +1,11 @@
 """
 Collection of reusable components for building full screen applications.
 """
-from typing import Optional, Sequence, Union
+from typing import (
+        Optional,
+        Sequence,
+        Union
+        )
 
 from quo.filters import has_completions, has_focus
 from quo.text import Textual
@@ -16,7 +20,12 @@ from quo.layout.containers import (
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 
-from .core import Box, Button, Frame, Shadow
+from .core import (
+        Box,
+        Button, 
+        Frame,
+        Shadow
+        )
 
 __all__ = [
         "Dialog",
@@ -43,7 +52,7 @@ class Dialog:
         buttons: Optional[Sequence[Button]] = None,
         modal: bool = True,
         width: AnyDimension = None,
-        with_background: bool = False,
+        background: bool = False,
     ) -> None:
 
         self.body = body
@@ -52,13 +61,13 @@ class Dialog:
         buttons = buttons or []
 
         # When a button is selected, handle left/right key bindings.
-        buttons_kb = KeyBinder()
+        b_kb = KeyBinder()
         if len(buttons) > 1:
             first_selected = has_focus(buttons[0])
             last_selected = has_focus(buttons[-1])
 
-            buttons_kb.add("left", filter=~first_selected)(focus_previous)
-            buttons_kb.add("right", filter=~last_selected)(focus_next)
+            b_kb.add("left", filter=~first_selected)(focus_previous)
+            b_kb.add("right", filter=~last_selected)(focus_next)
 
         frame_body: AnyContainer
         if buttons:
@@ -72,7 +81,7 @@ class Dialog:
                     ),
                     # The buttons.
                     Box(
-                        body=VSplit(buttons, padding=1, key_bindings=buttons_kb),
+                        body=VSplit(buttons, padding=1, key_bindings=b_kb),
                         height=D(min=1, max=3, preferred=3),
                     ),
                 ]
@@ -90,15 +99,19 @@ class Dialog:
                 title=lambda: self.title,
                 body=frame_body,
                 style="class:dialog.body",
-                width=(None if with_background is None else width),
+                width=(None if background is None else width),
                 key_bindings=kb,
                 modal=modal,
             )
         )
 
         self.container: Union[Box, Shadow]
-        if with_background:
-            self.container = Box(body=frame, style="class:dialog", width=width)
+        if background:
+            self.container = Box(
+                    body=frame,
+                    style="class:dialog",
+                    width=width
+                    )
         else:
             self.container = frame
 

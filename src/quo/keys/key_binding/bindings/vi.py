@@ -40,7 +40,7 @@ from quo.filters.app import (
     vi_selection_mode,
     vi_waiting_for_text_object_mode,
 )
-from quo.input.vt100_parser import Vt100Parser
+from quo.i_o.input.vt100_parser import Vt100Parser
 from quo.keys.key_binding.digraphs import DIGRAPHS
 from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.key_binding.vi_state import CharacterFind, InputMode
