@@ -39,7 +39,7 @@ class MenuContainer:
         self.selected_menu = [0]
 
         # Key bindings.
-        kb = KeyBindings()
+        kb = KeyBinder()
 
         @Condition
         def in_main_menu() -> bool:
@@ -65,8 +65,8 @@ class MenuContainer:
         def _down(event: E) -> None:
             self.selected_menu.append(0)
 
-        @kb.add("c-c", filter=in_main_menu)
-        @kb.add("c-g", filter=in_main_menu)
+        @kb.add("ctrl-c", filter=in_main_menu)
+        @kb.add("ctrl-g", filter=in_main_menu)
         def _cancel(event: E) -> None:
             "Leave menu."
             event.app.layout.focus_last()
@@ -74,8 +74,8 @@ class MenuContainer:
         # Sub menu navigation.
 
         @kb.add("left", filter=in_sub_menu)
-        @kb.add("c-g", filter=in_sub_menu)
-        @kb.add("c-c", filter=in_sub_menu)
+        @kb.add("ctrl-g", filter=in_sub_menu)
+        @kb.add("ctrl-c", filter=in_sub_menu)
         def _back(event: E) -> None:
             "Go back to parent menu."
             if len(self.selected_menu) > 1:

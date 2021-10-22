@@ -5,7 +5,14 @@ import itertools
 import re
 import sys
 from enum import Enum
-from typing import Dict, Hashable, List, Set, Tuple, TypeVar
+from typing import (
+        Dict,
+        Hashable,
+        List, 
+        Set, 
+        Tuple, 
+        TypeVar
+        )
 
 from quo.cache import SimpleCache
 

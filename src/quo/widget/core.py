@@ -182,16 +182,16 @@ class TextArea:
         get_line_prefix: Optional[GetLinePrefixCallable] = None,
         scrollbar: bool = False,
         style: str = "",
-        search_field: Optional[SearchToolbar] = None,
+        search: Optional[SearchToolbar] = None,
         preview_search: FilterOrBool = True,
         prompt: Textual = "",
         input_processors: Optional[List[Processor]] = None,
     ) -> None:
 
-        if search_field is None:
+        if search is None:
             search_control = None
-        elif isinstance(search_field, SearchToolbar):
-            search_control = search_field.control
+        elif isinstance(search, SearchToolbar):
+            search_control = search.control
 
         if input_processors is None:
             input_processors = []

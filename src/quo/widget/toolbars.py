@@ -15,8 +15,20 @@ from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBinding
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.key_binding.vi_state import InputMode
 from quo.keys import Keys, KeyBinder
-from quo.layout.containers import ConditionalContainer, Container, Window
-from quo.layout.controls import BufferControl, FormattedTextControl, SearchBufferControl, UIContent, UIControl
+from quo.layout.containers import (
+        ConditionalContainer,
+        Container, 
+        Window
+        )
+
+from quo.layout.controls import (
+        BufferControl, 
+        FormattedTextControl,
+        SearchBufferControl, 
+        UIContent, 
+        UIControl
+        )
+
 from quo.layout.dimension import Dimension
 from quo.layout.processors import BeforeInput
 from quo.lexers import SimpleLexer
@@ -98,8 +110,8 @@ class SystemToolbar:
         handle = emacs_bindings.add
 
         @handle("escape", filter=focused)
-        @handle("c-g", filter=focused)
-        @handle("c-c", filter=focused)
+        @handle("ctrl-g", filter=focused)
+        @handle("ctrl-c", filter=focused)
         def _cancel(event: E) -> None:
             "Hide system prompt."
             self.system_buffer.reset()
@@ -120,7 +132,7 @@ class SystemToolbar:
         handle = vi_bindings.add
 
         @handle("escape", filter=focused)
-        @handle("c-c", filter=focused)
+        @handle("ctrl-c", filter=focused)
         def _cancel_vi(event: E) -> None:
             "Hide system prompt."
             event.app.vi_state.input_mode = InputMode.NAVIGATION
