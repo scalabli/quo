@@ -2,7 +2,7 @@ from typing import Any, Generic, List, Optional, TextIO, TypeVar, Union, overloa
 
 from . import get_console
 from .console import Console
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 
 PromptType = TypeVar("PromptType")
 DefaultType = TypeVar("DefaultType")
@@ -349,7 +349,7 @@ class Confirm(PromptBase[bool]):
 
 if __name__ == "__main__":  # pragma: no cover
 
-    from rich import print
+    from quo import evoke
 
     if Confirm.ask("Run [i]prompt[/i] tests?", default=True):
         while True:
@@ -358,8 +358,8 @@ if __name__ == "__main__":  # pragma: no cover
             )
             if result >= 1 and result <= 10:
                 break
-            print(":pile_of_poo: [prompt.invalid]Number must be between 1 and 10")
-        print(f"number={result}")
+            evoke(":pile_of_poo: [prompt.invalid]Number must be between 1 and 10")
+        evoke(f"number={result}")
 
         while True:
             password = Prompt.ask(
@@ -368,11 +368,11 @@ if __name__ == "__main__":  # pragma: no cover
             )
             if len(password) >= 5:
                 break
-            print("[prompt.invalid]password too short")
-        print(f"password={password!r}")
+            evoke("[prompt.invalid]password too short")
+        evoke(f"password={password!r}")
 
         fruit = Prompt.ask("Enter a fruit", choices=["apple", "orange", "pear"])
-        print(f"fruit={fruit!r}")
+        evoke(f"fruit={fruit!r}")
 
     else:
-        print("[b]OK :loudly_crying_face:")
+        evoke("[b]OK :loudly_crying_face:")
