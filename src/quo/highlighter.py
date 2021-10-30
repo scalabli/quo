@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Union
 
-from .text import Text
+from quo.text.text import Text
 
 
 def _combine_regex(*regexes: str) -> str:
