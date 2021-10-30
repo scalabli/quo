@@ -29,7 +29,7 @@ from .panel import Panel
 from .scope import render_scope
 from .style import Style
 from .syntax import Syntax
-from .text import Text
+from quo.text.text import Text
 from .theme import Theme
 
 WINDOWS = platform.system() == "Windows"
