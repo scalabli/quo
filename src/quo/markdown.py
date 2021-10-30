@@ -13,7 +13,7 @@ from .rule import Rule
 from .segment import Segment
 from .style import Style, StyleStack
 from .syntax import Syntax
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 
 
 class MarkdownElement:
