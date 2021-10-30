@@ -60,7 +60,7 @@ from .segment import Segment
 from .style import Style, StyleType
 from .styled import Styled
 from .terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 from .theme import Theme, ThemeStack
 
 if TYPE_CHECKING:
