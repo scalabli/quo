@@ -1,6 +1,6 @@
 import builtins
 import os
-from rich.repr import RichReprResult
+from quo.repr import RichReprResult
 import sys
 from array import array
 from collections import Counter, defaultdict, deque, UserDict, UserList
