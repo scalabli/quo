@@ -2,7 +2,7 @@ import io
 from typing import List, Any, IO, TYPE_CHECKING
 
 from .ansi import AnsiDecoder
-from .text import Text
+from quo.text.text import Text
 
 if TYPE_CHECKING:
     from .console import Console
