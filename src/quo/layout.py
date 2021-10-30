@@ -26,7 +26,7 @@ from .segment import Segment
 from .style import StyleType
 
 if TYPE_CHECKING:
-    from rich.tree import Tree
+    from quo.tree import Tree
 
 
 class LayoutRender(NamedTuple):
@@ -418,7 +418,7 @@ class Layout:
 
 
 if __name__ == "__main__":
-    from rich.console import Console
+    from quo.console import Console
 
     console = Console()
     layout = Layout()
