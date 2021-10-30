@@ -236,7 +236,7 @@ class Text(JupyterMixin):
         Returns:
             Text: A Text instance with markup rendered.
         """
-        from .markup import render
+        from quo.markup import render
 
         rendered_text = render(text, style, emoji=emoji, emoji_variant=emoji_variant)
         rendered_text.justify = justify
@@ -1189,17 +1189,17 @@ if __name__ == "__main__":  # pragma: no cover
 
     console = Console()
     console.rule("justify='left'")
-    console.print(text, style="red")
-    console.print()
+    console.evoke(text, style="red")
+    console.evoke()
 
     console.rule("justify='center'")
-    console.print(text, style="green", justify="center")
-    console.print()
+    console.evoke(text, style="green", justify="center")
+    console.evoke()
 
     console.rule("justify='right'")
-    console.print(text, style="blue", justify="right")
-    console.print()
+    console.evoke(text, style="blue", justify="right")
+    console.evoke()
 
     console.rule("justify='full'")
-    console.print(text, style="magenta", justify="full")
-    console.print()
+    console.evoke(text, style="magenta", justify="full")
+    console.evoke()
