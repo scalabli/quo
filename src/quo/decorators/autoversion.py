@@ -1,5 +1,5 @@
 from quo.decorators import core
-
+#from .core import app
 def autoversion(
     version=None,
     *param_decls,

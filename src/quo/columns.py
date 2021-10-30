@@ -3,21 +3,21 @@ from itertools import chain
 from operator import itemgetter
 from typing import Dict, Iterable, List, Optional, Tuple
 
-from quo.align import Align, AlignMethod
-from quo.terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
-from quo.constrain import Constrain
-from quo.width import Measurement
-from quo.padding import Padding, PaddingDimensions
-from quo.tabulate import Table
-from quo.text import TextType
-from quo.jupyter import JupyterMixin
+from .align import Align, AlignMethod
+from .console import Console, ConsoleOptions, RenderableType, RenderResult
+from .constrain import Constrain
+from .measure import Measurement
+from .padding import Padding, PaddingDimensions
+from .table import Table
+from .text import TextType
+from .jupyter import JupyterMixin
 
 
 class Columns(JupyterMixin):
     """Display renderables in neat columns.
 
     Args:
-        renderables (Iterable[RenderableType]): Any number of Quo renderables (including str).
+        renderables (Iterable[RenderableType]): Any number of Rich renderables (including str).
         width (int, optional): The desired width of the columns, or None to auto detect. Defaults to None.
         padding (PaddingDimensions, optional): Optional padding around cells. Defaults to (0, 1).
         expand (bool, optional): Expand columns to full width. Defaults to False.
@@ -59,8 +59,8 @@ class Columns(JupyterMixin):
         """
         self.renderables.append(renderable)
 
-    def __quo_console__(
-        self, console: Terminal, options: ConsoleOptions
+    def __rich_console__(
+        self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         render_str = console.render_str
         renderables = [
@@ -174,9 +174,7 @@ class Columns(JupyterMixin):
 if __name__ == "__main__":  # pragma: no cover
     import os
 
-    console = Terminal()
-
-    from quo.panel import Panel
+    console = Console()
 
     files = [f"{i} {s}" for i, s in enumerate(sorted(os.listdir()))]
     columns = Columns(files, padding=(0, 1), expand=False, equal=False)

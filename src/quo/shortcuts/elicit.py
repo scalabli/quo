@@ -46,10 +46,25 @@ from quo.application import Suite
 from quo.application.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
-from quo.clipboard import Clipboard, DynamicClipboard, InMemoryClipboard
-from quo.completion import Completer, DynamicCompleter, ThreadedCompleter
+from quo.clipboard import (
+        Clipboard, 
+        DynamicClipboard,
+        InMemoryClipboard
+        )
+
+from quo.completion import (
+        Completer, 
+        DynamicCompleter,
+        ThreadedCompleter
+        )
+
 from quo.document import Document
-from quo.enums import DEFAULT_BUFFER, SEARCH_BUFFER, EditingMode
+from quo.enums import (
+        DEFAULT_BUFFER, 
+        SEARCH_BUFFER,
+        EditingMode
+        )
+
 from quo.filters import (
     Condition,
     FilterOrBool,
@@ -119,7 +134,7 @@ from quo.styles import (
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
 )
-from quo.utils import get_width as get_cwdith
+from quo.utils import get_width
 from quo.utils import (
     is_dumb_terminal,
     suspend_to_background_supported,
@@ -1307,7 +1322,7 @@ class Elicit(Generic[_T]):
                 return get_elicit_text_2()
 
         # For the next lines, display the appropriate continuation.
-        elicit_width = get_cwidth(fragment_list_to_text(get_elicit_text_2()))
+        elicit_width = get_width(fragment_list_to_text(get_elicit_text_2()))
         return self._get_continuation(elicit_width, line_number, wrap_count)
 
     def _get_arg_text(self) -> StyleAndTextTuples:

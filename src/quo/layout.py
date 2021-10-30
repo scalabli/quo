@@ -16,17 +16,17 @@ from typing import (
 
 from ._ratio import ratio_resolve
 from .align import Align
-from .terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
+from .console import Console, ConsoleOptions, RenderableType, RenderResult
 from .highlighter import ReprHighlighter
 from .panel import Panel
 from .pretty import Pretty
-from .repr import quo_repr, Result
+from .repr import rich_repr, Result
 from .region import Region
 from .segment import Segment
 from .style import StyleType
 
 if TYPE_CHECKING:
-    from quo.tree import Tree
+    from rich.tree import Tree
 
 
 class LayoutRender(NamedTuple):
@@ -57,8 +57,8 @@ class _Placeholder:
         self.layout = layout
         self.style = style
 
-    def __quo_console__(
-        self, console: Terminal, options: ConsoleOptions
+    def __rich_console__(
+        self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         width = options.max_width
         height = options.height or options.size.height
@@ -137,7 +137,7 @@ class ColumnSplitter(Splitter):
             offset += child_height
 
 
-@quo_repr
+@rich_repr
 class Layout:
     """A renderable to divide a fixed height in to rows or columns.
 
@@ -175,7 +175,7 @@ class Layout:
         self._render_map: RenderMap = {}
         self._lock = RLock()
 
-    def __quo_repr__(self) -> Result:
+    def __rich_repr__(self) -> Result:
         yield "name", self.name, None
         yield "size", self.size, None
         yield "minimum_size", self.minimum_size, 1
@@ -223,9 +223,9 @@ class Layout:
     @property
     def tree(self) -> "Tree":
         """Get a tree renderable to show layout structure."""
-        from quo.styled import Styled
-        from quo.table import Table
-        from quo.tree import Tree
+        from rich.styled import Styled
+        from rich.table import Table
+        from rich.tree import Tree
 
         def summary(layout: "Layout") -> Table:
 
@@ -327,11 +327,11 @@ class Layout:
         with self._lock:
             self._renderable = renderable
 
-    def refresh_screen(self, console: "Terminal", layout_name: str) -> None:
+    def refresh_screen(self, console: "Console", layout_name: str) -> None:
         """Refresh a sub-layout.
 
         Args:
-            console (Terminal): Terminal instance where Layout is to be rendered.
+            console (Console): Console instance where Layout is to be rendered.
             layout_name (str): Name of layout.
         """
         with self._lock:
@@ -365,12 +365,12 @@ class Layout:
         }
         return region_map
 
-    def render(self, console: Terminal, options: ConsoleOptions) -> RenderMap:
+    def render(self, console: Console, options: ConsoleOptions) -> RenderMap:
         """Render the sub_layouts.
 
         Args:
-            console (Terminal): Terminal instance.
-            options (ConsoleOptions): Terminal options.
+            console (Console): Console instance.
+            options (ConsoleOptions): Console options.
 
         Returns:
             RenderMap: A dict that maps Layout on to a tuple of Region, lines
@@ -394,8 +394,8 @@ class Layout:
             render_map[layout] = LayoutRender(region, lines)
         return render_map
 
-    def __quo_console__(
-        self, console: Terminal, options: ConsoleOptions
+    def __rich_console__(
+        self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         with self._lock:
             width = options.max_width or console.width
@@ -418,9 +418,9 @@ class Layout:
 
 
 if __name__ == "__main__":
-    from quo.terminal import Terminal
+    from rich.console import Console
 
-    console = Terminal()
+    console = Console()
     layout = Layout()
 
     layout.split_column(

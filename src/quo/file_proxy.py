@@ -1,24 +1,24 @@
 import io
 from typing import List, Any, IO, TYPE_CHECKING
 
-from quo.ansi import AnsiDecoder
-from quo.text import Text
+from .ansi import AnsiDecoder
+from .text import Text
 
 if TYPE_CHECKING:
-    from .termimal import Terminal
+    from .console import Console
 
 
 class FileProxy(io.TextIOBase):
     """Wraps a file (e.g. sys.stdout) and redirects writes to a console."""
 
-    def __init__(self, console: "Terminal", file: IO[str]) -> None:
+    def __init__(self, console: "Console", file: IO[str]) -> None:
         self.__console = console
         self.__file = file
         self.__buffer: List[str] = []
         self.__ansi_decoder = AnsiDecoder()
 
     @property
-    def quo_proxied_file(self) -> IO[str]:
+    def rich_proxied_file(self) -> IO[str]:
         """Get proxied file."""
         return self.__file
 

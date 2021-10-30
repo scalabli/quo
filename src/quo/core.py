@@ -991,7 +991,7 @@ class Command(BaseCommand):
                              passed to the context object.
     :param callback: the callback to invoke.  This is optional.
     :param params: the parameters to register with this command.  This can
-                   be either :class:`App` or :class:`Argument` objects.
+                   be either :class:`App` or :class:`Arg` objects.
     :param help: the help string to use for this command.
     :param epilog: like the help string but it's printed at the end of the
                    help page after everything else.
@@ -1712,7 +1712,7 @@ class Parameter:
     :param expose_value: if this is `True` then the value is passed onwards
                          to the command callback and stored on the context,
                          otherwise it's skipped.
-    :param is_eager: eager values are processed before non eager ones.  This
+    :param eager: eager values are processed before non eager ones.  This
                      should not be set for arguments or it will inverse the
                      order of processing.
     :param envvar: a string or list of strings that are environment variables
@@ -1737,7 +1737,7 @@ class Parameter:
         nargs=None,
         metavar=None,
         expose_value=True,
-        is_eager=False,
+        eager=False,
         envvar=None,
         shell_complete=None,
         autocompletion=None,
@@ -1762,7 +1762,7 @@ class Parameter:
         self.multiple = False
         self.expose_value = expose_value
         self.default = default
-        self.is_eager = is_eager
+        self.eager = eager
         self.metavar = metavar
         self.envvar = envvar
 
@@ -2047,7 +2047,7 @@ class App(Parameter):
     :param hide_input: if this is `True` then the input on the prompt will be
                        hidden from the user.  This is useful for password
                        input.
-    :param is_flag: forces this app to act as a flag.  The default is
+    :param flag: forces this app to act as a flag.  The default is
                     auto detection.
     :param flag_value: which value should be used for this flag if it's
                        enabled.  This is set to a boolean automatically if
@@ -2075,7 +2075,7 @@ class App(Parameter):
         autoconfirm=False,
         prompt_required=True,
         hide=False,
-        is_flag=None,
+        flag=None,
         flag_value=None,
         multiple=False,
         count=False,
@@ -2106,31 +2106,31 @@ class App(Parameter):
         # used as a flag to indicate using prompt or flag_value.
         self._flag_needs_value = self.prompt is not None and not self.prompt_required
 
-        if is_flag is None:
+        if flag is None:
             if flag_value is not None:
                 # Implicitly a flag because flag_value was set.
-                is_flag = True
+                flag = True
             elif self._flag_needs_value:
                 # Not a flag, but when used as a flag it shows a prompt.
-                is_flag = False
+                flag = False
             else:
                 # Implicitly a flag because flag apps were given.
-                is_flag = bool(self.secondary_opts)
-        elif is_flag is False and not self._flag_needs_value:
+                flag = bool(self.secondary_opts)
+        elif flag is False and not self._flag_needs_value:
             # Not a flag, and prompt is not enabled, can be used as a
             # flag if flag_value is set.
             self._flag_needs_value = flag_value is not None
 
-        if is_flag and default_is_missing:
+        if flag and default_is_missing:
             self.default = False
 
         if flag_value is None:
             flag_value = not self.default
 
-        self.is_flag = is_flag
+        self.flag = flag
         self.flag_value = flag_value
 
-        if self.is_flag and isinstance(self.flag_value, bool) and type in [None, bool]:
+        if self.flag and isinstance(self.flag_value, bool) and type in [None, bool]:
             self.type = BOOL
             self.is_bool_flag = True
         else:
@@ -2176,7 +2176,7 @@ class App(Parameter):
         info_dict.update(
             help=self.help,
             prompt=self.prompt,
-            is_flag=self.is_flag,
+            flag=self.flag,
             flag_value=self.flag_value,
             count=self.count,
             hidden=self.hidden,
@@ -2248,7 +2248,7 @@ class App(Parameter):
         else:
             action = "store"
 
-        if self.is_flag:
+        if self.flag:
             kwargs.pop("nargs", None)
             action_const = f"{action}_const"
             if self.is_bool_flag and self.secondary_opts:
@@ -2273,7 +2273,7 @@ class App(Parameter):
             rv, any_slashes = join_apps(opts)
             if any_slashes:
                 any_prefix_is_slash[:] = [True]
-            if not self.is_flag and not self.count:
+            if not self.flag and not self.count:
                 rv += f" {self.make_metavar()}"
             return rv
 
@@ -2335,7 +2335,7 @@ class App(Parameter):
         # we need to look at all flags in the same tether to figure out
         # if we're the the default one in which case we return the flag
         # value as default.
-        if self.is_flag and not self.is_bool_flag:
+        if self.flag and not self.is_bool_flag:
             for param in clime.command.params:
                 if param.name == self.name and param.default:
                     return param.flag_value

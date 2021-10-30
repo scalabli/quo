@@ -5,25 +5,24 @@ from typing import (
     List,
     Optional,
     Union,
-    cast,
     overload,
     TypeVar,
     TYPE_CHECKING,
 )
 
 if TYPE_CHECKING:
-    from quo.terminal import (
-        Terminal,
+    from .console import (
+        Console,
         ConsoleOptions,
         JustifyMethod,
         OverflowMethod,
         RenderResult,
         RenderableType,
     )
+    from .text import Text
 
-from quo.vitals import Text
-from quo.width.cells import cell_len
-from quo.width.measure import Measurement
+from .cells import cell_len
+from .measure import Measurement
 
 T = TypeVar("T")
 
@@ -38,14 +37,14 @@ class Renderables:
             list(renderables) if renderables is not None else []
         )
 
-    def __quo_console__(
-        self, console: "Terminal", options: "ConsoleOptions"
+    def __rich_console__(
+        self, console: "Console", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._renderables
 
-    def __quo_measure__(
-        self, console: "Terminal", options: "ConsoleOptions"
+    def __rich_measure__(
+        self, console: "Console", options: "ConsoleOptions"
     ) -> "Measurement":
         dimensions = [
             Measurement.get(console, options, renderable)
@@ -94,8 +93,8 @@ class Lines:
     def __len__(self) -> int:
         return self._lines.__len__()
 
-    def __quo_console__(
-        self, console: "Terminal", options: "ConsoleOptions"
+    def __rich_console__(
+        self, console: "Console", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._lines
@@ -111,7 +110,7 @@ class Lines:
 
     def justify(
         self,
-        console: "Terminal",
+        console: "Console",
         width: int,
         justify: "JustifyMethod" = "left",
         overflow: "OverflowMethod" = "fold",
@@ -125,7 +124,7 @@ class Lines:
             overflow (str, optional): Default overflow for text: "crop", "fold", or "ellipsis". Defaults to "fold".
 
         """
-        from quo.text import Text
+        from .text import Text
 
         if justify == "left":
             for line in self._lines:
