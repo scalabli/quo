@@ -414,7 +414,7 @@ class Style:
         """
         try:
             return str(cls.parse(style))
-        except errors.StyleSyntaxError:
+        except exceptions.StyleSyntaxError:
             return style.strip().lower()
 
     @classmethod
@@ -517,7 +517,7 @@ class Style:
             style_definition (str): A string containing a style.
 
         Raises:
-            errors.StyleSyntaxError: If the style definition syntax is invalid.
+            exceptions.StyleSyntaxError: If the style definition syntax is invalid.
 
         Returns:
             `Style`: A Style instance.
@@ -537,11 +537,11 @@ class Style:
             if word == "on":
                 word = next(words, "")
                 if not word:
-                    raise errors.StyleSyntaxError("color expected after 'on'")
+                    raise exceptions.StyleSyntaxError("color expected after 'on'")
                 try:
                     Color.parse(word) is None
                 except ColorParseError as error:
-                    raise errors.StyleSyntaxError(
+                    raise exceptions.StyleSyntaxError(
                         f"unable to parse {word!r} as background color; {error}"
                     ) from None
                 bgcolor = word
@@ -550,7 +550,7 @@ class Style:
                 word = next(words, "")
                 attribute = STYLE_ATTRIBUTES.get(word)
                 if attribute is None:
-                    raise errors.StyleSyntaxError(
+                    raise exceptions.StyleSyntaxError(
                         f"expected style attribute after 'not', found {word!r}"
                     )
                 attributes[attribute] = False
@@ -558,7 +558,7 @@ class Style:
             elif word == "link":
                 word = next(words, "")
                 if not word:
-                    raise errors.StyleSyntaxError("URL expected after 'link'")
+                    raise exceptions.StyleSyntaxError("URL expected after 'link'")
                 link = word
 
             elif word in STYLE_ATTRIBUTES:
@@ -568,7 +568,7 @@ class Style:
                 try:
                     Color.parse(word)
                 except ColorParseError as error:
-                    raise errors.StyleSyntaxError(
+                    raise exceptions.StyleSyntaxError(
                         f"unable to parse {word!r} as color; {error}"
                     ) from None
                 color = word
