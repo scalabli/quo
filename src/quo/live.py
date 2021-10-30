@@ -10,7 +10,7 @@ from .file_proxy import FileProxy
 from .jupyter import JupyterMixin
 from .live_render import LiveRender, VerticalOverflowMethod
 from .screen import Screen
-from .text import Text
+from quo.text.text import Text
 
 
 class _RefreshThread(Thread):
