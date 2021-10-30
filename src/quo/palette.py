@@ -5,7 +5,7 @@ from typing import Sequence, Tuple, TYPE_CHECKING
 from .color_triplet import ColorTriplet
 
 if TYPE_CHECKING:
-    from rich.table import Table
+    from quo.table import Table
 
 
 class Palette:
@@ -75,10 +75,10 @@ class Palette:
 if __name__ == "__main__":  # pragma: no cover
     import colorsys
     from typing import Iterable
-    from rich.color import Color
-    from rich.console import Console, ConsoleOptions
-    from rich.segment import Segment
-    from rich.style import Style
+    from quo.color.color import Color
+    from quo.console import Console, ConsoleOptions
+    from quo.segment import Segment
+    from quo.style import Style
 
     class ColorBox:
         def __rich_console__(
