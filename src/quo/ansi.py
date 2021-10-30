@@ -2,7 +2,7 @@ from contextlib import suppress
 import re
 from typing import Iterable, NamedTuple
 
-from .color import Color
+from quo.color.color import Color
 from .style import Style
 from quo.text.text import Text
 
