@@ -39,7 +39,7 @@ from .cells import cell_len
 from .highlighter import ReprHighlighter
 from .jupyter import JupyterMixin, JupyterRenderable
 from .measure import Measurement
-from .text import Text
+from quo.text.text import Text
 
 if TYPE_CHECKING:
     from .console import (
@@ -821,6 +821,6 @@ if __name__ == "__main__":  # pragma: no cover
     }
     data["foo"].append(data)  # type: ignore
 
-    from rich import print
+    from quo import evoke
 
-    print(Pretty(data, indent_guides=True, max_string=20))
+    evoke(Pretty(data, indent_guides=True, max_string=20))
