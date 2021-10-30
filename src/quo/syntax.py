@@ -1,6 +1,6 @@
 import os.path
 import platform
-from rich.containers import Lines
+from quo.containers import Lines
 import textwrap
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple, Type, Union
@@ -29,7 +29,7 @@ from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
 from .style import Style
-from .text import Text
+from quo.text.text import Text
 
 TokenType = Tuple[str, ...]
 
