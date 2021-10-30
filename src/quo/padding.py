@@ -134,6 +134,6 @@ class Padding(JupyterMixin):
 
 
 if __name__ == "__main__":  #  pragma: no cover
-    from rich import print
+    from quo import evoke
 
-    print(Padding("Hello, World", (2, 4), style="on blue"))
+    evoke(Padding("Hello, World", (2, 4), style="on blue"))
