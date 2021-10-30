@@ -1,7 +1,7 @@
 from operator import itemgetter
 from typing import Callable, Iterable, NamedTuple, Optional, TYPE_CHECKING
 
-from quo.errors import errors
+from quo.errors import exceptions
 from .protocol import is_renderable
 
 if TYPE_CHECKING:
