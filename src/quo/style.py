@@ -4,7 +4,7 @@ from marshal import loads, dumps
 from random import randint
 from typing import Any, cast, Dict, Iterable, List, Optional, Type, Union
 
-from . import errors
+from quo.errors import exceptions
 from quo.color.color import Color, ColorParseError, ColorSystem, blend_rgb
 from .repr import rich_repr, Result
 from .terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
