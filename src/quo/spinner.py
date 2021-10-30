@@ -3,7 +3,7 @@ from typing import cast, List, Optional, TYPE_CHECKING
 from ._spinners import SPINNERS
 from .measure import Measurement
 from .table import Table
-from .text import Text
+from quo.text.text import Text
 
 if TYPE_CHECKING:
     from .console import Console, ConsoleOptions, RenderResult, RenderableType
