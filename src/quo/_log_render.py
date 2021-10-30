@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 
 
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 
 if TYPE_CHECKING:
     from .console import Console, ConsoleRenderable, RenderableType
@@ -83,7 +83,7 @@ class LogRender:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
+    from quo.console import Console
 
     c = Console()
     c.print("[on blue]Hello", justify="right")
