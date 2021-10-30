@@ -5,14 +5,14 @@ from enum import IntEnum
 from functools import lru_cache
 from typing import TYPE_CHECKING, NamedTuple, Optional, Tuple
 
-from ._palettes import EIGHT_BIT_PALETTE, STANDARD_PALETTE, WINDOWS_PALETTE
-from .color_triplet import ColorTriplet
-from .repr import rich_repr, Result
-from .terminal_theme import DEFAULT_TERMINAL_THEME
+from quo._palettes import EIGHT_BIT_PALETTE, STANDARD_PALETTE, WINDOWS_PALETTE
+from quo.color_triplet import ColorTriplet
+from quo.repr import rich_repr, Result
+from quo.terminal_theme import DEFAULT_TERMINAL_THEME
 
 if TYPE_CHECKING:  # pragma: no cover
-    from .terminal_theme import TerminalTheme
-    from .text import Text
+    from quo.terminal_theme import TerminalTheme
+    from quo.text.text import Text
 
 
 WINDOWS = platform.system() == "Windows"
@@ -556,7 +556,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     from .console import Console
     from .table import Table
-    from .text import Text
+    from quo.text.text import Text
 
     console = Console()
 
