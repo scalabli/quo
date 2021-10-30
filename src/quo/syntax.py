@@ -690,7 +690,7 @@ if __name__ == "__main__":  # pragma: no cover
     )
     args = parser.parse_args()
 
-    from rich.console import Console
+    from quo.console import Console
 
     console = Console(force_terminal=args.force_color, width=args.width)
 
@@ -714,4 +714,4 @@ if __name__ == "__main__":  # pragma: no cover
             background_color=args.background_color,
             indent_guides=args.indent_guides,
         )
-    console.print(syntax, soft_wrap=args.soft_wrap)
+    console.evoke(syntax, soft_wrap=args.soft_wrap)
