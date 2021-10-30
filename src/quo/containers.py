@@ -124,7 +124,7 @@ class Lines:
             overflow (str, optional): Default overflow for text: "crop", "fold", or "ellipsis". Defaults to "fold".
 
         """
-        from .text import Text
+        from quo.text.text import Text
 
         if justify == "left":
             for line in self._lines:
