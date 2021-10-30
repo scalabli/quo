@@ -1,7 +1,6 @@
 """
 Progress bar implementation.
 
-quo v2021.3
 """
 
 import os
@@ -31,7 +30,7 @@ from quo.text import (
     StyleAndTextTuples,
     to_formatted_text,
 )
-from quo.input import Input
+from quo.i_o.input import Input
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.containers import ConditionalContainer
