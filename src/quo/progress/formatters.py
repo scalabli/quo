@@ -13,7 +13,7 @@ from typing import (
 
 from quo.text import (
         HTML,
-        AnyFormattedText,
+        Textual,
         StyleAndTextTuples,
         to_formatted_text
         )
@@ -53,7 +53,7 @@ class Formatter(metaclass=ABCMeta):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
         pass
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
@@ -65,7 +65,7 @@ class Text(Formatter):
     Display plain text.
     """
 
-    def __init__(self, text: AnyFormattedText, style: str = "") -> None:
+    def __init__(self, text: Textual, style: str = "") -> None:
         self.text = to_formatted_text(text, style=style)
 
     def format(
@@ -73,7 +73,7 @@ class Text(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
         return self.text
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
@@ -94,7 +94,7 @@ class Label(Formatter):
         self.width = width
         self.suffix = suffix
 
-    def _add_suffix(self, label: AnyFormattedText) -> StyleAndTextTuples:
+    def _add_suffix(self, label: Textual) -> StyleAndTextTuples:
         label = to_formatted_text(label, style="class:label")
         return label + [("", self.suffix)]
 
@@ -103,7 +103,7 @@ class Label(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         label = self._add_suffix(progress.label)
         cwidth = fragment_list_width(label)
@@ -141,7 +141,7 @@ class Percentage(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         return HTML(self.template).format(percentage=round(progress.percentage, 1))
 
@@ -181,7 +181,7 @@ class Bar(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
         if progress.done or progress.total or progress.stopped:
             sym_a, sym_b, sym_c = self.sym_a, self.sym_b, self.sym_c
 
@@ -228,7 +228,7 @@ class Progress(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         return HTML(self.template).format(
             current=progress.items_completed, total=progress.total or "?"
@@ -262,7 +262,7 @@ class TimeElapsed(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         text = _format_timedelta(progress.time_elapsed).rjust(width)
         return HTML("<time-elapsed>{time_elapsed}</time-elapsed>").format(
@@ -291,7 +291,7 @@ class TimeLeft(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         time_left = progress.time_left
         if time_left is not None:
@@ -325,7 +325,7 @@ class IterationsPerSecond(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         value = progress.items_completed / progress.time_elapsed.total_seconds()
         return HTML(self.template.format(iterations_per_second=value))
@@ -352,7 +352,7 @@ class SpinningWheel(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         index = int(time.time() * 3) % len(self.characters)
         return HTML("<spinning-wheel>{0}</spinning-wheel>").format(
@@ -400,7 +400,7 @@ class Rainbow(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> Textual:
 
         # Get formatted text from nested formatter, and explode it in
         # text/style tuples.
