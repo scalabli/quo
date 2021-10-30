@@ -41,11 +41,12 @@ else:
         runtime_checkable,
     )  # pragma: no cover
 
-from . import errors, themes
+from . import themes
+from quo.errors import exceptions
 from ._emoji_replace import _emoji_replace
 from ._log_render import FormatTimeCallable, LogRender
 from .align import Align, AlignMethod
-from .color import ColorSystem
+from quo.color.color import ColorSystem
 from .control import Control
 from .emoji import EmojiVariant
 from .highlighter import NullHighlighter, ReprHighlighter
