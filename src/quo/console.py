@@ -791,11 +791,11 @@ class Console:
             live (Live): Live instance using this Console.
 
         Raises:
-            errors.LiveError: If this Console has a Live context currently active.
+            exceptions.LiveError: If this Console has a Live context currently active.
         """
         with self._lock:
             if self._live is not None:
-                raise errors.LiveError("Only one live display may be active at once")
+                raise exceptions.LiveError("Only one live display may be active at once")
             self._live = live
 
     def clear_live(self) -> None:
@@ -1211,7 +1211,7 @@ class Console:
             )
             render_iterable = text_renderable.__rich_console__(self, _options)
         else:
-            raise errors.NotRenderableError(
+            raise exceptions.NotRenderableError(
                 f"Unable to render {renderable!r}; "
                 "A str, Segment or object with __rich_console__ method is required"
             )
@@ -1219,7 +1219,7 @@ class Console:
         try:
             iter_render = iter(render_iterable)
         except TypeError:
-            raise errors.NotRenderableError(
+            raise exceptions.NotRenderableError(
                 f"object {render_iterable!r} is not renderable"
             )
         _Segment = Segment
@@ -1364,10 +1364,10 @@ class Console:
             if style is None:
                 style = Style.parse(name)
             return style.copy() if style.link else style
-        except errors.StyleSyntaxError as error:
+        except exceptions.StyleSyntaxError as error:
             if default is not None:
                 return self.get_style(default)
-            raise errors.MissingStyle(
+            raise exceptions.MissingStyle(
                 f"Failed to get style {name!r}; {error}"
             ) from None
 
@@ -1659,11 +1659,11 @@ class Console:
             y (int, optional): y offset. Defaults to 0.
 
         Raises:
-            errors.NoAltScreen: If the Console isn't in alt screen mode.
+            exceptions.NoAltScreen: If the Console isn't in alt screen mode.
 
         """
         if not self.is_alt_screen:
-            raise errors.NoAltScreen("Alt screen must be enabled to call update_screen")
+            raise exceptions.NoAltScreen("Alt screen must be enabled to call update_screen")
         render_options = options or self.options
         if region is None:
             x = y = 0
@@ -1688,10 +1688,10 @@ class Console:
             y (int, optional): y offset (column no). Defaults to 0.
 
         Raises:
-            errors.NoAltScreen: If the Console isn't in alt screen mode.
+            exceptions.NoAltScreen: If the Console isn't in alt screen mode.
         """
         if not self.is_alt_screen:
-            raise errors.NoAltScreen("Alt screen must be enabled to call update_screen")
+            raise exceptions.NoAltScreen("Alt screen must be enabled to call update_screen")
         screen_update = ScreenUpdate(lines, x, y)
         segments = self.render(screen_update)
         self._buffer.extend(segments)
