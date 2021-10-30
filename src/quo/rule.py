@@ -5,7 +5,7 @@ from .cells import cell_len, set_cell_size
 from .console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .style import Style
-from .text import Text
+from quo.text.text import Text
 
 
 class Rule(JupyterMixin):
@@ -104,7 +104,7 @@ class Rule(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
+    from quo.console import Console
     import sys
 
     try:
