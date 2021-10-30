@@ -5,7 +5,7 @@ from .highlighter import ReprHighlighter
 from .panel import Panel
 from .pretty import Pretty
 from .table import Table
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 
 if TYPE_CHECKING:
     from .console import ConsoleRenderable
@@ -68,9 +68,9 @@ def render_scope(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich import print
+    from quo import evoke
 
-    print()
+    evoke()
 
     def test(foo: float, bar: float) -> None:
         list_of_things = [1, 2, 3, None, 4, True, False, "Hello World"]
@@ -80,7 +80,7 @@ if __name__ == "__main__":  # pragma: no cover
             "params": [["apple", "orange", "mangoes", "pomelo"], 1.123],
             "id": "194521489",
         }
-        print(render_scope(locals(), title="[i]locals", sort_keys=False))
+        evoke(render_scope(locals(), title="[i]locals", sort_keys=False))
 
     test(20.3423, 3.1427)
-    print()
+    evoke()
