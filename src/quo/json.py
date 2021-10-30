@@ -1,7 +1,7 @@
 from json import loads, dumps
 from typing import Any
 
-from .text import Text
+from quo.text.text import Text
 from .highlighter import JSONHighlighter, NullHighlighter
 
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    from rich.console import Console
+    from quo.console import Console
 
     console = Console()
     error_console = Console(stderr=True)
