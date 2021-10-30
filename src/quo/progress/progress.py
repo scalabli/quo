@@ -563,7 +563,7 @@ class Progress(JupyterMixin):
         refresh_per_second (Optional[float], optional): Number of times per second to refresh the progress information or None to use default (10). Defaults to None.
         speed_estimate_period: (float, optional): Period (in seconds) used to calculate the speed estimate. Defaults to 30.
         transient: (bool, optional): Clear the progress on exit. Defaults to False.
-        redirect_stdout: (bool, optional): Enable redirection of stdout, so ``print`` may be used. Defaults to True.
+        redirect_stdout: (bool, optional): Enable redirection of stdout, so ``evoke`` may be used. Defaults to True.
         redirect_stderr: (bool, optional): Enable redirection of stderr. Defaults to True.
         get_time: (Callable, optional): A callable that gets the current time, or None to use Console.get_time. Defaults to None.
         disable (bool, optional): Disable progress display. Defaults to False
@@ -610,7 +610,7 @@ class Progress(JupyterMixin):
             get_renderable=self.get_renderable,
         )
         self.get_time = get_time or self.console.get_time
-        self.print = self.console.print
+        self.evoke = self.console.evoke
         self.log = self.console.log
 
     @property
