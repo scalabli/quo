@@ -32,7 +32,7 @@ from .progress_bar import ProgressBar
 from .spinner import Spinner
 from .style import StyleType
 from .table import Column, Table
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 
 TaskID = NewType("TaskID", int)
 
