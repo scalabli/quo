@@ -27,7 +27,7 @@ from quo.application import Suite
 from quo.application.current import get_app_session
 from quo.filters import Condition, is_done, renderer_height_is_known
 from quo.text import (
-    AnyFormattedText,
+    Textual,
     StyleAndTextTuples,
     to_formatted_text,
 )
@@ -111,9 +111,9 @@ class ProgressBar:
 
     def __init__(
         self,
-        title: AnyFormattedText = None,
+        title: Textual = None,
         formatters: Optional[Sequence[Formatter]] = None,
-        bottom_toolbar: AnyFormattedText = None,
+        bottom_toolbar: Textual = None,
         style: Optional[BaseStyle] = None,
         key_bindings: Optional[KeyBinder] = None,
         file: Optional[TextIO] = None,
@@ -237,7 +237,7 @@ class ProgressBar:
     def __call__(
         self,
         data: Optional[Iterable[_T]] = None,
-        label: AnyFormattedText = "",
+        label: Textual = "",
         remove_when_done: bool = False,
         total: Optional[int] = None,
     ) -> "ProgressBarCounter[_T]":
@@ -306,7 +306,7 @@ class ProgressBarCounter(Generic[_CounterItem]):
         self,
         progress_bar: ProgressBar,
         data: Optional[Iterable[_CounterItem]] = None,
-        label: AnyFormattedText = "",
+        label: Textual = "",
         remove_when_done: bool = False,
         total: Optional[int] = None,
     ) -> None:
