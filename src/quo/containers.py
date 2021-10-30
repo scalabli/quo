@@ -19,7 +19,7 @@ if TYPE_CHECKING:
         RenderResult,
         RenderableType,
     )
-    from .text import Text
+    from quo.text.text import Text
 
 from .cells import cell_len
 from .measure import Measurement
