@@ -4,7 +4,7 @@ from typing import Iterable, NamedTuple
 
 from .color import Color
 from .style import Style
-from .text import Text
+from quo.text.text import Text
 
 re_ansi = re.compile(r"(?:\x1b\[(.*?)m)|(?:\x1b\](.*?)\x1b\\)")
 re_csi = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
