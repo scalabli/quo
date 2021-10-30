@@ -20,7 +20,7 @@ from .padding import Padding, PaddingDimensions
 from .protocol import is_renderable
 from .segment import Segment
 from .style import Style, StyleType
-from .text import Text, TextType
+from quo.text.text import Text, TextType
 
 if TYPE_CHECKING:
     from .console import (
