@@ -150,7 +150,7 @@ def iter_params_for_processing(invocation_order, declaration_order):
             idx = invocation_order.index(item)
         except ValueError:
             idx = float("inf")
-        return (not item.is_eager, idx)
+        return (not item.eager, idx)
 
     return sorted(declaration_order, key=sort_key)
 
@@ -1114,8 +1114,8 @@ class Command(BaseCommand):
 
         return App(
             autohelps,
-            is_flag=True,
-            is_eager=True,
+            flag=True,
+            eager=True,
             expose_value=False,
             callback=show_help,
             help="Check the documentation for more mitigation steps.",
@@ -2155,7 +2155,7 @@ class App(Parameter):
         if __debug__:
             if self.nargs < 0:
                 raise TypeError("Apps cannot have nargs < 0")
-            if self.prompt and self.is_flag and not self.is_bool_flag:
+            if self.prompt and self.flag and not self.is_bool_flag:
                 raise TypeError("Cannot prompt for flags that are not bools.")
             if not self.is_bool_flag and self.secondary_opts:
                 raise TypeError("Got secondary app for non boolean flag.")
@@ -2166,7 +2166,7 @@ class App(Parameter):
                     raise TypeError(
                         "Apps cannot be multiple and count at the same time."
                     )
-                elif self.is_flag:
+                elif self.flag:
                     raise TypeError(
                         "Apps cannot be count and flags at the same time."
                     )
