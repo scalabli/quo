@@ -3,9 +3,9 @@ from operator import attrgetter
 import re
 from typing import Callable, Iterable, List, Match, NamedTuple, Optional, Tuple, Union
 
-from .errors import MarkupError
+from quo.errors.errors import MarkupError
 from .style import Style
-from .text import Span, Text
+from quo.text.text import Span, Text
 from .emoji import EmojiVariant
 from ._emoji_replace import _emoji_replace
 
@@ -233,12 +233,12 @@ if __name__ == "__main__":  # pragma: no cover
         ":warning-emoji: [bold red blink] DANGER![/]",
     ]
 
-    from rich.table import Table
-    from rich import print
+    from quo.table import Table
+    from quo import evoke
 
     grid = Table("Markup", "Result", padding=(0, 1))
 
     for markup in MARKUP:
         grid.add_row(Text(markup), markup)
 
-    print(grid)
+    evoke(grid)
