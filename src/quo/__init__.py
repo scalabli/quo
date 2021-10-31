@@ -221,7 +221,7 @@ def inspect(
         value (bool, optional): Pretty print value. Defaults to True.
     """
     _console = console or get_console()
-    from rich._inspect import Inspect
+    from quo._inspect import Inspect
 
     # Special case for inspect(inspect)
     is_inspect = obj is inspect
@@ -242,7 +242,8 @@ def inspect(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    echo(f"Hello, **World**")
+    echo(f"Hello,", nl=False)
+    echo(f" world", fg="red", bold=True)
 
 
 
