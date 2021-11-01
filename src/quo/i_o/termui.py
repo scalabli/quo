@@ -16,7 +16,7 @@ from quo.accordance import (
 from quo.color import ansi_color_codes, _ansi_reset_all
 from quo.errors import Abort, UsageError
 from quo.context.current import resolve_color_default
-from quo.types import Choice, convert type, ParamType
+from quo.types import Choice, convert_type, ParamType
 from quo.expediency import inscribe, LazyFile
 
 
