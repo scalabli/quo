@@ -229,14 +229,14 @@ class WindowsChunkedWriter:
             written += to_write
 
 
-def _get_text_stdin(buffer_stream):
+def _get_text_stdin(buffer_stream: t.BinaryIO) -> t.TextIO:
     text_stream = _NonClosingTextIOWrapper(
         io.BufferedReader(_WindowsConsoleReader(STDIN_HANDLE)),
         "utf-16-le",
         "strict",
         line_buffering=True,
     )
-    return ConsoleStream(text_stream, buffer_stream)
+    return t.cast(t.TextIO, ConsoleStream(text_stream, buffer_stream))
 
 
 def _get_text_stdout(buffer_stream):
@@ -249,7 +249,7 @@ def _get_text_stdout(buffer_stream):
     return ConsoleStream(text_stream, buffer_stream)
 
 
-def _get_text_stderr(buffer_stream):
+def _get_text_stderr(buffer_stream: t.BinaryIO) -> t.TextIO:
     text_stream = _NonClosingTextIOWrapper(
         io.BufferedWriter(_WindowsConsoleWriter(STDERR_HANDLE)),
         "utf-16-le",
@@ -266,7 +266,7 @@ _stream_factories = {
 }
 
 
-def _is_console(f):
+def _is_console(f: t.TextIO) -> bool:
     if not hasattr(f, "fileno"):
         return False
 
@@ -279,7 +279,11 @@ def _is_console(f):
     return bool(GetConsoleMode(handle, byref(DWORD())))
 
 
-def _get_windows_console_stream(f, encoding, errors):
+def _get_windows_console_stream(
+  f: t.TextIO, 
+  encoding: t.Optional[str],
+  errors: t.Optional[str]
+) -> t.Optional[t.TextIO]:
     if (
         get_buffer is not None
         and encoding in {"utf-16-le", None}
