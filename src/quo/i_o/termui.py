@@ -23,19 +23,24 @@ from quo.expediency import inscribe, LazyFile
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
 
-insert = input
+insert: t.Callable[[str], str] = input
 
 
 
-def hidden_prompt_func(prompt):
+def hidden_prompt_func(prompt: str) -> str:
     import getpass
 
     return getpass.getpass(prompt)
 
 
 def _build_prompt(
-    text, suffix, show_default=False, default=None, show_choices=True, type=None
-):
+  text: str, 
+  suffix: str, 
+  show_default: bool = False, 
+  default: t.Optional[t.Any] = None,
+  show_choices: bool = True,
+  type: t.Optional[ParamType] = None
+) -> str:
     prompt = text
     if type is not None and show_choices and isinstance(type, Choice):
         prompt += f" ({', '.join(map(str, type.choices))})"
@@ -44,7 +49,7 @@ def _build_prompt(
     return f"{prompt}{suffix}"
 
 
-def _format_default(default):
+def _format_default(default: t.Any) -> t.Any:
     if isinstance(default, (io.IOBase, LazyFile)) and hasattr(default, "name"):
         return default.name
 
@@ -60,13 +65,14 @@ def _format_default(default):
 
 
 def confirm(
-        text,
-        default=False, 
-        abort=False,
-        suffix=":>", 
-        show_default=True, 
-        err=False
-        ):
+        text: str, 
+        default: t.Optional[bool] = False, 
+        abort: bool = False,
+        suffix: str = ":>", 
+        show_default: bool = True, 
+        err: bool = False
+        ) -> bool:
+          
     """Prompts for confirmation (yes/no question).
 
     If the user aborts the input by sending a interrupt signal this
@@ -104,43 +110,21 @@ def confirm(
     if abort and not rv:
         raise Abort()
     return rv
-############
-def evoke(
-    *objects: Any,
-    sep: str = " ",
-    end: str = "\n",
-    file: Optional[IO[str]] = None,
-    flush: bool = False,
-) -> None:
-    r"""Print object(s) supplied via positional arguments.
-    This function has an identical signature to the built-in print.
-    For more advanced features, see the :class:`~rich.console.Console` class.
-
-    Args:
-        sep (str, optional): Separator between printed objects. Defaults to " ".
-        end (str, optional): Character to write at end of output. Defaults to "\\n".
-        file (IO[str], optional): File to write to, or None for stdout. Defaults to None.
-        flush (bool, optional): Has no effect as Rich always flushes output. Defaults to False.
-
-    """
-    from quo.terminal import Terminal
-
-    write_console = get_terminal() if file is None else Terminal(file=file)
-    return write_console.print(*objects, sep=sep, end=end)
-########################################################
+##############################################
 
 def prompt(
-    text,
-    default=None,
-    hide=False,
-    affirm=False,
-    type=None,
-    value_proc=None,
-    suffix=":> ",
-    show_default=True,
-    err=False,
-    show_choices=True,
-):
+    text: str,
+    default: t.Optional[t.Any] = None,
+    hide: bool = False,
+    affirm: t.Union[bool, str] = False,
+    type: t.Optional[t.Union[ParamType, t.Any]] = None,
+    value_proc: t.Optional[t.Callable[[str], t. Any]] = None,
+    suffix: str = ":> ",
+    show_default: bool = True,
+    err: bool = False,
+    show_choices: bool = True,
+   ) -> t.Any:
+     
 
     """Prompts a user for input.  This is a convenience function that can be used to prompt a user for input later.
 
@@ -160,7 +144,8 @@ def prompt(
     """
     result = None
 
-    def prompt_func(text):
+    def prompt_func(text: str) -> str:
+      
         f = hidden_prompt_func if hide else insert
         try:
             inscribe(text, nl=False, err=err)
@@ -211,7 +196,7 @@ def prompt(
 
 
 
-def terminalsize():
+def terminalsize()  -> os.terminal_size:
     """Returns the current size of the terminal as tuple in the form
     ``(width, height)`` in columns and rows.
     """
@@ -294,23 +279,25 @@ def _interpret_color(color, offset=0):
 
 
 def flair(
-    text,
-    fg=None,
-    foreground=None,
-    bg=None,
-    background=None,
-    bold=None,
-    dim=None,
+    text: str,
+    fg: t.Optional[t.Union[int, t.Tuple[int, int, int], str]] = None,
+    bg: t.Optional[t.Union[int, t.Tuple[int, int, int], str]] = None,
+    foreground: t.Optional[t.Union[int, t.Tuple[int, int, int], str]] = None,
+    background: t.Optional[t.Union[int, t.Tuple[int, int, int], str]] = None,
+    bold: t.Optional[bool] = None,
+    dim: t.Optional[bool] = None,
     end=None,
     hidden=None,
-    ul=None,
-    underline=None,
-    blink=None,
-    italic=None,
+    ul: t.Optional[bool] = None,
+    underline: t.Optional[bool] = None,
+    ov: t.Optional[bool] = None,
+    overline: t.Optional[bool] = None,
+    blink: t.Optional[bool] = None,
+    italic: t.Optional[bool] = None,
     reverse=None,
     reset=True,
-    strike=None,
-):
+    strike: t.Optional[bool] = None,
+    ) -> str:
     """Styles a text with ANSI styles and returns the new string.  By
     default the styling is self contained which means that at the end
     of the string a reset code is issued.  This can be prevented by
@@ -407,6 +394,10 @@ def flair(
         bits.append(f"\033[{2 if dim else 22}m")
     if end is not None:
         pass
+    if ov is not None:
+        bits.append(f"\033[{53 if ov else 55}m") 
+    if overline is not None:
+        bits.append(f"\033[{53 if overline else 55}m")
 
     if ul is not None:
         bits.append(f"\033[{4 if ul else 24}m")
