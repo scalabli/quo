@@ -21,7 +21,7 @@ from ctypes.wintypes import LPWSTR
 
 import msvcrt
 
-from .accordance import _NonClosingTextIOWrapper
+from quo.accordance import _NonClosingTextIOWrapper
 
 try:
     from ctypes import pythonapi
