@@ -35,9 +35,8 @@ been assigned, through the `key_binding` decorator.::
     kb.add(Keys.A, my_key_binding)
 """
 from abc import ABCMeta, abstractmethod, abstractproperty
-#from typing import (TYPE_CHECKING,    Awaitable, Callable, Hashable, List, Optional,Sequence, Tuple, TypeVar,Union, cast,
+from typing import TYPE_CHECKING, Awaitable, Callable, Hashable, List, Optional, Sequence, Tuple, TypeVar, Union, cast,
 
-import typing
 from quo.cache import SimpleCache
 from quo.filters import FilterOrBool, Never, to_filter
 from quo.i_o import echo
