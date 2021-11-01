@@ -410,7 +410,7 @@ class ScreenContext:
             )
         if style is not None:
             self.screen.style = style
-        self.console.evoke(self.screen, end="")
+        self.console.echo(self.screen, end="")
 
     def __enter__(self) -> "ScreenContext":
         self._changed = self.console.set_alt_screen(True)
@@ -1021,8 +1021,8 @@ class Console:
             >>> from rich.console import Console
             >>> console = Console()
             >>> with console.capture() as capture:
-            ...     console.evoke("[bold magenta]Hello World[/]")
-            >>> evoke(capture.get())
+            ...     console.echo("[bold magenta]Hello World[/]")
+            >>> echo(capture.get())
 
         Returns:
             Capture: Context manager with disables writing to the terminal.
@@ -1046,7 +1046,7 @@ class Console:
             >>> from rich.__main__ import make_test_card
             >>> console = Console()
             >>> with console.pager():
-                    console.evoke(make_test_card())
+                    console.echo(make_test_card())
 
         Returns:
             PagerContext: A context manager.
@@ -1061,7 +1061,7 @@ class Console:
         """
 
         assert count >= 0, "count must be >= 0"
-        self.evoke(NewLine(count))
+        self.echo(NewLine(count))
 
     def clear(self, home: bool = True) -> None:
         """Clear the screen.
@@ -1471,7 +1471,7 @@ class Console:
         from .rule import Rule
 
         rule = Rule(title=title, characters=characters, style=style, align=align)
-        self.evoke(rule)
+        self.echo(rule)
 
     def control(self, *control: Control) -> None:
         """Insert non-printing control codes.
@@ -1493,7 +1493,7 @@ class Console:
         highlight: Optional[bool] = None,
     ) -> None:
         """Output to the terminal. This is a low-level way of writing to the terminal which unlike
-        :meth:`~rich.console.Console.evoke` won't pretty print, wrap text, or apply markup, but will
+        :meth:`~rich.console.Console.echo` won't pretty print, wrap text, or apply markup, but will
         optionally apply highlighting and a basic style.
 
         Args:
@@ -1504,7 +1504,7 @@ class Console:
                 console default. Defaults to ``None``.
         """
         raw_output: str = sep.join(str(_object) for _object in objects)
-        self.evoke(
+        self.echo(
             raw_output,
             style=style,
             highlight=highlight,
@@ -1516,7 +1516,7 @@ class Console:
             end=end,
         )
 
-    def evoke(
+    def echo(
         self,
         *objects: Any,
         sep: str = " ",
@@ -1641,7 +1641,7 @@ class Console:
                     f"json must be str. Did you mean print_json(data={json!r}) ?"
                 )
             json_renderable = JSON(json, indent=indent, highlight=highlight)
-        self.evoke(json_renderable)
+        self.echo(json_renderable)
 
     def update_screen(
         self,
@@ -1730,7 +1730,7 @@ class Console:
             suppress=suppress,
             max_frames=max_frames,
         )
-        self.evoke(traceback)
+        self.echo(traceback)
 
     @staticmethod
     def _caller_frame_info(
@@ -1927,7 +1927,7 @@ class Console:
         prompt_str = ""
         if prompt:
             with self.capture() as capture:
-                self.evoke(prompt, markup=markup, emoji=emoji, end="")
+                self.echo(prompt, markup=markup, emoji=emoji, end="")
             prompt_str = capture.get()
         if self.legacy_windows:
             # Legacy windows doesn't like ANSI codes in getpass or input (colorama bug)?
@@ -2116,7 +2116,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     console.log("Hello, World!", "{'a': 1}", repr(console))
 
-    console.evoke(
+    console.echo(
         {
             "name": None,
             "empty": [],
