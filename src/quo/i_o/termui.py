@@ -6,7 +6,7 @@ import struct
 import sys
 import math
 import typing as t
-from typing import Optional, Callable, Any
+from typing import Optional, Callable, Any, IO
 from quo.accordance import (
         DEFAULT_COLUMNS,
         get_winterm_size,
