@@ -5,6 +5,7 @@ import os
 import struct
 import sys
 import math
+import typing as t
 import typing
 from quo.accordance import (
         DEFAULT_COLUMNS,
