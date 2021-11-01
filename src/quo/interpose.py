@@ -2,7 +2,8 @@ from quo.expediency import inscribe
 
 
 _interpose = None
-def interpose(inscribe=False):
+def interpose(inscribe: bool = False) -> str:
+  
     """Fetches a single character from the terminal and returns it.  This
     will always return a unicode character and under certain rare
     circumstances this might return more than one character.  The
@@ -17,6 +18,7 @@ def interpose(inscribe=False):
     :param inscribe: if set to `True`, the character read will also show up on
                  the terminal.  The default is to not show it.
     """
+    global _interpose
     f = _interpose
     if f is None:
         from quo.implementation import interpose as f
