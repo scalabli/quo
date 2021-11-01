@@ -1,5 +1,7 @@
-def get_console() -> "Console":
-    """Get a global :class:`~rich.console.Console` instance. This function is used when Rich requires a Console,
+from quo.console import Console
+
+def _get_console() -> "Console":
+    """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
     and hasn't been explicitly given one.
 
     Returns:
@@ -7,7 +9,6 @@ def get_console() -> "Console":
     """
     global _console
     if _console is None:
-        from .console import Console
 
         _console = Console()
 
