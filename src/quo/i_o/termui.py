@@ -5,7 +5,7 @@ import os
 import struct
 import sys
 import math
-from typing import Any, IO, Optional
+import typing
 from quo.accordance import (
         DEFAULT_COLUMNS,
         get_winterm_size,
@@ -16,7 +16,7 @@ from quo.accordance import (
 from quo.color import ansi_color_codes, _ansi_reset_all
 from quo.errors import Abort, UsageError
 from quo.context.current import resolve_color_default
-from quo.types import Choice, convert_type
+from quo.types import Choice, convert type, ParamType
 from quo.expediency import inscribe, LazyFile
 
 
