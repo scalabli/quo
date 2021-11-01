@@ -245,11 +245,11 @@ if __name__ == "__main__":  # pragma: no cover
     test_card = make_test_card()
 
     # Print once to warm cache
-    console.print(test_card)
+    console.evoke(test_card)
     console.file = io.StringIO()
 
     start = process_time()
-    console.print(test_card)
+    console.evoke(test_card)
     taken = round((process_time() - start) * 1000.0, 1)
 
     text = console.file.getvalue()
@@ -296,7 +296,7 @@ Consider supporting my work via Github Sponsors (ask your company / organization
     message.add_column(no_wrap=True)
     message.add_row(intro_message, sponsor_message)
 
-    console.print(
+    console.invoke(
         Panel.fit(
             message,
             box=box.ROUNDED,
