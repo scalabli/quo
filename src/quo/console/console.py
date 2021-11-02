@@ -43,31 +43,31 @@ else:
 
 from quo import themes
 from quo.errors import exceptions
-from ._emoji_replace import _emoji_replace
-from ._log_render import FormatTimeCallable, LogRender
-from .align import Align, AlignMethod
+from quo._emoji_replace import _emoji_replace
+from quo._log_render import FormatTimeCallable, LogRender
+from quo.align import Align, AlignMethod
 from quo.color.color import ColorSystem
-from .control import Control
-from .emoji import EmojiVariant
-from .highlighter import NullHighlighter, ReprHighlighter
-from .markup import render as render_markup
-from .measure import Measurement, measure_renderables
-from .pager import Pager, SystemPager
-from .pretty import Pretty, is_expandable
-from .region import Region
-from .scope import render_scope
-from .screen import Screen
-from .segment import Segment
-from .style import Style, StyleType
-from .styled import Styled
-from .terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
+from quo.control import Control
+from quo.emoji import EmojiVariant
+from quo.highlighter import NullHighlighter, ReprHighlighter
+from quo.markup import render as render_markup
+from quo.measure import Measurement, measure_renderables
+from quo.pager import Pager, SystemPager
+from quo.pretty import Pretty, is_expandable
+from quo.region import Region
+from quo.scope import render_scope
+from quo.screen import Screen
+from quo.segment import Segment
+from quo.style import Style, StyleType
+from quo.styled import Styled
+from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
 from quo.text.text import Text, TextType
-from .theme import Theme, ThemeStack
+from quo.theme import Theme, ThemeStack
 
 if TYPE_CHECKING:
-    from ._windows import WindowsConsoleFeatures
-    from .live import Live
-    from .status import Status
+    from quo._windows import WindowsConsoleFeatures
+    from quo.live import Live
+    from quo.status import Status
 
 WINDOWS = platform.system() == "Windows"
 
