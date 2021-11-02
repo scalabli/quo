@@ -2,7 +2,7 @@ from typing import Union
 
 from .align import AlignMethod
 from .cells import cell_len, set_cell_size
-from .console import Console, ConsoleOptions, RenderResult
+from quo.console.console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .style import Style
 from quo.text.text import Text
@@ -112,4 +112,4 @@ if __name__ == "__main__":  # pragma: no cover
     except IndexError:
         text = "Hello, World"
     console = Console()
-    console.print(Rule(title=text))
+    console.echo(Rule(title=text))
