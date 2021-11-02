@@ -16,7 +16,7 @@ from typing import (
 
 from ._ratio import ratio_resolve
 from .align import Align
-from .console import Console, ConsoleOptions, RenderableType, RenderResult
+from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 from .highlighter import ReprHighlighter
 from .panel import Panel
 from .pretty import Pretty
@@ -418,7 +418,7 @@ class Layout:
 
 
 if __name__ == "__main__":
-    from quo.console import Console
+    from quo import Console
 
     console = Console()
     layout = Layout()
@@ -441,4 +441,4 @@ if __name__ == "__main__":
 
     layout["content"].update("foo")
 
-    console.print(layout)
+    console.echo(layout)
