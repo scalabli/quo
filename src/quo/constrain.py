@@ -4,7 +4,7 @@ from .jupyter import JupyterMixin
 from .measure import Measurement
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderableType, RenderResult
+    from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 
 
 class Constrain(JupyterMixin):
