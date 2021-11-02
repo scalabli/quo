@@ -1,7 +1,7 @@
 from typing import Iterator, List, Optional, Tuple
 
 from ._loop import loop_first, loop_last
-from .console import Console, ConsoleOptions, RenderableType, RenderResult
+from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
