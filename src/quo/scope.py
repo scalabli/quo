@@ -8,7 +8,7 @@ from .table import Table
 from quo.text.text import Text, TextType
 
 if TYPE_CHECKING:
-    from .console import ConsoleRenderable
+    from quo.console.console import ConsoleRenderable
 
 
 def render_scope(
@@ -68,9 +68,10 @@ def render_scope(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from quo import evoke
+    from quo import Console
 
-    evoke()
+    console = Console() 
+
 
     def test(foo: float, bar: float) -> None:
         list_of_things = [1, 2, 3, None, 4, True, False, "Hello World"]
@@ -80,7 +81,7 @@ if __name__ == "__main__":  # pragma: no cover
             "params": [["apple", "orange", "mangoes", "pomelo"], 1.123],
             "id": "194521489",
         }
-        evoke(render_scope(locals(), title="[i]locals", sort_keys=False))
+        console.echo(render_scope(locals(), title="[i]locals", sort_keys=False))
 
     test(20.3423, 3.1427)
-    evoke()
+    console.echo()
