@@ -2,11 +2,12 @@ from datetime import datetime
 from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 
 
-from quo.text.text import Text, TextType
+from quo.text import Text
+from quo.text.text import TextType
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleRenderable, RenderableType
-    from .table import Table
+    from quo.console.console import Console, ConsoleRenderable, RenderableType
+    from quo.table import Table
 
 FormatTimeCallable = Callable[[datetime], Text]
 
