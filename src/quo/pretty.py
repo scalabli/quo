@@ -42,7 +42,7 @@ from .measure import Measurement
 from quo.text.text import Text
 
 if TYPE_CHECKING:
-    from .console import (
+    from quo.console.console import (
         Console,
         ConsoleOptions,
         HighlighterType,
