@@ -11,7 +11,7 @@ from quo.text.text import Text, TextType
 from .segment import Segment
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderableType, RenderResult
+    from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 
 
 class Panel(JupyterMixin):
@@ -231,7 +231,7 @@ class Panel(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from .console import Console
+    from quo import Console
 
     c = Console()
 
@@ -246,5 +246,5 @@ if __name__ == "__main__":  # pragma: no cover
         padding=1,
     )
 
-    c.print()
-    c.print(p)
+    c.echo()
+    c.echo(p)
