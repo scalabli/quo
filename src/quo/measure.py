@@ -5,7 +5,7 @@ from quo.errors import exceptions
 from .protocol import is_renderable
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderableType
+    from quo.console.console import Console, ConsoleOptions, RenderableType
 
 
 class Measurement(NamedTuple):
