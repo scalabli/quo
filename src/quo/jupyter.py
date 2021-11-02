@@ -1,6 +1,6 @@
 from typing import Any, Dict, Iterable, List
 
-from . import get_console
+from ._get_console import _get_console
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
 
@@ -82,7 +82,7 @@ def display(segments: Iterable[Segment], text: str) -> None:
     ipython_display(jupyter_renderable)
 
 
-def print(*args: Any, **kwargs: Any) -> None:
+def echo(*args: Any, **kwargs: Any) -> None:
     """Proxy for Console print."""
-    console = get_console()
-    return console.print(*args, **kwargs)
+    console = _get_console()
+    return console.echo(*args, **kwargs)
