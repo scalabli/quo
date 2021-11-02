@@ -4,7 +4,7 @@ from operator import itemgetter
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from .align import Align, AlignMethod
-from .console import Console, ConsoleOptions, RenderableType, RenderResult
+from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 from .constrain import Constrain
 from .measure import Measurement
 from .padding import Padding, PaddingDimensions
