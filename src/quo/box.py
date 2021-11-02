@@ -10,7 +10,7 @@ else:
 from ._loop import loop_last
 
 if TYPE_CHECKING:
-    from quo.console import ConsoleOptions
+    from quo.console.console import ConsoleOptions
 
 
 class Box:
