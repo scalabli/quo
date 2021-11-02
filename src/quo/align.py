@@ -14,7 +14,7 @@ from .segment import Segment
 from .style import StyleType
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderableType, RenderResult
+    from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 
 AlignMethod = Literal["left", "center", "right"]
 VerticalAlignMethod = Literal["top", "middle", "bottom"]
@@ -307,6 +307,6 @@ if __name__ == "__main__":  # pragma: no cover
         title="Algin",
     )
 
-    console.print(
+    console.echo(
         Align.center(panel, vertical="middle", style="on red", height=console.height)
     )
