@@ -41,7 +41,7 @@ else:
         runtime_checkable,
     )  # pragma: no cover
 
-from . import themes
+from quo import themes
 from quo.errors import exceptions
 from ._emoji_replace import _emoji_replace
 from ._log_render import FormatTimeCallable, LogRender
