@@ -1,7 +1,7 @@
 from typing import cast, List, Optional, Tuple, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
-    from .console import (
+    from quo.console.console import (
         Console,
         ConsoleOptions,
         RenderableType,
