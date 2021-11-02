@@ -23,7 +23,7 @@ from .style import Style, StyleType
 from quo.text.text import Text, TextType
 
 if TYPE_CHECKING:
-    from .console import (
+    from quo.console.console import (
         Console,
         ConsoleOptions,
         JustifyMethod,
@@ -900,7 +900,7 @@ if __name__ == "__main__":  # pragma: no cover
     table.row_styles = ["dim", "none"]
     header("row_styles=['dim', 'none']")
 
-    console.print(table, justify="center")
+    console.echo(table, justify="center")
 
     table.width = None
     table.expand = False
@@ -915,4 +915,4 @@ if __name__ == "__main__":  # pragma: no cover
     table.show_lines = True
     table.leading = 0
     header("show_lines=True, row_styles=['dim', 'none']")
-    console.print(table, justify="center")
+    console.echo(table, justify="center")
