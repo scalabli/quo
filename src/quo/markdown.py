@@ -5,7 +5,7 @@ from commonmark.blocks import Parser
 from . import box
 from ._loop import loop_first
 from ._stack import Stack
-from .console import Console, ConsoleOptions, JustifyMethod, RenderResult
+from quo.console.console import Console, ConsoleOptions, JustifyMethod, RenderResult
 from .containers import Renderables
 from .jupyter import JupyterMixin
 from .panel import Panel
