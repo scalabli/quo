@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 
 
-from quo.text import Text
-from quo.text.text import TextType
+from quo._text import Text
+from quo._text import TextType
 
 if TYPE_CHECKING:
     from quo.console.console import Console, ConsoleRenderable, RenderableType
