@@ -1,7 +1,7 @@
 from types import TracebackType
 from typing import Optional, Type
 
-from .console import Console, RenderableType
+from quo.console.console import Console, RenderableType
 from .jupyter import JupyterMixin
 from .live import Live
 from .spinner import Spinner
@@ -110,7 +110,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     from time import sleep
 
-    from .console import Console
+    from quo.console import Console
 
     console = Console()
     with console.status("[magenta]Covid detector booting up") as status:
@@ -129,4 +129,4 @@ if __name__ == "__main__":  # pragma: no cover
             spinner_style="yellow",
         )
         sleep(5)
-    console.print("[bold green]Covid deleted successfully")
+    console.echo("[bold green]Covid deleted successfully")
