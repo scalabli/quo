@@ -13,7 +13,7 @@ def _combine_regex(*regexes: str) -> str:
     return "|".join(regexes)
 
 
-class Highlight(ABC):
+class Highlighter(ABC):
     """Abstract base class for highlighters."""
 
     def __call__(self, text: Union[str, Text]) -> Text:
@@ -34,11 +34,11 @@ class Highlight(ABC):
             highlight_text = text.copy()
         else:
             raise TypeError(f"str or Text instance required, not {text!r}")
-        self._highlight(highlight_text)
+        self.highlight(highlight_text)
         return highlight_text
 
     @abstractmethod
-    def _highlight(self, text: Text) -> None:
+    def highlight(self, text: Text) -> None:
         """Apply highlighting in place to text.
 
         Args:
@@ -46,24 +46,24 @@ class Highlight(ABC):
         """
 
 
-class NullHighlighter(Highlight):
+class NullHighlighter(Highlighter):
     """A highlighter object that doesn't highlight.
 
     May be used to disable highlighting entirely.
 
     """
 
-    def _highlight(self, text: Text) -> None:
+    def highlight(self, text: Text) -> None:
         """Nothing to do"""
 
 
-class RegexHighlighter(Highlight):
+class RegexHighlighter(Highlighter):
     """Applies highlighting from a list of regular expressions."""
 
     highlights: List[str] = []
     base_style: str = ""
 
-    def _highlight(self, text: Text) -> None:
+    def highlight(self, text: Text) -> None:
         """Highlight :class:`rich.text.Text` using regular expressions.
 
         Args:
@@ -120,28 +120,28 @@ if __name__ == "__main__":  # pragma: no cover
     from .console import Console
 
     console = Console()
-    console.evoke("[bold green]hello world![/bold green]")
-    console.evoke("'[bold green]hello world![/bold green]'")
+    console.print("[bold green]hello world![/bold green]")
+    console.print("'[bold green]hello world![/bold green]'")
 
-    console.evoke(" /foo")
-    console.evoke("/foo/")
-    console.evoke("/foo/bar")
-    console.evoke("foo/bar/baz")
+    console.print(" /foo")
+    console.print("/foo/")
+    console.print("/foo/bar")
+    console.print("foo/bar/baz")
 
-    console.evoke("/foo/bar/baz?foo=bar+egg&egg=baz")
-    console.evoke("/foo/bar/baz/")
-    console.evoke("/foo/bar/baz/egg")
-    console.evoke("/foo/bar/baz/egg.py")
-    console.evoke("/foo/bar/baz/egg.py word")
-    console.evoke(" /foo/bar/baz/egg.py word")
-    console.evoke("foo /foo/bar/baz/egg.py word")
-    console.evoke("foo /foo/bar/ba._++z/egg+.py word")
-    console.evoke("https://example.org?foo=bar#header")
+    console.print("/foo/bar/baz?foo=bar+egg&egg=baz")
+    console.print("/foo/bar/baz/")
+    console.print("/foo/bar/baz/egg")
+    console.print("/foo/bar/baz/egg.py")
+    console.print("/foo/bar/baz/egg.py word")
+    console.print(" /foo/bar/baz/egg.py word")
+    console.print("foo /foo/bar/baz/egg.py word")
+    console.print("foo /foo/bar/ba._++z/egg+.py word")
+    console.print("https://example.org?foo=bar#header")
 
-    console.evoke(1234567.34)
-    console.evoke(1 / 2)
-    console.evoke(-1 / 123123123123)
+    console.print(1234567.34)
+    console.print(1 / 2)
+    console.print(-1 / 123123123123)
 
-    console.evoke(
+    console.print(
         "127.0.1.1 bar 192.168.1.4 2001:0db8:85a3:0000:0000:8a2e:0370:7334 foo"
     )
