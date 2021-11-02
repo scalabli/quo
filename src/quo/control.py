@@ -3,7 +3,7 @@ from typing import Any, Callable, Dict, Iterable, List, TYPE_CHECKING, Union
 from .segment import ControlCode, ControlType, Segment
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult
+    from quo.console.console import Console, ConsoleOptions, RenderResult
 
 STRIP_CONTROL_CODES = [
     8,  # Backspace
