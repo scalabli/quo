@@ -3,8 +3,8 @@ from threading import Event, RLock, Thread
 from types import TracebackType
 from typing import IO, Any, Callable, List, Optional, TextIO, Type, cast
 
-from . import get_console
-from .console import Console, ConsoleRenderable, RenderableType, RenderHook
+from quo._get_console import _get_console
+from quo.console.console import Console, ConsoleRenderable, RenderableType, RenderHook
 from .control import Control
 from .file_proxy import FileProxy
 from .jupyter import JupyterMixin
@@ -275,7 +275,7 @@ if __name__ == "__main__":  # pragma: no cover
     from typing import Dict, List, Tuple
 
     from .align import Align
-    from .console import Console
+    from quo import Console
     from .live import Live
     from .panel import Panel
     from .rule import Rule
