@@ -5,7 +5,7 @@ from typing import Iterable, List, Optional
 
 from quo.color.color import Color, blend_rgb
 from .color_triplet import ColorTriplet
-from .console import Console, ConsoleOptions, RenderResult
+from quo.console.console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
@@ -213,4 +213,4 @@ if __name__ == "__main__":  # pragma: no cover
         console.file.write("\r")
         time.sleep(0.05)
     console.show_cursor(True)
-    console.print()
+    console.echo()
