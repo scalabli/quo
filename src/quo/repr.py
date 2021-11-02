@@ -132,20 +132,20 @@ if __name__ == "__main__":
             yield "buy", "hand sanitizer"
 
     foo = Foo()
-    from rich.console import Console
+    from quo import Console
 
     console = Console()
 
     console.rule("Standard repr")
-    console.print(foo)
+    console.echo(foo)
 
-    console.print(foo, width=60)
-    console.print(foo, width=30)
+    console.echo(foo, width=60)
+    console.echo(foo, width=30)
 
     console.rule("Angular repr")
     Foo.__rich_repr__.angular = True  # type: ignore
 
-    console.print(foo)
+    console.echo(foo)
 
-    console.print(foo, width=60)
-    console.print(foo, width=30)
+    console.echo(foo, width=60)
+    console.echo(foo, width=30)
