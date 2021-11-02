@@ -18,10 +18,10 @@ class Palette:
         return ColorTriplet(*self._colors[number])
 
     def __rich__(self) -> "Table":
-        from rich.color import Color
-        from rich.style import Style
-        from rich.text import Text
-        from rich.table import Table
+        from quo.color import Color
+        from quo.style import Style
+        from quo.text import Text
+        from quo.table import Table
 
         table = Table(
             "index",
@@ -75,7 +75,7 @@ class Palette:
 if __name__ == "__main__":  # pragma: no cover
     import colorsys
     from typing import Iterable
-    from quo.color.color import Color
+    from quo.color import Color
     from quo.console import Console, ConsoleOptions
     from quo.segment import Segment
     from quo.style import Style
@@ -97,4 +97,4 @@ if __name__ == "__main__":  # pragma: no cover
                 yield Segment.line()
 
     console = Console()
-    console.print(ColorBox())
+    console.echo(ColorBox())
