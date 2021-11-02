@@ -1,7 +1,7 @@
 from typing import Optional, Union
 
 from quo.color.color import Color
-from .console import Console, ConsoleOptions, RenderResult
+from quo.console.console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
