@@ -1,7 +1,7 @@
 from typing import Any, Generic, List, Optional, TextIO, TypeVar, Union, overload
 
 from . import get_console
-from .console import Console
+from quo.console.console import Console
 from quo.text.text import Text, TextType
 
 PromptType = TypeVar("PromptType")
