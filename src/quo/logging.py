@@ -4,9 +4,9 @@ from logging import Handler, LogRecord
 from pathlib import Path
 from typing import ClassVar, List, Optional, Type, Union
 
-from . import get_console
+from quo._get_console import _get_console
 from ._log_render import LogRender, FormatTimeCallable
-from .console import Console, ConsoleRenderable
+from quo.console.console import Console, ConsoleRenderable
 from .highlighter import Highlighter, ReprHighlighter
 from .text import Text
 from .traceback import Traceback
