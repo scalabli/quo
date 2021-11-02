@@ -16,7 +16,7 @@ from pygments.token import Token
 from . import pretty
 from ._loop import loop_first, loop_last
 from .columns import Columns
-from .console import (
+from quo.console.console import (
     Console,
     ConsoleOptions,
     ConsoleRenderable,
