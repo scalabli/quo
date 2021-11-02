@@ -27,7 +27,7 @@ from time import process_time
 
 from quo import box
 from quo.color import Color
-from quo.console import (
+from quo.console.console import (
     Console,
     ConsoleOptions,
     Group,
