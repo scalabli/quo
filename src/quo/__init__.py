@@ -114,7 +114,7 @@ _IMPORT_CWD = os.path.abspath(os.getcwd())
 
 
 def get_console() -> "Console":
-    """Get a global :class:`~rich.console.Console` instance. This function is used when Rich requires a Console,
+    """Get a global :class:`~quo.console.Console` instance. This function is used when Rich requires a Console,
     and hasn't been explicitly given one.
 
     Returns:
@@ -122,7 +122,7 @@ def get_console() -> "Console":
     """
     global _console
     if _console is None:
-        from .console import Console
+        from quo.console import Console
 
         _console = Console()
 
@@ -141,29 +141,6 @@ def reconfigure(*args: Any, **kwargs: Any) -> None:
     _console = get_console()
     _console.__dict__ = new_console.__dict__
 
-
-def evoke(
-    *objects: Any,
-    sep: str = " ",
-    end: str = "\n",
-    file: Optional[IO[str]] = None,
-    flush: bool = False,
-) -> None:
-    r"""Print object(s) supplied via positional arguments.
-    This function has an identical signature to the built-in print.
-    For more advanced features, see the :class:`~rich.console.Console` class.
-
-    Args:
-        sep (str, optional): Separator between printed objects. Defaults to " ".
-        end (str, optional): Character to write at end of output. Defaults to "\\n".
-        file (IO[str], optional): File to write to, or None for stdout. Defaults to None.
-        flush (bool, optional): Has no effect as Rich always flushes output. Defaults to False.
-
-    """
-    from quo.console import Console
-
-    write_console = get_console() if file is None else Console(file=file)
-    return write_console.evoke(*objects, sep=sep, end=end)
 
 
 def print_json(
