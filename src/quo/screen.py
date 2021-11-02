@@ -6,7 +6,7 @@ from ._loop import loop_last
 
 
 if TYPE_CHECKING:
-    from .console import (
+    from quo.console.console import (
         Console,
         ConsoleOptions,
         RenderResult,
