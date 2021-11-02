@@ -14,7 +14,7 @@ else:
 
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult
+    from quo.console.console import Console, ConsoleOptions, RenderResult
 
 
 EmojiVariant = Literal["emoji", "text"]
