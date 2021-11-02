@@ -20,9 +20,9 @@ from .repr import Result, rich_repr
 from .style import Style
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult
+    from quo.console.console import Console, ConsoleOptions, RenderResult
 
-log = getLogger("rich")
+log = getLogger("quo")
 
 
 class ControlType(IntEnum):
@@ -588,9 +588,9 @@ class SegmentLines:
 if __name__ == "__main__":
 
     if __name__ == "__main__":  # pragma: no cover
-        from rich.console import Console
-        from rich.syntax import Syntax
-        from rich.text import Text
+        from quo.console import Console
+        from quo.syntax import Syntax
+        from quo.text import Text
 
         code = """from rich.console import Console
     console = Console()
@@ -602,22 +602,22 @@ if __name__ == "__main__":
         console = Console()
 
         console.rule("rich.Segment")
-        console.print(
+        console.echo(
             "A Segment is the last step in the Rich render process before generating text with ANSI codes."
         )
-        console.print("\nConsider the following code:\n")
-        console.print(Syntax(code, "python", line_numbers=True))
-        console.print()
-        console.print(
+        console.echo("\nConsider the following code:\n")
+        console.echo(Syntax(code, "python", line_numbers=True))
+        console.echo()
+        console.echo(
             "When you call [b]print()[/b], Rich [i]renders[/i] the object in to the the following:\n"
         )
         fragments = list(console.render(text))
-        console.print(fragments)
-        console.print()
-        console.print(
+        console.echo(fragments)
+        console.echo()
+        console.echo(
             "The Segments are then processed to produce the following output:\n"
         )
-        console.print(text)
-        console.print(
+        console.echo(text)
+        console.echo(
             "\nYou will only need to know this if you are implementing your own Rich renderables."
         )
