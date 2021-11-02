@@ -11,7 +11,7 @@ from typing import (
 )
 
 if TYPE_CHECKING:
-    from .console import (
+    from quo.console.console import (
         Console,
         ConsoleOptions,
         JustifyMethod,
