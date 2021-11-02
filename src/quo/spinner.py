@@ -6,7 +6,7 @@ from .table import Table
 from quo.text.text import Text
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult, RenderableType
+    from quo.console.console import Console, ConsoleOptions, RenderResult, RenderableType
     from .style import StyleType
 
 
