@@ -48,7 +48,8 @@ from quo._log_render import FormatTimeCallable, LogRender
 from quo.align import Align, AlignMethod
 from quo.color.color import ColorSystem
 from quo.control import Control
-from quo.emoji import EmojiVariant
+# emoji EmojiVariant
+from quo._emoji import EmojiVariant
 from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
 from quo.measure import Measurement, measure_renderables
