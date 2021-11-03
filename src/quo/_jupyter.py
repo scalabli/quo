@@ -1,6 +1,6 @@
 from typing import Any, Dict, Iterable, List
 
-from ._get_console import _get_console
+#from ._get_console import _get_console
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
 
@@ -26,7 +26,21 @@ class JupyterRenderable:
         if exclude:
             data = {k: v for (k, v) in data.items() if k not in exclude}
         return data
+from quo.console import Console
 
+def _get_console() -> "Console":
+    """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
+    and hasn't been explicitly given one.
+
+    Returns:
+        Console: A console instance.
+    """
+    global _console
+    if _console is None:
+
+        _console = Console()
+
+    return _console
 
 class JupyterMixin:
     """Add to an Rich renderable to make it render in Jupyter notebook."""
