@@ -1,6 +1,6 @@
 from typing import Optional, TYPE_CHECKING
-
-from .jupyter import JupyterMixin
+# jupyter JupyterMixin
+from quo._jupyter import JupyterMixin
 from .measure import Measurement
 
 if TYPE_CHECKING:
