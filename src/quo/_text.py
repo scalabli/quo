@@ -25,7 +25,8 @@ from quo.align import AlignMethod
 from quo.cells import cell_len, set_cell_size
 from quo.containers import Lines
 from quo.control import strip_control_codes
-from quo.emoji import EmojiVariant
+# emoji EmojiVariant
+from quo._emoji import EmojiVariant
 from quo.jupyter import JupyterMixin
 from quo.measure import Measurement
 from quo.segment import Segment
