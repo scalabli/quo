@@ -26,7 +26,7 @@ class JupyterRenderable:
         if exclude:
             data = {k: v for (k, v) in data.items() if k not in exclude}
         return data
-from quo.console import Console
+#from quo.console import Console
 
 def _get_console() -> "Console":
     """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
@@ -35,6 +35,7 @@ def _get_console() -> "Console":
     Returns:
         Console: A console instance.
     """
+    from quo.console.console import Console
     global _console
     if _console is None:
 
