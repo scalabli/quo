@@ -27,7 +27,8 @@ from quo.containers import Lines
 from quo.control import strip_control_codes
 # emoji EmojiVariant
 from quo._emoji import EmojiVariant
-from quo.jupyter import JupyterMixin
+# jupyter JupyterMixin
+from quo._jupyter import JupyterMixin
 from quo.measure import Measurement
 from quo.segment import Segment
 from quo.style import Style, StyleType
