@@ -31,7 +31,7 @@ except ImportError:  # pragma: no cover
 
 
 from .highlighter import ReprHighlighter
-from . import get_console
+from quo._get_console import _get_console
 from ._loop import loop_last
 from ._pick import pick_bool
 from .abc import RichRenderable
