@@ -5,7 +5,8 @@ from typing import Callable, Iterable, List, Match, NamedTuple, Optional, Tuple,
 
 from quo.errors import MarkupError
 from .style import Style
-from quo.text.text import Span, Text
+#text 
+from quo._text import Span, Text
 from .emoji import EmojiVariant
 from ._emoji_replace import _emoji_replace
 
