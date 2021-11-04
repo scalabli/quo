@@ -3,11 +3,11 @@ from typing import Optional, TYPE_CHECKING
 from .box import Box, ROUNDED
 
 from .align import AlignMethod
-from .jupyter import JupyterMixin
+from quo._jupyter import JupyterMixin
 from .measure import Measurement, measure_renderables
 from .padding import Padding, PaddingDimensions
 from .style import StyleType
-from quo.text.text import Text, TextType
+from quo._text import Text, TextType
 from .segment import Segment
 
 if TYPE_CHECKING:
