@@ -7,7 +7,8 @@ from quo.errors import MarkupError
 from .style import Style
 #text 
 from quo._text import Span, Text
-from .emoji import EmojiVariant
+#emoji
+from ._emoji import EmojiVariant
 from ._emoji_replace import _emoji_replace
 
 
