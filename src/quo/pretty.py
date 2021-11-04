@@ -36,7 +36,7 @@ from ._pick import pick_bool
 from .abc import RichRenderable
 from .cells import cell_len
 from .highlighter import ReprHighlighter
-from .jupyter import JupyterMixin, JupyterRenderable
+from quo._jupyter import JupyterMixin, JupyterRenderable
 from .measure import Measurement
 from quo.text.text import Text
 
