@@ -38,7 +38,7 @@ from .cells import cell_len
 from .highlighter import ReprHighlighter
 from quo._jupyter import JupyterMixin, JupyterRenderable
 from .measure import Measurement
-from quo.text.text import Text
+from quo._text import Text
 
 if TYPE_CHECKING:
     from quo.console.console import (
