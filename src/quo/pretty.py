@@ -31,7 +31,6 @@ except ImportError:  # pragma: no cover
 
 
 from .highlighter import ReprHighlighter
-from quo._get_console import _get_console
 from ._loop import loop_last
 from ._pick import pick_bool
 from .abc import RichRenderable
@@ -53,7 +52,21 @@ if TYPE_CHECKING:
 
 # Matches Jupyter's special methods
 _re_jupyter_repr = re.compile(f"^_repr_.+_$")
+from quo.console import Console
 
+def _get_console() -> "Console":
+    """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
+    and hasn't been explicitly given one.
+
+    Returns:
+        Console: A console instance.
+    """
+    global _console
+    if _console is None:
+
+        _console = Console()
+
+    return _console
 
 def _is_attr_object(obj: Any) -> bool:
     """Check if an object was created with attrs module."""
