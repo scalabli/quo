@@ -1,4 +1,6 @@
+from typing import Optional
 from quo.console import Console
+
 _console: Optional["Console"] = None
 
 def _get_console() -> "Console":
