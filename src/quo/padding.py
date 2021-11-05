@@ -7,7 +7,7 @@ if TYPE_CHECKING:
         RenderableType,
         RenderResult,
     )
-from .jupyter import JupyterMixin
+from quo.jupyter import JupyterMixin
 from .measure import Measurement
 from .style import Style
 from .segment import Segment
