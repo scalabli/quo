@@ -14,13 +14,13 @@ from . import box, errors
 from ._loop import loop_first_last, loop_last
 from ._pick import pick_bool
 from ._ratio import ratio_distribute, ratio_reduce
-from .jupyter import JupyterMixin
+from quo._jupyter import JupyterMixin
 from .measure import Measurement
 from .padding import Padding, PaddingDimensions
 from .protocol import is_renderable
 from .segment import Segment
 from .style import Style, StyleType
-from quo.text.text import Text, TextType
+from quo._text import Text, TextType
 
 if TYPE_CHECKING:
     from quo.console.console import (
