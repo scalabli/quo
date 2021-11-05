@@ -80,4 +80,4 @@ if __name__ == "__main__":
         error_console.print(f"Unable to read {args.path!r}; {error}")
         sys.exit(-1)
 
-    console.print(JSON(json_data, indent=args.indent), soft_wrap=True)
+    console.echo(JSON(json_data, indent=args.indent), soft_wrap=True)
