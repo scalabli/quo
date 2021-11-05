@@ -1,4 +1,5 @@
 from quo.console import Console
+_console: Optional["Console"] = None
 
 def _get_console() -> "Console":
     """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
