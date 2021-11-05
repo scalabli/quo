@@ -232,15 +232,15 @@ class Live(JupyterMixin, RenderHook):
 
                     with self.ipy_widget:
                         self.ipy_widget.clear_output(wait=True)
-                        self.console.evoke(self._live_render.renderable)
+                        self.console.echo(self._live_render.renderable)
             elif self.console.is_terminal and not self.console.is_dumb_terminal:
                 with self.console:
-                    self.console.evoke(Control())
+                    self.console.echo(Control())
             elif (
                 not self._started and not self.transient
             ):  # if it is finished allow files or dumb-terminals to see final result
                 with self.console:
-                    self.console.evoke(Control())
+                    self.console.echo(Control())
 
     def process_renderables(
         self, renderables: List[ConsoleRenderable]
