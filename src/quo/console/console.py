@@ -62,7 +62,7 @@ from quo.segment import Segment
 from quo.style import Style, StyleType
 from quo.styled import Styled
 from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
-from quo.text.text import Text, TextType
+from quo._text import Text
 from quo.theme import Theme, ThemeStack
 
 if TYPE_CHECKING:
@@ -75,7 +75,7 @@ WINDOWS = platform.system() == "Windows"
 HighlighterType = Callable[[Union[str, "Text"]], "Text"]
 JustifyMethod = Literal["default", "left", "center", "right", "full"]
 OverflowMethod = Literal["fold", "crop", "ellipsis", "ignore"]
-
+TextType = Union[str, "Text"]
 
 class NoChange:
     pass
