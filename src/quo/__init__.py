@@ -20,17 +20,17 @@ from .core import (
              Tether
              )
 
+from quo.console import Console
 
+#from quo.accordance import (
+#       DEFAULT_COLUMNS,
+#        get_winterm_size,
+#       strip_ansi_colors
+#        )
 
-from quo.accordance import (
-        DEFAULT_COLUMNS,
-        get_winterm_size,
-        strip_ansi_colors
-        )
-
-from quo.context.current import resolve_color_default
+#from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
-from quo.expediency import LazyFile
+#from quo.expediency import LazyFile
 from quo.text import ANSI, HTML
 from quo.output import ColorDepth
 from quo.shortcuts import Elicit
@@ -105,7 +105,7 @@ from ._extension import load_ipython_extension
 __all__ = ["get_console", "reconfigure", "evoke", "inspect"]
 
 if TYPE_CHECKING:
-    from .console import Console
+    from quo.console import Console
 
 # Global console used by alternative print
 _console: Optional["Console"] = None
