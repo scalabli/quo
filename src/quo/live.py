@@ -64,7 +64,7 @@ class Live(JupyterMixin, RenderHook):
     ) -> None:
         assert refresh_per_second > 0, "refresh_per_second must be > 0"
         self._renderable = renderable
-        self.console = console if console is not None else get_console()
+        self.console = console if console is not None else _get_console()
         self._screen = screen
         self._alt_screen = False
 
