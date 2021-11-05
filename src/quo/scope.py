@@ -5,7 +5,7 @@ from .highlighter import ReprHighlighter
 from .panel import Panel
 from .pretty import Pretty
 from .table import Table
-from quo.text.text import Text, TextType
+from quo._text import Text, TextType
 
 if TYPE_CHECKING:
     from quo.console.console import ConsoleRenderable
