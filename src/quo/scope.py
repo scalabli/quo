@@ -123,9 +123,9 @@ from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
 from quo.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
-from quo.pretty import Pretty, is_expandable
+# from quo.pretty import Pretty, is_expandable
 from quo.region import Region
-from quo.scope import render_scope
+#from quo.scope import render_scope
 from quo.screen import Screen
 from quo.segment import Segment
 from quo.style import Style, StyleType

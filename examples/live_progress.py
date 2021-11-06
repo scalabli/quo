@@ -8,7 +8,7 @@ from time import sleep
 
 from quo.live import Live
 from quo.panel import Panel
-from quo.progress.progress import Progress, SpinnerColumn, BarColumn, TextColumn
+from quo.progress import Progress, SpinnerColumn, BarColumn, TextColumn
 from quo.table import Table
 
 

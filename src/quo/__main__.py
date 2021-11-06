@@ -1,3 +1,4 @@
+import colorsys
 from quo.i_o import echo
 from quo.color.rgb import *
 from quo.tabulate import tabular
@@ -68,7 +69,7 @@ class ColorBox:
 def make_test_card() -> Table:
     """Get a renderable that demonstrates a number of features."""
     table = Table.grid(padding=1, pad_edge=True)
-    table.title = "Rich features"
+    table.title = "Quo features"
     table.add_column("Feature", no_wrap=True, justify="center", style="bold red")
     table.add_column("Demonstration")
 
@@ -80,7 +81,7 @@ def make_test_card() -> Table:
         pad_edge=False,
     )
     color_table.add_row(
-        # "[bold yellow]256[/] colors or [bold green]16.7 million[/] colors [blue](if supported by your terminal)[/].",
+         "[bold yellow]256[/] colors or [bold green]16.7 million[/] colors [blue](if supported by your terminal)[/].",
         (
             "✓ [bold green]4-bit color[/]\n"
             "✓ [bold blue]8-bit color[/]\n"
@@ -245,11 +246,11 @@ if __name__ == "__main__":  # pragma: no cover
     test_card = make_test_card()
 
     # Print once to warm cache
-    console.evoke(test_card)
+    console.echo(test_card)
     console.file = io.StringIO()
 
     start = process_time()
-    console.evoke(test_card)
+    console.echo(test_card)
     taken = round((process_time() - start) * 1000.0, 1)
 
     text = console.file.getvalue()
@@ -296,7 +297,7 @@ Consider supporting my work via Github Sponsors (ask your company / organization
     message.add_column(no_wrap=True)
     message.add_row(intro_message, sponsor_message)
 
-    console.invoke(
+    console.echo(
         Panel.fit(
             message,
             box=box.ROUNDED,

@@ -13,6 +13,7 @@ from typing import (
     Dict,
     Iterable,
     List,
+    Literal,
     NamedTuple,
     NewType,
     Optional,
@@ -24,7 +25,7 @@ from typing import (
 )
 
 from quo import filesize, get_console
-from quo.console import Console, JustifyMethod, RenderableType, Group
+from quo.console.console import Console, RenderableType, Group
 from quo.highlighter import Highlighter
 from quo.jupyter import JupyterMixin
 from quo.live import Live
@@ -39,8 +40,7 @@ TaskID = NewType("TaskID", int)
 ProgressType = TypeVar("ProgressType")
 
 GetTimeCallable = Callable[[], float]
-
-
+JustifyMethod = Literal["default", "left", "center", "right", "full"]
 class _TrackThread(Thread):
     """A thread to periodically update progress."""
 
@@ -610,7 +610,7 @@ class Progress(JupyterMixin):
             get_renderable=self.get_renderable,
         )
         self.get_time = get_time or self.console.get_time
-        self.evoke = self.console.evoke
+        self.echo = self.console.echo
         self.log = self.console.log
 
     @property

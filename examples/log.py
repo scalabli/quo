@@ -3,7 +3,7 @@ A simulation of Rich console logging.
 """
 
 import time
-from quo.console import Console
+from quo import Console
 from quo.style import Style
 from quo.theme import Theme
 from quo.highlighter import RegexHighlighter

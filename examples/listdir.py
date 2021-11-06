@@ -9,10 +9,10 @@ If your terminal supports hyperlinks you should be able to launch files by click
 import os
 import sys
 
-from quo import echo, evoke
+from quo import echo, Console
 from quo.columns import Columns
-from quo.text.text import Text
-
+from quo.text import Text
+con = Console()
 try:
     root_path = sys.argv[1]
 except IndexError:
@@ -32,4 +32,4 @@ else:
     filenames.sort(key=lambda filename: filename.lower())
     filename_text = [make_filename_text(filename) for filename in filenames]
     columns = Columns(filename_text, equal=True, column_first=True)
-    evoke(columns)
+    con.echo(columns)

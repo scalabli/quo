@@ -2096,7 +2096,6 @@ class Console:
         with open(path, "wt", encoding="utf-8") as write_file:
             write_file.write(html)
 
-
 if __name__ == "__main__":  # pragma: no cover
     console = Console()
 
@@ -2152,3 +2151,7 @@ if __name__ == "__main__":  # pragma: no cover
         }
     )
     console.log("foo")
+
+
+
+

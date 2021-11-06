@@ -1,4 +1,6 @@
 from .core import ProgressBar, ProgressBarCounter
+
+from .progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from .formatters import (
     Bar,
     Formatter,
