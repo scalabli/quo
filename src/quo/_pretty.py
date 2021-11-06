@@ -57,10 +57,8 @@ _re_jupyter_repr = re.compile(f"^_repr_.+_$")
 
 
 import inspect
-import os
 import platform
 import shutil
-import sys
 import threading
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -73,16 +71,10 @@ from itertools import islice
 from time import monotonic
 from types import FrameType, TracebackType, ModuleType
 from typing import (
-    Any,
-    Callable,
-    Dict,
     Iterable,
-    List,
     Mapping,
     NamedTuple,
-    Optional,
     TextIO,
-    Tuple,
     Type,
     cast,
 )
