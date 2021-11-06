@@ -235,6 +235,9 @@ class Exit(RuntimeError):
 class ConsoleError(Exception):
     """An error in console operation."""
 
+class ThemeStackError(Exception):
+    """Base exception for errors related to the theme stack."""
+
 
 class StyleError(Exception):
     """An error in styles."""
