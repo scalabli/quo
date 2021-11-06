@@ -51,7 +51,7 @@ class JupyterMixin:
     def _repr_mimebundle_(
         self, include: Iterable[str], exclude: Iterable[str], **kwargs: Any
     ) -> Dict[str, str]:
-        console = get_console()
+        console = _get_console()
         segments = list(console.render(self, console.options))  # type: ignore
         html = _render_segments(segments)
         text = console._render_buffer(segments)
