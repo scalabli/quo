@@ -2,8 +2,10 @@ import configparser
 from typing import Dict, List, IO, Mapping, Optional
 
 from .default_styles import DEFAULT_STYLES
-from .style import Style, StyleType
+from .style import Style
+from quo.errors.exceptions import ThemeStackError
 
+StyleType = Union[str, "Style"]
 
 class Theme:
     """A container for style information, used by :class:`~rich.console.Console`.
@@ -68,10 +70,6 @@ class Theme:
         """
         with open(path, "rt") as config_file:
             return cls.from_file(config_file, source=path, inherit=inherit)
-
-
-class ThemeStackError(Exception):
-    """Base exception for errors related to the theme stack."""
 
 
 class ThemeStack:
