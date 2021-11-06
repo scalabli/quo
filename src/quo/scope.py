@@ -1,15 +1,5 @@
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, Optional, Tuple
-
-from .highlighter import ReprHighlighter
-from .panel import Panel
-#from quo._pretty import Pretty
-from .table import Table
-from quo._text import Text, TextType
-
-if TYPE_CHECKING:
-    from quo.console.console import ConsoleRenderable
-# *********************
 import builtins
 import os
 from quo.repr import RichReprResult
@@ -21,18 +11,26 @@ from dataclasses import dataclass, fields, is_dataclass
 from inspect import isclass
 from itertools import islice
 import re
+
+from .highlighter import ReprHighlighter
+from .panel import Panel
+#from quo._pretty import Pretty
+from .table import Table
+from quo._text import Text
+
+if TYPE_CHECKING:
+    from quo.console.console import ConsoleRenderable
+# *********************
+
+
 from typing import (
     DefaultDict,
-    TYPE_CHECKING,
-    Any,
     Callable,
     Dict,
     Iterable,
     List,
-    Optional,
     Set,
-    Union,
-    Tuple,
+    Union
 )
 from types import MappingProxyType
 
@@ -41,8 +39,6 @@ try:
 except ImportError:  # pragma: no cover
     _attr_module = None  # type: ignore
 
-
-from .highlighter import ReprHighlighter
 from ._loop import loop_last
 from ._pick import pick_bool
 from .abc import RichRenderable
@@ -64,14 +60,12 @@ if TYPE_CHECKING:
 
 # Matches Jupyter's special methods
 _re_jupyter_repr = re.compile(f"^_repr_.+_$")
-#from quo._console import Console
+
 
 # ***********************
 import inspect
-import os
 import platform
 import shutil
-import sys
 import threading
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -128,7 +122,7 @@ from quo.region import Region
 #from quo.scope import render_scope
 from quo.screen import Screen
 from quo.segment import Segment
-from quo.style import Style, StyleType
+from quo.style import Style
 from quo.styled import Styled
 from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
 from quo._text import Text
@@ -145,6 +139,7 @@ HighlighterType = Callable[[Union[str, "Text"]], "Text"]
 JustifyMethod = Literal["default", "left", "center", "right", "full"]
 OverflowMethod = Literal["fold", "crop", "ellipsis", "ignore"]
 TextType = Union[str, "Text"]
+StyleType = Union[str, "Style"]
 
 class NoChange:
     pass
