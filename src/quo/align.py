@@ -12,7 +12,7 @@ from .constrain import Constrain
 from quo._jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
-from .style import StyleType
+from .style import Style
 
 if TYPE_CHECKING:
     from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 AlignMethod = Literal["left", "center", "right"]
 VerticalAlignMethod = Literal["top", "middle", "bottom"]
 AlignValues = AlignMethod  # TODO: deprecate AlignValues
+StyleType = Union[str, "Style"]
 
 
 class Align(JupyterMixin):
