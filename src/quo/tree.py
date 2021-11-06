@@ -1,13 +1,14 @@
-from typing import Iterator, List, Optional, Tuple
+from typing import Iterator, List, Optional, Tuple, Union
 
 from ._loop import loop_first, loop_last
 from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
-from .style import Style, StyleStack, StyleType
+from .style import Style, StyleStack
 from .styled import Styled
 
+StyleType = Union[str, "Style"]
 
 class Tree(JupyterMixin):
     """A renderable for a tree structure.
@@ -239,4 +240,4 @@ class Segment(NamedTuple):
     containers_node.add(Group("📄 [b magenta]Table", table))
 
     console = Console()
-    console.print(root)
+    console.echo(root)
