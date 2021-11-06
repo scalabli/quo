@@ -1,14 +1,25 @@
 import builtins
 import os
-from quo.repr import RichReprResult
+import re
 import sys
+import inspect
+import platform
+import shutil
+import threading
+import dataclasses
+from datetime import datetime
+from functools import wraps
+from getpass import getpass
+from html import escape
+from time import monotonic
+from abc import ABC, abstractmethod
+from quo.repr import RichReprResult
 from array import array
 from collections import Counter, defaultdict, deque, UserDict, UserList
-import dataclasses
 from dataclasses import dataclass, fields, is_dataclass
 from inspect import isclass
 from itertools import islice
-import re
+
 from typing import (
     DefaultDict,
     TYPE_CHECKING,
@@ -23,7 +34,7 @@ from typing import (
     Union,
     Tuple,
 )
-from types import MappingProxyType
+from types import MappingProxyType, FrameType, TracebackType, ModuleType
 
 try:
     import attr as _attr_module
@@ -55,18 +66,6 @@ if TYPE_CHECKING:
 _re_jupyter_repr = re.compile(f"^_repr_.+_$")
 #from quo.console.console import Console
 
-
-import inspect
-import platform
-import shutil
-import threading
-from abc import ABC, abstractmethod
-from datetime import datetime
-from functools import wraps
-from getpass import getpass
-from html import escape
-from time import monotonic
-from types import FrameType, TracebackType, ModuleType
 from typing import (
     Mapping,
     NamedTuple,
