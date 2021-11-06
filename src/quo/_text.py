@@ -2,14 +2,13 @@ import re
 from functools import partial, reduce
 from math import gcd
 from operator import attrgetter, itemgetter
-# emoji**
-from quo._emoji import EmojiVariant
 from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
     Dict,
     Iterable,
+    Literal,
     List,
     NamedTuple,
     Optional,
@@ -25,8 +24,6 @@ from quo.align import AlignMethod
 from quo.cells import cell_len, set_cell_size
 from quo.containers import Lines
 from quo.control import strip_control_codes
-# emoji EmojiVariant
-from quo._emoji import EmojiVariant
 # jupyter JupyterMixin
 from quo._jupyter import JupyterMixin
 from quo.measure import Measurement
@@ -39,6 +36,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 DEFAULT_JUSTIFY: "JustifyMethod" = "default"
 DEFAULT_OVERFLOW: "OverflowMethod" = "fold"
+EmojiVariant = Literal["emoji", "text"]
 
 
 _re_whitespace = re.compile(r"\s+$")
