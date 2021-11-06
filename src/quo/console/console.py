@@ -257,10 +257,6 @@ RenderResult = Iterable[Union[RenderableType, Segment]]
 _null_highlighter = NullHighlighter()
 
 
-class CaptureError(Exception):
-    """An error in the Capture context manager."""
-
-
 class NewLine:
     """A renderable to generate new line(s)"""
 
