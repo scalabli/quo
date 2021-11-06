@@ -72,8 +72,6 @@ from itertools import islice
 from time import monotonic
 from types import FrameType, TracebackType, ModuleType
 from typing import (
-    IO,
-    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
@@ -85,7 +83,6 @@ from typing import (
     TextIO,
     Tuple,
     Type,
-    Union,
     cast,
 )
 
