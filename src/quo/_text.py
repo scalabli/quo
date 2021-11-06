@@ -31,7 +31,8 @@ from quo._emoji import EmojiVariant
 from quo._jupyter import JupyterMixin
 from quo.measure import Measurement
 from quo.segment import Segment
-from quo.style import Style, StyleType
+from quo.text.text import Span
+from quo.style import Style
 
 if TYPE_CHECKING:  # pragma: no cover
     from quo.console import Console, ConsoleOptions, JustifyMethod, OverflowMethod
