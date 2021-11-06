@@ -3,7 +3,6 @@ from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 
 
 from quo._text import Text
-from quo._text import TextType
 
 if TYPE_CHECKING:
     from quo.console.console import Console, ConsoleRenderable, RenderableType
@@ -11,6 +10,7 @@ if TYPE_CHECKING:
 
 FormatTimeCallable = Callable[[datetime], Text]
 
+TextType = Union[str, "Text"]
 
 class LogRender:
     def __init__(
@@ -87,5 +87,5 @@ if __name__ == "__main__":  # pragma: no cover
     from quo.console import Console
 
     c = Console()
-    c.print("[on blue]Hello", justify="right")
+    c.echo("[on blue]Hello", justify="right")
     c.log("[on blue]hello", justify="right")
