@@ -28,7 +28,7 @@ from quo.emoji import EmojiVariant
 from quo.jupyter import JupyterMixin
 from quo.measure import Measurement
 from quo.segment import Segment
-from quo.style import Style, StyleType
+from quo.style import Style
 
 if TYPE_CHECKING:  # pragma: no cover
     from quo.console.console import Console, ConsoleOptions, JustifyMethod, OverflowMethod
@@ -40,6 +40,7 @@ DEFAULT_OVERFLOW: "OverflowMethod" = "fold"
 _re_whitespace = re.compile(r"\s+$")
 
 TextType = Union[str, "Text"]
+StyleType = Union[str, "Style"]
 
 GetStyleCallable = Callable[[str], Optional[StyleType]]
 
@@ -1177,29 +1178,3 @@ class Text(JupyterMixin):
         new_text = text.blank_copy("\n").join(new_lines)
         return new_text
 
-
-if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
-
-    text = Text(
-        """\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n"""
-    )
-    text.highlight_words(["Lorem"], "bold")
-    text.highlight_words(["ipsum"], "italic")
-
-    console = Console()
-    console.rule("justify='left'")
-    console.evoke(text, style="red")
-    console.evoke()
-
-    console.rule("justify='center'")
-    console.evoke(text, style="green", justify="center")
-    console.evoke()
-
-    console.rule("justify='right'")
-    console.evoke(text, style="blue", justify="right")
-    console.evoke()
-
-    console.rule("justify='full'")
-    console.evoke(text, style="magenta", justify="full")
-    console.evoke()
