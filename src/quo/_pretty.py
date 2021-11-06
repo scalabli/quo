@@ -1,15 +1,3 @@
-from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, Optional, Tuple
-
-from .highlighter import ReprHighlighter
-from .panel import Panel
-#from quo._pretty import Pretty
-from .table import Table
-from quo._text import Text, TextType
-
-if TYPE_CHECKING:
-    from quo.console.console import ConsoleRenderable
-# *********************
 import builtins
 import os
 from quo.repr import RichReprResult
@@ -64,9 +52,9 @@ if TYPE_CHECKING:
 
 # Matches Jupyter's special methods
 _re_jupyter_repr = re.compile(f"^_repr_.+_$")
-#from quo._console import Console
+#from quo.console.console import Console
 
-# ***********************
+
 import inspect
 import os
 import platform
@@ -123,7 +111,7 @@ from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
 from quo.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
-from quo.pretty import Pretty, is_expandable
+#from quo._pretty import Pretty, is_expandable
 from quo.region import Region
 from quo.scope import render_scope
 from quo.screen import Screen
@@ -2221,10 +2209,6 @@ if __name__ == "__main__":  # pragma: no cover
         }
     )
     console.log("foo")
-
-
-# *****'''''*************
-
 def _get_console() -> "Console":
     """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
     and hasn't been explicitly given one.
@@ -3008,80 +2992,3 @@ if __name__ == "__main__":  # pragma: no cover
     from quo import evoke
 
     evoke(Pretty(data, indent_guides=True, max_string=20))
-
-# *********************
-
-def render_scope(
-    scope: "Mapping[str, Any]",
-    *,
-    title: Optional[TextType] = None,
-    sort_keys: bool = True,
-    indent_guides: bool = False,
-    max_length: Optional[int] = None,
-    max_string: Optional[int] = None,
-) -> "ConsoleRenderable":
-    """Render python variables in a given scope.
-
-    Args:
-        scope (Mapping): A mapping containing variable names and values.
-        title (str, optional): Optional title. Defaults to None.
-        sort_keys (bool, optional): Enable sorting of items. Defaults to True.
-        indent_guides (bool, optional): Enable indentaton guides. Defaults to False.
-        max_length (int, optional): Maximum length of containers before abbreviating, or None for no abbreviation.
-            Defaults to None.
-        max_string (int, optional): Maximum length of string before truncating, or None to disable. Defaults to None.
-
-    Returns:
-        ConsoleRenderable: A renderable object.
-    """
-    highlighter = ReprHighlighter()
-    items_table = Table.grid(padding=(0, 1), expand=False)
-    items_table.add_column(justify="right")
-
-    def sort_items(item: Tuple[str, Any]) -> Tuple[bool, str]:
-        """Sort special variables first, then alphabetically."""
-        key, _ = item
-        return (not key.startswith("__"), key.lower())
-
-    items = sorted(scope.items(), key=sort_items) if sort_keys else scope.items()
-    for key, value in items:
-        key_text = Text.assemble(
-            (key, "scope.key.special" if key.startswith("__") else "scope.key"),
-            (" =", "scope.equals"),
-        )
-        items_table.add_row(
-            key_text,
-            Pretty(
-                value,
-                highlighter=highlighter,
-                indent_guides=indent_guides,
-                max_length=max_length,
-                max_string=max_string,
-            ),
-        )
-    return Panel.fit(
-        items_table,
-        title=title,
-        border_style="scope.border",
-        padding=(0, 1),
-    )
-
-
-if __name__ == "__main__":  # pragma: no cover
-    from quo import Console
-
-    console = Console() 
-
-
-    def test(foo: float, bar: float) -> None:
-        list_of_things = [1, 2, 3, None, 4, True, False, "Hello World"]
-        dict_of_things = {
-            "version": "1.1",
-            "method": "confirmFruitPurchase",
-            "params": [["apple", "orange", "mangoes", "pomelo"], 1.123],
-            "id": "194521489",
-        }
-        console.echo(render_scope(locals(), title="[i]locals", sort_keys=False))
-
-    test(20.3423, 3.1427)
-    console.echo()

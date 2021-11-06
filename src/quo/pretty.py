@@ -52,7 +52,7 @@ if TYPE_CHECKING:
 
 # Matches Jupyter's special methods
 _re_jupyter_repr = re.compile(f"^_repr_.+_$")
-from quo.console import Console
+from quo._console import Console
 
 def _get_console() -> "Console":
     """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
