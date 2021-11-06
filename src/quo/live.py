@@ -3,7 +3,6 @@ from threading import Event, RLock, Thread
 from types import TracebackType
 from typing import IO, Any, Callable, List, Optional, TextIO, Type, cast
 
-from quo._get_console import _get_console
 from quo.console.console import Console, ConsoleRenderable, RenderableType, RenderHook
 from .control import Control
 from .file_proxy import FileProxy
@@ -12,6 +11,22 @@ from .live_render import LiveRender, VerticalOverflowMethod
 from .screen import Screen
 from quo.text.text import Text
 
+
+_console: Optional["Console"] = None
+
+def _get_console() -> "Console":
+    """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
+    and hasn't been explicitly given one.
+
+    Returns:
+        Console: A console instance.
+    """
+    global _console
+    if _console is None:
+
+        _console = Console()
+
+    return _console
 
 class _RefreshThread(Thread):
     """A thread that calls refresh() at regular intervals."""
