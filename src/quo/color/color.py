@@ -6,7 +6,7 @@ from functools import lru_cache
 from typing import TYPE_CHECKING, NamedTuple, Optional, Tuple
 
 from quo._palettes import EIGHT_BIT_PALETTE, STANDARD_PALETTE, WINDOWS_PALETTE
-from quo.color_triplet import ColorTriplet
+from .color_triplet import ColorTriplet
 from quo.repr import rich_repr, Result
 from quo.terminal_theme import DEFAULT_TERMINAL_THEME
 
