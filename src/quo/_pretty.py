@@ -61,7 +61,6 @@ import platform
 import shutil
 import threading
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
 from datetime import datetime
 from functools import wraps
 from getpass import getpass
@@ -69,7 +68,6 @@ from html import escape
 from time import monotonic
 from types import FrameType, TracebackType, ModuleType
 from typing import (
-    Iterable,
     Mapping,
     NamedTuple,
     TextIO,
