@@ -114,7 +114,7 @@ from quo.region import Region
 from quo.scope import render_scope
 from quo.screen import Screen
 from quo.segment import Segment
-from quo.style import Style, StyleType
+from quo.style import Style
 from quo.styled import Styled
 from quo.terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
 from quo._text import Text
@@ -131,6 +131,7 @@ HighlighterType = Callable[[Union[str, "Text"]], "Text"]
 JustifyMethod = Literal["default", "left", "center", "right", "full"]
 OverflowMethod = Literal["fold", "crop", "ellipsis", "ignore"]
 TextType = Union[str, "Text"]
+StyleType = Union[str, "Style"]
 
 class NoChange:
     pass
