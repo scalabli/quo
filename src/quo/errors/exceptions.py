@@ -1,6 +1,3 @@
-#
-#
-#
 from quo.accordance import filename_to_ui, get_text_stderr
 from quo.expediency import inscribe
 from typing import (
@@ -58,6 +55,10 @@ class ValidationError(Exception):
             self.cursor_position,
             self.message,
         )
+
+class ReprError(Outlier):
+    """An error occurred when attempting to build a repr."""
+
 
 class UsageError(Outlier):
     """An internal exception that signals a usage error.This typically aborts any further handling.
