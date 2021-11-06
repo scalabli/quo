@@ -9,8 +9,9 @@ from .jupyter import JupyterMixin
 from .panel import Panel
 from .pretty import Pretty
 from .table import Table
-from .text import Text, TextType
+from quo.text.text import Text
 
+TextType = Union[str, "Text"]
 
 def _first_paragraph(doc: str) -> str:
     """Get the first paragraph from a docstring."""
