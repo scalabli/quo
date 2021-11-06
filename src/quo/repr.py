@@ -13,17 +13,13 @@ from typing import (
     Type,
     TypeVar,
 )
-
+from quo.errors.exceptions import ReprError
 
 T = TypeVar("T")
 
 
 Result = Iterable[Union[Any, Tuple[Any], Tuple[str, Any], Tuple[str, Any, Any]]]
 RichReprResult = Result
-
-
-class ReprError(Exception):
-    """An error occurred when attempting to build a repr."""
 
 
 @overload
