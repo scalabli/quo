@@ -23,11 +23,12 @@ from .pretty import Pretty
 from .repr import rich_repr, Result
 from .region import Region
 from .segment import Segment
-from .style import StyleType
+from .style import Style
 
 if TYPE_CHECKING:
     from quo.tree import Tree
 
+StyleType = Union[str, "Style"]
 
 class LayoutRender(NamedTuple):
     """An individual layout render."""
