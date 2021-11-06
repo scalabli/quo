@@ -221,6 +221,9 @@ class Abort(RuntimeError):
     """An internal signalling exception that signals Quo to abort."""
 
 
+class CaptureError(Outlier):
+    """An error in the Capture context manager."""
+
 class Exit(RuntimeError):
     """An exception that indicates that the application should exit with some status code.
 
@@ -232,14 +235,14 @@ class Exit(RuntimeError):
     def __init__(self, code=0):
         self.exit_code = code
 
-class ConsoleError(Exception):
+class ConsoleError(Outlier):
     """An error in console operation."""
 
-class ThemeStackError(Exception):
+class ThemeStackError(Outlier):
     """Base exception for errors related to the theme stack."""
 
 
-class StyleError(Exception):
+class StyleError(Outlier):
     """An error in styles."""
 
 
