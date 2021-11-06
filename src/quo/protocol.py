@@ -2,7 +2,7 @@ from typing import Any
 
 
 def is_renderable(check_object: Any) -> bool:
-    """Check if an object may be rendered by Rich."""
+    """Check if an object may be renderable."""
     return (
         isinstance(check_object, str)
         or hasattr(check_object, "__rich__")
