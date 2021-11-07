@@ -26,7 +26,7 @@ from ._loop import loop_first
 from quo.color.color import Color, blend_rgb
 from quo.console.console import Console, ConsoleOptions, JustifyMethod, RenderResult
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style
 from quo.text.text import Text
