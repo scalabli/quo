@@ -6,8 +6,8 @@ from typing import Iterable, List, Optional
 from quo.color.color import Color, blend_rgb
 from quo.color.color_triplet import ColorTriplet
 from quo.console.console import Console, ConsoleOptions, RenderResult
-from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.jupyter import JupyterMixin
+from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style
 
@@ -209,7 +209,7 @@ if __name__ == "__main__":  # pragma: no cover
     console.show_cursor(False)
     for n in range(0, 101, 1):
         bar.update(n)
-        console.print(bar)
+        console.echo(bar)
         console.file.write("\r")
         time.sleep(0.05)
     console.show_cursor(True)
