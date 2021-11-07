@@ -135,7 +135,7 @@ class ConsoleOptions:
     """Encoding of terminal."""
     max_height: int
     """Height of container (starts as terminal)"""
-    justify: Optional[JustifyMethod] = None
+    situate: Optional[JustifyMethod] = None
     """Justify value override for renderable."""
     overflow: Optional[OverflowMethod] = None
     """Overflow value override for renderable."""
@@ -168,7 +168,7 @@ class ConsoleOptions:
         width: Union[int, NoChange] = NO_CHANGE,
         min_width: Union[int, NoChange] = NO_CHANGE,
         max_width: Union[int, NoChange] = NO_CHANGE,
-        justify: Union[Optional[JustifyMethod], NoChange] = NO_CHANGE,
+        situate: Union[Optional[JustifyMethod], NoChange] = NO_CHANGE,
         overflow: Union[Optional[OverflowMethod], NoChange] = NO_CHANGE,
         no_wrap: Union[Optional[bool], NoChange] = NO_CHANGE,
         highlight: Union[Optional[bool], NoChange] = NO_CHANGE,
@@ -183,8 +183,8 @@ class ConsoleOptions:
             options.min_width = min_width
         if not isinstance(max_width, NoChange):
             options.max_width = max_width
-        if not isinstance(justify, NoChange):
-            options.justify = justify
+        if not isinstance(situate, NoChange):
+            options.situate = situate
         if not isinstance(overflow, NoChange):
             options.overflow = overflow
         if not isinstance(no_wrap, NoChange):
@@ -1284,7 +1284,7 @@ class Console:
         text: str,
         *,
         style: Union[str, Style] = "",
-        justify: Optional[JustifyMethod] = None,
+        situate: Optional[JustifyMethod] = None,
         overflow: Optional[OverflowMethod] = None,
         emoji: Optional[bool] = None,
         markup: Optional[bool] = None,
@@ -1297,7 +1297,7 @@ class Console:
         Args:
             text (str): Text to render.
             style (Union[str, Style], optional): Style to apply to rendered text.
-            justify (str, optional): Justify method: "default", "left", "center", "full", or "right". Defaults to ``None``.
+            situate (str, optional): situate method: "default", "left", "center", "full", or "right". Defaults to ``None``.
             overflow (str, optional): Overflow method: "crop", "fold", or "ellipsis". Defaults to ``None``.
             emoji (Optional[bool], optional): Enable emoji, or ``None`` to use Console default.
             markup (Optional[bool], optional): Enable markup, or ``None`` to use Console default.
@@ -1318,14 +1318,14 @@ class Console:
                 emoji=emoji_enabled,
                 emoji_variant=self._emoji_variant,
             )
-            rich_text.justify = justify
+            rich_text.situate = situate
             rich_text.overflow = overflow
         else:
             rich_text = Text(
                 _emoji_replace(text, default_variant=self._emoji_variant)
                 if emoji_enabled
                 else text,
-                justify=justify,
+                situate=situate,
                 overflow=overflow,
                 style=style,
             )
@@ -1374,7 +1374,7 @@ class Console:
         sep: str,
         end: str,
         *,
-        justify: Optional[JustifyMethod] = None,
+        situate: Optional[JustifyMethod] = None,
         emoji: Optional[bool] = None,
         markup: Optional[bool] = None,
         highlight: Optional[bool] = None,
@@ -1385,7 +1385,7 @@ class Console:
             objects (Iterable[Any]): Anything that Rich can render.
             sep (str): String to write between print data.
             end (str): String to write at end of print data.
-            justify (str, optional): One of "left", "right", "center", or "full". Defaults to ``None``.
+            situate (str, optional): One of "left", "right", "center", or "full". Defaults to ``None``.
             emoji (Optional[bool], optional): Enable emoji code, or ``None`` to use console default.
             markup (Optional[bool], optional): Enable markup, or ``None`` to use console default.
             highlight (Optional[bool], optional): Enable automatic highlighting, or ``None`` to use console default.
@@ -1399,10 +1399,10 @@ class Console:
         append_text = text.append
 
         append = _append
-        if justify in ("left", "center", "right"):
+        if situate in ("left", "center", "right"):
 
             def align_append(renderable: RenderableType) -> None:
-                _append(Align(renderable, cast(AlignMethod, justify)))
+                _append(Align(renderable, cast(AlignMethod, situate)))
 
             append = align_append
 
@@ -1412,7 +1412,7 @@ class Console:
 
         def check_text() -> None:
             if text:
-                sep_text = Text(sep, justify=justify, end=end)
+                sep_text = Text(sep, situate=situate, end=end)
                 append(sep_text.join(text))
                 del text[:]
 
@@ -1519,7 +1519,7 @@ class Console:
         sep: str = " ",
         end: str = "\n",
         style: Optional[Union[str, Style]] = None,
-        justify: Optional[JustifyMethod] = None,
+        situate: Optional[JustifyMethod] = None,
         overflow: Optional[OverflowMethod] = None,
         no_wrap: Optional[bool] = None,
         emoji: Optional[bool] = None,
@@ -1538,7 +1538,7 @@ class Console:
             sep (str, optional): String to write between print data. Defaults to " ".
             end (str, optional): String to write at end of print data. Defaults to "\\\\n".
             style (Union[str, Style], optional): A style to apply to output. Defaults to None.
-            justify (str, optional): Justify method: "default", "left", "right", "center", or "full". Defaults to ``None``.
+            situate (str, optional): Justify method: "default", "left", "right", "center", or "full". Defaults to ``None``.
             overflow (str, optional): Overflow method: "ignore", "crop", "fold", or "ellipsis". Defaults to None.
             no_wrap (Optional[bool], optional): Disable word wrapping. Defaults to None.
             emoji (Optional[bool], optional): Enable emoji code, or ``None`` to use console default. Defaults to ``None``.
@@ -1567,7 +1567,7 @@ class Console:
                 objects,
                 sep,
                 end,
-                justify=justify,
+                situate=situate,
                 emoji=emoji,
                 markup=markup,
                 highlight=highlight,
@@ -1575,7 +1575,7 @@ class Console:
             for hook in self._render_hooks:
                 renderables = hook.process_renderables(renderables)
             render_options = self.options.update(
-                justify=justify,
+                situate=situate,
                 overflow=overflow,
                 width=min(width, self.width) if width is not None else NO_CHANGE,
                 height=height,
@@ -1770,7 +1770,7 @@ class Console:
         sep: str = " ",
         end: str = "\n",
         style: Optional[Union[str, Style]] = None,
-        justify: Optional[JustifyMethod] = None,
+        situate: Optional[JustifyMethod] = None,
         emoji: Optional[bool] = None,
         markup: Optional[bool] = None,
         highlight: Optional[bool] = None,
@@ -1784,7 +1784,7 @@ class Console:
             sep (str, optional): String to write between print data. Defaults to " ".
             end (str, optional): String to write at end of print data. Defaults to "\\\\n".
             style (Union[str, Style], optional): A style to apply to output. Defaults to None.
-            justify (str, optional): One of "left", "right", "center", or "full". Defaults to ``None``.
+            situate (str, optional): One of "left", "right", "center", or "full". Defaults to ``None``.
             overflow (str, optional): Overflow method: "crop", "fold", or "ellipsis". Defaults to None.
             emoji (Optional[bool], optional): Enable emoji code, or ``None`` to use console default. Defaults to None.
             markup (Optional[bool], optional): Enable markup, or ``None`` to use console default. Defaults to None.
@@ -1801,7 +1801,7 @@ class Console:
                 objects,
                 sep,
                 end,
-                justify=justify,
+                situate=situate,
                 emoji=emoji,
                 markup=markup,
                 highlight=highlight,
@@ -2147,7 +2147,6 @@ if __name__ == "__main__":  # pragma: no cover
         }
     )
     console.log("foo")
-
 
 
 
