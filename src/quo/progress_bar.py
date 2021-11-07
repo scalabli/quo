@@ -9,11 +9,11 @@ from quo.console.console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement
 from .segment import Segment
-from .style import Style, StyleType
+from .style import Style
 
 # Number of characters before 'pulse' animation repeats
 PULSE_SIZE = 20
-
+StyleType = Union[str, "Style"]
 
 class ProgressBar(JupyterMixin):
     """Renders a (progress) bar. Used by rich.progress.
