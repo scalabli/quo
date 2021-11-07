@@ -1,6 +1,6 @@
 from typing import List, Optional, Tuple
 
-from quo.color.color_triplet import ColorTriplet
+from quo.color.rgb import ColorTriplet
 from .palette import Palette
 
 _ColorTuple = Tuple[int, int, int]
