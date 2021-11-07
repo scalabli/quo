@@ -4,7 +4,7 @@ from .box import Box, ROUNDED
 
 from .align import AlignMethod
 from quo._jupyter import JupyterMixin
-from .measure import Measurement, measure_renderables
+from quo.measure.measure import Measurement, measure_renderables
 from .padding import Padding, PaddingDimensions
 from .style import StyleType
 from quo._text import Text
@@ -19,7 +19,7 @@ class Panel(JupyterMixin):
     """A console renderable that draws a border around its contents.
 
     Example:
-        >>> console.print(Panel("Hello, World!"))
+        >>> console.echo(Panel("Hello, World!"))
 
     Args:
         renderable (RenderableType): A console renderable object.
