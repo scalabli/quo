@@ -1,9 +1,24 @@
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Optional
 
-from ._get_console import _get_console
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
+from quo.console import Console
 
+_console: Optional["Console"] = None
+
+def _get_console() -> "Console":
+    """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
+    and hasn't been explicitly given one.
+
+    Returns:
+        Console: A console instance.
+    """
+    global _console
+    if _console is None:
+
+        _console = Console()
+
+    return _console
 
 JUPYTER_HTML_FORMAT = """\
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">{code}</pre>
