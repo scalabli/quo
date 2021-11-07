@@ -10,7 +10,7 @@ from .ansi import ANSI_COLOR_NAMES
 from .rgb import ColorTriplet
 from quo.repr import rich_repr, Result
 from quo.terminal_theme import DEFAULT_TERMINAL_THEME
-
+from quo.errors.exceptions import ColorParseError
 if TYPE_CHECKING:  # pragma: no cover
     from quo.terminal_theme import TerminalTheme
     from quo.text.text import Text
@@ -43,9 +43,6 @@ class ColorType(IntEnum):
     def __repr__(self) -> str:
         return f"ColorType.{self.name}"
 
-
-class ColorParseError(Exception):
-    """The color could not be parsed."""
 
 
 RE_COLOR = re.compile(
