@@ -15,7 +15,7 @@ else:
 from .constrain import Constrain
 # _jupiter JupyterMixin
 from quo._jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style
 
