@@ -56,7 +56,7 @@ class Style:
 
     """
 
-    _color: Optional[Color]
+    _fg: Optional[Color]
     _bg: Optional[Color]
     _attributes: int
     _set_attributes: int
@@ -65,7 +65,7 @@ class Style:
     _meta: Optional[bytes]
 
     __slots__ = [
-        "_color",
+        "_fg",
         "_bg",
         "_attributes",
         "_set_attributes",
@@ -123,7 +123,7 @@ class Style:
     def __init__(
         self,
         *,
-        color: Optional[Union[Color, str]] = None,
+        fg: Optional[Union[Color, str]] = None,
         bg: Optional[Union[Color, str]] = None,
         bold: Optional[bool] = None,
         dim: Optional[bool] = None,
@@ -144,10 +144,10 @@ class Style:
         self._ansi: Optional[str] = None
         self._style_definition: Optional[str] = None
 
-        def _make_color(color: Union[Color, str]) -> Color:
-            return color if isinstance(color, Color) else Color.parse(color)
+        def _make_color(fg: Union[Color, str]) -> Color:
+            return fg if isinstance(fg, Color) else Color.parse(fg)
 
-        self._color = None if color is None else _make_color(color)
+        self._fg = None if fg is None else _make_color(fg)
         self._bg = None if bg is None else _make_color(bg)
         self._set_attributes = sum(
             (
@@ -193,7 +193,7 @@ class Style:
         self._meta = None if meta is None else dumps(meta)
         self._hash = hash(
             (
-                self._color,
+                self._fg,
                 self._bg,
                 self._attributes,
                 self._set_attributes,
@@ -211,13 +211,13 @@ class Style:
     @classmethod
     def from_color(
             cls, 
-            color: Optional[Color] = None,
+            fg: Optional[Color] = None,
             bg: Optional[Color] = None
             ) -> "Style":
         """Create a new style with colors and no attributes.
 
         Returns:
-            color (Optional[Color]): A (foreground) color, or None for no color. Defaults to None.
+            fg (Optional[Color]): A (foreground) color, or None for no color. Defaults to None.
             bg (Optional[Color]): A (background) color, or None for no color. Defaults to None.
         """
         style: Style = cls.__new__(Style)
@@ -240,7 +240,7 @@ class Style:
                 None,
             )
         )
-        style._null = not (color or bg)
+        style._null = not (fg or bg)
         return style
 
     @classmethod
