@@ -110,7 +110,7 @@ class Text(JupyterMixin):
     Args:
         text (str, optional): Default unstyled text. Defaults to "".
         style (Union[str, Style], optional): Base style for text. Defaults to "".
-        justify (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
+        situate (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
         overflow (str, optional): Overflow method: "crop", "fold", "ellipsis". Defaults to None.
         no_wrap (bool, optional): Disable text wrapping, or None for default. Defaults to None.
         end (str, optional): Character to end text with. Defaults to "\\\\n".
@@ -121,7 +121,7 @@ class Text(JupyterMixin):
     __slots__ = [
         "_text",
         "style",
-        "justify",
+        "situate",
         "overflow",
         "no_wrap",
         "end",
@@ -135,7 +135,7 @@ class Text(JupyterMixin):
         text: str = "",
         style: Union[str, Style] = "",
         *,
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
         no_wrap: Optional[bool] = None,
         end: str = "\n",
@@ -144,7 +144,7 @@ class Text(JupyterMixin):
     ) -> None:
         self._text = [strip_control_codes(text)]
         self.style = style
-        self.justify = justify
+        self.situate = situate
         self.overflow = overflow
         self.no_wrap = no_wrap
         self.end = end
@@ -222,7 +222,7 @@ class Text(JupyterMixin):
         style: Union[str, Style] = "",
         emoji: bool = True,
         emoji_variant: Optional[EmojiVariant] = None,
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
     ) -> "Text":
         """Create Text instance from markup.
@@ -230,7 +230,7 @@ class Text(JupyterMixin):
         Args:
             text (str): A string containing console markup.
             emoji (bool, optional): Also render emoji code. Defaults to True.
-            justify (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
+            situate (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
             overflow (str, optional): Overflow method: "crop", "fold", "ellipsis". Defaults to None.
 
         Returns:
@@ -239,7 +239,7 @@ class Text(JupyterMixin):
         from quo.markup import render
 
         rendered_text = render(text, style, emoji=emoji, emoji_variant=emoji_variant)
-        rendered_text.justify = justify
+        rendered_text.situate = situate
         rendered_text.overflow = overflow
         return rendered_text
 
@@ -249,7 +249,7 @@ class Text(JupyterMixin):
         text: str,
         style: StyleType = "",
         *,
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
     ) -> "Text":
         """Construct a Text instance with a pre-applied styled. A style applied in this way won't be used
@@ -258,13 +258,13 @@ class Text(JupyterMixin):
         Args:
             text (str): A string containing console markup.
             style (Union[str, Style]): Style to apply to the text. Defaults to "".
-            justify (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
+            situate (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
             overflow (str, optional): Overflow method: "crop", "fold", "ellipsis". Defaults to None.
 
         Returns:
             Text: A text instance with a style applied to the entire string.
         """
-        styled_text = cls(text, justify=justify, overflow=overflow)
+        styled_text = cls(text, situate=situate, overflow=overflow)
         styled_text.stylize(style)
         return styled_text
 
@@ -273,7 +273,7 @@ class Text(JupyterMixin):
         cls,
         *parts: Union[str, "Text", Tuple[str, StyleType]],
         style: Union[str, Style] = "",
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
         no_wrap: Optional[bool] = None,
         end: str = "\n",
@@ -285,7 +285,7 @@ class Text(JupyterMixin):
 
         Args:
             style (Union[str, Style], optional): Base style for text. Defaults to "".
-            justify (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
+            situate (str, optional): Justify method: "left", "center", "full", "right". Defaults to None.
             overflow (str, optional): Overflow method: "crop", "fold", "ellipsis". Defaults to None.
             end (str, optional): Character to end text with. Defaults to "\\\\n".
             tab_size (int): Number of spaces per tab, or ``None`` to use ``console.tab_size``. Defaults to 8.
@@ -296,7 +296,7 @@ class Text(JupyterMixin):
         """
         text = cls(
             style=style,
-            justify=justify,
+            situate=situate,
             overflow=overflow,
             no_wrap=no_wrap,
             end=end,
@@ -345,7 +345,7 @@ class Text(JupyterMixin):
         copy_self = Text(
             plain,
             style=self.style,
-            justify=self.justify,
+            situate=self.situate,
             overflow=self.overflow,
             no_wrap=self.no_wrap,
             end=self.end,
@@ -358,7 +358,7 @@ class Text(JupyterMixin):
         copy_self = Text(
             self.plain,
             style=self.style,
-            justify=self.justify,
+            situate=self.situate,
             overflow=self.overflow,
             no_wrap=self.no_wrap,
             end=self.end,
@@ -412,7 +412,7 @@ class Text(JupyterMixin):
         """Apply event handlers (used by Textual project).
 
         Example:
-            >>> from rich.text import Text
+            >>> from quo.text import Text
             >>> text = Text("hello world")
             >>> text.on(click="view.toggle('world')")
 
@@ -555,8 +555,8 @@ class Text(JupyterMixin):
         self, console: "Console", options: "ConsoleOptions"
     ) -> Iterable[Segment]:
         tab_size: int = console.tab_size or self.tab_size or 8
-        justify = (
-            cast("JustifyMethod", self.justify) or options.justify or DEFAULT_OVERFLOW
+        situate = (
+            cast("JustifyMethod", self.situate) or options.situate or DEFAULT_OVERFLOW
         )
 
         overflow = (
@@ -568,7 +568,7 @@ class Text(JupyterMixin):
         lines = self.wrap(
             console,
             options.max_width,
-            justify=justify,
+            situate=situate,
             overflow=overflow,
             tab_size=tab_size or 8,
             no_wrap=pick_bool(self.no_wrap, options.no_wrap, False),
@@ -925,7 +925,7 @@ class Text(JupyterMixin):
         include_separator: bool = False,
         allow_blank: bool = False,
     ) -> Lines:
-        """Split rich text in to lines, preserving styles.
+        """Split text in to lines, preserving styles.
 
         Args:
             separator (str, optional): String to split on. Defaults to "\\\\n".
@@ -933,7 +933,7 @@ class Text(JupyterMixin):
             allow_blank (bool, optional): Return a blank line if the text ends with a separator. Defaults to False.
 
         Returns:
-            List[RichText]: A list of rich text, one per line of the original.
+            List[RichText]: A list of text, one per line of the original.
         """
         assert separator, "separator must not be empty"
 
@@ -981,14 +981,14 @@ class Text(JupyterMixin):
         line_ranges = list(zip(divide_offsets, divide_offsets[1:]))
 
         style = self.style
-        justify = self.justify
+        situate = self.situate
         overflow = self.overflow
         _Text = Text
         new_lines = Lines(
             _Text(
                 text[start:end],
                 style=style,
-                justify=justify,
+                situate=situate,
                 overflow=overflow,
             )
             for start, end in line_ranges
@@ -1046,7 +1046,7 @@ class Text(JupyterMixin):
         console: "Console",
         width: int,
         *,
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
         tab_size: int = 8,
         no_wrap: Optional[bool] = None,
@@ -1057,7 +1057,7 @@ class Text(JupyterMixin):
             console (Console): Console instance.
             width (int): Number of characters per line.
             emoji (bool, optional): Also render emoji code. Defaults to True.
-            justify (str, optional): Justify method: "default", "left", "center", "full", "right". Defaults to "default".
+            situate (str, optional): Justify method: "default", "left", "center", "full", "right". Defaults to "default".
             overflow (str, optional): Overflow method: "crop", "fold", or "ellipsis". Defaults to None.
             tab_size (int, optional): Default tab size. Defaults to 8.
             no_wrap (bool, optional): Disable wrapping, Defaults to False.
@@ -1065,7 +1065,7 @@ class Text(JupyterMixin):
         Returns:
             Lines: Number of lines.
         """
-        wrap_justify = cast("JustifyMethod", justify or self.justify) or DEFAULT_JUSTIFY
+        wrap_justify = cast("JustifyMethod", situate or self.situate) or DEFAULT_JUSTIFY
         wrap_overflow = (
             cast("OverflowMethod", overflow or self.overflow) or DEFAULT_OVERFLOW
         )
@@ -1084,8 +1084,8 @@ class Text(JupyterMixin):
             for line in new_lines:
                 line.rstrip_end(width)
             if wrap_justify:
-                new_lines.justify(
-                    console, width, justify=wrap_justify, overflow=wrap_overflow
+                new_lines.situate(
+                    console, width, situate=wrap_justify, overflow=wrap_overflow
                 )
             for line in new_lines:
                 line.truncate(width, overflow=wrap_overflow)
@@ -1179,7 +1179,7 @@ class Text(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
+    from quo.console import Console
 
     text = Text(
         """\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n"""
@@ -1188,18 +1188,18 @@ if __name__ == "__main__":  # pragma: no cover
     text.highlight_words(["ipsum"], "italic")
 
     console = Console()
-    console.rule("justify='left'")
+    console.rule("situate='left'")
     console.evoke(text, style="red")
     console.evoke()
 
-    console.rule("justify='center'")
-    console.evoke(text, style="green", justify="center")
+    console.rule("situate='center'")
+    console.evoke(text, style="green", situate="center")
     console.evoke()
 
-    console.rule("justify='right'")
-    console.evoke(text, style="blue", justify="right")
+    console.rule("situate='right'")
+    console.evoke(text, style="blue", situate="right")
     console.evoke()
 
-    console.rule("justify='full'")
-    console.evoke(text, style="magenta", justify="full")
+    console.rule("situate='full'")
+    console.evoke(text, style="magenta", situate="full")
     console.evoke()
