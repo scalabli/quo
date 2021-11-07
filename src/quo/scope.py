@@ -4,6 +4,13 @@ import builtins
 import os
 from quo.repr import RichReprResult
 import sys
+import inspect
+import platform
+import shutil
+import threading
+from abc import ABC, abstractmethod
+from datetime import datetime
+from functools import wraps
 from array import array
 from collections import Counter, defaultdict, deque, UserDict, UserList
 import dataclasses
@@ -62,13 +69,7 @@ _re_jupyter_repr = re.compile(f"^_repr_.+_$")
 
 
 # ***********************
-import inspect
-import platform
-import shutil
-import threading
-from abc import ABC, abstractmethod
-from datetime import datetime
-from functools import wraps
+
 from getpass import getpass
 from html import escape
 from time import monotonic
@@ -111,7 +112,7 @@ from quo.control import Control
 from quo._emoji import EmojiVariant
 from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
-from quo.measure import Measurement, measure_renderables
+from quo.measure.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
 # from quo.pretty import Pretty, is_expandable
 from quo.region import Region
