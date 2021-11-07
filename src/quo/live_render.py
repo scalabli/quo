@@ -99,7 +99,7 @@ class LiveRender:
                 overflow_text = Text(
                     "...",
                     overflow="crop",
-                    justify="center",
+                    situate="center",
                     end="",
                     style="live.ellipsis",
                 )
