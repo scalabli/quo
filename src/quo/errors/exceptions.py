@@ -254,6 +254,8 @@ class StyleSyntaxError(ConsoleError):
 class MissingStyle(StyleError):
     """No such style."""
 
+class ColorParseError(Outlier):
+    """The color could not be parsed."""
 
 class StyleStackError(ConsoleError):
     """Style stack is invalid."""
