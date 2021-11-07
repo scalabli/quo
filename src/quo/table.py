@@ -52,8 +52,8 @@ class Column:
     style: StyleType = ""
     """StyleType: The style of the column."""
 
-    justify: "JustifyMethod" = "left"
-    """str: How to justify text within the column ("left", "center", "right", or "full")"""
+    situate: "JustifyMethod" = "left"
+    """str: How to situate text within the column ("left", "center", "right", or "full")"""
 
     overflow: "OverflowMethod" = "ellipsis"
     """str: Overflow method."""
@@ -140,8 +140,8 @@ class Table(JupyterMixin):
         border_style (Union[str, Style], optional): Style of the border. Defaults to None.
         title_style (Union[str, Style], optional): Style of the title. Defaults to None.
         caption_style (Union[str, Style], optional): Style of the caption. Defaults to None.
-        title_justify (str, optional): Justify method for title. Defaults to "center".
-        caption_justify (str, optional): Justify method for caption. Defaults to "center".
+        title_situate (str, optional): Justify method for title. Defaults to "center".
+        caption_situate (str, optional): Justify method for caption. Defaults to "center".
         highlight (bool, optional): Highlight cell contents (if str). Defaults to False.
     """
 
@@ -173,8 +173,8 @@ class Table(JupyterMixin):
         border_style: Optional[StyleType] = None,
         title_style: Optional[StyleType] = None,
         caption_style: Optional[StyleType] = None,
-        title_justify: "JustifyMethod" = "center",
-        caption_justify: "JustifyMethod" = "center",
+        title_situate: "JustifyMethod" = "center",
+        caption_situate: "JustifyMethod" = "center",
         highlight: bool = False,
     ) -> None:
 
@@ -201,8 +201,8 @@ class Table(JupyterMixin):
         self.border_style = border_style
         self.title_style = title_style
         self.caption_style = caption_style
-        self.title_justify = title_justify
-        self.caption_justify = caption_justify
+        self.title_situate = title_situate
+        self.caption_situate = caption_situate
         self.highlight = highlight
         self.row_styles = list(row_styles or [])
         append_column = self.columns.append
@@ -333,7 +333,7 @@ class Table(JupyterMixin):
         header_style: Optional[StyleType] = None,
         footer_style: Optional[StyleType] = None,
         style: Optional[StyleType] = None,
-        justify: "JustifyMethod" = "left",
+        situate: "JustifyMethod" = "left",
         overflow: "OverflowMethod" = "ellipsis",
         width: Optional[int] = None,
         min_width: Optional[int] = None,
@@ -351,7 +351,7 @@ class Table(JupyterMixin):
             header_style (Union[str, Style], optional): Style for the header, or None for default. Defaults to None.
             footer_style (Union[str, Style], optional): Style for the footer, or None for default. Defaults to None.
             style (Union[str, Style], optional): Style for the column cells, or None for default. Defaults to None.
-            justify (JustifyMethod, optional): Alignment for cells. Defaults to "left".
+            situate (JustifyMethod, optional): Alignment for cells. Defaults to "left".
             overflow (OverflowMethod): Overflow method: "crop", "fold", "ellipsis". Defaults to "ellipsis".
             width (int, optional): Desired width of column in characters, or None to fit to contents. Defaults to None.
             min_width (Optional[int], optional): Minimum width of column, or ``None`` for no minimum. Defaults to None.
@@ -367,7 +367,7 @@ class Table(JupyterMixin):
             header_style=header_style or "",
             footer_style=footer_style or "",
             style=style or "",
-            justify=justify,
+            situate=situate,
             overflow=overflow,
             width=width,
             min_width=min_width,
@@ -447,7 +447,7 @@ class Table(JupyterMixin):
         )
 
         def render_annotation(
-            text: TextType, style: StyleType, justify: "JustifyMethod" = "center"
+            text: TextType, style: StyleType, situate: "JustifyMethod" = "center"
         ) -> "RenderResult":
             render_text = (
                 console.render_str(text, style=style, highlight=False)
@@ -455,21 +455,21 @@ class Table(JupyterMixin):
                 else text
             )
             return console.render(
-                render_text, options=render_options.update(justify=justify)
+                render_text, options=render_options.update(situate=situate)
             )
 
         if self.title:
             yield from render_annotation(
                 self.title,
                 style=Style.pick_first(self.title_style, "table.title"),
-                justify=self.title_justify,
+                situate=self.title_situate,
             )
         yield from self._render(console, render_options, widths)
         if self.caption:
             yield from render_annotation(
                 self.caption,
                 style=Style.pick_first(self.caption_style, "table.caption"),
-                justify=self.caption_justify,
+                situate=self.caption_situate,
             )
 
     def _calculate_column_widths(
@@ -764,7 +764,7 @@ class Table(JupyterMixin):
             for width, cell, column in zip(widths, row_cell, columns):
                 render_options = options.update(
                     width=width,
-                    justify=column.justify,
+                    situate=column.situate,
                     no_wrap=column.no_wrap,
                     overflow=column.overflow,
                     height=None,
@@ -850,12 +850,12 @@ if __name__ == "__main__":  # pragma: no cover
     table = Table(
         title="Star Wars Movies",
         caption="Rich example table",
-        caption_justify="right",
+        caption_situate="right",
     )
 
     table.add_column("Released", header_style="bright_cyan", style="cyan", no_wrap=True)
     table.add_column("Title", style="magenta")
-    table.add_column("Box Office", justify="right", style="green")
+    table.add_column("Box Office", situate="right", style="green")
 
     table.add_row(
         "Dec 20, 2019",
@@ -884,7 +884,7 @@ if __name__ == "__main__":  # pragma: no cover
     console = Console()
     highlight = ReprHighlighter()
     header("Example Table")
-    console.print(table, justify="center")
+    console.print(table, situate="center")
 
     table.expand = True
     header("expand=True")
@@ -893,21 +893,21 @@ if __name__ == "__main__":  # pragma: no cover
     table.width = 50
     header("width=50")
 
-    console.print(table, justify="center")
+    console.print(table, situate="center")
 
     table.width = None
     table.expand = False
     table.row_styles = ["dim", "none"]
     header("row_styles=['dim', 'none']")
 
-    console.echo(table, justify="center")
+    console.echo(table, situate="center")
 
     table.width = None
     table.expand = False
     table.row_styles = ["dim", "none"]
     table.leading = 1
     header("leading=1, row_styles=['dim', 'none']")
-    console.print(table, justify="center")
+    console.print(table, situate="center")
 
     table.width = None
     table.expand = False
@@ -915,4 +915,4 @@ if __name__ == "__main__":  # pragma: no cover
     table.show_lines = True
     table.leading = 0
     header("show_lines=True, row_styles=['dim', 'none']")
-    console.echo(table, justify="center")
+    console.echo(table, situate="center")
