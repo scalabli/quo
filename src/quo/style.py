@@ -32,13 +32,13 @@ class _Bit:
 class Style:
     """A terminal style.
 
-    A terminal style consists of a color (`color`), a background color (`bgcolor`), and a number of attributes, such
+    A terminal style consists of a foreground color (`fg`), a background color (`bg`), and a number of attributes, such
     as bold, italic etc. The attributes have 3 states: they can either be on
     (``True``), off (``False``), or not set (``None``).
 
     Args:
-        color (Union[Color, str], optional): Color of terminal text. Defaults to None.
-        bgcolor (Union[Color, str], optional): Color of terminal background. Defaults to None.
+        fg (Union[Color, str], optional): Color of terminal text. Defaults to None.
+        bg (Union[Color, str], optional): Color of terminal background. Defaults to None.
         bold (bool, optional): Enable bold text. Defaults to None.
         dim (bool, optional): Enable dim text. Defaults to None.
         italic (bool, optional): Enable italic text. Defaults to None.
@@ -544,7 +544,7 @@ class Style:
             return cls.null()
 
         STYLE_ATTRIBUTES = cls.STYLE_ATTRIBUTES
-        color: Optional[str] = None
+        fg: Optional[str] = None
         bg: Optional[str] = None
         attributes: Dict[str, Optional[Any]] = {}
         link: Optional[str] = None
