@@ -117,15 +117,14 @@ def install(
         expand_all (bool, optional): Expand all containers. Defaults to False.
         max_frames (int): Maximum number of frames to show in a traceback, 0 for no maximum. Defaults to 100.
     """
-    from rich import get_console
 
-    from .console import ConsoleRenderable  # needed here to prevent circular import
+    from quo.console.console import ConsoleRenderable  # needed here to prevent circular import
 
-    console = console or get_console()
+    console = console or _get_console()
     assert console is not None
 
     def display_hook(value: Any) -> None:
-        """Replacement sys.displayhook which prettifies objects with Rich."""
+        """Replacement sys.displayhook which prettifies objects."""
         if value is not None:
             assert console is not None
             builtins._ = None  # type: ignore
@@ -188,13 +187,13 @@ def install(
 
 
 class Pretty(JupyterMixin):
-    """A rich renderable that pretty prints an object.
+    """A renderable that pretty prints an object.
 
     Args:
         _object (Any): An object to pretty print.
         highlighter (HighlighterType, optional): Highlighter object to apply to result, or None for ReprHighlighter. Defaults to None.
         indent_size (int, optional): Number of spaces in indent. Defaults to 4.
-        justify (JustifyMethod, optional): Justify method, or None for default. Defaults to None.
+        situate (JustifyMethod, optional): Justify method, or None for default. Defaults to None.
         overflow (OverflowMethod, optional): Overflow method, or None for default. Defaults to None.
         no_wrap (Optional[bool], optional): Disable word wrapping. Defaults to False.
         indent_guides (bool, optional): Enable indentation guides. Defaults to False.
@@ -212,7 +211,7 @@ class Pretty(JupyterMixin):
         highlighter: Optional["HighlighterType"] = None,
         *,
         indent_size: int = 4,
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
         no_wrap: Optional[bool] = False,
         indent_guides: bool = False,
@@ -225,7 +224,7 @@ class Pretty(JupyterMixin):
         self._object = _object
         self.highlighter = highlighter or ReprHighlighter()
         self.indent_size = indent_size
-        self.justify = justify
+        self.situate = situate
         self.overflow = overflow
         self.no_wrap = no_wrap
         self.indent_guides = indent_guides
@@ -248,7 +247,7 @@ class Pretty(JupyterMixin):
         )
         pretty_text = Text(
             pretty_str,
-            justify=self.justify or options.justify,
+            situate=self.situate or options.situate,
             overflow=self.overflow or options.overflow,
             no_wrap=pick_bool(self.no_wrap, options.no_wrap),
             style="pretty",
@@ -783,7 +782,7 @@ def pprint(
         indent_guides (bool, optional): Enable indentation guides. Defaults to True.
         expand_all (bool, optional): Expand all containers. Defaults to False.
     """
-    _console = get_console() if console is None else console
+    _console = _get_console() if console is None else console
     _console.print(
         Pretty(
             _object,
@@ -834,6 +833,6 @@ if __name__ == "__main__":  # pragma: no cover
     }
     data["foo"].append(data)  # type: ignore
 
-    from quo import evoke
+    from quo import echo
 
-    evoke(Pretty(data, indent_guides=True, max_string=20))
+    echo(Pretty(data, indent_guides=True, max_string=20))
