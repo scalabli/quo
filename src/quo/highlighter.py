@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from typing import List, Union
-# text. Text
 from quo._text import Text
 
 
@@ -117,7 +116,7 @@ class JSONHighlighter(RegexHighlighter):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from .console import Console
+    from quo.console import Console
 
     console = Console()
     console.print("[bold green]hello world![/bold green]")

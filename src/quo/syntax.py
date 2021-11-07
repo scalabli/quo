@@ -128,7 +128,7 @@ class PygmentsSyntaxTheme(SyntaxTheme):
             self._pygments_style_class = theme
 
         self._background_color = self._pygments_style_class.background_color
-        self._background_style = Style(bgcolor=self._background_color)
+        self._background_style = Style(bg=self._background_color)
 
     def get_style_for_token(self, token_type: TokenType) -> Style:
         """Get a style from a Pygments class."""
@@ -141,10 +141,10 @@ class PygmentsSyntaxTheme(SyntaxTheme):
                 style = Style.null()
             else:
                 color = pygments_style["color"]
-                bgcolor = pygments_style["bgcolor"]
+                bg = pygments_style["bgcolor"]
                 style = Style(
                     color="#" + color if color else "#000000",
-                    bgcolor="#" + bgcolor if bgcolor else self._background_color,
+                    bg="#" + bg if bg else self._background_color,
                     bold=pygments_style["bold"],
                     italic=pygments_style["italic"],
                     underline=pygments_style["underline"],
@@ -428,7 +428,7 @@ class Syntax(JupyterMixin):
 
     def _get_line_numbers_color(self, blend: float = 0.3) -> Color:
         background_style = self._theme.get_background_style() + self.background_style
-        background_color = background_style.bgcolor
+        background_color = background_style.bg
         if background_color is None or background_color.is_system_defined:
             return Color.default()
         foreground_color = self._get_token_color(Token.Text)
@@ -617,7 +617,7 @@ if __name__ == "__main__":  # pragma: no cover
     import sys
 
     parser = argparse.ArgumentParser(
-        description="Render syntax to the console with Rich"
+        description="Render syntax to the console"
     )
     parser.add_argument(
         "path",
@@ -714,4 +714,4 @@ if __name__ == "__main__":  # pragma: no cover
             background_color=args.background_color,
             indent_guides=args.indent_guides,
         )
-    console.evoke(syntax, soft_wrap=args.soft_wrap)
+    console.echo(syntax, soft_wrap=args.soft_wrap)

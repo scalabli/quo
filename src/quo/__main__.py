@@ -110,10 +110,10 @@ def make_test_card() -> Table:
     lorem_table = Table.grid(padding=1, collapse_padding=True)
     lorem_table.pad_edge = False
     lorem_table.add_row(
-        Text(lorem, justify="left", style="green"),
-        Text(lorem, justify="center", style="yellow"),
-        Text(lorem, justify="right", style="blue"),
-        Text(lorem, justify="full", style="red"),
+        Text(lorem, situate="left", style="green"),
+        Text(lorem, situate="center", style="yellow"),
+        Text(lorem, situate="right", style="blue"),
+        Text(lorem, situate="full", style="red"),
     )
     table.add_row(
         "Text",
@@ -141,7 +141,7 @@ def make_test_card() -> Table:
     )
 
     markup_example = (
-        "[bold magenta]Rich[/] supports a simple [i]bbcode[/i]-like [b]markup[/b] for [yellow]color[/], [underline]style[/], and emoji! "
+        "[bold magenta]Quo[/] supports a simple [i]bbcode[/i]-like [b]markup[/b] for [yellow]color[/], [underline]style[/], and emoji! "
         ":+1: :apple: :ant: :bear: :baguette_bread: :bus: "
     )
     table.add_row("Markup", markup_example)
@@ -158,13 +158,13 @@ def make_test_card() -> Table:
     example_table.add_column(
         "[cyan]Production Budget",
         style="cyan",
-        justify="right",
+        situate="right",
         no_wrap=True,
     )
     example_table.add_column(
         "[magenta]Box Office",
         style="magenta",
-        justify="right",
+        situate="right",
         no_wrap=True,
     )
     example_table.add_row(
@@ -283,7 +283,7 @@ if __name__ == "__main__":  # pragma: no cover
     )
     sponsor_message.add_row(
         "Buy me a :coffee:",
-        "[u blue link=https://ko-fi.com/willmcgugan]https://ko-fi.com/willmcgugan",
+        "[u blue link=https://ko-fi.com/gerrishon]https://ko-fi.com/gerrishon",
     )
     sponsor_message.add_row(
         "Twitter",
@@ -315,5 +315,5 @@ Consider supporting my work via Github Sponsors (ask your company / organization
             title="[b red]Thanks for trying out Rich!",
             border_style="bright_blue",
         ),
-        justify="center",
+        situate="center",
     )

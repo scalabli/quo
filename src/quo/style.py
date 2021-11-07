@@ -201,7 +201,7 @@ class Style:
                 self._meta,
             )
         )
-        self._null = not (self._set_attributes or color or bgcolor or link or meta)
+        self._null = not (self._set_attributes or color or bg or link or meta)
 
     @classmethod
     def null(cls) -> "Style":
@@ -210,18 +210,20 @@ class Style:
 
     @classmethod
     def from_color(
-        cls, color: Optional[Color] = None, bg: Optional[Color] = None
-    ) -> "Style":
+            cls, 
+            color: Optional[Color] = None,
+            bg: Optional[Color] = None
+            ) -> "Style":
         """Create a new style with colors and no attributes.
 
         Returns:
             color (Optional[Color]): A (foreground) color, or None for no color. Defaults to None.
-            bgcolor (Optional[Color]): A (background) color, or None for no color. Defaults to None.
+            bg (Optional[Color]): A (background) color, or None for no color. Defaults to None.
         """
         style: Style = cls.__new__(Style)
         style._ansi = None
         style._style_definition = None
-        style._color = color
+        style._fg = fg
         style._bg = bg
         style._set_attributes = 0
         style._attributes = 0
@@ -230,7 +232,7 @@ class Style:
         style._meta = None
         style._hash = hash(
             (
-                color,
+                fg,
                 bg,
                 None,
                 None,
@@ -254,7 +256,7 @@ class Style:
         style: Style = cls.__new__(Style)
         style._ansi = None
         style._style_definition = None
-        style._color = None
+        style._fg = None
         style._bg = None
         style._set_attributes = 0
         style._attributes = 0
@@ -350,8 +352,8 @@ class Style:
                     append("encircle" if self.encircle else "not encircle")
                 if bits & (1 << 12):
                     append("overline" if self.overline else "not overline")
-            if self._color is not None:
-                append(self._color.name)
+            if self._fg is not None:
+                append(self._fg.name)
             if self._bg is not None:
                 append("on")
                 append(self._bg.name)
@@ -399,8 +401,8 @@ class Style:
                     for bit in range(9, 13):
                         if attributes & (1 << bit):
                             append(_style_map[bit])
-            if self._color is not None:
-                sgr.extend(self._color.downgrade(color_system).get_ansi_codes())
+            if self._fg is not None:
+                sgr.extend(self._fg.downgrade(color_system).get_ansi_codes())
             if self._bg is not None:
                 sgr.extend(
                     self._bg.downgrade(color_system).get_ansi_codes(
@@ -439,7 +441,7 @@ class Style:
         raise ValueError("expected at least one non-None style")
 
     def __rich_repr__(self) -> Result:
-        yield "color", self.color, None
+        yield "fg", self.fg, None
         yield "bg", self.bg, None
         yield "bold", self.bold, None,
         yield "dim", self.dim, None,
@@ -464,7 +466,7 @@ class Style:
         if not isinstance(other, Style):
             return NotImplemented
         return (
-            self._color == other._color
+            self._fg == other._fg
             and self._bg == other._bg
             and self._set_attributes == other._set_attributes
             and self._attributes == other._attributes
@@ -476,9 +478,9 @@ class Style:
         return self._hash
 
     @property
-    def color(self) -> Optional[Color]:
+    def fg(self) -> Optional[Color]:
         """The foreground color or None if it is not set."""
-        return self._color
+        return self._fg
 
     @property
     def bg(self) -> Optional[Color]:
@@ -513,7 +515,7 @@ class Style:
         style: Style = self.__new__(Style)
         style._ansi = None
         style._style_definition = None
-        style._color = None
+        style._fg = None
         style._bg = None
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
@@ -588,7 +590,7 @@ class Style:
                         f"unable to parse {word!r} as color; {error}"
                     ) from None
                 color = word
-        style = Style(color=color, bg=bg, link=link, **attributes)
+        style = Style(fg=fg, bg=bg, link=link, **attributes)
         return style
 
     @lru_cache(maxsize=1024)
@@ -601,20 +603,20 @@ class Style:
         css: List[str] = []
         append = css.append
 
-        color = self.color
+        fg = self.fg
         bg = self.bg
         if self.reverse:
-            color, bg = bg, color
+            fg, bg = bg, fg
         if self.dim:
             foreground_color = (
-                theme.foreground_color if color is None else color.get_truecolor(theme)
+                theme.foreground_color if fg is None else fg.get_truecolor(theme)
             )
-            color = Color.from_triplet(
+            fg = Color.from_triplet(
                 blend_rgb(foreground_color, theme.background_color, 0.5)
             )
-        if color is not None:
-            theme_color = color.get_truecolor(theme)
-            append(f"color: {theme_color.hex}")
+        if fg is not None:
+            theme_color = fg.get_truecolor(theme)
+            append(f"fg: {theme_color.hex}")
             append(f"text-decoration-color: {theme_color.hex}")
         if bg is not None:
             theme_color = bg.get_truecolor(theme, foreground=False)
@@ -671,7 +673,7 @@ class Style:
         style: Style = self.__new__(Style)
         style._ansi = self._ansi
         style._style_definition = self._style_definition
-        style._color = self._color
+        style._fg = self._fg
         style._bg = self._bg
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
@@ -694,7 +696,7 @@ class Style:
         style: Style = self.__new__(Style)
         style._ansi = self._ansi
         style._style_definition = self._style_definition
-        style._color = self._color
+        style._fg = self._fg
         style._bg = self._bg
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
@@ -753,7 +755,7 @@ class Style:
         new_style: Style = self.__new__(Style)
         new_style._ansi = None
         new_style._style_definition = None
-        new_style._color = style._color or self._color
+        new_style._fg = style._fg or self._fg
         new_style._bg = style._bg or self._bg
         new_style._attributes = (self._attributes & ~style._set_attributes) | (
             style._attributes & style._set_attributes
