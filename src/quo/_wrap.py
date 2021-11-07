@@ -51,5 +51,5 @@ if __name__ == "__main__":  # pragma: no cover
     from .console import Console
 
     console = Console(width=10)
-    console.print("12345 abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ 12345")
+    console.echo("12345 abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ 12345")
     print(chop_cells("abcdefghijklmnopqrstuvwxyz", 10, position=2))
