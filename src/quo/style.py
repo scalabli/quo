@@ -57,7 +57,7 @@ class Style:
     """
 
     _color: Optional[Color]
-    _bgcolor: Optional[Color]
+    _bg: Optional[Color]
     _attributes: int
     _set_attributes: int
     _hash: int
@@ -66,7 +66,7 @@ class Style:
 
     __slots__ = [
         "_color",
-        "_bgcolor",
+        "_bg",
         "_attributes",
         "_set_attributes",
         "_link",
@@ -124,7 +124,7 @@ class Style:
         self,
         *,
         color: Optional[Union[Color, str]] = None,
-        bgcolor: Optional[Union[Color, str]] = None,
+        bg: Optional[Union[Color, str]] = None,
         bold: Optional[bool] = None,
         dim: Optional[bool] = None,
         italic: Optional[bool] = None,
@@ -148,7 +148,7 @@ class Style:
             return color if isinstance(color, Color) else Color.parse(color)
 
         self._color = None if color is None else _make_color(color)
-        self._bgcolor = None if bgcolor is None else _make_color(bgcolor)
+        self._bg = None if bg is None else _make_color(bg)
         self._set_attributes = sum(
             (
                 bold is not None,
@@ -194,7 +194,7 @@ class Style:
         self._hash = hash(
             (
                 self._color,
-                self._bgcolor,
+                self._bg,
                 self._attributes,
                 self._set_attributes,
                 link,
@@ -210,7 +210,7 @@ class Style:
 
     @classmethod
     def from_color(
-        cls, color: Optional[Color] = None, bgcolor: Optional[Color] = None
+        cls, color: Optional[Color] = None, bg: Optional[Color] = None
     ) -> "Style":
         """Create a new style with colors and no attributes.
 
@@ -222,7 +222,7 @@ class Style:
         style._ansi = None
         style._style_definition = None
         style._color = color
-        style._bgcolor = bgcolor
+        style._bg = bg
         style._set_attributes = 0
         style._attributes = 0
         style._link = None
@@ -231,18 +231,21 @@ class Style:
         style._hash = hash(
             (
                 color,
-                bgcolor,
+                bg,
                 None,
                 None,
                 None,
                 None,
             )
         )
-        style._null = not (color or bgcolor)
+        style._null = not (color or bg)
         return style
 
     @classmethod
-    def from_meta(cls, meta: Optional[Dict[str, Any]]) -> "Style":
+    def from_meta(
+            cls, 
+            meta: Optional[Dict[str, Any]]
+            ) -> "Style":
         """Create a new style with meta data.
 
         Returns:
@@ -252,7 +255,7 @@ class Style:
         style._ansi = None
         style._style_definition = None
         style._color = None
-        style._bgcolor = None
+        style._bg = None
         style._set_attributes = 0
         style._attributes = 0
         style._link = None
@@ -272,7 +275,11 @@ class Style:
         return style
 
     @classmethod
-    def on(cls, meta: Optional[Dict[str, Any]] = None, **handlers: Any) -> "Style":
+    def on(
+            cls, 
+            meta: Optional[Dict[str, Any]] = None,
+            **handlers: Any
+            ) -> "Style":
         """Create a blank style with meta information.
 
         Example:
@@ -345,9 +352,9 @@ class Style:
                     append("overline" if self.overline else "not overline")
             if self._color is not None:
                 append(self._color.name)
-            if self._bgcolor is not None:
+            if self._bg is not None:
                 append("on")
-                append(self._bgcolor.name)
+                append(self._bg.name)
             if self._link:
                 append("link")
                 append(self._link)
@@ -358,7 +365,10 @@ class Style:
         """A Style is false if it has no attributes, colors, or links."""
         return not self._null
 
-    def _make_ansi_codes(self, color_system: ColorSystem) -> str:
+    def _make_ansi_codes(
+            self, 
+            color_system: ColorSystem
+            ) -> str:
         """Generate ANSI codes for this style.
 
         Args:
@@ -391,9 +401,9 @@ class Style:
                             append(_style_map[bit])
             if self._color is not None:
                 sgr.extend(self._color.downgrade(color_system).get_ansi_codes())
-            if self._bgcolor is not None:
+            if self._bg is not None:
                 sgr.extend(
-                    self._bgcolor.downgrade(color_system).get_ansi_codes(
+                    self._bg.downgrade(color_system).get_ansi_codes(
                         foreground=False
                     )
                 )
@@ -418,7 +428,10 @@ class Style:
             return style.strip().lower()
 
     @classmethod
-    def pick_first(cls, *values: Optional[StyleType]) -> StyleType:
+    def pick_first(
+            cls,
+            *values: Optional[StyleType]
+            ) -> StyleType:
         """Pick first non-None style."""
         for value in values:
             if value is not None:
@@ -427,7 +440,7 @@ class Style:
 
     def __rich_repr__(self) -> Result:
         yield "color", self.color, None
-        yield "bgcolor", self.bgcolor, None
+        yield "bg", self.bg, None
         yield "bold", self.bold, None,
         yield "dim", self.dim, None,
         yield "italic", self.italic, None
@@ -444,12 +457,15 @@ class Style:
         if self._meta:
             yield "meta", self.meta
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(
+            self, 
+            other: Any
+            ) -> bool:
         if not isinstance(other, Style):
             return NotImplemented
         return (
             self._color == other._color
-            and self._bgcolor == other._bgcolor
+            and self._bg == other._bg
             and self._set_attributes == other._set_attributes
             and self._attributes == other._attributes
             and self._link == other._link
@@ -465,9 +481,9 @@ class Style:
         return self._color
 
     @property
-    def bgcolor(self) -> Optional[Color]:
+    def bg(self) -> Optional[Color]:
         """The background color or None if it is not set."""
-        return self._bgcolor
+        return self._bg
 
     @property
     def link(self) -> Optional[str]:
@@ -477,12 +493,12 @@ class Style:
     @property
     def transparent_background(self) -> bool:
         """Check if the style specified a transparent background."""
-        return self.bgcolor is None or self.bgcolor.is_default
+        return self.bg is None or self.bg.is_default
 
     @property
     def background_style(self) -> "Style":
         """A Style with background only."""
-        return Style(bgcolor=self.bgcolor)
+        return Style(bg=self.bg)
 
     @property
     def meta(self) -> Dict[str, Any]:
@@ -498,7 +514,7 @@ class Style:
         style._ansi = None
         style._style_definition = None
         style._color = None
-        style._bgcolor = None
+        style._bg = None
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
         style._link = self._link
@@ -527,7 +543,7 @@ class Style:
 
         STYLE_ATTRIBUTES = cls.STYLE_ATTRIBUTES
         color: Optional[str] = None
-        bgcolor: Optional[str] = None
+        bg: Optional[str] = None
         attributes: Dict[str, Optional[Any]] = {}
         link: Optional[str] = None
 
@@ -544,7 +560,7 @@ class Style:
                     raise exceptions.StyleSyntaxError(
                         f"unable to parse {word!r} as background color; {error}"
                     ) from None
-                bgcolor = word
+                bg = word
 
             elif word == "not":
                 word = next(words, "")
@@ -572,20 +588,23 @@ class Style:
                         f"unable to parse {word!r} as color; {error}"
                     ) from None
                 color = word
-        style = Style(color=color, bgcolor=bgcolor, link=link, **attributes)
+        style = Style(color=color, bg=bg, link=link, **attributes)
         return style
 
     @lru_cache(maxsize=1024)
-    def get_html_style(self, theme: Optional[TerminalTheme] = None) -> str:
+    def get_html_style(
+            self, 
+            theme: Optional[TerminalTheme] = None
+            ) -> str:
         """Get a CSS style rule."""
         theme = theme or DEFAULT_TERMINAL_THEME
         css: List[str] = []
         append = css.append
 
         color = self.color
-        bgcolor = self.bgcolor
+        bg = self.bg
         if self.reverse:
-            color, bgcolor = bgcolor, color
+            color, bg = bg, color
         if self.dim:
             foreground_color = (
                 theme.foreground_color if color is None else color.get_truecolor(theme)
@@ -597,8 +616,8 @@ class Style:
             theme_color = color.get_truecolor(theme)
             append(f"color: {theme_color.hex}")
             append(f"text-decoration-color: {theme_color.hex}")
-        if bgcolor is not None:
-            theme_color = bgcolor.get_truecolor(theme, foreground=False)
+        if bg is not None:
+            theme_color = bg.get_truecolor(theme, foreground=False)
             append(f"background-color: {theme_color.hex}")
         if self.bold:
             append("font-weight: bold")
@@ -626,7 +645,10 @@ class Style:
         return sum(iter_styles, next(iter_styles))
 
     @classmethod
-    def chain(cls, *styles: "Style") -> "Style":
+    def chain(
+            cls, 
+            *styles: "Style"
+            ) -> "Style":
         """Combine styles from positional argument in to a single style.
 
         Args:
@@ -650,7 +672,7 @@ class Style:
         style._ansi = self._ansi
         style._style_definition = self._style_definition
         style._color = self._color
-        style._bgcolor = self._bgcolor
+        style._bg = self._bg
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
         style._link = self._link
@@ -673,7 +695,7 @@ class Style:
         style._ansi = self._ansi
         style._style_definition = self._style_definition
         style._color = self._color
-        style._bgcolor = self._bgcolor
+        style._bg = self._bg
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
         style._link = link
@@ -732,7 +754,7 @@ class Style:
         new_style._ansi = None
         new_style._style_definition = None
         new_style._color = style._color or self._color
-        new_style._bgcolor = style._bgcolor or self._bgcolor
+        new_style._bg = style._bg or self._bg
         new_style._attributes = (self._attributes & ~style._set_attributes) | (
             style._attributes & style._set_attributes
         )

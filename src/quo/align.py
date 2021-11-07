@@ -1,6 +1,11 @@
 import sys
 from itertools import chain
-from typing import TYPE_CHECKING, Iterable, Optional
+from typing import (
+        TYPE_CHECKING,
+        Iterable, 
+        Optional,
+        Union
+        )
 
 if sys.version_info >= (3, 8):
     from typing import Literal

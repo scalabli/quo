@@ -1,4 +1,7 @@
 import colorsys
+import io
+from time import process_time
+
 from quo.i_o import echo
 from quo.color.rgb import *
 from quo.tabulate import tabular
@@ -22,7 +25,7 @@ echo(f"Highlighting")
 echo(f"* ", fg=khaki, nl=False)
 echo(f"Lightweight")
 
-import colorsys
+
 import io
 from time import process_time
 
@@ -47,22 +50,26 @@ from quo.text import Text
 
 class ColorBox:
     def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
+            self, 
+            console: Console, 
+            options: ConsoleOptions
+            ) -> RenderResult:
         for y in range(0, 5):
             for x in range(options.max_width):
                 h = x / options.max_width
                 l = 0.1 + ((y / 5) * 0.7)
                 r1, g1, b1 = colorsys.hls_to_rgb(h, l, 1.0)
                 r2, g2, b2 = colorsys.hls_to_rgb(h, l + 0.7 / 10, 1.0)
-                bgcolor = Color.from_rgb(r1 * 255, g1 * 255, b1 * 255)
+                bg = Color.from_rgb(r1 * 255, g1 * 255, b1 * 255)
                 color = Color.from_rgb(r2 * 255, g2 * 255, b2 * 255)
-                yield Segment("▄", Style(color=color, bgcolor=bgcolor))
+                yield Segment("▄", Style(color=color, bg=bg))
             yield Segment.line()
 
     def __rich_measure__(
-        self, console: "Console", options: ConsoleOptions
-    ) -> Measurement:
+            self,
+            console: "Console", 
+            options: ConsoleOptions
+            ) -> Measurement:
         return Measurement(1, options.max_width)
 
 
@@ -118,7 +125,10 @@ def make_test_card() -> Table:
         ),
     )
 
-    def comparison(renderable1: RenderableType, renderable2: RenderableType) -> Table:
+    def comparison(
+            renderable1: RenderableType,
+            renderable2: RenderableType
+            ) -> Table:
         table = Table(show_header=False, pad_edge=False, box=None, expand=True)
         table.add_column("1", ratio=1)
         table.add_column("2", ratio=1)
@@ -258,7 +268,7 @@ if __name__ == "__main__":  # pragma: no cover
     for line in text.splitlines():
         print(line)
 
-    print(f"rendered in {taken}ms")
+    echo(f"rendered in {taken}ms")
 
     from quo.panel import Panel
 
@@ -289,7 +299,7 @@ It takes a lot of time to develop Rich and to provide support.
 
 Consider supporting my work via Github Sponsors (ask your company / organization), or buy me a coffee to say thanks.
 
-- Will McGugan"""
+- Gerrishon Sirere"""
     )
 
     message = Table.grid(padding=2)

@@ -16,7 +16,7 @@ from abc import ABC, abstractmethod
 from quo.repr import RichReprResult
 from array import array
 from collections import Counter, defaultdict, deque, UserDict, UserList
-from dataclasses import dataclass, fields, is_dataclass
+from dataclasses import dataclass, fields, is_dataclass, field
 from inspect import isclass
 from itertools import islice
 

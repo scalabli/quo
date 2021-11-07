@@ -4,7 +4,7 @@ from time import monotonic
 from typing import Iterable, List, Optional
 
 from quo.color.color import Color, blend_rgb
-from .color_triplet import ColorTriplet
+from quo.color.color_triplet import ColorTriplet
 from quo.console.console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
 from .measure import Measurement

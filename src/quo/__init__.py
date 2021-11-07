@@ -22,12 +22,6 @@ from .core import (
 
 from quo.console import Console
 
-#from quo.accordance import (
-#       DEFAULT_COLUMNS,
-#        get_winterm_size,
-#       strip_ansi_colors
-#        )
-
 #from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
 #from quo.expediency import LazyFile
@@ -102,7 +96,7 @@ from typing import IO, TYPE_CHECKING, Any, Optional
 
 from ._extension import load_ipython_extension
 
-__all__ = ["get_console", "reconfigure", "evoke", "inspect"]
+__all__ = ["get_console", "reconfigure", "inspect"]
 
 if TYPE_CHECKING:
     from quo.console import Console

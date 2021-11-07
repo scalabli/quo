@@ -28,7 +28,7 @@ from quo.control import strip_control_codes
 from quo._jupyter import JupyterMixin
 from quo.measure import Measurement
 from quo.segment import Segment
-from quo.text.text import Span
+
 from quo.style import Style
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -42,8 +42,69 @@ EmojiVariant = Literal["emoji", "text"]
 _re_whitespace = re.compile(r"\s+$")
 
 TextType = Union[str, "Text"]
+StyleType = Union[str, "Style"]
 
 GetStyleCallable = Callable[[str], Optional[StyleType]]
+
+
+class Span(NamedTuple):
+    """A marked up region in some text."""
+
+    start: int
+    """Span start index."""
+    end: int
+    """Span end index."""
+    style: Union[str, Style]
+    """Style associated with the span."""
+
+    def __repr__(self) -> str:
+        return (
+            f"Span({self.start}, {self.end}, {self.style!r})"
+            if (isinstance(self.style, Style) and self.style._meta)
+            else f"Span({self.start}, {self.end}, {str(self.style)!r})"
+        )
+
+    def __bool__(self) -> bool:
+        return self.end > self.start
+
+    def split(self, offset: int) -> Tuple["Span", Optional["Span"]]:
+        """Split a span in to 2 from a given offset."""
+
+        if offset < self.start:
+            return self, None
+        if offset >= self.end:
+            return self, None
+
+        start, end, style = self
+        span1 = Span(start, min(end, offset), style)
+        span2 = Span(span1.end, end, style)
+        return span1, span2
+
+    def move(self, offset: int) -> "Span":
+        """Move start and end by a given offset.
+
+        Args:
+            offset (int): Number of characters to add to start and end.
+
+        Returns:
+            TextSpan: A new TextSpan with adjusted position.
+        """
+        start, end, style = self
+        return Span(start + offset, end + offset, style)
+
+    def right_crop(self, offset: int) -> "Span":
+        """Crop the span at the given offset.
+
+        Args:
+            offset (int): A value between start and end.
+
+        Returns:
+            Span: A new (possibly smaller) span.
+        """
+        start, end, style = self
+        if offset >= end:
+            return self
+        return Span(start, min(offset, end), style)
 
 
 class Text(JupyterMixin):

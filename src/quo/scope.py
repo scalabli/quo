@@ -7,14 +7,13 @@ import sys
 from array import array
 from collections import Counter, defaultdict, deque, UserDict, UserList
 import dataclasses
-from dataclasses import dataclass, fields, is_dataclass
+from dataclasses import dataclass, fields, is_dataclass, field
 from inspect import isclass
 from itertools import islice
 import re
 
 from .highlighter import ReprHighlighter
 from .panel import Panel
-#from quo._pretty import Pretty
 from .table import Table
 from quo._text import Text
 
