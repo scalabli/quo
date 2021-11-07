@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, Union
 
 from .box import Box, ROUNDED
 
@@ -7,12 +7,13 @@ from quo._jupyter import JupyterMixin
 from .measure import Measurement, measure_renderables
 from .padding import Padding, PaddingDimensions
 from .style import StyleType
-from quo._text import Text, TextType
+from quo._text import Text
 from .segment import Segment
 
 if TYPE_CHECKING:
     from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 
+TextType = Union[str, "Text"]
 
 class Panel(JupyterMixin):
     """A console renderable that draws a border around its contents.
