@@ -3,7 +3,7 @@ from typing import Optional, Union
 from quo.color.color import Color
 from quo.console.console import Console, ConsoleOptions, RenderResult
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style
 
