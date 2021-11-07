@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from quo.text.text import Text
 
 from .cells import cell_len
-from .measure import Measurement
+from quo.measure.measure import Measurement
 
 T = TypeVar("T")
 
