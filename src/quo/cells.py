@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Dict, List
 
-from ._cell_widths import CELL_WIDTHS
+from quo.measure._cell_widths import CELL_WIDTHS
 from ._lru_cache import LRUCache
 
 
