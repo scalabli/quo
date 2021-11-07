@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     )
 # jupyter
 from quo._jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .style import Style
 from .segment import Segment
 
