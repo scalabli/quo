@@ -201,7 +201,7 @@ class Style:
                 self._meta,
             )
         )
-        self._null = not (self._set_attributes or color or bg or link or meta)
+        self._null = not (self._set_attributes or fg or bg or link or meta)
 
     @classmethod
     def null(cls) -> "Style":
