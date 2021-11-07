@@ -2,7 +2,7 @@ from math import sqrt
 from functools import lru_cache
 from typing import Sequence, Tuple, TYPE_CHECKING
 
-from quo.color.color_triplet import ColorTriplet
+from quo.color.rgb import ColorTriplet
 
 if TYPE_CHECKING:
     from quo.table import Table
@@ -30,13 +30,13 @@ class Palette:
             title="Palette",
             caption=f"{len(self._colors)} colors",
             highlight=True,
-            caption_justify="right",
+            caption_situate="right",
         )
         for index, color in enumerate(self._colors):
             table.add_row(
                 str(index),
                 repr(color),
-                Text(" " * 16, style=Style(bgcolor=Color.from_rgb(*color))),
+                Text(" " * 16, style=Style(bg=Color.from_rgb(*color))),
             )
         return table
 
@@ -91,9 +91,9 @@ if __name__ == "__main__":  # pragma: no cover
                     l = y / (height + 1)
                     r1, g1, b1 = colorsys.hls_to_rgb(h, l, 1.0)
                     r2, g2, b2 = colorsys.hls_to_rgb(h, l + (1 / height / 2), 1.0)
-                    bgcolor = Color.from_rgb(r1 * 255, g1 * 255, b1 * 255)
-                    color = Color.from_rgb(r2 * 255, g2 * 255, b2 * 255)
-                    yield Segment("▄", Style(color=color, bgcolor=bgcolor))
+                    bg = Color.from_rgb(r1 * 255, g1 * 255, b1 * 255)
+                    fg = Color.from_rgb(r2 * 255, g2 * 255, b2 * 255)
+                    yield Segment("▄", Style(fg=fg, bg=bg))
                 yield Segment.line()
 
     console = Console()
