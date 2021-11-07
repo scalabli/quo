@@ -92,7 +92,7 @@ class TextElement(MarkdownElement):
 
     def on_enter(self, context: "MarkdownContext") -> None:
         self.style = context.enter_style(self.style_name)
-        self.text = Text(justify="left")
+        self.text = Text(situate="left")
 
     def on_text(self, context: "MarkdownContext", text: TextType) -> None:
         self.text.append(text, context.current_style if isinstance(text, str) else None)
@@ -105,19 +105,19 @@ class Paragraph(TextElement):
     """A Paragraph."""
 
     style_name = "markdown.paragraph"
-    justify: JustifyMethod
+    situate: JustifyMethod
 
     @classmethod
     def create(cls, markdown: "Markdown", node: MarkdownElement) -> "Paragraph":
-        return cls(justify=markdown.justify or "left")
+        return cls(situate=markdown.situate or "left")
 
-    def __init__(self, justify: JustifyMethod) -> None:
-        self.justify = justify
+    def __init__(self, situate: JustifyMethod) -> None:
+        self.situate = situate
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
-        self.text.justify = self.justify
+        self.text.situate = self.situate
         yield self.text
 
 
@@ -142,7 +142,7 @@ class Heading(TextElement):
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
         text = self.text
-        text.justify = "center"
+        text.situate = "center"
         if self.level == 1:
             # Draw a border around h1s
             yield Panel(
@@ -328,7 +328,7 @@ class ImageItem(TextElement):
 
     def on_enter(self, context: "MarkdownContext") -> None:
         self.link = context.current_style.link
-        self.text = Text(justify="left")
+        self.text = Text(situate="left")
         super().on_enter(context)
 
     def __rich_console__(
@@ -395,7 +395,7 @@ class Markdown(JupyterMixin):
     Args:
         markup (str): A string containing markdown.
         code_theme (str, optional): Pygments theme for code blocks. Defaults to "monokai".
-        justify (JustifyMethod, optional): Justify value for paragraphs. Defaults to None.
+        situate (JustifyMethod, optional): Justify value for paragraphs. Defaults to None.
         style (Union[str, Style], optional): Optional style to apply to markdown.
         hyperlinks (bool, optional): Enable hyperlinks. Defaults to ``True``.
         inline_code_lexer: (str, optional): Lexer to use if inline code highlighting is
@@ -420,7 +420,7 @@ class Markdown(JupyterMixin):
         self,
         markup: str,
         code_theme: str = "monokai",
-        justify: Optional[JustifyMethod] = None,
+        situate: Optional[JustifyMethod] = None,
         style: Union[str, Style] = "none",
         hyperlinks: bool = True,
         inline_code_lexer: Optional[str] = None,
@@ -430,7 +430,7 @@ class Markdown(JupyterMixin):
         parser = Parser()
         self.parsed = parser.parse(markup)
         self.code_theme = code_theme
-        self.justify: Optional[JustifyMethod] = justify
+        self.situate: Optional[JustifyMethod] = situate
         self.style = style
         self.hyperlinks = hyperlinks
         self.inline_code_lexer = inline_code_lexer
@@ -535,7 +535,7 @@ if __name__ == "__main__":  # pragma: no cover
     import sys
 
     parser = argparse.ArgumentParser(
-        description="Render Markdown to the console with Rich"
+        description="Render Markdown to the console"
     )
     parser.add_argument(
         "path",
@@ -580,11 +580,11 @@ if __name__ == "__main__":  # pragma: no cover
         help="width of output (default will auto-detect)",
     )
     parser.add_argument(
-        "-j",
-        "--justify",
-        dest="justify",
+        "-s",
+        "--situate",
+        dest="situate",
         action="store_true",
-        help="enable full text justify",
+        help="enable full text situate",
     )
     parser.add_argument(
         "-p",
@@ -595,7 +595,7 @@ if __name__ == "__main__":  # pragma: no cover
     )
     args = parser.parse_args()
 
-    from rich.console import Console
+    from quo.console import Console
 
     if args.path == "-":
         markdown_body = sys.stdin.read()
@@ -604,7 +604,7 @@ if __name__ == "__main__":  # pragma: no cover
             markdown_body = markdown_file.read()
     markdown = Markdown(
         markdown_body,
-        justify="full" if args.justify else "left",
+        situate="full" if args.situate else "left",
         code_theme=args.code_theme,
         hyperlinks=args.hyperlinks,
         inline_code_lexer=args.inline_code_lexer,
