@@ -39,7 +39,6 @@ DEFAULT_OVERFLOW: "OverflowMethod" = "fold"
 
 _re_whitespace = re.compile(r"\s+$")
 
-TextType = Union[str, "Text"]
 StyleType = Union[str, "Style"]
 
 GetStyleCallable = Callable[[str], Optional[StyleType]]
