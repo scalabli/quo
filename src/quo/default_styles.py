@@ -69,7 +69,7 @@ DEFAULT_STYLES: Dict[str, Style] = {
     "repr.ipv4": Style(bold=True, fg="vgreen"),
     "repr.ipv6": Style(bold=True, fg="vgreen"),
     "repr.eui48": Style(bold=True, fg="vgreen"),
-    "repr.eui64": Style(bold=True, fg="vggreen"),
+    "repr.eui64": Style(bold=True, fg="vgreen"),
     "repr.tag_start": Style(bold=True),
     "repr.tag_name": Style(fg="vmagenta", bold=True),
     "repr.tag_contents": Style(fg="default"),
