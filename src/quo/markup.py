@@ -3,7 +3,7 @@ from operator import attrgetter
 import re
 from typing import Callable, Iterable, List, Match, NamedTuple, Optional, Tuple, Union
 
-from quo.errors import MarkupError
+from quo.errors.exceptions import MarkupError
 from .style import Style
 #text 
 from quo._text import Span, Text
