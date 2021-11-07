@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .segment import Segment
-from .style import StyleType
+from quo.style import StyleType
 
 if TYPE_CHECKING:
-    from .console import Console, ConsoleOptions, RenderResult, RenderableType
+    from quo.console.console import Console, ConsoleOptions, RenderResult, RenderableType
 
 
 class Styled:
@@ -35,7 +35,7 @@ class Styled:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich import print
+    from quo import Console
     from rich.panel import Panel
 
     panel = Styled(Panel("hello"), "on blue")
