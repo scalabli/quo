@@ -1,7 +1,7 @@
 from typing import cast, List, Optional, TYPE_CHECKING
 
 from ._spinners import SPINNERS
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .table import Table
 from quo.text.text import Text
 
