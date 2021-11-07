@@ -15,7 +15,7 @@ from ._loop import loop_first_last, loop_last
 from ._pick import pick_bool
 from ._ratio import ratio_distribute, ratio_reduce
 from quo._jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .padding import Padding, PaddingDimensions
 from .protocol import is_renderable
 from .segment import Segment
