@@ -37,7 +37,7 @@ from .abc import RichRenderable
 from .cells import cell_len
 from .highlighter import ReprHighlighter
 from quo._jupyter import JupyterMixin, JupyterRenderable
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from quo._text import Text
 
 if TYPE_CHECKING:
@@ -128,7 +128,7 @@ def install(
         if value is not None:
             assert console is not None
             builtins._ = None  # type: ignore
-            console.print(
+            console.echo(
                 value
                 if isinstance(value, RichRenderable)
                 else Pretty(
@@ -145,10 +145,10 @@ def install(
 
     def ipy_display_hook(value: Any) -> None:  # pragma: no cover
         assert console is not None
-        # always skip rich generated jupyter renderables or None values
+        # always skip quo generated jupyter renderables or None values
         if isinstance(value, JupyterRenderable) or value is None:
             return
-        # on jupyter rich display, if using one of the special representations don't use rich
+        # on jupyter quo display, if using one of the special representations don't use quo
         if console.is_jupyter and any(
             _re_jupyter_repr.match(attr) for attr in dir(value)
         ):
@@ -158,7 +158,7 @@ def install(
         if isinstance(value, ConsoleRenderable):
             console.line()
 
-        console.print(
+        console.echo(
             value
             if isinstance(value, RichRenderable)
             else Pretty(
@@ -783,7 +783,7 @@ def pprint(
         expand_all (bool, optional): Expand all containers. Defaults to False.
     """
     _console = _get_console() if console is None else console
-    _console.print(
+    _console.echo(
         Pretty(
             _object,
             max_length=max_length,
