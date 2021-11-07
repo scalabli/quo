@@ -1,7 +1,7 @@
 from typing import Optional, TYPE_CHECKING
 # jupyter JupyterMixin
 from quo._jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 
 if TYPE_CHECKING:
     from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
