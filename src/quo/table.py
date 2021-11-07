@@ -19,8 +19,8 @@ from .measure import Measurement
 from .padding import Padding, PaddingDimensions
 from .protocol import is_renderable
 from .segment import Segment
-from .style import Style, StyleType
-from quo._text import Text, TextType
+from .style import Style
+from quo._text import Text
 
 if TYPE_CHECKING:
     from quo.console.console import (
@@ -32,6 +32,8 @@ if TYPE_CHECKING:
         RenderResult,
     )
 
+TextType = Union[str, "Text"]
+StyleType = Union[str, "Style"]
 
 @dataclass
 class Column:
