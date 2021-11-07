@@ -2,7 +2,7 @@ from operator import itemgetter
 from typing import Callable, Iterable, NamedTuple, Optional, TYPE_CHECKING
 
 from quo.errors import exceptions
-from .protocol import is_renderable
+from quo.protocol import is_renderable
 
 if TYPE_CHECKING:
     from quo.console.console import Console, ConsoleOptions, RenderableType
@@ -129,7 +129,7 @@ def measure_renderables(
     """Get a measurement that would fit a number of renderables.
 
     Args:
-        console (~rich.console.Console): Console instance.
+        console (~quo.console.Console): Console instance.
         renderables (Iterable[RenderableType]): One or more renderable objects.
         max_width (int): The maximum width available.
 
