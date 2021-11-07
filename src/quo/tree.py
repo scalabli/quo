@@ -3,7 +3,7 @@ from typing import Iterator, List, Optional, Tuple, Union
 from ._loop import loop_first, loop_last
 from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 from .jupyter import JupyterMixin
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style, StyleStack
 from .styled import Styled
