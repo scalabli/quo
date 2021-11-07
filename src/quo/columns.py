@@ -3,10 +3,10 @@ from itertools import chain
 from operator import itemgetter
 from typing import Dict, Iterable, List, Optional, Tuple
 
-from .align import Align, AlignMethod
+from quo.align import Align, AlignMethod
 from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 from .constrain import Constrain
-from .measure import Measurement
+from quo.measure.measure import Measurement
 from .padding import Padding, PaddingDimensions
 from .table import Table
 from quo.text.text import TextType
@@ -169,19 +169,3 @@ class Columns(JupyterMixin):
                 row = row[::-1]
             add_row(*row)
         yield table
-
-
-if __name__ == "__main__":  # pragma: no cover
-    import os
-
-    console = Console()
-
-    files = [f"{i} {s}" for i, s in enumerate(sorted(os.listdir()))]
-    columns = Columns(files, padding=(0, 1), expand=False, equal=False)
-    console.print(columns)
-    console.rule()
-    columns.column_first = True
-    console.print(columns)
-    columns.right_to_left = True
-    console.rule()
-    console.print(columns)
