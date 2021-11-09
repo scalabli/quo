@@ -21,7 +21,7 @@ class Padding(JupyterMixin):
     """Draw space around content.
 
     Example:
-        >>> print(Padding("Hello", (2, 4), style="on blue"))
+        >>> echo(Padding("Hello", (2, 4), style="on blue"))
 
     Args:
         renderable (RenderableType): String or other renderable.
@@ -45,7 +45,11 @@ class Padding(JupyterMixin):
         self.expand = expand
 
     @classmethod
-    def indent(cls, renderable: "RenderableType", level: int) -> "Padding":
+    def indent(
+            cls,
+            renderable: "RenderableType",
+            level: int
+            ) -> "Padding":
         """Make padding instance to render an indent.
 
         Args:
@@ -72,7 +76,7 @@ class Padding(JupyterMixin):
         if len(pad) == 4:
             top, right, bottom, left = cast(Tuple[int, int, int, int], pad)
             return (top, right, bottom, left)
-        raise ValueError(f"1, 2 or 4 integers required for padding; {len(pad)} given")
+        raise UsageError(f"1, 2 or 4 integers required for padding; {len(pad)} given")
 
     def __repr__(self) -> str:
         return f"Padding({self.renderable!r}, ({self.top},{self.right},{self.bottom},{self.left}))"

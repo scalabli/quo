@@ -94,9 +94,8 @@ from quo.control import Control
 from quo._emoji import EmojiVariant
 from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
-from quo.measure import Measurement, measure_renderables
+from quo.measure.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
-#from quo._pretty import Pretty, is_expandable
 from quo.region import Region
 from quo.scope import render_scope
 from quo.screen import Screen

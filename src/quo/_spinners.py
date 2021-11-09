@@ -565,7 +565,7 @@ SPINNERS = {
             "[=   ]",
         ],
     },
-    "bouncingBall": {
+    "bouncingball": {
         "interval": 80,
         "frames": [
             "( ●    )",
@@ -600,7 +600,7 @@ SPINNERS = {
             "🕚 ",
         ],
     },
-    "earth": {"interval": 180, "frames": ["🌍 ", "🌎 ", "🌏 "]},
+    "globe": {"interval": 180, "frames": ["🌍 ", "🌎 ", "🌏 "]},
     "material": {
         "interval": 17,
         "frames": [
@@ -832,7 +832,7 @@ SPINNERS = {
             "ββββββρ",
         ],
     },
-    "aesthetic": {
+    "bar": {
         "interval": 80,
         "frames": [
             "▰▱▱▱▱▱▱",

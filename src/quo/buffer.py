@@ -238,7 +238,7 @@ class Buffer:
         tempfile_suffix: Union[str, Callable[[], str]] = "",
         tempfile: Union[str, Callable[[], str]] = "",
         name: str = "",
-        complete_while_typing: FilterOrBool = False,
+        auto_complete: FilterOrBool = True,
         validate_while_typing: FilterOrBool = False,
         enable_history_search: FilterOrBool = False,
         document: Optional[Document] = None,
@@ -254,7 +254,7 @@ class Buffer:
 
         # Accept both filters and booleans as input.
         enable_history_search = to_filter(enable_history_search)
-        complete_while_typing = to_filter(complete_while_typing)
+        auto_complete = to_filter(auto_complete)
         validate_while_typing = to_filter(validate_while_typing)
         read_only = to_filter(read_only)
         multiline = to_filter(multiline)
@@ -268,7 +268,7 @@ class Buffer:
         self.accept_handler = accept_handler
 
         # Filters. (Usually, used by the key bindings to drive the buffer.)
-        self.complete_while_typing = complete_while_typing
+        self.auto_complete = auto_complete
         self.validate_while_typing = validate_while_typing
         self.enable_history_search = enable_history_search
         self.read_only = read_only
@@ -1267,8 +1267,8 @@ class Buffer:
         if fire_event:  # XXX: rename to `start_complete`.
             self.on_text_insert.fire()
 
-            # Only complete when "complete_while_typing" is enabled.
-            if self.completer and self.complete_while_typing():
+            # Only complete when "auto_complete" is enabled.
+            if self.completer and self.auto_complete():
                 get_app().create_background_task(self._async_completer())
 
             # Call auto_suggest.

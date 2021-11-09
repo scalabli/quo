@@ -514,11 +514,12 @@ class Elicit(Generic[_T]):
 
         return Buffer(
             name=DEFAULT_BUFFER,
-            # Make sure that complete_while_typing is disabled when
+            #auto_complete  >>buffer
+            # Make sure that auto_complete is disabled when
             # enable_history_search is enabled. (First convert to Filter,
             # to avoid doing bitwise operations on bool objects.)
-            complete_while_typing=Condition(
-                lambda: is_true(self.complete_while_typing)
+            auto_complete=Condition(
+                lambda: is_true(self.auto_complete)
                 and not is_true(self.enable_history_search)
                 and not self.complete_style == CompleteStyle.READLINE_LIKE
             ),

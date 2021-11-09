@@ -38,6 +38,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 from typing import TYPE_CHECKING, Awaitable, Callable, Hashable, List, Optional, Sequence, Tuple, TypeVar, Union, cast
 
 from quo.cache import SimpleCache
+from quo.errors.exceptions import UsageError
 from quo.filters import FilterOrBool, Never, to_filter
 from quo.i_o import echo
 from quo.keys.list import KEY_ALIASES, Keys
@@ -315,8 +316,8 @@ class KeyBinder(KeyBindingsBase):
         if found:
             self._clear_cache()
         else:
-            # No key binding found for this function. Raise ValueError.
-            raise ValueError("Binding not found: %r" % (function,))
+            # No key binding found for this function. Raise UsageError.
+            raise UsageError("Binding not found: %r" % (function,))
 
     # For backwards-compatibility.
     add_binding = add

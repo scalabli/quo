@@ -31,7 +31,7 @@ class WordCompleter(Completer):
     def __init__(
             self,
             words: Union[List[str], Callable[[], List[str]]],
-            ignore_case: bool = False,
+            ignore_case: bool = True,
             display_dict: Optional[Mapping[str, Textual]] = None,
             meta_dict: Optional[Mapping[str, Textual]] = None,
             WORD: bool = False,

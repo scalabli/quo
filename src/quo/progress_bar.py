@@ -1,10 +1,10 @@
 import math
 from functools import lru_cache
 from time import monotonic
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, Union
 
 from quo.color.color import Color, blend_rgb
-from quo.color.color_triplet import ColorTriplet
+from quo.color.rgb import ColorTriplet
 from quo.console.console import Console, ConsoleOptions, RenderResult
 from quo.jupyter import JupyterMixin
 from quo.measure.measure import Measurement
@@ -16,7 +16,7 @@ PULSE_SIZE = 20
 StyleType = Union[str, "Style"]
 
 class ProgressBar(JupyterMixin):
-    """Renders a (progress) bar. Used by rich.progress.
+    """Renders a (progress) bar. Used by quo.progress.
 
     Args:
         total (float, optional): Number of steps in the bar. Defaults to 100.

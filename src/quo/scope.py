@@ -2280,9 +2280,8 @@ def install(
         expand_all (bool, optional): Expand all containers. Defaults to False.
         max_frames (int): Maximum number of frames to show in a traceback, 0 for no maximum. Defaults to 100.
     """
-    from rich import get_console
 
-    from .console import ConsoleRenderable  # needed here to prevent circular import
+    from quo.console.console import ConsoleRenderable  # needed here to prevent circular import
 
     console = console or get_console()
     assert console is not None
@@ -2309,10 +2308,10 @@ def install(
 
     def ipy_display_hook(value: Any) -> None:  # pragma: no cover
         assert console is not None
-        # always skip rich generated jupyter renderables or None values
+        # skip quo generated jupyter renderables or None values
         if isinstance(value, JupyterRenderable) or value is None:
             return
-        # on jupyter rich display, if using one of the special representations don't use rich
+        # on jupyter quo display, if using one of the special representations don't use rich
         if console.is_jupyter and any(
             _re_jupyter_repr.match(attr) for attr in dir(value)
         ):
@@ -2322,7 +2321,7 @@ def install(
         if isinstance(value, ConsoleRenderable):
             console.line()
 
-        console.print(
+        console.echo(
             value
             if isinstance(value, RichRenderable)
             else Pretty(
@@ -2375,7 +2374,7 @@ class Pretty(JupyterMixin):
         highlighter: Optional["HighlighterType"] = None,
         *,
         indent_size: int = 4,
-        justify: Optional["JustifyMethod"] = None,
+        situate: Optional["JustifyMethod"] = None,
         overflow: Optional["OverflowMethod"] = None,
         no_wrap: Optional[bool] = False,
         indent_guides: bool = False,
@@ -2388,7 +2387,7 @@ class Pretty(JupyterMixin):
         self._object = _object
         self.highlighter = highlighter or ReprHighlighter()
         self.indent_size = indent_size
-        self.justify = justify
+        self.situate = situate
         self.overflow = overflow
         self.no_wrap = no_wrap
         self.indent_guides = indent_guides
@@ -2411,7 +2410,7 @@ class Pretty(JupyterMixin):
         )
         pretty_text = Text(
             pretty_str,
-            justify=self.justify or options.justify,
+            situate=self.situate or options.situate,
             overflow=self.overflow or options.overflow,
             no_wrap=pick_bool(self.no_wrap, options.no_wrap),
             style="pretty",
@@ -3028,7 +3027,7 @@ def render_scope(
     """
     highlighter = ReprHighlighter()
     items_table = Table.grid(padding=(0, 1), expand=False)
-    items_table.add_column(justify="right")
+    items_table.add_column(situate="right")
 
     def sort_items(item: Tuple[str, Any]) -> Tuple[bool, str]:
         """Sort special variables first, then alphabetically."""

@@ -9,12 +9,12 @@ import sys
 from quo import Console, command, app
 from quo.filesize import decimal
 from quo.markup import escape
-from quo.text.text import Text
+from quo.text import Text
 from quo.tree import Tree
 con = Console()
 @command()
 @app("--directory")
-@app("--tree")
+@app("--tree", help="Usage:[/] python3 tree.py <DIRECTORY>")
 def walk_directory(directory: pathlib.Path, tree: Tree) -> None:
     """Recursively build a Tree with directory contents."""
     # Sort dirs first then by filename
@@ -46,9 +46,11 @@ def walk_directory(directory: pathlib.Path, tree: Tree) -> None:
 
 try:
     directory = os.path.abspath(sys.argv[1])
-except IndexError:
-    con.echo("[b]Usage:[/] python tree.py <DIRECTORY>")
-else:
+
+#except IndexError:
+#   & echo(f"Usage:[/] python3 tree.py
+#    con.echo("[b]Usage:[/] python tree.py <DIRECTORY>")
+#else:
     tree = Tree(
         f":open_file_folder: [link file://{directory}]{directory}",
         guide_style="bold bright_blue",

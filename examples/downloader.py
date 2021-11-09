@@ -1,5 +1,5 @@
 """
-A rudimentary URL downloader (like wget or curl) to demonstrate Rich progress bars.
+A rudimentary URL downloader (like wget or curl) to demonstrate quo progress bars.
 """
 
 import os.path
@@ -10,8 +10,8 @@ from functools import partial
 from threading import Event
 from typing import Iterable
 from urllib.request import urlopen
-
-from rich.progress import (
+from quo import command, app
+from quo.progress.progress import (
     BarColumn,
     DownloadColumn,
     Progress,
@@ -22,7 +22,7 @@ from rich.progress import (
 )
 
 progress = Progress(
-    TextColumn("[bold blue]{task.fields[filename]}", justify="right"),
+    TextColumn("[bold blue]{task.fields[filename]}", situate="right"),
     BarColumn(bar_width=None),
     "[progress.percentage]{task.percentage:>3.1f}%",
     "•",
@@ -36,16 +36,23 @@ progress = Progress(
 
 done_event = Event()
 
-
+@command()
+@app("--signum")
+@app("--frame")
 def handle_sigint(signum, frame):
     done_event.set()
 
 
 signal.signal(signal.SIGINT, handle_sigint)
 
-
+@command()
+@app("--task_id")
+@app("--url")
+@app("--path")
 def copy_url(task_id: TaskID, url: str, path: str) -> None:
     """Copy data from a url to a local file."""
+
+    url = prompt("Enter the url:")
     progress.console.log(f"Requesting {url}")
     response = urlopen(url)
     # This will break if the response doesn't contain content length
@@ -59,7 +66,9 @@ def copy_url(task_id: TaskID, url: str, path: str) -> None:
                 return
     progress.console.log(f"Downloaded {path}")
 
-
+@command()
+@app("--urls", type=str, help="url file")
+@app("--dest_dir", type=str)
 def download(urls: Iterable[str], dest_dir: str):
     """Download multuple files to the given directory."""
 

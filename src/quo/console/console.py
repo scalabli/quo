@@ -48,11 +48,10 @@ from quo._log_render import FormatTimeCallable, LogRender
 from quo.align import Align, AlignMethod
 from quo.color.color import ColorSystem
 from quo.control import Control
-# emoji EmojiVariant
 from quo._emoji import EmojiVariant
 from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
-from quo.measure import Measurement, measure_renderables
+from quo.measure.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
 from quo.pretty import Pretty, is_expandable
 from quo.region import Region
@@ -1092,7 +1091,7 @@ class Console:
         Returns:
             Status: A Status object that may be used as a context manager.
         """
-        from .status import Status
+        from quo.status import Status
 
         status_renderable = Status(
             status,
@@ -1465,7 +1464,7 @@ class Console:
             style (str, optional): Style of line. Defaults to "rule.line".
             align (str, optional): How to align the title, one of "left", "center", or "right". Defaults to "center".
         """
-        from .rule import Rule
+        from quo.rule import Rule
 
         rule = Rule(title=title, characters=characters, style=style, align=align)
         self.echo(rule)
@@ -1518,7 +1517,7 @@ class Console:
         *objects: Any,
         sep: str = " ",
         end: str = "\n",
-        style: Optional[Union[str, Style]] = None,
+        fg: Optional[Union[str, Style]] = None,
         situate: Optional[JustifyMethod] = None,
         overflow: Optional[OverflowMethod] = None,
         no_wrap: Optional[bool] = None,
@@ -1537,7 +1536,7 @@ class Console:
             objects (positional args): Objects to log to the terminal.
             sep (str, optional): String to write between print data. Defaults to " ".
             end (str, optional): String to write at end of print data. Defaults to "\\\\n".
-            style (Union[str, Style], optional): A style to apply to output. Defaults to None.
+            fg (Union[str, Style], optional): Foreground to apply to output. Defaults to None.
             situate (str, optional): Justify method: "default", "left", "right", "center", or "full". Defaults to ``None``.
             overflow (str, optional): Overflow method: "ignore", "crop", "fold", or "ellipsis". Defaults to None.
             no_wrap (Optional[bool], optional): Disable word wrapping. Defaults to None.
@@ -1587,14 +1586,14 @@ class Console:
             new_segments: List[Segment] = []
             extend = new_segments.extend
             render = self.render
-            if style is None:
+            if fg is None:
                 for renderable in renderables:
                     extend(render(renderable, render_options))
             else:
                 for renderable in renderables:
                     extend(
                         Segment.apply_style(
-                            render(renderable, render_options), self.get_style(style)
+                            render(renderable, render_options), self.get_style(fg)
                         )
                     )
             if new_line_start:
@@ -1716,7 +1715,7 @@ class Console:
             suppress (Iterable[Union[str, ModuleType]]): Optional sequence of modules or paths to exclude from traceback.
             max_frames (int): Maximum number of frames to show in a traceback, 0 for no maximum. Defaults to 100.
         """
-        from .traceback import Traceback
+        from quo.traceback import Traceback
 
         traceback = Traceback(
             width=width,
@@ -1777,7 +1776,7 @@ class Console:
         log_locals: bool = False,
         _stack_offset: int = 1,
     ) -> None:
-        """Log rich content to the terminal.
+        """Log content to the terminal.
 
         Args:
             objects (positional args): Objects to log to the terminal.
@@ -1900,9 +1899,9 @@ class Console:
         rendered = "".join(output)
         return rendered
 
-    def input(
+    def prompt(
         self,
-        prompt: TextType = "",
+        input: TextType = "",
         *,
         markup: bool = True,
         emoji: bool = True,
@@ -1912,7 +1911,7 @@ class Console:
         """Displays a prompt and waits for input from the user. The prompt may contain color / style.
 
         Args:
-            prompt (Union[str, Text]): Text to render in the prompt.
+            input (Union[str, Text]): Text to render in the prompt.
             markup (bool, optional): Enable console markup (requires a str prompt). Defaults to True.
             emoji (bool, optional): Enable emoji (requires a str prompt). Defaults to True.
             password: (bool, optional): Hide typed text. Defaults to False.
@@ -1922,9 +1921,9 @@ class Console:
             str: Text read from stdin.
         """
         prompt_str = ""
-        if prompt:
+        if input:
             with self.capture() as capture:
-                self.echo(prompt, markup=markup, emoji=emoji, end="")
+                self.echo(input, markup=markup, emoji=emoji, end="")
             prompt_str = capture.get()
         if self.legacy_windows:
             # Legacy windows doesn't like ANSI codes in getpass or input (colorama bug)?
@@ -1937,7 +1936,7 @@ class Console:
                 self.file.write(prompt_str)
                 result = stream.readline()
             else:
-                result = input(prompt_str)
+                result = prompt(prompt_str)
         return result
 
     def export_text(self, *, clear: bool = True, styles: bool = False) -> str:

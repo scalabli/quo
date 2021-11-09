@@ -108,39 +108,39 @@ class Lines:
     def pop(self, index: int = -1) -> "Text":
         return self._lines.pop(index)
 
-    def justify(
+    def situate(
         self,
         console: "Console",
         width: int,
-        justify: "JustifyMethod" = "left",
+        situate: "JustifyMethod" = "left",
         overflow: "OverflowMethod" = "fold",
     ) -> None:
-        """Justify and overflow text to a given width.
+        """Situate and overflow text to a given width.
 
         Args:
             console (Console): Console instance.
             width (int): Number of characters per line.
-            justify (str, optional): Default justify method for text: "left", "center", "full" or "right". Defaults to "left".
+            situate(str, optional): Default situate method for text: "left", "center", "full" or "right". Defaults to "left".
             overflow (str, optional): Default overflow for text: "crop", "fold", or "ellipsis". Defaults to "fold".
 
         """
         from quo._text import Text
 
-        if justify == "left":
+        if situate == "left":
             for line in self._lines:
                 line.truncate(width, overflow=overflow, pad=True)
-        elif justify == "center":
+        elif situate == "center":
             for line in self._lines:
                 line.rstrip()
                 line.truncate(width, overflow=overflow)
                 line.pad_left((width - cell_len(line.plain)) // 2)
                 line.pad_right(width - cell_len(line.plain))
-        elif justify == "right":
+        elif situate == "right":
             for line in self._lines:
                 line.rstrip()
                 line.truncate(width, overflow=overflow)
                 line.pad_left(width - cell_len(line.plain))
-        elif justify == "full":
+        elif situate == "full":
             for line_index, line in enumerate(self._lines):
                 if line_index == len(self._lines) - 1:
                     break

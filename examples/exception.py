@@ -2,7 +2,7 @@
 Basic example to show how to print an traceback of an exception
 """
 from typing import List, Tuple
-from rich.console import Console
+from quo.console import Console
 
 console = Console()
 
@@ -18,13 +18,13 @@ def divide_all(divides: List[Tuple[float, float]]) -> None:
     """Do something impossible every day."""
 
     for number, divisor in divides:
-        console.print(f"dividing {number} by {divisor}")
+        console.echo(f"dividing {number} by {divisor}")
         try:
             result = divide_by(number, divisor)
         except Exception:
             console.print_exception(extra_lines=8, show_locals=True)
         else:
-            console.print(f" = {result}")
+            console.echo(f" = {result}")
 
 
 DIVIDES = [

@@ -1,6 +1,5 @@
 from typing import Any, Dict, Iterable, List
 
-#from ._get_console import _get_console
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
 

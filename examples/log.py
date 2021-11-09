@@ -22,7 +22,7 @@ theme = Theme(
         "req.protocol": Style.parse("dim bold green"),
         "req.method": Style.parse("bold cyan"),
         "req.path": Style.parse("magenta"),
-        "req.filename": Style.parse("bright_magenta"),
+        "req.filename": Style.parse("vmagenta"),
         "req.result": Style.parse("yellow"),
         "req.stats": Style.parse("dim"),
     }

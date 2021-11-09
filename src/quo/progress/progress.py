@@ -265,13 +265,13 @@ class TextColumn(ProgressColumn):
         self,
         text_format: str,
         style: StyleType = "none",
-        justify: JustifyMethod = "left",
+        situate: JustifyMethod = "left",
         markup: bool = True,
         highlighter: Optional[Highlighter] = None,
         table_column: Optional[Column] = None,
     ) -> None:
         self.text_format = text_format
-        self.justify = justify
+        self.situate = situate
         self.style = style
         self.markup = markup
         self.highlighter = highlighter
@@ -280,9 +280,9 @@ class TextColumn(ProgressColumn):
     def render(self, task: "Task") -> Text:
         _text = self.text_format.format(task=task)
         if self.markup:
-            text = Text.from_markup(_text, style=self.style, justify=self.justify)
+            text = Text.from_markup(_text, style=self.style, situate=self.situate)
         else:
-            text = Text(_text, style=self.style, justify=self.justify)
+            text = Text(_text, style=self.style, situate=self.situate)
         if self.highlighter:
             self.highlighter.highlight(text)
         return text
