@@ -1,5 +1,5 @@
 """
-This example demonstrates the justify argument to print.
+This example demonstrates the situate argument to print.
 """
 
 from quo import Console
