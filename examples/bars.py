@@ -5,10 +5,7 @@ Use Bar to renderer a sort-of circle.
 """
 import math
 
-from quo.align import Align
-from quo.bar import Bar
-from quo.color.color import Color
-from quo import Console
+from quo import Align, Bar, Color, Console
 
 SIZE = 40
 cc = Console()

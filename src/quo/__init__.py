@@ -7,6 +7,7 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import importlib
 import os
 import subprocess
+from typing import IO, TYPE_CHECKING, Any, Optional
 from quo.application import Suite
 from .core import (
              App,
@@ -20,12 +21,12 @@ from .core import (
              Tether
              )
 
-from quo.console import Console
-
-#from quo.context.current import resolve_color_default
 from quo.types import Choice, convert_type
-#from quo.expediency import LazyFile
 from quo.text import ANSI, HTML
+from quo.align import Align
+from quo.bar import Bar
+from quo.console import Console
+from quo.color.color import Color
 from quo.output import ColorDepth
 from quo.shortcuts import Elicit
 from quo.pause import pause
@@ -90,10 +91,6 @@ from quo.i_o import (
 
 from quo.shortcuts import container
 from quo.widget import TextArea, Frame
-"""Rich text and beautiful formatting in the terminal."""
-
-from typing import IO, TYPE_CHECKING, Any, Optional
-
 from ._extension import load_ipython_extension
 
 __all__ = ["get_console", "reconfigure", "inspect"]

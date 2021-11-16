@@ -75,7 +75,7 @@ with Live(table_centered, console=console, screen=False, refresh_per_second=20):
         table.add_column("Release Date", no_wrap=True)
 
     with beat(10):
-        table.add_column("Title", Text.from_markup("[b]Total", justify="right"))
+        table.add_column("Title", Text.from_markup("[b]Total", situate="right"))
 
     with beat(10):
         table.add_column("Budget", "[u]$412,000,000", no_wrap=True)
@@ -95,7 +95,7 @@ with Live(table_centered, console=console, screen=False, refresh_per_second=20):
         )
 
     with beat(10):
-        table.caption = "Made with Rich"
+        table.caption = "Quo"
 
     with beat(10):
         table.caption = "Made with [b]Rich[/b]"
@@ -113,13 +113,13 @@ with Live(table_centered, console=console, screen=False, refresh_per_second=20):
     table_width = console.measure(table).maximum
 
     with beat(10):
-        table.columns[2].justify = "right"
+        table.columns[2].situate = "right"
 
     with beat(10):
-        table.columns[3].justify = "right"
+        table.columns[3].situate = "right"
 
     with beat(10):
-        table.columns[4].justify = "right"
+        table.columns[4].situate = "right"
 
     with beat(10):
         table.columns[2].header_style = "bold red"
@@ -148,19 +148,19 @@ with Live(table_centered, console=console, screen=False, refresh_per_second=20):
         table.columns[1].header_style = "bold magenta"
 
     with beat(10):
-        table.columns[2].footer_style = "bright_red"
+        table.columns[2].footer_style = "vred"
 
     with beat(10):
-        table.columns[3].footer_style = "bright_green"
+        table.columns[3].footer_style = "vgreen"
 
     with beat(10):
-        table.columns[4].footer_style = "bright_blue"
+        table.columns[4].footer_style = "vblue"
 
     with beat(10):
         table.row_styles = ["none", "dim"]
 
     with beat(10):
-        table.border_style = "bright_yellow"
+        table.border_style = "vyellow"
 
     for box_style in [
         box.SQUARE,

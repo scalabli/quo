@@ -1489,7 +1489,7 @@ class Console:
         highlight: Optional[bool] = None,
     ) -> None:
         """Output to the terminal. This is a low-level way of writing to the terminal which unlike
-        :meth:`~rich.console.Console.echo` won't pretty print, wrap text, or apply markup, but will
+        :meth:`~quo.console.Console.echo` won't pretty print, wrap text, or apply markup, but will
         optionally apply highlighting and a basic style.
 
         Args:
@@ -1627,7 +1627,7 @@ class Console:
             indent (int, optional): Number of spaces to indent. Defaults to 2.
             highlight (bool, optional): Enable highlighting of output: Defaults to True.
         """
-        from rich.json import JSON
+        from quo.json import JSON
 
         if json is None:
             json_renderable = JSON.from_data(data, indent=indent, highlight=highlight)
