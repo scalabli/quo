@@ -17,7 +17,7 @@ from .core import (
         merge_formatted_text,
         to_formatted_text,
         )
-from .text import Text
+from .text import Text, Span
 from .pygments import PygmentsTokens
 from .utils import (
     fragment_list_len,
