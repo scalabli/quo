@@ -2,8 +2,8 @@
 Demonstrates export console output
 """
 
-from rich.console import Console
-from rich.table import Table
+from quo import Console
+from quo.table import Table
 
 console = Console(record=True)
 
