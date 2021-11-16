@@ -1,10 +1,7 @@
 """Same as the table_movie.py but uses Live to update"""
 import time
 from contextlib import contextmanager
-from quo import clear
-from quo import box
-from quo.align import Align
-from quo.console import Console
+from quo import Align, box, clear, Console
 from quo.live import Live
 from quo.table import Table
 from quo.text import Text
