@@ -1,5 +1,5 @@
 from typing import List
-from quo.console.console import Console, OverflowMethod
+from quo import Console, OverflowMethod
 
 console = Console(width=14)
 supercali = "supercalifragilisticexpialidocious"
