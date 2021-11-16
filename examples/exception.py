@@ -1,8 +1,8 @@
 """
-Basic example to show how to print an traceback of an exception
+Example to show how to print a traceback of an exception
 """
 from typing import List, Tuple
-from quo.console import Console
+from quo import Console
 
 console = Console()
 
