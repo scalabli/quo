@@ -1,18 +1,17 @@
 """
-Demonstrates a Rich "application" using the Layout and Live classes.
+Demonstrates a Quo "application" using the Layout and Live classes.
 
 """
 
 from datetime import datetime
 
 from quo import box
-from quo.align import Align
-from quo import Console
+from quo import Align, Console
 from quo.console.console import Group
 from quo.layout import Layout
 from quo.panel import Panel
-from rich.progress.progress import Progress, SpinnerColumn, BarColumn, TextColumn
-from rich.syntax import Syntax
+from quo.progress.progress import Progress, SpinnerColumn, BarColumn, TextColumn
+from quo.syntax import Syntax
 from quo.table import Table
 from quo.text import Text
 
