@@ -1,12 +1,10 @@
 """
 
-Demonstrates Rich tracebacks for recursion errors.
-
-Rich can exclude frames in the middle to avoid huge tracebacks.
+Tracebacks for recursion errors.
 
 """
 
-from quo.console import Console
+from quo import Console
 
 
 def foo(n):
