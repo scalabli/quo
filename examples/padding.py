@@ -1,6 +1,5 @@
-from quo import echo
-from quo import Console
-from quo.padding import Padding
+from quo import echo, Console, Padding
+
 
 console = Console()
 test = Padding("Hello", (2, 4), style="on blue", expand=False)
