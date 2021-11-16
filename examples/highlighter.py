@@ -2,8 +2,8 @@
 This example demonstrates a simple text highlighter.
 """
 
-from quo.console import Console
-from quo.highlight import RegexHighlighter
+from quo import Console
+from quo.highlighter import RegexHighlighter
 from quo.theme import Theme
 
 
@@ -17,4 +17,4 @@ class EmailHighlighter(RegexHighlighter):
 theme = Theme({"example.email": "bold magenta"})
 console = Console(highlighter=EmailHighlighter(), theme=theme)
 
-console.evoke("Send funds to money@example.org")
+console.echo("Send funds to money@example.org")
