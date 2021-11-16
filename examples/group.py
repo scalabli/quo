@@ -1,6 +1,5 @@
-from quo import Console
+from quo import Console, Panel
 from quo.console.console import group
-from quo.panel import Panel
 
 cc = Console()
 @group()
