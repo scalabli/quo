@@ -170,6 +170,3 @@ def strip_control_codes(
     """
     return text.translate(_translate_table)
 
-
-if __name__ == "__main__":  # pragma: no cover
-    print(strip_control_codes("hello\rWorld"))
