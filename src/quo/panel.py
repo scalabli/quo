@@ -229,23 +229,3 @@ class Panel(JupyterMixin):
         else:
             width = self.width
         return Measurement(width, width)
-
-
-if __name__ == "__main__":  # pragma: no cover
-    from quo import Console
-
-    c = Console()
-
-    from .padding import Padding
-    from .box import ROUNDED, DOUBLE
-
-    p = Panel(
-        "Hello, World!",
-        title="rich.Panel",
-        style="white on blue",
-        box=DOUBLE,
-        padding=1,
-    )
-
-    c.echo()
-    c.echo(p)
