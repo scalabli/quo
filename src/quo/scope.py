@@ -29,15 +29,8 @@ if TYPE_CHECKING:
 # *********************
 
 
-from typing import (
-    DefaultDict,
-    Callable,
-    Dict,
-    Iterable,
-    List,
-    Set,
-    Union
-)
+from typing import DefaultDict, Callable, Dict, Iterable, List, Set, Union, IO, TYPE_CHECKING, Any, Iterable, Mapping, NamedTuple, Optional, TextIO, Tuple, Type, cast,
+
 from types import MappingProxyType
 
 try:
@@ -52,7 +45,6 @@ from .cells import cell_len
 from .highlighter import ReprHighlighter
 from quo._jupyter import JupyterMixin, JupyterRenderable
 from .measure import Measurement
-from quo._text import Text
 
 if TYPE_CHECKING:
     from quo.console.console import (
@@ -74,23 +66,7 @@ from getpass import getpass
 from html import escape
 from time import monotonic
 from types import FrameType, TracebackType, ModuleType
-from typing import (
-    IO,
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Dict,
-    Iterable,
-    List,
-    Mapping,
-    NamedTuple,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
-    Union,
-    cast,
-)
+  
 
 if sys.version_info >= (3, 8):
     from typing import Literal, Protocol, runtime_checkable
@@ -114,9 +90,7 @@ from quo.highlighter import NullHighlighter, ReprHighlighter
 from quo.markup import render as render_markup
 from quo.measure.measure import Measurement, measure_renderables
 from quo.pager import Pager, SystemPager
-# from quo.pretty import Pretty, is_expandable
 from quo.region import Region
-#from quo.scope import render_scope
 from quo.screen import Screen
 from quo.segment import Segment
 from quo.style import Style
@@ -3057,22 +3031,3 @@ def render_scope(
         padding=(0, 1),
     )
 
-
-if __name__ == "__main__":  # pragma: no cover
-    from quo import Console
-
-    console = Console() 
-
-
-    def test(foo: float, bar: float) -> None:
-        list_of_things = [1, 2, 3, None, 4, True, False, "Hello World"]
-        dict_of_things = {
-            "version": "1.1",
-            "method": "confirmFruitPurchase",
-            "params": [["apple", "orange", "mangoes", "pomelo"], 1.123],
-            "id": "194521489",
-        }
-        console.echo(render_scope(locals(), title="[i]locals", sort_keys=False))
-
-    test(20.3423, 3.1427)
-    console.echo()
