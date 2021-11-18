@@ -103,13 +103,3 @@ class Rule(JupyterMixin):
         yield rule_text
 
 
-if __name__ == "__main__":  # pragma: no cover
-    from quo.console import Console
-    import sys
-
-    try:
-        text = sys.argv[1]
-    except IndexError:
-        text = "Hello, World"
-    console = Console()
-    console.echo(Rule(title=text))
