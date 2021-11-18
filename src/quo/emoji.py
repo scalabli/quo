@@ -76,21 +76,3 @@ class Emoji(JupyterMixin):
         self, console: "Console", options: "ConsoleOptions"
     ) -> "RenderResult":
         yield Segment(self._char, console.get_style(self.style))
-
-
-if __name__ == "__main__":  # pragma: no cover
-    import sys
-
-    from quo.columns import Columns
-    from quo.console import Console
-
-    console = Console(record=True)
-
-    columns = Columns(
-        (f":{name}: {name}" for name in sorted(EMOJI.keys()) if "\u200D" not in name),
-        column_first=True,
-    )
-
-    console.print(columns)
-    if len(sys.argv) > 1:
-        console.save_html(sys.argv[1])
