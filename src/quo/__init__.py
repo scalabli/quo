@@ -209,11 +209,6 @@ def inspect(
     _console.print(_inspect)
 
 
-if __name__ == "__main__":  # pragma: no cover
-    echo(f"Hello,", nl=False)
-    echo(f" world", fg="red", bold=True)
-
-
 
 
 __version__ = "2021.6"
