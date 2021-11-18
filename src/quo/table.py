@@ -10,7 +10,8 @@ from typing import (
     Union,
 )
 
-from . import box, errors
+from . import box
+from quo.errors.exceptions import *
 from ._loop import loop_first_last, loop_last
 from ._pick import pick_bool
 from ._ratio import ratio_distribute, ratio_reduce
@@ -843,78 +844,3 @@ class Table(JupyterMixin):
             yield _Segment(_box.get_bottom(widths), border_style)
             yield new_line
 
-
-if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
-    from rich.highlighter import ReprHighlighter
-    from rich.table import Table
-
-    table = Table(
-        title="Star Wars Movies",
-        caption="Rich example table",
-        caption_situate="right",
-    )
-
-    table.add_column("Released", header_style="bright_cyan", style="cyan", no_wrap=True)
-    table.add_column("Title", style="magenta")
-    table.add_column("Box Office", situate="right", style="green")
-
-    table.add_row(
-        "Dec 20, 2019",
-        "Star Wars: The Rise of Skywalker",
-        "$952,110,690",
-    )
-    table.add_row("May 25, 2018", "Solo: A Star Wars Story", "$393,151,347")
-    table.add_row(
-        "Dec 15, 2017",
-        "Star Wars Ep. V111: The Last Jedi",
-        "$1,332,539,889",
-        style="on black",
-        end_section=True,
-    )
-    table.add_row(
-        "Dec 16, 2016",
-        "Rogue One: A Star Wars Story",
-        "$1,332,439,889",
-    )
-
-    def header(text: str) -> None:
-        console.print()
-        console.rule(highlight(text))
-        console.print()
-
-    console = Console()
-    highlight = ReprHighlighter()
-    header("Example Table")
-    console.print(table, situate="center")
-
-    table.expand = True
-    header("expand=True")
-    console.print(table)
-
-    table.width = 50
-    header("width=50")
-
-    console.print(table, situate="center")
-
-    table.width = None
-    table.expand = False
-    table.row_styles = ["dim", "none"]
-    header("row_styles=['dim', 'none']")
-
-    console.echo(table, situate="center")
-
-    table.width = None
-    table.expand = False
-    table.row_styles = ["dim", "none"]
-    table.leading = 1
-    header("leading=1, row_styles=['dim', 'none']")
-    console.print(table, situate="center")
-
-    table.width = None
-    table.expand = False
-    table.row_styles = ["dim", "none"]
-    table.show_lines = True
-    table.leading = 0
-    header("show_lines=True, row_styles=['dim', 'none']")
-    console.echo(table, situate="center")
