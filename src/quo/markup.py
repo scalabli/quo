@@ -223,24 +223,3 @@ def render(
 
     text.spans = sorted(spans[::-1], key=attrgetter("start"))
     return text
-
-
-if __name__ == "__main__":  # pragma: no cover
-
-    MARKUP = [
-        "[red]Hello World[/red]",
-        "[magenta]Hello [b]World[/b]",
-        "[bold]Bold[italic] bold and italic [/bold]italic[/italic]",
-        "Click [link=https://www.willmcgugan.com]here[/link] to visit my Blog",
-        ":warning-emoji: [bold red blink] DANGER![/]",
-    ]
-
-    from quo.table import Table
-    from quo import evoke
-
-    grid = Table("Markup", "Result", padding=(0, 1))
-
-    for markup in MARKUP:
-        grid.add_row(Text(markup), markup)
-
-    evoke(grid)
