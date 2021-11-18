@@ -70,31 +70,3 @@ class Palette:
 
         min_index = min(range(len(self._colors)), key=get_color_distance)
         return min_index
-
-
-if __name__ == "__main__":  # pragma: no cover
-    import colorsys
-    from typing import Iterable
-    from quo.color import Color
-    from quo.console import Console, ConsoleOptions
-    from quo.segment import Segment
-    from quo.style import Style
-
-    class ColorBox:
-        def __rich_console__(
-            self, console: Console, options: ConsoleOptions
-        ) -> Iterable[Segment]:
-            height = console.size.height - 3
-            for y in range(0, height):
-                for x in range(options.max_width):
-                    h = x / options.max_width
-                    l = y / (height + 1)
-                    r1, g1, b1 = colorsys.hls_to_rgb(h, l, 1.0)
-                    r2, g2, b2 = colorsys.hls_to_rgb(h, l + (1 / height / 2), 1.0)
-                    bg = Color.from_rgb(r1 * 255, g1 * 255, b1 * 255)
-                    fg = Color.from_rgb(r2 * 255, g2 * 255, b2 * 255)
-                    yield Segment("▄", Style(fg=fg, bg=bg))
-                yield Segment.line()
-
-    console = Console()
-    console.echo(ColorBox())
