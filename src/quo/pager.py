@@ -24,12 +24,3 @@ class SystemPager(Pager):
     def show(self, content: str) -> None:
         """Use the same pager used by pydoc."""
         self._pager(content)
-
-
-if __name__ == "__main__":  # pragma: no cover
-    from .__main__ import make_test_card
-    from quo import Console
-
-    console = Console()
-    with console.pager(styles=True):
-        console.echo(make_test_card())
