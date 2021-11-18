@@ -116,32 +116,3 @@ def rich_repr(
         return auto(angular=angular)
     else:
         return auto(cls)
-
-
-if __name__ == "__main__":
-
-    @auto
-    class Foo:
-        def __rich_repr__(self) -> Result:
-            yield "foo"
-            yield "bar", {"shopping": ["eggs", "ham", "pineapple"]}
-            yield "buy", "hand sanitizer"
-
-    foo = Foo()
-    from quo import Console
-
-    console = Console()
-
-    console.rule("Standard repr")
-    console.echo(foo)
-
-    console.echo(foo, width=60)
-    console.echo(foo, width=30)
-
-    console.rule("Angular repr")
-    Foo.__rich_repr__.angular = True  # type: ignore
-
-    console.echo(foo)
-
-    console.echo(foo, width=60)
-    console.echo(foo, width=30)
