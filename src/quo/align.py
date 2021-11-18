@@ -294,26 +294,3 @@ class VerticalCenter(JupyterMixin):
         measurement = Measurement.get(console, options, self.renderable)
         return measurement
 
-
-if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console, Group
-    from rich.highlighter import ReprHighlighter
-    from rich.panel import Panel
-
-    highlighter = ReprHighlighter()
-    console = Console()
-
-    panel = Panel(
-        Group(
-            Align.left(highlighter("align='left'")),
-            Align.center(highlighter("align='center'")),
-            Align.right(highlighter("align='right'")),
-        ),
-        width=60,
-        style="on dark_blue",
-        title="Algin",
-    )
-
-    console.echo(
-        Align.center(panel, vertical="middle", style="on red", height=console.height)
-    )
