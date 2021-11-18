@@ -104,7 +104,3 @@ class ThemeStack:
         self._entries.pop()
         self.get = self._entries[-1].get
 
-
-if __name__ == "__main__":  # pragma: no cover
-    theme = Theme()
-    print(theme.config)
