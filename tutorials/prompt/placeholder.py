@@ -1,5 +1,5 @@
-from quo import Elicit
+import quo
 from quo.widget.placeholder import *
 
-s = Elicit()
+s = quo.Elicit()
 s.elicit("You said :", placeholder=grey)
