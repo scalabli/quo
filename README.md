@@ -110,6 +110,9 @@ It also supports handling of ANSI color sequences.
            console.log(f"{task} complete")
 ```
 
+![Status](https://github.com/secretum-inc/quo/raw/master/pics/status.gif)
+
+
 For more intricate  examples, have a look in the [tutorials](https://github.com/secretum-inc/quo/tree/master/tutorials) directory and the documentation.
 
 ## Donate🎁
