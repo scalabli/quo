@@ -42,16 +42,18 @@ pip install -U quo
 ### Quo print
 **Example 1**
 ```python
-   from quo import echo
-   echo(f"Hello, World!", fg="red", italic=True, bold=True))
+   import quo
+
+   quo.echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
 
 **Example 2**
 ```python
-   from quo import echo
-   echo(f"Quo is ", nl=False)
-   echo(f"scalable", bg="red", fg="black") 
+   import quo
+
+   quo.echo(f"Quo is ", nl=False)
+   quo.echo(f"scalable", bg="red", fg="black") 
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
@@ -60,15 +62,25 @@ It also supports handling of ANSI color sequences.
 
 ### Quo prompt
 ```python
-   from quo import prompt
-   prompt("What is your name?")
+   import quo
+
+   quo.prompt("What is your name?")
 ```
 ![prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
+### Quo log
+```python
+   import quo
+
+   console = quo.Console()
+   console.log("Quo status")
+
+```
+
 ### Quo tabular
 ```python
-   from quo import echo
-   from quo.tabulate import tabular
+   import quo
+
 
    table = [
      ["Name", "Gender", "Age"],
@@ -77,7 +89,7 @@ It also supports handling of ANSI color sequences.
      ["Dave", "M", 24]
    ]
 
-   echo(tabular(table))
+   quo.echo(quo.tabular(table))
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
    
