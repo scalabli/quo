@@ -40,7 +40,7 @@ if __name__ == "__main__":
         ],
     )
 
-    from quo.console import Console
+    from quo import Console
     from quo.pretty import Pretty
     from quo.table import Column, Table
     from quo.text.text import Text

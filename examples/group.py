@@ -1,4 +1,5 @@
-from quo import Console, Panel
+from quo import Console
+from quo.panel import Panel
 from quo.console.console import group
 
 cc = Console()

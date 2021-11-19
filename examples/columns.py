@@ -7,7 +7,9 @@ The data is pulled from https://randomuser.me
 import json
 from urllib.request import urlopen
 
-from quo import Console, Columns, Panel
+from quo import Console
+from quo.columns import Columns
+from quo.panel import Panel
 
 def get_content(user):
     """Extract text from user dict."""

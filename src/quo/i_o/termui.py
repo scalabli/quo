@@ -105,6 +105,7 @@ def confirm(
             rv = default
         else:
             echo(f"ERROR:", bg="red", fg="black", nl=False)
+            echo(f" ", nl=False)
             echo(f"invalid input", bg="yellow", fg="black", err=err)
             continue
         break

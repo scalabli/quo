@@ -1,7 +1,7 @@
 import time
 
-from quo.progress.progress import Progress
-from quo.layout.layout import Layout
+from quo.progress import Progress
+from quo.layout import Layout
 
 with Progress() as progress:
 

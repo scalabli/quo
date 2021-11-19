@@ -1,9 +1,9 @@
 from __future__ import absolute_import
 
 from inspect import cleandoc, getdoc, getfile, isclass, ismodule, signature
-from typing import Any, Iterable, Optional, Tuple
+from typing import Any, Iterable, Optional, Tuple, Union
 
-from .console import RenderableType, Group
+from quo.console.console import RenderableType, Group
 from .highlighter import ReprHighlighter
 from .jupyter import JupyterMixin
 from .panel import Panel
@@ -140,7 +140,7 @@ class Inspect(JupyterMixin):
             items.sort(key=sort_items)
 
         items_table = Table.grid(padding=(0, 1), expand=False)
-        items_table.add_column(justify="right")
+        items_table.add_column(situate="right")
         add_row = items_table.add_row
         highlighter = self.highlighter
 

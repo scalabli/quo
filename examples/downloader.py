@@ -10,7 +10,7 @@ from functools import partial
 from threading import Event
 from typing import Iterable
 from urllib.request import urlopen
-from quo import command, app
+from quo import command, app, prompt
 from quo.progress.progress import (
     BarColumn,
     DownloadColumn,
@@ -49,6 +49,8 @@ signal.signal(signal.SIGINT, handle_sigint)
 @app("--task_id")
 @app("--url")
 @app("--path")
+
+url = prompt("")
 def copy_url(task_id: TaskID, url: str, path: str) -> None:
     """Copy data from a url to a local file."""
 

@@ -1,5 +1,5 @@
 """
-A simulation of Rich console logging.
+A simulation of console logging.
 """
 
 import time
