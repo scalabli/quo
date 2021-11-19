@@ -2,6 +2,6 @@
 """
 Example of a confirmation prompt.
 """
-from quo import confirm
+import quo
 
-confirm("Should we do that?")
+quo.confirm("Should we do that?")
