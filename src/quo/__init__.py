@@ -52,7 +52,7 @@ from quo.expediency import (
                   inscribe,
                   appdir,
                   formatfilename,
-                  os_args,
+                 # os_args,
                   textstream,
                   binarystream,
                   openfile
@@ -82,12 +82,13 @@ from quo.i_o import (
               echo,
               edit,
               terminalsize,
-              unstyle,
+             # unstyle,
               prompt,
               )
 
 #from quo.shortcuts import container
 #from quo.widget import TextArea, Frame
+from quo.tabulate import tabular
 
 
 
