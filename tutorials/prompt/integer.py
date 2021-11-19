@@ -1,3 +1,3 @@
-from quo import prompt
+import quo
 
-prompt("How old are you?", type=int)
+quo.prompt("How old are you?", type=int)
