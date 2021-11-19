@@ -1,2 +1,3 @@
-from quo import prompt
-prompt("What is your name?")
+import quo
+
+quo.prompt("What is your name?")
