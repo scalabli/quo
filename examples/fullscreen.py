@@ -6,7 +6,8 @@ Demonstrates a Quo "application" using the Layout and Live classes.
 from datetime import datetime
 
 from quo import box
-from quo import Align, Console
+from quo import Console
+from quo.align import Align
 from quo.console.console import Group
 from quo.layout import Layout
 from quo.panel import Panel

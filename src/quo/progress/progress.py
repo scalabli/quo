@@ -24,7 +24,7 @@ from typing import (
     Union,
 )
 
-from quo import filesize, get_console
+from quo import filesize
 from quo.console.console import Console, RenderableType, Group
 from quo.highlighter import Highlighter
 from quo.jupyter import JupyterMixin
@@ -41,6 +41,23 @@ ProgressType = TypeVar("ProgressType")
 
 GetTimeCallable = Callable[[], float]
 JustifyMethod = Literal["default", "left", "center", "right", "full"]
+_console: Optional["Console"] = None
+
+def get_console() -> "Console":
+    """Used when Quo requires a Console,
+    and hasn't been explicitly given one.
+
+    Returns:
+        Console: A console instance.
+    """
+    global _console
+    if _console is None:
+        from quo.console.console import Console
+
+        _console = Console()
+
+    return _console
+
 class _TrackThread(Thread):
     """A thread to periodically update progress."""
 
