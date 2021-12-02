@@ -95,7 +95,7 @@ It also supports handling of ANSI color sequences.
    
 ### Quo Status
 ```python
-   from time import sleep
+   import time
     
    import quo
 
@@ -106,7 +106,7 @@ It also supports handling of ANSI color sequences.
    with console.status("[bold green] ",) as status:
        while tasks:
            task = tasks.pop(0)
-           sleep(1)
+           time.sleep(1)
            console.log(f"{task} complete")
 ```
 
