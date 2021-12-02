@@ -2,18 +2,16 @@
 Input validation for a `Buffer`.
 (Validators will be called before accepting input.)
 """
-from abc import ABCMeta, abstractmethod
-from typing import Callable, Optional
+import abc
+import typing
 
 from quo.eventloop import run_in_executor_with_context
-
 from .document import Document
 from quo.filters import FilterOrBool, to_filter
 from quo.errors import ValidationError
 
 #__all__ = [
  #   "ConditionalValidator",
- #   "ValidationError",
  #   "Validator",
 #  "ThreadedValidator",
 #    "DummyValidator",
@@ -22,7 +20,7 @@ from quo.errors import ValidationError
 
 
 
-class Validator(metaclass=ABCMeta):
+class Validator(metaclass=abc.ABCMeta):
     """
     Abstract base class for an input validator.
 
@@ -35,7 +33,7 @@ class Validator(metaclass=ABCMeta):
     thread, this can be wrapped in a :class:`.ThreadedValidator`.
     """
 
-    @abstractmethod
+    @abc.abstractmethod
     def validate(self, document: Document) -> None:
         """
         Validate the input.
@@ -59,7 +57,7 @@ class Validator(metaclass=ABCMeta):
     @classmethod
     def from_callable(
         cls,
-        validate_func: Callable[[str], bool],
+        validate_func: typing.Callable[[str], bool],
         error_message: str = "Invalid input",
         move_cursor_to_end: bool = False,
     ) -> "Validator":
@@ -87,7 +85,7 @@ class _ValidatorFromCallable(Validator):
     """
 
     def __init__(
-        self, func: Callable[[str], bool], error_message: str, move_cursor_to_end: bool
+        self, func: typing.Callable[[str], bool], error_message: str, move_cursor_to_end: bool
     ) -> None:
 
         self.func = func
@@ -163,7 +161,7 @@ class DynamicValidator(Validator):
     :param get_validator: Callable that returns a :class:`.Validator` instance.
     """
 
-    def __init__(self, get_validator: Callable[[], Optional[Validator]]) -> None:
+    def __init__(self, get_validator: typing.Callable[[], typing.Optional[Validator]]) -> None:
         self.get_validator = get_validator
 
     def validate(self, document: Document) -> None:
