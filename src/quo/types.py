@@ -1,5 +1,6 @@
 import os
 import stat
+import typing
 from datetime import datetime
 
 from quo.accordance import (
@@ -12,13 +13,9 @@ from quo.accordance import (
 
 from quo.errors import BadParameter
 from quo.expediency.vitals import LazyFile
-from typing import (
-        Any, 
-        Callable, 
-        TypeVar
-        )
 
-DecoratedCallable = TypeVar("DecoratedCallable", bound=Callable[..., Any])
+## --> (typing) = Any, Callable, TypeVar
+DecoratedCallable = typing.TypeVar("DecoratedCallable", bound=typing.Callable[..., typing.Any])
 
 
 
