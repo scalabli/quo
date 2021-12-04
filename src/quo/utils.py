@@ -1,23 +1,15 @@
 import os
 import signal
 import sys
+import typing
 import threading
 from collections import deque
-from typing import (
-    Callable,
-    ContextManager,
-    Deque,
-    Dict,
-    Generator,
-    Generic,
-    List,
-    Optional,
-    TypeVar,
-    Union,
-)
+
 
 from quo.width import width
 from quo.width.width import wcwidth
+
+## --> (typing) = Callable, ContextManager, Deque, Dict, Generator, Generic, List, Optional, TypeVar, Union
 
 __all__ = [
     "Event",
@@ -41,10 +33,10 @@ __all__ = [
 # stuff when documenting win32.py modules.
 SPHINX_AUTODOC_RUNNING = "sphinx.ext.autodoc" in sys.modules
 
-_Sender = TypeVar("_Sender", covariant=True)
+_Sender = typing.TypeVar("_Sender", covariant=True)
 
 
-class Event(Generic[_Sender]):
+class Event(typing.Generic[_Sender]):
     """
     Simple event to which event handlers can be attached. For instance::
 
@@ -66,10 +58,10 @@ class Event(Generic[_Sender]):
     """
 
     def __init__(
-        self, sender: _Sender, handler: Optional[Callable[[_Sender], None]] = None
+        self, sender: _Sender, handler: typing.Optional[typing.Callable[[_Sender], None]] = None
     ):
         self.sender = sender
-        self._handlers: List[Callable[[_Sender], None]] = []
+        self._handlers: typing.List[typing.Callable[[_Sender], None]] = []
 
         if handler is not None:
             self += handler
@@ -83,7 +75,7 @@ class Event(Generic[_Sender]):
         "Alias for just calling the event."
         self()
 
-    def add_handler(self, handler: Callable[[_Sender], None]) -> None:
+    def add_handler(self, handler: typing.Callable[[_Sender], None]) -> None:
         """
         Add another handler to this callback.
         (Handler should be a callable that takes exactly one parameter: the
@@ -92,21 +84,21 @@ class Event(Generic[_Sender]):
         # Add to list of event handlers.
         self._handlers.append(handler)
 
-    def remove_handler(self, handler: Callable[[_Sender], None]) -> None:
+    def remove_handler(self, handler: typing.Callable[[_Sender], None]) -> None:
         """
         Remove a handler from this callback.
         """
         if handler in self._handlers:
             self._handlers.remove(handler)
 
-    def __iadd__(self, handler: Callable[[_Sender], None]) -> "Event[_Sender]":
+    def __iadd__(self, handler: typing.Callable[[_Sender], None]) -> "Event[_Sender]":
         """
         `event += handler` notation for adding a handler.
         """
         self.add_handler(handler)
         return self
 
-    def __isub__(self, handler: Callable[[_Sender], None]) -> "Event[_Sender]":
+    def __isub__(self, handler: typing.Callable[[_Sender], None]) -> "Event[_Sender]":
         """
         `event -= handler` notation for removing a handler.
         """
@@ -114,7 +106,7 @@ class Event(Generic[_Sender]):
         return self
 
 
-class DummyContext(ContextManager[None]):
+class DummyContext(typing.ContextManager[None]):
     """
     (contextlib.nested is not available on Py3)
     """
@@ -126,7 +118,7 @@ class DummyContext(ContextManager[None]):
         pass
 
 
-class _CharSizesCache(Dict[str, int]):
+class _CharSizesCache(typing.Dict[str, int]):
     """
     Cache for wcwidth sizes.
     """
@@ -137,7 +129,7 @@ class _CharSizesCache(Dict[str, int]):
     def __init__(self) -> None:
         super().__init__()
         # Keep track of the "long" strings in this cache.
-        self._long_strings: Deque[str] = deque()
+        self._long_strings: typing.Deque[str] = deque()
 
     def __missing__(self, string: str) -> int:
         # Note: We use the `max(0, ...` because some non printable control
@@ -229,12 +221,12 @@ def get_term_environment_variable() -> str:
     return os.environ.get("TERM", "")
 
 
-_T = TypeVar("_T")
+_T = typing.TypeVar("_T")
 
 
 def take_using_weights(
-    items: List[_T], weights: List[int]
-) -> Generator[_T, None, None]:
+    items: typing.List[_T], weights: typing.List[int]
+) -> typing.Generator[_T, None, None]:
     """
     Generator that keeps yielding items from the items list, in proportion to
     their weight. For instance::
@@ -286,7 +278,7 @@ def take_using_weights(
         i += 1
 
 
-def to_str(value: Union[Callable[[], str], str]) -> str:
+def to_str(value: typing.Union[typing.Callable[[], str], str]) -> str:
     "Turn callable or string into string."
     if callable(value):
         return to_str(value())
@@ -294,7 +286,7 @@ def to_str(value: Union[Callable[[], str], str]) -> str:
         return str(value)
 
 
-def to_int(value: Union[Callable[[], int], int]) -> int:
+def to_int(value: typing.Union[typing.Callable[[], int], int]) -> int:
     "Turn callable or int into int."
     if callable(value):
         return to_int(value())
@@ -302,7 +294,7 @@ def to_int(value: Union[Callable[[], int], int]) -> int:
         return int(value)
 
 
-AnyFloat = Union[Callable[[], float], float]
+AnyFloat = typing.Union[typing.Callable[[], float], float]
 
 
 def to_float(value: AnyFloat) -> float:
@@ -313,7 +305,7 @@ def to_float(value: AnyFloat) -> float:
         return float(value)
 
 
-def is_dumb_terminal(term: Optional[str] = None) -> bool:
+def is_dumb_terminal(term: typing.Optional[str] = None) -> bool:
     """
     True if this terminal type is considered "dumb".
 
