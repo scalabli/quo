@@ -1,4 +1,3 @@
-# --> Tuple, Union, List, Optional, Iterator
 import typing
 
 from ._loop import loop_first, loop_last
@@ -8,6 +7,8 @@ from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style, StyleStack
 from .styled import Styled
+
+## --> (typing) =Tuple, Union, List, Optional, Iterator
 
 StyleType = typing.Union[str, "Style"]
 
