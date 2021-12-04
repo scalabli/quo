@@ -1,4 +1,4 @@
-from typing import Iterator, List, Optional, Tuple, Union
+import typing
 
 from ._loop import loop_first, loop_last
 from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
@@ -8,7 +8,7 @@ from .segment import Segment
 from .style import Style, StyleStack
 from .styled import Styled
 
-StyleType = Union[str, "Style"]
+StyleType = typing.Union[str, "Style"]
 
 class Tree(JupyterMixin):
     """A renderable for a tree structure.
@@ -41,8 +41,8 @@ class Tree(JupyterMixin):
         self,
         label: RenderableType,
         *,
-        style: Optional[StyleType] = None,
-        guide_style: Optional[StyleType] = None,
+        style: typing.Optional[StyleType] = None,
+        guide_style: typing.Optional[StyleType] = None,
         expanded: bool = True,
         highlight: bool = False,
     ) -> "Tree":
@@ -72,7 +72,7 @@ class Tree(JupyterMixin):
         self, console: "Console", options: "ConsoleOptions"
     ) -> "RenderResult":
 
-        stack: List[Iterator[Tuple[bool, Tree]]] = []
+        stack: typing.List[typing.Iterator[typing.Tuple[bool, Tree]]] = []
         pop = stack.pop
         push = stack.append
         new_line = Segment.line()
@@ -99,7 +99,7 @@ class Tree(JupyterMixin):
                 line = TREE_GUIDES[0 if options.legacy_windows else guide][index]
             return _Segment(line, style)
 
-        levels: List[Segment] = [make_guide(CONTINUE, guide_style)]
+        levels: typing.List[Segment] = [make_guide(CONTINUE, guide_style)]
         push(iter(loop_last([self])))
 
         guide_style_stack = StyleStack(get_style(self.guide_style))
@@ -162,7 +162,7 @@ class Tree(JupyterMixin):
     def __rich_measure__(
         self, console: "Console", options: "ConsoleOptions"
     ) -> "Measurement":
-        stack: List[Iterator[Tree]] = [iter([self])]
+        stack: typing.List[typing.Iterator[Tree]] = [iter([self])]
         pop = stack.pop
         push = stack.append
         minimum = 0
