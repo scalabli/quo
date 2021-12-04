@@ -33,7 +33,7 @@ class Tree(JupyterMixin):
         self.label = label
         self.style = style
         self.guide_style = guide_style
-        self.children: List[Tree] = []
+        self.children: typing.List[Tree] = []
         self.expanded = expanded
         self.highlight = highlight
 
