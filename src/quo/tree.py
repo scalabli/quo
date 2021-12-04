@@ -1,3 +1,4 @@
+# --> Tuple, Union, List, Optional, Iterator
 import typing
 
 from ._loop import loop_first, loop_last
@@ -53,7 +54,7 @@ class Tree(JupyterMixin):
             style (StyleType, optional): Style of this tree. Defaults to "tree".
             guide_style (StyleType, optional): Style of the guide lines. Defaults to "tree.line".
             expanded (bool, optional): Also display children. Defaults to True.
-            highlight (Optional[bool], optional): Highlight renderable (if str). Defaults to False.
+            highlight (typing.Optional[bool], optional): Highlight renderable (if str). Defaults to False.
 
         Returns:
             Tree: A new child Tree, which may be further modified.
