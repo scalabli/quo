@@ -1,6 +1,6 @@
 import sys
+import dataclasses
 
-from dataclasses import dataclass
 
 
 @dataclass
@@ -16,10 +16,9 @@ class WindowsConsoleFeatures:
 try:
     import ctypes
     from ctypes import wintypes
-    from ctypes import LibraryLoader
 
     if sys.platform == "win32":
-        windll = LibraryLoader(ctypes.WinDLL)
+        windll = ctypes.LibraryLoader(ctypes.WinDLL)
     else:
         windll = None
         raise ImportError("Not windows")
@@ -64,12 +63,3 @@ else:
         features = WindowsConsoleFeatures(vt=vt, truecolor=truecolor)
         return features
 
-
-if __name__ == "__main__":
-    import platform
-
-    features = get_windows_console_features()
-    from rich import print
-
-    print(f'platform="{platform.system()}"')
-    print(repr(features))

@@ -2,7 +2,7 @@
 Dummy layout. Used when somebody creates an `Application` without specifying a
 `Layout`.
 """
-from quo.text import HTML
+from quo.i_o.output.html import HTML
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
 

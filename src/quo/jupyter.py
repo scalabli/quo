@@ -1,10 +1,10 @@
-from typing import Any, Dict, Iterable, List, Optional
+import typing as ty
 
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
 from quo.console import Console
 
-_console: Optional["Console"] = None
+_console: ty.Optional["Console"] = None
 
 def _get_console() -> "Console":
     """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
@@ -33,8 +33,8 @@ class JupyterRenderable:
         self.text = text
 
     def _repr_mimebundle_(
-        self, include: Iterable[str], exclude: Iterable[str], **kwargs: Any
-    ) -> Dict[str, str]:
+        self, include: ty.Iterable[str], exclude: ty.Iterable[str], **kwargs: ty.Any
+    ) -> ty.Dict[str, str]:
         data = {"text/plain": self.text, "text/html": self.html}
         if include:
             data = {k: v for (k, v) in data.items() if k in include}
@@ -49,8 +49,8 @@ class JupyterMixin:
     __slots__ = ()
 
     def _repr_mimebundle_(
-        self, include: Iterable[str], exclude: Iterable[str], **kwargs: Any
-    ) -> Dict[str, str]:
+        self, include: ty.Iterable[str], exclude: ty.Iterable[str], **kwargs: ty.Any
+    ) -> ty.Dict[str, str]:
         console = get_console()
         segments = list(console.render(self, console.options))  # type: ignore
         html = _render_segments(segments)
@@ -63,12 +63,12 @@ class JupyterMixin:
         return data
 
 
-def _render_segments(segments: Iterable[Segment]) -> str:
+def _render_segments(segments: ty.Iterable[Segment]) -> str:
     def escape(text: str) -> str:
         """Escape html."""
         return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
-    fragments: List[str] = []
+    fragments: ty.List[str] = []
     append_fragment = fragments.append
     theme = DEFAULT_TERMINAL_THEME
     for text, style, control in Segment.simplify(segments):
@@ -88,7 +88,7 @@ def _render_segments(segments: Iterable[Segment]) -> str:
     return html
 
 
-def display(segments: Iterable[Segment], text: str) -> None:
+def display(segments: ty.Iterable[Segment], text: str) -> None:
     """Render segments to Jupyter."""
     from IPython.display import display as ipython_display
 
@@ -97,7 +97,7 @@ def display(segments: Iterable[Segment], text: str) -> None:
     ipython_display(jupyter_renderable)
 
 
-def echo(*args: Any, **kwargs: Any) -> None:
+def echo(*args: ty.Any, **kwargs: ty.Any) -> None:
     """Proxy for Console print."""
     console = _get_console()
     return console.echo(*args, **kwargs)

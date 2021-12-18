@@ -1,11 +1,10 @@
 """
 Tools for running functions on the terminal above the current application or prompt.
 """
-from asyncio import Future, ensure_future
-from typing import AsyncGenerator, Awaitable, Callable, TypeVar
+import typing as ty
+import asyncio
 
 from quo.eventloop import run_in_executor_with_context
-
 from .current import get_app_or_none
 
 try:
@@ -19,12 +18,12 @@ except ImportError:
   #  "in_terminal",
 #]
 
-_T = TypeVar("_T")
+_T = ty.TypeVar("_T")
 
 
 def run_in_terminal(
-    func: Callable[[], _T], render_cli_done: bool = False, in_executor: bool = False
-) -> Awaitable[_T]:
+    func: ty.Callable[[], _T], render_cli_done: bool = False, in_executor: bool = False
+) -> ty.Awaitable[_T]:
     """
     Run function on the terminal above the current application or prompt.
 
@@ -54,11 +53,11 @@ def run_in_terminal(
             else:
                 return func()
 
-    return ensure_future(run())
+    return asyncio.ensure_future(run())
 
 
 @asynccontextmanager
-async def in_terminal(render_cli_done: bool = False) -> AsyncGenerator[None, None]:
+async def in_terminal(render_cli_done: bool = False) -> ty.AsyncGenerator[None, None]:
     """
     Asynchronous context manager that suspends the current application and runs
     the body in the terminal.
@@ -78,7 +77,7 @@ async def in_terminal(render_cli_done: bool = False) -> AsyncGenerator[None, Non
     # When a previous `run_in_terminal` call was in progress. Wait for that
     # to finish, before starting this one. Chain to previous call.
     previous_run_in_terminal_f = app._running_in_terminal_f
-    new_run_in_terminal_f: Future[None] = Future()
+    new_run_in_terminal_f: asyncio.Future[None] = asyncio.Future()
     app._running_in_terminal_f = new_run_in_terminal_f
 
     # Wait for the previous `run_in_terminal` to finish.

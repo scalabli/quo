@@ -3,6 +3,7 @@ import os
 import re
 import signal
 import sys
+import typing as ty
 import threading
 import time
 from asyncio import (
@@ -16,28 +17,9 @@ from asyncio import (
     set_event_loop,
     sleep,
 )
-from contextlib import contextmanager
+
 from subprocess import Popen
 from traceback import format_tb
-from typing import (
-    Any,
-    Awaitable,
-    Callable,
-    Dict,
-    FrozenSet,
-    Generator,
-    Generic,
-    Hashable,
-    Iterable,
-    List,
-    Optional,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    cast,
-    overload,
-)
 
 from quo.buffer import Buffer
 from quo.i_o.termui import echo
@@ -110,17 +92,17 @@ except ImportError:
 
 
 E = KeyPressEvent
-_AppResult = TypeVar("_AppResult")
+_AppResult = ty.TypeVar("_AppResult")
 
 
 # event handler
-onSuite = Callable[["Suite[_AppResult]"], None]
+onSuite = ty.Callable[["Suite[_AppResult]"], None]
 
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 _SIGTSTP = getattr(signal, "SIGTSTP", None)
 
 
-class Suite(Generic[_AppResult]):
+class Suite(ty.Generic[_AppResult]):
     """
     The main Suite class!
     This glues everything together.
@@ -203,35 +185,35 @@ class Suite(Generic[_AppResult]):
 
     def __init__(
         self,
-        layout: Optional[Layout] = None,
-        style: Optional[BaseStyle] = None,
+        layout: ty.Optional[Layout] = None,
+        style: ty.Optional[BaseStyle] = None,
         include_default_pygments_style: FilterOrBool = True,
-        style_transformation: Optional[StyleTransformation] = None,
-        key_bindings: Optional[KeyBindingsBase] = None,
-        clipboard: Optional[Clipboard] = None,
+        style_transformation: ty.Optional[StyleTransformation] = None,
+        key_bindings: ty.Optional[KeyBindingsBase] = None,
+        clipboard: ty.Optional[Clipboard] = None,
         full_screen: bool = False,
-        color_depth: Union[
-            ColorDepth, Callable[[], Union[ColorDepth, None]], None
+        color_depth: ty.Union[
+            ColorDepth, ty.Callable[[], ty.Union[ColorDepth, None]], None
         ] = None,
         mouse_support: FilterOrBool = False,
-        enable_page_navigation_bindings: Optional[
+        enable_page_navigation_bindings: ty.Optional[
             FilterOrBool
         ] = None,  # Can be None, True or False.
         paste_mode: FilterOrBool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         erase_when_done: bool = False,
         reverse_vi_search_direction: FilterOrBool = False,
-        min_redraw_interval: Union[float, int, None] = None,
-        max_render_postpone_time: Union[float, int, None] = 0.01,
-        refresh_interval: Optional[float] = None,
+        min_redraw_interval: ty.Union[float, int, None] = None,
+        max_render_postpone_time: ty.Union[float, int, None] = 0.01,
+        refresh_interval: ty.Optional[float] = None,
         terminal_size_polling_interval: Optional[float] = 0.5,
-        on_reset: Optional[onSuite] = None,
-        on_invalidate: Optional[onSuite] = None,
-        before_render: Optional[onSuite] = None,
-        after_render: Optional[onSuite] = None,
+        on_reset: ty.Optional[onSuite] = None,
+        on_invalidate: ty.Optional[onSuite] = None,
+        before_render: ty.Optional[onSuite] = None,
+        after_render: ty.Optional[onSuite] = None,
         # I/O.
-        input: Optional[Input] = None,
-        output: Optional[Output] = None,
+        input: ty.Optional[Input] = None,
+        output: ty.Optional[Output] = None,
     ) -> None:
 
         # If `enable_page_navigation_bindings` is not specified, enable it in
@@ -287,12 +269,12 @@ class Suite(Generic[_AppResult]):
         self.input = input or session.input
 
         # List of 'extra' functions to execute before a Suite.run.
-        self.pre_run_callables: List[Callable[[], None]] = []
+        self.pre_run_callables: ty.List[ty.Callable[[], None]] = []
 
         self._is_running = False
-        self.future: Optional[Future[_AppResult]] = None
-        self.loop: Optional[AbstractEventLoop] = None
-        self.context: Optional[contextvars.Context] = None
+        self.future: ty.Optional[Future[_AppResult]] = None
+        self.loop: ty.Optional[AbstractEventLoop] = None
+        self.context: ty.Optional[contextvars.Context] = None
 
         #: Quoted insert. This flag is set if we go into quoted insert mode.
         self.quoted_insert = False
@@ -349,7 +331,7 @@ class Suite(Generic[_AppResult]):
         # If `run_in_terminal` was called. This will point to a `Future` what will be
         # set at the point when the previous run finishes.
         self._running_in_terminal = False
-        self._running_in_terminal_f: Optional[Future[None]] = None
+        self._running_in_terminal_f: ty.Optional[Future[None]] = None
 
         # Trigger initialize callback.
         self.reset()
@@ -616,7 +598,7 @@ class Suite(Generic[_AppResult]):
         self._request_absolute_cursor_position()
         self._redraw()
 
-    def _pre_run(self, pre_run: Optional[Callable[[], None]] = None) -> None:
+    def _pre_run(self, pre_run: ty.Optional[ty.Callable[[], None]] = None) -> None:
         """
         Called during `run`.
 
@@ -636,7 +618,7 @@ class Suite(Generic[_AppResult]):
 
     async def run_async(
         self,
-        pre_run: Optional[Callable[[], None]] = None,
+        pre_run: ty.Optional[ty.Callable[[], None]] = None,
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
@@ -669,7 +651,7 @@ class Suite(Generic[_AppResult]):
             # pressed, we start a 'flush' timer for flushing our escape key. But
             # when any subsequent input is received, a new timer is started and
             # the current timer will be ignored.
-            flush_task: Optional[asyncio.Task[None]] = None
+            flush_task: ty.Optional[asyncio.Task[None]] = None
 
             # Reset.
             # (`self.future` needs to be set when `pre_run` is called.)
@@ -824,7 +806,7 @@ class Suite(Generic[_AppResult]):
 
     def run(
         self,
-        pre_run: Optional[Callable[[], None]] = None,
+        pre_run: ty.Optional[ty.Callable[[], None]] = None,
         set_exception_handler: bool = True,
         in_thread: bool = False,
     ) -> _AppResult:
@@ -854,7 +836,7 @@ class Suite(Generic[_AppResult]):
         """
         if in_thread:
             result: _AppResult
-            exception: Optional[BaseException] = None
+            exception: ty.Optional[BaseException] = None
 
             def run_in_thread() -> None:
                 nonlocal result, exception
@@ -900,7 +882,7 @@ class Suite(Generic[_AppResult]):
         )
 
     def _handle_exception(
-        self, loop: AbstractEventLoop, context: Dict[str, Any]
+        self, loop: AbstractEventLoop, context: ty.Dict[str, ty.Any]
     ) -> None:
         """
         Handler for event loop exceptions.
@@ -928,7 +910,7 @@ class Suite(Generic[_AppResult]):
         ensure_future(in_term())
 
     def create_background_task(
-        self, coroutine: Awaitable[None]
+        self, coroutine: ty.Awaitable[None]
     ) -> "asyncio.Task[None]":
         """
         Start a background task (coroutine) for the running application. When
@@ -999,24 +981,24 @@ class Suite(Generic[_AppResult]):
 
         run_in_terminal(in_terminal)
 
-    @overload
+    @ty.overload
     def exit(self) -> None:
         "Exit without arguments."
 
-    @overload
+    @ty.overload
     def exit(self, *, result: _AppResult, style: str = "") -> None:
         "Exit with `_AppResult`."
 
-    @overload
+    @ty.overload
     def exit(
-        self, *, exception: Union[BaseException, Type[BaseException]], style: str = ""
+        self, *, exception: ty.Union[BaseException, Type[BaseException]], style: str = ""
     ) -> None:
         "Exit with exception."
 
     def exit(
         self,
-        result: Optional[_AppResult] = None,
-        exception: Optional[Union[BaseException, Type[BaseException]]] = None,
+        result: ty.Optional[_AppResult] = None,
+        exception: ty.Optional[ty.Union[BaseException, Type[BaseException]]] = None,
         style: str = "",
     ) -> None:
         """
@@ -1130,7 +1112,7 @@ class Suite(Generic[_AppResult]):
             run_in_terminal(run)
 
     def print_text(
-        self, text: Textual, style: Optional[BaseStyle] = None
+        self, text: Textual, style: ty.Optional[BaseStyle] = None
     ) -> None:
         """
         Print a list of (style_str, text) tuples to the output.
@@ -1159,7 +1141,7 @@ class Suite(Generic[_AppResult]):
             return self.future.done()
         return False
 
-    def get_used_style_strings(self) -> List[str]:
+    def get_used_style_strings(self) -> ty.List[str]:
         """
         Return a list of used style strings. This is helpful for debugging, and
         for writing a new `Style`.
@@ -1187,22 +1169,22 @@ class _CombinedRegistry(KeyBindingsBase):
     def __init__(self, app: Suite[_AppResult]) -> None:
         self.app = app
         self._cache: SimpleCache[
-            Tuple[Window, FrozenSet[UIControl]], KeyBindingsBase
+            ty.Tuple[Window, ty.FrozenSet[UIControl]], KeyBindingsBase
         ] = SimpleCache()
 
     @property
-    def _version(self) -> Hashable:
+    def _version(self) -> ty.Hashable:
         """Not needed - this object is not going to be wrapped in another
         KeyBindings object."""
         raise NotImplementedError
 
-    def bindings(self) -> List[Binding]:
+    def bindings(self) -> ty.List[Binding]:
         """Not needed - this object is not going to be wrapped in another
         KeyBindings object."""
         raise NotImplementedError
 
     def _create_key_bindings(
-        self, current_window: Window, other_controls: List[UIControl]
+        self, current_window: Window, other_controls: ty.List[UIControl]
     ) -> KeyBindingsBase:
         """
         Create a `KeyBinder` object that merges the `KeyBindings` from the
@@ -1265,10 +1247,10 @@ class _CombinedRegistry(KeyBindingsBase):
             key, lambda: self._create_key_bindings(current_window, other_controls)
         )
 
-    def get_bindings_for_keys(self, keys: KeysTuple) -> List[Binding]:
+    def get_bindings_for_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         return self._key_bindings.get_bindings_for_keys(keys)
 
-    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> List[Binding]:
+    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         return self._key_bindings.get_bindings_starting_with_keys(keys)
 
 
@@ -1298,11 +1280,12 @@ async def _do_wait_for_enter(wait_text: Textual) -> None:
     )
     await session.app.run_async()
 
+import contextlib
 
-@contextmanager
+@contextlib.contextmanager
 def attach_winch_signal_handler(
-    handler: Callable[[], None]
-) -> Generator[None, None, None]:
+    handler: ty.Callable[[], None]
+) -> ty.Generator[None, None, None]:
     """
     Attach the given callback as a WINCH signal handler within the context
     manager. Restore the original signal handler when done.

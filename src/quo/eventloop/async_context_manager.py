@@ -3,8 +3,7 @@
 For usage in Python 3.6.
 """
 import abc
-from functools import wraps
-
+import functools
 import _collections_abc
 
 __all__ = ["asynccontextmanager"]

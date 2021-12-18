@@ -1,10 +1,5 @@
+import typing
 import xml.dom.minidom as minidom
-from typing import (
-        Any, 
-        List, 
-        Tuple, 
-        Union
-        )
 
 from quo.text.core import RichText, StyleAndTextTuples
 
@@ -36,9 +31,9 @@ class HTML:
         document = minidom.parseString("<html-root>%s</html-root>" % (value,))
 
         result: StyleAndTextTuples = []
-        name_stack: List[str] = []
-        fg_stack: List[str] = []
-        bg_stack: List[str] = []
+        name_stack: typing.List[str] = []
+        fg_stack: typing.List[str] = []
+        bg_stack: typing.List[str] = []
 
         def get_current_style() -> str:
             "Build style string for current node."
@@ -52,7 +47,7 @@ class HTML:
                 parts.append("bg:" + bg_stack[-1])
             return " ".join(parts)
 
-        def process_node(node: Any) -> None:
+        def process_node(node: typing.Any) -> None:
             "Process node recursively."
             for child in node.childNodes:
                 if child.nodeType == child.TEXT_NODE:
@@ -117,7 +112,7 @@ class HTML:
 
         return HTML(self.value.format(*escaped_args, **escaped_kwargs))
 
-    def __mod__(self, value: Union[object, Tuple[object, ...]]) -> "HTML":
+    def __mod__(self, value: typing.Union[object, typing.Tuple[object, ...]]) -> "HTML":
         """
         HTML('<b>%s</b>') % value
         """

@@ -1,12 +1,11 @@
-from collections import OrderedDict
-from typing import Dict, Generic, TypeVar
+import collections
+import typing
+
+CacheKey = typing.TypeVar("CacheKey")
+CacheValue = typing.TypeVar("CacheValue")
 
 
-CacheKey = TypeVar("CacheKey")
-CacheValue = TypeVar("CacheValue")
-
-
-class LRUCache(Generic[CacheKey, CacheValue], OrderedDict):  # type: ignore # https://github.com/python/mypy/issues/6904
+class LRUCache(typing.Generic[CacheKey, CacheValue], collections.OrderedDict):  # type: ignore # https://github.com/python/mypy/issues/6904
     """
     A dictionary-like container that stores a given maximum items.
 
@@ -24,11 +23,11 @@ class LRUCache(Generic[CacheKey, CacheValue], OrderedDict):  # type: ignore # ht
         if key not in self:
             if len(self) >= self.cache_size:
                 self.popitem(last=False)
-        OrderedDict.__setitem__(self, key, value)
+        collections.OrderedDict.__setitem__(self, key, value)
 
-    def __getitem__(self: Dict[CacheKey, CacheValue], key: CacheKey) -> CacheValue:
+    def __getitem__(self: typing.Dict[CacheKey, CacheValue], key: CacheKey) -> CacheValue:
         """Gets the item, but also makes it most recent."""
-        value: CacheValue = OrderedDict.__getitem__(self, key)
-        OrderedDict.__delitem__(self, key)
-        OrderedDict.__setitem__(self, key, value)
+        value: CacheValue = collections.OrderedDict.__getitem__(self, key)
+        collections.OrderedDict.__delitem__(self, key)
+        collections.OrderedDict.__setitem__(self, key, value)
         return value

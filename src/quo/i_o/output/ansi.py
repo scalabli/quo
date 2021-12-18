@@ -1,8 +1,4 @@
-from typing import (
-        Generator,
-        List,
-        Optional
-        )
+import typing
 
 from quo.output.videoterminal import BG_ANSI_COLORS, FG_ANSI_COLORS
 from quo.output.videoterminal import _256_colors as _256_colors_table
@@ -35,8 +31,8 @@ class ANSI:
         self._formatted_text: StyleAndTextTuples = []
 
         # Default style attributes.
-        self._color: Optional[str] = None
-        self._bgcolor: Optional[str] = None
+        self._color: typing.Optional[str] = None
+        self._bgcolor: typing.Optional[str] = None
         self._bold = False
         self._underline = False
         self._italic = False
@@ -50,7 +46,7 @@ class ANSI:
         for c in value:
             parser.send(c)
 
-    def _parse_corot(self) -> Generator[None, str, None]:
+    def _parse_corot(self) -> typing.Generator[None, str, None]:
         """
         Coroutine that parses the ANSI escape sequences.
         """
@@ -112,7 +108,7 @@ class ANSI:
                 #       output.
                 formatted_text.append((style, c))
 
-    def _select_graphic_rendition(self, attrs: List[int]) -> None:
+    def _select_graphic_rendition(self, attrs: typing.List[int]) -> None:
         """
         Taken a list of graphics attributes and apply changes.
         """

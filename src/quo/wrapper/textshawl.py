@@ -1,5 +1,5 @@
 import textwrap
-from contextlib import contextmanager
+import contextlib
 
 
 class TextWrapper(textwrap.TextWrapper):
@@ -15,7 +15,7 @@ class TextWrapper(textwrap.TextWrapper):
         elif not cur_line:
             cur_line.append(reversed_chunks.pop())
 
-    @contextmanager
+    @contextlib.contextmanager
     def extra_indent(self, indent):
         old_initial_indent = self.initial_indent
         old_subsequent_indent = self.subsequent_indent

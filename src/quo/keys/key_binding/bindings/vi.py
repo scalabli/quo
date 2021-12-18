@@ -14,7 +14,7 @@ from typing import (
         )
 
 from quo.application.current import get_app
-from quo.buffer import Buffer, indent, reshape_text, unindent
+from quo.layout.utils import Buffer, indent, reshape_text, unindent
 from quo.clipboard import Data
 from quo.document import Document
 from quo.filters import (
@@ -40,7 +40,7 @@ from quo.filters.app import (
     vi_selection_mode,
     vi_waiting_for_text_object_mode,
 )
-from quo.i_o.input.vt100_parser import Vt100Parser
+from quo.i_o.input import Vt100Parser
 from quo.keys.key_binding.digraphs import DIGRAPHS
 from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.key_binding.vi_state import CharacterFind, InputMode

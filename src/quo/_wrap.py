@@ -1,5 +1,5 @@
 import re
-from typing import Iterable, List, Tuple
+import typing
 
 from .cells import cell_len, chop_cells
 from ._loop import loop_last
@@ -7,7 +7,7 @@ from ._loop import loop_last
 re_word = re.compile(r"\s*\S+\s*")
 
 
-def words(text: str) -> Iterable[Tuple[int, int, str]]:
+def words(text: str) -> typing.Iterable[typing.Tuple[int, int, str]]:
     position = 0
     word_match = re_word.match(text, position)
     while word_match is not None:
@@ -17,8 +17,8 @@ def words(text: str) -> Iterable[Tuple[int, int, str]]:
         word_match = re_word.match(text, end)
 
 
-def divide_line(text: str, width: int, fold: bool = True) -> List[int]:
-    divides: List[int] = []
+def divide_line(text: str, width: int, fold: bool = True) -> typing.List[int]:
+    divides: typing.List[int] = []
     append = divides.append
     line_position = 0
     _cell_len = cell_len
@@ -46,10 +46,3 @@ def divide_line(text: str, width: int, fold: bool = True) -> List[int]:
             line_position += _cell_len(word)
     return divides
 
-
-if __name__ == "__main__":  # pragma: no cover
-    from .console import Console
-
-    console = Console(width=10)
-    console.echo("12345 abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ 12345")
-    print(chop_cells("abcdefghijklmnopqrstuvwxyz", 10, position=2))

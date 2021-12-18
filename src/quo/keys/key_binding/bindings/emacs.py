@@ -2,8 +2,8 @@
 from typing import Dict, Union
 
 from quo.application.current import get_app
-from quo.buffer import Buffer, indent, unindent
-from quo.completion import CompleteEvent
+from quo.layout.utils import Buffer, indent, unindent
+from quo.i_o.util import CompleteEvent
 from quo.filters import (
     Condition,
     emacs_insert_mode,

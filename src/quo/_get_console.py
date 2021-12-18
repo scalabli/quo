@@ -1,7 +1,8 @@
-from typing import Optional
+import typing
+
 from quo.console import Console
 
-_console: Optional["Console"] = None
+_console: typing.Optional["Console"] = None
 
 def _get_console() -> "Console":
     """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,

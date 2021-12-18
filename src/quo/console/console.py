@@ -838,7 +838,7 @@ class Console:
 
     def push_theme(self, theme: Theme, *, inherit: bool = True) -> None:
         """Push a new theme on to the top of the stack, replacing the styles from the previous theme.
-        Generally speaking, you should call :meth:`~rich.console.Console.use_theme` to get a context manager, rather
+        Generally speaking, you should call :meth:`~quo.Console.use_theme` to get a context manager, rather
         than calling this method directly.
 
         Args:
@@ -912,7 +912,7 @@ class Console:
 
     @property
     def options(self) -> ConsoleOptions:
-        """Get default console options."""
+        """Get default console options or settings"""
         return ConsoleOptions(
             max_height=self.size.height,
             size=self.size,
@@ -1006,7 +1006,7 @@ class Console:
         self._height = height
 
     def bell(self) -> None:
-        """Play a 'bell' sound (if supported by the terminal)."""
+        """Play a 'bell' sound or vibrate (if supported by the terminal)."""
         self.control(Control.bell())
 
     def capture(self) -> Capture:
@@ -1014,7 +1014,7 @@ class Console:
         rather than writing it to the console.
 
         Example:
-            >>> from rich.console import Console
+            >>> from quo import Console
             >>> console = Console()
             >>> with console.capture() as capture:
             ...     console.echo("[bold magenta]Hello World[/]")
@@ -1038,8 +1038,8 @@ class Console:
             links (bool, optional): Show links in pager. Defaults to False.
 
         Example:
-            >>> from rich.console import Console
-            >>> from rich.__main__ import make_test_card
+            >>> from quo.console import Console
+            >>> from quo.__main__ import make_test_card
             >>> console = Console()
             >>> with console.pager():
                     console.echo(make_test_card())
@@ -1055,26 +1055,14 @@ class Console:
         Args:
             count (int, optional): Number of new lines. Defaults to 1.
         """
-
-        assert count >= 0, "count must be >= 0"
+        assert count >= 0, "Count must be >=0"
         self.echo(NewLine(count))
-
-    def clear(self, home: bool = True) -> None:
-        """Clear the screen.
-
-        Args:
-            home (bool, optional): Also move the cursor to 'home' position. Defaults to True.
-        """
-        if home:
-            self.control(Control.clear(), Control.home())
-        else:
-            self.control(Control.clear())
 
     def status(
         self,
         status: RenderableType,
         *,
-        spinner: str = "dots",
+        spinner: str = "bar",
         spinner_style: str = "status.spinner",
         speed: float = 1.0,
         refresh_per_second: float = 12.5,
@@ -1083,10 +1071,10 @@ class Console:
 
         Args:
             status (RenderableType): A status renderable (str or Text typically).
-            spinner (str, optional): Name of spinner animation (see python -m rich.spinner). Defaults to "dots".
+            spinner (str, optional): Name of spinner animation. Defaults to "bar".
             spinner_style (StyleType, optional): Style of spinner. Defaults to "status.spinner".
             speed (float, optional): Speed factor for spinner animation. Defaults to 1.0.
-            refresh_per_second (float, optional): Number of refreshes per second. Defaults to 12.5.
+            refresh_per_second (float, optional): Number of refreshes per second. Defaults to 13.
 
         Returns:
             Status: A Status object that may be used as a context manager.
@@ -1118,7 +1106,7 @@ class Console:
         """Enables alternative screen mode.
 
         Note, if you enable this mode, you should ensure that is disabled before
-        the application exits. See :meth:`~rich.Console.screen` for a context manager
+        the application exits. See :meth:`~quo.Console.screen` for a context manager
         that handles this for you.
 
         Args:
@@ -1161,7 +1149,7 @@ class Console:
     def measure(
         self, renderable: RenderableType, *, options: Optional[ConsoleOptions] = None
     ) -> Measurement:
-        """Measure a renderable. Returns a :class:`~rich.measure.Measurement` object which contains
+        """Measure a renderable. Returns a :class:`~quo.measure.Measurement` object which contains
         information regarding the number of characters required to print the renderable.
 
         Args:
@@ -1489,7 +1477,7 @@ class Console:
         highlight: Optional[bool] = None,
     ) -> None:
         """Output to the terminal. This is a low-level way of writing to the terminal which unlike
-        :meth:`~quo.console.Console.echo` won't pretty print, wrap text, or apply markup, but will
+        :meth:`~quo.Console.echo` won't pretty print, wrap text, or apply markup, but will
         optionally apply highlighting and a basic style.
 
         Args:
@@ -1692,41 +1680,6 @@ class Console:
         segments = self.render(screen_update)
         self._buffer.extend(segments)
         self._check_buffer()
-
-    def print_exception(
-        self,
-        *,
-        width: Optional[int] = 100,
-        extra_lines: int = 3,
-        theme: Optional[str] = None,
-        word_wrap: bool = False,
-        show_locals: bool = False,
-        suppress: Iterable[Union[str, ModuleType]] = (),
-        max_frames: int = 100,
-    ) -> None:
-        """Prints a rich render of the last exception and traceback.
-
-        Args:
-            width (Optional[int], optional): Number of characters used to render code. Defaults to 88.
-            extra_lines (int, optional): Additional lines of code to render. Defaults to 3.
-            theme (str, optional): Override pygments theme used in traceback
-            word_wrap (bool, optional): Enable word wrapping of long lines. Defaults to False.
-            show_locals (bool, optional): Enable display of local variables. Defaults to False.
-            suppress (Iterable[Union[str, ModuleType]]): Optional sequence of modules or paths to exclude from traceback.
-            max_frames (int): Maximum number of frames to show in a traceback, 0 for no maximum. Defaults to 100.
-        """
-        from quo.traceback import Traceback
-
-        traceback = Traceback(
-            width=width,
-            extra_lines=extra_lines,
-            theme=theme,
-            word_wrap=word_wrap,
-            show_locals=show_locals,
-            suppress=suppress,
-            max_frames=max_frames,
-        )
-        self.echo(traceback)
 
     @staticmethod
     def _caller_frame_info(

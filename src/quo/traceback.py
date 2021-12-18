@@ -336,7 +336,7 @@ class Traceback:
         stacks: List[Stack] = []
         is_cause = False
 
-        from quo import _IMPORT_CWD
+        _IMPORT_CWD = os.path.abspath(os.getcwd())
 
         def safe_str(_object: Any) -> str:
             """Don't allow exceptions from __str__ to propegate."""

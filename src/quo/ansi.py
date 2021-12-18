@@ -1,6 +1,5 @@
-from contextlib import suppress
 import re
-from typing import Iterable, NamedTuple
+import typing
 
 from quo.color.color import Color
 from .style import Style
@@ -10,7 +9,7 @@ re_ansi = re.compile(r"(?:\x1b\[(.*?)m)|(?:\x1b\](.*?)\x1b\\)")
 re_csi = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
 
-class _AnsiToken(NamedTuple):
+class _AnsiToken(typing.NamedTuple):
     """Result of ansi tokenized string."""
 
     plain: str = ""
@@ -18,7 +17,7 @@ class _AnsiToken(NamedTuple):
     osc: str = ""
 
 
-def _ansi_tokenize(ansi_text: str) -> Iterable[_AnsiToken]:
+def _ansi_tokenize(ansi_text: str) -> typing.Iterable[_AnsiToken]:
     """Tokenize a string in to plain text and ANSI codes.
 
     Args:
@@ -111,7 +110,7 @@ class AnsiDecoder:
     def __init__(self) -> None:
         self.style = Style.null()
 
-    def decode(self, terminal_text: str) -> Iterable[Text]:
+    def decode(self, terminal_text: str) -> typing.Iterable[Text]:
         """Decode ANSI codes in an interable of lines.
 
         Args:
@@ -132,6 +131,7 @@ class AnsiDecoder:
         Returns:
             Text: A Text instance marked up according to ansi codes.
         """
+        from contextlib import supress
         from_ansi = Color.from_ansi
         from_rgb = Color.from_rgb
         _Style = Style

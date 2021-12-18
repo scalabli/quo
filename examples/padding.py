@@ -1,4 +1,5 @@
-from quo import echo, Console, Padding
+from quo import echo, Console
+from quo.padding import Padding
 
 
 console = Console()

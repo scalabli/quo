@@ -1,7 +1,8 @@
 """Same as the table_movie.py but uses Live to update"""
 import time
 from contextlib import contextmanager
-from quo import Align, box, clear, Console
+from quo import box, clear, Console
+from quo.align import Align
 from quo.live import Live
 from quo.table import Table
 from quo.text import Text
@@ -95,10 +96,10 @@ with Live(table_centered, console=console, screen=False, refresh_per_second=20):
         table.caption = "Quo"
 
     with beat(10):
-        table.caption = "Made with [b]Rich[/b]"
+        table.caption = "Made with [b]Quo[/b]"
 
     with beat(10):
-        table.caption = "Made with [b magenta not dim]Rich[/]"
+        table.caption = "Made with [b magenta not dim]Quo[/]"
 
     for row in TABLE_DATA:
         with beat(10):

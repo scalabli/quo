@@ -17,7 +17,7 @@ from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, 
 
 from quo.application.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
-from quo.buffer import Buffer, BufferAcceptHandler
+from quo.layout.utils import Buffer, BufferAcceptHandler
 from quo.completion import Completer, DynamicCompleter
 from quo.document import Document
 from quo.filters import (

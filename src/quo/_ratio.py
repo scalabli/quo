@@ -1,7 +1,5 @@
 import sys
-from fractions import Fraction
-from math import ceil
-from typing import cast, List, Optional, Sequence
+import typing
 
 if sys.version_info >= (3, 8):
     from typing import Protocol
@@ -12,12 +10,13 @@ else:
 class Edge(Protocol):
     """Any object that defines an edge (such as Layout)."""
 
-    size: Optional[int] = None
+    size: typing.Optional[int] = None
     ratio: int = 1
     minimum_size: int = 1
 
 
-def ratio_resolve(total: int, edges: Sequence[Edge]) -> List[int]:
+def ratio_resolve(total: int, edges: typing.Sequence[Edge]) -> typing.List[int]:
+    import fractions
     """Divide total space to satisfy size, ratio, and minimum_size, constraints.
 
     The returned list of integers should add up to total in most cases, unless it is
@@ -36,7 +35,7 @@ def ratio_resolve(total: int, edges: Sequence[Edge]) -> List[int]:
     # Size of edge or None for yet to be determined
     sizes = [(edge.size or None) for edge in edges]
 
-    _Fraction = Fraction
+    _Fraction = fractions.Fraction
 
     # While any edges haven't been calculated
     while None in sizes:
@@ -75,12 +74,12 @@ def ratio_resolve(total: int, edges: Sequence[Edge]) -> List[int]:
                 sizes[index] = size
             break
     # Sizes now contains integers only
-    return cast(List[int], sizes)
+    return typing.cast(typing.List[int], sizes)
 
 
 def ratio_reduce(
-    total: int, ratios: List[int], maximums: List[int], values: List[int]
-) -> List[int]:
+    total: int, ratios: typing.List[int], maximums: typing.List[int], values: typing.List[int]
+) -> typing.List[int]:
     """Divide an integer total in to parts based on ratios.
 
     Args:
@@ -97,7 +96,7 @@ def ratio_reduce(
     if not total_ratio:
         return values[:]
     total_remaining = total
-    result: List[int] = []
+    result: typing.List[int] = []
     append = result.append
     for ratio, maximum, value in zip(ratios, maximums, values):
         if ratio and total_ratio > 0:
@@ -111,8 +110,9 @@ def ratio_reduce(
 
 
 def ratio_distribute(
-    total: int, ratios: List[int], minimums: Optional[List[int]] = None
-) -> List[int]:
+    total: int, ratios: typing.List[int], minimums: typing.Optional[typing.List[int]] = None
+) -> typing.List[int]:
+    import math
     """Distribute an integer total in to parts based on ratios.
 
     Args:
@@ -129,7 +129,7 @@ def ratio_distribute(
     assert total_ratio > 0, "Sum of ratios must be > 0"
 
     total_remaining = total
-    distributed_total: List[int] = []
+    distributed_total: typing.List[int] = []
     append = distributed_total.append
     if minimums is None:
         _minimums = [0] * len(ratios)
@@ -137,7 +137,7 @@ def ratio_distribute(
         _minimums = minimums
     for ratio, minimum in zip(ratios, _minimums):
         if total_ratio > 0:
-            distributed = max(minimum, ceil(ratio * total_remaining / total_ratio))
+            distributed = max(minimum, math.ceil(ratio * total_remaining / total_ratio))
         else:
             distributed = total_remaining
         append(distributed)
@@ -145,16 +145,3 @@ def ratio_distribute(
         total_remaining -= distributed
     return distributed_total
 
-
-if __name__ == "__main__":
-    from dataclasses import dataclass
-
-    @dataclass
-    class E:
-
-        size: Optional[int] = None
-        ratio: int = 1
-        minimum_size: int = 1
-
-    resolved = ratio_resolve(110, [E(None, 1, 1), E(None, 1, 1), E(None, 1, 1)])
-    print(sum(resolved))

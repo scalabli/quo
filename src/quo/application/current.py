@@ -1,18 +1,13 @@
 import sys
-from contextlib import contextmanager
-from typing import (
-        TYPE_CHECKING,
-        Any,
-        Generator, 
-        Optional
-        )
+import typing as ty
+import contextlib
 
 try:
     from contextvars import ContextVar
 except ImportError:
     from quo.eventloop.dummy_contextvars import ContextVar  # type: ignore
 
-if TYPE_CHECKING:
+if ty.TYPE_CHECKING:
     from quo.i_o.input.core import Input
     from quo.output.core import Output
 
@@ -46,7 +41,9 @@ class AppSession:
     """
 
     def __init__(
-        self, input: Optional["Input"] = None, output: Optional["Output"] = None
+        self, 
+        input: ty.Optional["Input"] = None, 
+        output: ty.Optional["Output"] = None
     ) -> None:
 
         self._input = input
@@ -54,7 +51,7 @@ class AppSession:
 
         # The application will be set dynamically by the `set_app` context
         # manager. This is called in the application itself.
-        self.app: Optional["Suite[Any]"] = None
+        self.app: ty.Optional["Suite[Any]"] = None
 
     def __repr__(self) -> str:
         return "AppSession(app=%r)" % (self.app,)
@@ -85,7 +82,7 @@ def get_app_session() -> AppSession:
     return _current_app_session.get()
 
 
-def get_app() -> "Suite[Any]":
+def get_app() -> "Suite[ty.Any]":
     """
     Get the current active (running) Application.
     An :class:`.Suite` is active during the
@@ -96,7 +93,7 @@ def get_app() -> "Suite[Any]":
     stdout. This makes the code significantly easier than passing around the
     :class:`.Suite` everywhere.
 
-    If no :class:`.Application` is running, then return by default a
+    If no :class:`.Suite` is running, then return by default a
     :class:`.DummyApplication`. For practical reasons, we prefer to not raise
     an exception. This way, we don't have to check all over the place whether
     an actual `Application` was returned.
@@ -113,7 +110,7 @@ def get_app() -> "Suite[Any]":
     return DummyApplication()
 
 
-def get_app_or_none() -> Optional["Suite[Any]"]:
+def get_app_or_none() -> ty.Optional["Suite[ty.Any]"]:
     """
     Get the current active (running) Application, or return `None` if no
     application is running.
@@ -122,8 +119,8 @@ def get_app_or_none() -> Optional["Suite[Any]"]:
     return session.app
 
 
-@contextmanager
-def set_app(app: "Suite[Any]") -> Generator[None, None, None]:
+@contextlib.contextmanager
+def set_app(app: "Suite[ty.Any]") -> ty.Generator[None, None, None]:
     """
     Context manager that sets the given :class:`.Suite` active in an
     `AppSession`.
@@ -144,10 +141,10 @@ def set_app(app: "Suite[Any]") -> Generator[None, None, None]:
         session.app = previous_app
 
 
-@contextmanager
+@contextlib.contextmanager
 def create_app_session(
-    input: Optional["Input"] = None, output: Optional["Output"] = None
-) -> Generator[AppSession, None, None]:
+    input: ty.Optional["Input"] = None, output: ty.Optional["Output"] = None
+) -> ty.Generator[AppSession, None, None]:
     """
     Create a separate AppSession.
 

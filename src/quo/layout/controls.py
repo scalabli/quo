@@ -16,12 +16,12 @@ from typing import (
 )
 
 from quo.application.current import get_app
-from quo.buffer import Buffer
+from .utils import Buffer
 from quo.cache import SimpleCache
 from quo.data_structures import Point
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.text import (
+from quo.text.core import (
         Textual,
         StyleAndTextTuples,
         to_formatted_text

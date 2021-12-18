@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+import typing
 
 from quo.text import Textual
 from quo.i_o.input import DummyInput
@@ -22,7 +22,7 @@ class DummyApplication(Suite[None]):
 
     def run(
         self,
-        pre_run: Optional[Callable[[], None]] = None,
+        pre_run: typing.Optional[typing.Callable[[], None]] = None,
         set_exception_handler: bool = True,
         in_thread: bool = False,
     ) -> None:
@@ -30,7 +30,7 @@ class DummyApplication(Suite[None]):
 
     async def run_async(
         self,
-        pre_run: Optional[Callable[[], None]] = None,
+        pre_run: typing.Optional[typing.Callable[[], None]] = None,
         set_exception_handler: bool = True,
     ) -> None:
         raise NotImplementedError("A DummyApplication is not supposed to run.")

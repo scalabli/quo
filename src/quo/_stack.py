@@ -1,9 +1,9 @@
-from typing import List, TypeVar
+import typing
 
-T = TypeVar("T")
+T = typing.TypeVar("T")
 
 
-class Stack(List[T]):
+class Stack(typing.List[T]):
     """A small shim over builtin list."""
 
     @property

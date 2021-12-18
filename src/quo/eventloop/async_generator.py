@@ -1,8 +1,8 @@
 """
 Implementation for async generators.
 """
-from asyncio import Queue, get_event_loop
-from typing import AsyncGenerator, Callable, Iterable, TypeVar, Union
+import asyncio
+import typing as ty
 
 from .utils import run_in_executor_with_context
 
@@ -11,7 +11,7 @@ __all__ = [
 ]
 
 
-_T = TypeVar("_T")
+_T = ty.TypeVar("_T")
 
 
 class _Done:
@@ -19,8 +19,8 @@ class _Done:
 
 
 async def generator_to_async_generator(
-    get_iterable: Callable[[], Iterable[_T]]
-) -> AsyncGenerator[_T, None]:
+    get_iterable: ty.Callable[[], ty.Iterable[_T]]
+) -> ty.AsyncGenerator[_T, None]:
     """
     Turn a generator or iterable into an async generator.
 
@@ -31,8 +31,8 @@ async def generator_to_async_generator(
     """
     quitting = False
     _done = _Done()
-    q: Queue[Union[_T, _Done]] = Queue()
-    loop = get_event_loop()
+    q: asyncio.Queue[ty.Union[_T, _Done]] = asyncio.Queue()
+    loop = asyncio.get_event_loop()
 
     def runner() -> None:
         """

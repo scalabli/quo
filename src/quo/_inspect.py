@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 
+import typing
+
 from inspect import cleandoc, getdoc, getfile, isclass, ismodule, signature
-from typing import Any, Iterable, Optional, Tuple, Union
 
 from quo.console.console import RenderableType, Group
 from .highlighter import ReprHighlighter
@@ -11,7 +12,7 @@ from .pretty import Pretty
 from .table import Table
 from quo.text.text import Text
 
-TextType = Union[str, "Text"]
+TextType = typing.Union[str, "Text"]
 
 def _first_paragraph(doc: str) -> str:
     """Get the first paragraph from a docstring."""
@@ -43,9 +44,9 @@ class Inspect(JupyterMixin):
 
     def __init__(
         self,
-        obj: Any,
+        obj: typing.Any,
         *,
-        title: Optional[TextType] = None,
+        title: typing.Optional[TextType] = None,
         help: bool = False,
         methods: bool = False,
         docs: bool = True,
@@ -68,7 +69,7 @@ class Inspect(JupyterMixin):
         self.sort = sort
         self.value = value
 
-    def _make_title(self, obj: Any) -> Text:
+    def _make_title(self, obj: typing.Any) -> Text:
         """Make a default title."""
         title_str = (
             str(obj)
@@ -86,7 +87,7 @@ class Inspect(JupyterMixin):
             padding=(0, 1),
         )
 
-    def _get_signature(self, name: str, obj: Any) -> Optional[Text]:
+    def _get_signature(self, name: str, obj: typing.Any) -> typing.Optional[Text]:
         """Get a signature for a callable."""
         try:
             _signature = str(signature(obj)) + ":"
@@ -95,7 +96,7 @@ class Inspect(JupyterMixin):
         except TypeError:
             return None
 
-        source_filename: Optional[str] = None
+        source_filename: typing.Optional[str] = None
         try:
             source_filename = getfile(obj)
         except TypeError:
@@ -113,14 +114,14 @@ class Inspect(JupyterMixin):
 
         return qual_signature
 
-    def _render(self) -> Iterable[RenderableType]:
+    def _render(self) -> typing.Iterable[RenderableType]:
         """Render object."""
 
-        def sort_items(item: Tuple[str, Any]) -> Tuple[bool, str]:
+        def sort_items(item: typing.Tuple[str, typing.Any]) -> typing.Tuple[bool, str]:
             key, (_error, value) = item
             return (callable(value), key.strip("_").lower())
 
-        def safe_getattr(attr_name: str) -> Tuple[Any, Any]:
+        def safe_getattr(attr_name: str) -> typing.Tuple[typing.Any, typing.Any]:
             """Get attribute or any exception."""
             try:
                 return (None, getattr(obj, attr_name))

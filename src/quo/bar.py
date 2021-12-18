@@ -1,4 +1,4 @@
-from typing import Optional, Union
+import typing as ty
 
 from quo.color.color import Color
 from quo.console.console import Console, ConsoleOptions, RenderResult
@@ -32,9 +32,9 @@ class Bar(JupyterMixin):
         begin: float,
         end: float,
         *,
-        width: Optional[int] = None,
-        fg: Union[Color, str] = "default",
-        bg: Union[Color, str] = "default",
+        width: ty.Optional[int] = None,
+        fg: ty.Union[Color, str] = "default",
+        bg: ty.Union[Color, str] = "default",
     ):
         self.size = size
         self.begin = max(begin, 0)

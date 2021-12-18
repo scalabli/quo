@@ -1,7 +1,6 @@
-from typing import Any
+import typing
 
-
-def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
+def load_ipython_extension(ip: typing.Any) -> None:  # pragma: no cover
     # prevent circular import
     from quo.pretty import install
     from quo.traceback import install as tr_install

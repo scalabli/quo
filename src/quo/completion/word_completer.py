@@ -1,4 +1,4 @@
-from typing import Callable, Iterable, List, Mapping, Optional, Pattern, Union
+import typing as ty
 
 from quo.completion import CompleteEvent, Completer, Completion
 from quo.document import Document
@@ -30,14 +30,14 @@ class WordCompleter(Completer):
 
     def __init__(
             self,
-            words: Union[List[str], Callable[[], List[str]]],
+            words: ty.Union[ty.List[str], ty.Callable[[], ty.List[str]]],
             ignore_case: bool = True,
-            display_dict: Optional[Mapping[str, Textual]] = None,
-            meta_dict: Optional[Mapping[str, Textual]] = None,
+            display_dict: ty.Optional[ty.Mapping[str, Textual]] = None,
+            meta_dict: ty.Optional[ty.Mapping[str, Textual]] = None,
             WORD: bool = False,
             sentence: bool = False,
             match_middle: bool = False,
-            pattern: Optional[Pattern[str]] = None,
+            pattern: ty.Optional[ty.Pattern[str]] = None,
             ) -> None:
 
         assert not (WORD and sentence)
@@ -55,7 +55,7 @@ class WordCompleter(Completer):
             self, 
             document: Document, complete_event: CompleteEvent
 
-            ) -> Iterable[Completion]:
+            ) -> ty.Iterable[Completion]:
 
         # Get list of words.
         words = self.words

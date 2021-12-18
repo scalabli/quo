@@ -26,7 +26,7 @@ from quo.filters import (
     to_filter,
     vi_insert_mode,
 )
-from quo.text import (
+from quo.text.core import (
         Textual,
         StyleAndTextTuples,
         to_formatted_text

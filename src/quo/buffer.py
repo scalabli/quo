@@ -46,7 +46,8 @@ from .history import History, InMemoryHistory
 from .search import SearchDirection, SearchState
 from .selection import PasteMode, SelectionState, SelectionType
 from .utils import Event, to_str
-from .validation import ValidationError, Validator
+from .validation import Validator
+from quo.errors import ValidationError
 
 __all__ = [
         "EditReadOnlyBuffer",

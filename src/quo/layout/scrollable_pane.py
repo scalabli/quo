@@ -1,10 +1,9 @@
-from typing import Dict, List, Optional
+import typing
 
 from quo.data_structures import Point
 from quo.filters import FilterOrBool, to_filter
 from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent
-
 from .containers import Container, ScrollOffsets
 from .dimension import AnyDimension, Dimension, sum_layout_dimensions, to_dimension
 from .mouse_handlers import MouseHandler, MouseHandlers
@@ -52,7 +51,7 @@ class ScrollablePane(Container):
     def __init__(
         self,
         content: Container,
-        scroll_offsets: Optional[ScrollOffsets] = None,
+        scroll_offsets: typing.Optional[ScrollOffsets] = None,
         keep_cursor_visible: FilterOrBool = True,
         keep_focused_window_visible: FilterOrBool = True,
         max_available_height: int = MAX_AVAILABLE_HEIGHT,
@@ -119,7 +118,7 @@ class ScrollablePane(Container):
         write_position: WritePosition,
         parent_style: str,
         erase_bg: bool,
-        z_index: Optional[int],
+        z_index: typing.Optional[int],
     ) -> None:
         """
         Render scrollable pane content.
@@ -163,7 +162,7 @@ class ScrollablePane(Container):
         temp_screen.draw_all_floats()
 
         # If anything in the virtual screen is focused, move vertical scroll to
-        from prompt_toolkit.application import get_app
+        from quo.application import get_app
 
         focused_window = get_app().layout.current_window
 
@@ -345,10 +344,10 @@ class ScrollablePane(Container):
     def is_modal(self) -> bool:
         return self.content.is_modal()
 
-    def get_key_bindings(self) -> Optional[KeyBindingsBase]:
+    def get_key_bindings(self) -> typing.Optional[KeyBindingsBase]:
         return self.content.get_key_bindings()
 
-    def get_children(self) -> List["Container"]:
+    def get_children(self) -> typing.List["Container"]:
         return [self.content]
 
     def _make_window_visible(
@@ -356,7 +355,7 @@ class ScrollablePane(Container):
         visible_height: int,
         virtual_height: int,
         visible_win_write_pos: WritePosition,
-        cursor_position: Optional[Point],
+        cursor_position: typing.Optional[Point],
     ) -> None:
         """
         Scroll the scrollable pane, so that this window becomes visible.

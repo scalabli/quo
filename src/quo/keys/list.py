@@ -1,6 +1,5 @@
-from enum import Enum
-from typing import Dict, List
-
+import typing as ty
+import enum
 
 __all__ = [
         "Keys",
@@ -8,7 +7,7 @@ __all__ = [
         ]
 
 
-class Keys(str, Enum):
+class Keys(str, enum.Enum):
     """
     List of keys for use in key bindings.
 
@@ -50,16 +49,16 @@ class Keys(str, Enum):
     ControlY = "ctrl-y"
     ControlZ = "ctrl-z"
 
-    Control1 = "c-1"
-    Control2 = "c-2"
-    Control3 = "c-3"
-    Control4 = "c-4"
-    Control5 = "c-5"
-    Control6 = "c-6"
-    Control7 = "c-7"
-    Control8 = "c-8"
-    Control9 = "c-9"
-    Control0 = "c-0"
+    Control1 = "ctrl-1"
+    Control2 = "ctrl-2"
+    Control3 = "ctlr-3"
+    Control4 = "ctrl-4"
+    Control5 = "ctrl-5"
+    Control6 = "ctrl-6"
+    Control7 = "ctrl-7"
+    Control8 = "ctrl-8"
+    Control9 = "ctrl-9"
+    Control0 = "ctrl-0"
 
     ControlShift1 = "c-s-1"
     ControlShift2 = "c-s-2"
@@ -148,30 +147,30 @@ class Keys(str, Enum):
     F23 = "f23"
     F24 = "f24"
 
-    ControlF1 = "c-f1"
-    ControlF2 = "c-f2"
-    ControlF3 = "c-f3"
-    ControlF4 = "c-f4"
-    ControlF5 = "c-f5"
-    ControlF6 = "c-f6"
-    ControlF7 = "c-f7"
-    ControlF8 = "c-f8"
-    ControlF9 = "c-f9"
-    ControlF10 = "c-f10"
-    ControlF11 = "c-f11"
-    ControlF12 = "c-f12"
-    ControlF13 = "c-f13"
-    ControlF14 = "c-f14"
-    ControlF15 = "c-f15"
-    ControlF16 = "c-f16"
-    ControlF17 = "c-f17"
-    ControlF18 = "c-f18"
-    ControlF19 = "c-f19"
-    ControlF20 = "c-f20"
-    ControlF21 = "c-f21"
-    ControlF22 = "c-f22"
-    ControlF23 = "c-f23"
-    ControlF24 = "c-f24"
+    ControlF1 = "ctrl-f1"
+    ControlF2 = "ctrl-f2"
+    ControlF3 = "ctrl-f3"
+    ControlF4 = "ctrl-f4"
+    ControlF5 = "ctrl-f5"
+    ControlF6 = "ctrl-f6"
+    ControlF7 = "ctrl-f7"
+    ControlF8 = "ctrl-f8"
+    ControlF9 = "ctrl-f9"
+    ControlF10 = "ctrl-f10"
+    ControlF11 = "ctrl-f11"
+    ControlF12 = "ctrl-f12"
+    ControlF13 = "ctrl-f13"
+    ControlF14 = "ctrl-f14"
+    ControlF15 = "ctrl-f15"
+    ControlF16 = "ctrl-f16"
+    ControlF17 = "ctrl-f17"
+    ControlF18 = "ctrl-f18"
+    ControlF19 = "ctrl-f19"
+    ControlF20 = "ctrl-f20"
+    ControlF21 = "ctrl-f21"
+    ControlF22 = "ctrl-f22"
+    ControlF23 = "ctrl-f23"
+    ControlF24 = "ctrl-f24"
 
     # Matches any key.
     Any = "<any>"
@@ -203,11 +202,11 @@ class Keys(str, Enum):
     ShiftControlEnd = ControlShiftEnd
 
 
-ALL_KEYS: List[str] = [k.value for k in Keys]
+ALL_KEYS: ty.List[str] = [k.value for k in Keys]
 
 
 # Aliases.
-KEY_ALIASES: Dict[str, str] = {
+KEY_ALIASES: ty.Dict[str, str] = {
         "backspace": "ctrl-h",
         "ctrl-space": "ctrl-@",
         "enter": "ctrl-m",

@@ -1,9 +1,5 @@
 import os
-from typing import (
-        ContextManager, 
-        TextIO,
-        cast
-        )
+import typing
 
 from ..utils import DummyContext
 from .core import PipeInput
@@ -40,7 +36,7 @@ class PosixPipeInput(Vt100, PipeInput):
             def fileno(stdin) -> int:
                 return self._r
 
-        super().__init__(cast(TextIO, Stdin()))
+        super().__init__(typing.cast(typing.TextIO, Stdin()))
         self.send_text(text)
 
         # Identifier for every PipeInput for the hash.
@@ -54,10 +50,10 @@ class PosixPipeInput(Vt100, PipeInput):
         "Send text to the input."
         os.write(self._w, data.encode("utf-8"))
 
-    def raw_mode(self) -> ContextManager[None]:
+    def raw_mode(self) -> typing.ContextManager[None]:
         return DummyContext()
 
-    def cooked_mode(self) -> ContextManager[None]:
+    def cooked_mode(self) -> typing.ContextManager[None]:
         return DummyContext()
 
     def close(self) -> None:

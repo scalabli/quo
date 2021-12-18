@@ -1,6 +1,5 @@
 import os
 import select
-from codecs import getincrementaldecoder
 
 __all__ = [
     "PosixStdinReader",
@@ -38,11 +37,12 @@ class PosixStdinReader:
     ) -> None:
         self.stdin_fd = stdin_fd
         self.errors = errors
+        from codecs import getincrementaldecoder as gid
 
         # Create incremental decoder for decoding stdin.
         # We can not just do `os.read(stdin.fileno(), 1024).decode('utf-8')`, because
         # it could be that we are in the middle of a utf-8 byte sequence.
-        self._stdin_decoder_cls = getincrementaldecoder(encoding)
+        self._stdin_decoder_cls = gid(encoding)
         self._stdin_decoder = self._stdin_decoder_cls(errors=errors)
 
         #: True when there is nothing anymore to read.

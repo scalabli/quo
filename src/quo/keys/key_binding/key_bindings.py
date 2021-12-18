@@ -14,8 +14,8 @@ Typical usage::
         # Handle ControlX-ControlC key sequence.
         pass
 
-It is also possible to combine multiple KeyBindings objects. We do this in the
-default key bindings. There are some KeyBindings objects that contain the Emacs
+It is also possible to combine multiple KeyBinder objects. We do this in the
+default key bindings. There are some KeyBinder objects that contain the Emacs
 bindings, while others contain the Vi bindings. They are merged together using
 `merge_key_bindings`.
 
@@ -34,31 +34,52 @@ been assigned, through the `key_binding` decorator.::
     # Later, add it to the key bindings.
     kb.add(Keys.A, my_key_binding)
 """
-from abc import ABCMeta, abstractmethod, abstractproperty
-from typing import TYPE_CHECKING, Awaitable, Callable, Hashable, List, Optional, Sequence, Tuple, TypeVar, Union, cast
+
+import abc
+import inspect
+import typing as ty
 
 from quo.cache import SimpleCache
-from quo.errors.exceptions import UsageError
 from quo.filters import FilterOrBool, Never, to_filter
-from quo.i_o import echo
 from quo.keys.list import KEY_ALIASES, Keys
 
-# Avoid circular imports.
-if TYPE_CHECKING:
+if ty.TYPE_CHECKING:
+    # Avoid circular imports.
     from .key_processor import KeyPressEvent
+
+    # The only two return values for a mouse hander (and key bindings) are
+    # `None` and `NotImplemented`. For the type checker it's best to annotate
+    # this as `object`. (The consumer never expects a more specific instance:
+    # checking for NotImplemented can be done using `is NotImplemented`.)
+    NotImplementedOrNone = object
+    # Other non-working options are:
+    # * ty.Optional[Literal[NotImplemented]]
+    #      --> Doesn't work, Literal can't take an Any.
+    # * None
+    #      --> Doesn't work. We can't assign the result of a function that
+    #          returns `None` to a variable.
+    # * Any
+    #      --> Works, but too broad.
 
 
 __all__ = [
+    "NotImplementedOrNone",
     "Binding",
     "KeyBindingsBase",
-    "KeyBindings",
+    "KeyBinder",
     "ConditionalKeyBindings",
     "merge_key_bindings",
     "DynamicKeyBindings",
     "GlobalOnlyKeyBindings",
 ]
 
-KeyHandlerCallable = Callable[["KeyPressEvent"], Union[None, Awaitable[None]]]
+# Key bindings can be regular functions or coroutines.
+# In both cases, if they return `NotImplemented`, the UI won't be invalidated.
+# This is mainly used in case of mouse move events, to prevent excessive
+# repainting during mouse move events.
+KeyHandlerCallable = ty.Callable[
+    ["KeyPressEvent"], ty.Union["NotImplementedOrNone", ty.Awaitable["NotImplementedOrNone"]]
+]
 
 
 class Binding:
@@ -72,12 +93,12 @@ class Binding:
 
     def __init__(
         self,
-        keys: Tuple[Union[Keys, str], ...],
+        keys: ty.Tuple[ty.Union[Keys, str], ...],
         handler: KeyHandlerCallable,
         filter: FilterOrBool = True,
         eager: FilterOrBool = False,
         is_global: FilterOrBool = False,
-        save_before: Callable[["KeyPressEvent"], bool] = (lambda e: True),
+        save_before: ty.Callable[["KeyPressEvent"], bool] = (lambda e: True),
         record_in_macro: FilterOrBool = True,
     ) -> None:
         self.keys = keys
@@ -92,8 +113,18 @@ class Binding:
         result = self.handler(event)
 
         # If the handler is a coroutine, create an asyncio task.
-        if result is not None:
-            event.app.create_background_task(result)
+        if inspect.isawaitable(result):
+            awaitable = ty.cast(ty.Awaitable["NotImplementedOrNone"], result)
+
+            async def bg_task() -> None:
+                result = await awaitable
+                if result != NotImplemented:
+                    event.app.invalidate()
+
+            event.app.create_background_task(bg_task())
+
+        elif result != NotImplemented:
+            event.app.invalidate()
 
     def __repr__(self) -> str:
         return "%s(keys=%r, handler=%r)" % (
@@ -104,26 +135,26 @@ class Binding:
 
 
 # Sequence of keys presses.
-KeysTuple = Tuple[Union[Keys, str], ...]
+KeysTuple = ty.Tuple[ty.Union[Keys, str], ...]
 
 
-class KeyBindingsBase(metaclass=ABCMeta):
+class KeyBindingsBase(metaclass=abc.ABCMeta):
     """
-    Interface for a KeyBindings.
+    Interface for a KeyBinder.
     """
 
-    @abstractproperty
-    def _version(self) -> Hashable:
+    @abc.abstractproperty
+    def _version(self) -> ty.Hashable:
         """
         For cache invalidation. - This should increase every time that
         something changes.
         """
         return 0
 
-    @abstractmethod
-    def get_bindings_for_keys(self, keys: KeysTuple) -> List[Binding]:
+    @abc.abstractmethod
+    def get_bindings_for_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         """
-        Return a list of key bindings that can handle these keys.
+        Return a ty.List of key bindings that can handle these keys.
         (This return also inactive bindings, so the `filter` still has to be
         called, for checking it.)
 
@@ -131,8 +162,8 @@ class KeyBindingsBase(metaclass=ABCMeta):
         """
         return []
 
-    @abstractmethod
-    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> List[Binding]:
+    @abc.abstractmethod
+    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         """
         Return a list of key bindings that handle a key sequence starting with
         `keys`. (It does only return bindings for which the sequences are
@@ -143,11 +174,11 @@ class KeyBindingsBase(metaclass=ABCMeta):
         """
         return []
 
-    @abstractproperty
-    def bindings(self) -> List[Binding]:
+    @abc.abstractproperty
+    def bindings(self) -> ty.List[Binding]:
         """
         List of `Binding` objects.
-        (These need to be exposed, so that `KeyBindings` objects can be merged
+        (These need to be exposed, so that `KeyBinder` objects can be merged
         together.)
         """
         return []
@@ -155,7 +186,7 @@ class KeyBindingsBase(metaclass=ABCMeta):
     # `add` and `remove` don't have to be part of this interface.
 
 
-T = TypeVar("T", bound=Union[KeyHandlerCallable, Binding])
+T = ty.TypeVar("T", bound=ty.Union[KeyHandlerCallable, Binding])
 
 
 class KeyBinder(KeyBindingsBase):
@@ -181,12 +212,12 @@ class KeyBinder(KeyBindingsBase):
     """
 
     def __init__(self) -> None:
-        self._bindings: List[Binding] = []
+        self._bindings: ty.List[Binding] = []
         self._get_bindings_for_keys_cache: SimpleCache[
-            KeysTuple, List[Binding]
+            KeysTuple, ty.List[Binding]
         ] = SimpleCache(maxsize=10000)
         self._get_bindings_starting_with_keys_cache: SimpleCache[
-            KeysTuple, List[Binding]
+            KeysTuple, ty.List[Binding]
         ] = SimpleCache(maxsize=1000)
         self.__version = 0  # For cache invalidation.
 
@@ -196,22 +227,22 @@ class KeyBinder(KeyBindingsBase):
         self._get_bindings_starting_with_keys_cache.clear()
 
     @property
-    def bindings(self) -> List[Binding]:
+    def bindings(self) -> ty.List[Binding]:
         return self._bindings
 
     @property
-    def _version(self) -> Hashable:
+    def _version(self) -> ty.Hashable:
         return self.__version
 
     def add(
         self,
-        *keys: Union[Keys, str],
+        *keys: ty.Union[Keys, str],
         filter: FilterOrBool = True,
         eager: FilterOrBool = False,
         is_global: FilterOrBool = False,
-        save_before: Callable[["KeyPressEvent"], bool] = (lambda e: True),
+        save_before: ty.Callable[["KeyPressEvent"], bool] = (lambda e: True),
         record_in_macro: FilterOrBool = True,
-    ) -> Callable[[T], T]:
+    ) -> ty.Callable[[T], T]:
         """
         Decorator for adding a key bindings.
 
@@ -261,7 +292,7 @@ class KeyBinder(KeyBindingsBase):
                     self.bindings.append(
                         Binding(
                             keys,
-                            cast(KeyHandlerCallable, func),
+                            ty.cast(KeyHandlerCallable, func),
                             filter=filter,
                             eager=eager,
                             is_global=is_global,
@@ -275,7 +306,7 @@ class KeyBinder(KeyBindingsBase):
 
         return decorator
 
-    def remove(self, *args: Union[Keys, str, KeyHandlerCallable]) -> None:
+    def remove(self, *args: ty.Union[Keys, str, KeyHandlerCallable]) -> None:
         """
         Remove a key binding.
 
@@ -287,7 +318,7 @@ class KeyBinder(KeyBindingsBase):
         Usage::
 
             remove(handler)  # Pass handler.
-            remove('c-x', 'c-a')  # Or pass the key bindings.
+            remove('ctrl-x', 'ctrl-a')  # Or pass the key bindings.
         """
         found = False
 
@@ -303,7 +334,7 @@ class KeyBinder(KeyBindingsBase):
 
         else:
             assert len(args) > 0
-            args = cast(Tuple[Union[Keys, str]], args)
+            args = ty.cast(ty.Tuple[ty.Union[Keys, str]], args)
 
             # Remove this sequence of key bindings.
             keys = tuple(_parse_key(k) for k in args)
@@ -316,14 +347,14 @@ class KeyBinder(KeyBindingsBase):
         if found:
             self._clear_cache()
         else:
-            # No key binding found for this function. Raise UsageError.
-            raise UsageError("Binding not found: %r" % (function,))
+            # No key binding found for this function. Raise ValueError.
+            raise ValueError("Binding not found: %r" % (function,))
 
     # For backwards-compatibility.
     add_binding = add
     remove_binding = remove
 
-    def get_bindings_for_keys(self, keys: KeysTuple) -> List[Binding]:
+    def get_bindings_for_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         """
         Return a list of key bindings that can handle this key.
         (This return also inactive bindings, so the `filter` still has to be
@@ -332,8 +363,8 @@ class KeyBinder(KeyBindingsBase):
         :param keys: tuple of keys.
         """
 
-        def get() -> List[Binding]:
-            result: List[Tuple[int, Binding]] = []
+        def get() -> ty.List[Binding]:
+            result: ty.List[ty.Tuple[int, Binding]] = []
 
             for b in self.bindings:
                 if len(keys) == len(b.keys):
@@ -358,7 +389,7 @@ class KeyBinder(KeyBindingsBase):
 
         return self._get_bindings_for_keys_cache.get(keys, get)
 
-    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> List[Binding]:
+    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         """
         Return a list of key bindings that handle a key sequence starting with
         `keys`. (It does only return bindings for which the sequences are
@@ -368,7 +399,7 @@ class KeyBinder(KeyBindingsBase):
         :param keys: tuple of keys.
         """
 
-        def get() -> List[Binding]:
+        def get() -> ty.List[Binding]:
             result = []
             for b in self.bindings:
                 if len(keys) < len(b.keys):
@@ -384,7 +415,7 @@ class KeyBinder(KeyBindingsBase):
         return self._get_bindings_starting_with_keys_cache.get(keys, get)
 
 
-def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
+def _parse_key(key: ty.Union[Keys, str]) -> ty.Union[str, Keys]:
     """
     Replace key by alias and verify whether it's a valid one.
     """
@@ -407,7 +438,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        return ValueError, echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f" ", hidden=True, nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
+        raise ValueError("Invalid key: %s" % (key,))
 
     return key
 
@@ -416,12 +447,12 @@ def key_binding(
     filter: FilterOrBool = True,
     eager: FilterOrBool = False,
     is_global: FilterOrBool = False,
-    save_before: Callable[["KeyPressEvent"], bool] = (lambda event: True),
+    save_before: ty.Callable[["KeyPressEvent"], bool] = (lambda event: True),
     record_in_macro: FilterOrBool = True,
-) -> Callable[[KeyHandlerCallable], Binding]:
+) -> ty.Callable[[KeyHandlerCallable], Binding]:
     """
     Decorator that turn a function into a `Binding` object. This can be added
-    to a `KeyBindings` object when a key binding is assigned.
+    to a `KeyBinder` object when a key binding is assigned.
     """
     assert save_before is None or callable(save_before)
 
@@ -452,9 +483,9 @@ class _Proxy(KeyBindingsBase):
     """
 
     def __init__(self) -> None:
-        # `KeyBindings` to be synchronized with all the others.
+        # `KeyBinder` to be synchronized with all the others.
         self._bindings2: KeyBindingsBase = KeyBinder()
-        self._last_version: Hashable = ()
+        self._last_version: ty.Hashable = ()
 
     def _update_cache(self) -> None:
         """
@@ -466,20 +497,20 @@ class _Proxy(KeyBindingsBase):
     # Proxy methods to self._bindings2.
 
     @property
-    def bindings(self) -> List[Binding]:
+    def bindings(self) -> ty.List[Binding]:
         self._update_cache()
         return self._bindings2.bindings
 
     @property
-    def _version(self) -> Hashable:
+    def _version(self) -> ty.Hashable:
         self._update_cache()
         return self._last_version
 
-    def get_bindings_for_keys(self, keys: KeysTuple) -> List[Binding]:
+    def get_bindings_for_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         self._update_cache()
         return self._bindings2.get_bindings_for_keys(keys)
 
-    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> List[Binding]:
+    def get_bindings_starting_with_keys(self, keys: KeysTuple) -> ty.List[Binding]:
         self._update_cache()
         return self._bindings2.get_bindings_starting_with_keys(keys)
 
@@ -498,8 +529,8 @@ class ConditionalKeyBindings(_Proxy):
     When new key bindings are added to this object. They are also
     enable/disabled according to the given `filter`.
 
-    :param registries: List of :class:`.KeyBindings` objects.
-    :param filter: :class:`~prompt_toolkit.filters.Filter` object.
+    :param registries: ty.List of :class:`.KeyBinder` objects.
+    :param filter: :class:`~quo.filters.Filter` object.
     """
 
     def __init__(
@@ -540,13 +571,13 @@ class _MergedKeyBindings(_Proxy):
     """
     Merge multiple registries of key bindings into one.
 
-    This class acts as a proxy to multiple :class:`.KeyBindings` objects, but
-    behaves as if this is just one bigger :class:`.KeyBindings`.
+    This class acts as a proxy to multiple :class:`.KeyBinder` objects, but
+    behaves as if this is just one bigger :class:`.KeyBinder`.
 
-    :param registries: List of :class:`.KeyBindings` objects.
+    :param registries: ty.List of :class:`.KeyBinder` objects.
     """
 
-    def __init__(self, registries: Sequence[KeyBindingsBase]) -> None:
+    def __init__(self, registries: ty.Sequence[KeyBindingsBase]) -> None:
         _Proxy.__init__(self)
         self.registries = registries
 
@@ -567,7 +598,7 @@ class _MergedKeyBindings(_Proxy):
             self._last_version = expected_version
 
 
-def merge_key_bindings(bindings: Sequence[KeyBindingsBase]) -> _MergedKeyBindings:
+def merge_key_bindings(bindings: ty.Sequence[KeyBindingsBase]) -> _MergedKeyBindings:
     """
     Merge multiple :class:`.Keybinding` objects together.
 
@@ -580,13 +611,13 @@ def merge_key_bindings(bindings: Sequence[KeyBindingsBase]) -> _MergedKeyBinding
 
 class DynamicKeyBindings(_Proxy):
     """
-    KeyBindings class that can dynamically returns any KeyBindings.
+    KeyBinder class that can dynamically returns any KeyBinder.
 
-    :param get_key_bindings: Callable that returns a :class:`.KeyBindings` instance.
+    :param get_key_bindings: ty.Callable that returns a :class:`.KeyBinder` instance.
     """
 
     def __init__(
-        self, get_key_bindings: Callable[[], Optional[KeyBindingsBase]]
+        self, get_key_bindings: ty.Callable[[], ty.Optional[KeyBindingsBase]]
     ) -> None:
         self.get_key_bindings = get_key_bindings
         self.__version = 0

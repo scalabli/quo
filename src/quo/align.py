@@ -1,4 +1,5 @@
 import sys
+import typing
 from itertools import chain
 from typing import (
         TYPE_CHECKING,
@@ -19,13 +20,13 @@ from quo.measure.measure import Measurement
 from .segment import Segment
 from .style import Style
 
-if TYPE_CHECKING:
+if typing.TYPE_CHECKING:
     from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
 
-AlignMethod = Literal["left", "center", "right"]
-VerticalAlignMethod = Literal["top", "middle", "bottom"]
+AlignMethod = typing.Literal["left", "center", "right"]
+VerticalAlignMethod = typing.Literal["top", "middle", "bottom"]
 AlignValues = AlignMethod  # TODO: deprecate AlignValues
-StyleType = Union[str, "Style"]
+StyleType = typing.Union[str, "Style"]
 
 
 class Align(JupyterMixin):
@@ -48,12 +49,12 @@ class Align(JupyterMixin):
         self,
         renderable: "RenderableType",
         align: AlignMethod = "left",
-        style: Optional[StyleType] = None,
+        style: typing.Optional[StyleType] = None,
         *,
-        vertical: Optional[VerticalAlignMethod] = None,
+        vertical: typing.Optional[VerticalAlignMethod] = None,
         pad: bool = True,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
+        width: typing.Optional[int] = None,
+        height: typing.Optional[int] = None,
     ) -> None:
         if align not in ("left", "center", "right"):
             raise ValueError(
@@ -78,12 +79,12 @@ class Align(JupyterMixin):
     def left(
         cls,
         renderable: "RenderableType",
-        style: Optional[StyleType] = None,
+        style: typing.Optional[StyleType] = None,
         *,
-        vertical: Optional[VerticalAlignMethod] = None,
+        vertical: typing.Optional[VerticalAlignMethod] = None,
         pad: bool = True,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
+        width: typing.Optional[int] = None,
+        height: typing.Optional[int] = None,
     ) -> "Align":
         """Align a renderable to the left."""
         return cls(
@@ -100,12 +101,12 @@ class Align(JupyterMixin):
     def center(
         cls,
         renderable: "RenderableType",
-        style: Optional[StyleType] = None,
+        style: typing.Optional[StyleType] = None,
         *,
-        vertical: Optional[VerticalAlignMethod] = None,
+        vertical: typing.Optional[VerticalAlignMethod] = None,
         pad: bool = True,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
+        width: typing.Optional[int] = None,
+        height: typing.Optional[int] = None,
     ) -> "Align":
         """Align a renderable to the center."""
         return cls(
@@ -122,12 +123,12 @@ class Align(JupyterMixin):
     def right(
         cls,
         renderable: "RenderableType",
-        style: Optional[StyleType] = None,
+        style: typing.Optional[StyleType] = None,
         *,
-        vertical: Optional[VerticalAlignMethod] = None,
+        vertical: typing.Optional[VerticalAlignMethod] = None,
         pad: bool = True,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
+        width: typing.Optional[int] = None,
+        height: typing.Optional[int] = None,
     ) -> "Align":
         """Align a renderable to the right."""
         return cls(
@@ -158,7 +159,7 @@ class Align(JupyterMixin):
         excess_space = options.max_width - width
         style = console.get_style(self.style) if self.style is not None else None
 
-        def generate_segments() -> Iterable[Segment]:
+        def generate_segments() -> typing.Iterable[Segment]:
             if excess_space <= 0:
                 # Exact fit
                 for line in lines:
@@ -203,7 +204,7 @@ class Align(JupyterMixin):
             else Segment("\n")
         )
 
-        def blank_lines(count: int) -> Iterable[Segment]:
+        def blank_lines(count: int) -> typing.Iterable[Segment]:
             if count > 0:
                 for _ in range(count):
                     yield blank_line
@@ -253,7 +254,7 @@ class VerticalCenter(JupyterMixin):
     def __init__(
         self,
         renderable: "RenderableType",
-        style: Optional[StyleType] = None,
+        style: typing.Optional[StyleType] = None,
     ) -> None:
         self.renderable = renderable
         self.style = style
@@ -275,7 +276,7 @@ class VerticalCenter(JupyterMixin):
         bottom_space = height - top_space - len(lines)
         blank_line = Segment(f"{' ' * width}", style)
 
-        def blank_lines(count: int) -> Iterable[Segment]:
+        def blank_lines(count: int) -> typing.Iterable[Segment]:
             for _ in range(count):
                 yield blank_line
                 yield new_line

@@ -1,13 +1,14 @@
 from .core import ProgressBar, ProgressBarCounter
 
-from .progress import BarColumn, Progress, SpinnerColumn, TextColumn
+from .progress import BarColumn, Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
+
 from .formatters import (
     Bar,
     Formatter,
     IterationsPerSecond,
     Label,
     Percentage,
-    Progress,
+    #Progress,
     Rainbow,
     SpinningWheel,
     Text,

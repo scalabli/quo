@@ -8,26 +8,24 @@ import importlib
 import os
 import subprocess
 from quo.application import Suite
-#from .core import (
-#             App,
-#             Arg,
-#             BaseCommand,
-#             Command,
-#             CommandCollection,
-#             Context,
-#             MultiCommand,
-#             Parameter,
-#             Tether
-#             )
-
 from quo.types import Choice, convert_type
 from quo.text import ANSI, HTML
+from quo.align import Align
+from quo.bar import Bar
+from quo.columns import Columns
 from quo.console import Console
+from quo.console import Group
 from quo.color.color import Color
+from quo.layout import Outline
 from quo.output import ColorDepth
+from quo.pad import Padding
+from quo.panel import Panel
 from quo.shortcuts import Elicit
+from quo.style import Style
+from quo.table import Table
+from quo.text import Text
 from quo.pause import pause
-from quo.styles import Style
+#from quo.styles import Style
 from quo.decorators import (
                        app,
                        arg,
@@ -35,24 +33,11 @@ from quo.decorators import (
                        tether
                        )
 
-#from quo.decorators import (
-#             contextualize,
-#             objectualize,
-#             make_pass_decorator,
-#             autoversion,
-#             autopasswd,
-#            autohelp,
-#             autoconfirm
-#             )
-
-#from .setout import HelpFormatter, wraptext
-#from quo.context.current import currentcontext
 from .parser import AppParser
 from quo.expediency import (
                   inscribe,
                   appdir,
                   formatfilename,
-                 # os_args,
                   textstream,
                   binarystream,
                   openfile
@@ -82,14 +67,12 @@ from quo.i_o import (
               echo,
               edit,
               terminalsize,
-             # unstyle,
               prompt,
               )
 
-#from quo.shortcuts import container
-#from quo.widget import TextArea, Frame
 from quo.tabulate import tabular
 
+import typing
+OverflowMethod = typing.Literal["fold", "crop", "ellipsis", "ignore"]
 
-
-__version__ = "2021.6"
+__version__ = "2021.6.5"

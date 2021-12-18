@@ -1,12 +1,5 @@
 from quo.accordance import filename_to_ui, get_text_stderr
 from quo.expediency import inscribe
-from typing import (
-        Any,
-        Dict, 
-        Optional,
-        Sequence, 
-        Type
-        )
 
 
 
@@ -272,6 +265,8 @@ class MarkupError(ConsoleError):
 class LiveError(ConsoleError):
     """Error related to Live display."""
 
+class LayoutError(Outlier):
+    """Layout error"""
 
 class NoAltScreen(ConsoleError):
     """Alt screen mode was required."""

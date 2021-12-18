@@ -1,8 +1,7 @@
+import typing
 import sys
-from typing import Optional, TextIO
 
 from quo.utils import is_windows
-
 from .core import Input
 from .core import PipeInput
 
@@ -13,7 +12,7 @@ __all__ = [
 
 
 def create_input(
-    stdin: Optional[TextIO] = None, always_prefer_tty: bool = False
+    stdin: typing.Optional[typing.TextIO] = None, always_prefer_tty: bool = False
 ) -> Input:
     """
     Create the appropriate `Input` object for the current os/environment.

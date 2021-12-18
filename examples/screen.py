@@ -2,7 +2,8 @@
 Demonstration of Console.screen() 
 """
 from time import sleep
-from quo import Align, Console
+from quo import Console
+from quo.align import Align
 from quo.panel import Panel
 
 console = Console()

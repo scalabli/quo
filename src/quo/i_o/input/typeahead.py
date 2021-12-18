@@ -31,8 +31,8 @@ To support type ahead, this module will store all the key strokes that were
 read too early, so that they can be feed into to the next `prompt()` call or to
 the next quo `Application`.
 """
+import typing
 from collections import defaultdict
-from typing import Dict, List
 
 from quo.keys.key_binding import KeyPress
 from .core import Input
@@ -43,10 +43,10 @@ __all__ = [
     "clear_typeahead",
 ]
 
-_buffer: Dict[str, List[KeyPress]] = defaultdict(list)
+_buffer: typing.Dict[str, typing.List[KeyPress]] = defaultdict(list)
 
 
-def store_typeahead(input_obj: Input, key_presses: List[KeyPress]) -> None:
+def store_typeahead(input_obj: Input, key_presses: typing.List[KeyPress]) -> None:
     """
     Insert typeahead key presses for the given input.
     """
@@ -55,7 +55,7 @@ def store_typeahead(input_obj: Input, key_presses: List[KeyPress]) -> None:
     _buffer[key].extend(key_presses)
 
 
-def get_typeahead(input_obj: Input) -> List[KeyPress]:
+def get_typeahead(input_obj: Input) -> typing.List[KeyPress]:
     """
     Retrieve typeahead and reset the buffer for this input.
     """

@@ -1,6 +1,5 @@
-from ctypes import windll
-from ctypes.wintypes import HANDLE
-from typing import Callable, ContextManager, List
+import typing
+import ctype
 
 from quo.eventloop.win32 import create_win32_event
 
@@ -43,7 +42,7 @@ class Win32PipeInput(_Win32InputBase, PipeInput):
         self._closed = False
 
         # Parser for incoming keys.
-        self._buffer: List[KeyPress] = []  # Buffer to collect the Key objects.
+        self._buffer: typing.List[KeyPress] = []  # Buffer to collect the Key objects.
         self.vt100_parser = Vt100Parser(lambda key: self._buffer.append(key))
 
         # Identifier for every PipeInput for the hash.
@@ -61,25 +60,25 @@ class Win32PipeInput(_Win32InputBase, PipeInput):
         raise NotImplementedError
 
     @property
-    def handle(self) -> HANDLE:
+    def handle(self) -> ctypes.wintypes.HANDLE:
         "The handle used for registering this pipe in the event loop."
         return self._event
 
-    def attach(self, input_ready_callback: Callable) -> ContextManager[None]:
+    def attach(self, input_ready_callback: typing.Callable) -> typing.ContextManager[None]:
         """
         Return a context manager that makes this input active in the current
         event loop.
         """
         return attach_win32_input(self, input_ready_callback)
 
-    def detach(self) -> ContextManager[None]:
+    def detach(self) -> typing.ContextManager[None]:
         """
         Return a context manager that makes sure that this input is not active
         in the current event loop.
         """
         return detach_win32_input(self)
 
-    def read_keys(self) -> List[KeyPress]:
+    def read_keys(self) -> typing.List[KeyPress]:
         "Read list of KeyPress."
 
         # Return result.
@@ -87,11 +86,11 @@ class Win32PipeInput(_Win32InputBase, PipeInput):
         self._buffer = []
 
         # Reset event.
-        windll.kernel32.ResetEvent(self._event)
+        ctypes.windll.kernel32.ResetEvent(self._event)
 
         return result
 
-    def flush_keys(self) -> List[KeyPress]:
+    def flush_keys(self) -> typing.List[KeyPress]:
         """
         Flush pending keys and return them.
         (Used for flushing the 'escape' key.)
@@ -117,15 +116,15 @@ class Win32PipeInput(_Win32InputBase, PipeInput):
         # Set event.
         windll.kernel32.SetEvent(self._event)
 
-    def raw_mode(self) -> ContextManager[None]:
+    def raw_mode(self) -> typing.ContextManager[None]:
         return DummyContext()
 
-    def cooked_mode(self) -> ContextManager[None]:
+    def cooked_mode(self) -> typing.ContextManager[None]:
         return DummyContext()
 
     def close(self) -> None:
         "Close pipe handles."
-        windll.kernel32.CloseHandle(self._event)
+        ctypes.windll.kernel32.CloseHandle(self._event)
         self._closed = True
 
     def typeahead_hash(self) -> str:

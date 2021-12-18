@@ -1,7 +1,6 @@
-from abc import ABC
+import abc
 
-
-class RichRenderable(ABC):
+class RichRenderable(abc.ABC):
     """An abstract base class for renderables.
 
     Note that there is no need to extend this class, the intended use is to check if an

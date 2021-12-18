@@ -1,16 +1,16 @@
+import typing
 from datetime import datetime
-from typing import Iterable, List, Optional, TYPE_CHECKING, Union, Callable
 
 
 from quo._text import Text
 
-if TYPE_CHECKING:
+if typing.TYPE_CHECKING:
     from quo.console.console import Console, ConsoleRenderable, RenderableType
     from quo.table import Table
 
-FormatTimeCallable = Callable[[datetime], Text]
+FormatTimeCallable = typing.Callable[[datetime], Text]
 
-TextType = Union[str, "Text"]
+TextType = typing.Union[str, "Text"]
 
 class LogRender:
     def __init__(
@@ -18,9 +18,9 @@ class LogRender:
         show_time: bool = True,
         show_level: bool = False,
         show_path: bool = True,
-        time_format: Union[str, FormatTimeCallable] = "[%x %X]",
+        time_format: typing.Union[str, FormatTimeCallable] = "[%x %X]",
         omit_repeated_times: bool = True,
-        level_width: Optional[int] = 8,
+        level_width: typing.Optional[int] = 8,
     ) -> None:
         self.show_time = show_time
         self.show_level = show_level
@@ -28,18 +28,18 @@ class LogRender:
         self.time_format = time_format
         self.omit_repeated_times = omit_repeated_times
         self.level_width = level_width
-        self._last_time: Optional[Text] = None
+        self._last_time: typing.Optional[Text] = None
 
     def __call__(
         self,
         console: "Console",
-        renderables: Iterable["ConsoleRenderable"],
-        log_time: Optional[datetime] = None,
-        time_format: Optional[Union[str, FormatTimeCallable]] = None,
+        renderables: typing.Iterable["ConsoleRenderable"],
+        log_time: typing.Optional[datetime] = None,
+        time_format: typing.Optional[typing.Union[str, FormatTimeCallable]] = None,
         level: TextType = "",
-        path: Optional[str] = None,
-        line_no: Optional[int] = None,
-        link_path: Optional[str] = None,
+        path: typing.Optional[str] = None,
+        line_no: typing.Optional[int] = None,
+        link_path: typing.Optional[str] = None,
     ) -> "Table":
         from .containers import Renderables
         from .table import Table
@@ -53,7 +53,7 @@ class LogRender:
         output.add_column(ratio=1, style="log.message", overflow="fold")
         if self.show_path and path:
             output.add_column(style="log.path")
-        row: List["RenderableType"] = []
+        row: typing.List["RenderableType"] = []
         if self.show_time:
             log_time = log_time or console.get_datetime()
             time_format = time_format or self.time_format
@@ -82,10 +82,3 @@ class LogRender:
         output.add_row(*row)
         return output
 
-
-if __name__ == "__main__":  # pragma: no cover
-    from quo.console import Console
-
-    c = Console()
-    c.echo("[on blue]Hello", justify="right")
-    c.log("[on blue]hello", justify="right")

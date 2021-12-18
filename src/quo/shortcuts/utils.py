@@ -1,10 +1,4 @@
-from asyncio import get_event_loop
-from typing import (
-        TYPE_CHECKING, 
-        Any, 
-        Optional, 
-        TextIO
-        )
+import typing as ty
 
 from quo.application import Suite
 from quo.application.current import get_app_session
@@ -28,7 +22,7 @@ from quo.styles import (
     merge_styles,
 )
 
-if TYPE_CHECKING:
+if ty.TYPE_CHECKING:
     from quo.layout.containers import AnyContainer
 
 __all__ = [
@@ -40,15 +34,15 @@ __all__ = [
 
 
 def print_formatted_text(
-    *values: Any,
+    *values: ty.Any,
     sep: str = " ",
     end: str = "\n",
-    file: Optional[TextIO] = None,
+    file: ty.Optional[ty.TextIO] = None,
     flush: bool = False,
-    style: Optional[BaseStyle] = None,
-    output: Optional[Output] = None,
-    color_depth: Optional[ColorDepth] = None,
-    style_transformation: Optional[StyleTransformation] = None,
+    style: ty.Optional[BaseStyle] = None,
+    output: ty.Optional[Output] = None,
+    color_depth: ty.Optional[ColorDepth] = None,
+    style_transformation: ty.Optional[StyleTransformation] = None,
     include_default_pygments_style: bool = True,
 ) -> None:
     """
@@ -112,7 +106,7 @@ def print_formatted_text(
     color_depth = color_depth or output.get_default_color_depth()
 
     # Merges values.
-    def to_text(val: Any) -> StyleAndTextTuples:
+    def to_text(val: ty.Any) -> StyleAndTextTuples:
         # Normal lists which are not instances of `FormattedText` are
         # considered plain text.
         if isinstance(val, list) and not isinstance(val, FormattedText):
@@ -146,10 +140,11 @@ def print_formatted_text(
 
 def container(
     container: "AnyContainer",
-    file: Optional[TextIO] = None,
-    style: Optional[BaseStyle] = None,
+    file: ty.Optional[ty.TextIO] = None,
+    style: ty.Optional[BaseStyle] = None,
     include_default_pygments_style: bool = True,
 ) -> None:
+    import asyncio
     """
     Print any layout to the output in a non-interactive way.
 
@@ -167,7 +162,7 @@ def container(
     def exit_immediately() -> None:
         # Use `call_from_executor` to exit "soon", so that we still render one
         # initial time, before exiting the application.
-        get_event_loop().call_soon(lambda: app.exit())
+        asyncio.get_event_loop().call_soon(lambda: app.exit())
 
     app: Suite[None] = Suite(
         layout=Layout(container=container),
@@ -181,7 +176,7 @@ def container(
 
 
 def _create_merged_style(
-    style: Optional[BaseStyle], include_default_pygments_style: bool
+    style: ty.Optional[BaseStyle], include_default_pygments_style: bool
 ) -> BaseStyle:
     """
     Merge user defined style with built-in style.
