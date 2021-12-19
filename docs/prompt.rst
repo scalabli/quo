@@ -117,9 +117,31 @@ Parameters
         syntax highlighting.
     * ``validator`` - :class:`~quo.validation.Validator` instance
         for input validation.
-    :param completer: :class:`~quo.completion.Completer` instance
+    * ``completer`` - :class:`~quo.completion.Completer` instance
         for input completion.
-    :param complete_in_thread:
+    * ``complete_in_thread`` - `bool` or
+        :class:`~quo.filters.Filter`. Run the completer code in a
+        background thread in order to avoid blocking the user interface.
+        For ``CompleteStyle.READLINE_LIKE``, this setting has no effect. There
+        we always run the completions in the main thread.
+    * ``reserve_space_for_menu`` - Space to be reserved for displaying the menu.
+        (0 means that no space needs to be reserved.)
+    * ``auto_suggest`` - :class:`~quo.auto_suggest.AutoSuggest`
+        instance for input suggestions.
+    * ``style`` - :class:`.Style` instance for the color scheme.
+    * ``include_default_pygments_style`` - `bool` or
+        :class:`~quo.filters.Filter`. Tell whether the default
+        styling for Pygments lexers has to be included. By default, this is
+        true, but it is recommended to be disabled if another Pygments style is
+        passed as the `style` argument, otherwise, two Pygments styles will be
+        merged.
+    :param style_transformation:
+        :class:`~quo.style.StyleTransformation` instance.
+    :param swap_light_and_dark_colors: `bool` or
+        :class:`~quo.filters.Filter`. When enabled, apply
+        :class:`~quo.style.SwapLightAndDarkStyleTransformation`.
+        This is useful for switching between dark and light terminal
+        backgrounds.
 Confirmation Prompts
 --------------------
 
