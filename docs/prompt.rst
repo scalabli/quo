@@ -77,7 +77,18 @@ Parameters
 
 Input Prompts using Prompt() object
 -------------------------------------
+Input history can be kept between consecutive Prompt() calls incase you want to ask for multiple inputs, but each input call needs about the same arguments.
 
+.. code:: python
+    
+  import quo
+
+  # Create prompt object.
+  session = quo.Prompt()
+
+  # Do multiple input calls.
+  text1 = session.prompt("What's your name?")
+  text2 = session.prompt("Where are you from?")
 
 Confirmation Prompts
 --------------------
