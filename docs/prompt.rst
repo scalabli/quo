@@ -20,7 +20,7 @@ and returns the text. Just like ``input``.
     text = quo.prompt('Give me some input: ')
     quo.echo(f"You said: {text}")
 
-.. image:: ../images/prompt.png
+.. image:: ./images/prompt.png
 
 App Prompts
 --------------
