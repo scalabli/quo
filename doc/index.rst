@@ -15,7 +15,7 @@ Quo's Documentation
    :maxdepth: 2
    :caption: Contents:
 
-   introduction.rst
+   quickstart.rst
    echo.rst
    commands.rst
    apps.rst
