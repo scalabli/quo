@@ -171,18 +171,18 @@ script can instead be written like this:
 .. code-block:: python
 
     import quo
-    from quo import tether, command, echo
-    @tether() 
+    
+    @quo.tether() 
     def cli():
         pass
 
     @cli.command()
     def initdb():
-        echo('Initialized the database')
+        quo.echo('Initialized the database')
 
     @cli.command()
     def dropdb():
-        echo('Dropped the database')
+        quo.echo('Dropped the database')
 
 You would then invoke the :class:`Tether` in your setuptools entry points or
 other invocations::
@@ -201,16 +201,16 @@ split commands into multiple Python modules.
 .. code-block:: python
 
     import quo
-    from quo import command, echo, tether
-    @command()
-    def greet():
-        echo("Hello, World!")
     
-    @tether() 
-    def tether():
+    @quo.command()
+    def greet():
+        quo.echo("Hello, World!")
+    
+    @quo.tether() 
+    def tethered():
         pass
 
-        tether.addcommand(greet)
+        tethered.addcommand(greet)
 
 
 Adding Parameters
@@ -221,13 +221,13 @@ To add parameters, use the :func:`app` and :func:`arg` decorators:
 .. code-block:: python
    
     import quo
-    from quo import command, app, arg, echo
-    @command()
-    @app('--count', default=1, help='number of greetings')
-    @arg('name')
+    
+    @quo.command()
+    @quo.app('--count', default=1, help='number of greetings')
+    @quo.arg('name')
     def hello(count, name):
         for x in range(count):
-            echo(f"Hello {name}!")
+            quo.echo(f"Hello {name}!")
 
 
 .. _switching-to-setuptools:
