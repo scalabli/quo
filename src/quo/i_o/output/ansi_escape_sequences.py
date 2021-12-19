@@ -10,7 +10,7 @@ mostly Xterm compatible.
 Some useful docs:
 - Mintty: https://github.com/mintty/mintty/blob/master/wiki/Keycodes.md
 """
-import typing
+from typing import Dict, Tuple, Union
 
 from quo.keys.list import Keys
 
@@ -20,7 +20,7 @@ __all__ = [
 ]
 
 # Mapping of vt100 escape codes to Keys.
-ANSI_SEQUENCES: typing.Dict[str, typing.Union[Keys, typing.Tuple[Keys, ...]]] = {
+ANSI_SEQUENCES: Dict[str, Union[Keys, Tuple[Keys, ...]]] = {
     # Control keys.
     "\x00": Keys.ControlAt,  # Control-At (Also for Ctrl-Space)
     "\x01": Keys.ControlA,  # Control-A (home)
@@ -317,11 +317,11 @@ ANSI_SEQUENCES: typing.Dict[str, typing.Union[Keys, typing.Tuple[Keys, ...]]] = 
 }
 
 
-def _get_reverse_ansi_sequences() -> typing.Dict[Keys, str]:
+def _get_reverse_ansi_sequences() -> Dict[Keys, str]:
     """
     Create a dictionary that maps Quo keys back to the VT100 escape sequences.
     """
-    result: typing.Dict[Keys, str] = {}
+    result: Dict[Keys, str] = {}
 
     for sequence, key in ANSI_SEQUENCES.items():
         if not isinstance(key, tuple):

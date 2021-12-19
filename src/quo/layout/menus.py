@@ -13,8 +13,9 @@ from typing import (
     cast,
 )
 
-from quo.application.current import get_app
-from .utils import CompletionState
+from quo.suite.current import get_app
+from quo.buffer import CompletionState
+from quo.completion import Completion
 from quo.data_structures import Point
 from quo.filters import (
     Condition,
@@ -23,12 +24,15 @@ from quo.filters import (
     is_done,
     to_filter,
 )
-from quo.text.core import Textual, StyleAndTextTuples, to_formatted_text
-from quo.text.utils import fragment_list_width
+from quo.text import (
+    StyleAndTextTuples,
+    fragment_list_width,
+    to_formatted_text,
+)
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.utils import explode_text_fragments
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import get_width
+from quo.utils.utils import get_width
 
 from .containers import ConditionalContainer, HSplit, ScrollOffsets, Window
 from .controls import GetLinePrefixCallable, UIContent, UIControl
@@ -46,110 +50,6 @@ __all__ = [
 ]
 
 E = KeyPressEvent
-
-
-
-
-
-class Completion:
-    # Decoy class q.completion
-
-    def __init__(
-        self,
-        text: str,
-        start_position: int = 0,
-        display: Optional[Textual] = None,
-        display_meta: Optional[Textual] = None,
-        style: str = "",
-        selected_style: str = "",
-    ) -> None:
-
-        from quo.text import to_formatted_text
-
-        self.text = text
-        self.start_position = start_position
-        self._display_meta = display_meta
-
-        if display is None:
-            display = text
-
-        self.display = to_formatted_text(display)
-
-        self.style = style
-        self.selected_style = selected_style
-
-        assert self.start_position <= 0
-
-    def __repr__(self) -> str:
-        if isinstance(self.display, str) and self.display == self.text:
-            return "%s(text=%r, start_position=%r)" % (
-                self.__class__.__name__,
-                self.text,
-                self.start_position,
-            )
-        else:
-            return "%s(text=%r, start_position=%r, display=%r)" % (
-                self.__class__.__name__,
-                self.text,
-                self.start_position,
-                self.display,
-            )
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Completion):
-            return False
-        return (
-            self.text == other.text
-            and self.start_position == other.start_position
-            and self.display == other.display
-            and self._display_meta == other._display_meta
-        )
-
-    def __hash__(self) -> int:
-        return hash((self.text, self.start_position, self.display, self._display_meta))
-
-    @property
-    def display_text(self) -> str:
-        "The 'display' field as plain text."
-        from quo.text import fragment_list_to_text
-
-        return fragment_list_to_text(self.display)
-
-    @property
-    def display_meta(self) -> StyleAndTextTuples:
-        "Return meta-text. (This is lazy when using a callable)."
-        from quo.text import to_formatted_text
-
-        return to_formatted_text(self._display_meta or "")
-
-    @property
-    def display_meta_text(self) -> str:
-        "The 'meta' field as plain text."
-        from quo.text import fragment_list_to_text
-
-        return to_formatted_text(self._display_meta or "")
-
-    @property
-    def display_meta_text(self) -> str:
-        "The 'meta' field as plain text."
-        from quo.text import fragment_list_to_text
-
-        return fragment_list_to_text(self.display_meta)
-
-    def new_completion_from_position(self, position: int) -> "Completion":
-        """
-        (Only for internal use!)
-        Get a new completion by splitting this one. Used by `Application` when
-        it needs to have a list of new completions after inserting the common
-        prefix.
-        """
-        assert position - self.start_position >= 0
-
-        return Completion(
-            text=self.text[position - self.start_position :],
-            display=self.display,
-            display_meta=self._display_meta,
-        )
 
 
 class CompletionsMenuControl(UIControl):
@@ -333,7 +233,6 @@ def _get_menu_item_fragments(
         cast(StyleAndTextTuples, []) + [("", " ")] + text + [("", padding)],
         style=style_str,
     )
-
 
 
 def _trim_formatted_text(

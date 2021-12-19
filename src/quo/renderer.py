@@ -6,10 +6,10 @@ from collections import deque
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Callable, Deque, Dict, Hashable, Optional, Tuple
 
-from quo.application.current import get_app
+from quo.suite.current import get_app
 from quo.data_structures import Point, Size
 from quo.filters import FilterOrBool, to_filter
-from quo.text.core import Textual, to_formatted_text
+from quo.text import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
 from quo.layout.screen import Char, Screen, WritePosition
 from quo.output import ColorDepth, Output
@@ -21,7 +21,7 @@ from quo.styles import (
 )
 
 if TYPE_CHECKING:
-    from quo.application import Application
+    from quo.suite.suite import Suite
     from quo.layout.layout import Layout
 
 
@@ -32,7 +32,7 @@ __all__ = [
 
 
 def _output_screen_diff(
-    app: "Application[Any]",
+    app: "Suite[Any]",
     output: Output,
     screen: Screen,
     current_pos: Point,
@@ -749,7 +749,7 @@ class Renderer:
 
 def print_formatted_text(
     output: Output,
-    formatted_text: Textual,
+    formatted_text: AnyFormattedText,
     style: BaseStyle,
     style_transformation: Optional[StyleTransformation] = None,
     color_depth: Optional[ColorDepth] = None,

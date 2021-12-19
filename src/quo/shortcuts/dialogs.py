@@ -1,22 +1,24 @@
 import functools
-import typing as ty
 from asyncio import get_event_loop
-from .suite import Suite
-from quo.application.current import get_app
-from quo.layout.utils import Buffer
-from quo.i_o.util import Completer
+from typing import Any, Callable, List, Optional, Tuple, TypeVar
+
+from quo.suite.suite import Suite
+from quo.suite.current import get_app
+from quo.buffer import Buffer
+from quo.completion import Completer
 from quo.eventloop import run_in_executor_with_context
 from quo.filters import FilterOrBool
-from quo.text.core import Textual
+from quo.text import AnyFormattedText
 from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
 from quo.keys.key_binding.defaults import load_key_bindings
-from quo.keys.key_binding.key_bindings import KeyBinder, merge_key_bindings
-from quo.layout import Layout
+from quo.keys import KeyBinder
+from quo.keys.key_binding.key_bindings import merge_key_bindings
+from quo.layout.layout import Layout
 from quo.layout.containers import AnyContainer, HSplit
 from quo.layout.dimension import Dimension as D
 from quo.styles import BaseStyle
 from quo.validation import Validator
-from quo.widget import (
+from quo.widgets import (
     Box,
     Button,
     CheckboxList,
@@ -30,21 +32,21 @@ from quo.widget import (
 
 __all__ = [
     "yes_no_dialog",
-    "button_dialog",
-    "input_dialog",
-    "message_dialog",
+    "button",
+    "evoke",
+    "message",
     "radiolist_dialog",
-    "checkboxlist_dialog",
-    "progress_dialog",
+    "checkbox",
+    "progress",
 ]
 
 
 def yes_no_dialog(
-    title: Textual = "",
-    text: Textual = "",
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
     yes_text: str = "Yes",
     no_text: str = "No",
-    style: ty.Optional[BaseStyle] = None,
+    style: Optional[BaseStyle] = None,
 ) -> Suite[bool]:
     """
     Display a Yes/No dialog.
@@ -70,14 +72,14 @@ def yes_no_dialog(
     return _create_app(dialog, style)
 
 
-_T = ty.TypeVar("_T")
+_T = TypeVar("_T")
 
 
-def button_dialog(
-    title: Textual = "",
-    text: Textual = "",
-    buttons: ty.List[ty.Tuple[str, _T]] = [],
-    style: ty.Optional[BaseStyle] = None,
+def button(
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
+    buttons: List[Tuple[str, _T]] = [],
+    style: Optional[BaseStyle] = None,
 ) -> Suite[_T]:
     """
     Display a dialog with button choices (given as a list of tuples).
@@ -100,15 +102,15 @@ def button_dialog(
     return _create_app(dialog, style)
 
 
-def input_dialog(
-    title: Textual = "",
-    text: Textual = "",
+def evoke(
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
     ok_text: str = "OK",
     cancel_text: str = "Cancel",
-    completer: ty.Optional[Completer] = None,
-    validator: ty.Optional[Validator] = None,
+    completer: Optional[Completer] = None,
+    validator: Optional[Validator] = None,
     password: FilterOrBool = False,
-    style: ty.Optional[BaseStyle] = None,
+    style: Optional[BaseStyle] = None,
 ) -> Suite[str]:
     """
     Display a text input box.
@@ -150,11 +152,11 @@ def input_dialog(
     return _create_app(dialog, style)
 
 
-def message_dialog(
-    title: Textual = "",
-    text: Textual = "",
+def message(
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
     ok_text: str = "Ok",
-    style: ty.Optional[BaseStyle] = None,
+    style: Optional[BaseStyle] = None,
 ) -> Suite[None]:
     """
     Display a simple message box and wait until the user presses enter.
@@ -170,12 +172,12 @@ def message_dialog(
 
 
 def radiolist_dialog(
-    title: Textual = "",
-    text: Textual = "",
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
     ok_text: str = "Ok",
     cancel_text: str = "Cancel",
-    values: ty.Optional[ty.List[ty.Tuple[_T, Textual]]] = None,
-    style: ty.Optional[BaseStyle] = None,
+    values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+    style: Optional[BaseStyle] = None,
 ) -> Suite[_T]:
     """
     Display a simple list of element the user can choose amongst.
@@ -207,14 +209,14 @@ def radiolist_dialog(
     return _create_app(dialog, style)
 
 
-def checkboxlist_dialog(
-    title: Textual = "",
-    text: Textual = "",
+def checkbox(
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
     ok_text: str = "Ok",
     cancel_text: str = "Cancel",
-    values: ty.Optional[ty.List[ty.Tuple[_T, Textual]]] = None,
-    style: ty.Optional[BaseStyle] = None,
-) -> Suite[ty.List[_T]]:
+    values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+    style: Optional[BaseStyle] = None,
+) -> Suite[List[_T]]:
     """
     Display a simple list of element the user can choose multiple values amongst.
 
@@ -245,13 +247,13 @@ def checkboxlist_dialog(
     return _create_app(dialog, style)
 
 
-def progress_dialog(
-    title: Textual = "",
-    text: Textual = "",
-    run_callback: ty.Callable[[ty.Callable[[int], None], ty.Callable[[str], None]], None] = (
+def progress(
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
+    run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (
         lambda *a: None
     ),
-    style: ty.Optional[BaseStyle] = None,
+    style: Optional[BaseStyle] = None,
 ) -> Suite[None]:
     """
     :param run_callback: A function that receives as input a `set_percentage`
@@ -303,13 +305,13 @@ def progress_dialog(
     return app
 
 
-def _create_app(dialog: AnyContainer, style: ty.Optional[BaseStyle]) -> Suite[ty.Any]:
+def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Suite[Any]:
     # Key bindings.
     bindings = KeyBinder()
     bindings.add("tab")(focus_next)
     bindings.add("s-tab")(focus_previous)
 
-    return Suite(
+    return Suit(
         layout=Layout(dialog),
         key_bindings=merge_key_bindings([load_key_bindings(), bindings]),
         mouse_support=True,

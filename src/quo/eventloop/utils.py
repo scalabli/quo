@@ -1,8 +1,8 @@
-import typing as ty
 import sys
 import time
 from asyncio import AbstractEventLoop, get_event_loop
 from types import TracebackType
+from typing import Any, Awaitable, Callable, Dict, Optional, TypeVar, cast
 
 try:
     import contextvars
@@ -15,12 +15,12 @@ __all__ = [
     "get_traceback_from_context",
 ]
 
-_T = ty.TypeVar("_T")
+_T = TypeVar("_T")
 
 
 def run_in_executor_with_context(
-    func: ty.Callable[..., _T], *args: ty.Any, loop: ty.Optional[AbstractEventLoop] = None
-) -> ty.Awaitable[_T]:
+    func: Callable[..., _T], *args: Any, loop: Optional[AbstractEventLoop] = None
+) -> Awaitable[_T]:
     """
     Run a function in an executor, but make sure it uses the same contextvars.
     This is required so that the function will see the right application.
@@ -34,9 +34,9 @@ def run_in_executor_with_context(
 
 
 def call_soon_threadsafe(
-    func: ty.Callable[[], None],
-    max_postpone_time: ty.Optional[float] = None,
-    loop: ty.Optional[AbstractEventLoop] = None,
+    func: Callable[[], None],
+    max_postpone_time: Optional[float] = None,
+    loop: Optional[AbstractEventLoop] = None,
 ) -> None:
     """
     Wrapper around asyncio's `call_soon_threadsafe`.
@@ -83,7 +83,7 @@ def call_soon_threadsafe(
     loop2.call_soon_threadsafe(schedule)
 
 
-def get_traceback_from_context(context: ty.Dict[str, ty.Any]) -> ty.Optional[TracebackType]:
+def get_traceback_from_context(context: Dict[str, Any]) -> Optional[TracebackType]:
     """
     Get the traceback object from the context.
     """

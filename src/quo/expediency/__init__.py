@@ -5,6 +5,8 @@ from .vitals import (
         binarystream,
         openfile,
         os_args,
+        pick_bool,
+        terminal_ui,
         textstream,
         inscribe,
         LazyFile,

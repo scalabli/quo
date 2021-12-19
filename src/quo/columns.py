@@ -4,20 +4,20 @@ from operator import itemgetter
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from quo.align import Align, AlignMethod
-from quo.console.console import Console, ConsoleOptions, RenderableType, RenderResult
-from .constrain import Constrain
-from quo.measure.measure import Measurement
-from .padding import Padding, PaddingDimensions
-from .table import Table
-from quo.text.text import TextType
-from .jupyter import JupyterMixin
+from quo.terminal import Terminal, ConsoleOptions, RenderableType, RenderResult
+from quo.constrain import Constrain
+from quo.width import Measurement
+from quo.padding import Padding, PaddingDimensions
+from quo.tabulate import Table
+from quo.text import TextType
+from quo.jupyter import JupyterMixin
 
 
 class Columns(JupyterMixin):
     """Display renderables in neat columns.
 
     Args:
-        renderables (Iterable[RenderableType]): Any number of Rich renderables (including str).
+        renderables (Iterable[RenderableType]): Any number of Quo renderables (including str).
         width (int, optional): The desired width of the columns, or None to auto detect. Defaults to None.
         padding (PaddingDimensions, optional): Optional padding around cells. Defaults to (0, 1).
         expand (bool, optional): Expand columns to full width. Defaults to False.
@@ -59,8 +59,8 @@ class Columns(JupyterMixin):
         """
         self.renderables.append(renderable)
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
         render_str = console.render_str
         renderables = [
@@ -169,3 +169,21 @@ class Columns(JupyterMixin):
                 row = row[::-1]
             add_row(*row)
         yield table
+
+
+if __name__ == "__main__":  # pragma: no cover
+    import os
+
+    console = Terminal()
+
+    from quo.panel import Panel
+
+    files = [f"{i} {s}" for i, s in enumerate(sorted(os.listdir()))]
+    columns = Columns(files, padding=(0, 1), expand=False, equal=False)
+    console.print(columns)
+    console.rule()
+    columns.column_first = True
+    console.print(columns)
+    columns.right_to_left = True
+    console.rule()
+    console.print(columns)

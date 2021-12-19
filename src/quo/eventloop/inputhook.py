@@ -24,14 +24,14 @@ stuff to do. There are two ways to detect when to return:
 """
 import asyncio
 import os
-import typing
 import select
 import selectors
 import threading
 from asyncio import AbstractEventLoop, get_event_loop
 from selectors import BaseSelector
+from typing import Callable
 
-from quo.utils import is_windows
+from quo.utils.utils import is_windows
 
 __all__ = [
     "new_eventloop_with_inputhook",
@@ -42,7 +42,7 @@ __all__ = [
 
 
 def new_eventloop_with_inputhook(
-    inputhook: typing.Callable[["InputHookContext"], None]
+    inputhook: Callable[["InputHookContext"], None]
 ) -> AbstractEventLoop:
     """
     Create a new event loop with the given inputhook.
@@ -53,7 +53,7 @@ def new_eventloop_with_inputhook(
 
 
 def set_eventloop_with_inputhook(
-    inputhook: typing.Callable[["InputHookContext"], None]
+    inputhook: Callable[["InputHookContext"], None]
 ) -> AbstractEventLoop:
     """
     Create a new event loop with the given inputhook, and activate it.
@@ -73,7 +73,7 @@ class InputHookSelector(BaseSelector):
     """
 
     def __init__(
-        self, selector: BaseSelector, inputhook: typing.Callable[["InputHookContext"], None]
+        self, selector: BaseSelector, inputhook: Callable[["InputHookContext"], None]
     ) -> None:
         self.selector = selector
         self.inputhook = inputhook
@@ -162,7 +162,7 @@ class InputHookContext:
     Given as a parameter to the inputhook.
     """
 
-    def __init__(self, fileno: int, input_is_ready: typing.Callable[[], bool]) -> None:
+    def __init__(self, fileno: int, input_is_ready: Callable[[], bool]) -> None:
         self._fileno = fileno
         self.input_is_ready = input_is_ready
 

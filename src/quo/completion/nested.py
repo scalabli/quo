@@ -1,19 +1,16 @@
 """
 Nestedcompleter for completion of hierarchical data structures.
 """
-import typing as ty
+from typing import Any, Dict, Iterable, Mapping, Optional, Set, Union
 
-from quo.completion import (
-        CompleteEvent, 
-        Completer, 
-        Completion
-        )
+from quo.completion import CompleteEvent, Completer, Completion
 from quo.completion.word_completer import WordCompleter
 from quo.document import Document
 
 __all__ = ["NestedCompleter"]
 
-NestedDict = ty.Mapping[str, ty.Union[ty.Any, ty.Set[str], None, Completer]]
+# NestedDict = Mapping[str, Union['NestedDict', Set[str], None, Completer]]
+NestedDict = Mapping[str, Union[Any, Set[str], None, Completer]]
 
 
 class NestedCompleter(Completer):
@@ -29,7 +26,7 @@ class NestedCompleter(Completer):
     """
 
     def __init__(
-        self, options: ty.Dict[str, ty.Optional[Completer]], ignore_case: bool = True
+        self, options: Dict[str, Optional[Completer]], ignore_case: bool = True
     ) -> None:
 
         self.options = options
@@ -63,7 +60,7 @@ class NestedCompleter(Completer):
 
         Values in this data structure can be a completers as well.
         """
-        options: ty.Dict[str, ty.Optional[Completer]] = {}
+        options: Dict[str, Optional[Completer]] = {}
         for key, value in data.items():
             if isinstance(value, Completer):
                 options[key] = value
@@ -79,7 +76,7 @@ class NestedCompleter(Completer):
 
     def get_completions(
         self, document: Document, complete_event: CompleteEvent
-    ) -> ty.Iterable[Completion]:
+    ) -> Iterable[Completion]:
         # Split document.
         text = document.text_before_cursor.lstrip()
         stripped_len = len(document.text_before_cursor) - len(text)

@@ -1,13 +1,4 @@
-from typing import (
-        Any,
-        Callable,
-        cast,
-        Iterable,
-        List,
-        TYPE_CHECKING,
-        Tuple,
-        Union
-        )
+from typing import TYPE_CHECKING, Any, Callable, Iterable, List, Tuple, Union, cast
 
 from quo.mouse_events import MouseEvent
 
@@ -18,12 +9,12 @@ __all__ = [
     "OneStyleAndTextTuple",
     "StyleAndTextTuples",
     "MagicFormattedText",
-    "Textual",
+    "AnyFormattedText",
     "to_formatted_text",
     "is_formatted_text",
     "Template",
     "merge_formatted_text",
-    "RichText",
+    "FormattedText",
 ]
 
 OneStyleAndTextTuple = Union[
@@ -46,7 +37,7 @@ if TYPE_CHECKING:
             ...
 
 
-Textual = Union[
+AnyFormattedText = Union[
     str,
     "MagicFormattedText",
     StyleAndTextTuples,
@@ -57,12 +48,12 @@ Textual = Union[
 
 
 def to_formatted_text(
-    value: Textual, style: str = "", auto_convert: bool = False
-) -> "RichText":
+    value: AnyFormattedText, style: str = "", auto_convert: bool = False
+) -> "FormattedText":
     """
     Convert the given value (which can be formatted text) into a list of text
     fragments. (Which is the canonical form of formatted text.) The outcome is
-    always a `RichText` instance, which is a list of (style, text) tuples.
+    always a `FormattedText` instance, which is a list of (style, text) tuples.
 
     It can take a plain text string, an `HTML` or `ANSI` object, anything that
     implements `__pt_formatted_text__` or a callable that takes no arguments and
@@ -73,7 +64,7 @@ def to_formatted_text(
     :param auto_convert: If `True`, also accept other types, and convert them
         to a string first.
     """
-    result: Union[RichText, StyleAndTextTuples]
+    result: Union[FormattedText, StyleAndTextTuples]
 
     if value is None:
         result = []
@@ -103,10 +94,10 @@ def to_formatted_text(
     # Make sure the result is wrapped in a `FormattedText`. Among other
     # reasons, this is important for `print_formatted_text` to work correctly
     # and distinguish between lists and formatted text.
-    if isinstance(result, RichText):
+    if isinstance(result, FormattedText):
         return result
     else:
-        return RichText(result)
+        return FormattedText(result)
 
 
 def is_formatted_text(value: object) -> bool:
@@ -124,7 +115,7 @@ def is_formatted_text(value: object) -> bool:
     return False
 
 
-class RichText(StyleAndTextTuples):
+class FormattedText(StyleAndTextTuples):
     """
     A list of ``(style, text)`` tuples.
 
@@ -136,7 +127,7 @@ class RichText(StyleAndTextTuples):
         return self
 
     def __repr__(self) -> str:
-        return "RichText(%s)" % super().__repr__()
+        return "FormattedText(%s)" % super().__repr__()
 
 
 class Template:
@@ -154,13 +145,13 @@ class Template:
         assert "{0}" not in text
         self.text = text
 
-    def format(self, *values: Textual) -> Textual:
-        def get_result() -> Textual:
+    def format(self, *values: AnyFormattedText) -> AnyFormattedText:
+        def get_result() -> AnyFormattedText:
             # Split the template in parts.
             parts = self.text.split("{}")
             assert len(parts) - 1 == len(values)
 
-            result = RichText()
+            result = FormattedText()
             for part, val in zip(parts, values):
                 result.append(("", part))
                 result.extend(to_formatted_text(val))
@@ -170,13 +161,13 @@ class Template:
         return get_result
 
 
-def merge_formatted_text(items: Iterable[Textual]) -> Textual:
+def merge_formatted_text(items: Iterable[AnyFormattedText]) -> AnyFormattedText:
     """
     Merge (Concatenate) several pieces of formatted text together.
     """
 
-    def _merge_formatted_text() -> Textual:
-        result = RichText()
+    def _merge_formatted_text() -> AnyFormattedText:
+        result = FormattedText()
         for i in items:
             result.extend(to_formatted_text(i))
         return result

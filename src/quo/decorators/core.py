@@ -1,3 +1,6 @@
+#
+#
+#
 import inspect
 import asyncio
 from .autoversion import autoversion
@@ -5,7 +8,9 @@ from .autohelp import autohelp
 from .autoconfirm import autoconfirm
 from .autopasswd import autopasswd
 from functools import update_wrapper
+from quo.core import Arg
 from quo.core import Command
+from quo.core import Tether
 from quo.core import App
 from quo.context.current import currentcontext
 from quo.expediency import inscribe
@@ -177,7 +182,6 @@ def arg(*param_decls, **attrs):
     :param cls: the arg class to instantiate.  This defaults to
                 :class:`Arg`.
     """
-    from quo.core import Arg
 
     def decorator(f):
         ArgClass = attrs.pop("cls", Arg)
@@ -190,12 +194,5 @@ def tether(name=None, **attrs):
     """Creates a new :class:`Tether` with a function as callback.  This works otherwise the same as :func:`command` just that the `cls`
     parameter is set to :class:`Tether`.
     """
-    from quo.core import Tether
     attrs.setdefault("cls", Tether)
-    return command(name, **attrs)
-
-
-def log(name=None, **attrs):
-    from quo.console.console import Console
-    attrs.setdefault("cls", Console)
     return command(name, **attrs)

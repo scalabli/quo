@@ -15,7 +15,7 @@ from typing import Callable, Hashable, Optional, Sequence, Tuple, Union
 
 from quo.cache import memoized
 from quo.filters import FilterOrBool, to_filter
-from quo.utils import AnyFloat, to_float, to_str
+from quo.utils.utils import AnyFloat, to_float, to_str
 
 from .core import ANSI_COLOR_NAMES, Attrs
 from .style import parse_color

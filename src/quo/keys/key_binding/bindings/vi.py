@@ -1,20 +1,12 @@
+# pylint: disable=function-redefined
 import codecs
 import string
 from enum import Enum
 from itertools import accumulate
-from typing import (
-        Callable, 
-        Iterable, 
-        List,
-        Optional, 
-        Tuple,
-        TypeVar,
-        Union,
-        cast
-        )
+from typing import Callable, Iterable, List, Optional, Tuple, TypeVar, Union, cast
 
-from quo.application.current import get_app
-from quo.layout.utils import Buffer, indent, reshape_text, unindent
+from quo.suite.current import get_app
+from quo.buffer import Buffer, indent, reshape_text, unindent
 from quo.clipboard import Data
 from quo.document import Document
 from quo.filters import (
@@ -40,18 +32,13 @@ from quo.filters.app import (
     vi_selection_mode,
     vi_waiting_for_text_object_mode,
 )
-from quo.i_o.input import Vt100Parser
+from quo.input.vt100_parser import Vt100Parser
 from quo.keys.key_binding.digraphs import DIGRAPHS
 from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.key_binding.vi_state import CharacterFind, InputMode
 from quo.keys.list import Keys
 from quo.search import SearchDirection
-from quo.selection import (
-        PasteMode,
-        SelectionState,
-        SelectionType
-        )
-
+from quo.selection import PasteMode, SelectionState, SelectionType
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase
 from .named_commands import get_by_name
@@ -428,7 +415,7 @@ def load_vi_bindings() -> KeyBindingsBase:
     ]
 
     # Insert a character literally (quoted insert).
-    handle("c-v", filter=vi_insert_mode)(get_by_name("quoted-insert"))
+    handle("ctrl-v", filter=vi_insert_mode)(get_by_name("quoted-insert"))
 
     @handle("escape")
     def _back_to_navigation(event: E) -> None:
@@ -849,7 +836,7 @@ def load_vi_bindings() -> KeyBindingsBase:
         """
         event.current_buffer.start_selection(selection_type=SelectionType.LINES)
 
-    @handle("ctrl-v", filter=vi_navigation_mode)
+    @handle("c-v", filter=vi_navigation_mode)
     def _visual_block(event: E) -> None:
         """
         Enter block selection mode.
@@ -891,7 +878,7 @@ def load_vi_bindings() -> KeyBindingsBase:
             else:
                 event.current_buffer.exit_selection()
 
-    @handle("ctrl-v", filter=vi_selection_mode)
+    @handle("c-v", filter=vi_selection_mode)
     def _visual_block2(event: E) -> None:
         """
         Exit block selection mode, or go from non block selection mode to block
@@ -2058,7 +2045,7 @@ def load_vi_bindings() -> KeyBindingsBase:
         Ignore all up/down key presses when in multiple cursor mode.
         """
 
-    @handle("ctrl-x", "ctrl-l", filter=vi_insert_mode)
+    @handle("c-x", "c-l", filter=vi_insert_mode)
     def _complete_line(event: E) -> None:
         """
         Pressing the ControlX - ControlL sequence in Vi mode does line
@@ -2066,7 +2053,7 @@ def load_vi_bindings() -> KeyBindingsBase:
         """
         event.current_buffer.start_history_lines_completion()
 
-    @handle("ctrl-x", "ctrl-f", filter=vi_insert_mode)
+    @handle("c-x", "c-f", filter=vi_insert_mode)
     def _complete_filename(event: E) -> None:
         """
         Complete file names.
@@ -2074,7 +2061,7 @@ def load_vi_bindings() -> KeyBindingsBase:
         # TODO
         pass
 
-    @handle("ctrl-k", filter=vi_insert_mode | vi_replace_mode)
+    @handle("c-k", filter=vi_insert_mode | vi_replace_mode)
     def _digraph(event: E) -> None:
         """
         Go into digraph mode.
@@ -2118,7 +2105,7 @@ def load_vi_bindings() -> KeyBindingsBase:
             event.app.vi_state.waiting_for_digraph = False
             event.app.vi_state.digraph_symbol1 = None
 
-    @handle("ctrl-o", filter=vi_insert_mode | vi_replace_mode)
+    @handle("c-o", filter=vi_insert_mode | vi_replace_mode)
     def _quick_normal_mode(event: E) -> None:
         """
         Go into normal mode for one single action.
@@ -2204,7 +2191,7 @@ def load_vi_search_bindings() -> KeyBindingsBase:
         "?",
         filter=(vi_navigation_mode | vi_selection_mode) & vi_search_direction_reversed,
     )(search.start_forward_incremental_search)
-    handle("ctrl-s")(search.start_forward_incremental_search)
+    handle("c-s")(search.start_forward_incremental_search)
 
     # Vi-style backward search.
     handle(
@@ -2215,16 +2202,16 @@ def load_vi_search_bindings() -> KeyBindingsBase:
         "/",
         filter=(vi_navigation_mode | vi_selection_mode) & vi_search_direction_reversed,
     )(search.start_reverse_incremental_search)
-    handle("ctrl-r")(search.start_reverse_incremental_search)
+    handle("c-r")(search.start_reverse_incremental_search)
 
     # Apply the search. (At the / or ? prompt.)
     handle("enter", filter=is_searching)(search.accept_search)
 
-    handle("ctrl-r", filter=is_searching)(search.reverse_incremental_search)
-    handle("ctrl-s", filter=is_searching)(search.forward_incremental_search)
+    handle("c-r", filter=is_searching)(search.reverse_incremental_search)
+    handle("c-s", filter=is_searching)(search.forward_incremental_search)
 
-    handle("ctrl-c")(search.abort_search)
-    handle("ctrl-g")(search.abort_search)
+    handle("c-c")(search.abort_search)
+    handle("c-g")(search.abort_search)
     handle("backspace", filter=search_buffer_is_empty)(search.abort_search)
 
     # Handle escape. This should accept the search, just like readline.

@@ -1,16 +1,20 @@
 """
 Margin implementations for a :class:`~quo.layout.containers.Window`.
 """
-import abc
-import typing as ty
+from abc import ABCMeta, abstractmethod
+from typing import TYPE_CHECKING, Callable, Optional
 
 from quo.filters import FilterOrBool, to_filter
-from quo.text.core import StyleAndTextTuples, to_formatted_text
-from quo.text.utils import fragment_list_to_text
-from quo.utils import get_width as g_w
+from quo.text import (
+    StyleAndTextTuples,
+    fragment_list_to_text,
+    to_formatted_text,
+)
+from quo.utils.utils import get_width as g_w
+
 from .controls import UIContent
 
-if ty.TYPE_CHECKING:
+if TYPE_CHECKING:
     from .containers import WindowRenderInfo
 
 __all__ = [
@@ -22,13 +26,13 @@ __all__ = [
 ]
 
 
-class Margin(metaclass=abc.ABCMeta):
+class Margin(metaclass=ABCMeta):
     """
     Base interface for a margin.
     """
 
-    @abc.abstractmethod
-    def get_width(self, get_ui_content: ty.Callable[[], UIContent]) -> int:
+    @abstractmethod
+    def get_width(self, get_ui_content: Callable[[], UIContent]) -> int:
         """
         Return the width that this margin is going to consume.
 
@@ -38,7 +42,7 @@ class Margin(metaclass=abc.ABCMeta):
         """
         return 0
 
-    @abc.abstractmethod
+    @abstractmethod
     def create_margin(
         self, window_render_info: "WindowRenderInfo", width: int, height: int
     ) -> StyleAndTextTuples:
@@ -76,7 +80,7 @@ class NumberedMargin(Margin):
         self.relative = to_filter(relative)
         self.display_tildes = to_filter(display_tildes)
 
-    def get_width(self, get_ui_content: ty.Callable[[], UIContent]) -> int:
+    def get_width(self, get_ui_content: Callable[[], UIContent]) -> int:
         line_count = get_ui_content().line_count
         return max(3, len("%s" % line_count) + 1)
 
@@ -137,7 +141,7 @@ class ConditionalMargin(Margin):
         self.margin = margin
         self.filter = to_filter(filter)
 
-    def get_width(self, get_ui_content: ty.Callable[[], UIContent]) -> int:
+    def get_width(self, get_ui_content: Callable[[], UIContent]) -> int:
         if self.filter():
             return self.margin.get_width(get_ui_content)
         else:
@@ -170,7 +174,7 @@ class ScrollbarMargin(Margin):
         self.up_arrow_symbol = up_arrow_symbol
         self.down_arrow_symbol = down_arrow_symbol
 
-    def get_width(self, get_ui_content: ty.Callable[[], UIContent]) -> int:
+    def get_width(self, get_ui_content: Callable[[], UIContent]) -> int:
         return 1
 
     def create_margin(
@@ -263,16 +267,16 @@ class PromptMargin(Margin):
 
     def __init__(
         self,
-        get_prompt: ty.Callable[[], StyleAndTextTuples],
-        get_continuation: ty.Optional[
-            ty.Callable[[int, int, bool], StyleAndTextTuples]
+        get_prompt: Callable[[], StyleAndTextTuples],
+        get_continuation: Optional[
+            Callable[[int, int, bool], StyleAndTextTuples]
         ] = None,
     ) -> None:
 
         self.get_prompt = get_prompt
         self.get_continuation = get_continuation
 
-    def get_width(self, get_ui_content: ty.Callable[[], UIContent]) -> int:
+    def get_width(self, get_ui_content: Callable[[], UIContent]) -> int:
         "Width to report to the `Window`."
         # Take the width from the first line.
         text = fragment_list_to_text(self.get_prompt())

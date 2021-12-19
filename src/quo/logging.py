@@ -4,31 +4,16 @@ from logging import Handler, LogRecord
 from pathlib import Path
 from typing import ClassVar, List, Optional, Type, Union
 
-from quo._get_console import _get_console
+from quo.i_o import get_terminal
 from ._log_render import LogRender, FormatTimeCallable
-from quo.console.console import Console, ConsoleRenderable
+from .terminal import Terminal, ConsoleRenderable
 from .highlighter import Highlighter, ReprHighlighter
-from .text import Text
+from quo.text import Text
 from .traceback import Traceback
 
-_console: Optional["Console"] = None
-
-def _get_console() -> "Console":
-    """Get a global :class:`~quo.console.Console` instance. This function is used when Quo requires a Console,
-    and hasn't been explicitly given one.
-
-    Returns:
-        Console: A console instance.
-    """
-    global _console
-    if _console is None:
-
-        _console = Console()
-
-    return _console
 
 class RichHandler(Handler):
-    """A logging handler that renders output with Rich. The time / level / message and file are displayed in columns.
+    """A logging handler that renders output with quo. The time / level / message and file are displayed in columns.
     The level is color coded, and the message is syntax highlighted.
 
     Note:
@@ -37,7 +22,7 @@ class RichHandler(Handler):
 
     Args:
         level (Union[int, str], optional): Log level. Defaults to logging.NOTSET.
-        console (:class:`~rich.console.Console`, optional): Optional console instance to write logs.
+        console (:class:`~quo.terminal.Terminal`, optional): Optional console instance to write logs.
             Default will use a global console instance writing to stdout.
         show_time (bool, optional): Show a column for the time. Defaults to True.
         omit_repeated_times (bool, optional): Omit repetition of the same time. Defaults to True.
@@ -46,7 +31,7 @@ class RichHandler(Handler):
         enable_link_path (bool, optional): Enable terminal link of path column to file. Defaults to True.
         highlighter (Highlighter, optional): Highlighter to style log messages, or None to use ReprHighlighter. Defaults to None.
         markup (bool, optional): Enable console markup in log messages. Defaults to False.
-        rich_tracebacks (bool, optional): Enable rich tracebacks with syntax highlighting and formatting. Defaults to False.
+        quo_tracebacks (bool, optional): Enable quo tracebacks with syntax highlighting and formatting. Defaults to False.
         tracebacks_width (Optional[int], optional): Number of characters used to render tracebacks, or None for full width. Defaults to None.
         tracebacks_extra_lines (int, optional): Additional lines of code to render tracebacks, or None for full width. Defaults to None.
         tracebacks_theme (str, optional): Override pygments theme used in traceback.
@@ -73,7 +58,7 @@ class RichHandler(Handler):
     def __init__(
         self,
         level: Union[int, str] = logging.NOTSET,
-        console: Optional[Console] = None,
+        console: Optional[Terminal] = None,
         *,
         show_time: bool = True,
         omit_repeated_times: bool = True,
@@ -82,7 +67,7 @@ class RichHandler(Handler):
         enable_link_path: bool = True,
         highlighter: Optional[Highlighter] = None,
         markup: bool = False,
-        rich_tracebacks: bool = False,
+        quo_tracebacks: bool = False,
         tracebacks_width: Optional[int] = None,
         tracebacks_extra_lines: int = 3,
         tracebacks_theme: Optional[str] = None,
@@ -93,7 +78,7 @@ class RichHandler(Handler):
         log_time_format: Union[str, FormatTimeCallable] = "[%x %X]",
     ) -> None:
         super().__init__(level=level)
-        self.console = console or get_console()
+        self.console = console or get_terminal()
         self.highlighter = highlighter or self.HIGHLIGHTER_CLASS()
         self._log_render = LogRender(
             show_time=show_time,
@@ -105,7 +90,7 @@ class RichHandler(Handler):
         )
         self.enable_link_path = enable_link_path
         self.markup = markup
-        self.rich_tracebacks = rich_tracebacks
+        self.quo_tracebacks = quo_tracebacks
         self.tracebacks_width = tracebacks_width
         self.tracebacks_extra_lines = tracebacks_extra_lines
         self.tracebacks_theme = tracebacks_theme
@@ -134,7 +119,7 @@ class RichHandler(Handler):
         message = self.format(record)
         traceback = None
         if (
-            self.rich_tracebacks
+            self.quo_tracebacks
             and record.exc_info
             and record.exc_info != (None, None, None)
         ):
@@ -219,3 +204,61 @@ class RichHandler(Handler):
             link_path=record.pathname if self.enable_link_path else None,
         )
         return log_renderable
+
+
+if __name__ == "__main__":  # pragma: no cover
+    from time import sleep
+
+    FORMAT = "%(message)s"
+    # FORMAT = "%(asctime)-15s - %(levelname)s - %(message)s"
+    logging.basicConfig(
+        level="NOTSET",
+        format=FORMAT,
+        datefmt="[%X]",
+        handlers=[RichHandler(quo_tracebacks=True, tracebacks_show_locals=True)],
+    )
+    log = logging.getLogger("quo")
+
+    log.info("Server starting...")
+    log.info("Listening on http://127.0.0.1:8080")
+    sleep(1)
+
+    log.info("GET /index.html 200 1298")
+    log.info("GET /imgs/backgrounds/back1.jpg 200 54386")
+    log.info("GET /css/styles.css 200 54386")
+    log.warning("GET /favicon.ico 404 242")
+    sleep(1)
+
+    log.debug(
+        "JSONRPC request\n--> %r\n<-- %r",
+        {
+            "version": "1.1",
+            "method": "confirmFruitPurchase",
+            "params": [["apple", "orange", "mangoes", "pomelo"], 1.123],
+            "id": "194521489",
+        },
+        {"version": "1.1", "result": True, "error": None, "id": "194521489"},
+    )
+    log.debug(
+        "Loading configuration file /adasd/asdasd/qeqwe/qwrqwrqwr/sdgsdgsdg/werwerwer/dfgerert/ertertert/ertetert/werwerwer"
+    )
+    log.error("Unable to find 'pomelo' in database!")
+    log.info("POST /jsonrpc/ 200 65532")
+    log.info("POST /admin/ 401 42234")
+    log.warning("password was rejected for admin site.")
+
+    def divide() -> None:
+        number = 1
+        divisor = 0
+        foos = ["foo"] * 100
+        log.debug("in divide")
+        try:
+            number / divisor
+        except:
+            log.exception("An error of some kind occurred!")
+
+    divide()
+    sleep(1)
+    log.critical("Out of memory!")
+    log.info("Server exited with code=-1")
+    log.info("[bold]EXITING...[/bold]", extra=dict(markup=True))

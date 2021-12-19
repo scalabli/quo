@@ -3,7 +3,7 @@ Filters that accept a `Application` as argument.
 """
 from typing import TYPE_CHECKING, cast
 
-from quo.application.current import get_app
+from quo.suite.current import get_app
 from quo.cache import memoized
 from quo.enums import EditingMode
 

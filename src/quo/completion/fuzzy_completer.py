@@ -1,9 +1,10 @@
 import re
-import typing as ty
+from typing import Callable, Dict, Iterable, List, NamedTuple, Optional, Tuple, Union
 
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.text import Textual, StyleAndTextTuples
+from quo.text import AnyFormattedText, StyleAndTextTuples
+
 from .core import CompleteEvent, Completer, Completion
 from .word_completer import WordCompleter
 
@@ -46,7 +47,7 @@ class FuzzyCompleter(Completer):
         self,
         completer: Completer,
         WORD: bool = False,
-        pattern: ty.Optional[str] = None,
+        pattern: Optional[str] = None,
         enable_fuzzy: FilterOrBool = True,
     ):
 
@@ -60,7 +61,7 @@ class FuzzyCompleter(Completer):
 
     def get_completions(
         self, document: Document, complete_event: CompleteEvent
-    ) -> ty.Iterable[Completion]:
+    ) -> Iterable[Completion]:
         if self.enable_fuzzy():
             return self._get_fuzzy_completions(document, complete_event)
         else:
@@ -75,7 +76,7 @@ class FuzzyCompleter(Completer):
 
     def _get_fuzzy_completions(
         self, document: Document, complete_event: CompleteEvent
-    ) -> ty.Iterable[Completion]:
+    ) -> Iterable[Completion]:
 
         word_before_cursor = document.get_word_before_cursor(
             pattern=re.compile(self._get_pattern())
@@ -89,7 +90,7 @@ class FuzzyCompleter(Completer):
 
         completions = list(self.completer.get_completions(document2, complete_event))
 
-        fuzzy_matches: ty.List[_FuzzyMatch] = []
+        fuzzy_matches: List[_FuzzyMatch] = []
 
         pat = ".*?".join(map(re.escape, word_before_cursor))
         pat = "(?=({0}))".format(pat)  # lookahead regex to manage overlapping matches
@@ -103,7 +104,7 @@ class FuzzyCompleter(Completer):
                     _FuzzyMatch(len(best.group(1)), best.start(), compl)
                 )
 
-        def sort_key(fuzzy_match: "_FuzzyMatch") -> ty.Tuple[int, int]:
+        def sort_key(fuzzy_match: "_FuzzyMatch") -> Tuple[int, int]:
             "Sort by start position, then by the length of the match."
             return fuzzy_match.start_pos, fuzzy_match.match_length
 
@@ -123,7 +124,7 @@ class FuzzyCompleter(Completer):
 
     def _get_display(
         self, fuzzy_match: "_FuzzyMatch", word_before_cursor: str
-    ) -> Textual:
+    ) -> AnyFormattedText:
         """
         Generate formatted text for the display label.
         """
@@ -173,8 +174,8 @@ class FuzzyWordCompleter(Completer):
 
     def __init__(
         self,
-        words: ty.Union[ty.List[str], ty.Callable[[], ty.List[str]]],
-        meta_dict: ty.Optional[ty.Dict[str, str]] = None,
+        words: Union[List[str], Callable[[], List[str]]],
+        meta_dict: Optional[Dict[str, str]] = None,
         WORD: bool = False,
     ) -> None:
 
@@ -190,11 +191,11 @@ class FuzzyWordCompleter(Completer):
 
     def get_completions(
         self, document: Document, complete_event: CompleteEvent
-    ) -> ty.Iterable[Completion]:
+    ) -> Iterable[Completion]:
         return self.fuzzy_completer.get_completions(document, complete_event)
 
 
-_FuzzyMatch = ty.NamedTuple(
+_FuzzyMatch = NamedTuple(
     "_FuzzyMatch",
     [("match_length", int), ("start_pos", int), ("completion", Completion)],
 )

@@ -1,11 +1,11 @@
-import typing as ty
-import collections
+from collections import defaultdict
+from typing import TYPE_CHECKING, Callable, DefaultDict, Dict, List, Optional, Tuple
 
 from quo.cache import FastDictCache
 from quo.data_structures import Point
-from quo.utils import get_width
+from quo.utils.utils import get_width
 
-if ty.TYPE_CHECKING:
+if TYPE_CHECKING:
     from .containers import Window
 
 
@@ -30,7 +30,7 @@ class Char:
     # If we end up having one of these special control sequences in the input string,
     # we should display them as follows:
     # Usually this happens after a "quoted insert".
-    display_mappings: ty.Dict[str, str] = {
+    display_mappings: Dict[str, str] = {
         "\x00": "^@",  # Control space
         "\x01": "^A",
         "\x02": "^B",
@@ -131,7 +131,7 @@ class Char:
         return "%s(%r, %r)" % (self.__class__.__name__, self.char, self.style)
 
 
-_CHAR_CACHE: FastDictCache[ty.Tuple[str, str], Char] = FastDictCache(
+_CHAR_CACHE: FastDictCache[Tuple[str, str], Char] = FastDictCache(
     Char, size=1000 * 1000
 )
 Transparent = "[transparent]"
@@ -144,7 +144,7 @@ class Screen:
 
     def __init__(
         self,
-        default_char: ty.Optional[Char] = None,
+        default_char: Optional[Char] = None,
         initial_width: int = 0,
         initial_height: int = 0,
     ) -> None:
@@ -154,17 +154,17 @@ class Screen:
         else:
             default_char2 = default_char
 
-        self.data_buffer: ty.DefaultDict[int, ty.DefaultDict[int, Char]] = collections.defaultdict(
-            lambda: collections.defaultdict(lambda: default_char2)
+        self.data_buffer: DefaultDict[int, DefaultDict[int, Char]] = defaultdict(
+            lambda: defaultdict(lambda: default_char2)
         )
 
         #: Escape sequences to be injected.
-        self.zero_width_escapes: ty.DefaultDict[int, ty.DefaultDict[int, str]] = collections.defaultdict(
-            lambda: collections.defaultdict(lambda: "")
+        self.zero_width_escapes: DefaultDict[int, DefaultDict[int, str]] = defaultdict(
+            lambda: defaultdict(lambda: "")
         )
 
         #: Position of the cursor.
-        self.cursor_positions: ty.Dict[
+        self.cursor_positions: Dict[
             "Window", Point
         ] = {}  # Map `Window` objects to `Point` objects.
 
@@ -175,7 +175,7 @@ class Screen:
         #: (We can't use the cursor position, because we don't want the
         #: completion menu to change its position when we browse through all the
         #: completions.)
-        self.menu_positions: ty.Dict[
+        self.menu_positions: Dict[
             "Window", Point
         ] = {}  # Map `Window` objects to `Point` objects.
 
@@ -186,13 +186,13 @@ class Screen:
 
         # Windows that have been drawn. (Each `Window` class will add itself to
         # this list.)
-        self.visible_windows_to_write_positions: ty.Dict["Window", "WritePosition"] = {}
+        self.visible_windows_to_write_positions: Dict["Window", "WritePosition"] = {}
 
         # List of (z_index, draw_func)
-        self._draw_float_functions: ty.List[ty.Tuple[int, ty.Callable[[], None]]] = []
+        self._draw_float_functions: List[Tuple[int, Callable[[], None]]] = []
 
     @property
-    def visible_windows(self) -> ty.List["Window"]:
+    def visible_windows(self) -> List["Window"]:
         return list(self.visible_windows_to_write_positions.keys())
 
     def set_cursor_position(self, window: "Window", position: Point) -> None:
@@ -230,7 +230,7 @@ class Screen:
             except KeyError:
                 return Point(x=0, y=0)
 
-    def draw_with_z_index(self, z_index: int, draw_func: ty.Callable[[], None]) -> None:
+    def draw_with_z_index(self, z_index: int, draw_func: Callable[[], None]) -> None:
         """
         Add a draw-function for a `Window` which has a >= 0 z_index.
         This will be postponed until `draw_all_floats` is called.

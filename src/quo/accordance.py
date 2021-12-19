@@ -1,8 +1,12 @@
+#
+#
+#
 import codecs
 import io
 import os
 import re
 import sys
+from weakref import WeakKeyDictionary
 
 CYGWIN = sys.platform.startswith("cygwin")
 MSYS2 = sys.platform.startswith("win") and ("GCC" in sys.version)
@@ -561,8 +565,7 @@ def isatty(stream):
 
 
 def _make_cached_stream_func(src_func, wrapper_func):
-    import weakref
-    cache = weakref.WeakKeyDictionary()
+    cache = WeakKeyDictionary()
 
     def func():
         stream = src_func()

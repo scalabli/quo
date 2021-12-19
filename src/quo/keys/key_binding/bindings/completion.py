@@ -3,17 +3,21 @@ Key binding handlers for displaying completions.
 """
 import asyncio
 import math
-import typing
+from typing import TYPE_CHECKING, List
 
-from quo.application.run_in_terminal import in_terminal
-from quo.i_o.util import CompleteEvent, Completion, get_common_complete_suffix
-from quo.text.core import StyleAndTextTuples
+from quo.suite.run_in_terminal import in_terminal
+from quo.completion import (
+    CompleteEvent,
+    Completion,
+    get_common_complete_suffix,
+)
+from quo.text import StyleAndTextTuples
 from quo.keys import Keys, KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.utils import get_width as get_cwidth
+from quo.utils.utils import get_width as get_cwidth
 
-if typing.TYPE_CHECKING:
-    from quo.application import Suite
+if TYPE_CHECKING:
+    from quo.suite.suite import Suite
     from quo.shortcuts import Elicit
 
 __all__ = [
@@ -75,7 +79,7 @@ def display_completions_like_readline(event: E) -> None:
 
 
 def _display_completions_like_readline(
-    app: "Suite[object]", completions: typing.List[Completion]
+    app: "Application[object]", completions: List[Completion]
 ) -> "asyncio.Task[None]":
     """
     Display the list of completions in columns above the prompt.

@@ -2,13 +2,8 @@
 Search related key bindings.
 """
 from quo import search
-from quo.application.current import get_app
-from quo.filters import (
-        Condition, 
-        control_is_searchable, 
-        is_searching
-        )
-
+from quo.suite.current import get_app
+from quo.filters import Condition, control_is_searchable, is_searching
 from quo.keys.key_binding.key_processor import KeyPressEvent
 
 from quo.keys.key_binding.key_bindings import key_binding

@@ -2,7 +2,14 @@
 Layout dimensions are used to give the minimum, maximum and preferred
 dimensions for containers and controls.
 """
-import typing as ty
+
+from typing import (
+        Any,
+        Callable, 
+        List, 
+        Optional,
+        Union
+        )
 
 __all__ = [
     "Dimension",
@@ -35,10 +42,10 @@ class Dimension:
 
     def __init__(
         self,
-        min: ty.Optional[int] = None,
-        max: ty.Optional[int] = None,
-        weight: ty.Optional[int] = None,
-        preferred: ty.Optional[int] = None,
+        min: Optional[int] = None,
+        max: Optional[int] = None,
+        weight: Optional[int] = None,
+        preferred: Optional[int] = None,
     ) -> None:
         if weight is not None:
             assert weight >= 0  # Also cannot be a float.
@@ -111,7 +118,7 @@ class Dimension:
         return "Dimension(%s)" % ", ".join(fields)
 
 
-def sum_layout_dimensions(dimensions: ty.List[Dimension]) -> Dimension:
+def sum_layout_dimensions(dimensions: List[Dimension]) -> Dimension:
     """
     Sum a list of :class:`.Dimension` instances.
     """
@@ -122,7 +129,7 @@ def sum_layout_dimensions(dimensions: ty.List[Dimension]) -> Dimension:
     return Dimension(min=min, max=max, preferred=preferred)
 
 
-def max_layout_dimensions(dimensions: ty.List[Dimension]) -> Dimension:
+def max_layout_dimensions(dimensions: List[Dimension]) -> Dimension:
     """
     Take the maximum of a list of :class:`.Dimension` instances.
     Used when we have a HSplit/VSplit, and we want to get the best width/height.)
@@ -168,12 +175,12 @@ def max_layout_dimensions(dimensions: ty.List[Dimension]) -> Dimension:
 
 
 # Anything that can be converted to a dimension.
-AnyDimension = ty.Union[
+AnyDimension = Union[
     None,  # None is a valid dimension that will fit anything.
     int,
     Dimension,
     # Callable[[], 'AnyDimension']  # Recursive definition not supported by mypy.
-    ty.Callable[[], ty.Any],
+    Callable[[], Any],
 ]
 
 

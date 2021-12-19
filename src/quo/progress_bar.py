@@ -1,22 +1,22 @@
 import math
 from functools import lru_cache
 from time import monotonic
-from typing import Iterable, List, Optional, Union
+from typing import Iterable, List, Optional
 
-from quo.color.color import Color, blend_rgb
-from quo.color.rgb import ColorTriplet
-from quo.console.console import Console, ConsoleOptions, RenderResult
-from quo.jupyter import JupyterMixin
-from quo.measure.measure import Measurement
+from quo.color import Color, blend_rgb
+from quo.color.color_triplet import ColorTriplet
+from quo.terminal import Terminal, ConsoleOptions, RenderResult
+from .jupyter import JupyterMixin
+from quo.width import Measurement
 from .segment import Segment
-from .style import Style
+from .style import Style, StyleType
 
 # Number of characters before 'pulse' animation repeats
 PULSE_SIZE = 20
-StyleType = Union[str, "Style"]
+
 
 class ProgressBar(JupyterMixin):
-    """Renders a (progress) bar. Used by quo.progress.
+    """Renders a (progress) bar. Used by rich.progress.
 
     Args:
         total (float, optional): Number of steps in the bar. Defaults to 100.
@@ -122,12 +122,12 @@ class ProgressBar(JupyterMixin):
         self.total = total if total is not None else self.total
 
     def _render_pulse(
-        self, console: Console, width: int, ascii: bool = False
+        self, console: Terminal, width: int, ascii: bool = False
     ) -> Iterable[Segment]:
         """Renders the pulse animation.
 
         Args:
-            console (Console): Console instance.
+            console (Terminal): Terminal instance.
             width (int): Width in characters of pulse animation.
 
         Returns:
@@ -151,8 +151,8 @@ class ProgressBar(JupyterMixin):
         segments = segments[offset : offset + width]
         yield from segments
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_console__(
+        self, console: Terminal, options: ConsoleOptions
     ) -> RenderResult:
 
         width = min(self.width or options.max_width, options.max_width)
@@ -190,8 +190,8 @@ class ProgressBar(JupyterMixin):
                 if remaining_bars:
                     yield _Segment(bar * remaining_bars, style)
 
-    def __rich_measure__(
-        self, console: Console, options: ConsoleOptions
+    def __quo_measure__(
+            self, console: Terminal, options: ConsoleOptions
     ) -> Measurement:
         return (
             Measurement(self.width, self.width)
@@ -199,3 +199,18 @@ class ProgressBar(JupyterMixin):
             else Measurement(4, options.max_width)
         )
 
+
+if __name__ == "__main__":  # pragma: no cover
+    console = Terminal()
+    bar = ProgressBar(width=50, total=100)
+
+    import time
+
+    console.show_cursor(False)
+    for n in range(0, 101, 1):
+        bar.update(n)
+        console.print(bar)
+        console.file.write("\r")
+        time.sleep(0.05)
+    console.show_cursor(True)
+    console.print()

@@ -3,13 +3,7 @@ Key bindings which are also known by GNU Readline by the given names.
 
 See: http://www.delorie.com/gnu/docs/readline/rlman_13.html
 """
-from typing import (
-        Callable, 
-        Dict, 
-        TypeVar, 
-        Union, 
-        cast
-        )
+from typing import Callable, Dict, TypeVar, Union, cast
 
 from quo.document import Document
 from quo.enums import EditingMode

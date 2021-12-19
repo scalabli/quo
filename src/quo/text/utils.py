@@ -6,7 +6,7 @@ tuples. This file contains functions for manipulating such a list.
 """
 from typing import Iterable, cast
 
-from quo.utils import get_width
+from quo.utils.utils import get_width
 
 from .core import OneStyleAndTextTuple, StyleAndTextTuples
 

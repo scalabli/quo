@@ -11,16 +11,16 @@ from asyncio import Task, sleep
 from collections import deque
 from typing import TYPE_CHECKING, Any, Deque, Generator, List, Optional, Union
 
-from quo.application.current import get_app
+from quo.suite.current import get_app
 from quo.enums import EditingMode
 from quo.filters.app import vi_navigation_mode
 from quo.keys import Keys
-from quo.utils import Event
+from quo.utils.utils import Event
 
 from quo.keys.key_binding.key_bindings import Binding, KeyBindingsBase
 
 if TYPE_CHECKING:
-    from quo.application import Suite
+    from quo.suite import Suite
     from quo.buffer import Buffer
 
 
@@ -37,11 +37,7 @@ class KeyPress:
     :param data: The received string on stdin. (Often vt100 escape codes.)
     """
 
-    def __init__(
-            self, 
-            key: Union[Keys, str], 
-            data: Optional[str] = None
-            ) -> None:
+    def __init__(self, key: Union[Keys, str], data: Optional[str] = None) -> None:
         assert isinstance(key, Keys) or len(key) == 1
 
         if data is None:

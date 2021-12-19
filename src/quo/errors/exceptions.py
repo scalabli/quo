@@ -1,5 +1,15 @@
+#
+#
+#
 from quo.accordance import filename_to_ui, get_text_stderr
 from quo.expediency import inscribe
+from typing import (
+        Any,
+        Dict, 
+        Optional,
+        Sequence, 
+        Type
+        )
 
 
 
@@ -48,10 +58,6 @@ class ValidationError(Exception):
             self.cursor_position,
             self.message,
         )
-
-class ReprError(Outlier):
-    """An error occurred when attempting to build a repr."""
-
 
 class UsageError(Outlier):
     """An internal exception that signals a usage error.This typically aborts any further handling.
@@ -215,9 +221,6 @@ class Abort(RuntimeError):
     """An internal signalling exception that signals Quo to abort."""
 
 
-class CaptureError(Outlier):
-    """An error in the Capture context manager."""
-
 class Exit(RuntimeError):
     """An exception that indicates that the application should exit with some status code.
 
@@ -229,44 +232,4 @@ class Exit(RuntimeError):
     def __init__(self, code=0):
         self.exit_code = code
 
-class ConsoleError(Outlier):
-    """An error in console operation."""
 
-class ThemeStackError(Outlier):
-    """Base exception for errors related to the theme stack."""
-
-
-class StyleError(Outlier):
-    """An error in styles."""
-
-
-class StyleSyntaxError(ConsoleError):
-    """Style was badly formatted."""
-
-
-class MissingStyle(StyleError):
-    """No such style."""
-
-class ColorParseError(Outlier):
-    """The color could not be parsed."""
-
-class StyleStackError(ConsoleError):
-    """Style stack is invalid."""
-
-
-class NotRenderableError(ConsoleError):
-    """Object is not renderable."""
-
-
-class MarkupError(ConsoleError):
-    """Markup was badly formatted."""
-
-
-class LiveError(ConsoleError):
-    """Error related to Live display."""
-
-class LayoutError(Outlier):
-    """Layout error"""
-
-class NoAltScreen(ConsoleError):
-    """Alt screen mode was required."""

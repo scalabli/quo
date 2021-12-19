@@ -15,18 +15,17 @@ from typing import (
     Union,
 )
 
-from quo.application.current import get_app
-from .utils import Buffer
+from quo.suite.current import get_app
+from quo.buffer import Buffer
 from quo.cache import SimpleCache
 from quo.data_structures import Point
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.text.core import (
-        Textual,
-        StyleAndTextTuples,
-        to_formatted_text
-        )
-
+from quo.text import (
+    AnyFormattedText,
+    StyleAndTextTuples,
+    to_formatted_text,
+)
 from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
@@ -36,7 +35,7 @@ from quo.lexers import Lexer, SimpleLexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.search import SearchState
 from quo.selection import SelectionType
-from quo.utils import get_width as get_cwidth
+from quo.utils.utils import get_width as get_cwidth
 
 from .processors import (
     DisplayMultipleCursors,
@@ -50,7 +49,7 @@ from .processors import (
 
 if TYPE_CHECKING:
     from quo.keys.key_binding.key_bindings import KeyBindingsBase
-    from quo.utils import Event
+    from quo.utils.utils import Event
 
     # The only two return values for a mouse hander are `None` and
     # `NotImplemented`. For the type checker it's best to annotate this as
@@ -76,7 +75,7 @@ __all__ = [
     "UIContent",
 ]
 
-GetLinePrefixCallable = Callable[[int, int], Textual]
+GetLinePrefixCallable = Callable[[int, int], AnyFormattedText]
 
 
 class UIControl(metaclass=ABCMeta):
@@ -312,7 +311,7 @@ class FormattedTextControl(UIControl):
 
     def __init__(
         self,
-        text: Textual = "",
+        text: AnyFormattedText = "",
         style: str = "",
         focusable: FilterOrBool = False,
         key_bindings: Optional["KeyBindingsBase"] = None,

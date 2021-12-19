@@ -3,7 +3,7 @@ Key bindings for auto suggestion (for fish-style auto suggestion).
 """
 import re
 
-from quo.application.current import get_app
+from quo.suite.current import get_app
 from quo.filters import Condition, emacs_mode
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
@@ -35,8 +35,8 @@ def load_auto_suggest_bindings() -> KeyBinder:
             and app.current_buffer.document.is_cursor_at_the_end
         )
 
-    @handle("ctrl-f", filter=suggestion_available)
-    @handle("ctrl-e", filter=suggestion_available)
+    @handle("c-f", filter=suggestion_available)
+    @handle("c-e", filter=suggestion_available)
     @handle("right", filter=suggestion_available)
     def _accept(event: E) -> None:
         """

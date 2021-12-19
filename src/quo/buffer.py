@@ -28,8 +28,8 @@ from typing import (
     cast,
 )
 
-from quo.application.current import get_app
-from quo.application.run_in_terminal import run_in_terminal
+from quo.suite.current import get_app
+from quo.suite.run_in_terminal import run_in_terminal
 from .auto_suggest import AutoSuggest, Suggestion
 from .cache import FastDictCache
 from quo.clipboard import Data
@@ -45,9 +45,8 @@ from quo.filters import FilterOrBool, to_filter
 from .history import History, InMemoryHistory
 from .search import SearchDirection, SearchState
 from .selection import PasteMode, SelectionState, SelectionType
-from .utils import Event, to_str
-from .validation import Validator
-from quo.errors import ValidationError
+from quo.utils.utils import Event, to_str
+from .validation import ValidationError, Validator
 
 __all__ = [
         "EditReadOnlyBuffer",
@@ -239,7 +238,7 @@ class Buffer:
         tempfile_suffix: Union[str, Callable[[], str]] = "",
         tempfile: Union[str, Callable[[], str]] = "",
         name: str = "",
-        auto_complete: FilterOrBool = True,
+        complete_while_typing: FilterOrBool = False,
         validate_while_typing: FilterOrBool = False,
         enable_history_search: FilterOrBool = False,
         document: Optional[Document] = None,
@@ -255,7 +254,7 @@ class Buffer:
 
         # Accept both filters and booleans as input.
         enable_history_search = to_filter(enable_history_search)
-        auto_complete = to_filter(auto_complete)
+        complete_while_typing = to_filter(complete_while_typing)
         validate_while_typing = to_filter(validate_while_typing)
         read_only = to_filter(read_only)
         multiline = to_filter(multiline)
@@ -269,7 +268,7 @@ class Buffer:
         self.accept_handler = accept_handler
 
         # Filters. (Usually, used by the key bindings to drive the buffer.)
-        self.auto_complete = auto_complete
+        self.complete_while_typing = complete_while_typing
         self.validate_while_typing = validate_while_typing
         self.enable_history_search = enable_history_search
         self.read_only = read_only
@@ -1268,8 +1267,8 @@ class Buffer:
         if fire_event:  # XXX: rename to `start_complete`.
             self.on_text_insert.fire()
 
-            # Only complete when "auto_complete" is enabled.
-            if self.completer and self.auto_complete():
+            # Only complete when "complete_while_typing" is enabled.
+            if self.completer and self.complete_while_typing():
                 get_app().create_background_task(self._async_completer())
 
             # Call auto_suggest.

@@ -5,24 +5,25 @@ from typing import (
     List,
     Optional,
     Union,
+    cast,
     overload,
     TypeVar,
     TYPE_CHECKING,
 )
 
 if TYPE_CHECKING:
-    from quo.console.console import (
-        Console,
+    from quo.terminal import (
+        Terminal,
         ConsoleOptions,
         JustifyMethod,
         OverflowMethod,
         RenderResult,
         RenderableType,
     )
-    from quo.text.text import Text
 
-from .cells import cell_len
-from quo.measure.measure import Measurement
+from quo.vitals import Text
+from quo.width.cells import cell_len
+from quo.width.measure import Measurement
 
 T = TypeVar("T")
 
@@ -37,14 +38,14 @@ class Renderables:
             list(renderables) if renderables is not None else []
         )
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._renderables
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_measure__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "Measurement":
         dimensions = [
             Measurement.get(console, options, renderable)
@@ -93,8 +94,8 @@ class Lines:
     def __len__(self) -> int:
         return self._lines.__len__()
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
+    def __quo_console__(
+        self, console: "Terminal", options: "ConsoleOptions"
     ) -> "RenderResult":
         """Console render method to insert line-breaks."""
         yield from self._lines
@@ -108,39 +109,39 @@ class Lines:
     def pop(self, index: int = -1) -> "Text":
         return self._lines.pop(index)
 
-    def situate(
+    def justify(
         self,
-        console: "Console",
+        console: "Terminal",
         width: int,
-        situate: "JustifyMethod" = "left",
+        justify: "JustifyMethod" = "left",
         overflow: "OverflowMethod" = "fold",
     ) -> None:
-        """Situate and overflow text to a given width.
+        """Justify and overflow text to a given width.
 
         Args:
             console (Console): Console instance.
             width (int): Number of characters per line.
-            situate(str, optional): Default situate method for text: "left", "center", "full" or "right". Defaults to "left".
+            justify (str, optional): Default justify method for text: "left", "center", "full" or "right". Defaults to "left".
             overflow (str, optional): Default overflow for text: "crop", "fold", or "ellipsis". Defaults to "fold".
 
         """
-        from quo._text import Text
+        from quo.text import Text
 
-        if situate == "left":
+        if justify == "left":
             for line in self._lines:
                 line.truncate(width, overflow=overflow, pad=True)
-        elif situate == "center":
+        elif justify == "center":
             for line in self._lines:
                 line.rstrip()
                 line.truncate(width, overflow=overflow)
                 line.pad_left((width - cell_len(line.plain)) // 2)
                 line.pad_right(width - cell_len(line.plain))
-        elif situate == "right":
+        elif justify == "right":
             for line in self._lines:
                 line.rstrip()
                 line.truncate(width, overflow=overflow)
                 line.pad_left(width - cell_len(line.plain))
-        elif situate == "full":
+        elif justify == "full":
             for line_index, line in enumerate(self._lines):
                 if line_index == len(self._lines) - 1:
                     break

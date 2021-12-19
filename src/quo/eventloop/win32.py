@@ -1,5 +1,4 @@
 from ctypes import pointer
-import typing as ty
 
 from ..utils import SPHINX_AUTODOC_RUNNING
 
@@ -9,6 +8,7 @@ if not SPHINX_AUTODOC_RUNNING:
     from ctypes import windll
 
 from ctypes.wintypes import BOOL, DWORD, HANDLE
+from typing import List, Optional
 
 from quo.win32_types import SECURITY_ATTRIBUTES
 
@@ -20,8 +20,8 @@ INFINITE = -1
 
 
 def wait_for_handles(
-    handles: ty.List[HANDLE], timeout: int = INFINITE
-) -> ty.Optional[HANDLE]:
+    handles: List[HANDLE], timeout: int = INFINITE
+) -> Optional[HANDLE]:
     """
     Waits for multiple handles. (Similar to 'select') Returns the handle which is ready.
     Returns `None` on timeout.

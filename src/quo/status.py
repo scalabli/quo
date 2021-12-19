@@ -1,11 +1,11 @@
 from types import TracebackType
 from typing import Optional, Type
 
-from quo.console.console import Console, RenderableType
-from .jupyter import JupyterMixin
-from .live import Live
-from .spinner import Spinner
-from .style import StyleType
+from quo.terminal import Terminal, RenderableType
+from quo.jupyter import JupyterMixin
+from quo.live import Live
+from quo.animate import Animate
+from quo.style import StyleType
 
 
 class Status(JupyterMixin):
@@ -46,7 +46,7 @@ class Status(JupyterMixin):
         return self._spinner
 
     @property
-    def console(self) -> "Console":
+    def console(self) -> "Terminal":
         """Get the Console used by the Status objects."""
         return self._live.console
 
@@ -105,3 +105,28 @@ class Status(JupyterMixin):
     ) -> None:
         self.stop()
 
+
+if __name__ == "__main__":  # pragma: no cover
+
+    from time import sleep
+
+    from quo.terminal import Terminal
+
+    console = Terminal()
+    with console.status("[magenta]Covid detector booting up") as status:
+        sleep(3)
+        console.log("Importing advanced AI")
+        sleep(3)
+        console.log("Advanced Covid AI Ready")
+        sleep(3)
+        status.update(status="[bold blue] Scanning for Covid", spinner="earth")
+        sleep(3)
+        console.log("Found 10,000,000,000 copies of Covid32.exe")
+        sleep(3)
+        status.update(
+            status="[bold red]Moving Covid32.exe to Trash",
+            spinner="bouncingBall",
+            spinner_style="yellow",
+        )
+        sleep(5)
+    console.print("[bold green]Covid deleted successfully")

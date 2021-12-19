@@ -19,19 +19,18 @@ from typing import (
     cast,
 )
 
-from quo.application.current import get_app
+from quo.suite.current import get_app
 from quo.cache import SimpleCache
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter, vi_insert_multiple_mode
-from quo.text.core import (
-        Textual,
-        StyleAndTextTuples,
-        to_formatted_text
-        )
-
+from quo.text import (
+    AnyFormattedText,
+    StyleAndTextTuples,
+    to_formatted_text,
+)
 from quo.text.utils import fragment_list_len, fragment_list_to_text
 from quo.search import SearchDirection
-from quo.utils import to_int, to_str
+from quo.utils.utils import to_int, to_str
 
 from .utils import explode_text_fragments
 
@@ -499,7 +498,7 @@ class BeforeInput(Processor):
     :param style: style to be applied to this prompt/prefix.
     """
 
-    def __init__(self, text: Textual, style: str = "") -> None:
+    def __init__(self, text: AnyFormattedText, style: str = "") -> None:
         self.text = text
         self.style = style
 
@@ -567,7 +566,7 @@ class AfterInput(Processor):
     :param style: style to be applied to this prompt/prefix.
     """
 
-    def __init__(self, text: Textual, style: str = "") -> None:
+    def __init__(self, text: AnyFormattedText, style: str = "") -> None:
         self.text = text
         self.style = style
 

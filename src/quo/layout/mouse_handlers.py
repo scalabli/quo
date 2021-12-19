@@ -1,5 +1,6 @@
-import collections
-import typing
+from collections import defaultdict
+from itertools import product
+from typing import Callable, DefaultDict, Tuple
 
 from quo.mouse_events import MouseEvent
 
@@ -8,7 +9,7 @@ __all__ = [
     "MouseHandlers",
 ]
 
-MouseHandler = typing.Callable[[MouseEvent], None]
+MouseHandler = Callable[[MouseEvent], None]
 
 
 class MouseHandlers:
@@ -27,9 +28,9 @@ class MouseHandlers:
         # over the mouse handlers of the visible region in the scrollable pane.
 
         # Map y (row) to x (column) to handlers.
-        self.mouse_handlers: typing.DefaultDict[
-            int, typing.DefaultDict[int, MouseHandler]
-        ] = collections.defaultdict(lambda: collections.defaultdict(lambda: dummy_callback))
+        self.mouse_handlers: DefaultDict[
+            int, DefaultDict[int, MouseHandler]
+        ] = defaultdict(lambda: defaultdict(lambda: dummy_callback))
 
     def set_mouse_handler_for_range(
         self,
@@ -37,7 +38,7 @@ class MouseHandlers:
         x_max: int,
         y_min: int,
         y_max: int,
-        handler: typing.Callable[[MouseEvent], None],
+        handler: Callable[[MouseEvent], None],
     ) -> None:
         """
         Set mouse handler for a region.

@@ -25,7 +25,7 @@ import time
 from contextlib import contextmanager
 from typing import Generator, List, Optional, TextIO, Union, cast
 
-from quo.application import get_app_session, run_in_terminal
+from quo.suite import get_app_session, run_in_terminal
 from quo.output import Output
 
 

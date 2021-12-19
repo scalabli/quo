@@ -6,7 +6,7 @@ from typing import AsyncGenerator, Callable, Iterable, Optional, Sequence
 from quo.document import Document
 from quo.eventloop import generator_to_async_generator
 from quo.filters import FilterOrBool, to_filter
-from quo.text.core import Textual, StyleAndTextTuples
+from quo.text import AnyFormattedText, StyleAndTextTuples
 
 __all__ = [
     "Completion",
@@ -41,8 +41,8 @@ class Completion:
         self,
         text: str,
         start_position: int = 0,
-        display: Optional[Textual] = None,
-        display_meta: Optional[Textual] = None,
+        display: Optional[AnyFormattedText] = None,
+        display_meta: Optional[AnyFormattedText] = None,
         style: str = "",
         selected_style: str = "",
     ) -> None:

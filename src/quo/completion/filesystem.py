@@ -1,5 +1,5 @@
 import os
-import typing as ty
+from typing import Callable, Iterable, List, Optional
 
 from quo.completion import CompleteEvent, Completer, Completion
 from quo.document import Document
@@ -25,8 +25,8 @@ class PathCompleter(Completer):
     def __init__(
         self,
         only_directories: bool = False,
-        get_paths: ty.Optional[ty.Callable[[], ty.List[str]]] = None,
-        file_filter: ty.Optional[ty.Callable[[str], bool]] = None,
+        get_paths: Optional[Callable[[], List[str]]] = None,
+        file_filter: Optional[Callable[[str], bool]] = None,
         min_input_len: int = 0,
         expanduser: bool = False,
     ) -> None:
@@ -39,7 +39,7 @@ class PathCompleter(Completer):
 
     def get_completions(
         self, document: Document, complete_event: CompleteEvent
-    ) -> ty.Iterable[Completion]:
+    ) -> Iterable[Completion]:
         text = document.text_before_cursor
 
         # Complete only when we have at least the minimal input length,

@@ -21,3 +21,4 @@ echo(f"Highlighting")
 echo(f"* ", fg=khaki, nl=False)
 echo(f"Lightweight")
 
+

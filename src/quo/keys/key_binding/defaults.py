@@ -2,7 +2,7 @@
 Default key bindings.::
 
     key_bindings = load_key_bindings()
-    app = Suite(key_bindings=key_bindings)
+    app = Application(key_bindings=key_bindings)
 """
 from quo.filters import buffer_has_focus
 from quo.keys.key_binding.bindings.basic import load_basic_bindings

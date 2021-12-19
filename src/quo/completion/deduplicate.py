@@ -1,6 +1,7 @@
-import typing as t
+from typing import Iterable, Set
 
 from quo.document import Document
+
 from .core import CompleteEvent, Completer, Completion
 
 __all__ = ["DeduplicateCompleter"]
@@ -20,9 +21,9 @@ class DeduplicateCompleter(Completer):
 
     def get_completions(
         self, document: Document, complete_event: CompleteEvent
-    ) -> t.Iterable[Completion]:
+    ) -> Iterable[Completion]:
         # Keep track of the document strings we'd get after applying any completion.
-        found_so_far: t.Set[str] = set()
+        found_so_far: Set[str] = set()
 
         for completion in self.completer.get_completions(document, complete_event):
             text_if_applied = (

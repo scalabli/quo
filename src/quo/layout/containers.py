@@ -17,7 +17,7 @@ from typing import (
     cast,
 )
 
-from quo.application.current import get_app
+from quo.suite.current import get_app
 from quo.cache import SimpleCache
 from quo.data_structures import Point
 from quo.filters import (
@@ -26,19 +26,19 @@ from quo.filters import (
     to_filter,
     vi_insert_mode,
 )
-from quo.text.core import (
-        Textual,
-        StyleAndTextTuples,
-        to_formatted_text
-        )
+from quo.text import (
+    AnyFormattedText,
+    StyleAndTextTuples,
+    to_formatted_text,
+)
 from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
 )
 from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent, MouseEventType
-from quo.utils import get_width as get_cwidth
-from quo.utils import take_using_weights, to_int, to_str
+from quo.utils.utils import get_width as get_cwidth
+from quo.utils.utils import take_using_weights, to_int, to_str
 
 from .controls import (
     DummyControl,
@@ -1943,7 +1943,7 @@ class Window(Container):
         always_hide_cursor: bool = False,
         has_focus: bool = False,
         align: WindowAlign = WindowAlign.LEFT,
-        get_line_prefix: Optional[Callable[[int, int], Textual]] = None,
+        get_line_prefix: Optional[Callable[[int, int], AnyFormattedText]] = None,
     ) -> Tuple[Dict[int, Tuple[int, int]], Dict[Tuple[int, int], Tuple[int, int]]]:
         """
         Copy the UIContent into the output screen.

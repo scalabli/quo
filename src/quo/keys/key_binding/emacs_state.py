@@ -11,8 +11,9 @@ class EmacsState:
     """
     Mutable class to hold Emacs specific state.
     """
+
     def __init__(self) -> None:
-        # Simple macro recording
+        # Simple macro recording. (Like Readline does.)
         # (For Emacs mode.)
         self.macro: Optional[List[KeyPress]] = []
         self.current_recording: Optional[List[KeyPress]] = None

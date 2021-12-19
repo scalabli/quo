@@ -5,8 +5,7 @@ import os
 import struct
 import sys
 import math
-import typing
-
+from typing import Any, IO, Optional
 from quo.accordance import (
         DEFAULT_COLUMNS,
         get_winterm_size,
@@ -17,46 +16,26 @@ from quo.accordance import (
 from quo.color import ansi_color_codes, _ansi_reset_all
 from quo.errors import Abort, UsageError
 from quo.context.current import resolve_color_default
-from quo.types import Choice, convert_type, ParamType
+from quo.types import Choice, convert_type
 from quo.expediency import inscribe, LazyFile
 
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
 
-insert: typing.Callable[[str], str] = input
+insert = input
 
 
 
-def hidden_prompt_func(prompt: str) -> str:
+def hidden_prompt_func(prompt):
     import getpass
 
     return getpass.getpass(prompt)
 
-import enum
-
-class EditingMode(enum.Enum):
-    # The set of key bindings that is active.
-    VI = "VI"
-    EMACS = "EMACS"
-
-#: Name of the search buffer.
-SEARCH_BUFFER = "SEARCH_BUFFER"
-
-#: Name of the default buffer.
-DEFAULT_BUFFER = "DEFAULT_BUFFER"
-
-#: Name of the system buffer.
-SYSTEM_BUFFER = "SYSTEM_BUFFER"
 
 def _build_prompt(
-  text: str, 
-  suffix: str, 
-  show_default: bool = False, 
-  default: typing.Optional[typing.Any] = None,
-  show_choices: bool = True,
-  type: typing.Optional[ParamType] = None
-) -> str:
+    text, suffix, show_default=False, default=None, show_choices=True, type=None
+):
     prompt = text
     if type is not None and show_choices and isinstance(type, Choice):
         prompt += f" ({', '.join(map(str, type.choices))})"
@@ -65,7 +44,7 @@ def _build_prompt(
     return f"{prompt}{suffix}"
 
 
-def _format_default(default: typing.Any) -> typing.Any:
+def _format_default(default):
     if isinstance(default, (io.IOBase, LazyFile)) and hasattr(default, "name"):
         return default.name
 
@@ -81,14 +60,13 @@ def _format_default(default: typing.Any) -> typing.Any:
 
 
 def confirm(
-        text: str, 
-        default: typing.Optional[bool] = False, 
-        abort: bool = False,
-        suffix: str = ":>", 
-        show_default: bool = True, 
-        err: bool = False
-        ) -> bool:
-          
+        text,
+        default=False, 
+        abort=False,
+        suffix=":>", 
+        show_default=True, 
+        err=False
+        ):
     """Prompts for confirmation (yes/no question).
 
     If the user aborts the input by sending a interrupt signal this
@@ -120,41 +98,49 @@ def confirm(
             rv = default
         else:
             echo(f"ERROR:", bg="red", fg="black", nl=False)
-            echo(f" ", nl=False)
             echo(f"invalid input", bg="yellow", fg="black", err=err)
             continue
         break
     if abort and not rv:
         raise Abort()
     return rv
-##############################################
-from quo.completion.auto_suggest import AutoSuggest
-from .util import Completer
-from quo.filters import FilterOrBool
-from quo.keys.key_binding.key_bindings import KeyBindingsBase
-from quo.text.core import Textual
-from quo.history import History
-from quo.lexers import Lexer
-from quo.shortcuts.elicit import Elicit
-from quo.styles import BaseStyle, StyleTransformation
-from quo.i_o.output import ColorDepth
-def promphgt(
-    self,
-    text: str = "",
-    message: typing.Optional[Textual] = None,
-    default: typing.Optional[typing.Any] = None,
-    history: typing.Optional[History] = None,
-    hide: bool = False,
-    affirm: typing.Union[bool, str] = False,
-    type: typing.Optional[typing.Union[ParamType, typing.Any]] = None,
-    value_proc: typing.Optional[typing.Callable[[str], typing.Any]] = None,
-    suffix: str = ":> ",
-    show_default: bool = True,
-    err: bool = False,
-    show_choices: bool = True,
-   ) -> typing.Any:
-    from quo.shortcuts.elicit import Elicit
-     
+############
+def evoke(
+    *objects: Any,
+    sep: str = " ",
+    end: str = "\n",
+    file: Optional[IO[str]] = None,
+    flush: bool = False,
+) -> None:
+    r"""Print object(s) supplied via positional arguments.
+    This function has an identical signature to the built-in print.
+    For more advanced features, see the :class:`~rich.console.Console` class.
+
+    Args:
+        sep (str, optional): Separator between printed objects. Defaults to " ".
+        end (str, optional): Character to write at end of output. Defaults to "\\n".
+        file (IO[str], optional): File to write to, or None for stdout. Defaults to None.
+        flush (bool, optional): Has no effect as Rich always flushes output. Defaults to False.
+
+    """
+    from quo.terminal import Terminal
+
+    write_console = get_terminal() if file is None else Terminal(file=file)
+    return write_console.print(*objects, sep=sep, end=end)
+########################################################
+
+def prompt(
+    text,
+    default=None,
+    hide=False,
+    affirm=False,
+    type=None,
+    value_proc=None,
+    suffix=":> ",
+    show_default=True,
+    err=False,
+    show_choices=True,
+):
 
     """Prompts a user for input.  This is a convenience function that can be used to prompt a user for input later.
 
@@ -172,11 +158,9 @@ def promphgt(
     :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
 
     """
-
     result = None
 
-    def prompt_func(text: str) -> str:
-      
+    def prompt_func(text):
         f = hidden_prompt_func if hide else insert
         try:
             inscribe(text, nl=False, err=err)
@@ -223,109 +207,11 @@ def promphgt(
         echo(f"ERROR:", nl=False, fg="black", bg="red")
         echo(f"The two entered values do not match", err=err, fg="black", bg="yellow")
 
-###
-def prompt(
-    message: typing.Optional[Textual] = None,
-    *,
-    history: typing.Optional[History] = None,
-    editing_mode: typing.Optional[EditingMode] = None,
-    refresh_interval: typing.Optional[float] = None,
-    suffix: str = ":> ",
-    vi_mode: typing.Optional[bool] = None,
-    lexer: typing.Optional[Lexer] = None,
-    completer: typing.Optional[Completer] = None,
-    complete_in_thread: typing.Optional[bool] = None,
-    is_password: typing.Optional[bool] = None,
-    key_bindings: typing.Optional[KeyBindingsBase] = None,
-    bottom_toolbar: Optional[Textual] = None,
-    style: typing.Optional[BaseStyle] = None,
-    color_depth: typing.Optional[ColorDepth] = None,
-    include_default_pygments_style: typing.Optional[FilterOrBool] = None,
-    style_transformation: typing.Optional[StyleTransformation] = None,
-    swap_light_and_dark_colors: typing.Optional[FilterOrBool] = None,
-    rprompt: typing.Optional[Textual] = None,
-    multiline: typing.Optional[FilterOrBool] = None,
-    prompt_continuation: typing.Optional[PromptContinuationText] = None,
-    wrap_lines: typing.Optional[FilterOrBool] = None,
-    enable_history_search: typing.Optional[FilterOrBool] = None,
-    search_ignore_case: typing.Optional[FilterOrBool] = None,
-    complete_while_typing: typing.Optional[FilterOrBool] = None,
-    validate_while_typing: typing.Optional[FilterOrBool] = None,
-    complete_style: typing.Optional[CompleteStyle] = None,
-    auto_suggest: typing.Optional[AutoSuggest] = None,
-    validator: typing.Optional[Validator] = None,
-    clipboard: typing.Optional[Clipboard] = None,
-    mouse_support: typing.Optional[FilterOrBool] = None,
-    input_processors: typing.Optional[List[Processor]] = None,
-    placeholder: typing.Optional[Textual] = None,
-    reserve_space_for_menu: typing.Optional[int] = None,
-    enable_system_prompt: typing.Optional[FilterOrBool] = None,
-    enable_suspend: typing.Optional[FilterOrBool] = None,
-    enable_open_in_editor: typing.Optional[FilterOrBool] = None,
-    tempfile_suffix: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-    tempfile: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-    # Following arguments are specific to the current `prompt()` call.
-    default: str = "",
-    accept_default: bool = False,
-    pre_run: typing.Optional[typing.Callable[[], None]] = None,
-) -> str:
-    """
-    The global `prompt` function. This will create a new `PromptSession`
-    instance for every call.
-    """
-    # The history is the only attribute that has to be passed to the
-    # `PromptSession`, it can't be passed into the `prompt()` method.
-    session: Elicit[str] = Elicit(history=history)
-
-    return session.prompt(
-        message,
-        editing_mode=editing_mode,
-        refresh_interval=refresh_interval,
-        vi_mode=vi_mode,
-        lexer=lexer,
-        completer=completer,
-        complete_in_thread=complete_in_thread,
-        is_password=is_password,
-        key_bindings=key_bindings,
-        bottom_toolbar=bottom_toolbar,
-        style=style,
-        color_depth=color_depth,
-        include_default_pygments_style=include_default_pygments_style,
-        style_transformation=style_transformation,
-        swap_light_and_dark_colors=swap_light_and_dark_colors,
-        rprompt=rprompt,
-        multiline=multiline,
-        prompt_continuation=prompt_continuation,
-        wrap_lines=wrap_lines,
-        enable_history_search=enable_history_search,
-        search_ignore_case=search_ignore_case,
-        complete_while_typing=complete_while_typing,
-        validate_while_typing=validate_while_typing,
-        complete_style=complete_style,
-        auto_suggest=auto_suggest,
-        validator=validator,
-        clipboard=clipboard,
-        mouse_support=mouse_support,
-        input_processors=input_processors,
-        placeholder=placeholder,
-        reserve_space_for_menu=reserve_space_for_menu,
-        enable_system_prompt=enable_system_prompt,
-        enable_suspend=enable_suspend,
-        enable_open_in_editor=enable_open_in_editor,
-        tempfile_suffix=tempfile_suffix,
-        tempfile=tempfile,
-        default=default,
-        accept_default=accept_default,
-        pre_run=pre_run,
-    )
-
-
-prompt.__doc__ = Elicit.prompt.__doc__
 
 
 
 
-def terminalsize()  -> os.terminal_size:
+def terminalsize():
     """Returns the current size of the terminal as tuple in the form
     ``(width, height)`` in columns and rows.
     """
@@ -408,25 +294,22 @@ def _interpret_color(color, offset=0):
 
 
 def flair(
-    text: str,
-    fg: typing.Optional[typing.Union[int, typing.Tuple[int, int, int], str]] = None,
-    bg: typing.Optional[typing.Union[int, typing.Tuple[int, int, int], str]] = None,
-    foreground: typing.Optional[typing.Union[int, typing.Tuple[int, int, int], str]] = None,
-    background: typing.Optional[typing.Union[int, typing.Tuple[int, int, int], str]] = None,
-    bold: typing.Optional[bool] = None,
-    dim: typing.Optional[bool] = None,
-    end=None,
+    text,
+    fg=None,
+    foreground=None,
+    bg=None,
+    background=None,
+    bold=None,
+    dim=None,
     hidden=None,
-    ul: typing.Optional[bool] = None,
-    underline: typing.Optional[bool] = None,
-    ov: typing.Optional[bool] = None,
-    overline: typing.Optional[bool] = None,
-    blink: typing.Optional[bool] = None,
-    italic: typing.Optional[bool] = None,
+    ul=None,
+    underline=None,
+    blink=None,
+    italic=None,
     reverse=None,
     reset=True,
-    strike: typing.Optional[bool] = None,
-    ) -> str:
+    strike=None,
+):
     """Styles a text with ANSI styles and returns the new string.  By
     default the styling is self contained which means that at the end
     of the string a reset code is issued.  This can be prevented by
@@ -521,12 +404,6 @@ def flair(
         bits.append(f"\033[{1 if bold else 22}m")
     if dim is not None:
         bits.append(f"\033[{2 if dim else 22}m")
-    if end is not None:
-        pass
-    if ov is not None:
-        bits.append(f"\033[{53 if ov else 55}m") 
-    if overline is not None:
-        bits.append(f"\033[{53 if overline else 55}m")
 
     if ul is not None:
         bits.append(f"\033[{4 if ul else 24}m")
@@ -637,7 +514,7 @@ def raw_terminal():
 
 def echo(
         message=None,
-        file: typing.Optional[typing.IO[str]] = None,
+        file: Optional[IO[str]] = None,
         nl=True,
         err=False,
         color=None,

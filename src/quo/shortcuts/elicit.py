@@ -5,36 +5,51 @@ Line editing functionality.
 This provides a UI for a line input, similar to GNU Readline, libedit and
 linenoise.
 
-Either call the `prompt` function for every line input. Or create an instance
-of the :class:`.Elicit` class and call the `prompt` method from that
+Either call the `elicit` function for every line input. Or create an instance
+of the :class:`.Elicit` class and call the `elicit` method from that
 class. In the second case, we'll have a 'session' that keeps all the state like
 the history in between several calls.
 
-There is a lot of overlap between the arguments taken by the `prompt` function
+There is a lot of overlap between the arguments taken by the `elicit` function
 and the `Elicit` (like `completer`, `style`, etcetera). There we have
 the freedom to decide which settings we want for the whole 'session', and which
-we want for an individual `prompt`.
+we want for an individual `elicit`.
 
 Example::
 
-        # Simple `prompt` call.
-        result = prompt('Say something: ')
+        # Simple `elicit` call.
+        result = elicit('Say something: ')
 
         # Using a 'session'.
         s = Elicit()
-        result = s.prompt('Say something: ')
+        result = s.elicit('Say something: ')
 """
-import typing as ty
+from asyncio import get_event_loop
+from contextlib import contextmanager
+from enum import Enum
+from functools import partial
+from typing import (
+    TYPE_CHECKING,
+    Callable,
+    Generic,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+    cast,
+)
 
-from quo.application import Suite
-from quo.application.current import get_app
+
+from quo.suite.suite import Suite
+from quo.suite.current import get_app
 from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
 from quo.clipboard import Clipboard, DynamicClipboard, InMemoryClipboard
 from quo.completion import Completer, DynamicCompleter, ThreadedCompleter
 from quo.document import Document
 from quo.enums import DEFAULT_BUFFER, SEARCH_BUFFER, EditingMode
-from asyncio import get_event_loop
 from quo.filters import (
     Condition,
     FilterOrBool,
@@ -46,14 +61,14 @@ from quo.filters import (
     to_filter,
 )
 from quo.text import (
-    Textual,
+    AnyFormattedText,
     StyleAndTextTuples,
     fragment_list_to_text,
     merge_formatted_text,
     to_formatted_text,
 )
 from quo.history import History, InMemoryHistory
-from quo.i_o.input.core import Input
+from quo.input.core import Input
 from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
 from quo.keys.key_binding.bindings.completion import (
     display_completions_like_readline,
@@ -61,16 +76,15 @@ from quo.keys.key_binding.bindings.completion import (
 from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
+from quo.keys import Keys, KeyBinder
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
-    KeyBinder,
     KeyBindingsBase,
     merge_key_bindings,
 )
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys
-from quo.layout import Float, FloatContainer, HSplit, Window
+from quo.layout.containers import Float, FloatContainer, HSplit, Window
 from quo.layout.containers import ConditionalContainer, WindowAlign
 from quo.layout.controls import (
     BufferControl,
@@ -95,7 +109,7 @@ from quo.layout.processors import (
 )
 from quo.layout.utils import explode_text_fragments
 from quo.lexers import DynamicLexer, Lexer
-from quo.i_o.output import ColorDepth, DummyOutput, Output
+from quo.output import ColorDepth, DummyOutput, Output
 from quo.styles import (
     BaseStyle,
     ConditionalStyleTransformation,
@@ -105,48 +119,46 @@ from quo.styles import (
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
 )
-from quo.utils import (
-    get_width,
+from quo.utils.utils import get_width as get_cwdith
+from quo.utils.utils import (
     is_dumb_terminal,
     suspend_to_background_supported,
     to_str,
 )
 from quo.validation import DynamicValidator, Validator
-from quo.widget.toolbars import (
+from quo.widgets.toolbars import (
     SearchToolbar,
     SystemToolbar,
     ValidationToolbar,
 )
 
-if ty.TYPE_CHECKING:
+if TYPE_CHECKING:
     from quo.text.core import MagicFormattedText
 
 __all__ = [
     "Elicit",
-    "prompt",
-    "confirm",
-    "create_confirm_session",  # Used by '_display_completions_like_readline'.
+    "elicit",  # Used by '_display_completions_like_readline'.
     "CompleteStyle",
 ]
 
-_StyleAndTextTuplesCallable = ty.Callable[[], StyleAndTextTuples]
+_StyleAndTextTuplesCallable = Callable[[], StyleAndTextTuples]
 E = KeyPressEvent
 
 
-def _split_multiline_prompt(
-    get_prompt_text: _StyleAndTextTuplesCallable,
-) -> ty.Tuple[
-    ty.Callable[[], bool], _StyleAndTextTuplesCallable, _StyleAndTextTuplesCallable
+def _split_multiline_elicit(
+    get_elicit_text: _StyleAndTextTuplesCallable,
+) -> Tuple[
+    Callable[[], bool], _StyleAndTextTuplesCallable, _StyleAndTextTuplesCallable
 ]:
     """
-    Take a `get_prompt_text` function and return three new functions instead.
-    One that tells whether this prompt consists of multiple lines; one that
+    Take a `get_elicit_text` function and return three new functions instead.
+    One that tells whether this elicit consists of multiple lines; one that
     returns the fragments to be shown on the lines above the input; and another
     one with the fragments to be shown at the first line of the input.
     """
 
     def has_before_fragments() -> bool:
-        for fragment, char, *_ in get_prompt_text():
+        for fragment, char, *_ in get_elicit_text():
             if "\n" in char:
                 return True
         return False
@@ -154,7 +166,7 @@ def _split_multiline_prompt(
     def before() -> StyleAndTextTuples:
         result: StyleAndTextTuples = []
         found_nl = False
-        for fragment, char, *_ in reversed(explode_text_fragments(get_prompt_text())):
+        for fragment, char, *_ in reversed(explode_text_fragments(get_elicit_text())):
             if found_nl:
                 result.insert(0, (fragment, char))
             elif char == "\n":
@@ -163,7 +175,7 @@ def _split_multiline_prompt(
 
     def first_input_line() -> StyleAndTextTuples:
         result: StyleAndTextTuples = []
-        for fragment, char, *_ in reversed(explode_text_fragments(get_prompt_text())):
+        for fragment, char, *_ in reversed(explode_text_fragments(get_elicit_text())):
             if char == "\n":
                 break
             else:
@@ -173,22 +185,22 @@ def _split_multiline_prompt(
     return has_before_fragments, before, first_input_line
 
 
-class _RPrompt(Window):
+class _Relicit(Window):
     """
-    The prompt that is displayed on the right side of the Window.
+    The elicit that is displayed on the right side of the Window.
     """
 
-    def __init__(self, text: Textual) -> None:
+    def __init__(self, text: AnyFormattedText) -> None:
         super().__init__(
             FormattedTextControl(text=text),
             align=WindowAlign.RIGHT,
-            style="class:rprompt",
+            style="class:r_elicit",
         )
 
-import enum
-class CompleteStyle(str, enum.Enum):
+
+class CompleteStyle(str, Enum):
     """
-    How to display autocompletions for the prompt.
+    How to display autocompletions for the elicit.
     """
 
     value: str
@@ -198,24 +210,22 @@ class CompleteStyle(str, enum.Enum):
     READLINE_LIKE = "READLINE_LIKE"
 
 
-# Formatted text for the continuation prompt. It's the same like other
+# Formatted text for the continuation elicit. It's the same like other
 # formatted text, except that if it's a callable, it takes three arguments.
-PromptContinuationText = ty.Union[
+ElicitContinuationText = Union[
     str,
     "MagicFormattedText",
     StyleAndTextTuples,
-    # (prompt_width, line_number, wrap_count) -> Textual.
-    ty.Callable[[int, int, int], Textual],
+    # (elicit_width, line_number, wrap_count) -> AnyFormattedText.
+    Callable[[int, int, int], AnyFormattedText],
 ]
 
-_T = ty.TypeVar("_T")
+_T = TypeVar("_T")
 
-import contextlib
-import functools
 
-class Elicit(ty.Generic[_T]):
+class Elicit(Generic[_T]):
     """
-    Elicit for a prompt application, which can be used as a GNU Readline
+    Elicit for a elicit application, which can be used as a GNU Readline
     replacement.
 
     This is a wrapper around a lot of ``quo`` functionality and can
@@ -227,14 +237,14 @@ class Elicit(ty.Generic[_T]):
     Example usage::
 
         s = Elicit(message='>')
-        text = s.prompt()
+        text = s.elicit()
 
-    :param message: Plain text or formatted text to be shown before the prompt.
+    :param message: Plain text or formatted text to be shown before the elicit.
         This can also be a callable that returns formatted text.
     :param multiline: `bool` or :class:`~quo.filters.Filter`.
         When True, prefer a layout that is more adapted for multiline input.
         Text after newlines is automatically indented, and search/arg input is
-        shown below the input, instead of replacing the prompt.
+        shown below the input, instead of replacing the elicit.
     :param wrap_lines: `bool` or :class:`~quo.filters.Filter`.
         When True (the default), automatically wrap long lines instead of
         scrolling horizontally.
@@ -281,26 +291,26 @@ class Elicit(ty.Generic[_T]):
         :class:`~quo.style.SwapLightAndDarkStyleTransformation`.
         This is useful for switching between dark and light terminal
         backgrounds.
-    :param enable_system_prompt: `bool` or
+    :param enable_system_elicit: `bool` or
         :class:`~quo.filters.Filter`. Pressing Meta+'!' will show
-        a system prompt.
+        a system elicit.
     :param enable_suspend: `bool` or :class:`~quo.filters.Filter`.
         Enable Control-Z style suspension.
     :param enable_open_in_editor: `bool` or
         :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
-        ctrl-X ctrl-E in emacs mode will open an external editor.
+        C-X C-E in emacs mode will open an external editor.
     :param history: :class:`~quo.history.History` instance.
     :param clipboard: :class:`~quo.clipboard.Clipboard` instance.
         (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
-    :param rprompt: Text or formatted text to be displayed on the right side.
+    :param r_elicit: Text or formatted text to be displayed on the right side.
         This can also be a callable that returns (formatted) text.
     :param bottom_toolbar: Formatted text or callable which is supposed to
         return formatted text.
-    :param prompt_continuation: Text that needs to be displayed for a multiline
-        prompt continuation. This can either be formatted text or a callable
-        that takes a `prompt_width`, `line_number` and `wrap_count` as input
+    :param elicit_continuation: Text that needs to be displayed for a multiline
+        elicit continuation. This can either be formatted text or a callable
+        that takes a `elicit_width`, `line_number` and `wrap_count` as input
         and returns formatted text. When this is `None` (the default), then
-        `prompt_width` spaces will be used.
+        `elicit_width` spaces will be used.
     :param complete_style: ``CompleteStyle.COLUMN``,
         ``CompleteStyle.MULTI_COLUMN`` or ``CompleteStyle.READLINE_LIKE``.
     :param mouse_support: `bool` or :class:`~quo.filters.Filter`
@@ -331,9 +341,9 @@ class Elicit(ty.Generic[_T]):
         "swap_light_and_dark_colors",
         "color_depth",
         "include_default_pygments_style",
-        "rprompt",
+        "r_elicit",
         "multiline",
-        "prompt_continuation",
+        "elicit_continuation",
         "wrap_lines",
         "enable_history_search",
         "search_ignore_case",
@@ -347,7 +357,7 @@ class Elicit(ty.Generic[_T]):
         "refresh_interval",
         "input_processors",
         "placeholder",
-        "enable_system_prompt",
+        "enable_system_elicit",
         "enable_suspend",
         "enable_open_in_editor",
         "reserve_space_for_menu",
@@ -357,7 +367,7 @@ class Elicit(ty.Generic[_T]):
 
     def __init__(
         self,
-        message: Textual = "",
+        message: AnyFormattedText = "",
         *,
         multiline: FilterOrBool = False,
         wrap_lines: FilterOrBool = True,
@@ -368,36 +378,36 @@ class Elicit(ty.Generic[_T]):
         validate_while_typing: FilterOrBool = True,
         enable_history_search: FilterOrBool = False,
         search_ignore_case: FilterOrBool = False,
-        lexer: ty.Optional[Lexer] = None,
-        enable_system_prompt: FilterOrBool = False,
+        lexer: Optional[Lexer] = None,
+        enable_system_elicit: FilterOrBool = False,
         enable_suspend: FilterOrBool = False,
         enable_open_in_editor: FilterOrBool = False,
-        validator: ty.Optional[Validator] = None,
-        completer: ty.Optional[Completer] = None,
+        validator: Optional[Validator] = None,
+        completer: Optional[Completer] = None,
         complete_in_thread: bool = False,
         reserve_space_for_menu: int = 8,
         complete_style: CompleteStyle = CompleteStyle.COLUMN,
-        auto_suggest: ty.Optional[AutoSuggest] = None,
-        style: ty.Optional[BaseStyle] = None,
-        style_transformation: ty.Optional[StyleTransformation] = None,
+        auto_suggest: Optional[AutoSuggest] = None,
+        style: Optional[BaseStyle] = None,
+        style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: FilterOrBool = False,
-        color_depth: ty.Optional[ColorDepth] = None,
+        color_depth: Optional[ColorDepth] = None,
         include_default_pygments_style: FilterOrBool = True,
-        history: ty.Optional[History] = None,
-        clipboard: ty.Optional[Clipboard] = None,
-        prompt_continuation: ty.Optional[PromptContinuationText] = None,
-        rprompt: Textual = None,
-        bottom_toolbar: Textual = None,
+        history: Optional[History] = None,
+        clipboard: Optional[Clipboard] = None,
+        elicit_continuation: Optional[ElicitContinuationText] = None,
+        r_elicit: AnyFormattedText = None,
+        bottom_toolbar: AnyFormattedText = None,
         mouse_support: FilterOrBool = False,
-        input_processors: ty.Optional[ty.List[Processor]] = None,
-        placeholder: ty.Optional[Textual] = None,
-        key_bindings: ty.Optional[KeyBindingsBase] = None,
+        input_processors: Optional[List[Processor]] = None,
+        placeholder: Optional[AnyFormattedText] = None,
+        key_bindings: Optional[KeyBindingsBase] = None,
         erase_when_done: bool = False,
-        tempfile_suffix: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = ".txt",
-        tempfile: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
+        tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
+        tempfile: Optional[Union[str, Callable[[], str]]] = None,
         refresh_interval: float = 0,
-        input: ty.Optional[Input] = None,
-        output: ty.Optional[Output] = None,
+        input: Optional[Input] = None,
+        output: Optional[Output] = None,
     ) -> None:
 
         history = history or InMemoryHistory()
@@ -425,9 +435,9 @@ class Elicit(ty.Generic[_T]):
         self.swap_light_and_dark_colors = swap_light_and_dark_colors
         self.color_depth = color_depth
         self.include_default_pygments_style = include_default_pygments_style
-        self.rprompt = rprompt
+        self.r_elicit = r_elicit
         self.multiline = multiline
-        self.prompt_continuation = prompt_continuation
+        self.elicit_continuation = elicit_continuation
         self.wrap_lines = wrap_lines
         self.enable_history_search = enable_history_search
         self.search_ignore_case = search_ignore_case
@@ -441,7 +451,7 @@ class Elicit(ty.Generic[_T]):
         self.refresh_interval = refresh_interval
         self.input_processors = input_processors
         self.placeholder = placeholder
-        self.enable_system_prompt = enable_system_prompt
+        self.enable_system_elicit = enable_system_elicit
         self.enable_suspend = enable_suspend
         self.enable_open_in_editor = enable_open_in_editor
         self.reserve_space_for_menu = reserve_space_for_menu
@@ -457,7 +467,7 @@ class Elicit(ty.Generic[_T]):
 
     def _dyncond(self, attr_name: str) -> Condition:
         """
-        Dynamically take this setting from this 'Elicit' class.
+        Dynamically take this setting from this 'ElicitSession' class.
         `attr_name` represents an attribute name of this class. Its value
         can either be a boolean or a `Filter`.
 
@@ -467,7 +477,7 @@ class Elicit(ty.Generic[_T]):
 
         @Condition
         def dynamic() -> bool:
-            value = ty.cast(FilterOrBool, getattr(self, attr_name))
+            value = cast(FilterOrBool, getattr(self, attr_name))
             return to_filter(value)()
 
         return dynamic
@@ -482,7 +492,7 @@ class Elicit(ty.Generic[_T]):
         def accept(buff: Buffer) -> bool:
             """Accept the content of the default buffer. This is called when
             the validation succeeds."""
-            ty.cast(Suite[str], get_app()).exit(result=buff.document.text)
+            cast(Suite[str], get_app()).exit(result=buff.document.text)
             return True  # Keep text, we call 'reset' later on.
 
         return Buffer(
@@ -490,11 +500,11 @@ class Elicit(ty.Generic[_T]):
             # Make sure that complete_while_typing is disabled when
             # enable_history_search is enabled. (First convert to Filter,
             # to avoid doing bitwise operations on bool objects.)
-  #        complete_while_typing=Condition(
- #               lambda: is_true(self.complete_while_typing)
- #               and not is_true(self.enable_history_search)
-  #              and not self.complete_style == CompleteStyle.READLINE_LIKE
- #           ),
+            complete_while_typing=Condition(
+                lambda: is_true(self.complete_while_typing)
+                and not is_true(self.enable_history_search)
+                and not self.complete_style == CompleteStyle.READLINE_LIKE
+            ),
             validate_while_typing=dyncond("validate_while_typing"),
             enable_history_search=dyncond("enable_history_search"),
             validator=DynamicValidator(lambda: self.validator),
@@ -515,17 +525,17 @@ class Elicit(ty.Generic[_T]):
 
     def _create_layout(self) -> Layout:
         """
-        Create `Layout` for this prompt.
+        Create `Layout` for this elicit.
         """
         dyncond = self._dyncond
 
-        # Create functions that will dynamically split the prompt. (If we have
-        # a multiline prompt.)
+        # Create functions that will dynamically split the elicit. (If we have
+        # a multiline elicit.)
         (
             has_before_fragments,
-            get_prompt_text_1,
-            get_prompt_text_2,
-        ) = _split_multiline_prompt(self._get_prompt)
+            get_elicit_text_1,
+            get_elicit_text_2,
+        ) = _split_multiline_elicit(self._get_elicit)
 
         default_buffer = self.default_buffer
         search_buffer = self.search_buffer
@@ -577,7 +587,7 @@ class Elicit(ty.Generic[_T]):
         )
 
         system_toolbar = SystemToolbar(
-            enable_global_bindings=dyncond("enable_system_prompt")
+            enable_global_bindings=dyncond("enable_system_elicit")
         )
 
         def get_search_buffer_control() -> SearchBufferControl:
@@ -599,8 +609,8 @@ class Elicit(ty.Generic[_T]):
         default_buffer_window = Window(
             default_buffer_control,
             height=self._get_default_buffer_control_height,
-            get_line_prefix=functools.partial(
-                self._get_line_prefix, get_prompt_text_2=get_prompt_text_2
+            get_line_prefix=partial(
+                self._get_line_prefix, get_elicit_text_2=get_elicit_text_2
             ),
             wrap_lines=dyncond("wrap_lines"),
         )
@@ -618,7 +628,7 @@ class Elicit(ty.Generic[_T]):
                         [
                             ConditionalContainer(
                                 Window(
-                                    FormattedTextControl(get_prompt_text_1),
+                                    FormattedTextControl(get_elicit_text_1),
                                     dont_extend_height=True,
                                 ),
                                 Condition(has_before_fragments),
@@ -665,18 +675,18 @@ class Elicit(ty.Generic[_T]):
                                 & multi_column_complete_style,
                             ),
                         ),
-                        # The right prompt.
+                        # The right elicit.
                         Float(
                             right=0,
                             bottom=0,
                             hide_when_covering_content=True,
-                            content=_RPrompt(lambda: self.rprompt),
+                            content=_Relicit(lambda: self.r_elicit),
                         ),
                     ],
                 ),
                 ConditionalContainer(ValidationToolbar(), filter=~is_done),
                 ConditionalContainer(
-                    system_toolbar, dyncond("enable_system_prompt") & ~is_done
+                    system_toolbar, dyncond("enable_system_elicit") & ~is_done
                 ),
                 # In multiline mode, we use two toolbars for 'arg' and 'search'.
                 ConditionalContainer(
@@ -694,14 +704,14 @@ class Elicit(ty.Generic[_T]):
         self, editing_mode: EditingMode, erase_when_done: bool
     ) -> Suite[_T]:
         """
-        Create the `Suite` object.
+        Create the `Application` object.
         """
         dyncond = self._dyncond
 
         # Default key bindings.
         auto_suggest_bindings = load_auto_suggest_bindings()
         open_in_editor_bindings = load_open_in_editor_bindings()
-        prompt_bindings = self._create_prompt_bindings()
+        elicit_bindings = self._create_elicit_bindings()
 
         # Create application
         application: Suite[_T] = Suite(
@@ -728,7 +738,7 @@ class Elicit(ty.Generic[_T]):
                                 dyncond("enable_open_in_editor")
                                 & has_focus(DEFAULT_BUFFER),
                             ),
-                            prompt_bindings,
+                            elicit_bindings,
                         ]
                     ),
                     DynamicKeyBindings(lambda: self.key_bindings),
@@ -766,9 +776,9 @@ class Elicit(ty.Generic[_T]):
 
         return application
 
-    def _create_prompt_bindings(self) -> KeyBinder:
+    def _create_elicit_bindings(self) -> KeyBinder:
         """
-        Create the KeyBindings for a prompt application.
+        Create the KeyBindings for a elicit application.
         """
         kb = KeyBinder()
         handle = kb.add
@@ -794,7 +804,7 @@ class Elicit(ty.Generic[_T]):
             "Display completions (like Readline)."
             display_completions_like_readline(event)
 
-        @handle("ctrl-c", filter=default_focused)
+        @handle("c-c", filter=default_focused)
         def _keyboard_interrupt(event: E) -> None:
             "Abort when Control-C has been pressed."
             event.app.exit(exception=KeyboardInterrupt, style="class:aborting")
@@ -809,7 +819,7 @@ class Elicit(ty.Generic[_T]):
                 and not app.current_buffer.text
             )
 
-        @handle("ctrl-d", filter=ctrl_d_condition & default_focused)
+        @handle("c-d", filter=ctrl_d_condition & default_focused)
         def _eof(event: E) -> None:
             "Exit when Control-D has been pressed."
             event.app.exit(exception=EOFError, style="class:exiting")
@@ -820,7 +830,7 @@ class Elicit(ty.Generic[_T]):
         def enable_suspend() -> bool:
             return to_filter(self.enable_suspend)()
 
-        @handle("ctrl-z", filter=suspend_supported & enable_suspend)
+        @handle("c-z", filter=suspend_supported & enable_suspend)
         def _suspend(event: E) -> None:
             """
             Suspend process to background.
@@ -829,78 +839,78 @@ class Elicit(ty.Generic[_T]):
 
         return kb
 
-    def prompt(
+    def elicit(
         self,
         # When any of these arguments are passed, this value is overwritten
-        # in this Elicit.
-        message: ty.Optional[Textual] = None,
+        # in this ElicitSession.
+        message: Optional[AnyFormattedText] = None,
         # `message` should go first, because people call it as
         # positional argument.
         *,
-        editing_mode: ty.Optional[EditingMode] = None,
-        refresh_interval: ty.Optional[float] = None,
-        vi_mode: ty.Optional[bool] = None,
-        lexer: ty.Optional[Lexer] = None,
-        completer: ty.Optional[Completer] = None,
-        complete_in_thread: ty.Optional[bool] = None,
-        is_password: ty.Optional[bool] = None,
-        key_bindings: ty.Optional[KeyBindingsBase] = None,
-        bottom_toolbar: ty.Optional[Textual] = None,
-        style: ty.Optional[BaseStyle] = None,
-        color_depth: ty.Optional[ColorDepth] = None,
-        include_default_pygments_style: ty.Optional[FilterOrBool] = None,
-        style_transformation: ty.Optional[StyleTransformation] = None,
-        swap_light_and_dark_colors: ty.Optional[FilterOrBool] = None,
-        rprompt: ty.Optional[Textual] = None,
-        multiline: ty.Optional[FilterOrBool] = None,
-        prompt_continuation: ty.Optional[PromptContinuationText] = None,
-        wrap_lines: ty.Optional[FilterOrBool] = None,
-        enable_history_search: ty.Optional[FilterOrBool] = None,
-        search_ignore_case: ty.Optional[FilterOrBool] = None,
-        complete_while_typing: ty.Optional[FilterOrBool] = None,
-        validate_while_typing: ty.Optional[FilterOrBool] = None,
-        complete_style: ty.Optional[CompleteStyle] = None,
-        auto_suggest: ty.Optional[AutoSuggest] = None,
-        validator: ty.Optional[Validator] = None,
-        clipboard: ty.Optional[Clipboard] = None,
-        mouse_support: ty.Optional[FilterOrBool] = None,
-        input_processors: ty.Optional[ty.List[Processor]] = None,
-        placeholder: ty.Optional[Textual] = None,
-        reserve_space_for_menu: ty.Optional[int] = None,
-        enable_system_prompt: ty.Optional[FilterOrBool] = None,
-        enable_suspend: ty.Optional[FilterOrBool] = None,
-        enable_open_in_editor: ty.Optional[FilterOrBool] = None,
-        tempfile_suffix: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
-        tempfile: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
-        # Following arguments are specific to the current `prompt()` call.
-        default: ty.Union[str, Document] = "",
+        editing_mode: Optional[EditingMode] = None,
+        refresh_interval: Optional[float] = None,
+        vi_mode: Optional[bool] = None,
+        lexer: Optional[Lexer] = None,
+        completer: Optional[Completer] = None,
+        complete_in_thread: Optional[bool] = None,
+        is_password: Optional[bool] = None,
+        key_bindings: Optional[KeyBindingsBase] = None,
+        bottom_toolbar: Optional[AnyFormattedText] = None,
+        style: Optional[BaseStyle] = None,
+        color_depth: Optional[ColorDepth] = None,
+        include_default_pygments_style: Optional[FilterOrBool] = None,
+        style_transformation: Optional[StyleTransformation] = None,
+        swap_light_and_dark_colors: Optional[FilterOrBool] = None,
+        r_elicit: Optional[AnyFormattedText] = None,
+        multiline: Optional[FilterOrBool] = None,
+        elicit_continuation: Optional[ElicitContinuationText] = None,
+        wrap_lines: Optional[FilterOrBool] = None,
+        enable_history_search: Optional[FilterOrBool] = None,
+        search_ignore_case: Optional[FilterOrBool] = None,
+        complete_while_typing: Optional[FilterOrBool] = None,
+        validate_while_typing: Optional[FilterOrBool] = None,
+        complete_style: Optional[CompleteStyle] = None,
+        auto_suggest: Optional[AutoSuggest] = None,
+        validator: Optional[Validator] = None,
+        clipboard: Optional[Clipboard] = None,
+        mouse_support: Optional[FilterOrBool] = None,
+        input_processors: Optional[List[Processor]] = None,
+        placeholder: Optional[AnyFormattedText] = None,
+        reserve_space_for_menu: Optional[int] = None,
+        enable_system_elicit: Optional[FilterOrBool] = None,
+        enable_suspend: Optional[FilterOrBool] = None,
+        enable_open_in_editor: Optional[FilterOrBool] = None,
+        tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
+        tempfile: Optional[Union[str, Callable[[], str]]] = None,
+        # Following arguments are specific to the current `elicit()` call.
+        default: Union[str, Document] = "",
         accept_default: bool = False,
-        pre_run: ty.Optional[ty.Callable[[], None]] = None,
+        pre_run: Optional[Callable[[], None]] = None,
         set_exception_handler: bool = True,
         in_thread: bool = False,
     ) -> _T:
         """
-        Display the prompt.
+        Display the elicit.
 
-        The first set of arguments is a subset of the :class:`~.Elicit`
+        The first set of arguments is a subset of the :class:`~.ElicitSession`
         class itself. For these, passing in ``None`` will keep the current
         values that are active in the session. Passing in a value will set the
         attribute for the session, which means that it applies to the current,
-        but also to the next prompts.
+        but also to the next ElicitS.
 
         Note that in order to erase a ``Completer``, ``Validator`` or
         ``AutoSuggest``, you can't use ``None``. Instead pass in a
         ``DummyCompleter``, ``DummyValidator`` or ``DummyAutoSuggest`` instance
         respectively. For a ``Lexer`` you can pass in an empty ``SimpleLexer``.
 
-        Additional arguments, specific for this prompt:
+        Additional arguments, specific for this elicit:
 
         :param default: The default input text to be shown. (This can be edited
             by the user).
         :param accept_default: When `True`, automatically accept the default
             value without allowing the user to edit the input.
         :param pre_run: Callable, called at the start of `Application.run`.
-        :param in_thread: Run the prompt in a background thread; block the
+        :param in_thread: Run the elicit in a background thread; block the
             current thread. This avoids interference with an event loop in the
             current thread. Like `Application.run(in_thread=True)`.
 
@@ -908,15 +918,15 @@ class Elicit(ty.Generic[_T]):
         pressed (for abort) and ``EOFError`` when control-d has been pressed
         (for exit).
         """
-        # NOTE: We used to create a backup of the Elicit attributes and
-        #       restore them after exiting the prompt. This code has been
+        # NOTE: We used to create a backup of the ElicitSession attributes and
+        #       restore them after exiting the elicit. This code has been
         #       removed, because it was confusing and didn't really serve a use
         #       case. (People were changing `Application.editing_mode`
         #       dynamically and surprised that it was reset after every call.)
 
         # NOTE 2: YES, this is a lot of repeation below...
         #         However, it is a very convenient for a user to accept all
-        #         these parameters in this `prompt` method as well. We could
+        #         these parameters in this `elicit` method as well. We could
         #         use `locals()` and `setattr` to avoid the repetition, but
         #         then we loose the advantage of mypy and pyflakes to be able
         #         to verify the code.
@@ -950,12 +960,12 @@ class Elicit(ty.Generic[_T]):
             self.style_transformation = style_transformation
         if swap_light_and_dark_colors is not None:
             self.swap_light_and_dark_colors = swap_light_and_dark_colors
-        if rprompt is not None:
-            self.rprompt = rprompt
+        if r_elicit is not None:
+            self.r_elicit = r_elicit
         if multiline is not None:
             self.multiline = multiline
-        if prompt_continuation is not None:
-            self.prompt_continuation = prompt_continuation
+        if elicit_continuation is not None:
+            self.elicit_continuation = elicit_continuation
         if wrap_lines is not None:
             self.wrap_lines = wrap_lines
         if enable_history_search is not None:
@@ -982,8 +992,8 @@ class Elicit(ty.Generic[_T]):
             self.placeholder = placeholder
         if reserve_space_for_menu is not None:
             self.reserve_space_for_menu = reserve_space_for_menu
-        if enable_system_prompt is not None:
-            self.enable_system_prompt = enable_system_prompt
+        if enable_system_elicit is not None:
+            self.enable_system_elicit = enable_system_elicit
         if enable_suspend is not None:
             self.enable_suspend = enable_suspend
         if enable_open_in_editor is not None:
@@ -1000,40 +1010,40 @@ class Elicit(ty.Generic[_T]):
         self.app.refresh_interval = self.refresh_interval  # This is not reactive.
 
         # If we are using the default output, and have a dumb terminal. Use the
-        # dumb prompt.
+        # dumb elicit.
         if self._output is None and is_dumb_terminal():
-            with self._dumb_prompt(self.message) as dump_app:
+            with self._dumb_elicit(self.message) as dump_app:
                 return dump_app.run(in_thread=in_thread)
 
         return self.app.run(
             set_exception_handler=set_exception_handler, in_thread=in_thread
         )
 
-    @contextlib.contextmanager
-    def _dumb_prompt(self, message: Textual = "") -> ty.Iterator[Suite[_T]]:
+    @contextmanager
+    def _dumb_elicit(self, message: AnyFormattedText = "") -> Iterator[Suite[_T]]:
         """
-        Create prompt `Application` for prompt function for dumb terminals.
+        Create elicit `Application` for elicit function for dumb terminals.
 
         Dumb terminals have minimum rendering capabilities. We can only print
         text to the screen. We can't use colors, and we can't do cursor
         movements. The Emacs inferior shell is an example of a dumb terminal.
 
-        We will show the prompt, and wait for the input. We still handle arrow
+        We will show the elicit, and wait for the input. We still handle arrow
         keys, and all custom key bindings, but we don't really render the
         cursor movements. Instead we only print the typed character that's
         right before the cursor.
         """
-        # Send prompt to output.
+        # Send elicit to output.
         self.output.write(fragment_list_to_text(to_formatted_text(self.message)))
         self.output.flush()
 
-        # Key bindings for the dumb prompt: mostly the same as the full prompt.
-        key_bindings: KeyBindingsBase = self._create_prompt_bindings()
+        # Key bindings for the dumb elicit: mostly the same as the full elicit.
+        key_bindings: KeyBindingsBase = self._create_elicit_bindings()
         if self.key_bindings:
             key_bindings = merge_key_bindings([self.key_bindings, key_bindings])
 
         # Create and run application.
-        application = ty.cast(
+        application = cast(
             Suite[_T],
             Suite(
                 input=self.input,
@@ -1058,53 +1068,53 @@ class Elicit(ty.Generic[_T]):
 
             self.default_buffer.on_text_changed -= on_text_changed
 
-    async def prompt_async(
+    async def elicit_async(
         self,
         # When any of these arguments are passed, this value is overwritten
-        # in this Elicit.
-        message: ty.Optional[Textual] = None,
+        # in this ElicitSession.
+        message: Optional[AnyFormattedText] = None,
         # `message` should go first, because people call it as
         # positional argument.
         *,
-        editing_mode: ty.Optional[EditingMode] = None,
-        refresh_interval: ty.Optional[float] = None,
-        vi_mode: ty.Optional[bool] = None,
-        lexer: ty.Optional[Lexer] = None,
-        completer: ty.Optional[Completer] = None,
-        complete_in_thread: ty.Optional[bool] = None,
-        is_password: ty.Optional[bool] = None,
-        key_bindings: ty.Optional[KeyBindingsBase] = None,
-        bottom_toolbar: ty.Optional[Textual] = None,
-        style: ty.Optional[BaseStyle] = None,
-        color_depth: ty.Optional[ColorDepth] = None,
-        include_default_pygments_style: ty.Optional[FilterOrBool] = None,
-        style_transformation: ty.Optional[StyleTransformation] = None,
-        swap_light_and_dark_colors: ty.Optional[FilterOrBool] = None,
-        rprompt: ty.Optional[Textual] = None,
-        multiline: ty.Optional[FilterOrBool] = None,
-        prompt_continuation: ty.Optional[PromptContinuationText] = None,
-        wrap_lines: ty.Optional[FilterOrBool] = None,
-        enable_history_search: ty.Optional[FilterOrBool] = None,
-        search_ignore_case: ty.Optional[FilterOrBool] = None,
-        complete_while_typing: ty.Optional[FilterOrBool] = None,
-        validate_while_typing: ty.Optional[FilterOrBool] = None,
-        complete_style: ty.Optional[CompleteStyle] = None,
-        auto_suggest: ty.Optional[AutoSuggest] = None,
-        validator: ty.Optional[Validator] = None,
-        clipboard: ty.Optional[Clipboard] = None,
-        mouse_support: ty.Optional[FilterOrBool] = None,
-        input_processors: ty.Optional[ty.List[Processor]] = None,
-        placeholder: ty.Optional[Textual] = None,
-        reserve_space_for_menu: ty.Optional[int] = None,
-        enable_system_prompt: ty.Optional[FilterOrBool] = None,
-        enable_suspend: ty.Optional[FilterOrBool] = None,
-        enable_open_in_editor: ty.Optional[FilterOrBool] = None,
-        tempfile_suffix: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
-        tempfile: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
-        # Following arguments are specific to the current `prompt()` call.
-        default: ty.Union[str, Document] = "",
+        editing_mode: Optional[EditingMode] = None,
+        refresh_interval: Optional[float] = None,
+        vi_mode: Optional[bool] = None,
+        lexer: Optional[Lexer] = None,
+        completer: Optional[Completer] = None,
+        complete_in_thread: Optional[bool] = None,
+        is_password: Optional[bool] = None,
+        key_bindings: Optional[KeyBindingsBase] = None,
+        bottom_toolbar: Optional[AnyFormattedText] = None,
+        style: Optional[BaseStyle] = None,
+        color_depth: Optional[ColorDepth] = None,
+        include_default_pygments_style: Optional[FilterOrBool] = None,
+        style_transformation: Optional[StyleTransformation] = None,
+        swap_light_and_dark_colors: Optional[FilterOrBool] = None,
+        r_elicit: Optional[AnyFormattedText] = None,
+        multiline: Optional[FilterOrBool] = None,
+        elicit_continuation: Optional[ElicitContinuationText] = None,
+        wrap_lines: Optional[FilterOrBool] = None,
+        enable_history_search: Optional[FilterOrBool] = None,
+        search_ignore_case: Optional[FilterOrBool] = None,
+        complete_while_typing: Optional[FilterOrBool] = None,
+        validate_while_typing: Optional[FilterOrBool] = None,
+        complete_style: Optional[CompleteStyle] = None,
+        auto_suggest: Optional[AutoSuggest] = None,
+        validator: Optional[Validator] = None,
+        clipboard: Optional[Clipboard] = None,
+        mouse_support: Optional[FilterOrBool] = None,
+        input_processors: Optional[List[Processor]] = None,
+        placeholder: Optional[AnyFormattedText] = None,
+        reserve_space_for_menu: Optional[int] = None,
+        enable_system_elicit: Optional[FilterOrBool] = None,
+        enable_suspend: Optional[FilterOrBool] = None,
+        enable_open_in_editor: Optional[FilterOrBool] = None,
+        tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
+        tempfile: Optional[Union[str, Callable[[], str]]] = None,
+        # Following arguments are specific to the current `elicit()` call.
+        default: Union[str, Document] = "",
         accept_default: bool = False,
-        pre_run: ty.Optional[ty.Callable[[], None]] = None,
+        pre_run: Optional[Callable[[], None]] = None,
         set_exception_handler: bool = True,
     ) -> _T:
 
@@ -1138,12 +1148,12 @@ class Elicit(ty.Generic[_T]):
             self.style_transformation = style_transformation
         if swap_light_and_dark_colors is not None:
             self.swap_light_and_dark_colors = swap_light_and_dark_colors
-        if rprompt is not None:
-            self.rprompt = rprompt
+        if r_elicit is not None:
+            self.r_elicit = r_elicit
         if multiline is not None:
             self.multiline = multiline
-        if prompt_continuation is not None:
-            self.prompt_continuation = prompt_continuation
+        if elicit_continuation is not None:
+            self.elicit_continuation = elicit_continuation
         if wrap_lines is not None:
             self.wrap_lines = wrap_lines
         if enable_history_search is not None:
@@ -1170,8 +1180,8 @@ class Elicit(ty.Generic[_T]):
             self.placeholder = placeholder
         if reserve_space_for_menu is not None:
             self.reserve_space_for_menu = reserve_space_for_menu
-        if enable_system_prompt is not None:
-            self.enable_system_prompt = enable_system_prompt
+        if enable_system_elicit is not None:
+            self.enable_system_elicit = enable_system_elicit
         if enable_suspend is not None:
             self.enable_suspend = enable_suspend
         if enable_open_in_editor is not None:
@@ -1188,15 +1198,15 @@ class Elicit(ty.Generic[_T]):
         self.app.refresh_interval = self.refresh_interval  # This is not reactive.
 
         # If we are using the default output, and have a dumb terminal. Use the
-        # dumb prompt.
+        # dumb elicit.
         if self._output is None and is_dumb_terminal():
-            with self._dumb_prompt(self.message) as dump_app:
+            with self._dumb_elicit(self.message) as dump_app:
                 return await dump_app.run_async()
 
         return await self.app.run_async(set_exception_handler=set_exception_handler)
 
     def _add_pre_run_callables(
-        self, pre_run: ty.Optional[ty.Callable[[], None]], accept_default: bool
+        self, pre_run: Optional[Callable[[], None]], accept_default: bool
     ) -> None:
         def pre_run2() -> None:
             if pre_run:
@@ -1241,56 +1251,56 @@ class Elicit(ty.Generic[_T]):
 
         return Dimension()
 
-    def _get_prompt(self) -> StyleAndTextTuples:
-        return to_formatted_text(self.message, style="class:prompt")
+    def _get_elicit(self) -> StyleAndTextTuples:
+        return to_formatted_text(self.message, style="class:elicit")
 
     def _get_continuation(
         self, width: int, line_number: int, wrap_count: int
     ) -> StyleAndTextTuples:
         """
-        Insert the prompt continuation.
+        Insert the elicit continuation.
 
-        :param width: The width that was used for the prompt. (more or less can
+        :param width: The width that was used for the elicit. (more or less can
             be used.)
         :param line_number:
         :param wrap_count: Amount of times that the line has been wrapped.
         """
-        prompt_continuation = self.prompt_continuation
+        elicit_continuation = self.elicit_continuation
 
-        if callable(prompt_continuation):
-            continuation: Textual = prompt_continuation(
+        if callable(elicit_continuation):
+            continuation: AnyFormattedText = elicit_continuation(
                 width, line_number, wrap_count
             )
         else:
-            continuation = prompt_continuation
+            continuation = elicit_continuation
 
-        # When the continuation prompt is not given, choose the same width as
-        # the actual prompt.
+        # When the continuation elicit is not given, choose the same width as
+        # the actual elicit.
         if continuation is None and is_true(self.multiline):
             continuation = " " * width
 
-        return to_formatted_text(continuation, style="class:prompt-continuation")
+        return to_formatted_text(continuation, style="class:elicit-continuation")
 
     def _get_line_prefix(
         self,
         line_number: int,
         wrap_count: int,
-        get_prompt_text_2: _StyleAndTextTuplesCallable,
+        get_elicit_text_2: _StyleAndTextTuplesCallable,
     ) -> StyleAndTextTuples:
         """
         Return whatever needs to be inserted before every line.
-        (the prompt, or a line continuation.)
+        (the elicit, or a line continuation.)
         """
-        # First line: display the "arg" or the prompt.
+        # First line: display the "arg" or the elicit.
         if line_number == 0 and wrap_count == 0:
             if not is_true(self.multiline) and get_app().key_processor.arg is not None:
                 return self._inline_arg()
             else:
-                return get_prompt_text_2()
+                return get_elicit_text_2()
 
         # For the next lines, display the appropriate continuation.
-        prompt_width = get_cwidth(fragment_list_to_text(get_prompt_text_2()))
-        return self._get_continuation(prompt_width, line_number, wrap_count)
+        elicit_width = get_cwidth(fragment_list_to_text(get_elicit_text_2()))
+        return self._get_continuation(elicit_width, line_number, wrap_count)
 
     def _get_arg_text(self) -> StyleAndTextTuples:
         "'arg' toolbar, for in multiline mode."
@@ -1313,9 +1323,9 @@ class Elicit(ty.Generic[_T]):
             arg = app.key_processor.arg
 
             return [
-                ("class:prompt.arg", "(arg: "),
-                ("class:prompt.arg.text", str(arg)),
-                ("class:prompt.arg", ") "),
+                ("class:elicit.arg", "(arg: "),
+                ("class:elicit.arg.text", str(arg)),
+                ("class:elicit.arg", ") "),
             ]
 
     # Expose the Input and Output objects as attributes, mainly for
@@ -1330,59 +1340,59 @@ class Elicit(ty.Generic[_T]):
         return self.app.output
 
 
-def prompt(
-    message: ty.Optional[Textual] = None,
+def elicit(
+    message: Optional[AnyFormattedText] = None,
     *,
-    history: ty.Optional[History] = None,
-    editing_mode: ty.Optional[EditingMode] = None,
-    refresh_interval: ty.Optional[float] = None,
-    vi_mode: ty.Optional[bool] = None,
-    lexer: ty.Optional[Lexer] = None,
-    completer: ty.Optional[Completer] = None,
-    complete_in_thread: ty.Optional[bool] = None,
-    is_password: ty.Optional[bool] = None,
-    key_bindings: ty.Optional[KeyBindingsBase] = None,
-    bottom_toolbar: ty.Optional[Textual] = None,
-    style: ty.Optional[BaseStyle] = None,
-    color_depth: ty.Optional[ColorDepth] = None,
-    include_default_pygments_style: ty.Optional[FilterOrBool] = None,
-    style_transformation: ty.Optional[StyleTransformation] = None,
-    swap_light_and_dark_colors: ty.Optional[FilterOrBool] = None,
-    rprompt: ty.Optional[Textual] = None,
-    multiline: ty.Optional[FilterOrBool] = None,
-    prompt_continuation: ty.Optional[PromptContinuationText] = None,
-    wrap_lines: ty.Optional[FilterOrBool] = None,
-    enable_history_search: ty.Optional[FilterOrBool] = None,
-    search_ignore_case: ty.Optional[FilterOrBool] = None,
-    complete_while_typing: ty.Optional[FilterOrBool] = None,
-    validate_while_typing: ty.Optional[FilterOrBool] = None,
-    complete_style: ty.Optional[CompleteStyle] = None,
-    auto_suggest: ty.Optional[AutoSuggest] = None,
-    validator: ty.Optional[Validator] = None,
-    clipboard: ty.Optional[Clipboard] = None,
-    mouse_support: ty.Optional[FilterOrBool] = None,
-    input_processors: ty.Optional[ty.List[Processor]] = None,
-    placeholder: ty.Optional[Textual] = None,
-    reserve_space_for_menu: ty.Optional[int] = None,
-    enable_system_prompt: ty.Optional[FilterOrBool] = None,
-    enable_suspend: ty.Optional[FilterOrBool] = None,
-    enable_open_in_editor: ty.Optional[FilterOrBool] = None,
-    tempfile_suffix: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
-    tempfile: ty.Optional[ty.Union[str, ty.Callable[[], str]]] = None,
-    # Following arguments are specific to the current `prompt()` call.
+    history: Optional[History] = None,
+    editing_mode: Optional[EditingMode] = None,
+    refresh_interval: Optional[float] = None,
+    vi_mode: Optional[bool] = None,
+    lexer: Optional[Lexer] = None,
+    completer: Optional[Completer] = None,
+    complete_in_thread: Optional[bool] = None,
+    is_password: Optional[bool] = None,
+    key_bindings: Optional[KeyBindingsBase] = None,
+    bottom_toolbar: Optional[AnyFormattedText] = None,
+    style: Optional[BaseStyle] = None,
+    color_depth: Optional[ColorDepth] = None,
+    include_default_pygments_style: Optional[FilterOrBool] = None,
+    style_transformation: Optional[StyleTransformation] = None,
+    swap_light_and_dark_colors: Optional[FilterOrBool] = None,
+    r_elicit: Optional[AnyFormattedText] = None,
+    multiline: Optional[FilterOrBool] = None,
+    elicit_continuation: Optional[ElicitContinuationText] = None,
+    wrap_lines: Optional[FilterOrBool] = None,
+    enable_history_search: Optional[FilterOrBool] = None,
+    search_ignore_case: Optional[FilterOrBool] = None,
+    complete_while_typing: Optional[FilterOrBool] = None,
+    validate_while_typing: Optional[FilterOrBool] = None,
+    complete_style: Optional[CompleteStyle] = None,
+    auto_suggest: Optional[AutoSuggest] = None,
+    validator: Optional[Validator] = None,
+    clipboard: Optional[Clipboard] = None,
+    mouse_support: Optional[FilterOrBool] = None,
+    input_processors: Optional[List[Processor]] = None,
+    placeholder: Optional[AnyFormattedText] = None,
+    reserve_space_for_menu: Optional[int] = None,
+    enable_system_elicit: Optional[FilterOrBool] = None,
+    enable_suspend: Optional[FilterOrBool] = None,
+    enable_open_in_editor: Optional[FilterOrBool] = None,
+    tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
+    tempfile: Optional[Union[str, Callable[[], str]]] = None,
+    # Following arguments are specific to the current `elicit()` call.
     default: str = "",
     accept_default: bool = False,
-    pre_run: ty.Optional[ty.Callable[[], None]] = None,
+    pre_run: Optional[Callable[[], None]] = None,
 ) -> str:
     """
-    The global `prompt` function. This will create a new `Elicit`
+    The global `elicit` function. This will create a new `Elicit`
     instance for every call.
     """
     # The history is the only attribute that has to be passed to the
-    # `Elicit`, it can't be passed into the `prompt()` method.
+    # `ElicitSession`, it can't be passed into the `elicit()` method.
     session: Elicit[str] = Elicit(history=history)
 
-    return session.prompt(
+    return session.elicit(
         message,
         editing_mode=editing_mode,
         refresh_interval=refresh_interval,
@@ -1398,9 +1408,9 @@ def prompt(
         include_default_pygments_style=include_default_pygments_style,
         style_transformation=style_transformation,
         swap_light_and_dark_colors=swap_light_and_dark_colors,
-        rprompt=rprompt,
+        r_elicit=r_elicit,
         multiline=multiline,
-        prompt_continuation=prompt_continuation,
+        elicit_continuation=elicit_continuation,
         wrap_lines=wrap_lines,
         enable_history_search=enable_history_search,
         search_ignore_case=search_ignore_case,
@@ -1414,7 +1424,7 @@ def prompt(
         input_processors=input_processors,
         placeholder=placeholder,
         reserve_space_for_menu=reserve_space_for_menu,
-        enable_system_prompt=enable_system_prompt,
+        enable_system_elicit=enable_system_elicit,
         enable_suspend=enable_suspend,
         enable_open_in_editor=enable_open_in_editor,
         tempfile_suffix=tempfile_suffix,
@@ -1425,7 +1435,7 @@ def prompt(
     )
 
 
-prompt.__doc__ = Elicit.prompt.__doc__
+elicit.__doc__ = Elicit.elicit.__doc__
 
 
 def create_confirm_session(
@@ -1460,9 +1470,3 @@ def create_confirm_session(
     return session
 
 
-def confirm(message: str = "Confirm?", suffix: str = " (y/n) ") -> bool:
-    """
-    Display a confirmation prompt that returns True/False.
-    """
-    session = create_confirm_session(message, suffix)
-    return session.prompt()
