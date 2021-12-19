@@ -116,11 +116,10 @@ Here's an easy example:
 .. code-block:: python
 
     import quo
-    from quo import command, echo
 
-    @command()
+    @quo.command()
     def love():
-        echo('I love quo!', bold=True, background="white", foreground="black")
+        quo.echo('I love quo!', bold=True, background="white", foreground="black")
 
 The function can then be made into a callable script like so::
 
@@ -145,19 +144,18 @@ implements two commands for managing databases:
 .. code-block:: python
 
     import quo
-    from quo import tether, command, echo
 
-    @tether() 
+    @quo.tether() 
     def cli():
         pass
 
-    @command()
+    @quo.command()
     def initdb():
-        echo('Initialized the database')
+        quo.echo('Initialized the database')
 
-    @command()
+    @quo.command()
     def dropdb():
-        echo('Dropped the database')
+        quo.echo('Dropped the database')
 
     cli.addcommand(initdb)
     cli.addcommand(dropdb)
