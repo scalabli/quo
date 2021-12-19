@@ -28,16 +28,17 @@ type.  For instance, you can ask for a valid integer:
 .. code:: python
 
    import quo
-   from quo import prompt, echo
-   prompt('Please enter a valid integer', type=int)
+   
+   quo.prompt('Please enter a valid integer', type=int)
 
 Additionally, the type will be determined automatically if a default value is
 provided.  For instance, the following will only accept floats:
 
 .. code:: python
 
-   from quo import prompt
-   prompt('Please enter a number', default=42.0)
+   import quo
+
+   quo.prompt('Please enter a number', default=42.0)
 
 Confirmation Prompts
 --------------------
@@ -48,16 +49,16 @@ as a boolean value:
 
 .. code:: python
 
-   from quo import confirm, echo
+   import quo
    
-   if confirm('Do you want to continue?'):
-   echo('Well done!')
+   if quo.confirm('Do you want to continue?'):
+    quo.echo('Well done!')
 
 There is also the option to make the function automatically abort the
 execution of the program if it does not return ``True``:
 
 .. code:: python
 
-   from quo import confirm
+   import quo
    
-   confirm('Do you want to continue?', abort=True)
+   quo.confirm('Do you want to continue?', abort=True)
