@@ -10,6 +10,17 @@ prompts at a later point independently.
 This can be accomplished with the :func:`prompt` function, which asks for
 valid input according to a type, or the :func:`confirm` function, which asks
 for confirmation (yes/no).
+The following snippet uses the :func:`prompt` function to ask the user for input
+and returns the text. Just like ``input``.
+
+.. code:: python
+
+    import quo
+
+    text = quo.prompt('Give me some input: ')
+    quo.echo(f"You said: {text}")
+
+.. image:: ../images/prompt.png
 
 App Prompts
 --------------
@@ -28,8 +39,8 @@ type.  For instance, you can ask for a valid integer:
 .. code:: python
 
    import quo
-   from quo import prompt, echo
-   prompt('Please enter a valid integer', type=int)
+   
+   quo.prompt('Please enter a valid integer', type=int)
 
 Additionally, the type will be determined automatically if a default value is
 provided.  For instance, the following will only accept floats:
