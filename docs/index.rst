@@ -4,7 +4,7 @@
 
 Quo's Documentation
 ================================
-:Version: 2021.6
+:Version: 2021.7
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
