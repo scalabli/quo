@@ -175,6 +175,25 @@ param enable_system_elicit: `bool` or
     :param input: `Input` object. (Note that the preferred way to change the
         input/output is by creating an `AppSession`.)
     :param output: `Output` object.
+
+Autocompletion
+
+Autocompletion can be added by passing a completer parameter.
+
+.. code:: python
+
+    import quo
+     
+    session = quo.Prompt()
+    suggest = quo.completion.WordCompleter(['<html>', '<body>', '<head>', '<title>'])
+    text =  session.prompt('Enter HTML: ', completer=suggest)
+    quo.echo(f"You said: {text}")
+
+:class:`~quo.completion.WordCompleter` is a simple completer that
+completes the last word before the cursor with any of the given words.
+
+.. image:: ./images/html-completion.png
+
 Confirmation Prompts
 --------------------
 
