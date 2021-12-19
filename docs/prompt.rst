@@ -90,6 +90,36 @@ Input history can be kept between consecutive Prompt() calls incase you want to 
   text1 = session.prompt("What's your name?")
   text2 = session.prompt("Where are you from?")
 
+Parameters
+   * ``message`` - Plain text or formatted text to be shown before the prompt. This can also be a callable that returns formatted text.
+   * ``multiline`` - `bool` or :class:`~quo.filters.Filter`.
+        When True, prefer a layout that is more adapted for multiline input.
+        Text after newlines is automatically indented, and search/arg input is
+        shown below the input, instead of replacing the elicit.
+    * ``wrap_lines`` `bool` or :class:`~quo.filters.Filter`.
+        When True (the default), automatically wrap long lines instead of
+        scrolling horizontally.
+    * ``is_password`` - Show asterisks instead of the actual typed characters.
+    * ``editing_mode`` - ``EditingMode.VI`` or ``EditingMode.EMACS``.
+    * ``vi_mode`` - `bool`, if True, Identical to ``editing_mode=EditingMode.VI``.
+    * ``complete_while_typing`` - `bool` or
+        :class:`~quo.filters.Filter`. Enable autocompletion while
+        typing.
+    * ``validate_while_typing`` - `bool` or
+        :class:`~quo.filters.Filter`. Enable input validation while
+        typing.
+    * ``enable_history_search`` - `bool` or
+        :class:`~quo.filters.Filter`. Enable up-arrow parting
+        string matching.
+    * ``search_ignore_case`` - 
+        :class:`~quo.filters.Filter`. Search case insensitive.
+    * ``lexer`` - :class:`~quo.lexers.Lexer` to be used for the
+        syntax highlighting.
+    * ``validator`` - :class:`~quo.validation.Validator` instance
+        for input validation.
+    :param completer: :class:`~quo.completion.Completer` instance
+        for input completion.
+    :param complete_in_thread:
 Confirmation Prompts
 --------------------
 
