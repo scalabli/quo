@@ -7,9 +7,11 @@ Quo supports prompts in two different places.  The first is automated
 prompts when the parameter handling happens, and the second is to ask for
 prompts at a later point independently.
 
-This can be accomplished with the :func:`prompt` function, which asks for
-valid input according to a type, or the :func:`confirm` function, which asks
+This can be accomplished with the :func: `prompt` function, which asks for
+valid input according to a type, or the :func:`Prompt` object, this makes it possible to create a Prompt instance followed by calling prompt() method for every input. This creates a kind of an input session and its packed with lots of features.
+You can also use the :func:`confirm` function, which asks
 for confirmation (yes/no).
+
 The following snippet uses the :func:`prompt` function to ask the user for input
 and returns the text. Just like ``input``.
 
