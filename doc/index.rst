@@ -11,7 +11,7 @@
 
 |coverage| |license| |wheel| |pyimp| |RTD| |PyPI| |PyStats|
 
-:Version: 2021.5.5
+:Version: 2021.7
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
@@ -23,16 +23,12 @@
     # Forever scalable
 
 
-
-.. note::
-   We're currently cleaning up the docs 📄
-
 **Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
 Quo improves programmer's productivity because it's easy to use and supports auto completion which means less time will be spent debugging. Simple to code, easy to learn, and does not come with needless baggage
 
 Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointment brought about by the failure to execute a CLI API.
 
-Quo requires Python `3.6` or later. 
+Quo requires Python `3.6.1` or later. 
 
 Installation
 ============
@@ -52,6 +48,7 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
     import quo
+
     quo.echo(f'Hello, World!')
     
 
@@ -60,6 +57,7 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
   import quo
+
   quo.echo(f'Hello, World!', fg="red", bold=True)
 
 **Example 3**
@@ -67,8 +65,8 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
    import quo
-   from quo import echo
-   echo(f"Hello, World in italics!", italic=True)
+
+   quo.echo(f"Hello, World in italics!", italic=True)
 
 
 **Example 4**
@@ -76,9 +74,9 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
    import quo
-   from quo import echo, prompt
-   answer = prompt("How old are you?")
-   echo(f"I am: {answer}")
+   
+   answer = quo.prompt("How old are you?")
+   quo.echo(f"I am: {answer}")
 
 
 **Example 5**
@@ -86,11 +84,11 @@ The most simple example of the library would look like this:
 .. sourcecode:: python
 
   import quo
-  from quo import command, app, echo
-  @command()
-  @app("--name", prompt="What is your name?:")
+  
+  @quo.command()
+  @quo.app("--name", prompt="What is your name?:")
   def hello(name):
-  echo(f'Hello {name}!')
+   quo.echo(f'Hello {name}!')
 
   if __name__ == '__main__':
       hello() 
