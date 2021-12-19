@@ -31,8 +31,8 @@ App prompts are integrated into the app interface.  See
 :ref:`app-prompting` for more information.  Internally, it
 automatically calls either :func:`prompt` or :func:`confirm` as necessary.
 
-Input Prompts
--------------
+Input Prompts using prompt() function
+--------------------------------------
 
 To manually ask for user input, you can use the :func:`prompt` function.
 By default, it accepts any Unicode string, but you can ask for any other
@@ -74,6 +74,9 @@ Parameters
    * ``err`` – if set to true the file defaults to stderr instead of stdout, the same as with echo.
 
    * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
+
+Input Prompts using Prompt() object
+-------------------------------------
 
 
 Confirmation Prompts
