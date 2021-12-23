@@ -21,6 +21,7 @@ Quo's Documentation
    apps.rst
    args.rst
    confirm.rst.
+   dialogs.rsr
    terminal.rst
    style.rst
    markup.rst
@@ -35,7 +36,7 @@ Quo's Documentation
    columns.rst
    padding.rst
    panel.rst
-   progress.rst
+   progress_bars.rst
    syntax.rst
    tables.rst
    tree.rst
