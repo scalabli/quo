@@ -39,7 +39,7 @@ from typing import (
     overload,
 )
 
-from quo.utils.buffer import Buffer
+from quo.buffer import Buffer
 from quo.i_o.termui import echo
 from quo.cache import SimpleCache
 from quo.clipboard import Clipboard, InMemoryClipboard
@@ -1273,7 +1273,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
     - This will share the same input/output I/O.
     - This doesn't block the event loop.
     """
-    from quo.shortcuts import Elicit
+    from quo.shortcuts import Prompt
     from quo.keys import KeyBinder
 
     key_bindings = KeyBinder()
@@ -1287,8 +1287,8 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
         "Disallow typing."
         pass
 
-    session: Elicit[None] = Elicit(
-        message=wait_text, key_bindings=key_bindings
+    session: Prompt[None] = Prompt(
+        text=wait_text, key_bindings=key_bindings
     )
     await session.app.run_async()
 

@@ -7,14 +7,14 @@ reversed input is shown on the right. Pressing Ctrl-Q will quit the application.
 """
 
 import quo
-from quo.buffer import Buffer
-from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
+
+from quo.layout.controls import BufferControl, FormattedTextControl
 
 # 3. Create the buffers
 #    ------------------
 
-left_buffer = Buffer()
-right_buffer = Buffer()
+left_buffer = quo.buffer.Buffer()
+right_buffer = quo.buffer.Buffer()
 
 # 1. First we create the layout
 #    --------------------------

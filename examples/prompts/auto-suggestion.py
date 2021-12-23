@@ -7,14 +7,14 @@ entry of the history starts with the given input, then it will show the
 remaining part as a suggestion. Pressing the right arrow will insert this
 suggestion.
 """
-from prompt_toolkit import PromptSession
-from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-from prompt_toolkit.history import InMemoryHistory
+import quo
+
+from quo.auto_suggest import AutoSuggestFromHistory
 
 
 def main():
     # Create some history first. (Easy for testing.)
-    history = InMemoryHistory()
+    history = quo.history.InMemoryHistory()
     history.append_string("import os")
     history.append_string('print("hello")')
     history.append_string('print("world")')
@@ -27,7 +27,7 @@ def main():
     print("Press Control-C to retry. Control-D to exit.")
     print()
 
-    session = PromptSession(
+    session = quo.Prompt(
         history=history,
         auto_suggest=AutoSuggestFromHistory(),
         enable_history_search=True,
@@ -35,13 +35,13 @@ def main():
 
     while True:
         try:
-            text = session.prompt("Say something: ")
+            text = session.prompt("Type something: ")
         except KeyboardInterrupt:
             pass  # Ctrl-C pressed. Try again.
         else:
             break
 
-    print("You said: %s" % text)
+    quo.echo(f"You said: {text}")
 
 
 if __name__ == "__main__":

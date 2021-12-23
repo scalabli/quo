@@ -4,8 +4,8 @@ A very simple progress bar which keep track of the progress as we consume an
 iterator.
 """
 import time
+import quo
 
-from quo.shortcuts import ProgressBar
 
 
 def data():
@@ -18,7 +18,7 @@ def data():
 
 
 def main():
-    with ProgressBar() as pb:
+    with quo.progress.ProgressBar() as pb:
         for i in pb(data()):
             time.sleep(0.1)
 

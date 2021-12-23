@@ -15,21 +15,21 @@ time to do processing.
 Simple progress bar
 -------------------
 Creating a new progress bar can be done by calling the
-:class:`~quo.ProgressBar`
+:class:`~quo.progress.ProgressBar`
 
 The progress can be displayed for any iterable. This works by wrapping the
 iterable (like ``range``) with the
-:class:`~quo.ProgressBar`. This
+:class:`~quo.progress.ProgressBar`. This
 way, the progress bar knows when the next item is consumed by the forloop and
 when progress happens.
 
 .. code:: python
 
-    from quo.progress import ProgressBar
+    import quo
     import time
 
 
-    with ProgressBar() as pb:
+    with quo.progress.ProgressBar() as pb:
         for i in pb(range(800)):
             time.sleep(.01)
 

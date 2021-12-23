@@ -5,7 +5,7 @@ import os
 import struct
 import sys
 import math
-from typing import Any, IO, Optional
+from typing import Any, Optional, IO
 from quo.accordance import (
         DEFAULT_COLUMNS,
         get_winterm_size,
@@ -105,28 +105,6 @@ def confirm(
         raise Abort()
     return rv
 ############
-def evoke(
-    *objects: Any,
-    sep: str = " ",
-    end: str = "\n",
-    file: Optional[IO[str]] = None,
-    flush: bool = False,
-) -> None:
-    r"""Print object(s) supplied via positional arguments.
-    This function has an identical signature to the built-in print.
-    For more advanced features, see the :class:`~rich.console.Console` class.
-
-    Args:
-        sep (str, optional): Separator between printed objects. Defaults to " ".
-        end (str, optional): Character to write at end of output. Defaults to "\\n".
-        file (IO[str], optional): File to write to, or None for stdout. Defaults to None.
-        flush (bool, optional): Has no effect as Rich always flushes output. Defaults to False.
-
-    """
-    from quo.terminal import Terminal
-
-    write_console = get_terminal() if file is None else Terminal(file=file)
-    return write_console.print(*objects, sep=sep, end=end)
 ########################################################
 
 def prompt(
@@ -520,18 +498,17 @@ def echo(
         color=None,
         **styles
         ):
-    """
-    quo.echo('Hello World!', fg='green')
+        """
+        quo.echo('Hello World!', fg='green')
         quo.inscribe(quo.style('Hello World!', fg='green'))
-    All keyword arguments are forwarded to the underlying functions
-    depending on which one they go with.
-    Non-string types will be converted to :class:`str`. However,
-    :class:`bytes` are passed directly to :meth:`inscribe` without applying
-    style. If you want to style bytes that represent text, call
-    :meth:`bytes.decode` first.
-    """
+        All keyword arguments are forwarded to the underlying functions  depending on which one they go with.
+        Non-string types will be converted to :class:`str`. However,
+        :class:`bytes` are passed directly to :meth:`inscribe` without applying
+        style. If you want to style bytes that represent text, call
+        :meth:`bytes.decode` first.
+        """
+        if message is not None and not bit_bytes(message):
+            message = flair(message, **styles)
 
-    if message is not None and not bit_bytes(message):
-        message = flair(message, **styles)
+        return inscribe(message, file=file, nl=nl, err=err, color=color)
 
-    return inscribe(message, file=file, nl=nl, err=err, color=color)

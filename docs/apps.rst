@@ -15,38 +15,35 @@ How to name Apps
 A name is chosen in the following order
 
 1.  In the event that a name is not prefixed, therefore it is used as the Python argument name
-2.  If there is at least one name prefixed with two dashes, the first
-    one given is used as the name.
-3.  The first name prefixed with one dash is used otherwise.
-
+2.  If there is at least one name prefixed with `@`  the first one given is used as the name.
 To get the Python argument name, the chosen name is converted to lower
 case, up to two dashes are removed as the prefix, and other dashes are
 converted to underscores.
-NB: Options are given as position arguments to the decorator.
+NB: Apps are given as position arguments to the decorator.
 
 .. code-block:: python
   
-    from quo import command, app, echo
-    @command()
-    @app('-s', '--string-to-echo')
+    import quo
+
+    @quo.command()
+    @quo.app('@s', '@string-to-echo')
     def echo(string_to_echo):
-        echo(string_to_echo)
+        quo.echo(string_to_echo)
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('-s', '--string-to-echo', 'string')
+    import quo
+    @quo.command()
+    @quo.app('@s', '@string-to-echo', 'string')
     def echo(string):
         echo(string)
 
--   ``"-f", "--foo-bar"``, the name is ``foo_bar``
--   ``"-x"``, the name is ``x``
--   ``"-f", "--filename", "dest"``, the name is  ``dest``
--   ``"--CamelCase"``, the name is ``camelcase``
--   ``"-f", "-fb"``, the name is ``f``
--   ``"--f", "--foo-bar"``, the name is ``f``
--   ``"---f"``, the name is ``_f``
+-   ``"@f", "@foo-bar"``, the name is ``foo_bar``
+-   ``"@x"``, the name is ``x``
+-   ``"@f", "@filename", "dest"``, the name is  ``dest``
+-   ``"@CamelCase"``, the name is ``camelcase``
+-   ``"@f", "@fb"``, the name is ``f``
+-   ``"@f", "@foo-bar"``, the name is ``f``
 
 Basic Value Apps
 -------------------
@@ -61,30 +58,33 @@ simply pass in `required=True` as an argument to the decorator.
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('--n', default=1)
+    import quo
+
+    @quo.command()
+    @quo.app('@n', default=1)
     def dots(n):
-        echo('.' * n)
+        quo.echo('.' * n)
 
 .. code-block:: python
 
     # How to make an option required
-    from quo import command, app, echo
-    @command()
-    @app('--n', required=True, type=int)
+    import quo
+
+    @quo.command()
+    @quo.app('@n', required=True, type=int)
     def dots(n):
         quo.echo('.' * n)
 
 .. code-block:: python
 
     # How to use a Python reserved word such as `from` as a parameter
-    from quo import command, app, echo
-    @command()
-    @app('--from', '-f', 'from_')
-    @app('--to', '-t')
+    import quo
+
+    @quo.command()
+    @quo.app('@from', '@f', 'from_')
+    @quo.app('@to', '@t')
     def reserved_param_name(from_, to):
-        echo(f"from {from_} to {to}")
+        quo.echo(f"from {from_} to {to}")
 
 
 
@@ -96,12 +96,12 @@ To show the default values when showing command help, use ``show_default=True``
 .. code-block:: python
 
 
-   from quo import command, app, echo
+   import quo
 
-    @command()
-    @app('--n', default=1, show_default=True)
-    def dots(n):
-        echo('.' * n)
+   @quo.command()
+   @quo.app('@n', default=1, show_default=True)
+   def dots(n):
+        quo.echo('.' * n)
 
 
 Multi Value Apps
@@ -113,12 +113,13 @@ the ``nargs`` parameter.  The values are then stored as a tuple.
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('--pos', nargs=2, type=float)
+    import quo
+
+    @quo.command()
+    @quo.app('@pos', nargs=2, type=float)
     def findme(pos):
         a, b = pos
-        echo(f"{a} / {b}")
+        quo.echo(f"{a} / {b}")
 
 
 
@@ -135,27 +136,28 @@ the tuple.  For this you can directly specify a tuple as type:
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('--item', type=(str, int))
+    import quo
+
+    @quo.command()
+    @quo.app('@item', type=(str, int))
     def putitem(item):
         name, id = item
-        echo(f"name={name} id={id}")
+        quo.echo(f"name={name} id={id}")
 
 
 By using a tuple literal as type, `nargs` gets automatically set to the
-length of the tuple and the :class:`quo.Tuple` type is automatically
+length of the tuple and the :class:`quo.types.Tuple` type is automatically
 used.  The above example is thus equivalent to this:
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    from quo.types import Tuple
-    @command()
-    @app('--item', nargs=2, type=Tuple([str, int]))
+    import quo
+
+    @quo.command()
+    @quo.app('@item', nargs=2, type=quo.types.Tuple([str, int]))
     def putitem(item):
         name, id = item
-        echo(f"name={name} id={id}")
+        quo.echo(f"name={name} id={id}")
 
 .. _multiple-apps:
 
@@ -172,11 +174,12 @@ Example:
 
 .. code-block:: python
     
-    from quo command, app, echo
-    @command()
-    @app('--message', '-m', multiple=True)
+    import quo
+
+    @quo.command()
+    @quo.app('@message', '@m', multiple=True)
     def commit(message):
-        echo('\n'.join(message))
+        quo.echo('\n'.join(message))
 
 
 When passing a ``default`` with ``multiple=True``, the default value
@@ -185,8 +188,9 @@ single characters.
 
 .. code-block:: python
 
-    from quo import app
-    @app("--format", multiple=True, default=["json"])
+    import quo
+
+    @quo.app("--format", multiple=True, default=["json"])
 
 
 Counting
@@ -198,11 +202,12 @@ for instance:
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('-v', '--verbose', count=True)
+    import quo
+
+    @quo.command()
+    @quo.app('@v', '@verbose', count=True)
     def log(verbose):
-        echo(f"Verbosity: {verbose}")
+        quo.echo(f"Verbosity: {verbose}")
 
 
 Boolean Flags
@@ -220,15 +225,15 @@ Example:
 .. code-block:: python
 
     import sys
-    from quo import comnand, app, echo
+    import quo
 
-    @command()
-    @app('--shout/--no-shout', default=False)
+    @quo.command()
+    @quo.app('@shout/@no-shout', default=False)
     def info(shout):
         rv = sys.platform
         if shout:
             rv = rv.upper() + '!!!!111'
-        echo(rv)
+        quo.echo(rv)
 
         
 If you really don't want an off-switch, you can just define one and
@@ -237,15 +242,15 @@ manually inform quo that something is a flag:
 .. code-block:: python
 
     import sys
-    from quo import command, tether, echo
+    import quo
 
-    @command()
-    @app('--shout', is_flag=True)
+    @quo.command()
+    @quo.app('@shout', is_flag=True)
     def info(shout):
         rv = sys.platform
         if shout:
             rv = rv.upper() + '!!!!111'
-        echo(rv)
+        quo.echo(rv)
 
 Note that if a slash is contained in your app  already (for instance, if
 you use Windows-style parameters where ``/`` is the prefix character), you
@@ -253,9 +258,10 @@ can alternatively split the parameters through ``;`` instead:
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('/debug;/no-debug')
+    import quo
+
+    @quo.command()
+    @quo.app('/debug;/no-debug')
     def log(debug):
         echo(f"debug={debug}")
 
@@ -271,15 +277,15 @@ Example:
 .. code-block:: python
 
     import sys
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app('--shout/--no-shout', ' /-S', default=False)
+    @quo.command()
+    @quo.app('@shout/@no-shout', ' /-S', default=False)
     def info(shout):
         rv = sys.platform
         if shout:
             rv = rv.upper() + '!!!!111'
-        echo(rv)
+        quo.echo(rv)
 
 
 Feature Switches
@@ -764,12 +770,12 @@ can still be passed a value, but if only the flag is given the
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app("--name", is_flag=False, flag_value="Flag", default="Default")
+    @quo.command()
+    @quo.app("@name", is_flag=False, flag_value="Flag", default="Default")
     def hello(name):
-        echo(f"Hello, {name}!")
+        quo.echo(f"Hello, {name}!")
 
 
 If the app has ``prompt`` enabled, then setting
@@ -778,12 +784,12 @@ app's flag is given, instead of if the app is not provided at all.
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app('--name', prompt=True, prompt_required=False, default="Default")
+    @quo.command()
+    @quo.app('@name', prompt=True, prompt_required=False, default="Default")
     def hello(name):
-        echo(f"Hello {name}!")
+        quo.echo(f"Hello {name}!")
 
 
 If ``required=True``, then the option will still prompt if it is not

@@ -175,17 +175,17 @@ class KeyBinder(KeyBindingsBase):
 
     Example usage::
 
-        kb = KeyBindings()
+        kb = quo.keys.KeyBinder()
 
-        @kb.add('c-t')
+        @kb.add('ctrl-t')
         def _(event):
             print('Control-T pressed')
 
-        @kb.add('c-a', 'c-b')
+        @kb.add('ctrl-a', 'ctrl-b')
         def _(event):
             print('Control-A pressed, followed by Control-B')
 
-        @kb.add('c-x', filter=is_searching)
+        @kb.add('ctrl-x', filter=is_searching)
         def _(event):
             print('Control-X pressed')  # Works only if we are searching.
 
@@ -298,7 +298,7 @@ class KeyBinder(KeyBindingsBase):
         Usage::
 
             remove(handler)  # Pass handler.
-            remove('c-x', 'c-a')  # Or pass the key bindings.
+            remove('ctrl-x', 'ctrl-a')  # Or pass the key bindings.
         """
         found = False
 
@@ -418,8 +418,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        return ValueError, echo(f"ERROR: ", fg="black", bg="red", nl=False), echo(f"Invalid key {key}", fg="black", bg="yellow")
-
+        raise ValueError(f"Invalid key: {key,}")
     return key
 
 
@@ -432,7 +431,7 @@ def key_binding(
 ) -> Callable[[KeyHandlerCallable], Binding]:
     """
     Decorator that turn a function into a `Binding` object. This can be added
-    to a `KeyBindings` object when a key binding is assigned.
+    to a `KeyBinder` object when a key binding is assigned.
     """
     assert save_before is None or callable(save_before)
 
@@ -509,8 +508,8 @@ class ConditionalKeyBindings(_Proxy):
     When new key bindings are added to this object. They are also
     enable/disabled according to the given `filter`.
 
-    :param registries: List of :class:`.KeyBindings` objects.
-    :param filter: :class:`~prompt_toolkit.filters.Filter` object.
+    :param registries: List of :class:`.KeyBinder` objects.
+    :param filter: :class:`~quo.filters.Filter` object.
     """
 
     def __init__(
@@ -551,10 +550,10 @@ class _MergedKeyBindings(_Proxy):
     """
     Merge multiple registries of key bindings into one.
 
-    This class acts as a proxy to multiple :class:`.KeyBindings` objects, but
-    behaves as if this is just one bigger :class:`.KeyBindings`.
+    This class acts as a proxy to multiple :class:`.KeyBinder` objects, but
+    behaves as if this is just one bigger :class:`.KeyBinder`.
 
-    :param registries: List of :class:`.KeyBindings` objects.
+    :param registries: List of :class:`.KeyBinder` objects.
     """
 
     def __init__(self, registries: Sequence[KeyBindingsBase]) -> None:
@@ -580,7 +579,7 @@ class _MergedKeyBindings(_Proxy):
 
 def merge_key_bindings(bindings: Sequence[KeyBindingsBase]) -> _MergedKeyBindings:
     """
-    Merge multiple :class:`.Keybinding` objects together.
+    Merge multiple :class:`.Keybinder` objects together.
 
     Usage::
 
@@ -591,9 +590,9 @@ def merge_key_bindings(bindings: Sequence[KeyBindingsBase]) -> _MergedKeyBinding
 
 class DynamicKeyBindings(_Proxy):
     """
-    KeyBindings class that can dynamically returns any KeyBindings.
+    KeyBinder class that can dynamically returns any KeyBinder.
 
-    :param get_key_bindings: Callable that returns a :class:`.KeyBindings` instance.
+    :param get_key_bindings: Callable that returns a :class:`.KeyBinder` instance.
     """
 
     def __init__(

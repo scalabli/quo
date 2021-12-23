@@ -7,7 +7,6 @@ from pygments.lexers.html import HtmlLexer
 
 from quo.suite.current import get_app
 from quo.completion import WordCompleter
-from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
 from quo.layout.containers import Float, HSplit, VSplit
 from quo.layout.dimension import D
 from quo.layout.layout import Layout
@@ -187,8 +186,8 @@ root_container = MenuContainer(
 
 # Global key bindings.
 bindings = quo.keys.KeyBinder()
-bindings.add("tab")(focus_next)
-bindings.add("s-tab")(focus_previous)
+bindings.add("tab")(quo.keys.focus.next)
+bindings.add("s-tab")(quo.keys.focus.previous)
 
 
 style = Style.from_dict(

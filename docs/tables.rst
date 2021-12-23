@@ -6,8 +6,7 @@ Here's an example:
 ..code-block:: python
 
 
-    from quo import echo
-    from quo.tabulate import tabular
+    import quo
 
     table = [
      ["Name", "Gender", "Age"],
@@ -16,7 +15,7 @@ Here's an example:
      ["Dave", "M", 24]
    ]
 
-    echo(tabular(table))
+    quo.echo(quo.tabulate.tabular(table))
    
     
 This produces the following output:

@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from quo.input.core import Input
     from quo.output.core import Output
 
-    from .application import Suite
+    from .suite import Suite
 
 __all__ = [
         "AppSession",
@@ -49,7 +49,7 @@ class AppSession:
 
         # The application will be set dynamically by the `set_app` context
         # manager. This is called in the application itself.
-        self.app: Optional["Application[Any]"] = None
+        self.app: Optional["Suite[Any]"] = None
 
     def __repr__(self) -> str:
         return "AppSession(app=%r)" % (self.app,)
@@ -91,13 +91,10 @@ def get_app() -> "Suite[Any]":
     stdout. This makes the code significantly easier than passing around the
     :class:`.Suite` everywhere.
 
-    If no :class:`.Application` is running, then return by default a
+    If no :class:`.Suite` is running, then return by default a
     :class:`.DummyApplication`. For practical reasons, we prefer to not raise
     an exception. This way, we don't have to check all over the place whether
-    an actual `Application` was returned.
-
-    (For applications like pymux where we can have more than one `Application`,
-    we'll use a work-around to handle that.)
+    an actual `Suite` was returned.
     """
     session = _current_app_session.get()
     if session.app is not None:
@@ -123,10 +120,10 @@ def set_app(app: "Suite[Any]") -> Generator[None, None, None]:
     Context manager that sets the given :class:`.Suite` active in an
     `AppSession`.
 
-    This should only be called by the `Application` itself.
+    This should only be called by the `Suite` itself.
     The application will automatically be active while its running. If you want
     the application to be active in other threads/coroutines, where that's not
-    the case, use `contextvars.copy_context()`, or use `Application.context` to
+    the case, use `contextvars.copy_context()`, or use `Suite.context` to
     run it in the appropriate context.
     """
     session = _current_app_session.get()

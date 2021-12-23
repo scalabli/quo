@@ -2,15 +2,12 @@
 """
 Demonstration of all the ANSI colors.
 """
-from prompt_toolkit import print_formatted_text
-from prompt_toolkit.formatted_text import HTML, FormattedText
-from prompt_toolkit.output import ColorDepth
+import quo
 
-print = print_formatted_text
-
-
-def main():
-    print(HTML("\n<u>True color test.</u>"))
+@quo.command()
+@quo.app("@colors", help="Demonstration of ANSI colors")
+def _color(colors):
+    quo.inscribe(quo.text.HTML("\n<u>True color test.</u>"))
 
     for template in [
         "bg:#{0:02x}0000",  # Red.
@@ -25,11 +22,11 @@ def main():
         for i in range(0, 256, 4):
             fragments.append((template.format(i), " "))
 
-        print(FormattedText(fragments), color_depth=ColorDepth.DEPTH_4_BIT)
-        print(FormattedText(fragments), color_depth=ColorDepth.DEPTH_8_BIT)
-        print(FormattedText(fragments), color_depth=ColorDepth.DEPTH_24_BIT)
-        print()
+        quo.inscribe(quo.text.FormattedText(fragments), color_depth=quo.color.ColorDepth.DEPTH_4_BIT)
+        quo.inscribe(quo.text.FormattedText(fragments), color_depth=quo.color.ColorDepth.DEPTH_8_BIT)
+        quo.inscribe(quo.text.FormattedText(fragments), color_depth=quo.color.ColorDepth.DEPTH_24_BIT)
+        quo.inscribe()
 
 
 if __name__ == "__main__":
-    main()
+    _color()

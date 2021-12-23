@@ -51,7 +51,7 @@ QUO_STYLE = [
     ("arg-toolbar", "bold"),
     ("arg-toolbar.text", "nobold"),
     # Validation toolbar.
-    ("validation-toolbar", "bg:#550000 #ffffff"),
+    ("validation-toolbar", "bg:#ff7c7c #ffffff"),
     ("window-too-small", "bg:#550000 #ffffff"),
     # Completions toolbar.
     ("completion-toolbar", "bg:#bbbbbb #000000"),

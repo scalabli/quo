@@ -7,9 +7,9 @@ import quo
 
 from quo.suite.current import get_app
 
-from prompt_toolkit.key_binding.bindings.focus import focus_next, focus_previous
-from prompt_toolkit.layout import Dimension, HSplit, Layout, ScrollablePane
-from prompt_toolkit.widgets import Frame, Label, TextArea
+from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
+from quo.layout import Dimension, HSplit, Layout, ScrollablePane
+from quo.widgets import Frame, Label, TextArea
 
 
 def main():

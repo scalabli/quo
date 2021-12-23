@@ -15,9 +15,9 @@ possible. ::
 """
 
 import asyncio
+import quo
 
-from prompt_toolkit.patch_stdout import patch_stdout
-from prompt_toolkit.shortcuts import PromptSession
+from quo.patch_stdout import patch_stdout
 
 
 async def print_counter():
@@ -39,7 +39,7 @@ async def interactive_shell():
     Like `interactive_shell`, but doing things manual.
     """
     # Create Prompt.
-    session = PromptSession("Say something: ")
+    session = quo.Prompt("Say something: ")
 
     # Run echo loop. Read text from stdin, and reply it back.
     while True:

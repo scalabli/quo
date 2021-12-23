@@ -1,3 +1,5 @@
+import typing
+
 #American National Standard Institute colors
 
 
@@ -228,9 +230,6 @@ ANSI_COLOR_NAMES = {
     "grey89": 254,
     "grey93": 255,
     }
-
-
-
 
 
 _ansi_reset_all = "\033[0m"

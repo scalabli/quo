@@ -30,32 +30,32 @@ def load_basic_bindings() -> KeyBinder:
     insert_mode = vi_insert_mode | emacs_insert_mode
     handle = key_bindings.add
 
-    @handle("c-a")
-    @handle("c-b")
-    @handle("c-c")
-    @handle("c-d")
-    @handle("c-e")
-    @handle("c-f")
-    @handle("c-g")
-    @handle("c-h")
-    @handle("c-i")
-    @handle("c-j")
-    @handle("c-k")
-    @handle("c-l")
-    @handle("c-m")
-    @handle("c-n")
-    @handle("c-o")
-    @handle("c-p")
-    @handle("c-q")
-    @handle("c-r")
-    @handle("c-s")
-    @handle("c-t")
-    @handle("c-u")
-    @handle("c-v")
-    @handle("c-w")
-    @handle("c-x")
-    @handle("c-y")
-    @handle("c-z")
+    @handle("ctrl-a")
+    @handle("ctrl-b")
+    @handle("ctrl-c")
+    @handle("ctrl-d")
+    @handle("ctrl-e")
+    @handle("ctrl-f")
+    @handle("ctrl-g")
+    @handle("ctrl-h")
+    @handle("ctrl-i")
+    @handle("ctrl-j")
+    @handle("ctrl-k")
+    @handle("ctrl-l")
+    @handle("ctrl-m")
+    @handle("ctrl-n")
+    @handle("ctrl-o")
+    @handle("ctrl-p")
+    @handle("ctrl-q")
+    @handle("ctrl-r")
+    @handle("ctrl-s")
+    @handle("ctrl-t")
+    @handle("ctrl-u")
+    @handle("ctrl-v")
+    @handle("ctrl-w")
+    @handle("ctrl-x")
+    @handle("ctrl-y")
+    @handle("ctrl-z")
     @handle("f1")
     @handle("f2")
     @handle("f3")
@@ -80,11 +80,11 @@ def load_basic_bindings() -> KeyBinder:
     @handle("f22")
     @handle("f23")
     @handle("f24")
-    @handle("c-@")  # Also c-space.
-    @handle("c-\\")
-    @handle("c-]")
-    @handle("c-^")
-    @handle("c-_")
+    @handle("ctrl-@")  # Also c-space.
+    @handle("ctrl-\\")
+    @handle("ctrl-]")
+    @handle("ctrl-^")
+    @handle("ctrl-_")
     @handle("backspace")
     @handle("up")
     @handle("down")
@@ -100,7 +100,7 @@ def load_basic_bindings() -> KeyBinder:
     @handle("s-end")
     @handle("delete")
     @handle("s-delete")
-    @handle("c-delete")
+    @handle("ctrl-delete")
     @handle("pageup")
     @handle("pagedown")
     @handle("s-tab")
@@ -109,15 +109,15 @@ def load_basic_bindings() -> KeyBinder:
     @handle("c-s-right")
     @handle("c-s-home")
     @handle("c-s-end")
-    @handle("c-left")
-    @handle("c-right")
-    @handle("c-up")
-    @handle("c-down")
-    @handle("c-home")
-    @handle("c-end")
+    @handle("ctrl-left")
+    @handle("ctrl-right")
+    @handle("ctrl-up")
+    @handle("ctrl-down")
+    @handle("ctrl-home")
+    @handle("ctrl-end")
     @handle("insert")
     @handle("s-insert")
-    @handle("c-insert")
+    @handle("ctrl-insert")
     @handle(Keys.Ignore)
     def _ignore(event: E) -> None:
         """
@@ -135,31 +135,31 @@ def load_basic_bindings() -> KeyBinder:
     handle("end")(get_by_name("end-of-line"))
     handle("left")(get_by_name("backward-char"))
     handle("right")(get_by_name("forward-char"))
-    handle("c-up")(get_by_name("previous-history"))
-    handle("c-down")(get_by_name("next-history"))
-    handle("c-l")(get_by_name("clear-screen"))
+    handle("ctrl-up")(get_by_name("previous-history"))
+    handle("ctrl-down")(get_by_name("next-history"))
+    handle("ctrl-l")(get_by_name("clear-screen"))
 
-    handle("c-k", filter=insert_mode)(get_by_name("kill-line"))
-    handle("c-u", filter=insert_mode)(get_by_name("unix-line-discard"))
+    handle("ctrl-k", filter=insert_mode)(get_by_name("kill-line"))
+    handle("ctrl-u", filter=insert_mode)(get_by_name("unix-line-discard"))
     handle("backspace", filter=insert_mode, save_before=if_no_repeat)(
         get_by_name("backward-delete-char")
     )
     handle("delete", filter=insert_mode, save_before=if_no_repeat)(
         get_by_name("delete-char")
     )
-    handle("c-delete", filter=insert_mode, save_before=if_no_repeat)(
+    handle("ctrl-delete", filter=insert_mode, save_before=if_no_repeat)(
         get_by_name("delete-char")
     )
     handle(Keys.Any, filter=insert_mode, save_before=if_no_repeat)(
         get_by_name("self-insert")
     )
-    handle("c-t", filter=insert_mode)(get_by_name("transpose-chars"))
-    handle("c-i", filter=insert_mode)(get_by_name("menu-complete"))
+    handle("ctrl-t", filter=insert_mode)(get_by_name("transpose-chars"))
+    handle("ctrl-i", filter=insert_mode)(get_by_name("menu-complete"))
     handle("s-tab", filter=insert_mode)(get_by_name("menu-complete-backward"))
 
     # Control-W should delete, using whitespace as separator, while M-Del
     # should delete using [^a-zA-Z0-9] as a boundary.
-    handle("c-w", filter=insert_mode)(get_by_name("unix-word-rubout"))
+    handle("ctrl-w", filter=insert_mode)(get_by_name("unix-word-rubout"))
 
     handle("pageup", filter=~has_selection)(get_by_name("previous-history"))
     handle("pagedown", filter=~has_selection)(get_by_name("next-history"))
@@ -170,7 +170,7 @@ def load_basic_bindings() -> KeyBinder:
     def has_text_before_cursor() -> bool:
         return bool(get_app().current_buffer.text)
 
-    handle("c-d", filter=has_text_before_cursor & insert_mode)(
+    handle("ctrl-d", filter=has_text_before_cursor & insert_mode)(
         get_by_name("delete-char")
     )
 
@@ -181,7 +181,7 @@ def load_basic_bindings() -> KeyBinder:
         """
         event.current_buffer.newline(copy_margin=not in_paste_mode())
 
-    @handle("c-j")
+    @handle("ctrl-j")
     def _newline2(event: E) -> None:
         r"""
         By default, handle \n as if it were a \r (enter).
@@ -207,7 +207,7 @@ def load_basic_bindings() -> KeyBinder:
 
     # Global bindings.
 
-    @handle("c-z")
+    @handle("ctrl-z")
     def _insert_ctrl_z(event: E) -> None:
         """
         By default, control-Z should literally insert Ctrl-Z.

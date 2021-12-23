@@ -2,6 +2,9 @@
 """
 Example of button dialog window.
 """
+
+import quo
+
 from quo.shortcuts import button
 
 def main():

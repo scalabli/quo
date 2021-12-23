@@ -6,7 +6,7 @@ import datetime
 
 import quo
 
-console = quo.Elicit()
+console = quo.Prompt()
 
 def get_prompt():
     "Tokens to be shown before the prompt."
@@ -18,8 +18,8 @@ def get_prompt():
 
 
 def main():
-    result = console.elicit(get_prompt, refresh_interval=0.5)
-    print("You said: %s" % result)
+    result = console.prompt(get_prompt, refresh_interval=0.5)
+    quo.echo(f"You said: {result}")
 
 
 if __name__ == "__main__":

@@ -20,11 +20,8 @@ from quo.lexers import DynamicLexer, PygmentsLexer
 from quo.search import start_search
 from quo.styles import Style
 from quo.widgets import (
-    Button,
     Dialog,
-    Label,
     SearchToolbar,
-    TextArea,
 )
 
 
@@ -89,7 +86,7 @@ class TextInputDialog:
         ok_button = quo.widgets.Button(text="OK", handler=accept)
         cancel_button = quo.widgets.Button(text="Cancel", handler=cancel)
 
-        self.dialog = quo.layout.Dialog(
+        self.dialog = quo.widgets.Dialog(
             title=title,
             body=quo.layout.HSplit([quo.widgets.Label(text=label_text), self.text_area]),
             buttons=[ok_button, cancel_button],

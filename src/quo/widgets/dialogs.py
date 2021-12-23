@@ -5,7 +5,7 @@ from typing import Optional, Sequence, Union
 
 from quo.filters import has_completions, has_focus
 from quo.text import AnyFormattedText
-from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
+from quo.keys.focus import next, previous
 from quo.keys import KeyBinder
 from quo.layout.containers import (
     AnyContainer,
@@ -57,8 +57,8 @@ class Dialog:
             first_selected = has_focus(buttons[0])
             last_selected = has_focus(buttons[-1])
 
-            buttons_kb.add("left", filter=~first_selected)(focus_previous)
-            buttons_kb.add("right", filter=~last_selected)(focus_next)
+            buttons_kb.add("left", filter=~first_selected)(previous)
+            buttons_kb.add("right", filter=~last_selected)(next)
 
         frame_body: AnyContainer
         if buttons:
@@ -81,9 +81,9 @@ class Dialog:
             frame_body = body
 
         # Key bindings for whole dialog.
-        kb = KeyBindings()
-        kb.add("tab", filter=~has_completions)(focus_next)
-        kb.add("s-tab", filter=~has_completions)(focus_previous)
+        kb = KeyBinder()
+        kb.add("tab", filter=~has_completions)(next)
+        kb.add("s-tab", filter=~has_completions)(previous)
 
         frame = Shadow(
             body=Frame(

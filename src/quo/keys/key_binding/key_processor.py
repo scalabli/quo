@@ -68,7 +68,7 @@ _Flush = KeyPress("?", data="_Flush")
 class KeyProcessor:
     """
     Statemachine that receives :class:`KeyPress` instances and according to the
-    key bindings in the given :class:`KeyBindings`, calls the matching handlers.
+    key bindings in the given :class:`KeyBinder`, calls the matching handlers.
 
     ::
 
@@ -118,8 +118,7 @@ class KeyProcessor:
 
     def _get_matches(self, key_presses: List[KeyPress]) -> List[Binding]:
         """
-        For a list of :class:`KeyPress` instances. Give the matching handlers
-        that would handle this.
+        For a list of :class:`KeyPress` instances. Give the matching handlers that would handle this.
         """
         keys = tuple(k.key for k in key_presses)
 
@@ -128,8 +127,7 @@ class KeyProcessor:
 
     def _is_prefix_of_longer_match(self, key_presses: List[KeyPress]) -> bool:
         """
-        For a list of :class:`KeyPress` instances. Return True if there is any
-        handler that is bound to a suffix of this keys.
+        For a list of :class:`KeyPress` instances. Return True if there is any handler that is bound to a suffix of this keys.
         """
         keys = tuple(k.key for k in key_presses)
 
@@ -146,8 +144,7 @@ class KeyProcessor:
 
     def _process(self) -> Generator[None, KeyPress, None]:
         """
-        Coroutine implementing the key match algorithm. Key strokes are sent
-        into this generator, and it calls the appropriate handlers.
+        Coroutine implementing the key match algorithm. Key strokes are sent into this generator, and it calls the appropriate handlers.
         """
         buffer = self.key_buffer
         retry = False
@@ -469,9 +466,9 @@ class KeyPressEvent:
         return processor
 
     @property
-    def app(self) -> "Application[Any]":
+    def app(self) -> "Suite[Any]":
         """
-        The current `Application` object.
+        The current `Suite` object.
         """
         return self._app
 
@@ -525,6 +522,6 @@ class KeyPressEvent:
         self.key_processor.arg = result
 
     @property
-    def cli(self) -> "Application[Any]":
+    def cli(self) -> "Suite[Any]":
         "For backward-compatibility."
         return self.app

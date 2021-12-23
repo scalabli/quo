@@ -2,7 +2,6 @@ echo
 =====
 This function prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode and binary data.
 
-If colorama is installed, the echo function will also support clever handling of ANSI color codes.
 Supported color names:
 
 * ``black (might be a gray)``
@@ -14,6 +13,10 @@ Supported color names:
 * ``cyan``
 * ``white`` *(might be light gray)*
 * ``vblack``  *vibrant black*
+* ``vblue``
+* ``vmagenta``
+* ``vwhite``
+* ``vcyan``
 * ``vred``
 * ``vgreen``
 * ``vyellow``

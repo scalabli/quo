@@ -1,8 +1,4 @@
-#
-#
-#
 import inspect
-import asyncio
 from .autoversion import autoversion
 from .autohelp import autohelp
 from .autoconfirm import autoconfirm
@@ -13,8 +9,6 @@ from quo.core import Command
 from quo.core import Tether
 from quo.core import App
 from quo.context.current import currentcontext
-from quo.expediency import inscribe
-
 #Marks a callback as wanting to receive current context
 def contextualize(f):
     """Marks a callback as wanting to receive the current context

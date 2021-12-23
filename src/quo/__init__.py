@@ -29,13 +29,11 @@ from quo.suite.suite import Suite
 #        )
 
 #from quo.context.current import resolve_color_default
-#from quo.types import Choice, convert_type
-from quo.expediency import inscribe # LazyFile
+#from quo.expediency import inscribe # LazyFile
 from quo.text import ANSI, HTML
-from quo.output import ColorDepth
-from quo.shortcuts.utils import print_formatted_text
+from quo.shortcuts.utils import inscribe
 from quo.indicators import ProgressBar
-from quo.shortcuts import Elicit
+from quo.shortcuts import Prompt
 from quo.pause import pause
 from quo.styles import Style
 from quo.decorators import (
@@ -59,7 +57,6 @@ from quo.decorators import (
 #from quo.context.current import currentcontext
 #from .parser import AppParser
 from quo.expediency import (
-                  inscribe,
                   appdir,
                   formatfilename,
                   os_args,
@@ -72,10 +69,7 @@ from quo.expediency import (
 def clear():
     import sys
     from .accordance import isatty, WIN
-    """Clears the terminal screen.  This will have the effect of clearing
-    the whole visible space of the terminal and moving the cursor to the
-    top left.  This does not do anything if not connected to a terminal.
-
+    """Clears the terminal screen and moves the cursor to the top left.
     """
     if not isatty(sys.stdout):
         return
@@ -98,4 +92,4 @@ from quo.i_o import (
 
 from quo.shortcuts import container
 
-__version__ = "2021.7.0"
+__version__ = "2021.7"

@@ -4,7 +4,7 @@ A simple example of a calculator program.
 This could be used as inspiration for a REPL.
 """
 import quo
-from quo.document import Document
+
 from quo.filters import has_focus
 from quo.styles import Style
 
@@ -54,7 +54,7 @@ def main():
         new_text = output_field.text + output
 
         # Add text to output buffer.
-        output_field.buffer.document = Document(
+        output_field.buffer.document = quo.document.Document(
             text=new_text, cursor_position=len(new_text)
         )
 

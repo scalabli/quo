@@ -2,10 +2,10 @@
 """
 Autocompletion example that shows meta-information alongside the completions.
 """
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.shortcuts import CompleteStyle, prompt
+import quo
 
-animal_completer = WordCompleter(
+
+animal_completer = quo.completion.WordCompleter(
     [
         "alligator",
         "ant",

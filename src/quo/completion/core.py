@@ -127,6 +127,15 @@ class Completion:
             display_meta=self._display_meta,
         )
 
+from enum import Enum
+class CompleteStyle(str, Enum):
+    """
+    How to display autocompletions for the elicit.
+    """
+    value: str
+    single_column= "single_column"
+    multi_column = "multi_column"
+    neat = "neat"
 
 class CompleteEvent:
     """

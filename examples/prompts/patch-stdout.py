@@ -8,8 +8,8 @@ the prompt, but instead is printed nicely above the prompt.
 import threading
 import time
 
-from prompt_toolkit import prompt
-from prompt_toolkit.patch_stdout import patch_stdout
+import quo
+from quo.patch_stdout import patch_stdout
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
     # Now read the input. The print statements of the other thread
     # should not disturb anything.
     with patch_stdout():
-        result = prompt("Say something: ")
+        result = quo.prompt("Say something: ")
     print("You said: %s" % result)
 
     # Stop thread.

@@ -11,38 +11,37 @@ inside will get 'bottom-toolbar.text'. These can be used to change the default
 style.
 """
 import time
-
 import quo
-from prompt_toolkit import prompt
-from prompt_toolkit.styles import Style
 
+from quo.styles import Style
+
+session = quo.Prompt()
 
 def main():
     # Example 1: fixed text.
-    text = prompt("Say something: ", bottom_toolbar="This is a toolbar")
+    text = session.prompt("Say something: ", bottom_toolbar="This is quo toolbar")
     quo.echo(f"You said: {text}")
 
     # Example 2: fixed text from a callable:
     def get_toolbar():
         return "Bottom toolbar: time=%r" % time.time()
 
-    text = prompt("Say something: ", bottom_toolbar=get_toolbar, refresh_interval=0.5)
+    text = session.prompt("Say something: ", bottom_toolbar=get_toolbar, refresh_interval=0.5)
     quo.echo(f"You said: {text}")
 
     # Example 3: Using HTML:
-    text = prompt(
+    text = session.prompt(
         "Say something: ",
-        bottom_toolbar=quo.HTML(
+        bottom_toolbar=quo.text.HTML(
             '(html) <b>This</b> <u>is</u> a <style bg="ansired">toolbar</style>'
         ),
     )
-    print("You said: %s" % text)
+    quo.echo(f"You said: {text}")
 
     # Example 4: Using ANSI:
-    text = prompt(
+    text = session.prompt(
         "Say something: ",
-        bottom_toolbar=quo.ANSI(
-            "(ansi): \x1b[1mThis\x1b[0m \x1b[4mis\x1b[0m a \x1b[91mtoolbar"
+        bottom_toolbar=quo.text.ANSI("(ansi): \x1b[1mThis\x1b[0m \x1b[4mis\x1b[0m a \x1b[91mtoolbar"
         ),
     )
     print("You said: %s" % text)
@@ -55,7 +54,7 @@ def main():
         }
     )
 
-    text = prompt("Say something: ", bottom_toolbar="This is a toolbar", style=style)
+    text = session.prompt("Say something: ", bottom_toolbar="This is a toolbar", style=style)
     print("You said: %s" % text)
 
     # Example 6: Using a list of tokens.
@@ -68,11 +67,11 @@ def main():
             ("", ". "),
         ]
 
-    text = prompt("Say something: ", bottom_toolbar=get_bottom_toolbar)
+    text = session.prompt("Say something: ", bottom_toolbar=get_bottom_toolbar)
     print("You said: %s" % text)
 
     # Example 7: multiline fixed text.
-    text = prompt("Say something: ", bottom_toolbar="This is\na multiline toolbar")
+    text = session.prompt("Say something: ", bottom_toolbar="This is\na multiline toolbar")
     print("You said: %s" % text)
 
 

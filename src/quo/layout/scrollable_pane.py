@@ -163,7 +163,7 @@ class ScrollablePane(Container):
         temp_screen.draw_all_floats()
 
         # If anything in the virtual screen is focused, move vertical scroll to
-        from prompt_toolkit.application import get_app
+        from quo.suite import get_app
 
         focused_window = get_app().layout.current_window
 

@@ -7,9 +7,11 @@ styling.
 This also demonstrates that the `title` argument can be any kind of formatted
 text.
 """
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import message_dialog
-from prompt_toolkit.styles import Style
+
+import quo
+
+from quo.shortcuts import message
+from quo.styles import Style
 
 # Custom color scheme.
 example_style = Style.from_dict(
@@ -23,10 +25,10 @@ example_style = Style.from_dict(
 
 
 def main():
-    message_dialog(
-        title=HTML(
+    message(
+        title=quo.text.HTML(
             '<style bg="blue" fg="white">Styled</style> '
-            '<style fg="ansired">dialog</style> window'
+            '<style fg="red">dialog</style> window'
         ),
         text="Do you want to continue?\nPress ENTER to quit.",
         style=example_style,

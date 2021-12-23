@@ -2,16 +2,17 @@
 """
 Example of a checkbox-list-based dialog.
 """
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import checkboxlist_dialog, message_dialog
-from prompt_toolkit.styles import Style
+import quo
 
-results = checkboxlist_dialog(
+from quo.shortcuts import checkbox, message
+from quo.styles import Style
+
+results = checkbox(
     title="CheckboxList dialog",
     text="What would you like in your breakfast ?",
     values=[
         ("eggs", "Eggs"),
-        ("bacon", HTML("<blue>Bacon</blue>")),
+        ("bacon", quo.text.HTML("<blue>Bacon</blue>")),
         ("croissants", "20 Croissants"),
         ("daily", "The breakfast of the day"),
     ],
@@ -28,9 +29,9 @@ results = checkboxlist_dialog(
     ),
 ).run()
 if results:
-    message_dialog(
+    message(
         title="Room service",
         text="You selected: %s\nGreat choice sir !" % ",".join(results),
     ).run()
 else:
-    message_dialog("*starves*").run()
+    message("*starves*").run()

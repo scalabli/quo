@@ -6,7 +6,6 @@ import quo
 
 from quo.suite.current import get_app
 
-from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
 from quo.styles import Style
 
 
@@ -64,8 +63,8 @@ layout = quo.layout.Layout(container=root_container, focused_element=button1)
 
 # Key bindings.
 kb = quo.keys.KeyBinder()
-kb.add("tab")(focus_next)
-kb.add("s-tab")(focus_previous)
+kb.add("tab")(quo.keys.focus.next)
+kb.add("s-tab")(quo.keys.focus.previous)
 
 
 # Styling.

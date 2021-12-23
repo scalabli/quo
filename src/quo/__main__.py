@@ -1,8 +1,10 @@
 from quo.i_o import echo
 from quo.color.rgb import *
-from quo.tabulate import tabular
+from quo.shortcuts import container
+from quo.widgets import Frame, TextArea
 
-echo(f"Features", reverse=True)
+container(Frame(TextArea(text="         FEATURES"), title="Quo"))
+
 
 echo(f"* ", fg="red", nl=False)
 echo(f"Support for ANSI and RGB color models")
@@ -20,5 +22,4 @@ echo(f"* ", fg=aquamarine, nl=False)
 echo(f"Highlighting")
 echo(f"* ", fg=khaki, nl=False)
 echo(f"Lightweight")
-
 

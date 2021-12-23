@@ -79,7 +79,7 @@ def display_completions_like_readline(event: E) -> None:
 
 
 def _display_completions_like_readline(
-    app: "Application[object]", completions: List[Completion]
+    app: "Suite[object]", completions: List[Completion]
 ) -> "asyncio.Task[None]":
     """
     Display the list of completions in columns above the prompt.

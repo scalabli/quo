@@ -35,8 +35,8 @@ def load_auto_suggest_bindings() -> KeyBinder:
             and app.current_buffer.document.is_cursor_at_the_end
         )
 
-    @handle("c-f", filter=suggestion_available)
-    @handle("c-e", filter=suggestion_available)
+    @handle("ctrl-f", filter=suggestion_available)
+    @handle("ctrl-e", filter=suggestion_available)
     @handle("right", filter=suggestion_available)
     def _accept(event: E) -> None:
         """

@@ -2,27 +2,21 @@
 """
 Demonstration of all the ANSI colors.
 """
-from prompt_toolkit import HTML, print_formatted_text
-from prompt_toolkit.formatted_text import FormattedText
-from prompt_toolkit.output import ColorDepth
-from prompt_toolkit.styles.named_colors import NAMED_COLORS
-
-print = print_formatted_text
-
+import quo
 
 def main():
-    tokens = FormattedText([("fg:" + name, name + "  ") for name in NAMED_COLORS])
+    tokens = quo.text.FormattedText([("fg:" + name, name + "  ") for name in quo.color.NAMED_COLORS])
 
-    print(HTML("\n<u>Named colors, using 16 color output.</u>"))
-    print("(Note that it doesn't really make sense to use named colors ")
-    print("with only 16 color output.)")
-    print(tokens, color_depth=ColorDepth.DEPTH_4_BIT)
+    quo.inscribe(quo.text.HTML("\n<u>Named colors, using 16 color output.</u>"))
+    quo.inscribe("Note that it doesn't really make sense to use named colors ")
+    quo.inscribe("with only 16 color output.)")
+    quo.inscribe(tokens, color_depth=quo.color.ColorDepth.4_bit)
 
-    print(HTML("\n<u>Named colors, use 256 colors.</u>"))
-    print(tokens)
+    quo.inscribe(quo.text.HTML("\n<u>Named colors, use 256 colors.</u>"))
+    quo.inscribe(tokens)
 
-    print(HTML("\n<u>Named colors, using True color output.</u>"))
-    print(tokens, color_depth=ColorDepth.TRUE_COLOR)
+    quo.inscribe(quo.text.HTML("\n<u>Named colors, using True color output.</u>"))
+    quo.inscribe(tokens, color_depth=quo.color.ColorDepth.TRUE_COLOR)
 
 
 if __name__ == "__main__":

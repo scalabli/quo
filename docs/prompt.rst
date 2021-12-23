@@ -49,8 +49,8 @@ provided.  For instance, the following will only accept floats:
 
 .. code:: python
 
-   from quo import prompt
-   prompt('Please enter a number', default=42.0)
+   import quo
+   quo.prompt('Please enter a number', default=42.0)
 
 
 
@@ -91,7 +91,7 @@ Input history can be kept between consecutive Prompt() calls incase you want to 
   text2 = session.prompt("Where are you from?")
 
 Parameters
-   * ``message`` - Plain text or formatted text to be shown before the prompt. This can also be a callable that returns formatted text.
+   * ``text`` - Plain text or formatted text to be shown before the prompt. This can also be a callable that returns formatted text.
    * ``multiline`` - `bool` or :class:`~quo.filters.Filter`.
         When True, prefer a layout that is more adapted for multiline input.
         Text after newlines is automatically indented, and search/arg input is
@@ -135,46 +135,46 @@ Parameters
         true, but it is recommended to be disabled if another Pygments style is
         passed as the `style` argument, otherwise, two Pygments styles will be
         merged.
-    :param style_transformation:
+    * ``style_transformation`` -
         :class:`~quo.style.StyleTransformation` instance.
-    :param swap_light_and_dark_colors: `bool` or
+    * ``swap_light_and_dark_colors`` - `bool` or
         :class:`~quo.filters.Filter`. When enabled, apply
         :class:`~quo.style.SwapLightAndDarkStyleTransformation`.
         This is useful for switching between dark and light terminal
         backgrounds.
-param enable_system_elicit: `bool` or
+    * ``enable_system_elicit`` - `bool` or
         :class:`~quo.filters.Filter`. Pressing Meta+'!' will show
         a system elicit.
-    :param enable_suspend: `bool` or :class:`~quo.filters.Filter`.
+    * ``enable_suspend`` - `bool` or :class:`~quo.filters.Filter`.
         Enable Control-Z style suspension.
-    :param enable_open_in_editor: `bool` or
+    * ``enable_open_in_editor`` - `bool` or
         :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
         C-X C-E in emacs mode will open an external editor.
-    :param history: :class:`~quo.history.History` instance.
-    :param clipboard: :class:`~quo.clipboard.Clipboard` instance.
+    * ``history`` - :class:`~quo.history.History` instance.
+    * ``clipboard`` - :class:`~quo.clipboard.Clipboard` instance.
         (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
-    :param r_elicit: Text or formatted text to be displayed on the right side.
+    * ``r_elicit`` - Text or formatted text to be displayed on the right side.
         This can also be a callable that returns (formatted) text.
-    :param bottom_toolbar: Formatted text or callable which is supposed to
+    * ``bottom_toolbar`` - Formatted text or callable which is supposed to
         return formatted text.
-    :param elicit_continuation: Text that needs to be displayed for a multiline
+    * ``elicit_continuation`` - Text that needs to be displayed for a multiline
         elicit continuation. This can either be formatted text or a callable
         that takes a `elicit_width`, `line_number` and `wrap_count` as input
         and returns formatted text. When this is `None` (the default), then
         `elicit_width` spaces will be used.
-    :param complete_style: ``CompleteStyle.COLUMN``,
+    * ``complete_style`` - ``CompleteStyle.COLUMN``,
         ``CompleteStyle.MULTI_COLUMN`` or ``CompleteStyle.READLINE_LIKE``.
-    :param mouse_support: `bool` or :class:`~quo.filters.Filter`
+    * ``mouse_support`` - `bool` or :class:`~quo.filters.Filter`
         to enable mouse support.
-    :param placeholder: Text to be displayed when no input has been given
+    * ``placeholder`` - Text to be displayed when no input has been given
         yet. Unlike the `default` parameter, this won't be returned as part of
         the output ever. This can be formatted text or a callable that returns
         formatted text.
-    :param refresh_interval: (number; in seconds) When given, refresh the UI
+    * ``refresh_interval`` - (number; in seconds) When given, refresh the UI
         every so many seconds.
-    :param input: `Input` object. (Note that the preferred way to change the
+    * ``input`` - `Input` object. (Note that the preferred way to change the
         input/output is by creating an `AppSession`.)
-    :param output: `Output` object.
+    * ``output`` - `Output` object.
 
 Autocompletion
 
@@ -203,7 +203,7 @@ as a boolean value:
 
 .. code:: python
 
-   from quo import confirm
+   import quo
    
-   confirm('Do you want to continue?')
+   quo.confirm('Do you want to continue?')
  

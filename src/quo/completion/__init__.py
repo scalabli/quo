@@ -1,5 +1,6 @@
 from .core import (
     CompleteEvent,
+    CompleteStyle,
     Completer,
     Completion,
     ConditionalCompleter,
@@ -9,11 +10,13 @@ from .core import (
     get_common_complete_suffix,
     merge_completers,
 )
+#from quo.shortcuts.prompt import CompleStyle
 from .deduplicate import DeduplicateCompleter
 from .filesystem import ExecutableCompleter, PathCompleter
 from .fuzzy_completer import FuzzyCompleter, FuzzyWordCompleter
 from .nested import NestedCompleter
 from .word_completer import WordCompleter
+from quo.auto_suggest import AutoSuggestFromHistory
 
 __all__ = [
     # Base.

@@ -2,14 +2,14 @@ import functools
 from asyncio import get_event_loop
 from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
-from quo.suite.suite import Suite
+from quo.suite import Suite
 from quo.suite.current import get_app
 from quo.buffer import Buffer
 from quo.completion import Completer
 from quo.eventloop import run_in_executor_with_context
 from quo.filters import FilterOrBool
 from quo.text import AnyFormattedText
-from quo.keys.key_binding.bindings.focus import focus_next, focus_previous
+from quo.keys.key_binding.bindings.focus import next, previous
 from quo.keys.key_binding.defaults import load_key_bindings
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_bindings import merge_key_bindings
@@ -31,8 +31,8 @@ from quo.widgets import (
 )
 
 __all__ = [
-    "yes_no_dialog",
-    "button",
+    "confirmation",
+    "choices",
     "evoke",
     "message",
     "radiolist_dialog",
@@ -41,7 +41,7 @@ __all__ = [
 ]
 
 
-def yes_no_dialog(
+def confirmation(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     yes_text: str = "Yes",
@@ -75,7 +75,7 @@ def yes_no_dialog(
 _T = TypeVar("_T")
 
 
-def button(
+def choices(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     buttons: List[Tuple[str, _T]] = [],
@@ -171,7 +171,7 @@ def message(
     return _create_app(dialog, style)
 
 
-def radiolist_dialog(
+def radiolist(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -308,10 +308,10 @@ def progress(
 def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Suite[Any]:
     # Key bindings.
     bindings = KeyBinder()
-    bindings.add("tab")(focus_next)
-    bindings.add("s-tab")(focus_previous)
+    bindings.add("tab")(next)
+    bindings.add("s-tab")(previous)
 
-    return Suit(
+    return Suite(
         layout=Layout(dialog),
         key_bindings=merge_key_bindings([load_key_bindings(), bindings]),
         mouse_support=True,

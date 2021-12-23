@@ -5,13 +5,15 @@ Simple example of a CLI that demonstrates up-arrow partial string matching.
 When you type some input, it's possible to use the up arrow to filter the
 history on the items starting with the given input text.
 """
-from prompt_toolkit import PromptSession
+
+import quo
+
 from prompt_toolkit.history import InMemoryHistory
 
 
 def main():
     # Create some history first. (Easy for testing.)
-    history = InMemoryHistory()
+    history = quo.history.InMemoryHistory()
     history.append_string("import os")
     history.append_string('print("hello")')
     history.append_string('print("world")')
@@ -24,7 +26,7 @@ def main():
     print("Press Control-C to retry. Control-D to exit.")
     print()
 
-    session = PromptSession(history=history, enable_history_search=True)
+    session = quo.Prompt(history=history, enable_history_search=True)
 
     while True:
         try:
@@ -34,7 +36,7 @@ def main():
         else:
             break
 
-    print("You said: %s" % text)
+    quo.echo(f"You said: {text}")
 
 
 if __name__ == "__main__":

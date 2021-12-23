@@ -9,28 +9,28 @@ __all__ = [
 
 class ColorDepth(str, Enum):
     """
-    Possible color depth values for the output.
+    The bit depth specifies the number of bits used for each color component
     """
 
     value: str
 
-    #: One color only.
-    DEPTH_1_BIT = "DEPTH_1_BIT"
+    #: 2 colors, often black and white
+    one_bit = "one_bit"
 
-    #: ANSI Colors.
-    DEPTH_4_BIT = "DEPTH_4_BIT"
+    #: ANSI Colors. 16 colors
+    four_bit = "four_bit"
 
-    #: The default.
-    DEPTH_8_BIT = "DEPTH_8_BIT"
+    #: The default. 256 colors
+    eight_bit= "eight_bit"
 
     #: 24 bit True color.
-    DEPTH_24_BIT = "DEPTH_24_BIT"
+    twenty_four_bit = "twenty_four_bit"
 
     # Aliases.
-    MONOCHROME = DEPTH_1_BIT
-    ANSI_COLORS_ONLY = DEPTH_4_BIT
-    DEFAULT = DEPTH_8_BIT
-    TRUE_COLOR = DEPTH_24_BIT
+    MONOCHROME = one_bit
+    ANSI_COLORS_ONLY = four_bit
+    DEFAULT = eight_bit
+    TRUE_COLOR = twenty_four_bit
 
     @classmethod
     def from_env(cls) -> Optional["ColorDepth"]:

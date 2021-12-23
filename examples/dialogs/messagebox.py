@@ -2,11 +2,10 @@
 """
 Example of a message box window.
 """
-from prompt_toolkit.shortcuts import message_dialog
-
+from quo.shortcuts import message
 
 def main():
-    message_dialog(
+    message(
         title="Example dialog window",
         text="Do you want to continue?\nPress ENTER to quit.",
     ).run()

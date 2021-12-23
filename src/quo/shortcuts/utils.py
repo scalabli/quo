@@ -30,7 +30,7 @@ __all__ = [
 ]
 
 
-def print_formatted_text(
+def inscribe(
     *values: Any,
     sep: str = " ",
     end: str = "\n",
@@ -45,24 +45,24 @@ def print_formatted_text(
     """
     ::
 
-        print_formatted_text(*values, sep=' ', end='\\n', file=None, flush=False, style=None, output=None)
+        inscribe(*values, sep=' ', end='\\n', file=None, flush=False, style=None, output=None)
 
     Print text to stdout. This is supposed to be compatible with Python's print
     function, but supports printing of formatted text. You can pass a
     :class:`~quo.text.FormattedText`,
     :class:`~quo.text.HTML` or
-    :class:`~quo.formtext.ANSI` object to print formatted
+    :class:`~quo.text.ANSI` object to print formatted
     text.
 
     * Print HTML as follows::
 
-        print_formatted_text(HTML('<i>Some italic text</i> <ansired>This is red!</ansired>'))
+        quo.inscribe(quo.text.HTML('<i>Some italic text</i> <red>This is red!</red>'))
 
         style = Style.from_dict({
             'hello': '#ff0066',
             'world': '#884444 italic',
         })
-        print_formatted_text(HTML('<hello>Hello</hello> <world>world</world>!'), style=style)
+        quo.inscribe(quo.text.HTML('<hello>Hello</hello> <world>world</world>!'), style=style)
 
     * Print a list of (style_str, text) tuples in the given style to the
       output.  E.g.::
@@ -75,7 +75,7 @@ def print_formatted_text(
             ('class:hello', 'Hello'),
             ('class:world', 'World'),
         ])
-        print_formatted_text(fragments, style=style)
+        quo.inscribe(fragments, style=style)
 
     If you want to print a list of Pygments tokens, wrap it in
     :class:`~quo.text.PygmentsTokens` to do the

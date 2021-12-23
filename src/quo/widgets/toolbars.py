@@ -92,8 +92,8 @@ class SystemToolbar:
         handle = emacs_bindings.add
 
         @handle("escape", filter=focused)
-        @handle("c-g", filter=focused)
-        @handle("c-c", filter=focused)
+        @handle("ctrl-g", filter=focused)
+        @handle("ctrl-c", filter=focused)
         def _cancel(event: E) -> None:
             "Hide system prompt."
             self.system_buffer.reset()
@@ -114,7 +114,7 @@ class SystemToolbar:
         handle = vi_bindings.add
 
         @handle("escape", filter=focused)
-        @handle("c-c", filter=focused)
+        @handle("ctrl-c", filter=focused)
         def _cancel_vi(event: E) -> None:
             "Hide system prompt."
             event.app.vi_state.input_mode = InputMode.NAVIGATION

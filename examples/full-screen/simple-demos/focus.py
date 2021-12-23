@@ -9,12 +9,12 @@ top_text = (
 )
 
 content = """
-placerat massa tempor elementum. Sed tristique mauris ac
-tempus vehicula augue non venenatis. Mauris aliquam velit turpis, nec congue
-risus aliquam sit amet. Pellentesque blandit scelerisque felis, faucibus
-consequat ante. Curabitur tempor tortor a imperdiet tincidunt. Nam sed justo
-sit amet odio bibendum congue. Quisque varius ligu
-Quo is a Python based toolkit for writing Command-Line Interface(CLI) applications. Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API. Simple to code, easy to learn, and does not come with needless baggage. """
+Quo is a Python based toolkit for writing Command-
+Line Interface(CLI) applications. Quo is making 
+headway towards composing speedy and orderly CLI 
+applications while forestalling any disappointments 
+brought about by the failure to execute a CLI API. 
+Simple to code, easy to learn, and does not come with needless baggage. """
 
 
 left_top = quo.layout.Window(BufferControl(quo.buffer.Buffer(document=quo.document.Document(content))))

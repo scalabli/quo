@@ -2,11 +2,11 @@
 """
 Example of an password input dialog.
 """
-from prompt_toolkit.shortcuts import input_dialog
+from quo.shortcuts import evoke
 
 
 def main():
-    result = input_dialog(
+    result = evoke(
         title="Password dialog example",
         text="Please type your password:",
         password=True,

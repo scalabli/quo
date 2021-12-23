@@ -131,7 +131,6 @@ def _parse_style_str(style_str: str) -> Attrs:
         elif part == "nounderline":
             attrs = attrs._replace(underline=False)
 
-        # prompt_toolkit extensions. Not in Pygments.
         elif part == "blink":
             attrs = attrs._replace(blink=True)
         elif part == "noblink":
