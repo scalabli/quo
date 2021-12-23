@@ -2,14 +2,23 @@
 
 
 Changelog
-=========
-Version 2021.6
----------------
+==========
+
+Version 2021.7
+--------------
 Unreleased
 
-- Added Support of a placeholder text that is displayed as long as no input is given.
+- Streamlined a number of features
+- Fixed broken placeholder() issue :issue:`30`
+- Faced out positional arguments ``foreground`` and ``background`` in favor of ``fg`` and ``bg``
 
--
+Version 2021.6
+---------------
+2021-11-20
+
+- Added Support of a placeholder text that is displayed as long as no input is given.
+- Fixed minor bugs
+
 Version 2021.5.5.2
 ------------------
 2021-09-28
@@ -48,18 +57,17 @@ Version 2021.3.5
 
 2021-07-19
 
--   Added ``fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``. foreground and background still works.
+-   Added positional arguments `fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``. foreground and background still works.
 
 -   Added support for lively ``ProgressBars``
 
--   Minimal implementation of ``HTML`` module to easy formating
+-   Implementation of :class: ``quo.text.HTML`` for easy text formating
 
 -   Fixed changelong link on PyPI
 
 -   Fixed wcwidth dependancy issue :issue:`18`
--   Added ability to display tabular which comes with several themes/formats
--
--
+-   Added ability to display tabular which comes with several themes
+
 
 
 
@@ -69,22 +77,14 @@ Version 2021.2
 Released 2021-06-28
 
 -   ``importlib_metadata`` backport package is installed on Python < 3.8 therefore will be be delisted as part of Quo's external dependency in later versions of Quo
--
--
--
--
--
+-   Under the hood optimizations
+
 
 
 Version 2021.1
 ---------------
 Released 2021-06-18
-`
+
 -   Added support for ``ANSI colors`` for better coloring of the terminal
 -   Ability to Print both ``text`` and ``binary`` data to stdout 
 -   Added support for RGB tuples of three integers
--
--
--
--
--
