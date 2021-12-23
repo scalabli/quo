@@ -166,7 +166,7 @@ modify the progress bar to look like an apt-get style progress bar:
         for i in pb(range(1600), label='Installing'):
             time.sleep(.01)
 
-.. image:: ../images/apt-get.png
+.. image:: ./images/apt-get.png
 
 
 Adding key bindings and toolbar
