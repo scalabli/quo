@@ -36,6 +36,8 @@ Quo's Documentation
    columns.rst
    padding.rst
    panel.rst
+   filters.rst
+   key_bindings.rst
    progress_bars.rst
    syntax.rst
    tables.rst
