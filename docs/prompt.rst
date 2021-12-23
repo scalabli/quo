@@ -31,12 +31,15 @@ App prompts are integrated into the app interface.  See
 :ref:`app-prompting` for more information.  Internally, it
 automatically calls either :func:`prompt` or :func:`confirm` as necessary.
 
-Input Prompts using prompt() function
---------------------------------------
+Input Validation
+----------------------------
+A prompt can have a validator attached. This is some code that will check
+whether the given input is acceptable and it will only return it if that's the
+case. Otherwise it will show an error message and move the cursor to a given
+position.
 
-To manually ask for user input, you can use the :func:`prompt` function.
-By default, it accepts any Unicode string, but you can ask for any other
-type.  For instance, you can ask for a valid integer:
+To manually ask for user input, you can use the :func:`prompt` function or the :class:`quo.Prompt` object.
+For instance, you can ask for a valid integer:
 
 .. code:: python
 
@@ -74,6 +77,49 @@ Parameters
    * ``err`` – if set to true the file defaults to stderr instead of stdout, the same as with echo.
 
    * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
+
+A validator should implements the :class:`~quo.types.Validator`
+abstract base class. This requires only one method, named ``validate`` that
+takes a :class:`~quo.document.Document` as input and raises
+:class:`~quo.errors.ValidationError` when the validation fails.
+
+.. code:: python
+
+    from prompt_toolkit.validation import Validator, ValidationError
+    from prompt_toolkit import prompt
+
+    class NumberValidator(Validator):
+        def validate(self, document):
+            text = document.text
+
+            if text and not text.isdigit():
+                i = 0
+
+                # Get index of first non numeric character.
+                # We want to move the cursor here.
+                for i, c in enumerate(text):
+                    if not c.isdigit():
+                        break
+
+                raise ValidationError(message='This input contains non-numeric characters',
+                                      cursor_position=i)
+
+    number = int(prompt('Give a number: ', validator=NumberValidator()))
+    print('You said: %i' % number)
+
+.. image:: ../images/number-validator.png
+
+By default, the input is validated in real-time while the user is typing, but
+prompt_toolkit can also validate after the user presses the enter key:
+
+.. code:: python
+
+    prompt('Give a number: ', validator=NumberValidator(),
+           validate_while_typing=False)
+
+If the input validation contains some heavy CPU intensive code, but you don't
+want to block the event loop, then it's recommended to wrap the validator class
+in a :class:`~prompt_toolkit.validation.ThreadedValidator`.
 
 Input Prompts using Prompt() object
 -------------------------------------
