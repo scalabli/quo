@@ -3,19 +3,6 @@
 Progress bars
 =============
 
-Prompt_toolkit ships with a high level API for displaying progress bars,
-inspired by `tqdm <https://github.com/tqdm/tqdm>`_ 
-
-.. warning::
-
-    The API for the prompt_toolkit progress bars is still very new and can
-    possibly change in the future. It is usable and tested, but keep this in
-    mind when upgrading.
-
-Remember that the `examples directory <https://github.com/prompt-toolkit/python-prompt-toolkit/tree/master/examples>`_
-of the prompt_toolkit repository ships with many progress bar examples as well.
-
-
 Simple progress bar
 -------------------
 
@@ -127,7 +114,7 @@ looks something like this:
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts.progress_bar.formatters import *
+    from quo.progress.progress_bar.formatters import *
 
     default_formatting = [
         Label(),
@@ -145,19 +132,19 @@ looks something like this:
     ]
 
 That sequence of
-:class:`~prompt_toolkit.shortcuts.progress_bar.formatters.Formatter` can be
+:class:`~quo.progress.progress_bar.formatters.Formatter` can be
 passed to the `formatter` argument of
-:class:`~prompt_toolkit.shortcuts.ProgressBar`. So, we could change this and
+:class:`~quo.progress.ProgressBar`. So, we could change this and
 modify the progress bar to look like an apt-get style progress bar:
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import ProgressBar
-    from prompt_toolkit.styles import Style
-    from prompt_toolkit.shortcuts.progress_bar import formatters
+    import quo
     import time
 
-    style = Style.from_dict({
+    from quo.progress.progress_bar import formatters
+
+    style = quo.style.Style.from_dict({
         'label': 'bg:#ffff00 #000000',
         'percentage': 'bg:#ffff00 #000000',
         'current': '#448844',
@@ -175,7 +162,7 @@ modify the progress bar to look like an apt-get style progress bar:
         formatters.Text('  '),
     ]
 
-    with ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with quo.progress.ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label='Installing'):
             time.sleep(.01)
 
