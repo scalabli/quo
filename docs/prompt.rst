@@ -33,12 +33,7 @@ automatically calls either :func:`prompt` or :func:`confirm` as necessary.
 
 Input Validation
 ----------------------------
-A prompt can have a validator attached. This is some code that will check
-whether the given input is acceptable and it will only return it if that's the
-case. Otherwise it will show an error message and move the cursor to a given
-position.
-
-To manually ask for user input, you can use the :func:`prompt` function or the :class:`quo.Prompt` object.
+A prompt can have a validator attached. To manually ask for user input, you can use the :func:`prompt` function or the :class:`quo.Prompt` object.
 For instance, you can ask for a valid integer:
 
 .. code:: python
