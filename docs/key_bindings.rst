@@ -196,9 +196,9 @@ filters <filters>`.)
 
 .. code:: python
 
-    from prompt_toolkit.filters import Condition
+    import quo
 
-    @Condition
+    @quo.filters.Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
@@ -216,18 +216,18 @@ ConditionalKeyBindings: Disabling a set of key bindings
 
 Sometimes you want to enable or disable a whole set of key bindings according
 to a certain condition. This is possible by wrapping it in a
-:class:`~prompt_toolkit.key_binding.ConditionalKeyBindings` object.
+:class:`~quo.keys.ConditionalKeyBindings` object.
 
 .. code:: python
 
-    from prompt_toolkit.key_binding import ConditionalKeyBindings
+    import quo
 
     @Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-     bindings = ConditionalKeyBindings(
+     bindings = quo.keys.ConditionalKeyBindings(
          key_bindings=my_bindings,
          filter=is_active)
 
