@@ -648,4 +648,123 @@ This ensures that the output of the print-statement and the prompt don't mix
 up. If the key bindings doesn't print anything, then it can be handled directly
 without nesting functions.
 
+Enable key bindings according to a condition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Often, some key bindings can be enabled or disabled according to a certain
+condition. For instance, the Emacs and Vi bindings will never be active at the
+same time, but it is possible to switch between Emacs and Vi bindings at run
+time.
+
+In order to enable a key binding according to a certain condition, we have to
+pass it a :class:`~prompt_toolkit.filters.Filter`, usually a
+:class:`~prompt_toolkit.filters.Condition` instance. (:ref:`Read more about
+filters <filters>`.)
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+    from prompt_toolkit.filters import Condition
+    from prompt_toolkit.key_binding import KeyBindings
+
+    bindings = KeyBindings()
+
+    @Condition
+    def is_active():
+        " Only activate key binding on the second half of each minute. "
+        return datetime.datetime.now().second > 30
+
+    @bindings.add('c-t', filter=is_active)
+    def _(event):
+        # ...
+        pass
+
+    prompt('> ', key_bindings=bindings)
+
+Using control-space for completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An popular short cut that people sometimes use it to use control-space for
+opening the autocompletion menu instead of the tab key. This can be done with
+the following key binding.
+
+.. code:: python
+
+    kb = KeyBindings()
+
+    @kb.add('c-space')
+    def _(event):
+        " Initialize autocompletion, or select the next completion. "
+        buff = event.app.current_buffer
+        if buff.complete_state:
+            buff.complete_next()
+        else:
+            buff.start_completion(select_first=False)
+
+
+Other prompt options
+--------------------
+
+Multiline input
+^^^^^^^^^^^^^^^
+
+Reading multiline input is as easy as passing the ``multiline=True`` parameter.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+
+    prompt('> ', multiline=True)
+
+A side effect of this is that the enter key will now insert a newline instead
+of accepting and returning the input. The user will now have to press
+:kbd:`Meta+Enter` in order to accept the input. (Or :kbd:`Escape` followed by
+:kbd:`Enter`.)
+
+It is possible to specify a continuation prompt. This works by passing a
+``prompt_continuation`` callable to :func:`~prompt_toolkit.shortcuts.prompt`.
+This function is supposed to return :ref:`formatted text <formatted_text>`, or
+a list of ``(style, text)`` tuples. The width of the returned text should not
+exceed the given width. (The width of the prompt margin is defined by the
+prompt.)
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+
+    def prompt_continuation(width, line_number, is_soft_wrap):
+        return '.' * width
+        # Or: return [('', '.' * width)]
+
+    prompt('multiline input> ', multiline=True,
+           prompt_continuation=prompt_continuation)
+
+.. image:: ../images/multiline-input.png
+
+Mouse support
+^^^^^^^^^^^^^
+
+There is limited mouse support for positioning the cursor, for scrolling (in
+case of large multiline inputs) and for clicking in the autocompletion menu.
+
+Enabling can be done by passing the ``mouse_support=True`` option.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+
+    prompt('What is your name: ', mouse_support=True)
+
+
+Line wrapping
+^^^^^^^^^^^^^
+
+Line wrapping is enabled by default. This is what most people are used to and
+this is what GNU Readline does. When it is disabled, the input string will
+scroll horizontally.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+
+    prompt('What is your name: ', wrap_lines=False)
