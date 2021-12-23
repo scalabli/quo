@@ -469,6 +469,24 @@ Notice that this setting is incompatible with the ``enable_history_search``
 option. The reason for this is that the up and down key bindings would conflict
 otherwise. So, make sure to disable history search for this.
 
+Password input
+^^^^^^^^^^^^^^
+
+When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.Prompt` has been given, the input is hidden or replaced by
+asterisks (``*`` characters) .
+
+.. code:: python
+    import quo
+     
+    quo.prompt("Enter password", hide=True) 
+
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+
+    prompt('Enter password: ', is_password=True)
+
 History
 -------
 
@@ -588,3 +606,46 @@ The ``get_rprompt`` function can return any kind of formatted text such as
 directly to the ``rprompt`` argument of the
 :func:`~prompt_toolkit.shortcuts.prompt` function. It does not have to be a
 callable.
+
+Adding custom key bindings
+--------------------------
+
+By default, every prompt already has a set of key bindings which implements the
+usual Vi or Emacs behaviour. We can extend this by passing another
+:class:`~prompt_toolkit.key_binding.KeyBindings` instance to the
+``key_bindings`` argument of the :func:`~prompt_toolkit.shortcuts.prompt`
+function or the :class:`~prompt_toolkit.shortcuts.PromptSession` class.
+
+An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pressed.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+    from prompt_toolkit.application import run_in_terminal
+    from prompt_toolkit.key_binding import KeyBindings
+
+    bindings = KeyBindings()
+
+    @bindings.add('c-t')
+    def _(event):
+        " Say 'hello' when `c-t` is pressed. "
+        def print_hello():
+            print('hello world')
+        run_in_terminal(print_hello)
+
+    @bindings.add('c-x')
+    def _(event):
+        " Exit when `c-x` is pressed. "
+        event.app.exit()
+
+    text = prompt('> ', key_bindings=bindings)
+    print('You said: %s' % text)
+
+
+Note that we use
+:meth:`~prompt_toolkit.application.run_in_terminal` for the first key binding.
+This ensures that the output of the print-statement and the prompt don't mix
+up. If the key bindings doesn't print anything, then it can be handled directly
+without nesting functions.
+
+
