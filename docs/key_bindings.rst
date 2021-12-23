@@ -1,12 +1,12 @@
 .. _key_bindings:
 
-More about key bindings
+Key binding
 =======================
-
+A key binding is an association between a physical key on a keyboard and a parameter. A parameter can have any number of key bindings associated with it, and a particular key binding can control any number of parameters.
 This page contains a few additional notes about key bindings.
 
 
-Key bindings can be defined as follows by creating a
+Key bindings can be defined by creating a
 :class:`~quo.keys.KeyBinder` instance:
 
 
@@ -47,13 +47,13 @@ only triggered when all the keys in this sequence are pressed.
 
 .. code:: python
 
-    @bindings.add('a', 'b')
+    @bindings.add('q', 'u', 'o')
     def _(start):
         " Do something if 'a' is pressed and then 'b' is pressed. "
         ...
 
-If the user presses only `a`, then nothing will happen until either a second
-key (like `b`) has been pressed or until the timeout expires (see later).
+If the user presses only `q`, then nothing will happen until either a second
+key (like `u` or `o`) has been pressed or until the timeout expires.
 
 
 List of special keys
