@@ -511,3 +511,53 @@ passed either to a :class:`~prompt_toolkit.shortcuts.PromptSession` or to the
    while True:
        session.prompt()
 
+Adding a bottom toolbar
+-----------------------
+
+Adding a bottom toolbar is as easy as passing a ``bottom_toolbar`` argument to
+:func:`~prompt_toolkit.shortcuts.prompt`. This argument be either plain text,
+:ref:`formatted text <formatted_text>` or a callable that returns plain or
+formatted text.
+
+When a function is given, it will be called every time the prompt is rendered,
+so the bottom toolbar can be used to display dynamic information.
+
+The toolbar is always erased when the prompt returns.
+Here we have an example of a callable that returns an
+:class:`~prompt_toolkit.formatted_text.HTML` object. By default, the toolbar
+has the **reversed style**, which is why we are setting the background instead
+of the foreground.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+    from prompt_toolkit.formatted_text import HTML
+
+    def bottom_toolbar():
+        return HTML('This is a <b><style bg="ansired">Toolbar</style></b>!')
+
+    text = prompt('> ', bottom_toolbar=bottom_toolbar)
+    print('You said: %s' % text)
+
+.. image:: ../images/bottom-toolbar.png
+
+Similar, we could use a list of style/text tuples.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+    from prompt_toolkit.styles import Style
+
+    def bottom_toolbar():
+        return [('class:bottom-toolbar', ' This is a toolbar. ')]
+
+    style = Style.from_dict({
+        'bottom-toolbar': '#ffffff bg:#333333',
+    })
+
+    text = prompt('> ', bottom_toolbar=bottom_toolbar, style=style)
+    print('You said: %s' % text)
+
+The default class name is ``bottom-toolbar`` and that will also be used to fill
+the background of the toolbar.
+
