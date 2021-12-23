@@ -81,10 +81,11 @@ It also supports handling of ANSI color sequences.
 ```python
    import quo
 
-   completer = quo.completions.WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+   completer = quo.completion.WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
    session = quo.Prompt(completer=completer)
    session.prompt('Which country are you from?: ')
 ```
+![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
 
 ### Quo tabular
 ```python
