@@ -21,14 +21,15 @@ Quo requires Python `3.6.1` or later.
 
 
 ## Features
-- Support for ANSI and RGB color models
-- Support for tabular presentation of data
-- Interactive progressbars
-- Code completions
-- Nesting of commands
-- Automatic help page generation
-- Highlighting
-- Lightweight
+- [x] Support for Ansi, RGB and HTML color models
+- [x] Support for tabular presentation of data
+- [x] Interactive progressbars
+- [x] Code completions
+- [x] Nesting of commands
+- [x] Automatic help page generation
+- [x] Syntax highlighting
+- [x] Autosuggestions
+- [x] Key Binders
 
 ## Getting Started
 ### Installation
