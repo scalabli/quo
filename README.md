@@ -77,13 +77,13 @@ It also supports handling of ANSI color sequences.
 ```
 ![quo.Prompt.prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
 
-### Quo log
+### Quo Autocompletion
 ```python
    import quo
 
-   console = quo.Console()
-   console.log("Quo status")
-
+   completer = quo.completions.WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+   session = quo.Prompt(completer=completer)
+   session.prompt('Which country are you from?: ')
 ```
 
 ### Quo tabular
