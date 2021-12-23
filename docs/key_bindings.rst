@@ -136,19 +136,19 @@ binding:
 There are a couple of useful aliases as well:
 
 +-------------------+-------------------+
-| :kbd:`c-h`        | :kbd:`backspace`  |
+| :kbd:`ctrl-h`        | :kbd:`backspace`  |
 +-------------------+-------------------+
-| :kbd:`c-@`        | :kbd:`c-space`    |
+| :kbd:`ctrl-@`        | :kbd:`c-space`    |
 +-------------------+-------------------+
-| :kbd:`c-m`        | :kbd:`enter`      |
+| :kbd:`ctrl-m`        | :kbd:`enter`      |
 +-------------------+-------------------+
-| :kbd:`c-i`        | :kbd:`tab`        |
+| :kbd:`ctrl-i`        | :kbd:`tab`        |
 +-------------------+-------------------+
 
 .. note::
 
     Note that the supported keys are limited to what typical VT100 terminals
-    offer. Binding :kbd:`c-7` (control + number 7) for instance is not
+    offer. Binding :kbd:`ctrl-7` (control + number 7) for instance is not
     supported.
 
 
@@ -203,7 +203,7 @@ filters <filters>`.)
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-    @bindings.add('c-t', filter=is_active)
+    @bindings.add('ctrl-t', filter=is_active)
     def _(event):
         # ...
         pass
