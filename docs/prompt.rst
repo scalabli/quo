@@ -561,3 +561,35 @@ Similar, we could use a list of style/text tuples.
 The default class name is ``bottom-toolbar`` and that will also be used to fill
 the background of the toolbar.
 
+Adding a right prompt
+---------------------
+
+The :func:`~prompt_toolkit.shortcuts.prompt` function has out of the box
+support for right prompts as well. People familiar to ZSH could recognise this
+as the `RPROMPT` option.
+
+So, similar to adding a bottom toolbar, we can pass an ``rprompt`` argument.
+This can be either plain text, :ref:`formatted text <formatted_text>` or a
+callable which returns either.
+
+.. code:: python
+
+    from prompt_toolkit import prompt
+    from prompt_toolkit.styles import Style
+
+    example_style = Style.from_dict({
+        'rprompt': 'bg:#ff0066 #ffffff',
+    })
+
+    def get_rprompt():
+        return '<rprompt>'
+
+    answer = prompt('> ', rprompt=get_rprompt, style=example_style)
+
+.. image:: ../images/rprompt.png
+
+The ``get_rprompt`` function can return any kind of formatted text such as
+:class:`~prompt_toolkit.formatted_text.HTML`. it is also possible to pass text
+directly to the ``rprompt`` argument of the
+:func:`~prompt_toolkit.shortcuts.prompt` function. It does not have to be a
+callable.
