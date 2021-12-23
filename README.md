@@ -39,7 +39,7 @@ pip install -U quo
 ```
 
 
-### Quo print
+### quo.echo
 **Example 1**
 ```python
    import quo
@@ -60,13 +60,22 @@ pip install -U quo
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
 It also supports handling of ANSI color sequences.
 
-### Quo prompt
+### quo.prompt
 ```python
    import quo
 
    quo.prompt("What is your name?")
 ```
-![prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
+![quo.prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
+
+### quo.Prompt.prompt
+```python
+   import quo
+   
+   session = quo.Prompt(bottom_toolbar="Python 🐍 is great")
+   session.prompt("Type something:") 
+```
+![quo.Prompt.prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
 
 ### Quo log
 ```python
