@@ -223,7 +223,7 @@ Parameters
     * ``output`` - `Output` object.
 
 Autocompletion
-
+----------------
 Autocompletion can be added by passing a completer parameter.
 
 .. code:: python
@@ -239,6 +239,45 @@ Autocompletion can be added by passing a completer parameter.
 completes the last word before the cursor with any of the given words.
 
 .. image:: ./images/html-completion.png
+
+Auto suggestion
+---------------
+
+Auto suggestion is a way to propose some input completions to the user like the
+`fish shell <http://fishshell.com/>`_.
+
+Usually, the input is compared to the history and when there is another entry
+starting with the given text, the completion will be shown as gray text behind
+the current input. Pressing the right arrow :kbd:`→` or :kbd:`c-e` will insert
+this suggestion, :kbd:`alt-f` will insert the first word of the suggestion.
+
+.. note::
+
+    When suggestions are based on the history, don't forget to share one
+    :class:`~prompt_toolkit.history.History` object between consecutive
+    :func:`~prompt_toolkit.shortcuts.prompt` calls. Using a
+    :class:`~prompt_toolkit.shortcuts.PromptSession` does this for you.
+
+Example:
+
+.. code:: python
+
+    from prompt_toolkit import PromptSession
+    from prompt_toolkit.history import InMemoryHistory
+    from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+
+    session = PromptSession()
+
+    while True:
+        text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
+        print('You said: %s' % text)
+
+.. image:: ../images/auto-suggestion.png
+
+A suggestion does not have to come from the history. Any implementation of the
+:class:`~prompt_toolkit.auto_suggest.AutoSuggest` abstract base class can be
+passed as an argument.
+
 
 Confirmation Prompts
 --------------------
@@ -434,3 +473,41 @@ option:
 Notice that this setting is incompatible with the ``enable_history_search``
 option. The reason for this is that the up and down key bindings would conflict
 otherwise. So, make sure to disable history search for this.
+
+History
+-------
+
+A :class:`~prompt_toolkit.history.History` object keeps track of all the
+previously entered strings, so that the up-arrow can reveal previously entered
+items.
+
+The recommended way is to use a
+:class:`~prompt_toolkit.shortcuts.PromptSession`, which uses an
+:class:`~prompt_toolkit.history.InMemoryHistory` for the entire session by
+default. The following example has a history out of the box:
+
+.. code:: python
+
+   from prompt_toolkit import PromptSession
+
+   session = PromptSession()
+
+   while True:
+       session.prompt()
+
+To persist a history to disk, use a :class:`~prompt_toolkit.history.FileHistory`
+instead of the default
+:class:`~prompt_toolkit.history.InMemoryHistory`. This history object can be
+passed either to a :class:`~prompt_toolkit.shortcuts.PromptSession` or to the
+:meth:`~prompt_toolkit.shortcuts.prompt` function. For instance:
+
+.. code:: python
+
+   from prompt_toolkit import PromptSession
+   from prompt_toolkit.history import FileHistory
+
+   session = PromptSession(history=FileHistory('~/.myhistory'))
+
+   while True:
+       session.prompt()
+
