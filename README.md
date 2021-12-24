@@ -89,6 +89,25 @@ It also supports handling of ANSI color sequences.
 ```
 ![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
 
+### Quo frame
+```python
+  
+   import quo
+
+   @quo.command()
+   @quo.app("@frame", help="Print a frame")
+
+   def _frame(frame):
+    """ Example of a simple layout"""                                                        content = quo.widgets.TextArea(text="Hello world🌍")       quo.container(
+        quo.widgets.Frame(
+            content,
+            title="Quo: python🐍")
+         )
+
+   if __name__ == "__main__":
+       _frame()
+```
+
 ### Quo tabular
 ```python
    import quo
