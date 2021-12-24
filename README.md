@@ -107,6 +107,7 @@ It also supports handling of ANSI color sequences.
    if __name__ == "__main__":
        _frame()
 ```
+![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
 ### Quo tabular
 ```python
