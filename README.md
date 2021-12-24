@@ -80,7 +80,7 @@ It also supports handling of ANSI color sequences.
 
 ### Quo autocompletion
 ```python
-   # Press [Tab] for to autocomplete
+   # Press [Tab] to autocomplete
    import quo
 
    completer = quo.completion.WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
