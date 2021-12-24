@@ -99,7 +99,8 @@ It also supports handling of ANSI color sequences.
 
    def _frame(frame):
     """ Example of a simple layout"""
-   content = quo.widgets.TextArea(text="Hello world🌍")       quo.container(
+   content = quo.widgets.TextArea(text="Hello world🌍")
+   quo.container(
         quo.widgets.Frame(
             content,
             title="Quo: python🐍")
