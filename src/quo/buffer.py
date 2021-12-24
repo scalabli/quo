@@ -30,8 +30,8 @@ from typing import (
 
 from quo.suite.current import get_app
 from quo.suite.run_in_terminal import run_in_terminal
-from .auto_suggest import AutoSuggest, Suggestion
-from .cache import FastDictCache
+from quo.completion.auto_suggest import AutoSuggest, Suggestion
+from quo.cache import FastDictCache
 from quo.clipboard import Data
 from quo.completion import (
     CompleteEvent,
@@ -40,13 +40,14 @@ from quo.completion import (
     DummyCompleter,
     get_common_complete_suffix,
 )
-from .document import Document
+from quo.document import Document
+from quo.errors import ValidationError
 from quo.filters import FilterOrBool, to_filter
 from .history import History, InMemoryHistory
 from .search import SearchDirection, SearchState
 from .selection import PasteMode, SelectionState, SelectionType
 from quo.utils.utils import Event, to_str
-from .validation import ValidationError, Validator
+from quo.types import Validator
 
 __all__ = [
         "EditReadOnlyBuffer",
