@@ -69,7 +69,7 @@ It also supports handling of ANSI color sequences.
 ```
 ![quo.prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
-### quo.Prompt.prompt
+### quo.Prompt
 ```python
    import quo
    
@@ -78,8 +78,9 @@ It also supports handling of ANSI color sequences.
 ```
 ![quo.Prompt.prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
 
-### Quo Autocompletion
+### Quo autocompletion
 ```python
+   # Press [Tab] for to autocomplete
    import quo
 
    completer = quo.completion.WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
@@ -104,24 +105,6 @@ It also supports handling of ANSI color sequences.
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
    
-### Quo Status
-```python
-   import time
-    
-   import quo
-
-   console = quo.Console()
-
-   tasks = [f"task {n}" for n in range(1, 11)]
-   quo.echo(f"Working on tasks...", fg="green", bold=True)
-   with console.status("[bold green] ",) as status:
-       while tasks:
-           task = tasks.pop(0)
-           time.sleep(1)
-           console.log(f"{task} complete")
-```
-
-![Status](https://github.com/secretum-inc/quo/raw/master/pics/status.gif)
 
 
 For more intricate  examples, have a look in the [examples](https://github.com/secretum-inc/quo/tree/master/examples) directory and the documentation.
