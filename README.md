@@ -98,7 +98,8 @@ It also supports handling of ANSI color sequences.
    @quo.app("@frame", help="Print a frame")
 
    def _frame(frame):
-    """ Example of a simple layout"""                                                        content = quo.widgets.TextArea(text="Hello world🌍")       quo.container(
+    """ Example of a simple layout"""
+   content = quo.widgets.TextArea(text="Hello world🌍")       quo.container(
         quo.widgets.Frame(
             content,
             title="Quo: python🐍")
