@@ -17,7 +17,7 @@ from quo.layout.layout import Layout
 from quo.layout.containers import AnyContainer, HSplit
 from quo.layout.dimension import Dimension as D
 from quo.styles import BaseStyle
-from quo.validation import Validator
+from quo.types import Validator
 from quo.widgets import (
     Box,
     Button,
