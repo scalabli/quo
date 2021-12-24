@@ -112,7 +112,7 @@ from quo.utils.utils import (
     suspend_to_background_supported,
     to_str,
 )
-from quo.validation import DynamicValidator, Validator
+from quo.types import DynamicValidator, Validator
 from quo.widgets.toolbars import (
     SearchToolbar,
     SystemToolbar,
