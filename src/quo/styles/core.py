@@ -23,6 +23,7 @@ Attrs = NamedTuple(
         ("bgcolor", Optional[str]),
         ("bold", Optional[bool]),
         ("underline", Optional[bool]),
+        ("strike", Optional[bool]),
         ("italic", Optional[bool]),
         ("blink", Optional[bool]),
         ("reverse", Optional[bool]),
@@ -35,6 +36,7 @@ Attrs = NamedTuple(
 :param bgcolor: Hexadecimal string. E.g. 'ffffff' or Ansi color name: e.g. 'ansired'
 :param bold: Boolean
 :param underline: Boolean
+:param strike: Boolean
 :param italic: Boolean
 :param blink: Boolean
 :param reverse: Boolean
@@ -47,6 +49,7 @@ DEFAULT_ATTRS = Attrs(
     bgcolor="",
     bold=False,
     underline=False,
+    strike=False,
     italic=False,
     blink=False,
     reverse=False,
@@ -82,6 +85,10 @@ ANSI_COLOR_NAMES = [
 ]
 
 
+# People don't use the same ANSI color names everywhere. In prompt_toolkit 1.0
+# we used some unconventional names (which were contributed like that to
+# Pygments). This is fixed now, but we still support the old names.
+
 # The table below maps the old aliases to the current names.
 ANSI_COLOR_NAMES_ALIASES: Dict[str, str] = {
     "ansidarkgray": "ansibrightblack",
@@ -101,7 +108,7 @@ assert not (set(ANSI_COLOR_NAMES_ALIASES.keys()) & set(ANSI_COLOR_NAMES))
 
 class BaseStyle(metaclass=ABCMeta):
     """
-    Abstract base class for quo  styles.
+    Abstract base class for prompt_toolkit styles.
     """
 
     @abstractmethod

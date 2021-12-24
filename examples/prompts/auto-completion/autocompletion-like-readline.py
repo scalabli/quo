@@ -3,10 +3,9 @@
 Autocompletion example that displays the autocompletions like readline does by
 binding a custom handler to the Tab key.
 """
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.shortcuts import CompleteStyle, prompt
+import quo
 
-animal_completer = WordCompleter(
+animal_completer = quo.completion.WordCompleter(
     [
         "alligator",
         "ant",
@@ -44,13 +43,12 @@ animal_completer = WordCompleter(
     ignore_case=True,
 )
 
-
+session = quo.Prompt()
 def main():
-    text = prompt(
+    text = session.prompt(
         "Give some animals: ",
         completer=animal_completer,
-        complete_style=CompleteStyle.READLINE_LIKE,
-    )
+        complete_style=quo.completion.CompleteStyle.neat)
     print("You said: %s" % text)
 
 

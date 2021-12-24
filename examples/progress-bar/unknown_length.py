@@ -6,8 +6,6 @@ iterator.
 import time
 import quo
 
-
-
 def data():
     """
     A generator that produces items. len() doesn't work here, so the progress
@@ -18,7 +16,7 @@ def data():
 
 
 def main():
-    with quo.progress.ProgressBar() as pb:
+    with quo.ProgressBar as pb:
         for i in pb(data()):
             time.sleep(0.1)
 

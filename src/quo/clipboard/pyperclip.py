@@ -9,7 +9,7 @@ __all__ = [
 ]
 
 
-class PyperclipClipboard(Clipboard):
+class PyperClipboard(Clipboard):
     """
     Clipboard that synchronizes with the Windows/Mac/Linux system clipboard,
     using the pyperclip module.

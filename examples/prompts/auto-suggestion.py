@@ -9,9 +9,6 @@ suggestion.
 """
 import quo
 
-from quo.auto_suggest import AutoSuggestFromHistory
-
-
 def main():
     # Create some history first. (Easy for testing.)
     history = quo.history.InMemoryHistory()
@@ -29,7 +26,7 @@ def main():
 
     session = quo.Prompt(
         history=history,
-        auto_suggest=AutoSuggestFromHistory(),
+        auto_suggest=quo.completion.AutoSuggestFromHistory(),
         enable_history_search=True,
     )
 

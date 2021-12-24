@@ -5,8 +5,6 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 
 
 import importlib
-import os
-import subprocess
 
 from quo.suite.suite import Suite
 #from .core import (
@@ -30,18 +28,16 @@ from quo.suite.suite import Suite
 
 #from quo.context.current import resolve_color_default
 #from quo.expediency import inscribe # LazyFile
-from quo.text import ANSI, HTML
 from quo.shortcuts.utils import inscribe
-from quo.indicators import ProgressBar
 from quo.shortcuts import Prompt
 from quo.pause import pause
-from quo.styles import Style
 from quo.decorators import (
                        app,
                        arg,
                        command,
                        tether
                        )
+from quo.progress import ProgressBar
 
 #from quo.decorators import (
 #             contextualize,
@@ -68,6 +64,7 @@ from quo.expediency import (
 
 def clear():
     import sys
+    import os
     from .accordance import isatty, WIN
     """Clears the terminal screen and moves the cursor to the top left.
     """

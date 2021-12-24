@@ -8,7 +8,7 @@ import quo
 
 
 def main():
-    with quo.progress.ProgressBar(
+    with quo.ProgressBar(
             title="Scrolling task name (make sure the window is not too big).") as pb:
         for i in pb(range(800),
                 label="This is a very very very long task that requires horizontal scrolling ...",):

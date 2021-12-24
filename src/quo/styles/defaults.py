@@ -51,7 +51,7 @@ QUO_STYLE = [
     ("arg-toolbar", "bold"),
     ("arg-toolbar.text", "nobold"),
     # Validation toolbar.
-    ("validation-toolbar", "bg:#ff7c7c #ffffff"),
+    ("validation-toolbar", "bg:#550000 #ffffff"),
     ("window-too-small", "bg:#550000 #ffffff"),
     # Completions toolbar.
     ("completion-toolbar", "bg:#bbbbbb #000000"),
@@ -102,18 +102,22 @@ QUO_STYLE = [
     # Default styling of HTML elements.
     ("i", "italic"),
     ("u", "underline"),
+    ("s", "strike"),
     ("b", "bold"),
     ("em", "italic"),
     ("strong", "bold"),
+    ("del", "strike"),
     ("hidden", "hidden"),
     # It should be possible to use the style names in HTML.
     # <reverse>...</reverse>  or <noreverse>...</noreverse>.
     ("italic", "italic"),
     ("underline", "underline"),
+    ("strike", "strike"),
     ("bold", "bold"),
     ("reverse", "reverse"),
     ("noitalic", "noitalic"),
     ("nounderline", "nounderline"),
+    ("nostrike", "nostrike"),
     ("nobold", "nobold"),
     ("noreverse", "noreverse"),
     # Prompt bottom toolbar

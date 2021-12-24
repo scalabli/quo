@@ -1,35 +1,30 @@
 #!/usr/bin/env python
 """
-Styled similar to tqdm, another progress bar implementation in Python.
-
-See: https://github.com/noamraph/tqdm
+Styled similar to tqdm, another progress bar impl
 """
+import quo
 import time
 
-from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.styles import Style
-
-style = Style.from_dict({"bar-a": "reverse"})
+style = quo.styles.Style.custom_tag({"bar-a": "reverse"})
 
 
 def main():
     custom_formatters = [
-        formatters.Label(suffix=": "),
-        formatters.Percentage(),
-        formatters.Bar(start="|", end="|", sym_a=" ", sym_b=" ", sym_c=" "),
-        formatters.Text(" "),
-        formatters.Progress(),
-        formatters.Text(" ["),
-        formatters.TimeElapsed(),
-        formatters.Text("<"),
-        formatters.TimeLeft(),
-        formatters.Text(", "),
-        formatters.IterationsPerSecond(),
-        formatters.Text("it/s]"),
+        quo.progress.formatters.Label(suffix=": "),
+        quo.progress.formatters.Percentage(),
+        quo.progress.formatters.Bar(start="|", end="|", sym_a=" ", sym_b=" ", sym_c=" "),
+        quo.progress.formatters.Text(" "),
+        quo.progress.formatters.Progress(),
+        quo.progress.formatters.Text(" ["),
+        quo.progress.formatters.TimeElapsed(),
+        quo.progress.formatters.Text("<"),
+        quo.progress.formatters.TimeLeft(),
+        quo.progress.formatters.Text(", "),
+        quo.progress.formatters.IterationsPerSecond(),
+        quo.progress.formatters.Text("it/s]"),
     ]
 
-    with ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with quo.ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label="Installing"):
             time.sleep(0.01)
 

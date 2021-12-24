@@ -3,9 +3,7 @@
 Demonstration of a custom completer class and the possibility of styling
 completions independently.
 """
-from prompt_toolkit.completion import Completer, Completion
-from prompt_toolkit.output.color_depth import ColorDepth
-from prompt_toolkit.shortcuts import CompleteStyle, prompt
+import quo
 
 colors = [
     "red",
@@ -19,13 +17,14 @@ colors = [
     "pink",
 ]
 
+session = quo.Prompt()
 
-class ColorCompleter(Completer):
+class ColorCompleter(quo.completion.Completer):
     def get_completions(self, document, complete_event):
         word = document.get_word_before_cursor()
         for color in colors:
             if color.startswith(word):
-                yield Completion(
+                yield quo.completion.Completion(
                     color,
                     start_position=-len(word),
                     style="fg:" + color,
@@ -36,20 +35,20 @@ class ColorCompleter(Completer):
 def main():
     # Simple completion menu.
     print("(The completion menu displays colors.)")
-    prompt("Type a color: ", completer=ColorCompleter())
+    session.prompt("Type a color: ", completer=ColorCompleter())
 
     # Multi-column menu.
-    prompt(
+    session.prompt(
         "Type a color: ",
         completer=ColorCompleter(),
-        complete_style=CompleteStyle.MULTI_COLUMN,
+        complete_style=quo.completion.CompleteStyle.multi_column,
     )
 
     # Readline-like
-    prompt(
+    session.prompt(
         "Type a color: ",
         completer=ColorCompleter(),
-        complete_style=CompleteStyle.READLINE_LIKE,
+        complete_style=quo.completion.CompleteStyle.neat,
     )
 
     # Prompt with true color output.
@@ -71,7 +70,7 @@ def main():
         ("#11aacc", "t"),
         ("#11aaee", ": "),
     ]
-    prompt(message, completer=ColorCompleter(), color_depth=ColorDepth.TRUE_COLOR)
+    session.prompt(message, completer=ColorCompleter(), color_depth=quo.color.ColorDepth.twenty_four_bit)
 
 
 if __name__ == "__main__":

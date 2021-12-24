@@ -18,7 +18,7 @@ from quo.utils.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
     from quo.suite.suite import Suite
-    from quo.shortcuts import Elicit
+    from quo.shortcuts import Prompt
 
 __all__ = [
     "generate_completions",
@@ -87,7 +87,8 @@ def _display_completions_like_readline(
     on a single page and provide a paginator to walk through them.
     """
     from quo.text import to_formatted_text
-    from quo.shortcuts.elicit import create_confirm_session
+    from quo.i_o.termui import confirm as confirm_
+   # from quo.shortcuts.elicit import create_confirm_session
 
     # Get terminal dimensions.
     term_size = app.output.get_size()
@@ -144,7 +145,7 @@ def _display_completions_like_readline(
         async with in_terminal(render_cli_done=True):
             if len(completions) > completions_per_page:
                 # Ask confirmation if it doesn't fit on the screen.
-                confirm = await create_confirm_session(
+                confirm = await confirm_(
                     "Display all {} possibilities?".format(len(completions)),
                 ).prompt_async()
 
@@ -174,7 +175,7 @@ def _create_more_session(message: str = "--MORE--") -> "Elicit[bool]":
     """
     Create an `Elicit` object for displaying the "--MORE--".
     """
-    from quo.shortcuts import Elicit
+    from quo.shortcuts import Prompt
 
     bindings = KeyBinder()
 
@@ -199,4 +200,4 @@ def _create_more_session(message: str = "--MORE--") -> "Elicit[bool]":
     def _ignore(event: E) -> None:
         "Disable inserting of text."
 
-    return Elicit(message, key_bindings=bindings, erase_when_done=True)
+    return Prompt(message, key_bindings=bindings, erase_when_done=True)

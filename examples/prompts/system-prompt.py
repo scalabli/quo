@@ -1,20 +1,26 @@
 #!/usr/bin/env python
-from prompt_toolkit import prompt
 
-if __name__ == "__main__":
-    # System prompt.
-    print(
-        "(1/3) If you press meta-! or esc-! at the following prompt, you can enter system commands."
-    )
-    answer = prompt("Give me some input: ", enable_system_prompt=True)
-    print("You said: %s" % answer)
+import quo
+
+session = quo.Prompt()
+
+@quo.command()
+@quo.app("@prompt")
+def main(prompt):
+    quo.echo("(1/3) If you press meta-! or esc-! at the following prompt, you can enter system commands.")
+
+    answer = session.prompt("Give me some input: ", enable_system_elicit=True)
+    quo.echo(f"You said: {answer}")
 
     # Enable suspend.
-    print("(2/3) If you press Control-Z, the application will suspend.")
-    answer = prompt("Give me some input: ", enable_suspend=True)
-    print("You said: %s" % answer)
+    quo.echo("(2/3) If you press Control-Z, the application will suspend.")
+    answer = session.prompt("Give me some input: ", enable_suspend=True)
+    quo.echo(f"You said: {answer}")
 
     # Enable open_in_editor
-    print("(3/3) If you press Control-X Control-E, the prompt will open in $EDITOR.")
-    answer = prompt("Give me some input: ", enable_open_in_editor=True)
-    print("You said: %s" % answer)
+    quo.echo("(3/3) If you press Control-X Control-E, the prompt will open in $EDITOR.")
+    answer = session.prompt("Give me some input: ", enable_open_in_editor=True)
+    quo.echo(f"You said: {answer}")
+
+if __name__ == "__main__":
+    main()

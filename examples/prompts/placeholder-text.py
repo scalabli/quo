@@ -4,7 +4,7 @@ Example of a placeholer that's displayed as long as no input is given.
 """
 import quo
 
-session = quo.Prompt(placeholder=quo.HTML('<style color="#888888">(please type something)</style>'))
+session = quo.Prompt(placeholder=quo.text.HTML('<style color="#888888">(please type something)</style>'))
 
 if __name__ == "__main__":
     answer = session.prompt("")

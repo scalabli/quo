@@ -2,8 +2,8 @@
 """
 A few examples of displaying a bottom toolbar.
 
-The ``prompt`` function takes a ``bottom_toolbar`` attribute.
-This can be any kind of formatted text (plain text, HTML or ANSI), or
+The ``Prompt`` function takes a ``bottom_toolbar`` attribute.
+This can be any kind of formatted text (plain text, or HTML), or
 it can be a callable that takes an App and returns an of these.
 
 The bottom toolbar will always receive the style 'bottom-toolbar', and the text
@@ -12,8 +12,6 @@ style.
 """
 import time
 import quo
-
-from quo.styles import Style
 
 session = quo.Prompt()
 
@@ -47,7 +45,7 @@ def main():
     print("You said: %s" % text)
 
     # Example 5: styling differently.
-    style = Style.from_dict(
+    style = quo.styles.Style.from_dict(
         {
             "bottom-toolbar": "#aaaa00 bg:#ff0000",
             "bottom-toolbar.text": "#aaaa44 bg:#aa4444",

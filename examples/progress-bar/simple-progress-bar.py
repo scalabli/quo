@@ -4,12 +4,10 @@ A very simple progress bar which keep track of the progress as we consume an
 iterator.
 """
 import time
-
-from prompt_toolkit.shortcuts import ProgressBar
-
+import quo
 
 def main():
-    with ProgressBar() as pb:
+    with quo.ProgressBar() as pb:
         for i in pb(range(800)):
             time.sleep(0.01)
 

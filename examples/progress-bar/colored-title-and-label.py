@@ -4,16 +4,13 @@ A progress bar that displays a formatted title above the progress bar and has a
 colored label.
 """
 import time
-
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import ProgressBar
-
+import quo
 
 def main():
-    title = HTML('Downloading <style bg="yellow" fg="black">4 files...</style>')
-    label = HTML("<ansired>some file</ansired>: ")
+    title = quo.text.HTML('Downloading <style bg="yellow" fg="black">4 files...</style>')
+    label = quo.text.HTML("<ansired>some file</ansired>: ")
 
-    with ProgressBar(title=title) as pb:
+    with quo.ProgressBar(title=title) as pb:
         for i in pb(range(800), label=label):
             time.sleep(0.01)
 

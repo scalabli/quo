@@ -1,5 +1,5 @@
 """
-Styling for prompt_toolkit applications.
+Styling for quo applications.
 """
 from .core import (
     ANSI_COLOR_NAMES,

@@ -8,8 +8,6 @@ history on the items starting with the given input text.
 
 import quo
 
-from prompt_toolkit.history import InMemoryHistory
-
 
 def main():
     # Create some history first. (Easy for testing.)
@@ -20,11 +18,11 @@ def main():
     history.append_string("import path")
 
     # Print help.
-    print("This CLI has up-arrow partial string matching enabled.")
-    print('Type for instance "pri" followed by up-arrow and you')
-    print('get the last items starting with "pri".')
-    print("Press Control-C to retry. Control-D to exit.")
-    print()
+    quo.echo("This CLI has up-arrow partial string matching enabled.")
+    quo.echo('Type for instance "pri" followed by up-arrow and you')
+    quo.echo('get the last items starting with "pri".')
+    quo.echo("Press Control-C to retry. Control-D to exit.")
+    quo.echo()
 
     session = quo.Prompt(history=history, enable_history_search=True)
 

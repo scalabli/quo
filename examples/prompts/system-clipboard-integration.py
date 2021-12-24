@@ -3,8 +3,9 @@
 Demonstration of a custom clipboard class.
 This requires the 'pyperclip' library to be installed.
 """
-from prompt_toolkit import prompt
-from prompt_toolkit.clipboard.pyperclip import PyperclipClipboard
+import quo
+
+session = quo.Prompt()
 
 if __name__ == "__main__":
     print("Emacs shortcuts:")
@@ -13,5 +14,5 @@ if __name__ == "__main__":
     print("    Press Control-W to cut to clipboard.")
     print("")
 
-    answer = prompt("Give me some input: ", clipboard=PyperclipClipboard())
-    print("You said: %s" % answer)
+    answer = session.prompt("Give me some input: ", clipboard=quo.clipboard.PyperClipboard())
+    quo.echo(f"You said: {answer}")

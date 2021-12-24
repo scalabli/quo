@@ -603,7 +603,7 @@ class Prompt(Generic[_T]):
 
         @Condition
         def multi_column_complete_style() -> bool:
-            return self.complete_style == CompleteStyle.MULTI_COLUMN
+            return self.complete_style == CompleteStyle.multi_column
 
         # Build the layout.
         layout = HSplit(
@@ -783,7 +783,7 @@ class Prompt(Generic[_T]):
 
         @Condition
         def readline_complete_style() -> bool:
-            return self.complete_style == CompleteStyle.READLINE_LIKE
+            return self.complete_style == CompleteStyle.neat
 
         @handle("tab", filter=readline_complete_style & default_focused)
         def _complete_like_readline(event: E) -> None:
@@ -1216,7 +1216,7 @@ class Prompt(Generic[_T]):
         # layout has at least a minimal height in order to display it.
         if (
             self.completer is not None
-            and self.complete_style != CompleteStyle.READLINE_LIKE
+            and self.complete_style != CompleteStyle.neat
         ):
             space = self.reserve_space_for_menu
         else:
@@ -1322,107 +1322,11 @@ class Prompt(Generic[_T]):
         return self.app.output
 
 
-def elicit(
-    message: Optional[AnyFormattedText] = None,
-    *,
-    history: Optional[History] = None,
-    editing_mode: Optional[EditingMode] = None,
-    refresh_interval: Optional[float] = None,
-    vi_mode: Optional[bool] = None,
-    lexer: Optional[Lexer] = None,
-    completer: Optional[Completer] = None,
-    complete_in_thread: Optional[bool] = None,
-    is_password: Optional[bool] = None,
-    key_bindings: Optional[KeyBindingsBase] = None,
-    bottom_toolbar: Optional[AnyFormattedText] = None,
-    style: Optional[BaseStyle] = None,
-    color_depth: Optional[ColorDepth] = None,
-    include_default_pygments_style: Optional[FilterOrBool] = None,
-    style_transformation: Optional[StyleTransformation] = None,
-    swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-    r_elicit: Optional[AnyFormattedText] = None,
-    multiline: Optional[FilterOrBool] = None,
-    elicit_continuation: Optional[ElicitContinuationText] = None,
-    wrap_lines: Optional[FilterOrBool] = None,
-    enable_history_search: Optional[FilterOrBool] = None,
-    search_ignore_case: Optional[FilterOrBool] = None,
-    complete_while_typing: Optional[FilterOrBool] = None,
-    validate_while_typing: Optional[FilterOrBool] = None,
-    complete_style: Optional[CompleteStyle] = None,
-    auto_suggest: Optional[AutoSuggest] = None,
-    validator: Optional[Validator] = None,
-    clipboard: Optional[Clipboard] = None,
-    mouse_support: Optional[FilterOrBool] = None,
-    input_processors: Optional[List[Processor]] = None,
-    placeholder: Optional[AnyFormattedText] = None,
-    reserve_space_for_menu: Optional[int] = None,
-    enable_system_elicit: Optional[FilterOrBool] = None,
-    enable_suspend: Optional[FilterOrBool] = None,
-    enable_open_in_editor: Optional[FilterOrBool] = None,
-    tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
-    tempfile: Optional[Union[str, Callable[[], str]]] = None,
-    # Following arguments are specific to the current `elicit()` call.
-    default: str = "",
-    accept_default: bool = False,
-    pre_run: Optional[Callable[[], None]] = None,
-) -> str:
-    """
-    The global `elicit` function. This will create a new `Elicit`
-    instance for every call.
-    """
-    # The history is the only attribute that has to be passed to the
-    # `ElicitSession`, it can't be passed into the `elicit()` method.
-    session: Elicit[str] = Elicit(history=history)
-
-    return session.elicit(
-        message,
-        editing_mode=editing_mode,
-        refresh_interval=refresh_interval,
-        vi_mode=vi_mode,
-        lexer=lexer,
-        completer=completer,
-        complete_in_thread=complete_in_thread,
-        is_password=is_password,
-        key_bindings=key_bindings,
-        bottom_toolbar=bottom_toolbar,
-        style=style,
-        color_depth=color_depth,
-        include_default_pygments_style=include_default_pygments_style,
-        style_transformation=style_transformation,
-        swap_light_and_dark_colors=swap_light_and_dark_colors,
-        r_elicit=r_elicit,
-        multiline=multiline,
-        elicit_continuation=elicit_continuation,
-        wrap_lines=wrap_lines,
-        enable_history_search=enable_history_search,
-        search_ignore_case=search_ignore_case,
-        complete_while_typing=complete_while_typing,
-        validate_while_typing=validate_while_typing,
-        complete_style=complete_style,
-        auto_suggest=auto_suggest,
-        validator=validator,
-        clipboard=clipboard,
-        mouse_support=mouse_support,
-        input_processors=input_processors,
-        placeholder=placeholder,
-        reserve_space_for_menu=reserve_space_for_menu,
-        enable_system_elicit=enable_system_elicit,
-        enable_suspend=enable_suspend,
-        enable_open_in_editor=enable_open_in_editor,
-        tempfile_suffix=tempfile_suffix,
-        tempfile=tempfile,
-        default=default,
-        accept_default=accept_default,
-        pre_run=pre_run,
-    )
-
-
-elicit.__doc__ = Prompt.prompt.__doc__
-
 
 def create_confirm_session(
-    text: str, suffix: str = " (y/n) "
-) -> Prompt[bool]:
+        text: str,
+        suffix: str = " (y/n) "
+        ) -> Prompt[bool]:
     """
     Create a `Prompt` object for the 'confirm' function.
     """
@@ -1446,7 +1350,7 @@ def create_confirm_session(
         pass
 
     complete_message = merge_formatted_text([text, suffix])
-    session: Elicit[bool] = Elicit(
+    session: Prompt[bool] = Prompt(
         complete_message, key_bindings=bindings
     )
     return session

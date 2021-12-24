@@ -8,15 +8,10 @@ This is similar to RPROMPT is Zsh.
 """
 import quo
 
-from quo.styles import Style
-
-
 session = quo.Prompt()
 
-example_style = Style.from_dict(
+example_style = quo.styles.Style.from_dict(
     {
-        # The 'rprompt' gets by default the 'rprompt' class. We can use this
-        # for the styling.
         "r_elicit": "bg:#ff0066 #ffffff",
     }
 )

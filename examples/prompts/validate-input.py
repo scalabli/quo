@@ -3,7 +3,7 @@ import quo
 session = quo.Prompt()
 
 
-class NumberValidator(quo.validation.Validator):
+class NumberValidator(quo.types.Validator):
 
     def validate(self, document):
         text = document.text

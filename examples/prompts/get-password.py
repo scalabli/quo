@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-from prompt_toolkit import prompt
+import quo
+
+session = quo.Prompt(is_password=True)
 
 if __name__ == "__main__":
-    password = prompt("Password: ", is_password=True)
-    print("You said: %s" % password)
+    password = session.prompt("Password: ")
+    quo.echo("You said: %s" % password)

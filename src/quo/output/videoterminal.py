@@ -1,14 +1,16 @@
 """
-The VT100 is a video terminal, introduced in August 1978 by Digital Equipment Corporation (DEC). It was one of the first terminals to support ANSI escape codes for cursor control and other tasks, and added a number of extended codes for special features like controlling the status lights on the keyboard.
-This is an output module for vt100 terminals.
+Output for vt100 terminals.
 
-
+A lot of thanks, regarding outputting of colors, goes to the Pygments project:
+(We don't rely on Pygments anymore, because many things are very custom, and
+everything has been highly optimized.)
+http://pygments.org/
 """
-import os
-import sys
-import io
 import array
 import errno
+import io
+import os
+import sys
 from contextlib import contextmanager
 from typing import (
     IO,
@@ -23,6 +25,7 @@ from typing import (
     Set,
     TextIO,
     Tuple,
+    cast,
 )
 
 from quo.data_structures import Size
@@ -33,14 +36,14 @@ from quo.utils.utils import is_dumb_terminal
 from .color import ColorDepth
 
 __all__ = [
-    "Vt100",
+    "Vt100_Output",
 ]
 
 
 FG_ANSI_COLORS = {
-    "default": 39,
+    "ansidefault": 39,
     # Low intensity.
-    "black": 30,
+    "ansiblack": 30,
     "ansired": 31,
     "ansigreen": 32,
     "ansiyellow": 33,
@@ -83,38 +86,36 @@ BG_ANSI_COLORS = {
 
 
 ANSI_COLORS_TO_RGB = {
-    "default": (
+    "ansidefault": (
         0x00,
         0x00,
         0x00,
     ),  # Don't use, 'default' doesn't really have a value.
-    "black": (0x00, 0x00, 0x00),
-    "gray": (0xE5, 0xE5, 0xE5),
-    "vblack": (0x7F, 0x7F, 0x7F),
-    "white": (0xFF, 0xFF, 0xFF),
+    "ansiblack": (0x00, 0x00, 0x00),
+    "ansigray": (0xE5, 0xE5, 0xE5),
+    "ansibrightblack": (0x7F, 0x7F, 0x7F),
+    "ansiwhite": (0xFF, 0xFF, 0xFF),
     # Low intensity.
-    "red": (0xCD, 0x00, 0x00),
-    "green": (0x00, 0xCD, 0x00),
-    "yellow": (0xCD, 0xCD, 0x00),
-    "blue": (0x00, 0x00, 0xCD),
-    "magenta": (0xCD, 0x00, 0xCD),
-    "cyan": (0x00, 0xCD, 0xCD),
+    "ansired": (0xCD, 0x00, 0x00),
+    "ansigreen": (0x00, 0xCD, 0x00),
+    "ansiyellow": (0xCD, 0xCD, 0x00),
+    "ansiblue": (0x00, 0x00, 0xCD),
+    "ansimagenta": (0xCD, 0x00, 0xCD),
+    "ansicyan": (0x00, 0xCD, 0xCD),
     # High intensity.
-    "vred": (0xFF, 0x00, 0x00),
-    "vgreen": (0x00, 0xFF, 0x00),
-    "vyellow": (0xFF, 0xFF, 0x00),
-    "vblue": (0x00, 0x00, 0xFF),
-    "vmagenta": (0xFF, 0x00, 0xFF),
-    "vcyan": (0x00, 0xFF, 0xFF),
+    "ansibrightred": (0xFF, 0x00, 0x00),
+    "ansibrightgreen": (0x00, 0xFF, 0x00),
+    "ansibrightyellow": (0xFF, 0xFF, 0x00),
+    "ansibrightblue": (0x00, 0x00, 0xFF),
+    "ansibrightmagenta": (0xFF, 0x00, 0xFF),
+    "ansibrightcyan": (0x00, 0xFF, 0xFF),
 }
 
 
-#assert set(FG_ANSI_COLORS) == set(ANSI_COLOR_NAMES)
-#assert set(BG_ANSI_COLORS) == set(ANSI_COLOR_NAMES)
-#assert set(ANSI_COLORS_TO_RGB) == set(ANSI_COLOR_NAMES)
-list(set(FG_ANSI_COLORS).intersection(set(ANSI_COLOR_NAMES)))
-list(set(BG_ANSI_COLORS).intersection(set(ANSI_COLOR_NAMES)))
-list(set(ANSI_COLORS_TO_RGB).intersection(set(ANSI_COLOR_NAMES)))
+assert set(FG_ANSI_COLORS) == set(ANSI_COLOR_NAMES)
+assert set(BG_ANSI_COLORS) == set(ANSI_COLOR_NAMES)
+assert set(ANSI_COLORS_TO_RGB) == set(ANSI_COLOR_NAMES)
+
 
 def _get_closest_ansi_color(r: int, g: int, b: int, exclude: Sequence[str] = ()) -> str:
     """
@@ -132,15 +133,15 @@ def _get_closest_ansi_color(r: int, g: int, b: int, exclude: Sequence[str] = ())
     saturation = abs(r - g) + abs(g - b) + abs(b - r)  # Between 0..510
 
     if saturation > 30:
-        exclude.extend(["lightgray", "darkgray", "white", "black"])
+        exclude.extend(["ansilightgray", "ansidarkgray", "ansiwhite", "ansiblack"])
 
     # Take the closest color.
     # (Thanks to Pygments for this part.)
     distance = 257 * 257 * 3  # "infinity" (>distance from #000000 to #ffffff)
-    match = "default"
+    match = "ansidefault"
 
     for name, (r2, g2, b2) in ANSI_COLORS_TO_RGB.items():
-        if name != "default" and name not in exclude:
+        if name != "ansidefault" and name not in exclude:
             d = (r - r2) ** 2 + (g - g2) ** 2 + (b - b2) ** 2
 
             if d < distance:
@@ -269,7 +270,8 @@ _256_colors = _256ColorCache()
 class _EscapeCodeCache(Dict[Attrs, str]):
     """
     Cache for VT100 escape codes. It maps
-    (fgcolor, bgcolor, bold, underline, reverse) tuples to VT100 escape sequences.
+    (fgcolor, bgcolor, bold, underline, strike, reverse) tuples to VT100
+    escape sequences.
 
     :param true_color: When True, use 24bit colors instead of 256 colors.
     """
@@ -278,7 +280,17 @@ class _EscapeCodeCache(Dict[Attrs, str]):
         self.color_depth = color_depth
 
     def __missing__(self, attrs: Attrs) -> str:
-        fgcolor, bgcolor, bold, underline, italic, blink, reverse, hidden = attrs
+        (
+            fgcolor,
+            bgcolor,
+            bold,
+            underline,
+            strike,
+            italic,
+            blink,
+            reverse,
+            hidden,
+        ) = attrs
         parts: List[str] = []
 
         parts.extend(self._colors_to_code(fgcolor or "", bgcolor or ""))
@@ -295,6 +307,8 @@ class _EscapeCodeCache(Dict[Attrs, str]):
             parts.append("7")
         if hidden:
             parts.append("8")
+        if strike:
+            parts.append("9")
 
         if parts:
             result = "\x1b[0;" + ";".join(parts) + "m"
@@ -537,6 +551,9 @@ class Vt100(Output):
     def enable_mouse_support(self) -> None:
         self.write_raw("\x1b[?1000h")
 
+        # Enable mouse-drag support.
+        self.write_raw("\x1b[?1003h")
+
         # Enable urxvt Mouse mode. (For terminals that understand this.)
         self.write_raw("\x1b[?1015h")
 
@@ -550,6 +567,7 @@ class Vt100(Output):
         self.write_raw("\x1b[?1000l")
         self.write_raw("\x1b[?1015l")
         self.write_raw("\x1b[?1006l")
+        self.write_raw("\x1b[?1003l")
 
     def erase_end_of_line(self) -> None:
         """
@@ -666,12 +684,14 @@ class Vt100(Output):
                 # UnicodeEncodeError crashes. E.g. u'\xb7' does not appear in 'ascii'.)
                 # My Arch Linux installation of july 2015 reported 'ANSI_X3.4-1968'
                 # for sys.stdout.encoding in xterm.
-                out: IO
+                out: IO[bytes]
                 if self.write_binary:
                     if hasattr(self.stdout, "buffer"):
-                        out = self.stdout.buffer  # Py3.
+                        out = self.stdout.buffer
                     else:
-                        out = self.stdout
+                        # IO[bytes] was given to begin with.
+                        # (Used in the unit tests, for instance.)
+                        out = cast(IO[bytes], self.stdout)
                     out.write(data.encode(self.stdout.encoding or "utf-8", "replace"))
                 else:
                     self.stdout.write(data)
@@ -705,7 +725,7 @@ class Vt100(Output):
     def responds_to_cpr(self) -> bool:
         # When the input is a tty, we assume that CPR is supported.
         # It's not when the input is piped from Pexpect.
-        if os.environ.get("QUO_NO_CPR", "") == "1":
+        if os.environ.get("PROMPT_TOOLKIT_NO_CPR", "") == "1":
             return False
 
         if is_dumb_terminal(self.term):

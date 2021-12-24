@@ -4,12 +4,10 @@ Two progress bars that run in parallel.
 """
 import threading
 import time
-
-from quo.shortcuts import ProgressBar
-
+import quo
 
 def main():
-    with ProgressBar() as pb:
+    with quo.ProgressBar() as pb:
         # Two parallal tasks.
         def task_1():
             for i in pb(range(100)):

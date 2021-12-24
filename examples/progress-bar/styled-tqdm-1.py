@@ -5,12 +5,11 @@ Styled similar to tqdm, another progress bar implementation in Python.
 See: https://github.com/noamraph/tqdm
 """
 import time
+import quo
 
-from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.styles import Style
+from quo.progress import formatters
 
-style = Style.from_dict({"": "cyan"})
+style = quo.styles.Style.custom_tag({"": "cyan"})
 
 
 def main():
@@ -31,7 +30,7 @@ def main():
         formatters.Text("  "),
     ]
 
-    with ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with quo.ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label="Installing"):
             time.sleep(0.01)
 
