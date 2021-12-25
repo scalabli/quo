@@ -1018,7 +1018,7 @@ class Command(BaseCommand):
         help=None,
         epilog=None,
         short_help=None,
-        apps_metavar="[HELP PAGE]",
+        apps_metavar="[ᕼᕮしᑭ ᖘᗩᎶᕮ]",
         add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
