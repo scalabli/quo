@@ -7,11 +7,11 @@ Simple progress bar
 -------------------
 
 Creating a new progress bar can be done by calling the
-:class:`~quo.progress.ProgressBar` context manager.
+:class:`~quo.ProgressBar` context manager.
 
 The progress can be displayed for any iterable. This works by wrapping the
 iterable (like ``range``) with the
-:class:`~quo.progress.ProgressBar` context manager itself. This
+:class:`~quo.ProgressBar` context manager itself. This
 way, the progress bar knows when the next item is consumed by the forloop and
 when progress happens.
 
@@ -21,7 +21,7 @@ when progress happens.
     import time
 
 
-    with quo.progress.ProgressBar() as pb:
+    with quo.ProgressBar() as pb:
         for i in pb(range(800)):
             time.sleep(.01)
 
@@ -36,7 +36,7 @@ in order to make displaying the progress possible:
     def some_iterable():
         yield ...
 
-    with quo.progress.ProgressBar() as pb:
+    with quo.ProgressBar() as pb:
         for i in pb(some_iterable, total=1000):
             time.sleep(.01)
 
@@ -58,7 +58,7 @@ want this depends on the application.
     import threading
 
 
-    with quo.progress.ProgressBar() as pb:
+    with quo.ProgressBar() as pb:
         # Two parallel tasks.
         def task_1():
             for i in pb(range(100)):
@@ -99,7 +99,7 @@ Each progress bar can have one title, and for each task an individual label.
     title = quo.text.HTML('Downloading <style bg="yellow" fg="black">4 files...</style>')
     label = quo.text.HTML('<red>some file</red>: ')
 
-    with quo.progress.ProgressBar(title=title) as pb:
+    with quo.ProgressBar(title=title) as pb:
         for i in pb(range(800), label=label):
             time.sleep(.01)
 
@@ -162,7 +162,7 @@ modify the progress bar to look like an apt-get style progress bar:
         formatters.Text('  '),
     ]
 
-    with quo.progress.ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with quo.ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label='Installing'):
             time.sleep(.01)
 
@@ -204,7 +204,7 @@ passing a :class:`~quo.keys.KeyBinder` object:
     # Use `patch_stdout`, to make sure that prints go above the
     # application.
     with patch_stdout():
-        with quo.progress.ProgressBar(key_bindings=kb, bottom_toolbar=bottom_toolbar) as pb:
+        with quo.ProgressBar(key_bindings=kb, bottom_toolbar=bottom_toolbar) as pb:
             for i in pb(range(800)):
                 time.sleep(.01)
 
