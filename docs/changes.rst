@@ -6,7 +6,7 @@ Changelog
 
 Version 2021.7
 --------------
-Unreleased
+2021-12-25
 
 - Streamlined a number of features
 - Fixed broken placeholder() issue :issue:`30`
