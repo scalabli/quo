@@ -3,10 +3,14 @@
 
 Changelog
 ==========
+Version 2021.7.5
+-----------------
+Unreleased
+
 
 Version 2021.7
 --------------
-2021-12-25
+Released on 2021-12-25
 
 - Streamlined a number of features
 - Fixed broken placeholder() issue :issue:`30`
@@ -14,21 +18,21 @@ Version 2021.7
 
 Version 2021.6
 ---------------
-2021-11-20
+Released on 2021-11-20
 
 - Added Support of a placeholder text that is displayed as long as no input is given.
 - Fixed minor bugs
 
 Version 2021.5.5.2
 ------------------
-2021-09-28
+Released on 2021-09-28
 
 - Pypi README fix
 
 Version 2021.5.5
 -----------------
 
-2021-09-23
+Released on 2021-09-23
 
 - Added support for tabular presentation of data.
 
@@ -44,7 +48,7 @@ Version 2021.5.5
 Version 2021.4.5
 ----------------
 
-2021-08-22
+Released on 2021-08-22
 
 - Phasing out module ``wcwidth`` to reduce the need for external dependencies.
 
@@ -55,7 +59,7 @@ Version 2021.4.5
 Version 2021.3.5
 -----------------
 
-2021-07-19
+Released on 2021-07-19
 
 -   Added positional arguments `fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``. foreground and background still works.
 
@@ -74,7 +78,7 @@ Version 2021.3.5
 Version 2021.2
 -------------
 
-Released 2021-06-28
+Released on 2021-06-28
 
 -   ``importlib_metadata`` backport package is installed on Python < 3.8 therefore will be be delisted as part of Quo's external dependency in later versions of Quo
 -   Under the hood optimizations
@@ -83,7 +87,7 @@ Released 2021-06-28
 
 Version 2021.1
 ---------------
-Released 2021-06-18
+Released on 2021-06-18
 
 -   Added support for ``ANSI colors`` for better coloring of the terminal
 -   Ability to Print both ``text`` and ``binary`` data to stdout 
