@@ -16,13 +16,13 @@ the search buffer has the focus). The ``wrap_lines`` option could be changed
 with a certain key binding. And that key binding could only work when the
 default buffer got the focus.
 
-In `prompt_toolkit`, we decided to reduce the amount of state in the whole
+In `quo`, we decided to reduce the amount of state in the whole
 framework, and apply a simple kind of reactive programming to describe the flow
 of these booleans as expressions. (It's one-way only: if a key binding needs to
 know whether it's active or not, it can follow this flow by evaluating an
 expression.)
 
-The (abstract) base class is :class:`~prompt_toolkit.filters.Filter`, which
+The (abstract) base class is :class:`~quo.filters.Filter`, which
 wraps an expression that takes no input and evaluates to a boolean. Getting the
 state of a filter is done by simply calling it.
 
@@ -30,28 +30,26 @@ state of a filter is done by simply calling it.
 An example
 ----------
 
-The most obvious way to create such a :class:`~prompt_toolkit.filters.Filter`
-instance is by creating a :class:`~prompt_toolkit.filters.Condition` instance
+The most obvious way to create such a :class:`~quo.filters.Filter`
+instance is by creating a :class:`~quo.filters.Condition` instance
 from a function. For instance, the following condition will evaluate to
 ``True`` when the user is searching:
 
 .. code:: python
 
-    from prompt_toolkit.application.current import get_app
-    from prompt_toolkit.filters import Condition
+    import quo
 
-    is_searching = Condition(lambda: get_app().is_searching)
+    is_searching = quo.filters.Condition(lambda: quo.suite.get_app().is_searching)
 
 A different way of writing this, is by using the decorator syntax:
 
 .. code:: python
 
-    from prompt_toolkit.application.current import get_app
-    from prompt_toolkit.filters import Condition
+    import quo
 
-    @Condition
+    @quo.filters.Condition
     def is_searching():
-        return get_app().is_searching
+        return quo.suite.get_app().is_searching
 
 This filter can then be used in a key binding, like in the following snippet:
 
@@ -59,9 +57,9 @@ This filter can then be used in a key binding, like in the following snippet:
 
     from prompt_toolkit.key_binding import KeyBindings
 
-    kb = KeyBindings()
+    kb = quo.keys.KeyBinder()
 
-    @kb.add('c-t', filter=is_searching)
+    @kb.add('ctrl-t', filter=is_searching)
     def _(event):
         # Do, something, but only when searching.
         pass
@@ -123,17 +121,16 @@ Some examples:
 
 .. code:: python
 
-    from prompt_toolkit.key_binding import KeyBindings
-    from prompt_toolkit.filters import has_selection, has_selection
+    import quo
 
-    kb = KeyBindings()
+    kb = quo.keys.KeyBinder()
 
-    @kb.add('c-t', filter=~is_searching)
+    @kb.add('ctrl-t', filter=~is_searching)
     def _(event):
         " Do something, but not while searching. "
         pass
 
-    @kb.add('c-t', filter=has_search | has_selection)
+    @kb.add('ctrl-t', filter=has_search | has_selection)
     def _(event):
         " Do something, but only when searching or when there is a selection. "
         pass
@@ -149,19 +146,19 @@ some advanced users want to be able this value to a certain setting or event
 that does changes over time.
 
 In order to handle both use cases, there is a utility called
-:func:`~prompt_toolkit.filters.utils.to_filter`.
+:func:`~quo.filters.to_filter`.
 
 This is a function that takes
-either a boolean or an actual :class:`~prompt_toolkit.filters.Filter`
-instance, and always returns a :class:`~prompt_toolkit.filters.Filter`.
+either a boolean or an actual :class:`~quo.filters.Filter`
+instance, and always returns a :class:`~quo.filters.Filter`.
 
 .. code:: python
 
-    from prompt_toolkit.filters.utils import to_filter
+    import quo
 
     # In each of the following three examples, 'f' will be a `Filter`
     # instance.
-    f = to_filter(True)
-    f = to_filter(False)
-    f = to_filter(Condition(lambda: True))
-    f = to_filter(has_search | has_selection)
+    f = quo.filters.to_filter(True)
+    f = quo.filters.to_filter(False)
+    f = quo.filters.to_filter(quo.filters.Condition(lambda: True))
+    f = quo.filters.to_filter(quo.filters.has_search | quo.filters.has_selection)

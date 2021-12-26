@@ -11,10 +11,7 @@ is useful for writing command line utilities.
 Printing to Stdout
 ------------------
 
-The most obvious helper is the :func:`echo` function, which in many ways
-works like the Python ``print`` statement or function.  The main difference is
-that it works the same in many different terminal environments.
-
+The most obvious helper is the :func:`echo` and :func:`inscribe` function, which in many ways works like the Python ``print`` statement or function.
 Example:
 
 .. code:: python

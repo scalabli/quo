@@ -1,19 +1,14 @@
 .. _styling:
 
-More about styling
+Styling
 ==================
 
-This page will attempt to explain in more detail how to use styling in
-prompt_toolkit.
-
-To some extent, it is very similar to how `Pygments <http://pygments.org/>`_
-styling works.
-
+This page will attempt to explain in more detail how to use styling in quo.
 
 Style strings
 -------------
 
-Many user interface controls, like :class:`~prompt_toolkit.layout.Window`
+Many user interface controls, like :class:`~quo.layout.Window`
 accept a ``style`` argument which can be used to pass the formatting as a
 string. For instance, we can select a foreground color:
 
@@ -50,18 +45,11 @@ All of these formatting options can be combined as well:
 - ``"fg:ansiyellow bg:black bold underline"``
 
 The style string can be given to any user control directly, or to a
-:class:`~prompt_toolkit.layout.Container` object from where it will propagate
+:class:`~quo.layout.Container` object from where it will propagate
 to all its children. A style defined by a parent user control can be overridden
 by any of its children. The parent can for instance say ``style="bold
 underline"`` where a child overrides this style partly by specifying
 ``style="nobold bg:ansired"``.
-
-.. note::
-
-    These styles are actually compatible with
-    `Pygments <http://pygments.org/>`_ styles, with additional support for
-    `reverse` and `blink`. Further, we ignore flags like `roman`, `sans`,
-    `mono` and `border`.
 
 The following ANSI colors are available (both for foreground and background):
 

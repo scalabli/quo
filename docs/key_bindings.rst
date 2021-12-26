@@ -240,13 +240,13 @@ Merging key bindings
 
 Sometimes you have different parts of your application generate a collection of
 key bindings. It is possible to merge them together through the
-:func:`~prompt_toolkit.key_binding.merge_key_bindings` function. This is
-preferred above passing a :class:`~prompt_toolkit.key_binding.KeyBindings`
+:func:`~quo.keys.merge_key_bindings` function. This is
+preferred above passing a :class:`~quo.keys.KeyBinder`
 object around and having everyone populate it.
 
 .. code:: python
 
-    from prompt_toolkit.key_binding import merge_key_bindings
+    from quo.keys import merge_key_bindings
 
     bindings = merge_key_bindings([
         bindings1,
@@ -284,11 +284,11 @@ This is mainly useful in order to conditionally override another binding.
 Asyncio coroutines
 ------------------
 
-Key binding handlers can be asyncio coroutines.
+Key binders handlers can be asyncio coroutines.
 
 .. code:: python
 
-    from prompt_toolkit.application import in_terminal
+    from quo.suite import in_terminal
 
     @bindings.add('x')
     async def print_hello(event):
