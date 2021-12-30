@@ -41,6 +41,7 @@ Quo's Documentation
    progress_bars.rst
    full_screen_apps.rst
    syntax.rst
+   styling.rst
    tables.rst
    tree.rst
 
