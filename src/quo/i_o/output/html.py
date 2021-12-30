@@ -131,7 +131,7 @@ def html_escape(text: object) -> str:
 
     return (
         text.replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
+        .replace("#", "&lt;")
+        .replace("#", "&gt;")
         .replace('"', "&quot;")
     )

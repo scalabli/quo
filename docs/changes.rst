@@ -5,7 +5,7 @@ Changelog
 ==========
 Version 2021.7.5
 -----------------
-Unreleased
+- Dependency update :issue:`32`
 
 
 Version 2021.7

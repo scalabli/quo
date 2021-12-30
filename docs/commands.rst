@@ -21,15 +21,16 @@ when an inner command runs:
 
 .. code-block:: python
       
-    from quo import tether, app, echo
-    @tether()
-    @app('--debug/--no-debug', default=False)
-    def cli(debug):
-        echo(f"Debug mode is {'on' if debug else 'off'}")
+    import quo
 
-    @cli.command()
+    @quo.tether()
+    @quo.app('@debug/@no-debug', default=False)
+    def cli(debug):
+        quo.echo(f"Debug mode is {'on' if debug else 'off'}")
+
+    @cli.quo.command()
     def sync():
-        echo('Syncing')
+        quo.echo('Syncing')
 
 
 Passing Parameters
@@ -76,9 +77,10 @@ script like this:
 
 .. code-block:: python
 
-    from quo import tether, app, echo
-    @tether()
-    @app('--debug/--no-debug', default=False)
+    import quo
+
+    @quo.tether()
+    @quo.app('--debug/--no-debug', default=False)
     @quo.pass_context
     def cli(clime, debug):
         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
@@ -90,7 +92,7 @@ script like this:
     @cli.command()
     @quo.pass_context
     def sync(clime):
-        echo(f"Debug is {'on' if clime.obj['DEBUG'] else 'off'}")
+        quo.echo(f"Debug is {'on' if clime.obj['DEBUG'] else 'off'}")
 
     if __name__ == '__main__':
         cli(obj={})
@@ -154,70 +156,20 @@ Example:
 
 .. code-block:: python
 
-    from quo import tether, command, echo
-    @tether(invoke_without_command=True)
+    import quo
+
+    @quo.tether(invoke_without_command=True)
     @quo.pass_context
     def cli(clime):
         if clime.invoked_subcommand is None:
-            echo('I was invoked without subcommand')
+            quo.echo('I was invoked without subcommand')
         else:
-            echo(f"I am about to invoke {clime.invoked_subcommand}")
+            quo.echo(f"I am about to invoke {clime.invoked_subcommand}")
 
     @cli.command()
     def sync():
-        echo('The subcommand')
+        quo.echo('The subcommand')
 
-
-.. _custom-multi-commands:
-
-Custom Multi Commands
----------------------
-
-In addition to using :func:`quo.tether`, you can also build your own
-custom multi commands.  This is useful when you want to support commands
-being loaded lazily from plugins.
-
-A custom multi command just needs to implement a list and load method:
-
-.. code-block:: python
-
-    import quo
-    import os
-
-    plugin_folder = os.path.join(os.path.dirname(__file__), 'commands')
-
-    class MyCLI(quo.MultiCommand):
-
-        def list_commands(self, ctx):
-            rv = []
-            for filename in os.listdir(plugin_folder):
-                if filename.endswith('.py') and filename != '__init__.py':
-                    rv.append(filename[:-3])
-            rv.sort()
-            return rv
-
-        def get_command(self, clime, name):
-            ns = {}
-            fn = os.path.join(plugin_folder, name + '.py')
-            with open(fn) as f:
-                code = compile(f.read(), fn, 'exec')
-                eval(code, ns, ns)
-            return ns['cli']
-
-    cli = MyCLI(help='This tool\'s subcommands are loaded from a '
-                'plugin folder dynamically.')
-
-    if __name__ == '__main__':
-        cli()
-
-These custom classes can also be used with decorators:
-
-.. code:: python
-
-    from quo import command
-    @command(cls=MyCLI)
-    def cli():
-        pass
 
 Merging Multi Commands
 ----------------------
@@ -268,27 +220,27 @@ Multi Command Chaining
 
 Sometimes it is useful to be allowed to invoke more than one subcommand in
 one go.  For instance if you have installed a setuptools package before
-you might be familiar with the ``setup.py sdist bdist_wheel upload``
-command chain which invokes ``sdist`` before ``bdist_wheel`` before
-``upload``. This is very simple to implement.
+you might be familiar with the ``setup.py sdist bdist_wheel``
+command chain which invokes ``sdist`` before ``bdist_wheel``. This is very simple to implement.
 All you have to do is to pass ``chain=True`` to your multicommand:
 
 .. code-block:: python
 
-    from quo import tether, command, echo
-    @tether(chain=True)
+    import quo
+
+    @quo.tether(chain=True)
     def cli():
         pass
 
 
-    @cli.command('sdist')
+    @cli.quo.command('sdist')
     def sdist():
-        echo('sdist called')
+        quo.echo('sdist called')
 
 
-    @cli.command('bdist_wheel')
+    @cli.quo.command('bdist_wheel')
     def bdist_wheel():
-        echo('bdist_wheel called')
+        quo.echo('bdist_wheel called')
 
 
 When using multi command chaining you can only have one command (the last)
@@ -334,9 +286,10 @@ To make this a bit more concrete consider this example:
 
 .. code:: python
 
-    from quo import tether, app, echo, command
-    @tether(chain=True, invoke_without_command=True)
-    @app('-i', '--input', type=quo.File('r'))
+    import quo
+
+    @quo.tether(chain=True, invoke_without_command=True)
+    @quo.app('@i', '@input', type=quo.types.File('r'))
     def cli(input):
         pass
 
@@ -346,7 +299,7 @@ To make this a bit more concrete consider this example:
         for processor in processors:
             iterator = processor(iterator)
         for item in iterator:
-            echo(item)
+            quo.echo(item)
 
     @cli.command('uppercase')
     def make_uppercase():
@@ -434,15 +387,16 @@ Example usage:
 
 .. code-block:: python
 
-    from quo import tether, app, command, echo
-    @tether()
+    import quo
+
+    @quo.tether()
     def cli():
         pass
 
     @cli.command()
-    @app('--port', default=8000)
+    @quo.app('@port', default=8000)
     def runserver(port):
-        echo(f"Serving on http://127.0.0.1:{port}/")
+        quo.echo(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli(default_map={
@@ -466,20 +420,19 @@ This example does the same as the previous example:
 .. code:: python
 
     import quo
-    from quo import tether, command, app, echo
 
     CONTEXT_SETTINGS = dict(
         default_map={'runserver': {'port': 5000}}
     )
 
-    @tether(context_settings=CONTEXT_SETTINGS)
+    @quo.tether(context_settings=CONTEXT_SETTINGS)
     def cli():
         pass
 
     @cli.command()
-    @app('--port', default=8000)
+    @quo.app('@port', default=8000)
     def runserver(port):
-        echo(f"Serving on http://127.0.0.1:{port}/")
+        quo.echo(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli()

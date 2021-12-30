@@ -154,23 +154,23 @@ responsible for generating the actual content.
 +---------------------------------------------+------------------------------------------------------+
 | Abstract base class                         | Examples                                             |
 +=============================================+======================================================+
-| :class:`~prompt_toolkit.layout.Container`   | :class:`~prompt_toolkit.layout.HSplit`               |
-|                                             | :class:`~prompt_toolkit.layout.VSplit`               |
-|                                             | :class:`~prompt_toolkit.layout.FloatContainer`       |
-|                                             | :class:`~prompt_toolkit.layout.Window`               |
-|                                             | :class:`~prompt_toolkit.layout.ScrollablePane`       |
+| :class:`~quo.layout.Container`   | :class:`~quo.layout.HSplit`               |
+|                                             | :class:`~quo.layout.VSplit`               |
+|                                             | :class:`~quo.layout.FloatContainer`       |
+|                                             | :class:`~quo.layout.Window`               |
+|                                             | :class:`~quo.layout.ScrollablePane`       |
 +---------------------------------------------+------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.UIControl`   | :class:`~prompt_toolkit.layout.BufferControl`        |
-|                                             | :class:`~prompt_toolkit.layout.FormattedTextControl` |
+| :class:`~quo.layout.UIControl`   | :class:`~quo.layout.BufferControl`        |
+|                                             | :class:`~quo.layout.FormattedTextControl` |
 +---------------------------------------------+------------------------------------------------------+
 
-The :class:`~prompt_toolkit.layout.Window` class itself is
-particular: it is a :class:`~prompt_toolkit.layout.Container` that
-can contain a :class:`~prompt_toolkit.layout.UIControl`. Thus, it's the adaptor
-between the two. The :class:`~prompt_toolkit.layout.Window` class also takes
+The :class:`~quo.layout.Window` class itself is
+particular: it is a :class:`~quo.layout.Container` that
+can contain a :class:`~quo.layout.UIControl`. Thus, it's the adaptor
+between the two. The :class:`~quo.layout.Window` class also takes
 care of scrolling the content and wrapping the lines if needed.
 
-Finally, there is the :class:`~prompt_toolkit.layout.Layout` class which wraps
+Finally, there is the :class:`~quo.layout.Layout` class which wraps
 the whole layout. This is responsible for keeping track of which window has the
 focus.
 
@@ -180,47 +180,43 @@ vertical line:
 
 .. code:: python
 
-    from prompt_toolkit import Application
-    from prompt_toolkit.buffer import Buffer
-    from prompt_toolkit.layout.containers import VSplit, Window
-    from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
-    from prompt_toolkit.layout.layout import Layout
+    import quo
 
-    buffer1 = Buffer()  # Editable buffer.
+    buffer1 = quo.buffer.Buffer()  # Editable buffer.
 
-    root_container = VSplit([
+    root_container = quo.layout.VSplit([
         # One window that holds the BufferControl with the default buffer on
         # the left.
-        Window(content=BufferControl(buffer=buffer1)),
+        quo.layout.Window(content=quo.layout.BufferControl(buffer=buffer1)),
 
         # A vertical line in the middle. We explicitly specify the width, to
         # make sure that the layout engine will not try to divide the whole
         # width by three for all these windows. The window will simply fill its
         # content by repeating this character.
-        Window(width=1, char='|'),
+        quo.layout.Window(width=1, char='|'),
 
         # Display the text 'Hello world' on the right.
-        Window(content=FormattedTextControl(text='Hello world')),
+        quo.layout.Window(content=quo.layout.FormattedTextControl(text='Hello world')),
     ])
 
-    layout = Layout(root_container)
+    layout = quo.layout.Layout(root_container)
 
-    app = Application(layout=layout, full_screen=True)
+    app = quo.Suite(layout=layout, full_screen=True)
     app.run() # You won't be able to Exit this app
 
 Notice that if you execute this right now, there is no way to quit this
 application yet. This is something we explain in the next section below.
 
 More complex layouts can be achieved by nesting multiple
-:class:`~prompt_toolkit.layout.VSplit`,
-:class:`~prompt_toolkit.layout.HSplit` and
-:class:`~prompt_toolkit.layout.FloatContainer` objects.
+:class:`~quo.layout.VSplit`,
+:class:`~quo.layout.HSplit` and
+:class:`~quo.layout.FloatContainer` objects.
 
 If you want to make some part of the layout only visible when a certain
 condition is satisfied, use a
-:class:`~prompt_toolkit.layout.ConditionalContainer`.
+:class:`~quo.layout.ConditionalContainer`.
 
-Finally, there is :class:`~prompt_toolkit.layout.ScrollablePane`, a container
+Finally, there is :class:`~quo.layout.ScrollablePane`, a container
 class that can be used to create long forms or nested layouts that are
 scrollable as a whole.
 
@@ -229,17 +225,17 @@ Focusing windows
 ^^^^^^^^^^^^^^^^^
 
 Focusing something can be done by calling the
-:meth:`~prompt_toolkit.layout.Layout.focus` method. This method is very
-flexible and accepts a :class:`~prompt_toolkit.layout.Window`, a
-:class:`~prompt_toolkit.buffer.Buffer`, a
-:class:`~prompt_toolkit.layout.controls.UIControl` and more.
+:meth:`~quo.layout.Layout.focus` method. This method is very
+flexible and accepts a :class:`~quo.layout.Window`, a
+:class:`~quo.buffer.Buffer`, a
+:class:`~quo.layout.controls.UIControl` and more.
 
-In the following example, we use :func:`~prompt_toolkit.application.get_app`
+In the following example, we use :func:`~quo.suite.get_app`
 for getting the active application.
 
 .. code:: python
 
-    from prompt_toolkit.application import get_app
+    import quo
 
     # This window was created earlier.
     w = Window()
@@ -247,7 +243,7 @@ for getting the active application.
     # ...
 
     # Now focus it.
-    get_app().layout.focus(w)
+    quo.suite.get_app().layout.focus(w)
 
 Changing the focus is something which is typically done in a key binding, so
 read on to see how to define key bindings.
@@ -256,17 +252,17 @@ Key bindings
 ------------
 
 In order to react to user actions, we need to create a
-:class:`~prompt_toolkit.key_binding.KeyBindings` object and pass
-that to our :class:`~prompt_toolkit.application.Application`.
+:class:`~quo.keys.KeyBinder` object and pass
+that to our :class:`~quo.Suite`.
 
 There are two kinds of key bindings:
 
 - Global key bindings, which are always active.
 - Key bindings that belong to a certain
-  :class:`~prompt_toolkit.layout.controls.UIControl` and are only active when
+  :class:`~quo.layout.controls.UIControl` and are only active when
   this control is focused. Both
-  :class:`~prompt_toolkit.layout.BufferControl`
-  :class:`~prompt_toolkit.layout.FormattedTextControl` take a ``key_bindings``
+  :class:`~quo.layout.BufferControl`
+  :class:`~quo.layout.FormattedTextControl` take a ``key_bindings``
   argument.
 
 
@@ -289,22 +285,21 @@ the key handler:
 
 .. code:: python
 
-    from prompt_toolkit import Application
-    from prompt_toolkit.key_binding import KeyBindings
+    import quo
 
-    kb = KeyBindings()
+    bindings = quo.keys.KeyBinder()
 
-    @kb.add('c-q')
+    @bindings.add('ctrl-q')
     def exit_(event):
         """
         Pressing Ctrl-Q will exit the user interface.
 
         Setting a return value means: quit the event loop that drives the user
-        interface and return this value from the `Application.run()` call. 
+        interface and return this value from the `Suite.run()` call. 
         """
         event.app.exit()
 
-    app = Application(key_bindings=kb, full_screen=True)
+    app = quo.Suite(key_bindings=kb, full_screen=True)
     app.run()
 
 The callback function is named ``exit_`` for clarity, but it could have been
@@ -317,15 +312,15 @@ Modal containers
 ^^^^^^^^^^^^^^^^
 
 The following container objects take a ``modal`` argument
-:class:`~prompt_toolkit.layout.VSplit`,
-:class:`~prompt_toolkit.layout.HSplit`, and
-:class:`~prompt_toolkit.layout.FloatContainer`.
+:class:`~quo.layout.VSplit`,
+:class:`~quo.layout.HSplit`, and
+:class:`~quo.layout.FloatContainer`.
 
 Setting ``modal=True`` makes what is called a **modal** container. Normally, a
 child container would inherit its parent key bindings. This does not apply to
 **modal** containers.
 
-Consider a **modal** container (e.g. :class:`~prompt_toolkit.layout.VSplit`)
+Consider a **modal** container (e.g. :class:`~quo.layout.VSplit`)
 is child of another container, its parent. Any key bindings from the parent
 are not taken into account if the **modal** container (child) has the focus.
 
@@ -339,11 +334,11 @@ The global key bindings are always active.
 More about the Window class
 ---------------------------
 
-As said earlier, a :class:`~prompt_toolkit.layout.Window` is a
-:class:`~prompt_toolkit.layout.Container` that wraps a
-:class:`~prompt_toolkit.layout.UIControl`, like a
-:class:`~prompt_toolkit.layout.BufferControl` or
-:class:`~prompt_toolkit.layout.FormattedTextControl`.
+As said earlier, a :class:`~quo.layout.Window` is a
+:class:`~quo.layout.Container` that wraps a
+:class:`~quo.layout.UIControl`, like a
+:class:`~quo.layout.BufferControl` or
+:class:`~quo.layout.FormattedTextControl`.
 
 .. note::
 
@@ -371,12 +366,12 @@ More about buffers and `BufferControl`
 Input processors
 ^^^^^^^^^^^^^^^^
 
-A :class:`~prompt_toolkit.layout.processors.Processor` is used to postprocess
-the content of a :class:`~prompt_toolkit.layout.BufferControl` before it's
+A :class:`~quo.layout.processors.Processor` is used to postprocess
+the content of a :class:`~quo.layout.BufferControl` before it's
 displayed. It can for instance highlight matching brackets or change the
 visualisation of tabs and so on.
 
-A :class:`~prompt_toolkit.layout.processors.Processor` operates on individual
+A :class:`~quo.layout.processors.Processor` operates on individual
 lines. Basically, it takes a (formatted) line and produces a new (formatted)
 line.
 
@@ -385,27 +380,27 @@ Some build-in processors:
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
 | Processor                                                                  | Usage:                                                    |
 +============================================================================+===========================================================+
-| :class:`~prompt_toolkit.layout.processors.HighlightSearchProcessor`        | Highlight the current search results.                     |
+| :class:`~quo.layout.processors.HighlightSearchProcessor`        | Highlight the current search results.                     |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.HighlightSelectionProcessor`     | Highlight the selection.                                  |
+| :class:`~quo.layout.processors.HighlightSelectionProcessor`     | Highlight the selection.                                  |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.PasswordProcessor`               | Display input as asterisks. (``*`` characters).           |
+| :class:`~quo.layout.processors.PasswordProcessor`               | Display input as asterisks. (``*`` characters).           |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.BracketsMismatchProcessor`       | Highlight open/close mismatches for brackets.             |
+| :class:`~quo.layout.processors.BracketsMismatchProcessor`       | Highlight open/close mismatches for brackets.             |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.BeforeInput`                     | Insert some text before.                                  |
+| :class:`~quo.layout.processors.BeforeInput`                     | Insert some text before.                                  |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.AfterInput`                      | Insert some text after.                                   |
+| :class:`~quo.layout.processors.AfterInput`                      | Insert some text after.                                   |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.AppendAutoSuggestion`            | Append auto suggestion text.                              |
+| :class:`~quo.layout.processors.AppendAutoSuggestion`            | Append auto suggestion text.                              |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.ShowLeadingWhiteSpaceProcessor`  | Visualise leading whitespace.                             |
+| :class:`~quo.layout.processors.ShowLeadingWhiteSpaceProcessor`  | Visualise leading whitespace.                             |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.ShowTrailingWhiteSpaceProcessor` | Visualise trailing whitespace.                            |
+| :class:`~quo.layout.processors.ShowTrailingWhiteSpaceProcessor` | Visualise trailing whitespace.                            |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~prompt_toolkit.layout.processors.TabsProcessor`                   | Visualise tabs as `n` spaces, or some symbols.            |
+| :class:`~quo.layout.processors.TabsProcessor`                   | Visualise tabs as `n` spaces, or some symbols.            |
 +----------------------------------------------------------------------------+-----------------------------------------------------------+
 
-A :class:`~prompt_toolkit.layout.BufferControl` takes only one processor as
+A :class:`~quo.layout.BufferControl` takes only one processor as
 input, but it is possible to "merge" multiple processors into one with the
-:func:`~prompt_toolkit.layout.processors.merge_processors` function.
+:func:`~quo.layout.processors.merge_processors` function.

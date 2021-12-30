@@ -4,9 +4,7 @@
 Input hooks
 ===========
 
-Input hooks are a tool for inserting an external event loop into the
-prompt_toolkit event loop, so that the other loop can run as long as
-prompt_toolkit (actually asyncio) is idle. This is used in applications like
+Input hooks are a tool for inserting an external event loop into Quo's event loop, so that the other loop can run as long as quo(actually asyncio) is idle. This is used in applications like
 `IPython <https://ipython.org/>`_, so that GUI toolkits can display their
 windows while we wait at the prompt for user input.
 
@@ -21,7 +19,7 @@ As a consequence, we will "trampoline" back and forth between two event loops.
 
 .. code:: python
 
-    from prompt_toolkit.eventloop.inputhook import set_eventloop_with_inputhook
+    from quo.eventloop.inputhook import set_eventloop_with_inputhook
 
     def inputhook(inputhook_context):
         # At this point, we run the other loop. This loop is supposed to run

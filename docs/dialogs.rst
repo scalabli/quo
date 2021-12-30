@@ -10,69 +10,69 @@ the Whiptail program, but in pure Python.
 Message box
 -----------
 
-Use the :func:`~prompt_toolkit.shortcuts.message_dialog` function to display a
+Use the :func:`~quo.shortcuts.message` function to display a
 simple message box. For instance:
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import message_dialog
+    from quo.shortcuts import message
 
-    message_dialog(
+    message(
         title='Example dialog window',
         text='Do you want to continue?\nPress ENTER to quit.').run()
 
-.. image:: ../images/dialogs/messagebox.png
+.. image:: ./images/dialogs/messagebox.png
 
 
 Input box
 ---------
 
-The :func:`~prompt_toolkit.shortcuts.input_dialog` function can display an
+The :func:`~quo.shortcuts.evoke` function can display an
 input box. It will return the user input as a string.
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import input_dialog
+    from quo.shortcuts import evoke
 
-    text = input_dialog(
+    text = evoke(
         title='Input dialog example',
         text='Please type your name:').run()
 
-.. image:: ../images/dialogs/inputbox.png
+.. image:: ./images/dialogs/inputbox.png
 
 
 The ``password=True`` option can be passed to the
-:func:`~prompt_toolkit.shortcuts.input_dialog` function to turn this into a
+:func:`~quo.shortcuts.evoke` function to turn this into a
 password input box.
 
 
 Yes/No confirmation dialog
 --------------------------
 
-The :func:`~prompt_toolkit.shortcuts.yes_no_dialog` function displays a yes/no
+The :func:`~quo.shortcuts.confirmation` function displays a yes/no
 confirmation dialog. It will return a boolean according to the selection.
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import yes_no_dialog
+    from quo.shortcuts import yes_no_dialog
 
-    result = yes_no_dialog(
+    result = confirmation(
         title='Yes/No dialog example',
         text='Do you want to confirm?').run()
 
-.. image:: ../images/dialogs/confirm.png
+.. image:: ./images/dialogs/confirm.png
 
 
 Button dialog
 -------------
 
-The :func:`~prompt_toolkit.shortcuts.button_dialog` function displays a dialog
+The :func:`~quo.shortcuts.button_dialog` function displays a dialog
 with choices offered as buttons. Buttons are indicated as a list of tuples,
 each providing the label (first) and return value if clicked (second).
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import button_dialog
+    from quo.shortcuts import button_dialog
 
     result = button_dialog(
         title='Button dialog example',
@@ -84,21 +84,21 @@ each providing the label (first) and return value if clicked (second).
         ],
     ).run()
 
-.. image:: ../images/dialogs/button.png
+.. image:: ./images/dialogs/button.png
 
 
 Radio list dialog
 -----------------
 
-The :func:`~prompt_toolkit.shortcuts.radiolist_dialog` function displays a dialog
+The :func:`~quo.shortcuts.radiolist` function displays a dialog
 with choices offered as a radio list. The values are provided as a list of tuples,
 each providing the return value (first element) and the displayed value (second element).
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import radiolist_dialog
+    from quo.shortcuts import radiolist
 
-    result = radiolist_dialog( 
+    result = radiolist( 
         title="RadioList dialog", 
         text="Which breakfast would you like ?", 
         values=[ 
@@ -112,13 +112,13 @@ each providing the return value (first element) and the displayed value (second 
 Checkbox list dialog
 --------------------
 
-The :func:`~prompt_toolkit.shortcuts.checkboxlist_dialog` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
+The :func:`~quo.shortcuts.checkbox` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import checkboxlist_dialog
+    from quo.shortcuts import checkbox
 
-    results_array = checkboxlist_dialog( 
+    results_array = checkbox( 
         title="CheckboxList dialog", 
         text="What would you like in your breakfast ?",
         values=[ 
@@ -133,31 +133,30 @@ The :func:`~prompt_toolkit.shortcuts.checkboxlist_dialog` has the same usage and
 Styling of dialogs
 ------------------
 
-A custom :class:`~prompt_toolkit.styles.Style` instance can be passed to all
+A custom :class:`~quo.styles.Style` instance can be passed to all
 dialogs to override the default style. Also, text can be styled by passing an
-:class:`~prompt_toolkit.formatted_text.HTML` object.
+:class:`~quo.text.HTML` object.
 
 
 .. code:: python
 
-    from prompt_toolkit.formatted_text import HTML
-    from prompt_toolkit.shortcuts import message_dialog
-    from prompt_toolkit.styles import Style
+    import quo
+    from quo.shortcuts import message
 
-    example_style = Style.from_dict({
+    example_style = quo.styles.Style.from_dict({
         'dialog':             'bg:#88ff88',
         'dialog frame.label': 'bg:#ffffff #000000',
         'dialog.body':        'bg:#000000 #00ff00',
         'dialog shadow':      'bg:#00aa00',
     })
 
-    message_dialog(
-        title=HTML('<style bg="blue" fg="white">Styled</style> '
+    message(
+        title=quo.text.HTML('<style bg="blue" fg="white">Styled</style> '
                    '<style fg="ansired">dialog</style> window'),
         text='Do you want to continue?\nPress ENTER to quit.',
         style=example_style).run()
 
-.. image:: ../images/dialogs/styled.png
+.. image:: ./images/dialogs/styled.png
 
 Styling reference sheet
 -----------------------
@@ -169,27 +168,27 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 +--------------------------+-------------------------+
 | Shortcut                 | Components used         |
 +==========================+=========================+
-| ``yes_no_dialog``        | - ``Label``             |
+| ``confirmation``        | - ``Label``             |
 |                          | - ``Button`` (x2)       |
 +--------------------------+-------------------------+
 | ``button_dialog``        | - ``Label``             |
 |                          | - ``Button``            |
 +--------------------------+-------------------------+
-| ``input_dialog``         | - ``TextArea``          |
+| ``evoke``         | - ``TextArea``          |
 |                          | - ``Button`` (x2)       |
 +--------------------------+-------------------------+
-| ``message_dialog``       | - ``Label``             |
+| ``message``       | - ``Label``             |
 |                          | - ``Button``            |
 +--------------------------+-------------------------+
-| ``radiolist_dialog``     | - ``Label``             |
+| ``radiolist``     | - ``Label``             |
 |                          | - ``RadioList``         |
 |                          | - ``Button`` (x2)       |
 +--------------------------+-------------------------+
-| ``checkboxlist_dialog``  | - ``Label``             |
+| ``checkbox``  | - ``Label``             |
 |                          | - ``CheckboxList``      |
 |                          | - ``Button`` (x2)       |
 +--------------------------+-------------------------+
-| ``progress_dialog``      | - ``Label``             |
+| ``progress``      | - ``Label``             |
 |                          | - ``TextArea`` (locked) |
 |                          | - ``ProgressBar``       |
 +--------------------------+-------------------------+
@@ -239,17 +238,17 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 Example
 _______
 
-Let's customize the example of the ``checkboxlist_dialog``.
+Let's customize the example of the ``checkbox``.
 
 It uses 2 ``Button``, a ``CheckboxList`` and a ``Label``, packed inside a ``Dialog``.
 Therefore we can customize each of these elements separately, using for instance:
 
 .. code:: python
 
-    from prompt_toolkit.shortcuts import checkboxlist_dialog
-    from prompt_toolkit.styles import Style
+    import quo
+    from quo.shortcuts import checkbox
 
-    results = checkboxlist_dialog(
+    results = checkbox(
         title="CheckboxList dialog",
         text="What would you like in your breakfast ?",
         values=[
@@ -258,7 +257,7 @@ Therefore we can customize each of these elements separately, using for instance
             ("croissants", "20 Croissants"),
             ("daily", "The breakfast of the day")
         ],
-        style=Style.from_dict({
+        style=quo.styles.Style.from_dict({
             'dialog': 'bg:#cdbbb3',
             'button': 'bg:#bf99a4',
             'checkbox': '#e8612c',

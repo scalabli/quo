@@ -27,15 +27,15 @@ RGB color codes
 Parameters
    * ``text`` – the string to style with ansi codes.
 
-   * ``fg or foreground``  – if provided this will become the foreground color.
+   * ``fg``  – if provided this will become the foreground color.
 
-   * ``bg or background``  – if provided this will become the background color.
+   * ``bg``  – if provided this will become the background color.
 
    * ``bold``  – if provided this will enable or disable bold mode.
 
    * ``dim``  – if provided this will enable or disable dim mode.
 
-   * ``nl or newline`` - if provided this will print a new line.
+   * ``nl`` - if provided this will print a new line.
 
    * ``ul or underline`` – if provided this will enable or disable underline
 

@@ -74,23 +74,22 @@ Class names
 Like we do for web design, it is not a good habit to specify all styling
 inline. Instead, we can attach class names to UI controls and have a style
 sheet that refers to these class names. The
-:class:`~prompt_toolkit.styles.Style` can be passed as an argument to the
-:class:`~prompt_toolkit.application.Application`.
+:class:`~quo.styles.Style` can be passed as an argument to the
+:class:`~quo.Suite`.
 
 .. code:: python
 
-    from prompt_toolkit.layout import VSplit, Window
-    from prompt_toolkit.styles import Style
+    import quo
 
-    layout = VSplit([
-        Window(BufferControl(...), style='class:left'),
-        HSplit([
-            Window(BufferControl(...), style='class:top'),
-            Window(BufferControl(...), style='class:bottom'),
+    layout = quo.layout.VSplit([
+        quo.layout.Window(quo.layout.BufferControl(...), style='class:left'),
+        quo.layout.HSplit([
+            quo.layout.Window(quo.layout.BufferControl(...), style='class:top'),
+            quo.layout.Window(quo.layout.BufferControl(...), style='class:bottom'),
         ], style='class:right')
     ])
 
-    style = Style([
+    style = quo.styles.Style([
          ('left', 'bg:ansired'),
          ('top', 'fg:#00aaaa'),
          ('bottom', 'underline bold'),
@@ -102,8 +101,8 @@ using a comma separated list, or by using the ``class:`` prefix twice.
 
 .. code:: python
 
-   Window(BufferControl(...), style='class:left,bottom'),
-   Window(BufferControl(...), style='class:left class:bottom'),
+   quo.layout.Window(quo.layout.BufferControl(...), style='class:left,bottom'),
+   quo.layout.Window(quo.layout.BufferControl(...), style='class:left class:bottom'),
 
 It is possible to combine class names and inline styling. The order in which
 the class names and inline styling is specified determines the order of
@@ -112,7 +111,7 @@ the "header" class, and then override that with a red background color.
 
 .. code:: python
 
-    Window(BufferControl(...), style='class:header bg:red'),
+    quo.layout.Window(quo.layout.BufferControl(...), style='class:header bg:red'),
 
 
 Dot notation in class names
@@ -136,7 +135,7 @@ matter).
 
 .. code:: python
 
-    style = Style([
+    style = quo.styles.Style([
          ('header left', 'underline'),
      ])
 
@@ -147,7 +146,7 @@ style sheet (just typing ``c`` or ``b.c`` doesn't work if the class is
 
 .. code:: python
 
-    style = Style([
+    style = quo.styles.Style([
          ('a.b.c', 'underline'),
      ])
 
@@ -155,7 +154,7 @@ It is possible to combine this:
 
 .. code:: python
 
-    style = Style([
+    style = quo.styles.Style([
          ('header body left.text', 'underline'),
      ])
 
@@ -197,9 +196,9 @@ their ordering. An ``OrderedDict`` works as well.
 
 .. code:: python
 
-    from prompt_toolkit.styles import Style
+    import quo
 
-    style = Style.from_dict({
+    style = quo.styles.Style.from_dict({
          'header body left.text': 'underline',
     })
 
@@ -213,7 +212,7 @@ style can however be loaded and used as follows:
 
 .. code:: python
 
-    from prompt_toolkit.styles.pygments import style_from_pygments_cls
+    from quo.styles.pygments import style_from_pygments_cls
     from pygments.styles import get_style_by_name
 
     style = style_from_pygments_cls(get_style_by_name('monokai'))
@@ -222,12 +221,12 @@ style can however be loaded and used as follows:
 Merging styles together
 -----------------------
 
-Multiple :class:`~prompt_toolkit.styles.Style` objects can be merged together as
+Multiple :class:`~quo.styles.Style` objects can be merged together as
 follows:
 
 .. code:: python
 
-    from prompt_toolkit.styles import merge_styles
+    from quo.styles import merge_styles
 
     style = merge_styles([
         style1,
@@ -242,13 +241,13 @@ Color depths
 There are four different levels of color depths available:
 
 +--------+-----------------+-----------------------------+---------------------------------+
-| 1 bit  | Black and white | ``ColorDepth.DEPTH_1_BIT``  | ``ColorDepth.MONOCHROME``       |
+| 1 bit  | Black and white | ``ColorDepth.one_bit``  | ``ColorDepth.one_bit``       |
 +--------+-----------------+-----------------------------+---------------------------------+
-| 4 bit  | ANSI colors     | ``ColorDepth.DEPTH_4_BIT``  | ``ColorDepth.ANSI_COLORS_ONLY`` |
+| 4 bit  | ANSI colors     | ``ColorDepth.four_bit``  | ``ColorDepth.four_bit`` |
 +--------+-----------------+-----------------------------+---------------------------------+
-| 8 bit  | 256 colors      | ``ColorDepth.DEPTH_8_BIT``  | ``ColorDepth.DEFAULT``          |
+| 8 bit  | 256 colors      | ``ColorDepth.eight_bit``  | ``ColorDepth.eight_bit``          |
 +--------+-----------------+-----------------------------+---------------------------------+
-| 24 bit | True colors     | ``ColorDepth.DEPTH_24_BIT`` | ``ColorDepth.TRUE_COLOR``       |
+| 24 bit | True colors     | ``ColorDepth.twenty_four_bit`` | ``ColorDepth.twenty_four_bit``       |
 +--------+-----------------+-----------------------------+---------------------------------+
 
 By default, 256 colors are used, because this is what most terminals support
@@ -257,27 +256,27 @@ these days. If the ``TERM`` enviroment variable is set to ``linux`` or
 bit true color output needs to be enabled explicitely. When 4 bit color output
 is chosen, all colors will be mapped to the closest ANSI color.
 
-Setting the default color depth for any prompt_toolkit application can be done
-by setting the ``PROMPT_TOOLKIT_COLOR_DEPTH`` environment variable. You could
+Setting the default color depth for any  application can be done
+by setting the ``QUO_COLOR_DEPTH`` environment variable. You could
 for instance copy the following into your `.bashrc` file.
 
 .. code:: shell
 
-    # export PROMPT_TOOLKIT_COLOR_DEPTH=DEPTH_1_BIT
-    export PROMPT_TOOLKIT_COLOR_DEPTH=DEPTH_4_BIT
-    # export PROMPT_TOOLKIT_COLOR_DEPTH=DEPTH_8_BIT
-    # export PROMPT_TOOLKIT_COLOR_DEPTH=DEPTH_24_BIT
+    # export QUO_COLOR_DEPTH=one_bit
+    export QUO_COLOR_DEPTH=four_bit
+    # export QUO_COLOR_DEPTH=eight_bit
+    # export QUO_COLOR_DEPTH=twenty_four_bit
 
 An application can also decide to set the color depth manually by passing a
-:class:`~prompt_toolkit.output.ColorDepth` value to the
-:class:`~prompt_toolkit.application.Application` object:
+:class:`~quo.color.ColorDepth` value to the
+:class:`~quo.Suite` object:
 
 .. code:: python
 
-    from prompt_toolkit.output.color_depth import ColorDepth
+    import quo
 
-    app = Application(
-        color_depth=ColorDepth.ANSI_COLORS_ONLY,
+    app = quo.Suite(
+        color_depth=quo.color.ColorDepth.ANSI_COLORS_ONLY,
         # ...
     )
 
@@ -285,21 +284,23 @@ An application can also decide to set the color depth manually by passing a
 Style transformations
 ---------------------
 
-Prompt_toolkit supports a way to apply certain transformations to the styles
+Quo supports a way to apply certain transformations to the styles
 near the end of the rendering pipeline. This can be used for instance to change
 certain colors to improve the rendering in some terminals.
 
 One useful example is the
-:class:`~prompt_toolkit.styles.AdjustBrightnessStyleTransformation` class,
+:class:`~quo.styles.AdjustBrightnessStyleTransformation` class,
 which takes `min_brightness` and `max_brightness` as arguments which by default
 have 0.0 and 1.0 as values. In the following code snippet, we increase the
 minimum brightness to improve rendering on terminals with a dark background.
 
 .. code:: python
 
-    from prompt_toolkit.styles import AdjustBrightnessStyleTransformation
+    import quo
+    
+    from quo.styles import AdjustBrightnessStyleTransformation
 
-    app = Application(
+    app = quo.Suite(
         style_transformation=AdjustBrightnessStyleTransformation(
             min_brightness=0.5,  # Increase the minimum brightness.
             max_brightness=1.0,

@@ -55,7 +55,7 @@ This filter can then be used in a key binding, like in the following snippet:
 
 .. code:: python
 
-    from prompt_toolkit.key_binding import KeyBindings
+    import quo
 
     kb = quo.keys.KeyBinder()
 
@@ -79,36 +79,36 @@ There are many built-in filters, ready to use. All of them have a lowercase
 name, because they represent the wrapped function underneath, and can be called
 as a function.
 
-- :class:`~prompt_toolkit.filters.app.has_arg`
-- :class:`~prompt_toolkit.filters.app.has_completions`
-- :class:`~prompt_toolkit.filters.app.has_focus`
-- :class:`~prompt_toolkit.filters.app.buffer_has_focus`
-- :class:`~prompt_toolkit.filters.app.has_selection`
-- :class:`~prompt_toolkit.filters.app.has_validation_error`
-- :class:`~prompt_toolkit.filters.app.is_aborting`
-- :class:`~prompt_toolkit.filters.app.is_done`
-- :class:`~prompt_toolkit.filters.app.is_read_only`
-- :class:`~prompt_toolkit.filters.app.is_multiline`
-- :class:`~prompt_toolkit.filters.app.renderer_height_is_known`
-- :class:`~prompt_toolkit.filters.app.in_editing_mode`
-- :class:`~prompt_toolkit.filters.app.in_paste_mode`
+- :class:`~quo.filters.app.has_arg`
+- :class:`~quo.filters.app.has_completions`
+- :class:`~quo.filters.app.has_focus`
+- :class:`~quo.filters.app.buffer_has_focus`
+- :class:`~quo.filters.app.has_selection`
+- :class:`~quo.filters.app.has_validation_error`
+- :class:`~quo.filters.app.is_aborting`
+- :class:`~quo.filters.app.is_done`
+- :class:`~quo.filters.app.is_read_only`
+- :class:`~quo.filters.app.is_multiline`
+- :class:`~quo.filters.app.renderer_height_is_known`
+- :class:`~quo.filters.app.in_editing_mode`
+- :class:`~quo.filters.app.in_paste_mode`
 
-- :class:`~prompt_toolkit.filters.app.vi_mode`
-- :class:`~prompt_toolkit.filters.app.vi_navigation_mode`
-- :class:`~prompt_toolkit.filters.app.vi_insert_mode`
-- :class:`~prompt_toolkit.filters.app.vi_insert_multiple_mode`
-- :class:`~prompt_toolkit.filters.app.vi_replace_mode`
-- :class:`~prompt_toolkit.filters.app.vi_selection_mode`
-- :class:`~prompt_toolkit.filters.app.vi_waiting_for_text_object_mode`
-- :class:`~prompt_toolkit.filters.app.vi_digraph_mode`
+- :class:`~quo.filters.app.vi_mode`
+- :class:`~quo.filters.app.vi_navigation_mode`
+- :class:`~quo.filters.app.vi_insert_mode`
+- :class:`~quo.filters.app.vi_insert_multiple_mode`
+- :class:`~quo.filters.app.vi_replace_mode`
+- :class:`~quo.filters.app.vi_selection_mode`
+- :class:`~quo.filters.app.vi_waiting_for_text_object_mode`
+- :class:`~quo.filters.app.vi_digraph_mode`
 
-- :class:`~prompt_toolkit.filters.app.emacs_mode`
-- :class:`~prompt_toolkit.filters.app.emacs_insert_mode`
-- :class:`~prompt_toolkit.filters.app.emacs_selection_mode`
+- :class:`~quo.filters.app.emacs_mode`
+- :class:`~quo.filters.app.emacs_insert_mode`
+- :class:`~quo.filters.app.emacs_selection_mode`
 
-- :class:`~prompt_toolkit.filters.app.is_searching`
-- :class:`~prompt_toolkit.filters.app.control_is_searchable`
-- :class:`~prompt_toolkit.filters.app.vi_search_direction_reversed`
+- :class:`~quo.filters.app.is_searching`
+- :class:`~quo.filters.app.control_is_searchable`
+- :class:`~quo.filters.app.vi_search_direction_reversed`
 
 
 Combining filters

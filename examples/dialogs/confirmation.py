@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-"""
-Example of confirmation (yes/no) dialog window.
-"""
+import quo
+
 from quo.shortcuts import confirmation
 
-def main():
-    result = confirmation(
-        title="Yes/No dialog example", text="Do you want to confirm?"
-    ).run()
+@quo.command()
+@quo.app("@dialog")
+def main(dialog):
+    """Example of a confirmation window"""
+    result = confirmation(title="Yes/No dialog example", text="Do you want to confirm?").run()
 
     print("Result = {}".format(result))
 

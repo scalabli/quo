@@ -4,6 +4,6 @@ To ask if a user wants to continue with an action, the :func:`confirm` function 
 
 .. code:: python
 
-   from quo import confirm
+   import quo
    
-   confirm("Do you want to continue?")                                            
+   quo.confirm("Do you want to continue?")                                            

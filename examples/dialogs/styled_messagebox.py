@@ -16,7 +16,7 @@ from quo.styles import Style
 # Custom color scheme.
 example_style = Style.from_dict(
     {
-        "dialog": "bg:#88ff88",
+        "dialog": "bg:aquamarine",
         "dialog frame-label": "bg:#ffffff #000000",
         "dialog.body": "bg:#000000 #00ff00",
         "dialog shadow": "bg:#00aa00",

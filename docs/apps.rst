@@ -12,7 +12,7 @@ Apps in quo are highly configurable and should not be confused with :ref:`positi
 How to name Apps
 -----------------
 
-A name is chosen in the following order
+For the purpose of uniformity, a name is chosen in the following order
 
 1.  In the event that a name is not prefixed, therefore it is used as the Python argument name
 2.  If there is at least one name prefixed with `@`  the first one given is used as the name.
@@ -190,7 +190,7 @@ single characters.
 
     import quo
 
-    @quo.app("--format", multiple=True, default=["json"])
+    @quo.app("@format", multiple=True, default=["json"])
 
 
 Counting
@@ -302,14 +302,13 @@ the default.
 .. code-block:: python
 
     import sys
-    from quo import command, app, echo
+    import quo
 
-
-    @command()
-    @app('--upper', 'transformation', flag_value='upper',default=True)
-    @app('--lower', 'transformation', flag_value='lower')
+    @quo.command()
+    @quo.app('@upper', 'transformation', flag_value='upper',default=True)
+    @quo.app('@lower', 'transformation', flag_value='lower')
     def info(transformation):
-        echo(getattr(sys.platform, transformation)())
+        quo.echo(getattr(sys.platform, transformation)())
 
 
 .. _choice-apps:
@@ -327,13 +326,12 @@ Example:
 
 .. code-block:: python
 
-    from quo import command, app, Choice, echo
+    import quo
 
-    @command()
-    @app('--hash-type',
-                  type= Choice(['MD5', 'SHA1'], case_sensitive=False))
+    @quo.command()
+    @quo.app('@hash-type', type= quo.types.Choice(['MD5', 'SHA1'], case_sensitive=False))
     def digest(hash_type):
-        echo(hash_type)
+        quo.echo(hash_type)
 
 
 Only pass the choices as list or tuple. Other iterables (like
@@ -360,12 +358,12 @@ Example:
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app('--name', prompt=True)
+    @quo.command()
+    @quo.app('@name', prompt=True)
     def hello(name):
-        echo(f"Hello {name}!")
+        quo.echo(f"Hello {name}!")
 
 
 If you are not happy with the default prompt string, you can ask for
@@ -373,11 +371,12 @@ a different one:
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('--name', prompt='Your name please')
+    import quo
+
+    @quo.command()
+    @quo.app('@name', prompt='Your name please')
     def hello(name):
-        echo(f"Hello {name}!")
+        quo.echo(f"Hello {name}!")
 
 It is advised that prompt not be used in conjunction with the multiple
 flag set to True. Instead, prompt in the function interactively.
@@ -396,25 +395,13 @@ useful for password input:
 .. code-block:: python
 
     import codecs
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app("--password", prompt=True, hide=True, affirm==True)
+    @quo.command()
+    @quo.app("@password", prompt=True, hide=True, affirm==True)
     def encode(password):
-        echo(f"encoded: {codecs.encode(password, 'rot13')}")
+        quo.echo(f"encoded: {codecs.encode(password, 'rot13')}")
 
-
-Because this combination of parameters is quite common, this can also be
-replaced with the :func:`autopasswd` decorator:
-
-.. code-block:: python
-
-    from quo import command, autopasswd, echo
-
-    @command()
-    @autopasswd()
-    def encrypt(password):
-        echo(f"encoded: to {codecs.encode(password, 'rot13')}")
 
 
 Dynamic Defaults for Prompts
@@ -433,48 +420,40 @@ from the environment:
 .. code-block:: python
 
     import os
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app("--username", prompt= True, default=lambda: os.environ.get("USER", ""))
+    @quo.command()
+    @quo.app("@username", prompt= True, default=lambda: os.environ.get("USER", ""))
     def hello(username):
-        echo(f"Hello, {username}!")
+        quo.cho(f"Hello, {username}!")
 
 To describe what the default value will be, set it in ``show_default``.
 
 .. code-block:: python
 
     import os
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app(
-        "--username", prompt=True,
-        default=lambda: os.environ.get("USER", ""),
-        show_default="current user"
-    )
+    @quo.command()
+    @quo.app("@username", prompt=True, default=lambda: os.environ.get("USER", ""), show_default="current user")
     def hello(username):
-        echo(f"Hello, {username}!")
+        quo.echo(f"Hello, {username}!")
 
 
 Callbacks and Eager Apps
 ---------------------------
 
 Sometimes, you want a parameter to completely change the execution flow.
-For instance, this is the case when you want to have a ``--version``
+For instance, this is the case when you want to have a ``@version``
 parameter that prints out the version and then exits the application.
-
-Note: an actual implementation of a ``--version`` parameter that is
-reusable is available in quo as :func:`quo.autoversion`.  The code
-here is merely an example of how to implement such a flag.
 
 In such cases, you need two concepts: eager parameters and a callback.  An
 eager parameter is a parameter that is handled before others, and a
 callback is what executes after the parameter is handled.  The eagerness
 is necessary so that an earlier required parameter does not produce an
-error message.  For instance, if ``--version`` was not eager and a
-parameter ``--foo`` was required and defined before, you would need to
-specify it for ``--version`` to work.  For more information, see
+error message.  For instance, if ``@version`` was not eager and a
+parameter ``@foo`` was required and defined before, you would need to
+specify it for ``@version`` to work.  For more information, see
 :ref:`callback-evaluation-order`.
 
 A callback is a function that is invoked with two parameters: the current
@@ -482,22 +461,22 @@ A callback is a function that is invoked with two parameters: the current
 such as quitting the application and gives access to other already
 processed parameters.
 
-Here an example for a ``--version`` flag:
+Here an example for a ``@version`` flag:
 
 .. code-block:: python
    
-   from quo import command, app, echo
+    import quo
 
     def print_version(clime, param, value):
     if not value or clime.resilient_parsing:
     return
-    echo('Version 1.0')
+    quo.echo('Version 1.0')
         clime.exit()
 
-    @command()
-    @app('--version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
+    @quo.command()
+    @quo.app('@version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
     def hello():
-        echo('Hello World!')
+        quo.echo('Hello World!')
 
 The `expose_value` parameter prevents the pretty pointless ``version``
 parameter from being passed to the callback.  If that was not specified, a
@@ -511,34 +490,22 @@ Yes Parameters
 --------------
 
 For dangerous operations, it's very useful to be able to ask a user for
-confirmation.  This can be done by adding a boolean ``--yes`` flag and
+confirmation.  This can be done by adding a boolean ``@yes`` flag and
 asking for confirmation if the user did not provide it and to fail in a
 callback:
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
     def abort_if_false(clime, param, value):
         if not value:
             clime.abort()
 
-    @command()
-    @app('--yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
+    @quo.command()
+    @quo.app('@yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
     def dropdb():
-        echo('Dropped all tables!')
-
-Because this combination of parameters is quite common, this can also be
-replaced with the :func:`autoconfirm` decorator:
-
-.. code-block:: python
-
-    from command, autoconfirm, echo
-
-    @command()
-    @autoconfirm(prompt='Are you sure you want to drop the db?')
-    def dropdb():
-        echo('Dropped all tables!')
+        quo.echo('Dropped all tables!')
 
 .. admonition:: Callback Signature Changes
 
@@ -565,12 +532,12 @@ Example usage:
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app('--username')
+    @quo.ccommand()
+    @quo.app('@username')
     def greet(username):
-        echo(f'Hello {username}!')
+        quo.echo(f'Hello {username}!')
 
     if __name__ == '__main__':
         greet(auto_envvar_prefix='GREETER')
@@ -586,17 +553,17 @@ Example:
 
 .. code-block:: python
 
-   from quo import tether, app, echo, command
+   import quo
 
-   @tether()
-   @app('--debug/--no-debug')
+   @quo.tether()
+   @quo.app('@debug/@no-debug')
    def cli(debug):
-       echo(f"Debug mode is {'on' if debug else 'off'}")
+       quo.echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
-   @app('--username')
+   @quo.app('@username')
    def greet(username):
-       echo(f"Hello {username}!")
+       quo.echo(f"Hello {username}!")
 
    if __name__ == '__main__':
        cli(auto_envvar_prefix='GREETER')
@@ -609,11 +576,12 @@ Example usage:
 
 .. code-block:: python
 
-    from quo import command, app, echo
-    @command()
-    @app('--username', envvar='USERNAME')
+    import quo
+
+    @quo.command()
+    @quo.app('@username', envvar='USERNAME')
     def greet(username):
-       echo(f"Hello {username}!")
+       quo.echo(f"Hello {username}!")
 
     if __name__ == '__main__':
         greet()
@@ -642,14 +610,12 @@ Example usage:
 .. code-block:: python
 
     import quo
-    from quo import command, app, echo, 
-    from quo.types import Path
 
-    @command()
-    @app('paths', '--path', envvar='PATHS', multiple=True, type=Path())
+    @quo.command()
+    @quo.app('paths', '@path', envvar='PATHS', multiple=True, type=quo.types.Path())
     def perform(paths):
         for path in paths:
-            echo(path)
+            quo.echo(path)
 
     if __name__ == '__main__':
         perform()
@@ -658,20 +624,18 @@ Example usage:
 Other Prefix Characters
 -----------------------
 
-quo can deal with alternative prefix characters other than ``-`` for
+quo can deal with alternative prefix characters other than ``@`` for
 apps.  This is for instance useful if you want to handle slashes as
-parameters ``/`` or something similar.  Note that this is strongly
-discouraged in general because quo wants developers to stay close to
-POSIX semantics.  However in certain situations this can be useful:
+parameters ``/`` or something similar.
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app('+w/-w')
+    @quo.command()
+    @quo.app('+w/-w')
     def chmod(w):
-        echo(f"writable={w}")
+        quo.echo(f"writable={w}")
 
     if __name__ == '__main__':
         chmod()
@@ -681,12 +645,12 @@ boolean flag you need to separate it with ``;`` instead of ``/``:
 
 .. code-block:: python
 
-    from quo import command, app, echo
+    import quo
 
-    @command()
-    @app('/debug;/no-debug')
+    @quo.command()
+    @quo.app('/debug;/no-debug')
     def log(debug):
-        echo(f"debug={debug}")
+        quo.echo(f"debug={debug}")
 
     if __name__ == '__main__':
         log()
@@ -713,13 +677,13 @@ bounds are *closed* (the default).
 
 .. code-block:: python
 
-    from quo import command, app, echo, IntRange
+    import quo
 
-    @command()
-    @app("--count", type= IntRange(0, 20, clamp=True))
-    @app("--digit", type= IntRange(0, 9))
+    @quo.command()
+    @quo.app("@count", type= quo.types.IntRange(0, 20, clamp=True))
+    @quo.app("@digit", type= quo.types.IntRange(0, 9))
     def repeat(count, digit):
-        echo(str(digit) * count)
+        quo.echo(str(digit) * count)
 
 
 Callbacks for Validation
@@ -732,7 +696,7 @@ type conversion. It is called for all sources, including prompts.
 
 .. code-block:: python
 
-    from quo import command, app, BadParameter, UNPROCESSED
+    import quo
 
     def validate_rolls(clime, param, value):
         if isinstance(value, tuple):
@@ -742,16 +706,13 @@ type conversion. It is called for all sources, including prompts.
             rolls, _, dice = value.partition("d")
             return int(dice), int(rolls)
         except ValueError:
-            raise BadParameter("format must be 'NdM'")
+            raise quo.types.BadParameter("format must be 'NdM'")
 
-    @command()
-    @app(
-        "--rolls", type= UNPROCESSED, callback=validate_rolls,
-        default="1d6", prompt=True,
-    )
+    @quo.command()
+    @quo.app( "@rolls", type= quo.types.UNPROCESSED, callback=validate_rolls, default="1d6", prompt=True)
     def roll(rolls):
         sides, times = rolls
-        echo(f"Rolling a {sides}-sided dice {times} time(s)")
+        quo.echo(f"Rolling a {sides}-sided dice {times} time(s)")
 
 
 

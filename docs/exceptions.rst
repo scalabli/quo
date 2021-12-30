@@ -71,3 +71,4 @@ The following common subclasses exist:
     the parameter name if possible.
 *   :exc:`FileError` this is an error that is raised by the
     :exc:`FileType` if quo encounters issues opening the file.
+    :exc: ‘ValidationError is quo encounters issues validating an input
