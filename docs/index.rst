@@ -39,6 +39,7 @@ Quo's Documentation
    filters.rst
    key_bindings.rst
    progress_bars.rst
+   full_screen_apps.rst
    syntax.rst
    tables.rst
    tree.rst
