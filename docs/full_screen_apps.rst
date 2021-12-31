@@ -299,7 +299,7 @@ the key handler:
         """
         event.app.exit()
 
-    app = quo.Suite(key_bindings=kb, full_screen=True)
+    app = quo.Suite(key_bindings=bindings, full_screen=True)
     app.run()
 
 The callback function is named ``exit_`` for clarity, but it could have been
@@ -377,19 +377,19 @@ line.
 
 Some build-in processors:
 
-+-----------------------------------------------------------------+-----------------------------------------------------------+
-| Processor                                                       | Usage:                                                    |
-+============================================================================+================================================+
-| :class:`~quo.layout.processors.HighlightSearchProcessor`        | Highlight the current search results.                     |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.HighlightSelectionProcessor`     | Highlight the selection.                                  |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.PasswordProcessor`               | Display input as asterisks. (``*`` characters).           |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.BracketsMismatchProcessor`       | Highlight open/close mismatches for brackets.             |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.BeforeInput`                     | Insert some text before.                                  |
-+----------------------------------------------------------------------------+------------------------------------------------+
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| Processor                                                       |            Usage:                                                    |
++============================================================================+===========================================================+
+| :class:`~quo.layout.processors.HighlightSearchProcessor`        |        Highlight the current search results.                         |
++----------------------------------------------------------------------------+-----------------------------------------------------------+
+| :class:`~quo.layout.processors.HighlightSelectionProcessor`     | Highlight the selection.                                             |
++----------------------------------------------------------------------------+-----------------------------------------------------------+
+| :class:`~quo.layout.processors.PasswordProcessor`               | Display input as asterisks. (``*`` characters).                      |
++----------------------------------------------------------------------------+-----------------------------------------------------------+
+| :class:`~quo.layout.processors.BracketsMismatchProcessor`       | Highlight open/close mismatches for brackets.                        |
++----------------------------------------------------------------------------+-----------------------------------------------------------+
+| :class:`~quo.layout.processors.BeforeInput`                     | Insert some text before.                                             |
++----------------------------------------------------------------------------+-----------------------------------------------------------+
 | :class:`~quo.layout.processors.AfterInput`                      | Insert some text after.                                   |
 +----------------------------------------------------------------------------+------------------------------------------------+
 | :class:`~quo.layout.processors.AppendAutoSuggestion`            | Append auto suggestion text.                              |
@@ -404,3 +404,4 @@ Some build-in processors:
 A :class:`~quo.layout.BufferControl` takes only one processor as
 input, but it is possible to "merge" multiple processors into one with the
 :func:`~quo.layout.processors.merge_processors` function.
+[1]
