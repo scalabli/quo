@@ -211,22 +211,3 @@ Usage: cli [OPTIONS]
 
 Options:
   -h, --help  Show this message and exit.
-Sponsored: EthicalAds
-Generate revenue while preserving user-privacy. Start earning today by hosting EthicalAds
-Ad by EthicalAds   ·   Monetize your site
-Contents
-Documenting Scripts
-Help Texts
-Documenting Arguments
-Preventing Rewrapping
-Truncating Help Texts
-Meta Variables
-Command Short Help
-Help Parameter Customization
-Navigation
-Overview
-Previous: User Input Prompts
-Next: Complex Applications
-Quick search
-© Copyright 2014 Pallets. Created using Sphinx 4.3.2.
-  v: 8.0.x 
