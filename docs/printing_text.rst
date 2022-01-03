@@ -4,7 +4,7 @@ Printing (and using) formatted text
 ===================================
 
 echo
-=====
+-----
 :func:`quo.echo` prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode, binary data and formatted text.
 
 Supported color names:
@@ -57,7 +57,7 @@ Parameters
    * ``reset``  – by default a reset-all code is added at the end of the string which means that styles do not carry over. This can be disabled to compose styles.
 
 inscribe
-=========
+----------
 quo ships with a
 :func:`~quo.inscribe` function that's meant to
 be (as much as possible) compatible with the built-in print function, but on
@@ -70,7 +70,7 @@ will use Win32 API calls or VT100 sequences, depending on what is available.
 
         This page is also useful if you'd like to learn how to use formatting
         in other places, like in a prompt or a toolbar. Just like
-        :func:`~prompt_toolkit.shortcuts.print_formatted_text` takes any kind
+        :func:`~quo.inscribe` takes any kind
         of "formatted text" as input, prompts and toolbars also accept
         "formatted text".
 
@@ -88,7 +88,7 @@ There are several ways to display colors:
 An instance of any of these three kinds of objects is called "formated text".
 
 quo.echo
-^^^^^
+^^^^^^^^^
 
 
 quo.text.HTML
@@ -145,25 +145,6 @@ assign a style for a custom tag.
     print_formatted_text(HTML('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
 
 
-ANSI
-^^^^
-
-Some people like to use the VT100 ANSI escape sequences to generate output.
-Natively, this is however only supported on VT100 terminals, but prompt_toolkit
-can parse these, and map them to formatted text instances. This means that they
-will work on Windows as well. The :class:`~prompt_toolkit.formatted_text.ANSI`
-class takes care of that.
-
-.. code:: python
-
-    from prompt_toolkit import print_formatted_text, ANSI
-
-    print_formatted_text(ANSI('\x1b[31mhello \x1b[32mworld'))
-
-Keep in mind that even on a Linux VT100 terminal, the final output produced by
-prompt_toolkit, is not necessarily exactly the same. Depending on the color
-depth, it is possible that colors are mapped to different colors, and unknown
-tags will be removed.
 
 
 (style, text) tuples
