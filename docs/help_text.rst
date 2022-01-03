@@ -19,7 +19,7 @@ def hello(count, name):
 And what it looks like:
 
 $ hello --help
-Usage: hello [OPTIONS] NAME
+Usage: hello [ᕼᕮしᑭ ᖘᗩᎶᕮ] NAME
 
   This script prints hello NAME COUNT times.
 
