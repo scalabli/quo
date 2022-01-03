@@ -46,7 +46,7 @@ The ``password=True`` option can be passed to the
 password input box.
 
 
-Yes/No confirmation dialog
+Confirmation dialog
 --------------------------
 
 The :func:`~quo.shortcuts.confirmation` function displays a yes/no
@@ -54,7 +54,7 @@ confirmation dialog. It will return a boolean according to the selection.
 
 .. code:: python
 
-    from quo.shortcuts import yes_no_dialog
+    from quo.shortcuts import confirmation
 
     result = confirmation(
         title='Yes/No dialog example',
@@ -87,7 +87,7 @@ each providing the label (first) and return value if clicked (second).
 .. image:: ./images/button.png
 
 
-Radio list dialog
+Radiolist dialog
 -----------------
 
 The :func:`~quo.shortcuts.radiolist` function displays a dialog
@@ -109,7 +109,7 @@ each providing the return value (first element) and the displayed value (second 
     ).run()
 
 
-Checkbox list dialog
+Checkbox dialog
 --------------------
 
 The :func:`~quo.shortcuts.checkbox` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
@@ -193,47 +193,47 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 |                     | - ``ProgressBar``       |
 +---------------------+-------------------------+
 
-+----------------+-----------------------------+
-| Components     | Available classnames        |
-+================+=============================+
-| Dialog         | - ``dialog``                |
-|                | - ``dialog.body``           |
-+----------------+-----------------------------+
-| TextArea       | - ``text-area``             |
-|                | - ``text-area.prompt``      |
-+----------------+-----------------------------+
-| Label          | - ``label``                 |
-+----------------+-----------------------------+
-| Button         | - ``button``                |
-|                | - ``button.focused``        |
-|                | - ``button.arrow``          |
-|                | - ``button.text``           |
-+----------------+-----------------------------+
-| Frame          | - ``frame``                 |
-|                | - ``frame.border``          |
-|                | - ``frame.label``           |
-+----------------+-----------------------------+
-| Shadow         | - ``shadow``                |
-+----------------+-----------------------------+
-| RadioList      | - ``radio-list``            |
-|                | - ``radio``                 |
-|                | - ``radio-checked``         |
-|                | - ``radio-selected``        |
-+----------------+-----------------------------+
-| CheckboxList   | - ``checkbox-list``         |
-|                | - ``checkbox``              |
-|                | - ``checkbox-checked``      |
-|                | - ``checkbox-selected``     |
-+----------------+-----------------------------+
-| VerticalLine   | - ``line``                  |
-|                | - ``vertical-line``         |
-+----------------+-----------------------------+
-| HorizontalLine | - ``line``                  |
-|                | - ``horizontal-line``       |
-+----------------+-----------------------------+
-| ProgressBar    | - ``progress-bar``          |
-|                | - ``progress-bar.used``     |
-+----------------+-----------------------------+
++----------------+------------------------+
+| Components     | Available classnames   |
++================+========================+
+| Dialog         | - ``dialog``           |
+|                | - ``dialog.body``      |
++----------------+------------------------+
+| TextArea       | - ``text-area``        |
+|                | - ``text-area.prompt`` |
++----------------+------------------------+
+| Label          | - ``label``            |
++----------------+------------------------+
+| Button         | - ``button``           |
+|                | - ``button.focused``   |
+|                | - ``button.arrow``     |
+|                | - ``button.text``      |
++----------------+------------------------+
+| Frame          | - ``frame``            |
+|                | - ``frame.border``     |
+|                | - ``frame.label``      |
++----------------+------------------------+
+| Shadow         | - ``shadow``           |
++----------------+------------------------+
+| RadioList      | - ``radio-list``       |
+|                | - ``radio``            |
+|                | - ``radio-checked``    |
+|                | - ``radio-selected``   |
++----------------+------------------------+
+| CheckboxList   | - ``checkbox-list``    |
+|                | - ``checkbox``         |
+|                | - ``checkbox-checked`` |
+|                | - ``checkbox-selected``|
++----------------+------------------------+
+| VerticalLine   | - ``line``             |
+|                | - ``vertical-line``    |
++----------------+------------------------+
+| HorizontalLine | - ``line``             |
+|                | - ``horizontal-line``  |
++----------------+------------------------+
+| ProgressBar    | - ``progress-bar``     |
+|                | - ``progress-bar.used``|
++----------------+------------------------+
 
 Example
 _______
