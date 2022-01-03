@@ -21,7 +21,7 @@ simple message box. For instance:
         title='Example dialog window',
         text='Do you want to continue?\nPress ENTER to quit.').run()
 
-.. image:: ./images/dialogs/messagebox.png
+.. image:: ./images/messagebox.png
 
 
 Input box
@@ -38,7 +38,7 @@ input box. It will return the user input as a string.
         title='Input dialog example',
         text='Please type your name:').run()
 
-.. image:: ./images/dialogs/inputbox.png
+.. image:: ./images/inputbox.png
 
 
 The ``password=True`` option can be passed to the
@@ -60,7 +60,7 @@ confirmation dialog. It will return a boolean according to the selection.
         title='Yes/No dialog example',
         text='Do you want to confirm?').run()
 
-.. image:: ./images/dialogs/confirm.png
+.. image:: ./images/confirm.png
 
 
 Button dialog
@@ -84,7 +84,7 @@ each providing the label (first) and return value if clicked (second).
         ],
     ).run()
 
-.. image:: ./images/dialogs/button.png
+.. image:: ./images/button.png
 
 
 Radio list dialog
@@ -156,7 +156,7 @@ dialogs to override the default style. Also, text can be styled by passing an
         text='Do you want to continue?\nPress ENTER to quit.',
         style=example_style).run()
 
-.. image:: ./images/dialogs/styled.png
+.. image:: ./images/styled.png
 
 Styling reference sheet
 -----------------------
@@ -165,33 +165,33 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 
 .. note:: All the shortcuts use the ``Dialog`` component, therefore it isn't specified explicitly below.
 
-+--------------------------+-------------------------+
-| Shortcut                 | Components used         |
-+==========================+=========================+
-| ``confirmation``        | - ``Label``             |
-|                          | - ``Button`` (x2)       |
-+--------------------------+-------------------------+
-| ``button_dialog``        | - ``Label``             |
-|                          | - ``Button``            |
-+--------------------------+-------------------------+
-| ``evoke``         | - ``TextArea``          |
-|                          | - ``Button`` (x2)       |
-+--------------------------+-------------------------+
-| ``message``       | - ``Label``             |
-|                          | - ``Button``            |
-+--------------------------+-------------------------+
-| ``radiolist``     | - ``Label``             |
-|                          | - ``RadioList``         |
-|                          | - ``Button`` (x2)       |
-+--------------------------+-------------------------+
-| ``checkbox``  | - ``Label``             |
-|                          | - ``CheckboxList``      |
-|                          | - ``Button`` (x2)       |
-+--------------------------+-------------------------+
-| ``progress``      | - ``Label``             |
-|                          | - ``TextArea`` (locked) |
-|                          | - ``ProgressBar``       |
-+--------------------------+-------------------------+
++---------------------+-------------------------+
+| Shortcut            | Components used         |
++=====================+=========================+
+| ``confirmation``    | - ``Label``             |
+|                     | - ``Button`` (x2)       |
++---------------------+-------------------------+
+| ``button_dialog``   | - ``Label``             |
+|                     | - ``Button``            |
++---------------------+-------------------------+
+| ``evoke``           | - ``TextArea``          |
+|                     | - ``Button`` (x2)       |
++---------------------+-------------------------+
+| ``message``         | - ``Label``             |
+|                     | - ``Button``            |
++---------------------+-------------------------+
+| ``radiolist``       | - ``Label``             |
+|                     | - ``RadioList``         |
+|                     | - ``Button`` (x2)       |
++---------------------+-------------------------+
+| ``checkbox``        | - ``Label``             |
+|                     | - ``CheckboxList``      |
+|                     | - ``Button`` (x2)       |
++---------------------+-------------------------+
+| ``progress``        | - ``Label``             |
+|                     | - ``TextArea`` (locked) |
+|                     | - ``ProgressBar``       |
++---------------------+-------------------------+
 
 +----------------+-----------------------------+
 | Components     | Available classnames        |
