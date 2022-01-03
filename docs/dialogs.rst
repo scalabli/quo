@@ -24,7 +24,7 @@ simple message box. For instance:
 .. image:: ./images/messagebox.png
 
 
-Input box
+Evoke(Input) box
 ---------
 
 The :func:`~quo.shortcuts.evoke` function can display an
@@ -63,18 +63,18 @@ confirmation dialog. It will return a boolean according to the selection.
 .. image:: ./images/confirm.png
 
 
-Button dialog
+Chooses dialog
 -------------
 
-The :func:`~quo.shortcuts.button_dialog` function displays a dialog
+The :func:`~quo.shortcuts.choices` function displays a dialog
 with choices offered as buttons. Buttons are indicated as a list of tuples,
 each providing the label (first) and return value if clicked (second).
 
 .. code:: python
 
-    from quo.shortcuts import button_dialog
+    from quo.shortcuts import choices
 
-    result = button_dialog(
+    result = choices(
         title='Button dialog example',
         text='Do you want to confirm?',
         buttons=[
@@ -165,33 +165,33 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 
 .. note:: All the shortcuts use the ``Dialog`` component, therefore it isn't specified explicitly below.
 
-+---------------------+-------------------------+
-| Shortcut            | Components used         |
-+=====================+=========================+
-| ``confirmation``    | - ``Label``             |
-|                     | - ``Button`` (x2)       |
-+---------------------+-------------------------+
-| ``button_dialog``   | - ``Label``             |
-|                     | - ``Button``            |
-+---------------------+-------------------------+
-| ``evoke``           | - ``TextArea``          |
-|                     | - ``Button`` (x2)       |
-+---------------------+-------------------------+
-| ``message``         | - ``Label``             |
-|                     | - ``Button``            |
-+---------------------+-------------------------+
-| ``radiolist``       | - ``Label``             |
-|                     | - ``RadioList``         |
-|                     | - ``Button`` (x2)       |
-+---------------------+-------------------------+
-| ``checkbox``        | - ``Label``             |
-|                     | - ``CheckboxList``      |
-|                     | - ``Button`` (x2)       |
-+---------------------+-------------------------+
-| ``progress``        | - ``Label``             |
-|                     | - ``TextArea`` (locked) |
-|                     | - ``ProgressBar``       |
-+---------------------+-------------------------+
++------------------+-------------------------+
+| Shortcut         | Components used         |
++==================+=========================+
+| ``confirmation`` | - ``Label``             |
+|                  | - ``Button`` (x2)       |
++------------------+-------------------------+
+| ``choices``      | - ``Label``             |
+|                  | - ``Button``            |
++------------------+-------------------------+
+| ``evoke``        | - ``TextArea``          |
+|                  | - ``Button`` (x2)       |
++------------------+-------------------------+
+| ``message``      | - ``Label``             |
+|                  | - ``Button``            |
++------------------+-------------------------+
+| ``radiolist``    | - ``Label``             |
+|                  | - ``RadioList``         |
+|                  | - ``Button`` (x2)       |
++------------------+-------------------------+
+| ``checkbox``     | - ``Label``             |
+|                  | - ``CheckboxList``      |
+|                  | - ``Button`` (x2)       |
++------------------+-------------------------+
+| ``progress``     | - ``Label``             |
+|                  | - ``TextArea`` (locked) |
+|                  | - ``ProgressBar``       |
++------------------+-------------------------+
 
 +----------------+------------------------+
 | Components     | Available classnames   |
