@@ -262,7 +262,7 @@ There are two kinds of key bindings:
   :class:`~quo.layout.controls.UIControl` and are only active when
   this control is focused. Both
   :class:`~quo.layout.BufferControl`
-  :class:`~quo.layout.FormattedTextControl` take a ``key_bindings``
+  :class:`~quo.layout.FormattedTextControl` take a ``bind``
   argument.
 
 
@@ -276,7 +276,7 @@ Key bindings can be passed to the application as follows:
     import quo
 
     kb = quo.keys.KeyBinder()
-    app = quo.Suite(key_bindings=kb)
+    app = quo.Suite(bind=kb)
     app.run()
 
 To register a new keyboard shortcut, we can use the
@@ -299,13 +299,13 @@ the key handler:
         """
         event.app.exit()
 
-    app = quo.Suite(key_bindings=bindings, full_screen=True)
+    app = quo.Suite(bind=bindings, full_screen=True)
     app.run()
 
 The callback function is named ``exit_`` for clarity, but it could have been
 named ``_`` (underscore) as well, because we won't refer to this name.
 
-:ref:`Read more about key bindings ...<key_bindings>`
+:ref:`Read more about key bindings ...<bind>`
 
 
 Modal containers
@@ -378,28 +378,28 @@ line.
 Some build-in processors:
 
 +-----------------------------------------------------------------+----------------------------------------------------------------------+
-| Processor                                                       |            Usage:                                                    |
-+============================================================================+===========================================================+
-| :class:`~quo.layout.processors.HighlightSearchProcessor`        |        Highlight the current search results.                         |
-+----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~quo.layout.processors.HighlightSelectionProcessor`     | Highlight the selection.                                             |
-+----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~quo.layout.processors.PasswordProcessor`               | Display input as asterisks. (``*`` characters).                      |
-+----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~quo.layout.processors.BracketsMismatchProcessor`       | Highlight open/close mismatches for brackets.                        |
-+----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~quo.layout.processors.BeforeInput`                     | Insert some text before.                                             |
-+----------------------------------------------------------------------------+-----------------------------------------------------------+
-| :class:`~quo.layout.processors.AfterInput`                      | Insert some text after.                                   |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.AppendAutoSuggestion`            | Append auto suggestion text.                              |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.ShowLeadingWhiteSpaceProcessor`  | Visualise leading whitespace.                             |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.ShowTrailingWhiteSpaceProcessor` | Visualise trailing whitespace.                            |
-+----------------------------------------------------------------------------+------------------------------------------------+
-| :class:`~quo.layout.processors.TabsProcessor`                   | Visualise tabs as `n` spaces, or some symbols.            |
-+----------------------------------------------------------------------------+------------------------------------------------+
+| Processor                                                       |                      Usage:                                          |
++=================================================================+======================================================================+
+| :class:`~quo.layout.processors.HighlightSearchProcessor`        |           Highlight the current search results.                      |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.HighlightSelectionProcessor`     |           Highlight the selection.                                   |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.PasswordProcessor`               |           Display input as asterisks. (``*`` characters).            |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.BracketsMismatchProcessor`       |           Highlight open/close mismatches for brackets.              |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.BeforeInput`                     |           Insert some text before.                                   |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.AfterInput`                      |           Insert some text after.                                    |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.AppendAutoSuggestion`            |           Append auto suggestion text.                               |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.ShowLeadingWhiteSpaceProcessor`  |           Visualise leading whitespace.                              |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.ShowTrailingWhiteSpaceProcessor` |           Visualise trailing whitespace.                             |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
+| :class:`~quo.layout.processors.TabsProcessor`                   |           Visualise tabs as `n` spaces, or some symbols.             |
++-----------------------------------------------------------------+----------------------------------------------------------------------+
 
 A :class:`~quo.layout.BufferControl` takes only one processor as
 input, but it is possible to "merge" multiple processors into one with the
