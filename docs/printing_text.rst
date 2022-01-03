@@ -76,7 +76,7 @@ will use Win32 API calls or VT100 sequences, depending on what is available.
 
 
 Formatted text
---------------
+---------------
 
 There are several ways to display colors:
 
@@ -107,9 +107,6 @@ italic and underline: ``<b>``, ``<i>`` and ``<u>``.
     quo.inscribe(quo.text.HTML('<i>This is italic</i>'))
     quo.inscribe(quo.text.HTML('<u>This is underlined</u>'))
 
-
-Colors from the ANSI palette
-
 .. code:: python
 
     # Colors from the ANSI palette.
@@ -127,22 +124,21 @@ and `bg` attributes of any HTML tag:
 .. code:: python
 
     # Colors from the ANSI palette.
-    print_formatted_text(HTML('<aaa fg="ansiwhite" bg="ansigreen">White on green</aaa>'))
+    quo.inscribe(quo.text.HTML('<aaa fg="white" bg="green">White on green</aaa>'))
 
 Underneath, all HTML tags are mapped to classes from a stylesheet, so you can
 assign a style for a custom tag.
 
 .. code:: python
 
-    from prompt_toolkit import print_formatted_text, HTML
-    from prompt_toolkit.styles import Style
+    import quo
 
-    style = Style.from_dict({
+    style = quo.styles.Style.from_dict({
         'aaa': '#ff0066',
         'bbb': '#44ff00 italic',
     })
 
-    print_formatted_text(HTML('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
+    quo.inscribe(quo.text.HTML('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
 
 
 
@@ -266,21 +262,3 @@ changing the style from these Pygments tokens can be done as follows:
     })
     print_formatted_text(PygmentsTokens(tokens), style=style)
 
-
-to_formatted_text
-^^^^^^^^^^^^^^^^^
-
-A useful function to know about is
-:func:`~prompt_toolkit.formatted_text.to_formatted_text`. This ensures that the
-given input is valid formatted text. While doing so, an additional style can be
-applied as well.
-
-.. code:: python
-
-    from prompt_toolkit.formatted_text import to_formatted_text, HTML
-    from prompt_toolkit import print_formatted_text
-
-    html = HTML('<aaa>Hello</aaa> <bbb>world</bbb>!')
-    text = to_formatted_text(html, style='class:my_html bg:#00ff00 italic')
-
-    print_formatted_text(text)
