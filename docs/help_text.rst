@@ -7,17 +7,20 @@ Commands and apps accept help arguments. In the case of commands, the docstring 
 
 Simple example:
 
-import quo
+.. code:: python
 
-@quo.command()
-@quo.app('@count', default=1, help='number of greetings')
-@quo.arg('name')
-def hello(count, name):
-    """This script prints hello NAME COUNT times."""
-    for x in range(count):
-        quo.echo(f"Hello {name}!")
+  import quo
+
+   @quo.command()
+   @quo.app('@count', default=1, help='number of greetings')
+   @quo.arg('name')
+   def hello(count, name):
+       """This script prints hello NAME COUNT times."""
+       for x in range(count):
+           quo.echo(f"Hello {name}!")
 And what it looks like:
 
+.. code:: console
 $ hello --help
 Usage: hello [ᕼᕮしᑭ ᖘᗩᎶᕮ] NAME
 
