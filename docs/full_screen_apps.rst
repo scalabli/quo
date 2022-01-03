@@ -151,18 +151,18 @@ responsible for generating the actual content.
      content. A :class:`~quo.layout.UIControl` is not aware
      of the screen.
 
-+---------------------------------------------+------------------------------------------------------+
-| Abstract base class                         | Examples                                             |
-+=============================================+======================================================+
-| :class:`~quo.layout.Container`   | :class:`~quo.layout.HSplit`               |
-|                                             | :class:`~quo.layout.VSplit`               |
-|                                             | :class:`~quo.layout.FloatContainer`       |
-|                                             | :class:`~quo.layout.Window`               |
-|                                             | :class:`~quo.layout.ScrollablePane`       |
-+---------------------------------------------+------------------------------------------------------+
-| :class:`~quo.layout.UIControl`   | :class:`~quo.layout.BufferControl`        |
-|                                             | :class:`~quo.layout.FormattedTextControl` |
-+---------------------------------------------+------------------------------------------------------+
++------------------------------------+-------------------------------------------+
+| Abstract base class                | Examples                                  |
++====================================+===========================================+
+| :class:`~quo.layout.Container`     | :class:`~quo.layout.HSplit`               |
+|                                    | :class:`~quo.layout.VSplit`               |
+|                                    | :class:`~quo.layout.FloatContainer`       |
+|                                    | :class:`~quo.layout.Window`               |
+|                                    | :class:`~quo.layout.ScrollablePane`       |
++------------------------------------+-------------------------------------------+
+| :class:`~quo.layout.UIControl`     | :class:`~quo.layout.BufferControl`        |
+|                                    | :class:`~quo.layout.FormattedTextControl` |
++------------------------------------+-------------------------------------------+
 
 The :class:`~quo.layout.Window` class itself is
 particular: it is a :class:`~quo.layout.Container` that
@@ -344,8 +344,8 @@ As said earlier, a :class:`~quo.layout.Window` is a
 
     Basically, windows are the leafs in the tree structure that represent the UI.
 
-A :class:`~prompt_toolkit.layout.Window` provides a "view" on the
-:class:`~prompt_toolkit.layout.UIControl`, which provides lines of content. The
+A :class:`~quo.layout.Window` provides a "view" on the
+:class:`~quo.layout.UIControl`, which provides lines of content. The
 window is in the first place responsible for the line wrapping and scrolling of
 the content, but there are much more options.
 
