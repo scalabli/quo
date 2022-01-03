@@ -56,8 +56,10 @@ Parameters
 
    * ``reset``  – by default a reset-all code is added at the end of the string which means that styles do not carry over. This can be disabled to compose styles.
 
-Prompt_toolkit ships with a
-:func:`~prompt_toolkit.shortcuts.print_formatted_text` function that's meant to
+inscribe
+=========
+quo ships with a
+:func:`~quo.inscribe` function that's meant to
 be (as much as possible) compatible with the built-in print function, but on
 top of that, also supports colors and formatting.
 
@@ -72,32 +74,6 @@ will use Win32 API calls or VT100 sequences, depending on what is available.
         of "formatted text" as input, prompts and toolbars also accept
         "formatted text".
 
-Printing plain text
--------------------
-
-The print function can be imported as follows:
-
-.. code:: python
-
-    from prompt_toolkit import print_formatted_text
-
-    print_formatted_text('Hello world')
-
-You can replace the built in ``print`` function as follows, if you want to.
-
-.. code:: python
-
-    from prompt_toolkit import print_formatted_text as print
-
-    print('Hello world')
-
-.. note::
-
-    If you're using Python 2, make sure to add ``from __future__ import
-    print_function``. Otherwise, it will not be possible to import a function
-    named ``print``.
-
-.. _formatted_text:
 
 Formatted text
 --------------
