@@ -20,7 +20,7 @@ Quo's Documentation
    apps.rst
    args.rst
    confirm.rst.
-   echo.rst
+   printing_text.rst
    prompt.rst
    exceptions.rst
    dialogs.rsr
@@ -32,7 +32,6 @@ Quo's Documentation
    pretty.rst
    logging.rst
    traceback.rst
-   prompt.rst
 
    columns.rst
    padding.rst
