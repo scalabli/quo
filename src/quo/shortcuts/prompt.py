@@ -690,7 +690,7 @@ class Prompt(Generic[_T]):
         self, editing_mode: EditingMode, erase_when_done: bool
     ) -> Suite[_T]:
         """
-        Create the `Application` object.
+        Create the `Suite` object.
         """
         dyncond = self._dyncond
 
@@ -714,7 +714,7 @@ class Prompt(Generic[_T]):
             ),
             include_default_pygments_style=dyncond("include_default_pygments_style"),
             clipboard=DynamicClipboard(lambda: self.clipboard),
-            key_bindings=merge_key_bindings(
+            bind=merge_key_bindings(
                 [
                     merge_key_bindings(
                         [

@@ -6,18 +6,17 @@ from abc import ABCMeta, abstractmethod
 
 
 from quo.accordance import (
-        encoding_filesystem,
-        _get_argv_encoding,
-        filename_to_ui,
-        get_strerror,
-        openstream
-        )
+    encoding_filesystem,
+    _get_argv_encoding,
+    filename_to_ui,
+    get_strerror,
+    openstream,
+)
 
 from quo.errors import BadParameter, ValidationError
 from quo.expediency.vitals import LazyFile
 
 DecoratedCallable = TypeVar("DecoratedCallable", bound=Callable[..., Any])
-
 
 
 class ParamType:
@@ -240,7 +239,7 @@ class Choice(ParamType):
         first do token_normalize_func, then lowercase
         preserve original `value` to produce an accurate message in
          `self.fail`"""
-         
+
         normed_value = value
         normed_choices = {choice: choice for choice in self.choices}
 
@@ -397,7 +396,9 @@ class _NumberRangeBase(_NumberParamTypeBase):
                 return self._clamp(self.max, -1, self.max_open)
 
         if lt_min or gt_max:
-            self.fail(f"{rv} is not in the range {self._describe_range()}.", param, clime)
+            self.fail(
+                f"{rv} is not in the range {self._describe_range()}.", param, clime
+            )
 
         return rv
 
@@ -473,21 +474,20 @@ from quo.eventloop import run_in_executor_with_context
 from .document import Document
 from quo.filters import FilterOrBool, to_filter
 
-#__all__ = [
- #   "ConditionalValidator",
- #   "ValidationError",
- #   "Validator",
+# __all__ = [
+#   "ConditionalValidator",
+#   "ValidationError",
+#   "Validator",
 #  "ThreadedValidator",
 #    "DummyValidator",
-  #  "DynamicValidator",
-#]
-
+#  "DynamicValidator",
+# ]
 
 
 class Validator(metaclass=ABCMeta):
     """
     Input validation for a `Buffer`.
-    (Validators will be called before accepting input.)                                 
+    (Validators will be called before accepting input.)
     Abstract base class for an input validator.
 
     A validator is typically created in one of the following two ways:
@@ -1005,14 +1005,14 @@ def convert_type(ty, default=None):
         if isinstance(default, (tuple, list)):
             """If the default is empty, ty will remain None and will
             return STRING."""
-            
+
             if default:
                 item = default[0]
 
                 """ A tuple of tuples needs to detect the inner types.
                  Can't call convert recursively because that would
                 incorrectly unwind the tuple to a single type."""
-                
+
                 if isinstance(item, (tuple, list)):
                     ty = tuple(map(type, item))
                 else:
@@ -1040,7 +1040,7 @@ def convert_type(ty, default=None):
     """Booleans are only okay if not guessed. For is_flag options with
     flag_value, default=True indicates which flag_value is the
     default."""
-    
+
     if ty is bool and not guessed_type:
         return BOOL
 

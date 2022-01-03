@@ -115,7 +115,7 @@ class Completion:
     def new_completion_from_position(self, position: int) -> "Completion":
         """
         (Only for internal use!)
-        Get a new completion by splitting this one. Used by `Application` when
+        Get a new completion by splitting this one. Used by `Suite` when
         it needs to have a list of new completions after inserting the common
         prefix.
         """

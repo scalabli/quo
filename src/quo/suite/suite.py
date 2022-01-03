@@ -201,7 +201,7 @@ class Suite(Generic[_AppResult]):
         style: Optional[BaseStyle] = None,
         include_default_pygments_style: FilterOrBool = True,
         style_transformation: Optional[StyleTransformation] = None,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         clipboard: Optional[Clipboard] = None,
         full_screen: bool = False,
         color_depth: Union[
@@ -249,7 +249,7 @@ class Suite(Generic[_AppResult]):
         self.style_transformation = style_transformation
 
         # Key bindings.
-        self.key_bindings = key_bindings
+        self.bind = bind
         self._default_bindings = load_key_bindings()
         self._page_navigation_bindings = load_page_navigation_bindings()
 
@@ -383,7 +383,7 @@ class Suite(Generic[_AppResult]):
         - Otherwise, fall back to the color depth that is reported by the
           :class:`.Output` implementation. If the :class:`.Output` class was
           created using `output.defaults.create_output`, then this value is
-          coming from the $PROMPT_TOOLKIT_COLOR_DEPTH environment variable.
+          coming from the $QUO_COLOR_DEPTH environment variable.
         """
         depth = self._color_depth
 
@@ -634,13 +634,13 @@ class Suite(Generic[_AppResult]):
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
-        Run the quo :class:`~quo.application.Suite`
-        until :meth:`~quo.application.Suite.exit` has been
+        Run the quo :class:`~quo.Suite`
+        until :meth:`~quo.Suite.exit` has been
         called. Return the value that was passed to
-        :meth:`~quo.application.Suite.exit`.
+        :meth:`~quo.Suite.exit`.
 
         This is the main entry point for a prompt_toolkit
-        :class:`~quo.application.Suite` and usually the only
+        :class:`~quo.Suite` and usually the only
         place where the event loop is actually running.
 
         :param pre_run: Optional callable, which is called right after the
@@ -894,8 +894,10 @@ class Suite(Generic[_AppResult]):
         )
 
     def _handle_exception(
-        self, loop: AbstractEventLoop, context: Dict[str, Any]
-    ) -> None:
+        self, 
+        loop: AbstractEventLoop, 
+        context: Dict[str, Any]
+        ) -> None:
         """
         Handler for event loop exceptions.
         This will print the exception, using run_in_terminal.
@@ -913,17 +915,18 @@ class Suite(Generic[_AppResult]):
                 # but don't use logger. (This works better on Python 2.)
                 echo(f"Unhandled ", nl=False)
                 echo(f"exception", fg="black", bg="yellow", nl=False)
-                echo(f"in the event loop:")
+                echo(f" in the event loop:")
                 echo(formatted_tb)
                 print("Exception %s" % (context.get("exception"),))
 
-                await _do_wait_for_enter("Press ENTER to continue...")
+                await _do_wait_for_enter("𝙿𝚛𝚎𝚜𝚜 𝙴𝙽𝚃𝙴𝚁 𝚝𝚘 𝚌𝚘𝚗𝚝𝚒𝚗𝚞𝚎...⏳")
 
         ensure_future(in_term())
 
     def create_background_task(
-        self, coroutine: Awaitable[None]
-    ) -> "asyncio.Task[None]":
+        self,
+        coroutine: Awaitable[None]
+        ) -> "asyncio.Task[None]":
         """
         Start a background task (coroutine) for the running application. When
         the `Suite` terminates, unfinished background tasks will be
@@ -998,13 +1001,21 @@ class Suite(Generic[_AppResult]):
         "Exit without arguments."
 
     @overload
-    def exit(self, *, result: _AppResult, style: str = "") -> None:
+    def exit(self,
+            *, 
+            result: _AppResult, 
+            style: str = ""
+            ) -> None:
         "Exit with `_AppResult`."
 
     @overload
     def exit(
-        self, *, exception: Union[BaseException, Type[BaseException]], style: str = ""
-    ) -> None:
+        self,
+        *,
+        exception: Union[BaseException, Type[BaseException]], 
+        style: str = ""
+
+        ) -> None:
         "Exit with exception."
 
     def exit(
@@ -1061,7 +1072,7 @@ class Suite(Generic[_AppResult]):
         command: str,
         wait_for_enter: bool = True,
         display_before_text: AnyFormattedText = "",
-        wait_text: str = "Press ENTER to continue...",
+        wait_text: str = "𝙿𝚛𝚎𝚜𝚜 𝙴𝙽𝚃𝙴𝚁 𝚝𝚘 𝚌𝚘𝚗𝚝𝚒𝚗𝚞𝚎...⏳",
     ) -> None:
         """
         Run system command (While hiding the prompt. When finished, all the
@@ -1178,7 +1189,9 @@ class _CombinedRegistry(KeyBindingsBase):
     control.
     """
 
-    def __init__(self, app: Suite[_AppResult]) -> None:
+    def __init__(self, 
+            app: Suite[_AppResult]
+            )-> None:
         self.app = app
         self._cache: SimpleCache[
             Tuple[Window, FrozenSet[UIControl]], KeyBindingsBase
@@ -1192,17 +1205,19 @@ class _CombinedRegistry(KeyBindingsBase):
 
     def bindings(self) -> List[Binding]:
         """Not needed - this object is not going to be wrapped in another
-        KeyBindings object."""
+        KeyBinder object."""
         raise NotImplementedError
 
     def _create_key_bindings(
-        self, current_window: Window, other_controls: List[UIControl]
-    ) -> KeyBindingsBase:
+            self, 
+            current_window: Window, 
+            other_controls: List[UIControl]
+            ) -> KeyBindingsBase:
         """
-        Create a `KeyBinder` object that merges the `KeyBindings` from the
+        Create a `KeyBinder` object that merges the `KeyBinder` from the
         `UIControl` with all the parent controls and the global key bindings.
         """
-        key_bindings = []
+        bind = []
         collected_containers = set()
 
         # Collect key bindings from currently focused control and all parent
@@ -1212,7 +1227,7 @@ class _CombinedRegistry(KeyBindingsBase):
             collected_containers.add(container)
             kb = container.get_key_bindings()
             if kb is not None:
-                key_bindings.append(kb)
+                bind.append(kb)
 
             if container.is_modal():
                 break
@@ -1228,26 +1243,26 @@ class _CombinedRegistry(KeyBindingsBase):
             if c not in collected_containers:
                 kb = c.get_key_bindings()
                 if kb is not None:
-                    key_bindings.append(GlobalOnlyKeyBindings(kb))
+                    bind.append(GlobalOnlyKeyBindings(kb))
 
         # Add App key bindings
-        if self.app.key_bindings:
-            key_bindings.append(self.app.key_bindings)
+        if self.app.bind:
+            bind.append(self.app.bind)
 
         # Add mouse bindings.
-        key_bindings.append(
+        bind.append(
             ConditionalKeyBindings(
                 self.app._page_navigation_bindings,
                 self.app.enable_page_navigation_bindings,
             )
         )
-        key_bindings.append(self.app._default_bindings)
+        bind.append(self.app._default_bindings)
 
         # Reverse this list. The current control's key bindings should come
         # last. They need priority.
-        key_bindings = key_bindings[::-1]
+        bind = bind[::-1]
 
-        return merge_key_bindings(key_bindings)
+        return merge_key_bindings(bind)
 
     @property
     def _key_bindings(self) -> KeyBindingsBase:

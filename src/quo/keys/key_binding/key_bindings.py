@@ -1,5 +1,5 @@
 """
-Key bindings registry.
+Key binder egistry.
 
 A `KeyBindings` object is a container that holds a list of key bindings. It has a
 very efficient internal data structure for checking which key bindings apply
@@ -7,15 +7,15 @@ for a pressed key.
 
 Typical usage::
 
-    kb = KeyBindings()
+    kb = KeyBinder()
 
     @kb.add(Keys.ControlX, Keys.ControlC, filter=INSERT)
     def handler(event):
         # Handle ControlX-ControlC key sequence.
         pass
 
-It is also possible to combine multiple KeyBindings objects. We do this in the
-default key bindings. There are some KeyBindings objects that contain the Emacs
+It is also possible to combine multiple KeyBinder objects. We do this in the
+default key bindings. There are some KeyBinder bjects that contain the Emacs
 bindings, while others contain the Vi bindings. They are merged together using
 `merge_key_bindings`.
 
@@ -62,7 +62,7 @@ if TYPE_CHECKING:
 __all__ = [
     "Binding",
     "KeyBindingsBase",
-    "KeyBindings",
+    "KeyBinder",
     "ConditionalKeyBindings",
     "merge_key_bindings",
     "DynamicKeyBindings",

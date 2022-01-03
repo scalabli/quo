@@ -7,14 +7,7 @@ from functools import update_wrapper
 from itertools import repeat
 
 from .universal import python_environment
-from quo.errors import (
-                   Abort,
-                   BadParameter,
-                   Exit,
-                   MissingParameter,
-                   UsageError,
-                   Outlier
-                   )
+from quo.errors import Abort, BadParameter, Exit, MissingParameter, UsageError, Outlier
 
 from .setout import HelpFormatter, join_apps
 from quo.context.current import pop_context
@@ -23,25 +16,16 @@ from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
 from quo.expediency.vitals import inscribe as echo
-from quo.i_o import (
-           confirm,
-           prompt,
-           flair
-           )
+from quo.i_o import confirm, prompt, flair
 
-from .types import (
-        _NumberRangeBase,
-        BOOL,
-        convert_type,
-        IntRange
-        )
+from .types import _NumberRangeBase, BOOL, convert_type, IntRange
 
 from quo.expediency import (
-        _detect_program_name,
-        make_default_short_help,
-        make_str,
-        PacifyFlushWrapper
-        )
+    _detect_program_name,
+    make_default_short_help,
+    make_str,
+    PacifyFlushWrapper,
+)
 
 _missing = object()
 
@@ -54,7 +38,12 @@ DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
 def deprecated_notice(cmd):
     if cmd.deprecated:
-        echo(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow", err=True)
+        echo(
+            DEPRECATED_INVOKE_NOTICE.format(name=cmd.name),
+            fg="black",
+            bg="yellow",
+            err=True,
+        )
 
 
 def quick_exit(code):
@@ -67,6 +56,7 @@ def quick_exit(code):
     sys.stderr.flush()
     os._exit(code)
 
+
 SHELL_NAMES = (
     {"sh", "bash", "dash", "ash"}  # Bourne.
     | {"csh", "tcsh"}  # C.
@@ -76,9 +66,8 @@ SHELL_NAMES = (
 )
 
 
-#class ShellDetectionFailure(EnvironmentError):
+# class ShellDetectionFailure(EnvironmentError):
 #    pass
-
 
 
 def _complete_visible_commands(clime, incomplete):
@@ -417,7 +406,7 @@ class Context:
             with Context(cli) as clime:
                 info = clime.to_info_dict()
 
-  
+
         """
         return {
             "command": self.command.to_info_dict(self),
@@ -471,19 +460,19 @@ class Context:
     @property
     def meta(self):
         """This is a dictionary which is shared with all the contexts that are nested.  It exists so that Quo utilities can store some state here if they need to.  It is however the responsibility of that code to manage this dictionary well.
-   
-   The keys are supposed to be unique dotted strings.  For instance module paths are a good choice for it.  What is stored in there is  irrelevant for the operation of Quo.  However what is important is that code that places data here adheres to the general semantics ofthe system.
 
-        Example usage::
+        The keys are supposed to be unique dotted strings.  For instance module paths are a good choice for it.  What is stored in there is  irrelevant for the operation of Quo.  However what is important is that code that places data here adheres to the general semantics ofthe system.
 
-            LANG_KEY = f'{__name__}.lang'
+             Example usage::
 
-            def set_language(value):
-                clime = currentcontext()
-                clime.meta[LANG_KEY] = value
+                 LANG_KEY = f'{__name__}.lang'
 
-            def get_language():
-                return currentcontext().meta.get(LANG_KEY, 'en_US')
+                 def set_language(value):
+                     clime = currentcontext()
+                     clime.meta[LANG_KEY] = value
+
+                 def get_language():
+                     return currentcontext().meta.get(LANG_KEY, 'en_US')
 
         """
         return self._meta
@@ -620,13 +609,11 @@ class Context:
         raise Exit(code)
 
     def get_usage(self):
-        """Helper method to get formatted usage string for the current context and command.
-        """
+        """Helper method to get formatted usage string for the current context and command."""
         return self.command.get_usage(self)
 
     def get_help(self):
-        """Helper method to get formatted help page for the current context and command.
-        """
+        """Helper method to get formatted help page for the current context and command."""
         return self.command.get_help(self)
 
     def _make_sub_context(self, command):
@@ -920,7 +907,7 @@ class BaseCommand:
                     # by its truthiness/falsiness
                     clime.exit()
             except (EOFError, KeyboardInterrupt):
-                echo(file=sys.stderr,fg="red")
+                echo(file=sys.stderr, fg="red")
                 raise Abort()
             except Outlier as e:
                 if not standalone_mode:
@@ -1767,7 +1754,6 @@ class Parameter:
         self.envvar = envvar
 
         if autocompletion is not None:
-        
 
             def shell_complete(clime, param, incomplete):
                 from quo.shelldone import CompletionItem
@@ -1792,7 +1778,7 @@ class Parameter:
         user-facing documentation.
 
         Use :meth:`quo.Context.to_info_dict` to traverse the entire
-        CLI structure 
+        CLI structure
 
         """
         return {
@@ -1873,8 +1859,7 @@ class Parameter:
         return value, source
 
     def type_cast_value(self, clime, value):
-        """Given a value this runs it properly through the type system. This automatically handles things like `nargs` and `multiple` as  well as composite types.
-        """
+        """Given a value this runs it properly through the type system. This automatically handles things like `nargs` and `multiple` as  well as composite types."""
         if value is None:
             return () if self.multiple or self.nargs == -1 else None
 
@@ -2167,9 +2152,7 @@ class App(Parameter):
                         "Apps cannot be multiple and count at the same time."
                     )
                 elif self.is_flag:
-                    raise TypeError(
-                        "Apps cannot be count and flags at the same time."
-                    )
+                    raise TypeError("Apps cannot be count and flags at the same time.")
 
     def to_info_dict(self):
         info_dict = super().to_info_dict()
@@ -2427,7 +2410,7 @@ class App(Parameter):
 
 class Arg(Parameter):
     """Args are positional parameters(arguments to a command.  They generally  provide fewer features than apps but can have infinite ``nargs`` and are required by default.
- All parameters are passed onwards to the parameter constructor.
+    All parameters are passed onwards to the parameter constructor.
     """
 
     param_type_name = "arg"
@@ -2474,8 +2457,7 @@ class Arg(Parameter):
             name = name.replace("-", "_").lower()
         else:
             raise TypeError(
-                "Args take exactly one parameter declaration, got"
-                f" {len(decls)}."
+                "Args take exactly one parameter declaration, got" f" {len(decls)}."
             )
         return name, [arg], []
 
@@ -2485,5 +2467,6 @@ class Arg(Parameter):
     def get_error_hint(self, clime):
         return repr(self.make_metavar())
 
+
 def add_to_parser(self, parser, clime):
-        parser.add_argument(dest=self.name, nargs=self.nargs, obj=self)
+    parser.add_argument(dest=self.name, nargs=self.nargs, obj=self)
