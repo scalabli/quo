@@ -16,17 +16,18 @@ Quo's Documentation
    :caption: Contents:
 
    introduction.rst
-   echo.rst
    commands.rst
    apps.rst
    args.rst
    confirm.rst.
+   echo.rst
+   prompt.rst
+   exceptions.rst
    dialogs.rsr
    terminal.rst
    style.rst
    markup.rst
    text.rst
-   exceptions.rst
    highlighting.rst
    pretty.rst
    logging.rst
@@ -37,9 +38,9 @@ Quo's Documentation
    padding.rst
    panel.rst
    filters.rst
+   full_screen_apps.rst
    key_bindings.rst
    progress_bars.rst
-   full_screen_apps.rst
    syntax.rst
    styling.rst
    tables.rst
