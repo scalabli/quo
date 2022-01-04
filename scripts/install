@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python3 $HOME/git/quo/ setup.py install
