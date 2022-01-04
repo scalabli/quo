@@ -37,19 +37,26 @@ $ hello.py --help
 
 
 Documenting Arguments
-click.argument() does not take a help parameter. This is to follow the general convention of Unix tools of using arguments for only the most necessary things, and to document them in the command help text by referring to them by name.
+----------------------
 
-You might prefer to reference the argument in the description:
+:func:`quo.arg()` does not take a help parameter. This is to follow the general convention of Unix tools of using arguments for only the most necessary things, and to document them in the command help text by referring to them by name.
 
-@click.command()
-@click.argument('filename')
-def touch(filename):
-    """Print FILENAME."""
-    click.echo(filename)
+You might prefer to reference the argument in the description like so:
+
+.. code:: python
+
+  import quo
+
+  @quo.command()
+  @quo.arg('filename')
+  def touch(filename):
+      """Print FILENAME."""
+      quo.echo(filename)
+
 And what it looks like:
 
 $ touch --help
-Usage: touch [OPTIONS] FILENAME
+Usage: touch [ᕼᕮしᑭ ᖘᗩᎶᕮ] FILENAME
 
   Print FILENAME.
 
