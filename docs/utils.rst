@@ -183,7 +183,7 @@ run interactively.
 Launching Editors
 -----------------
 
-Quo supports launching editors automatically through :func:`edit`.  This
+Quo supports launching editors automatically through :func:`quo.edit`.  This
 is very useful for asking users for multi-line input.  It will
 automatically open the user's defined editor or fall back to a sensible
 default.  If the user closes the editor without saving, the return value
@@ -192,7 +192,7 @@ will be ``None``, otherwise the entered text.
 .. code:: python
 
     import quo
-    from quo import edit
+
     def get_commit_message():
         MARKER = '# Everything below is ignored\n'
         message = edit('\n\n' + MARKER)
@@ -211,7 +211,7 @@ Alternatively, the function can also be used to launch editors for files by a sp
 Launching Applications
 ----------------------
 
-Quo supports launching applications through :func:`launch`.  This can be
+Quo supports launching applications through :func:`quo.launch`.  This can be
 used to open the default application associated with a URL or filetype.
 This can be used to launch web browsers or picture viewers, for instance.
 In addition to this, it can also launch the file manager and automatically
@@ -220,9 +220,9 @@ select the provided file.
 .. code:: python
   
    import quo
-   from quo import launch
-   launch("https://quo.rtfd.io/")
-   launch("/home/downloads/file.txt", locate=True)
+
+   quo.launch("https://quo.rtfd.io/")
+   quo.launch("/home/downloads/file.txt", locate=True)
 
 
 Printing Filenames
@@ -231,7 +231,7 @@ Printing Filenames
 Because filenames might not be Unicode, formatting them can be a bit
 tricky.
 
-The way this works with quo is through the :func:`formatfilename`
+The way this works with quo is through the :func:`quo.formatfilename`
 function.  It does a best-effort conversion of the filename to Unicode and
 will never fail.  This makes it possible to use these filenames in the
 context of a full Unicode string.
@@ -239,8 +239,8 @@ context of a full Unicode string.
 .. code:: python
 
    import quo
-   from quo import echo, formatfilename
-   echo(f"Path: {formatfilename(b'foo.txt')}")
+
+   quo.echo(f"Path: {quo.formatfilename(b'foo.txt')}")
 
 
 Standard Streams
@@ -248,11 +248,7 @@ Standard Streams
 
 For command line utilities, it's very important to get access to input and
 output streams reliably.  Python generally provides access to these
-streams through ``sys.stdout`` and friends, but unfortunately, there are
-API differences between 2.x and 3.x, especially with regards to how these
-streams respond to Unicode and binary data.
-
-Because of this, quo provides the :func:`binarystream` and
+streams through ``sys.stdout`` and friends but quo provides the :func:`binarystream` and
 :func:`textstream` functions, which produce consistent results with
 different Python versions and for a wide variety of terminal configurations.
 
@@ -262,29 +258,24 @@ stream object (except in very odd cases; see :doc:`/unicode-support`).
 .. code:: python
 
     import quo
-    from quo import textstream, binarystream
-    stdin_t = textstream('stdin')
-    stdout_b = binarystream('stdout')
 
-Quo now emulates output streams on Windows to support unicode to the
-Windows console through separate APIs.  For more information see
-:doc:`wincmd`.
+    stdin_t = quo.textstream('stdin')
+    stdout_b = quo.binarystream('stdout')
 
 
 Intelligent File Opening
 ------------------------
 
-The logic for opening files from the :class:`File`
-type is exposed through the :func:`openfile` function.  It can
+The logic for opening files from the :class:`quo.types.File`
+type is exposed through the :func:`quo.openfile` function.  It can
 intelligently open stdin/stdout as well as any other file.
 
 .. code:: python
 
     import quo
-    from quo openfile
 
-    stdout = openfile('-', 'w')
-    test_file = openfile('test.txt', 'w')
+    stdout = quo.openfile('-', 'w')
+    test_file = quo.openfile('test.txt', 'w')
 
 If stdin or stdout are returned, the return value is wrapped in a special
 file where the context manager will prevent the closing of the file.  This
@@ -293,8 +284,9 @@ it like this:
 
 .. code:: python
 
-   from quo import openfile
-   with openfile(filename, 'w') as f:
+   import quo
+
+   with quo.openfile(filename, 'w') as f:
    f.write('Hello World!\n')
 
 
@@ -304,20 +296,19 @@ Finding Application Folders
 Very often, you want to open a configuration file that belongs to your
 application.  However, different operating systems store these configuration
 files in different locations depending on their standards.  Quo provides
-a :func:`appdir` function which returns the most appropriate location
+a :func:`quo.appdir` function which returns the most appropriate location
 for per-user config files for your application depending on the OS.
 
 .. code:: python
 
     import os
     import quo
-    from quo import appdir
     import ConfigParser
 
     APP_NAME = 'My Application'
 
     def read_config():
-        cfg = os.path.join(appdir(APP_NAME), 'config.ini')
+        cfg = os.path.join(quo.appdir(APP_NAME), 'config.ini')
         parser = ConfigParser.RawConfigParser()
         parser.read([cfg])
         rv = {}
@@ -326,17 +317,3 @@ for per-user config files for your application depending on the OS.
                 rv[f"{section}.{key}"] = value
         return rv
 
-Display tabular data
----------------------
-
-Checking if a character is a bool
------------------------------------
-
-
-
-Checking if a character is a number
--------------------------------------
-
-
-Checking if a character is a integer
--------------------------------------
