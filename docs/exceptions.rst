@@ -69,6 +69,5 @@ The following common subclasses exist:
     augmented with extra information if possible.  For instance if those
     are raised from a callback quo will automatically augment it with
     the parameter name if possible.
-*   :exc:`FileError` this is an error that is raised by the
-    :exc:`FileType` if quo encounters issues opening the file.
-    :exc:`ValidationError` if quo encounters issues validating an input
+*   :exc:`FileError` this is an error that is raised by the :exc:`FileType` if quo encounters issues opening the file.
+*   :exc:`ValidationError` if quo encounters issues validating an input
