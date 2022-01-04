@@ -20,18 +20,20 @@ Simple example:
            quo.echo(f"Hello {name}!")
 And what it looks like:
 
-.. code:: console
 $ hello.py --help
-Usage: hello.py [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
-  Simple program that greets NAME for a total of
-  COUNT times.
+.. code:: python
 
-Apps:
-  @count INTEGER  number of greetings.
-  @name TEXT      The person to greet.
-  --help          Check the documentation for more
-                  mitigation steps.
+  Usage: hello.py [ᕼᕮしᑭ ᖘᗩᎶᕮ]
+
+    Simple program that greets NAME for a total of
+    COUNT times.
+
+  Apps:
+    @count INTEGER  number of greetings.
+    @name TEXT      The person to greet.
+    --help          Check the documentation for more
+                    mitigation steps.
 
 
 Documenting Arguments
