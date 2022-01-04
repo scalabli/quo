@@ -13,7 +13,7 @@ Simple example:
 
    @quo.command()
    @quo.app('@count', default=1, help='number of greetings')
-   @quo.arg('name')
+   @quo.app('@name', prompt="What is your name?", help="The person to greet")
    def hello(count, name):
        """This script prints hello NAME COUNT times."""
        for x in range(count):
@@ -21,14 +21,19 @@ Simple example:
 And what it looks like:
 
 .. code:: console
-$ hello --help
-Usage: hello [ᕼᕮしᑭ ᖘᗩᎶᕮ] NAME
+$ hello.py --help
+Usage: hello.py [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
-  This script prints hello NAME COUNT times.
+  Simple program that greets NAME for a total of
+  COUNT times.
 
 Apps:
-  @count INTEGER  number of greetings
-  --help           Show this message and exit.
+  @count INTEGER  number of greetings.
+  @name TEXT      The person to greet.
+  --help          Check the documentation for more
+                  mitigation steps.
+
+
 Documenting Arguments
 click.argument() does not take a help parameter. This is to follow the general convention of Unix tools of using arguments for only the most necessary things, and to document them in the command help text by referring to them by name.
 
