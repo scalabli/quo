@@ -105,43 +105,52 @@ The default behavior of Click is to rewrap text based on the width of the termin
 Rewrapping can be disabled on a per-paragraph basis by adding a line with solely the \b escape marker in it. This line will be removed from the help text and rewrapping will be disabled.
 
 Example:
+.. code:: python
 
-@click.command()
-def cli():
-    """First paragraph.
+  import quo
 
-    This is a very long second paragraph and as you
-    can see wrapped very early in the source text
-    but will be rewrapped to the terminal width in
-    the final output.
+  @quo.command()
+  def cli():
+      """First paragraph.
 
-    \b
+      This is a very long second paragraph and as you
+      can see wrapped very early in the source text
+      but will be rewrapped to the terminal width in
+      the final output.
+
+      \b
+      This is
+      a paragraph
+      without rewrapping.
+
+      And this is a paragraph
+      that will be rewrapped again.
+      """
+
+And what it looks like:
+
+$ cli --help
+
+.. code:: shell
+
+  Usage: cli [ᕼᕮしᑭ ᖘᗩᎶᕮ]
+
+    First paragraph.
+
+    This is a very long second paragraph and as you can see wrapped very early in
+    the source text but will be rewrapped to the terminal width in the final
+    output.
+
     This is
     a paragraph
     without rewrapping.
 
-    And this is a paragraph
-    that will be rewrapped again.
-    """
-And what it looks like:
+    And this is a paragraph that will be rewrapped again.
 
-$ cli --help
-Usage: cli [OPTIONS]
+  Apps:
+    --help  Check the documentation for more
+            mitigation steps.
 
-  First paragraph.
-
-  This is a very long second paragraph and as you can see wrapped very early in
-  the source text but will be rewrapped to the terminal width in the final
-  output.
-
-  This is
-  a paragraph
-  without rewrapping.
-
-  And this is a paragraph that will be rewrapped again.
-
-Options:
-  --help  Show this message and exit.
 Truncating Help Texts
 Click gets command help text from function docstrings. However if you already use docstrings to document function arguments you may not want to see :param: and :return: lines in your help text.
 
