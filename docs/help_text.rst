@@ -107,25 +107,25 @@ Rewrapping can be disabled on a per-paragraph basis by adding a line with solely
 Example:
 .. code:: python
 
-  import quo
+   import quo
 
-  @quo.command()
-  def cli():
-      """First paragraph.
+   @quo.command()
+   def cli():
+       """First paragraph.
 
-      This is a very long second paragraph and as you
-      can see wrapped very early in the source text
-      but will be rewrapped to the terminal width in
-      the final output.
+       This is a very long second paragraph and as you
+       can see wrapped very early in the source text
+       but will be rewrapped to the terminal width in
+       the final output.
 
-      \b
-      This is
-      a paragraph
-      without rewrapping.
+       \b
+       This is
+       a paragraph
+       without rewrapping.
 
-      And this is a paragraph
-      that will be rewrapped again.
-      """
+       And this is a paragraph
+       that will be rewrapped again.
+       """
 
 And what it looks like:
 
@@ -152,36 +152,46 @@ $ cli --help
             mitigation steps.
 
 Truncating Help Texts
-Click gets command help text from function docstrings. However if you already use docstrings to document function arguments you may not want to see :param: and :return: lines in your help text.
+-----------------------
+Quo gets command help text from function docstrings. However if you already use docstrings to document function arguments you may not want to see :param: and :return: lines in your help text.
 
-You can use the \f escape marker to have Click truncate the help text after the marker.
+You can use the \f escape marker to have Quo truncate the help text after the marker.
 
 Example:
 
-@click.command()
-@click.pass_context
-def cli(ctx):
-    """First paragraph.
+.. code:: python
 
-    This is a very long second
-    paragraph and not correctly
-    wrapped but it will be rewrapped.
-    \f
+  import quo
 
-    :param click.core.Context ctx: Click context.
-    """
+  @quo.command()
+  @quo.pass_context
+  def cli(clime):
+      """First paragraph.
+
+      This is a very long second
+      paragraph and not correctly
+      wrapped but it will be rewrapped.
+      \f
+
+      :param quo.core.Context clime: Quo context.
+      """
 And what it looks like:
 
 $ cli --help
-Usage: cli [OPTIONS]
 
-  First paragraph.
+.. code:: python
 
-  This is a very long second paragraph and not correctly wrapped but it will be
-  rewrapped.
+  Usage: cli [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
-Options:
-  --help  Show this message and exit.
+    First paragraph.
+
+    This is a very long second paragraph and not correctly wrapped but it will be
+    rewrapped.
+
+  Apps:
+    --help  Check the documentation for more
+            mitigation steps..
+
 Meta Variables
 Options and parameters accept a metavar argument that can change the meta variable in the help page. The default version is the parameter name in uppercase with underscores, but can be annotated differently if desired. This can be customized at all levels:
 
@@ -202,7 +212,9 @@ Usage: hello <options> <name>
 
 Options:
   --count <int>  number of greetings
-  --help         Show this message and exit.
+  --help         Check the documentation for more
+            mitigation steps.
+
 Command Short Help
 For commands, a short help snippet is generated. By default, it’s the first sentence of the help message of the command, unless it’s too long. This can also be overridden:
 
@@ -220,7 +232,7 @@ def delete():
 And what it looks like:
 
 $ repo.py
-Usage: repo.py [OPTIONS] COMMAND [ARGS]...
+Usage: repo.py [ᕼᕮしᑭ ᖘᗩᎶᕮ] COMMAND [ARGS]...
 
   A simple command line tool.
 
@@ -244,7 +256,7 @@ def cli():
 And what it looks like:
 
 $ cli -h
-Usage: cli [OPTIONS]
+Usage: cli [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
-Options:
+Apps:
   -h, --help  Show this message and exit.
