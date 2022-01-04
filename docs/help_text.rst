@@ -9,7 +9,7 @@ Simple example:
 
 .. code:: python
 
-  import quo
+   import quo
 
    @quo.command()
    @quo.app('@count', default=1, help='number of greetings')
@@ -100,11 +100,13 @@ $ touch --help
 For more examples, see the examples in Arguments.
 
 Preventing Rewrapping
-The default behavior of Click is to rewrap text based on the width of the terminal. In some circumstances, this can become a problem. The main issue is when showing code examples, where newlines are significant.
+----------------------
+The default behavior of Quo is to rewrap text based on the width of the terminal. In some circumstances, this can become a problem. The main issue is when showing code examples, where newlines are significant.
 
 Rewrapping can be disabled on a per-paragraph basis by adding a line with solely the \b escape marker in it. This line will be removed from the help text and rewrapping will be disabled.
 
 Example:
+
 .. code:: python
 
    import quo
@@ -179,7 +181,7 @@ And what it looks like:
 
 $ cli --help
 
-.. code:: python
+.. code:: shell
 
   Usage: cli [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
@@ -193,70 +195,94 @@ $ cli --help
             mitigation steps..
 
 Meta Variables
-Options and parameters accept a metavar argument that can change the meta variable in the help page. The default version is the parameter name in uppercase with underscores, but can be annotated differently if desired. This can be customized at all levels:
+---------------
 
-@click.command(options_metavar='<options>')
-@click.option('--count', default=1, help='number of greetings',
-              metavar='<int>')
-@click.argument('name', metavar='<name>')
-def hello(count, name):
-    """This script prints hello <name> <int> times."""
-    for x in range(count):
-        click.echo(f"Hello {name}!")
+Apps and parameters accept a metavar argument that can change the meta variable in the help page. The default version is the parameter name in uppercase with underscores, but can be annotated differently if desired. This can be customized at all levels:
+
+.. code:: python
+
+  import quo
+
+  @quo.command(apps_metavar='<options>')
+  @quo.app('@count', default=1, help='number of greetings', metavar='<int>')
+  @quo.arg('name', metavar='<name>')
+  def hello(count, name):
+      """This script prints hello <name> <int> times."""
+      for x in range(count):
+          quo.echo(f"Hello {name}!")
+
 Example:
 
 $ hello --help
-Usage: hello <options> <name>
 
-  This script prints hello <name> <int> times.
+.. code:: shell
 
-Options:
-  --count <int>  number of greetings
-  --help         Check the documentation for more
-            mitigation steps.
+  Usage: hello <options> <name>
+
+    This script prints hello <name> <int> times.
+
+  Apps:
+    @count <int>  number of greetings
+    --help         Check the documentation for more
+                   mitigation steps.
 
 Command Short Help
+-------------------
 For commands, a short help snippet is generated. By default, it’s the first sentence of the help message of the command, unless it’s too long. This can also be overridden:
 
-@click.group()
-def cli():
-    """A simple command line tool."""
+.. code:: python
 
-@cli.command('init', short_help='init the repo')
-def init():
-    """Initializes the repository."""
+  import quo
 
-@cli.command('delete', short_help='delete the repo')
-def delete():
-    """Deletes the repository."""
+  @quo.tether()
+  def cli():
+      """A simple command line tool."""
+
+  @cli.command('init', short_help='init the repo')
+  def init():
+      """Initializes the repository."""
+
+  @cli.command('delete', short_help='delete the repo')
+  def delete():
+      """Deletes the repository."""
+
 And what it looks like:
 
 $ repo.py
-Usage: repo.py [ᕼᕮしᑭ ᖘᗩᎶᕮ] COMMAND [ARGS]...
 
-  A simple command line tool.
+.. code:: shell
 
-Options:
-  --help  Show this message and exit.
+  Usage: repo.py [ᕼᕮしᑭ ᖘᗩᎶᕮ] COMMAND [ARGS]...
 
-Commands:
-  delete  delete the repo
-  init    init the repo
+    A simple command line tool.
+
+  Apps:
+    --help  Show this message and exit.
+
+  Commands:
+    delete  delete the repo
+    init    init the repo
+
 Help Parameter Customization
-Changelog
-The help parameter is implemented in Click in a very special manner. Unlike regular parameters it’s automatically added by Click for any command and it performs automatic conflict resolution. By default it’s called --help, but this can be changed. If a command itself implements a parameter with the same name, the default help parameter stops accepting it. There is a context setting that can be used to override the names of the help parameters called help_option_names.
-
+------------------------------
 This example changes the default parameters to -h and --help instead of just --help:
 
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+.. code:: python
 
-@click.command(context_settings=CONTEXT_SETTINGS)
-def cli():
-    pass
+  CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+
+  @quo.command(context_settings=CONTEXT_SETTINGS)
+  def cli():
+      pass
+
 And what it looks like:
 
 $ cli -h
-Usage: cli [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
-Apps:
-  -h, --help  Show this message and exit.
+.. code:: shell
+
+  Usage: cli [ᕼᕮしᑭ ᖘᗩᎶᕮ]
+
+  Apps:
+    -h, --help  Check the documentation for more
+              mitigation steps.
