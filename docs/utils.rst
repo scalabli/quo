@@ -25,6 +25,7 @@ by default, which needs to be suppressed by passing ``nl=False``:
 .. code:: python
 
    import quo
+
    quo.echo(b'\xe2\x98\x83', nl=False)
 
 Last but not least :func:`echo` uses quo's intelligent internal output
@@ -119,8 +120,8 @@ clears the entire visible screen in a platform-agnostic way:
 .. code:: python
 
     import quo
-    from quo import clear
-    clear()
+
+    quo.clear()
 
 
 Getting Characters from Terminal
@@ -159,15 +160,13 @@ otherwise, it's too easy to forget about that and to create scripts that
 cannot be properly exited.
 
 
-Waiting for Key Press
+Waiting for Key Press(pause)
 ---------------------
 
 Sometimes, it's useful to pause until the user presses any key on the
-keyboard.  This is especially useful on Windows where ``cmd.exe`` will
-close the window at the end of the command execution by default, instead
-of waiting.
+keyboard.
 
-In quo, this can be accomplished with the :func:`pause` function.  This
+In quo, this can be accomplished with the :func:`quo.pause` function.  This
 function will print a quick message to the terminal (which can be
 customized) and wait for the user to press a key.  In addition to that,
 it will also become a NOP (no operation instruction) if the script is not
@@ -176,8 +175,8 @@ run interactively.
 .. code:: python
 
     import quo
-    from quo import pause
-    pause()
+    
+    quo.pause()
 
 
 Launching Editors
@@ -195,7 +194,7 @@ will be ``None``, otherwise the entered text.
 
     def get_commit_message():
         MARKER = '# Everything below is ignored\n'
-        message = edit('\n\n' + MARKER)
+        message = quo.edit('\n\n' + MARKER)
         if message is not None:
             return message.split(MARKER, 1)[0].rstrip('\n')
 
@@ -204,8 +203,8 @@ Alternatively, the function can also be used to launch editors for files by a sp
 .. code:: python
 
     import quo
-    from quo import edit
-    edit(filename='/etc/passwd')
+    
+    quo.edit(filename='/etc/passwd')
 
 
 Launching Applications
