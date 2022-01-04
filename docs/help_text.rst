@@ -22,7 +22,7 @@ And what it looks like:
 
 $ hello.py --help
 
-.. code:: python
+.. code:: shell
 
   Usage: hello.py [ᕼᕮしᑭ ᖘᗩᎶᕮ]
 
