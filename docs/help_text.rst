@@ -56,33 +56,47 @@ You might prefer to reference the argument in the description like so:
 And what it looks like:
 
 $ touch --help
-Usage: touch [ᕼᕮしᑭ ᖘᗩᎶᕮ] FILENAME
 
-  Print FILENAME.
+.. code:: shell
 
-Options:
-  --help  Show this message and exit.
+  Usage: touch [ᕼᕮしᑭ ᖘᗩᎶᕮ] FILENAME
+
+    Print FILENAME.
+
+  Apps:
+    --help  Check the documentation for more
+            mitigation steps.
+
 Or you might prefer to explicitly provide a description of the argument:
 
-@click.command()
-@click.argument('filename')
-def touch(filename):
-    """Print FILENAME.
+.. code:: python
 
-    FILENAME is the name of the file to check.
-    """
-    click.echo(filename)
+  import quo
+  @quo.command()
+  @quo.arg('filename')
+  def touch(filename):
+      """Print FILENAME.
+
+      FILENAME is the name of the file to check.
+      """
+      quo.echo(filename)
+
 And what it looks like:
 
 $ touch --help
-Usage: touch [OPTIONS] FILENAME
 
-  Print FILENAME.
+.. code:: shell
 
-  FILENAME is the name of the file to check.
+  Usage: touch [ᕼᕮしᑭ ᖘᗩᎶᕮ] FILENAME
 
-Options:
-  --help  Show this message and exit.
+    Print FILENAME.
+
+    FILENAME is the name of the file to check.
+
+  Apps:
+    --help  Check the documentation for more
+            mitigation steps.
+
 For more examples, see the examples in Arguments.
 
 Preventing Rewrapping
