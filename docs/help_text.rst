@@ -285,4 +285,4 @@ $ cli -h
 
   Apps:
     -h, --help  Check the documentation for more
-              mitigation steps.
+                mitigation steps.
