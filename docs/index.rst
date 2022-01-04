@@ -44,6 +44,7 @@ Quo's Documentation
    syntax.rst
    styling.rst
    tables.rst
+   utils.rst
    tree.rst
 
    protocol.rst
