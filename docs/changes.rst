@@ -5,7 +5,8 @@ Changelog
 ==========
 Version 2021.7.5
 -----------------
-- Dependency update :issue:`32`
+- Dependency update :issue:`32` to :issue:`35`
+- TypeError: prompt() got an unexpected keyword argument :issue:`36`
 
 
 Version 2021.7
