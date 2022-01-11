@@ -1,5 +1,5 @@
+from typing import Callable, Iterable, List, Mapping, Optional, Pattern, Union
 
-import typing as ty
 from quo.completion import CompleteEvent, Completer, Completion
 from quo.document import Document
 from quo.text import AnyFormattedText
@@ -31,14 +31,14 @@ class WordCompleter(Completer):
 
     def __init__(
         self,
-        words: ty.Union[ty.List[str], ty.Callable[[], ty.List[str]]],
+        words: Union[List[str], Callable[[], List[str]]],
         ignore_case: bool = False,
-        display_dict: ty.Optional[ty.Mapping[str, AnyFormattedText]] = None,
-        meta_dict: ty.Optional[ty.Mapping[str, AnyFormattedText]] = None,
+        display_dict: Optional[Mapping[str, AnyFormattedText]] = None,
+        meta_dict: Optional[Mapping[str, AnyFormattedText]] = None,
         WORD: bool = False,
         sentence: bool = False,
         match_middle: bool = False,
-        pattern: ty.Optional[ty.Pattern[str]] = None,
+        pattern: Optional[Pattern[str]] = None,
     ) -> None:
 
         assert not (WORD and sentence)
@@ -53,10 +53,8 @@ class WordCompleter(Completer):
         self.pattern = pattern
 
     def get_completions(
-        self,
-        document: Document,
-        complete_event: CompleteEvent
-        ) -> ty.Iterable[Completion]:
+        self, document: Document, complete_event: CompleteEvent
+    ) -> Iterable[Completion]:
         # Get list of words.
         words = self.words
         if callable(words):

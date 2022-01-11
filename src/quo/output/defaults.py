@@ -25,7 +25,7 @@ def create_output(
 
     :param stdout: The stdout object
     :param always_prefer_tty: When set, look for `sys.stderr` if `sys.stdout`
-        is not a TTY. (The prompt_toolkit render output is not meant to be
+        is not a TTY. (The quo render output is not meant to be
         consumed by something other then a terminal, so this is a reasonable
         default.)
     """

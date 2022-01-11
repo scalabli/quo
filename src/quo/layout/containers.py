@@ -143,7 +143,7 @@ class Container(metaclass=ABCMeta):
 
     def get_key_bindings(self) -> Optional[KeyBindingsBase]:
         """
-        Returns a :class:`.KeyBinder` object. These bindings become active when any
+        Returns a :class:`.KeyBindings` object. These bindings become active when any
         user control in this container has the focus, except if any containers
         between this container and the focused user control is modal.
         """
@@ -174,7 +174,7 @@ AnyContainer = Union[Container, "MagicContainer"]
 def _window_too_small() -> "Window":
     "Create a `Window` that displays the 'Window too small' text."
     return Window(
-        FormattedTextControl(text=[("class:window-too-small", "𝚃𝚑𝚎 𝚠𝚒𝚗𝚍𝚘𝚠 𝚒𝚜 𝚝𝚘𝚘 𝚜𝚖𝚊𝚕𝚕,\n 𝚣𝚘𝚘𝚖 𝚘𝚞𝚝...⏳")])
+        FormattedTextControl(text=[("class:window-too-small", " Window too small... ")])
     )
 
 
@@ -201,7 +201,7 @@ class _Split(Container):
 
     def __init__(
         self,
-        subset: Sequence[AnyContainer],
+        children: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
         padding: AnyDimension = Dimension.exact(0),
         padding_char: Optional[str] = None,
@@ -210,11 +210,11 @@ class _Split(Container):
         height: AnyDimension = None,
         z_index: Optional[int] = None,
         modal: bool = False,
-        bind: Optional[KeyBindingsBase] = None,
+        key_bindings: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
-        self.subset = [to_container(c) for c in subset]
+        self.children = [to_container(c) for c in children]
         self.window_too_small = window_too_small or _window_too_small()
         self.padding = padding
         self.padding_char = padding_char
@@ -225,17 +225,17 @@ class _Split(Container):
         self.z_index = z_index
 
         self.modal = modal
-        self.bind = bind
+        self.key_bindings = key_bindings
         self.style = style
 
     def is_modal(self) -> bool:
         return self.modal
 
     def get_key_bindings(self) -> Optional[KeyBindingsBase]:
-        return self.bind
+        return self.key_bindings
 
     def get_children(self) -> List[Container]:
-        return self.subset
+        return self.children
 
 
 class HSplit(_Split):
@@ -251,12 +251,12 @@ class HSplit(_Split):
     By default, this doesn't display a horizontal line between the children,
     but if this is something you need, then create a HSplit as follows::
 
-        HSplit(subset=[ ... ], padding_char='-',
-               padding=1, padding_style='green')
+        HSplit(children=[ ... ], padding_char='-',
+               padding=1, padding_style='#ffff00')
 
-    :param subset: List of child :class:`.Container` objects.
+    :param children: List of child :class:`.Container` objects.
     :param window_too_small: A :class:`.Container` object that is displayed if
-        there is not enough space for all the subsets By default, this is a
+        there is not enough space for all the children. By default, this is a
         "Window too small" message.
     :param align: `VerticalAlign` value.
     :param width: When given, use this width instead of looking at the children.
@@ -265,7 +265,7 @@ class HSplit(_Split):
         element in front of floating elements.  `None` means: inherit from parent.
     :param style: A style string.
     :param modal: ``True`` or ``False``.
-    :param bind: ``None`` or a :class:`.KeyBinder` object.
+    :param key_bindings: ``None`` or a :class:`.KeyBindings` object.
 
     :param padding: (`Dimension` or int), size to be used for the padding.
     :param padding_char: Character to be used for filling in the padding.
@@ -274,7 +274,7 @@ class HSplit(_Split):
 
     def __init__(
         self,
-        subset: Sequence[AnyContainer],
+        children: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
         align: VerticalAlign = VerticalAlign.JUSTIFY,
         padding: AnyDimension = 0,
@@ -284,12 +284,12 @@ class HSplit(_Split):
         height: AnyDimension = None,
         z_index: Optional[int] = None,
         modal: bool = False,
-        bind: Optional[KeyBindingsBase] = None,
+        key_bindings: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
         super().__init__(
-            subset=subset,
+            children=children,
             window_too_small=window_too_small,
             padding=padding,
             padding_char=padding_char,
@@ -298,13 +298,13 @@ class HSplit(_Split):
             height=height,
             z_index=z_index,
             modal=modal,
-            bind=bind,
+            key_bindings=key_bindings,
             style=style,
         )
 
         self.align = align
 
-        self._subset_cache: SimpleCache[
+        self._children_cache: SimpleCache[
             Tuple[Container, ...], List[Container]
         ] = SimpleCache(maxsize=1)
         self._remaining_space_window = Window()  # Dummy window.
@@ -313,8 +313,8 @@ class HSplit(_Split):
         if self.width is not None:
             return to_dimension(self.width)
 
-        if self.subset:
-            dimensions = [c.preferred_width(max_available_width) for c in self.subset]
+        if self.children:
+            dimensions = [c.preferred_width(max_available_width) for c in self.children]
             return max_layout_dimensions(dimensions)
         else:
             return Dimension()
@@ -324,16 +324,16 @@ class HSplit(_Split):
             return to_dimension(self.height)
 
         dimensions = [
-            c.preferred_height(width, max_available_height) for c in self._all_subset
+            c.preferred_height(width, max_available_height) for c in self._all_children
         ]
         return sum_layout_dimensions(dimensions)
 
     def reset(self) -> None:
-        for c in self.subset:
+        for c in self.children:
             c.reset()
 
     @property
-    def _all_subset(self) -> List[Container]:
+    def _all_children(self) -> List[Container]:
         """
         List of child objects, including padding.
         """
@@ -346,7 +346,7 @@ class HSplit(_Split):
                 result.append(Window(width=Dimension(preferred=0)))
 
             # The children with padding.
-            for child in self.subset:
+            for child in self.children:
                 result.append(child)
                 result.append(
                     Window(
@@ -364,7 +364,7 @@ class HSplit(_Split):
 
             return result
 
-        return self._subset_cache.get(tuple(self.subset), get)
+        return self._children_cache.get(tuple(self.children), get)
 
     def write_to_screen(
         self,
@@ -396,7 +396,7 @@ class HSplit(_Split):
             width = write_position.width
 
             # Draw child panes.
-            for s, c in zip(sizes, self._all_subset):
+            for s, c in zip(sizes, self._all_children):
                 c.write_to_screen(
                     screen,
                     mouse_handlers,
@@ -428,14 +428,14 @@ class HSplit(_Split):
         Return the heights for all rows.
         Or None when there is not enough space.
         """
-        if not self.subset:
+        if not self.children:
             return []
 
         width = write_position.width
         height = write_position.height
 
         # Calculate heights.
-        dimensions = [c.preferred_height(width, height) for c in self._all_subset]
+        dimensions = [c.preferred_height(width, height) for c in self._all_children]
 
         # Sum dimensions
         sum_dimensions = sum_layout_dimensions(dimensions)
@@ -489,10 +489,10 @@ class VSplit(_Split):
     By default, this doesn't display a vertical line between the children, but
     if this is something you need, then create a HSplit as follows::
 
-        VSplit(subset=[ ... ], padding_char='|',
-               padding=1, padding_style='green')
+        VSplit(children=[ ... ], padding_char='|',
+               padding=1, padding_style='#ffff00')
 
-    :param subset: List of child :class:`.Container` objects.
+    :param children: List of child :class:`.Container` objects.
     :param window_too_small: A :class:`.Container` object that is displayed if
         there is not enough space for all the children. By default, this is a
         "Window too small" message.
@@ -503,7 +503,7 @@ class VSplit(_Split):
         element in front of floating elements.  `None` means: inherit from parent.
     :param style: A style string.
     :param modal: ``True`` or ``False``.
-    :param bind: ``None`` or a :class:`.KeyBinder` object.
+    :param key_bindings: ``None`` or a :class:`.KeyBindings` object.
 
     :param padding: (`Dimension` or int), size to be used for the padding.
     :param padding_char: Character to be used for filling in the padding.
@@ -512,7 +512,7 @@ class VSplit(_Split):
 
     def __init__(
         self,
-        subset: Sequence[AnyContainer],
+        children: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
         align: HorizontalAlign = HorizontalAlign.JUSTIFY,
         padding: AnyDimension = 0,
@@ -522,12 +522,12 @@ class VSplit(_Split):
         height: AnyDimension = None,
         z_index: Optional[int] = None,
         modal: bool = False,
-        bind: Optional[KeyBindingsBase] = None,
+        key_bindings: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
         super().__init__(
-            subset=subset,
+            children=children,
             window_too_small=window_too_small,
             padding=padding,
             padding_char=padding_char,
@@ -536,13 +536,13 @@ class VSplit(_Split):
             height=height,
             z_index=z_index,
             modal=modal,
-            bind=bind,
+            key_bindings=key_bindings,
             style=style,
         )
 
         self.align = align
 
-        self._subset_cache: SimpleCache[
+        self._children_cache: SimpleCache[
             Tuple[Container, ...], List[Container]
         ] = SimpleCache(maxsize=1)
         self._remaining_space_window = Window()  # Dummy window.
@@ -552,7 +552,7 @@ class VSplit(_Split):
             return to_dimension(self.width)
 
         dimensions = [
-            c.preferred_width(max_available_width) for c in self._all_subset
+            c.preferred_width(max_available_width) for c in self._all_children
         ]
 
         return sum_layout_dimensions(dimensions)
@@ -570,25 +570,25 @@ class VSplit(_Split):
         # wrap lines because of the smaller width returned by `_divide_widths`.
 
         sizes = self._divide_widths(width)
-        subset = self._all_subset
+        children = self._all_children
 
         if sizes is None:
             return Dimension()
         else:
             dimensions = [
                 c.preferred_height(s, max_available_height)
-                for s, c in zip(sizes, subset)
+                for s, c in zip(sizes, children)
             ]
             return max_layout_dimensions(dimensions)
 
     def reset(self) -> None:
-        for c in self.subset:
+        for c in self.children:
             c.reset()
 
     @property
-    def _all_subset(self) -> List[Container]:
+    def _all_children(self) -> List[Container]:
         """
-        List of subset objects, including padding.
+        List of child objects, including padding.
         """
 
         def get() -> List[Container]:
@@ -599,7 +599,7 @@ class VSplit(_Split):
                 result.append(Window(width=Dimension(preferred=0)))
 
             # The children with padding.
-            for child in self.subset:
+            for child in self.children:
                 result.append(child)
                 result.append(
                     Window(
@@ -617,20 +617,20 @@ class VSplit(_Split):
 
             return result
 
-        return self._subset_cache.get(tuple(self.subset), get)
+        return self._children_cache.get(tuple(self.children), get)
 
     def _divide_widths(self, width: int) -> Optional[List[int]]:
         """
         Return the widths for all columns.
         Or None when there is not enough space.
         """
-        subset = self._all_subset
+        children = self._all_children
 
-        if not subset:
+        if not children:
             return []
 
         # Calculate widths.
-        dimensions = [c.preferred_width(width) for c in subset]
+        dimensions = [c.preferred_width(width) for c in children]
         preferred_dimensions = [d.preferred for d in dimensions]
 
         # Sum dimensions
@@ -685,10 +685,10 @@ class VSplit(_Split):
         :param screen: The :class:`~quo.layout.screen.Screen` class
             to which the output has to be written.
         """
-        if not self.subset:
+        if not self.children:
             return
 
-        subset = self._all_subset
+        children = self._all_children
         sizes = self._divide_widths(write_position.width)
         style = parent_style + " " + to_str(self.style)
         z_index = z_index if self.z_index is None else self.z_index
@@ -704,7 +704,7 @@ class VSplit(_Split):
         # write_position.height.
         heights = [
             child.preferred_height(width, write_position.height).preferred
-            for width, child in zip(sizes, subset)
+            for width, child in zip(sizes, children)
         ]
         height = max(write_position.height, min(write_position.height, max(heights)))
 
@@ -713,7 +713,7 @@ class VSplit(_Split):
         xpos = write_position.xpos
 
         # Draw all child panes.
-        for s, c in zip(sizes, subset):
+        for s, c in zip(sizes, children):
             c.write_to_screen(
                 screen,
                 mouse_handlers,

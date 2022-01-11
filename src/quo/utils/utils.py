@@ -263,7 +263,7 @@ def take_using_weights(
 
     # Make sure that we have some items left.
     if not items:
-        raise ValueError("Did't got any items with a positive weight.")
+        raise ValueError("Did't get any items with a positive weight.")
 
     #
     already_taken = [0 for i in items]

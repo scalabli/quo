@@ -30,7 +30,7 @@ from typing import (
 
 from quo.suite.current import get_app
 from quo.suite.run_in_terminal import run_in_terminal
-from quo.auto_suggest import AutoSuggest, Suggestion
+from quo.completion.auto_suggest import AutoSuggest, Suggestion
 from quo.cache import FastDictCache
 from quo.clipboard import Data
 from quo.completion import (

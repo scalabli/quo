@@ -274,7 +274,9 @@ def _interpret_color(color, offset=0):
 def flair(
     text,
     fg=None,
+    foreground=None,
     bg=None,
+    background=None,
     bold=None,
     dim=None,
     hidden=None,
@@ -357,12 +359,24 @@ def flair(
         except KeyError:
             raise TypeError(f"Unknown color {fg!r}")
 
+    if foreground:
+        try:
+            bits.append(f"\033[{_interpret_color(foreground)}m")
+        except KeyError:
+            raise TypeError(f"Unknown color {foreground!r}")
+
 
     if bg:
         try:
             bits.append(f"\033[{_interpret_color(bg, 10)}m")
         except KeyError:
             raise TypeError(f"Unknown color {bg!r}")
+
+    if background:
+        try:
+            bits.append(f"\033[{_interpret_color(background, 10)}m")
+        except KeyError:
+            raise TypeError(f"Unknown color {background!r}")
 
     if bold is not None:
         bits.append(f"\033[{1 if bold else 22}m")

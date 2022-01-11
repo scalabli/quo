@@ -16,7 +16,7 @@ from functools import partial
 from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
 from quo.suite.current import get_app
-from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
+from quo.completion.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer, BufferAcceptHandler
 from quo.completion import Completer, DynamicCompleter
 from quo.document import Document
@@ -118,7 +118,7 @@ class TextArea:
     :param accept_handler: Called when `Enter` is pressed (This should be a
         callable that takes a buffer as input).
     :param history: :class:`~quo.history.History` instance.
-    :param auto_suggest: :class:`~quo.auto_suggest.AutoSuggest`
+    :param auto_suggest: :class:`~prompt_toolkit.auto_suggest.AutoSuggest`
         instance for input suggestions.
 
     BufferControl attributes:
@@ -136,8 +136,8 @@ class TextArea:
     :param lexer: :class:`~quo.lexers.Lexer` instance for syntax
         highlighting.
     :param wrap_lines: When `True`, don't scroll horizontally, but wrap lines.
-    :param width: Window width. (:class:`~quo.layout.Dimension` object.)
-    :param height: Window height. (:class:`~quo.layout.Dimension` object.)
+    :param width: Window width. (:class:`~prompt_toolkit.layout.Dimension` object.)
+    :param height: Window height. (:class:`~prompt_toolkit.layout.Dimension` object.)
     :param scrollbar: When `True`, display a scroll bar.
     :param style: A style string.
     :param dont_extend_width: When `True`, don't take up more width then the
@@ -470,7 +470,7 @@ class Frame:
         style: str = "",
         width: AnyDimension = None,
         height: AnyDimension = None,
-        bind: Optional[KeyBinder] = None,
+        key_bindings: Optional[KeyBinder] = None,
         modal: bool = False,
     ) -> None:
 
@@ -539,7 +539,7 @@ class Frame:
             width=width,
             height=height,
             style=style,
-            bind=bind,
+            key_bindings=key_bindings,
             modal=modal,
         )
 
@@ -615,7 +615,7 @@ class Box:
         style: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
-        bind: Optional[KeyBinder] = None,
+        key_bindings: Optional[KeyBinder] = None,
     ) -> None:
 
         if padding is None:
@@ -648,7 +648,7 @@ class Box:
             height=height,
             style=style,
             modal=modal,
-            bind=None,
+            key_bindings=None,
         )
 
     def __pt_container__(self) -> Container:

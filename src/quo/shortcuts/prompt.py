@@ -31,7 +31,7 @@ from typing import (
 
 from quo.suite.suite import Suite
 from quo.suite.current import get_app
-from quo.auto_suggest import AutoSuggest, DynamicAutoSuggest
+from quo.completion.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
 from quo.clipboard import Clipboard, DynamicClipboard, InMemoryClipboard
 from quo.completion import Completer, DynamicCompleter, ThreadedCompleter
@@ -690,7 +690,7 @@ class Prompt(Generic[_T]):
         self, editing_mode: EditingMode, erase_when_done: bool
     ) -> Suite[_T]:
         """
-        Create the `Suite` object.
+        Create the `Application` object.
         """
         dyncond = self._dyncond
 
@@ -714,7 +714,7 @@ class Prompt(Generic[_T]):
             ),
             include_default_pygments_style=dyncond("include_default_pygments_style"),
             clipboard=DynamicClipboard(lambda: self.clipboard),
-            bind=merge_key_bindings(
+            key_bindings=merge_key_bindings(
                 [
                     merge_key_bindings(
                         [

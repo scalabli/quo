@@ -16,11 +16,11 @@ from typing import TYPE_CHECKING, Callable, Optional, Union
 
 from quo.eventloop import run_in_executor_with_context
 
-from .document import Document
+from quo.document import Document
 from quo.filters import Filter, to_filter
 
 if TYPE_CHECKING:
-    from .buffer import Buffer
+    from quo.buffer import Buffer
 
 __all__ = [
         "Suggestion",

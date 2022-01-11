@@ -16,7 +16,7 @@ from .filesystem import ExecutableCompleter, PathCompleter
 from .fuzzy_completer import FuzzyCompleter, FuzzyWordCompleter
 from .nested import NestedCompleter
 from .word_completer import WordCompleter
-from quo.auto_suggest import AutoSuggestFromHistory
+from .auto_suggest import AutoSuggestFromHistory
 
 __all__ = [
     # Base.

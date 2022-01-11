@@ -2,19 +2,17 @@
 """
 Demonstration of all the ANSI colors.
 """
-from prompt_toolkit import print_formatted_text
-from prompt_toolkit.formatted_text import HTML, FormattedText
+import quo
 
-print = print_formatted_text
-
-
-def main():
+@quo.command()
+@quo.app("--ansi")
+def main(ansi):
     wide_space = ("", "       ")
     space = ("", " ")
 
-    print(HTML("\n<u>Foreground colors</u>"))
-    print(
-        FormattedText(
+    quo.inscribe(quo.text.HTML("\n<u>Foreground colors</u>"))
+    quo.inscribe(
+        quo.text.FormattedText(
             [
                 ("ansiblack", "ansiblack"),
                 wide_space,
@@ -53,9 +51,9 @@ def main():
         )
     )
 
-    print(HTML("\n<u>Background colors</u>"))
-    print(
-        FormattedText(
+    quo.inscribe(quo.text.HTML("\n<u>Background colors</u>"))
+    quo.inscribe(
+        quo.text.FormattedText(
             [
                 ("bg:ansiblack ansiwhite", "ansiblack"),
                 wide_space,
@@ -93,7 +91,7 @@ def main():
             ]
         )
     )
-    print()
+    quo.inscribe()
 
 
 if __name__ == "__main__":

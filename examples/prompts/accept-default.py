@@ -6,11 +6,17 @@ user typed without allowing him/her to edit it.
 This should display the prompt with all the formatting like usual, but not
 allow any editing.
 """
-from prompt_toolkit import HTML, prompt
+import quo
+
+session = quo.Prompt(
+       # accept_default=True,
+        #default="test"
+        )
+
+
 
 if __name__ == "__main__":
-    answer = prompt(
-        HTML("<b>Type <u>some input</u>: </b>"), accept_default=True, default="test"
-    )
+    answer = session.prompt(
+        quo.text.HTML("<b>Type <u>some input</u>: </b>"), accept_default=True, default= "test")
 
-    print("You said: %s" % answer)
+    quo.echo(f"You said: {answer}")

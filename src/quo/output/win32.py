@@ -13,7 +13,7 @@ from typing import Callable, Dict, List, Optional, TextIO, Tuple, Type, TypeVar,
 
 from quo.data_structures import Size
 from quo.styles import ANSI_COLOR_NAMES, Attrs
-from quo.utils import get_cwidth
+from quo.utils.utils import get_width
 from quo.win32_types import (
     CONSOLE_SCREEN_BUFFER_INFO,
     COORD,
@@ -122,7 +122,7 @@ class Win32Output(Output):
 
     def write(self, data: str) -> None:
         if self._hidden:
-            data = " " * get_cwidth(data)
+            data = " " * get_width(data)
 
         self._buffer.append(data)
 
@@ -285,7 +285,7 @@ class Win32Output(Output):
         # Start from the default attributes.
         win_attrs: int = self.default_attrs
 
-        if color_depth != ColorDepth.DEPTH_1_BIT:
+        if color_depth != ColorDepth.one_bit:
             # Override the last four bits: foreground color.
             if fgcolor:
                 win_attrs = win_attrs & ~0xF
@@ -509,7 +509,7 @@ class Win32Output(Output):
         # ENABLE_VIRTUAL_TERMINAL_PROCESSING are supported. We don't have a
         # reliable way yet to know whether our console supports true color or
         # only 4-bit.
-        return ColorDepth.DEPTH_4_BIT
+        return ColorDepth.four_bit
 
 
 class FOREGROUND_COLOR:

@@ -89,4 +89,4 @@ from quo.i_o import (
 
 from quo.shortcuts import container
 
-__version__ = "2021.7"
+__version__ = "2022.1"
