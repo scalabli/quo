@@ -6,11 +6,13 @@ Changelog
 Version 2021.1.5
 -----------------
 Released on 2022-1-11
-- ImportError: :issue:`37`
+
+- ImportError: :issue:`37` affecting Windows OS
 
 Version 2022.1
 -----------------
 Released on 2022-1-11
+
 - Dependency update :issue:`32` to :issue:`35`
 - TypeError: prompt() got an unexpected keyword argument :issue:`36`
 
