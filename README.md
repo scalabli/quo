@@ -174,3 +174,10 @@ Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at
 [Code of Conduct](http://contributor-covenant.org/version/1/2/0/)
 
+## Support
+Quo's emailing list for general discussion and bug reports is:
+ [Emailling list 📥](https://groups.google.com/forum/#!forum/secretum)
+
+Subscribe by sending an email to:
+
+ secretum+subscribe@googlegroups.com
