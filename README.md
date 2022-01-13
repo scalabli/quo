@@ -148,11 +148,11 @@ In order to for us to maintain this project and grow our community of contributo
 
 ## Getting Help
 
-### Gitter
+### Community
 
-For discussions about the usage, development, and future of quo, please join our Gitter community
+For discussions about the usage, development, and the future of quo, please join our Google community
 
-* [Join](https://gitter.im/secretum-inc/quo)
+* [Community👨‍👩‍👦‍👦](https://groups.google.com/forum/#!forum/secretum)
 
 ## Resources
 
@@ -160,7 +160,9 @@ For discussions about the usage, development, and future of quo, please join our
 
 If you have any suggestions, bug reports, or annoyances please report them
 to our issue tracker at 
-[Bug tracker](https://github.com/secretum-inc/quo/issues/)
+[Bug tracker](https://github.com/secretum-inc/quo/issues/) or send an email to:
+
+ 📥 secretum@googlegroups.com
 
 
 ## License📑
@@ -173,11 +175,3 @@ This software is licensed under the `MIT License`. See the [License](https://git
 Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at
 [Code of Conduct](http://contributor-covenant.org/version/1/2/0/)
-
-## Support
-Quo's emailing list for general discussion and bug reports is:
- [Emailling list 📥](https://groups.google.com/forum/#!forum/secretum)
-
-Subscribe by sending an email to:
-
- secretum+subscribe@googlegroups.com
