@@ -64,7 +64,7 @@ simply pass in `required=True` as an argument to the decorator.
     import quo
 
     @quo.command()
-    @quo.app('@n', default=1)
+    @quo.app('-n', default=1)
     def dots(n):
         quo.echo('.' * n)
 
@@ -74,7 +74,7 @@ simply pass in `required=True` as an argument to the decorator.
     import quo
 
     @quo.command()
-    @quo.app('@n', required=True, type=int)
+    @quo.app('-n', required=True, type=int)
     def dots(n):
         quo.echo('.' * n)
 
@@ -84,7 +84,7 @@ simply pass in `required=True` as an argument to the decorator.
     import quo
 
     @quo.command()
-    @quo.app('@from', '@f', 'from_')
+    @quo.app('--from', '-f', '--from_')
     @quo.app('@to', '@t')
     def reserved_param_name(from_, to):
         quo.echo(f"from {from_} to {to}")
@@ -102,7 +102,7 @@ To show the default values when showing command help, use ``show_default=True``
    import quo
 
    @quo.command()
-   @quo.app('@n', default=1, show_default=True)
+   @quo.app('-n', default=1, show_default=True)
    def dots(n):
         quo.echo('.' * n)
 
@@ -119,7 +119,7 @@ the ``nargs`` parameter.  The values are then stored as a tuple.
     import quo
 
     @quo.command()
-    @quo.app('@pos', nargs=2, type=float)
+    @quo.app('--pos', nargs=2, type=float)
     def findme(pos):
         a, b = pos
         quo.echo(f"{a} / {b}")
@@ -142,7 +142,7 @@ the tuple.  For this you can directly specify a tuple as type:
     import quo
 
     @quo.command()
-    @quo.app('@item', type=(str, int))
+    @quo.app('--item', type=(str, int))
     def putitem(item):
         name, id = item
         quo.echo(f"name={name} id={id}")
@@ -157,7 +157,7 @@ used.  The above example is thus equivalent to this:
     import quo
 
     @quo.command()
-    @quo.app('@item', nargs=2, type=quo.types.Tuple([str, int]))
+    @quo.app('--item', nargs=2, type=quo.types.Tuple([str, int]))
     def putitem(item):
         name, id = item
         quo.echo(f"name={name} id={id}")
@@ -180,7 +180,7 @@ Example:
     import quo
 
     @quo.command()
-    @quo.app('@message', '@m', multiple=True)
+    @quo.app('--message', '-m', multiple=True)
     def commit(message):
         quo.echo('\n'.join(message))
 
@@ -193,7 +193,7 @@ single characters.
 
     import quo
 
-    @quo.app("@format", multiple=True, default=["json"])
+    @quo.app("--format", multiple=True, default=["json"])
 
 
 Counting
@@ -208,7 +208,7 @@ for instance:
     import quo
 
     @quo.command()
-    @quo.app('@v', '@verbose', count=True)
+    @quo.app('-v', '--verbose', count=True)
     def log(verbose):
         quo.echo(f"Verbosity: {verbose}")
 
@@ -231,7 +231,7 @@ Example:
     import quo
 
     @quo.command()
-    @quo.app('@shout/@no-shout', default=False)
+    @quo.app('--shout/--no-shout', default=False)
     def info(shout):
         rv = sys.platform
         if shout:
@@ -248,7 +248,7 @@ manually inform quo that something is a flag:
     import quo
 
     @quo.command()
-    @quo.app('@shout', is_flag=True)
+    @quo.app('--shout', is_flag=True)
     def info(shout):
         rv = sys.platform
         if shout:
@@ -283,7 +283,7 @@ Example:
     import quo
 
     @quo.command()
-    @quo.app('@shout/@no-shout', ' /-S', default=False)
+    @quo.app('--shout/--no-shout', ' /-S', default=False)
     def info(shout):
         rv = sys.platform
         if shout:
@@ -308,8 +308,8 @@ the default.
     import quo
 
     @quo.command()
-    @quo.app('@upper', 'transformation', flag_value='upper',default=True)
-    @quo.app('@lower', 'transformation', flag_value='lower')
+    @quo.app('--upper', 'transformation', flag_value='upper',default=True)
+    @quo.app('--lower', 'transformation', flag_value='lower')
     def info(transformation):
         quo.echo(getattr(sys.platform, transformation)())
 
@@ -332,7 +332,7 @@ Example:
     import quo
 
     @quo.command()
-    @quo.app('@hash-type', type= quo.types.Choice(['MD5', 'SHA1'], case_sensitive=False))
+    @quo.app('--hash-type', type= quo.types.Choice(['MD5', 'SHA1'], case_sensitive=False))
     def digest(hash_type):
         quo.echo(hash_type)
 
@@ -364,7 +364,7 @@ Example:
     import quo
 
     @quo.command()
-    @quo.app('@name', prompt=True)
+    @quo.app('--name', prompt=True)
     def hello(name):
         quo.echo(f"Hello {name}!")
 
@@ -377,7 +377,7 @@ a different one:
     import quo
 
     @quo.command()
-    @quo.app('@name', prompt='Your name please')
+    @quo.app('--name', prompt='Your name please')
     def hello(name):
         quo.echo(f"Hello {name}!")
 
@@ -401,7 +401,7 @@ useful for password input:
     import quo
 
     @quo.command()
-    @quo.app("@password", prompt=True, hide=True, affirm==True)
+    @quo.app("--password", prompt=True, hide=True, affirm==True)
     def encode(password):
         quo.echo(f"encoded: {codecs.encode(password, 'rot13')}")
 
@@ -426,7 +426,7 @@ from the environment:
     import quo
 
     @quo.command()
-    @quo.app("@username", prompt= True, default=lambda: os.environ.get("USER", ""))
+    @quo.app("--username", prompt= True, default=lambda: os.environ.get("USER", ""))
     def hello(username):
         quo.cho(f"Hello, {username}!")
 
@@ -438,7 +438,7 @@ To describe what the default value will be, set it in ``show_default``.
     import quo
 
     @quo.command()
-    @quo.app("@username", prompt=True, default=lambda: os.environ.get("USER", ""), show_default="current user")
+    @quo.app("--username", prompt=True, default=lambda: os.environ.get("USER", ""), show_default="current user")
     def hello(username):
         quo.echo(f"Hello, {username}!")
 
@@ -477,7 +477,7 @@ Here an example for a ``@version`` flag:
         clime.exit()
 
     @quo.command()
-    @quo.app('@version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
+    @quo.app('--version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
     def hello():
         quo.echo('Hello World!')
 
@@ -506,7 +506,7 @@ callback:
             clime.abort()
 
     @quo.command()
-    @quo.app('@yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
+    @quo.app('--yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
     def dropdb():
         quo.echo('Dropped all tables!')
 
@@ -538,7 +538,7 @@ Example usage:
     import quo
 
     @quo.ccommand()
-    @quo.app('@username')
+    @quo.app('--username')
     def greet(username):
         quo.echo(f'Hello {username}!')
 
@@ -559,12 +559,12 @@ Example:
    import quo
 
    @quo.tether()
-   @quo.app('@debug/@no-debug')
+   @quo.app('--debug/--no-debug')
    def cli(debug):
        quo.echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
-   @quo.app('@username')
+   @quo.app('--username')
    def greet(username):
        quo.echo(f"Hello {username}!")
 
@@ -582,7 +582,7 @@ Example usage:
     import quo
 
     @quo.command()
-    @quo.app('@username', envvar='USERNAME')
+    @quo.app('--username', envvar='USERNAME')
     def greet(username):
        quo.echo(f"Hello {username}!")
 
@@ -615,7 +615,7 @@ Example usage:
     import quo
 
     @quo.command()
-    @quo.app('paths', '@path', envvar='PATHS', multiple=True, type=quo.types.Path())
+    @quo.app('paths', '--path', envvar='PATHS', multiple=True, type=quo.types.Path())
     def perform(paths):
         for path in paths:
             quo.echo(path)
@@ -683,8 +683,8 @@ bounds are *closed* (the default).
     import quo
 
     @quo.command()
-    @quo.app("@count", type= quo.types.IntRange(0, 20, clamp=True))
-    @quo.app("@digit", type= quo.types.IntRange(0, 9))
+    @quo.app("--count", type= quo.types.IntRange(0, 20, clamp=True))
+    @quo.app("--digit", type= quo.types.IntRange(0, 9))
     def repeat(count, digit):
         quo.echo(str(digit) * count)
 
@@ -712,7 +712,7 @@ type conversion. It is called for all sources, including prompts.
             raise quo.types.BadParameter("format must be 'NdM'")
 
     @quo.command()
-    @quo.app( "@rolls", type= quo.types.UNPROCESSED, callback=validate_rolls, default="1d6", prompt=True)
+    @quo.app( "--rolls", type= quo.types.UNPROCESSED, callback=validate_rolls, default="1d6", prompt=True)
     def roll(rolls):
         sides, times = rolls
         quo.echo(f"Rolling a {sides}-sided dice {times} time(s)")
@@ -737,7 +737,7 @@ can still be passed a value, but if only the flag is given the
     import quo
 
     @quo.command()
-    @quo.app("@name", is_flag=False, flag_value="Flag", default="Default")
+    @quo.app("--name", is_flag=False, flag_value="Flag", default="Default")
     def hello(name):
         quo.echo(f"Hello, {name}!")
 
@@ -751,7 +751,7 @@ app's flag is given, instead of if the app is not provided at all.
     import quo
 
     @quo.command()
-    @quo.app('@name', prompt=True, prompt_required=False, default="Default")
+    @quo.app('--name', prompt=True, prompt_required=False, default="Default")
     def hello(name):
         quo.echo(f"Hello {name}!")
 
