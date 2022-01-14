@@ -5,9 +5,9 @@ Apps
 
 .. currentmodule:: quo
 
-Apps can be added/nested to commands using the :func:`app` decorator.
+Apps can be added to commands using the :func:`app` decorator.
 
-Apps in quo are highly configurable and should not be confused with :ref:`positional arguments <arguments>`.
+Apps in quo are profoundly configurable and ought not to be mistaken for :ref:`positional arguments <arguments>`.
 
 How to name Apps
 -----------------
