@@ -1,10 +1,12 @@
 .. _key_bindings:
 
-Key binding
-=======================
+Key binding 🗝️
+===============
 A key binding is an association between a physical key on a keyboard and a parameter. A parameter can have any number of key bindings associated with it, and a particular key binding can control any number of parameters.
-This page contains a few additional notes about key bindings.
 
+.. note::
+
+  This page contains a couple of extra notes about key bindings.
 
 Key bindings can be defined by creating a
 :class:`~quo.keys.KeyBinder` instance:
