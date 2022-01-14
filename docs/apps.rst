@@ -86,7 +86,7 @@ simply pass in `required=True` as an argument to the decorator.
 
     @quo.command()
     @quo.app('--from', '-f', '--from_')
-    @quo.app('@to', '@t')
+    @quo.app('--to', '-t')
     def reserved_param_name(from_, to):
         quo.echo(f"from {from_} to {to}")
 
@@ -465,7 +465,7 @@ A callback is a function that is invoked with two parameters: the current
 such as quitting the application and gives access to other already
 processed parameters.
 
-Here an example for a ``@version`` flag:
+Here an example for a ``--version`` flag:
 
 .. code-block:: python
    
