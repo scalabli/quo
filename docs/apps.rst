@@ -16,10 +16,11 @@ For the purpose of uniformity, a name is chosen in the following order
 
 1.  In the event that a name is not prefixed, therefore it is used as the Python argument name
 
-2.  If there is at least one name prefixed with `@`  the first one given is used as the name.
+2.  If there is at least one name prefixed with `--`  the first one given is used as the name.
 To get the Python argument name, the chosen name is converted to lower
 case, up to two dashes are removed as the prefix, and other dashes are
 converted to underscores.
+
 .. note::
 
    Apps are given as position arguments to the decorator.
@@ -70,7 +71,7 @@ simply pass in `required=True` as an argument to the decorator.
 
 .. code-block:: python
 
-    # How to make an option required
+    # How to make an app required
     import quo
 
     @quo.command()
