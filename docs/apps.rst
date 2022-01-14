@@ -15,35 +15,38 @@ How to name Apps
 For the purpose of uniformity, a name is chosen in the following order
 
 1.  In the event that a name is not prefixed, therefore it is used as the Python argument name
+
 2.  If there is at least one name prefixed with `@`  the first one given is used as the name.
 To get the Python argument name, the chosen name is converted to lower
 case, up to two dashes are removed as the prefix, and other dashes are
 converted to underscores.
-NB: Apps are given as position arguments to the decorator.
+.. note::
 
-.. code-block:: python
+   Apps are given as position arguments to the decorator.
+
+.. code:: python
   
     import quo
 
     @quo.command()
-    @quo.app('@s', '@string-to-echo')
+    @quo.app('-s', '--string-to-echo')
     def echo(string_to_echo):
         quo.echo(string_to_echo)
 
-.. code-block:: python
+.. code:: python
 
     import quo
     @quo.command()
-    @quo.app('@s', '@string-to-echo', 'string')
+    @quo.app('-s', '--string-to-echo', 'string')
     def echo(string):
         echo(string)
 
--   ``"@f", "@foo-bar"``, the name is ``foo_bar``
--   ``"@x"``, the name is ``x``
--   ``"@f", "@filename", "dest"``, the name is  ``dest``
--   ``"@CamelCase"``, the name is ``camelcase``
--   ``"@f", "@fb"``, the name is ``f``
--   ``"@f", "@foo-bar"``, the name is ``f``
+-   ``"-f", "--foo-bar"``, the name is ``foo_bar``
+-   ``"-x"``, the name is ``x``
+-   ``"-f", "--filename", "dest"``, the name is  ``dest``
+-   ``"--CamelCase"``, the name is ``camelcase``
+-   ``"-f", "--fb"``, the name is ``f``
+-   ``"-f", "--foo-bar"``, the name is ``f``
 
 Basic Value Apps
 -------------------
