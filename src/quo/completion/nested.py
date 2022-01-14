@@ -36,7 +36,7 @@ class NestedCompleter(Completer):
         return "NestedCompleter(%r, ignore_case=%r)" % (self.options, self.ignore_case)
 
     @classmethod
-    def from_nested_dict(cls, data: NestedDict) -> "NestedCompleter":
+    def add(cls, data: NestedDict) -> "NestedCompleter":
         """
         Create a `NestedCompleter`, starting from a nested dictionary data
         structure, like this:
@@ -65,9 +65,9 @@ class NestedCompleter(Completer):
             if isinstance(value, Completer):
                 options[key] = value
             elif isinstance(value, dict):
-                options[key] = cls.from_nested_dict(value)
+                options[key] = cls.add(value)
             elif isinstance(value, set):
-                options[key] = cls.from_nested_dict({item: None for item in value})
+                options[key] = cls.add({item: None for item in value})
             else:
                 assert value is None
                 options[key] = None

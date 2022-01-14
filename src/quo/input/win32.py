@@ -4,7 +4,7 @@ from abc import abstractmethod
 from asyncio import get_event_loop
 from contextlib import contextmanager
 
-from ..utils import SPHINX_AUTODOC_RUNNING
+from quo.utils.utils import SPHINX_AUTODOC_RUNNING
 
 # Do not import win32-specific stuff when generating documentation.
 # Otherwise RTD would be unable to generate docs for this module.
@@ -38,7 +38,7 @@ from quo.win32_types import (
     EventTypes,
 )
 
-from .ansi_escape_sequences import REVERSE_ANSI_SEQUENCES
+from quo.i_o.output.ansi_escape_sequences import REVERSE_ANSI_SEQUENCES
 from .core import Input
 
 __all__ = [

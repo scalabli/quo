@@ -162,8 +162,11 @@ def message(
     Display a simple message box and wait until the user presses enter.
     """
     dialog = Dialog(
-        title=title,
-        body=Label(text=text, dont_extend_height=True),
+            title=title,
+            body=Label(
+                text=text, 
+                dont_extend_height=True
+                ),
         buttons=[Button(text=ok_text, handler=_return_none)],
         with_background=True,
     )
@@ -313,7 +316,7 @@ def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Suite[Any]:
 
     return Suite(
         layout=Layout(dialog),
-        key_bindings=merge_key_bindings([load_key_bindings(), bindings]),
+        bind=merge_key_bindings([load_key_bindings(), bindings]),
         mouse_support=True,
         style=style,
         full_screen=True,

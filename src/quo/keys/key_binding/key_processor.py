@@ -462,7 +462,8 @@ class KeyPressEvent:
     def key_processor(self) -> KeyProcessor:
         processor = self._key_processor_ref()
         if processor is None:
-            raise Exception("KeyProcessor was lost. This should not happen.")
+            from quo.errors import UsageError
+            raise UsageError("KeyProcessor was lost. This should not happen.")
         return processor
 
     @property

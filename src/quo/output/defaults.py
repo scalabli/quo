@@ -1,5 +1,5 @@
 import sys
-from typing import Optional, TextIO, cast
+import typing
 
 from quo.utils.utils import (
     get_bell_environment_variable,
@@ -17,8 +17,9 @@ __all__ = [
 
 
 def create_output(
-    stdout: Optional[TextIO] = None, always_prefer_tty: bool = True
-) -> Output:
+        stdout: typing.Optional[typing.TextIO] = None, 
+        always_prefer_tty: bool = True
+        ) -> Output:
     """
     Return an :class:`~quo.output.Output` instance for the command
     line.
@@ -48,7 +49,7 @@ def create_output(
                     break
 
     # If the patch_stdout context manager has been used, then sys.stdout is
-    # replaced by this proxy. For prompt_toolkit applications, we want to use
+    # replaced by this proxy. For quo applications, we want to use
     # the real stdout.
     from quo.patch_stdout import StdoutProxy
 
@@ -61,16 +62,23 @@ def create_output(
         from .windows10 import Windows10_Output, is_win_vt100_enabled
 
         if is_win_vt100_enabled():
-            return cast(
+            return typing.cast(
                 Output,
                 Windows10_Output(stdout, default_color_depth=color_depth_from_env),
             )
         if is_conemu_ansi():
-            return cast(
-                Output, ConEmuOutput(stdout, default_color_depth=color_depth_from_env)
-            )
+            return typing.cast(
+                    Output, 
+                    ConEmu(
+                        stdout, 
+                        default_color_depth=color_depth_from_env
+                        )
+                    )
         else:
-            return Win32Output(stdout, default_color_depth=color_depth_from_env)
+            return Win32Output(
+                    stdout,
+                    default_color_depth=color_depth_from_env
+                    )
     else:
         from .videoterminal import Vt100
 

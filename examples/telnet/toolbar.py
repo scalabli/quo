@@ -5,10 +5,10 @@ in the prompt.
 """
 import logging
 
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.contrib.telnet.server import TelnetServer
-from prompt_toolkit.eventloop import get_event_loop
-from prompt_toolkit.shortcuts import PromptSession
+from quo.completion import WordCompleter
+from quo.contrib.telnet.server import TelnetServer
+from asyncio import get_event_loop
+from quo.shortcuts import Prompt
 
 # Set up logging
 logging.basicConfig()
@@ -26,7 +26,7 @@ async def interact(connection):
     def get_toolbar():
         return "Bottom toolbar..."
 
-    session = PromptSession()
+    session = Prompt()
     result = await session.prompt_async(
         "Say something: ", bottom_toolbar=get_toolbar, completer=animal_completer
     )

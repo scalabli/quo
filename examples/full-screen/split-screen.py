@@ -129,16 +129,17 @@ left_buffer.on_text_changed += default_buffer_changed
 #    ----------------------------------
 
 # This glues everything together.
+layout = quo.layout.Layout(root_container, focused_element=left_window)
 
 application = quo.Suite(
-    layout=quo.layout.Layout(root_container, focused_element=left_window),
-    key_bindings=kb,
+        layout=layout,
+        bind=kb,
     # Let's add mouse support!
-    mouse_support=True,
+        mouse_support=True,
     # Using an alternate screen buffer means as much as: "run full screen".
     # It switches the terminal to an alternate screen.
-    full_screen=True,
-)
+        full_screen=True,
+        )
 
 
 # 4. Run the application

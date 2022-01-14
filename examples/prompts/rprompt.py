@@ -10,7 +10,7 @@ import quo
 
 session = quo.Prompt()
 
-example_style = quo.styles.Style.from_dict(
+example_style = quo.styles.Style.add(
     {
         "r_elicit": "bg:#ff0066 #ffffff",
     }

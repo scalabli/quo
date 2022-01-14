@@ -1,7 +1,7 @@
 """
 Key binder egistry.
 
-A `KeyBindings` object is a container that holds a list of key bindings. It has a
+A `KeyBinder` object is a container that holds a list of key bindings. It has a
 very efficient internal data structure for checking which key bindings apply
 for a pressed key.
 
@@ -50,6 +50,7 @@ from typing import (
 )
 
 from quo.cache import SimpleCache
+from quo.errors import UsageError
 from quo.filters import FilterOrBool, Never, to_filter
 from quo.i_o import echo
 from quo.keys.list import KEY_ALIASES, Keys
@@ -120,7 +121,7 @@ KeysTuple = Tuple[Union[Keys, str], ...]
 
 class KeyBindingsBase(metaclass=ABCMeta):
     """
-    Interface for a KeyBindings.
+    Interface for a KeyBinder.
     """
 
     @abstractproperty
@@ -286,7 +287,10 @@ class KeyBinder(KeyBindingsBase):
 
         return decorator
 
-    def remove(self, *args: Union[Keys, str, KeyHandlerCallable]) -> None:
+    def remove(
+            self, 
+            *args: Union[Keys, str, KeyHandlerCallable]
+            ) -> None:
         """
         Remove a key binding.
 
@@ -328,7 +332,7 @@ class KeyBinder(KeyBindingsBase):
             self._clear_cache()
         else:
             # No key binding found for this function. Raise ValueError.
-            raise ValueError("Binding not found: %r" % (function,))
+            raise UsageError("Binding not found: %r" % (function,))
 
     # For backwards-compatibility.
     add_binding = add
@@ -418,7 +422,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        raise ValueError(f"Invalid key: {key,}")
+        raise UsageError(f"Invalid key: {key,}")
     return key
 
 
@@ -513,8 +517,10 @@ class ConditionalKeyBindings(_Proxy):
     """
 
     def __init__(
-        self, key_bindings: KeyBindingsBase, filter: FilterOrBool = True
-    ) -> None:
+            self,
+            key_bindings: KeyBindingsBase, 
+            filter: FilterOrBool = True
+            ) -> None:
 
         _Proxy.__init__(self)
 

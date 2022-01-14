@@ -9,9 +9,9 @@ if not SPHINX_AUTODOC_RUNNING:
     from ctypes import windll
 
 from ctypes.wintypes import DWORD, HANDLE
-from typing import Callable, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, Union
+from typing import Callable, Dict, List, NamedTuple, Optional, TextIO, Tuple, Type, TypeVar, Union
 
-from quo.data_structures import Size
+from quo.errors import NoConsoleScreenBufferError
 from quo.styles import ANSI_COLOR_NAMES, Attrs
 from quo.utils.utils import get_width
 from quo.win32_types import (
@@ -24,6 +24,10 @@ from quo.win32_types import (
 
 from .core import Output
 from .color import ColorDepth
+
+
+
+Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 __all__ = [
     "Win32Output",
@@ -52,30 +56,7 @@ def _coord_byval(coord: COORD) -> c_long:
 #: is very useful for debugging. (e.g.: to see that we don't write more bytes
 #: than required.)
 _DEBUG_RENDER_OUTPUT = False
-_DEBUG_RENDER_OUTPUT_FILENAME = r"prompt-toolkit-windows-output.log"
-
-
-class NoConsoleScreenBufferError(Exception):
-    """
-    Raised when the application is not running inside a Windows Console, but
-    the user tries to instantiate Win32Output.
-    """
-
-    def __init__(self) -> None:
-        # Are we running in 'xterm' on Windows, like git-bash for instance?
-        xterm = "xterm" in os.environ.get("TERM", "")
-
-        if xterm:
-            message = (
-                "Found %s, while expecting a Windows console. "
-                'Maybe try to run this program using "winpty" '
-                "or run it in cmd.exe instead. Or otherwise, "
-                "in case of Cygwin, use the Python executable "
-                "that is compiled for Cygwin." % os.environ["TERM"]
-            )
-        else:
-            message = "No Windows console found. Are you running cmd.exe?"
-        super().__init__(message)
+_DEBUG_RENDER_OUTPUT_FILENAME = r"quo-windows-output.log"
 
 
 _T = TypeVar("_T")

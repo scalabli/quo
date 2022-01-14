@@ -2,20 +2,13 @@ import enum
 import errno
 import os
 import sys
+import typing as ty
 from contextlib import contextmanager, ExitStack
 from functools import update_wrapper
 from itertools import repeat
 
 from .universal import python_environment
-from quo.errors import (
-                   Abort,
-                   BadParameter,
-                   Exit,
-                   MissingParameter,
-                   UsageError,
-                   Outlier
-                   )
-
+from quo import errors
 from .setout import HelpFormatter, join_apps
 from quo.context.current import pop_context
 from quo.context.current import push_context
@@ -55,17 +48,6 @@ DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 def deprecated_notice(cmd):
     if cmd.deprecated:
         echo(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow", err=True)
-
-
-def quick_exit(code):
-    """Low-level exit that skips Python's cleanup but speeds up exit by
-    about 10ms for things like shell completion.
-
-    :param code: Exit code.
-    """
-    sys.stdout.flush()
-    sys.stderr.flush()
-    os._exit(code)
 
 
 def _complete_visible_commands(clime, incomplete):
@@ -114,13 +96,13 @@ def augment_usage_errors(clime, param=None):
     """Context manager that attaches extra information to exceptions."""
     try:
         yield
-    except BadParameter as e:
+    except errors.BadParameter as e:
         if e.clime is None:
             e.clime = clime
         if param is not None and e.param is None:
             e.param = param
         raise
-    except UsageError as e:
+    except errors.UsageError as e:
         if e.clime is None:
             e.clime = clime
         raise
@@ -240,7 +222,7 @@ class Context:
 
     def __init__(
         self,
-        command,
+        command: ty.Optional["Command"],
         parent=None,
         info_name=None,
         obj=None,
@@ -248,7 +230,7 @@ class Context:
         default_map=None,
         terminal_width=None,
         max_content_width=None,
-        resilient_parsing=False,
+        parse: bool =False,
         allow_extra_args=None,
         allow_interspersed_args=None,
         ignore_unknown_apps=None,
@@ -342,7 +324,7 @@ class Context:
             if parent is not None:
                 autohelp_names = parent.autohelp_names
             else:
-                autohelp_names = ["--help"]
+                autohelp_names = ["--help", "-h"]
 
         #: The names for the help apps.
         self.autohelp_names = autohelp_names
@@ -357,7 +339,7 @@ class Context:
         #: Indicates if resilient parsing is enabled.  In that case Quo
         #: will do its best to not cause any failures and default values
         #: will be ignored. Useful for completion.
-        self.resilient_parsing = resilient_parsing
+        self.parse = parse
 
         # If there is no envvar prefix yet, but the parent has one and
         # the command on this level has a name, we can expand the envvar
@@ -427,7 +409,9 @@ class Context:
         pop_context()
 
     @contextmanager
-    def scope(self, cleanup=True):
+    def scope(
+            self, 
+            cleanup: bool =True):
         """This helper method can be used with the context object to promote it to the current thread local (see :func:`currentcontext`).
         The default behavior of this is to invoke the cleanup functions which can be disabled by setting `cleanup` to `False`.  The cleanup  functions are typically used for things such as closing file handles.
 
@@ -590,7 +574,10 @@ class Context:
 
             return value
 
-    def fail(self, message):
+    def fail(
+            self, 
+            message: str
+            ):
         """Aborts the execution of the program with a specific error
         message.
 
@@ -600,11 +587,14 @@ class Context:
 
     def abort(self):
         """Aborts the script."""
-        raise Abort()
+        raise errors.Abort()
 
-    def exit(self, code=0):
+    def exit(
+            self, 
+            code: int =0
+            ):
         """Exits the application with a given exit code."""
-        raise Exit(code)
+        raise errors.Exit(code)
 
     def get_usage(self):
         """Helper method to get formatted usage string for the current context and command.
@@ -631,13 +621,9 @@ class Context:
             keyword arguments are forwarded directly to the function.
         2.  the first argument is a quo command object.  In that case all
             arguments are forwarded as well but proper quo parameters
-            (apps and quo arguments) must be keyword arguments and quo
+            (apps and quo args) must be keyword arguments and quo
             will fill in defaults.
 
-        Note that before quo 3.2 keyword arguments were not properly filled
-        in against the intention of this code and no context was created.  For
-        more information about this change and why it was done in a bugfix
-        release see :ref:`upgrade-to-3.2`.
         """
         self, callback = args[:2]
         clime = self
@@ -889,8 +875,6 @@ class BaseCommand:
         if prog_name is None:
             prog_name = _detect_program_name()
 
-        # Process shell completion requests and exit early.
-        self._main_shelldone(extra, prog_name, complete_var)
 
         try:
             try:
@@ -909,7 +893,7 @@ class BaseCommand:
             except (EOFError, KeyboardInterrupt):
                 echo(file=sys.stderr,fg="red")
                 raise Abort()
-            except Outlier as e:
+            except errors.Outlier as e:
                 if not standalone_mode:
                     raise
                 e.show()
@@ -921,7 +905,7 @@ class BaseCommand:
                     sys.exit(1)
                 else:
                     raise
-        except Exit as e:
+        except errors.Exit as e:
             if standalone_mode:
                 sys.exit(e.exit_code)
             else:
@@ -934,34 +918,12 @@ class BaseCommand:
                 # `clime.exit(1)` and to `return 1`, the caller won't be able to
                 # tell the difference between the two
                 return e.exit_code
-        except Abort:
+        except errors.Abort:
             if not standalone_mode:
                 raise
             echo("Aborted!", file=sys.stderr)
             sys.exit(1)
 
-    def _main_shelldone(self, clime_args, prog_name, complete_var=None):
-        """Check if the shell is asking for tab completion, process
-        that, then exit early. Called from :meth:`main` before the
-        program is invoked.
-
-        :param prog_name: Name of the executable in the shell.
-        :param complete_var: Name of the environment variable that holds
-            the completion instruction. Defaults to
-            ``_{PROG_NAME}_COMPLETE``.
-        """
-        if complete_var is None:
-            complete_var = f"_{prog_name}_COMPLETE".replace("-", "_").upper()
-
-        instruction = os.environ.get(complete_var)
-
-        if not instruction:
-            return
-
-        from .shelldone import shell_complete
-
-        rv = shell_complete(self, clime_args, prog_name, complete_var, instruction)
-        _fast_exit(rv)
 
     def __call__(self, *args, **kwargs):
         """Alias for :meth:`main`."""
@@ -1912,7 +1874,7 @@ class Parameter:
 
         # For bounded nargs (!= -1), validate the number of values.
         if (
-            not clime.resilient_parsing
+            not clime.parse
             and self.nargs > 1
             and isinstance(value, (tuple, list))
             and (
@@ -1964,7 +1926,7 @@ class Parameter:
                 if self.callback is not None:
                     value = self.callback(clime, self, value)
             except Exception:
-                if not clime.resilient_parsing:
+                if not clime.parse:
                     raise
 
                 value = None

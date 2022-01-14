@@ -30,7 +30,11 @@ class InputMode(str, Enum):
 
 
 class CharacterFind:
-    def __init__(self, character: str, backwards: bool = False) -> None:
+    def __init__(
+            self, 
+            character: str, 
+            backwards: bool = False
+            )-> None:
         self.character = character
         self.backwards = backwards
 

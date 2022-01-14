@@ -251,7 +251,7 @@ class Style(BaseStyle):
         return self._style_rules
 
     @classmethod
-    def from_dict(
+    def add(
         cls, style_dict: Dict[str, str], priority: Priority = default_priority
     ) -> "Style":
         """

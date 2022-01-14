@@ -1,10 +1,9 @@
 """
 Interface for an output.
 """
+import typing as ty
 from abc import ABCMeta, abstractmethod
-from typing import Optional, TextIO
 
-from quo.data_structures import Size
 from quo.styles import Attrs
 
 from .color import ColorDepth
@@ -14,6 +13,7 @@ __all__ = [
     "DummyOutput",
 ]
 
+Size = ty.NamedTuple("Size", [("rows", int), ("columns", int)])
 
 class Output(metaclass=ABCMeta):
     """
@@ -21,11 +21,11 @@ class Output(metaclass=ABCMeta):
     :class:`~quo.renderer.Renderer`.
 
     Actual implementations are
-    :class:`~quo.output.vt100.Vt100_Output` and
+    :class:`~quo.output.videoterminal.Vt100` and
     :class:`~quo.output.win32.Win32Output`.
     """
 
-    stdout: Optional[TextIO] = None
+    stdout: ty.Optional[ty.TextIO] = None
 
     @abstractmethod
     def fileno(self) -> int:
@@ -311,4 +311,4 @@ class DummyOutput(Output):
         return 40
 
     def get_default_color_depth(self) -> ColorDepth:
-        return ColorDepth.DEPTH_1_BIT
+        return ColorDepth.one_bit

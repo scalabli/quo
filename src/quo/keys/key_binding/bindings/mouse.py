@@ -1,4 +1,5 @@
-from quo.data_structures import Point
+from typing import NamedTuple
+
 from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
 from quo.keys.list import Keys
 from quo.mouse_events import MouseEvent, MouseEventType
@@ -12,6 +13,8 @@ __all__ = [
 
 E = KeyPressEvent
 
+#Data structures
+Point = NamedTuple("Point", [("x", int), ("y", int)])
 
 def load_mouse_bindings() -> KeyBinder:
     """

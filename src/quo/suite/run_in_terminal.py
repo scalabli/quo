@@ -23,8 +23,10 @@ _T = TypeVar("_T")
 
 
 def run_in_terminal(
-    func: Callable[[], _T], render_cli_done: bool = False, in_executor: bool = False
-) -> Awaitable[_T]:
+        func: Callable[[], _T], 
+        render_cli_done: bool = False, 
+        in_executor: bool = False
+        ) -> Awaitable[_T]:
     """
     Run function on the terminal above the current application or prompt.
 

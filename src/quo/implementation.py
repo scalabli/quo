@@ -19,7 +19,7 @@ from quo.accordance import (
         WIN
         )
 
-from quo.errors import Outlier
+from quo import errors
 from quo.expediency import inscribe
 
 if os.name == "nt":
@@ -190,9 +190,9 @@ class Editor:
             c = subprocess.Popen(f'{editor} "{filename}"', env=environ, shell=True)
             exit_code = c.wait()
             if exit_code != 0:
-                raise QuoException(f"{editor}: Editing failed!")
+                raise errors.Outlier(f"{editor}: Editing failed!")
         except OSError as e:
-            raise QuoException(f"{editor}: Editing failed: {e}")
+            raise errors.Outlier(f"{editor}: Editing failed: {e}")
 
     def edit(self, text):
         import tempfile

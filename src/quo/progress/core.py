@@ -101,7 +101,7 @@ class ProgressBar:
     :param bottom_toolbar: Text to be displayed in the bottom toolbar. This
         can be a callable or formatted text.
     :param style: :class:`quo.styles.BaseStyle` instance.
-    :param key_bindings: :class:`.KeyBinder` instance.
+    :param bind: :class:`.KeyBinder` instance.
     :param file: The file object used for rendering, by default `sys.stderr` is used.
 
     :param color_depth: `quo` `ColorDepth` instance.
@@ -115,7 +115,7 @@ class ProgressBar:
         formatters: Optional[Sequence[Formatter]] = None,
         bottom_toolbar: AnyFormattedText = None,
         style: Optional[BaseStyle] = None,
-        key_bindings: Optional[KeyBinder] = None,
+        bind: Optional[KeyBinder] = None,
         file: Optional[TextIO] = None,
         color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
@@ -127,7 +127,7 @@ class ProgressBar:
         self.bottom_toolbar = bottom_toolbar
         self.counters: List[ProgressBarCounter[object]] = []
         self.style = style
-        self.key_bindings = key_bindings
+        self.bind= bind
 
         # Note that we use __stderr__ as default error output, because that
         # works best with `patch_stdout`.
@@ -197,7 +197,7 @@ class ProgressBar:
                 )
             ),
             style=self.style,
-            key_bindings=self.key_bindings,
+            bind=self.bind,
             refresh_interval=0.3,
             color_depth=self.color_depth,
             output=self.output,

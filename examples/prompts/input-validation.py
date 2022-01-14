@@ -12,7 +12,7 @@ def is_valid_email(text):
 
 validator = quo.types.Validator.from_callable(
     is_valid_email,
-    error_message="Not a valid e-mail address (Does not contain an @).",
+    error_message="Not a valid e-mail address (Does not contain an @.",
     move_cursor_to_end=True,
 )
 

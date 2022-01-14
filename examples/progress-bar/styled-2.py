@@ -4,13 +4,11 @@ A very simple progress bar which keep track of the progress as we consume an
 iterator.
 """
 import time
+import quo
 
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.styles import Style
+from quo.progress import formatters
 
-style = Style.from_dict(
+style = quo.styles.Style.add(
     {
         "progressbar title": "#0000ff",
         "item-title": "#ff4400 underline",
@@ -31,12 +29,12 @@ def main():
         formatters.Text(" "),
         formatters.SpinningWheel(),
         formatters.Text(" "),
-        formatters.Text(HTML("<tildes>~~~</tildes>")),
+        formatters.Text(quo.text.HTML("<tildes>~~~</tildes>")),
         formatters.Bar(sym_a="#", sym_b="#", sym_c="."),
         formatters.Text(" left: "),
         formatters.TimeLeft(),
     ]
-    with ProgressBar(
+    with quo.ProgressBar(
         title="Progress bar example with custom formatter.",
         formatters=custom_formatters,
         style=style,

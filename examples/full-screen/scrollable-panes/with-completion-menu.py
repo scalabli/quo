@@ -57,12 +57,15 @@ def main():
     def exit(event) -> None:
         get_app().exit()
 
-    kb.add("tab")(quo.keys.focus_next)
-    kb.add("s-tab")(quo.keys.focus_previous)
+    kb.add("tab")(quo.keys.focus.next)
+    kb.add("s-tab")(quo.keys.focus.previous)
 
     # Create and run application.
     application = quo.Suite(
-        layout=layout, key_bindings=kb, full_screen=True, mouse_support=True
+            layout=layout, 
+            bind=kb, 
+            full_screen=True,
+            mouse_support=True
     )
     application.run()
 

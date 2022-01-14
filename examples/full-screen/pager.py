@@ -10,7 +10,6 @@ from quo.layout.containers import HSplit, Window
 from quo.layout.controls import FormattedTextControl
 from quo.layout.dimension import LayoutDimension as D
 from quo.lexers import PygmentsLexer
-from quo.styles import Style
 # Create one text buffer for the main content.
 
 _pager_py_path = __file__
@@ -79,7 +78,7 @@ def _(event):
     event.app.exit()
 
 
-style = Style.from_dict(
+style = quo.styles.Style.from_dict(
     {
         "status": "reverse",
         "status.position": "#aaaa00",
@@ -88,16 +87,18 @@ style = Style.from_dict(
     }
 )
 
+layout = quo.layout.Layout(root_container, focused_element=text_area)
 
 # create application.
+
 application = quo.Suite(
-    layout=quo.layout.Layout(root_container, focused_element=text_area),
-    key_bindings=bindings,
+    layout=layout,
+    bind=bindings,
     enable_page_navigation_bindings=True,
     mouse_support=True,
     style=style,
     full_screen=True,
-)
+    )
 
 
 def run():

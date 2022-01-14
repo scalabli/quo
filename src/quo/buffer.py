@@ -1319,8 +1319,8 @@ class Buffer:
             except ValidationError as e:
                 # Set cursor position (don't allow invalid values.)
                 if set_cursor:
-                    self.cursor_position = min(
-                        max(0, e.cursor_position), len(self.text)
+                    self.line = min(
+                        max(0, e.line), len(self.text)
                     )
 
                 self.validation_state = ValidationState.INVALID

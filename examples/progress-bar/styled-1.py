@@ -6,7 +6,7 @@ iterator.
 import time
 import quo
 
-style = quo.styles.Style.from_dict(
+style = quo.styles.Style.add(
     {
         "title": "#4444ff underline",
         "label": "#ff4400 bold",

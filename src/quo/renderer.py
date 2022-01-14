@@ -4,10 +4,9 @@ Renders the command line on the console.
 from asyncio import FIRST_COMPLETED, Future, ensure_future, sleep, wait
 from collections import deque
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Callable, Deque, Dict, Hashable, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Callable, Deque, Dict, Hashable, NamedTuple, Optional, Tuple
 
 from quo.suite.current import get_app
-from quo.data_structures import Point, Size
 from quo.filters import FilterOrBool, to_filter
 from quo.text import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
@@ -30,6 +29,9 @@ __all__ = [
         "print_formatted_text",
         ]
 
+# Data Structures
+Point = NamedTuple("Point", [("x", int), ("y", int)])
+Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 def _output_screen_diff(
     app: "Suite[Any]",

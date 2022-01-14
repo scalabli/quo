@@ -389,7 +389,7 @@ class Button:
         self.width = width
         self.control = FormattedTextControl(
             self._get_text_fragments,
-            key_bindings=self._get_key_bindings(),
+            bind=self._get_key_bindings(),
             focusable=True,
         )
 
@@ -728,7 +728,7 @@ class _DialogList(Generic[_T]):
 
         # Control and window.
         self.control = FormattedTextControl(
-            self._get_text_fragments, key_bindings=kb, focusable=True
+            self._get_text_fragments, bind=kb, focusable=True
         )
 
         self.window = Window(

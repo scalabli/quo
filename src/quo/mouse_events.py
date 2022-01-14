@@ -15,13 +15,13 @@ through the `Window` class where the coordinates are translated from absolute
 coordinates to coordinates relative to the user control, and there
 `UIControl.mouse_handler` is called.
 """
+import typing
 from enum import Enum
 
-from .data_structures import Point
 
 __all__ = ["MouseEventType", "MouseEvent"]
 
-
+Point = typing.NamedTuple("Point", [("x", int), ("y", int)])
 class MouseEventType(Enum):
     MOUSE_UP = "MOUSE_UP"
     MOUSE_DOWN = "MOUSE_DOWN"
@@ -38,7 +38,11 @@ class MouseEvent:
     :param event_type: `MouseEventType`.
     """
 
-    def __init__(self, position: Point, event_type: MouseEventType) -> None:
+    def __init__(
+            self,
+            position: Point, 
+            event_type: MouseEventType
+            ) -> None:
         self.position = position
         self.event_type = event_type
 

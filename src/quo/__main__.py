@@ -1,7 +1,11 @@
+import quo
 from quo.i_o import echo
 from quo.color.rgb import *
 from quo.shortcuts import container
 from quo.widgets import Frame, TextArea
+
+if __name__ == "__main__":
+    quo.main()
 
 container(Frame(TextArea(text="         FEATURES"), title="Quo"))
 

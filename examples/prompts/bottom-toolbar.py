@@ -45,7 +45,7 @@ def main():
     print("You said: %s" % text)
 
     # Example 5: styling differently.
-    style = quo.styles.Style.from_dict(
+    style = quo.styles.Style.add(
         {
             "bottom-toolbar": "#aaaa00 bg:#ff0000",
             "bottom-toolbar.text": "#aaaa44 bg:#aa4444",

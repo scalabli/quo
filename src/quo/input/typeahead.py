@@ -1,7 +1,7 @@
 r"""
 Store input key strokes if we did read more than was required.
 
-The input classes `Vt100Input` and `Win32Input` read the input text in chunks
+The input classes `Vt100` and `Win32Input` read the input text in chunks
 of a few kilobytes. This means that if we read input from stdin, it could be
 that we read a couple of lines (with newlines in between) at once.
 
@@ -29,7 +29,7 @@ input.
 
 To support type ahead, this module will store all the key strokes that were
 read too early, so that they can be feed into to the next `prompt()` call or to
-the next quo `Application`.
+the next quo `Suite`(Application).
 """
 from collections import defaultdict
 from typing import Dict, List

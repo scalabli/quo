@@ -5,7 +5,7 @@ from typing import Callable, ContextManager, List
 from quo.eventloop.win32 import create_win32_event
 
 from quo.keys.key_binding import KeyPress
-from ..utils import DummyContext
+from quo.utils.utils import DummyContext
 from .core import PipeInput
 from .vt100_parser import Vt100Parser
 from .win32 import _Win32InputBase, attach_win32_input, detach_win32_input

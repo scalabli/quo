@@ -321,7 +321,7 @@ class ValidationToolbar:
 
             if buff.validation_error:
                 row, column = buff.document.translate_index_to_position(
-                    buff.validation_error.cursor_position
+                    buff.validation_error.line
                 )
 
                 if show_position:

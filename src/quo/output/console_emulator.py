@@ -1,6 +1,5 @@
-from typing import Any, Optional, TextIO
+import typing
 
-from quo.data_structures import Size
 
 from .core import Output
 from .color import ColorDepth
@@ -11,6 +10,7 @@ __all__ = [
     "ConEmu",
 ]
 
+Size = typing.NamedTuple("Size", [("rows", int), ("columns", int)])
 
 class ConEmu:
     """
@@ -19,18 +19,25 @@ class ConEmu:
     """
 
     def __init__(
-        self, stdout: TextIO, default_color_depth: Optional[ColorDepth] = None
-    ) -> None:
-        self.win32_output = Win32Output(stdout, default_color_depth=default_color_depth)
-        self.vt100_output = Vt100_Output(
-            stdout, lambda: Size(0, 0), default_color_depth=default_color_depth
-        )
+            self, 
+            stdout: typing.TextIO, 
+            default_color_depth: typing.Optional[ColorDepth] = None
+            ) -> None:
+        self.win32_output = Win32Output(
+                stdout, 
+                default_color_depth=default_color_depth
+                )
+        self.vt100_output = Vt100(
+                stdout, 
+                lambda: Size(0, 0), 
+                default_color_depth=default_color_depth
+                )
 
     @property
     def responds_to_cpr(self) -> bool:
         return False  # We don't need this on Windows.
 
-    def __getattr__(self, name: str) -> Any:
+    def __getattr__(self, name: str) -> typing.Any:
         if name in (
             "get_size",
             "get_rows_below_cursor_position",
@@ -46,4 +53,4 @@ class ConEmu:
             return getattr(self.vt100_output, name)
 
 
-Output.register(ConEmuOutput)
+Output.register(ConEmu)

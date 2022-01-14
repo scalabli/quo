@@ -5,7 +5,7 @@ Styled similar to tqdm, another progress bar impl
 import quo
 import time
 
-style = quo.styles.Style.custom_tag({"bar-a": "reverse"})
+style = quo.styles.Style.add({"bar-a": "reverse"})
 
 
 def main():

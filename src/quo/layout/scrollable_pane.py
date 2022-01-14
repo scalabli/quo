@@ -1,6 +1,5 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, NamedTuple, Optional
 
-from quo.data_structures import Point
 from quo.filters import FilterOrBool, to_filter
 from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent
@@ -15,6 +14,8 @@ __all__ = ["ScrollablePane"]
 # Never go beyond this height, because performance will degrade.
 MAX_AVAILABLE_HEIGHT = 10_000
 
+#Data Structure
+Point = NamedTuple("Point", [("x", int), ("y", int)])
 
 class ScrollablePane(Container):
     """

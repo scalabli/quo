@@ -1,7 +1,7 @@
 import os
 from typing import ContextManager, TextIO, cast
 
-from ..utils import DummyContext
+from quo.utils.utils import DummyContext
 from .core import PipeInput
 from .videoterminal import Vt100
 

@@ -14,11 +14,11 @@ def main(ansi):
     quo.inscribe(
         quo.text.FormattedText(
             [
-                ("ansiblack", "ansiblack"),
+                ("black", "black"),
                 wide_space,
-                ("ansired", "ansired"),
+                ("red", "red"),
                 wide_space,
-                ("ansigreen", "ansigreen"),
+                ("green", "green"),
                 wide_space,
                 ("ansiyellow", "ansiyellow"),
                 wide_space,

@@ -11,6 +11,8 @@ from typing import (
         )
 
 from quo.buffer import Buffer
+from quo import errors
+
 
 from .containers import (
     AnyContainer,
@@ -27,7 +29,6 @@ from .controls import (
 
 __all__ = [
     "Layout",
-    "InvalidLayoutError",
     "walk",
 ]
 
@@ -37,7 +38,7 @@ FocusableElement = Union[str, Buffer, UIControl, AnyContainer]
 class Layout:
     """
     The layout for a quo
-    :class:`~quo.application.Application`.
+    :class:`~quo.Suite`.
     This also keeps track of which user control is focused.
 
     :param container: The "root" container for the layout.
@@ -71,7 +72,7 @@ class Layout:
             try:
                 self._stack.append(next(self.find_all_windows()))
             except StopIteration as e:
-                raise InvalidLayoutError(
+                raise errors.LayoutError(
                     "Invalid layout. The layout does not contain any Window object."
                 ) from e
         else:
@@ -114,7 +115,7 @@ class Layout:
                 if isinstance(control, BufferControl) and control.buffer.name == value:
                     self.focus(control)
                     return
-            raise ValueError(
+            raise errors.UsageError(
                 "Couldn't find Buffer in the current layout: %r." % (value,)
             )
 
@@ -124,7 +125,7 @@ class Layout:
                 if isinstance(control, BufferControl) and control.buffer == value:
                     self.focus(control)
                     return
-            raise ValueError(
+            raise errors.UsageError(
                 "Couldn't find Buffer in the current layout: %r." % (value,)
             )
 
@@ -220,7 +221,7 @@ class Layout:
                 self.current_window = window
                 return
 
-        raise ValueError("Control not found in the user interface.")
+        raise errors.UsageError("Control not found in the user interface.")
 
     @property
     def current_window(self) -> Window:
@@ -403,10 +404,6 @@ class Layout:
             return self._child_to_parent[container]
         except KeyError:
             return None
-
-
-class InvalidLayoutError(Exception):
-    pass
 
 
 def walk(container: Container, skip_hidden: bool = False) -> Iterable[Container]:

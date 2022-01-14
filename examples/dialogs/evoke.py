@@ -2,6 +2,9 @@
 """
 Example of an input box dialog.
 """
+
+import quo
+
 from quo.shortcuts import evoke
 
 

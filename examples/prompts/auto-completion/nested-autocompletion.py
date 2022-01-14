@@ -2,10 +2,12 @@
 """
 Example of nested autocompletion.
 """
-from prompt_toolkit import prompt
-from prompt_toolkit.completion import NestedCompleter
+import quo
 
-completer = NestedCompleter.from_nested_dict(
+session = quo.Prompt()
+
+
+completer = quo.completion.NestedCompleter.add(
     {
         "show": {"version": None, "clock": None, "ip": {"interface": {"brief": None}}},
         "exit": None,
@@ -14,7 +16,7 @@ completer = NestedCompleter.from_nested_dict(
 
 
 def main():
-    text = prompt("Type a command: ", completer=completer)
+    text = session.prompt("Type a command: ", completer=completer)
     print("You said: %s" % text)
 
 

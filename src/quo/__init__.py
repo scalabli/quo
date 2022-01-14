@@ -6,14 +6,14 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 
 import importlib
 
+from quo.exit import quick_exit as exit
 from quo.suite.suite import Suite
-#from .core import (
+from .core import Context as Clime, Parameter
 #             App,
 #             Arg,
 #             BaseCommand,
 #             Command,
 #             CommandCollection,
-#             Context,
 #             MultiCommand,
 #             Parameter,
 #             Tethe)

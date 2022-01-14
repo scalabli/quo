@@ -228,4 +228,4 @@ def default_pygments_style() -> Style:
     """
     Create a `Style` object that contains the default Pygments style.
     """
-    return Style.from_dict(PYGMENTS_DEFAULT_STYLE)
+    return Style.add(PYGMENTS_DEFAULT_STYLE)

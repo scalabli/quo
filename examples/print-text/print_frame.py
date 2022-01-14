@@ -6,7 +6,7 @@ any layout in a non-interactive way.
 import quo
 
 @quo.command()
-@quo.app("@frame", help="Print a frame")
+@quo.app("--frame", help="Print a frame")
 
 def _frame(frame):
     """ Example of a simple layout

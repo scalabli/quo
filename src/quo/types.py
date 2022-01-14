@@ -568,7 +568,7 @@ class _ValidatorFromCallable(Validator):
             else:
                 index = 0
 
-            raise ValidationError(cursor_position=index, message=self.error_message)
+            raise ValidationError(line = index, message=self.error_message)
 
 
 class ThreadedValidator(Validator):

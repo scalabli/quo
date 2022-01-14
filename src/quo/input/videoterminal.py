@@ -61,11 +61,11 @@ class Vt100(Input):
         isatty = stdin.isatty()
         fd = stdin.fileno()
 
-        if not isatty and fd not in Vt100Input._fds_not_a_terminal:
+        if not isatty and fd not in Vt100._fds_not_a_terminal:
             msg = "Warning: Input is not a terminal (fd=%r).\n"
             sys.stderr.write(msg % fd)
             sys.stderr.flush()
-            Vt100Input._fds_not_a_terminal.add(fd)
+            Vt100._fds_not_a_terminal.add(fd)
 
         #
         self.stdin = stdin
@@ -145,12 +145,13 @@ _current_callbacks: Dict[
 
 @contextlib.contextmanager
 def _attached_input(
-    input: Vt100, callback: Callable[[], None]
-) -> Generator[None, None, None]:
+        input: Vt100, 
+        callback: Callable[[], None]
+        ) -> Generator[None, None, None]:
     """
     Context manager that makes this input active in the current event loop.
 
-    :param input: :class:`~prompt_toolkit.input.Input` object.
+    :param input: :class:`~quo.input.Input` object.
     :param callback: Called when the input is ready to read.
     """
     loop = get_event_loop()

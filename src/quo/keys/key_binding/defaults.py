@@ -1,8 +1,8 @@
 """
 Default key bindings.::
 
-    key_bindings = load_key_bindings()
-    app = quo.Suite(key_bindings=key_bindings)
+    kb = load_key_bindings()
+    app = quo.Suite(bind=kb)
 """
 from quo.filters import buffer_has_focus
 from quo.keys.key_binding.bindings.basic import load_basic_bindings

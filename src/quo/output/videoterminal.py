@@ -20,6 +20,7 @@ from typing import (
     Iterable,
     Iterator,
     List,
+    NamedTuple,
     Optional,
     Sequence,
     Set,
@@ -28,7 +29,6 @@ from typing import (
     cast,
 )
 
-from quo.data_structures import Size
 from quo.output import Output
 from quo.styles import ANSI_COLOR_NAMES, Attrs
 from quo.utils.utils import is_dumb_terminal
@@ -36,7 +36,7 @@ from quo.utils.utils import is_dumb_terminal
 from .color import ColorDepth
 
 __all__ = [
-    "Vt100_Output",
+    "Vt100",
 ]
 
 
@@ -399,6 +399,8 @@ def _get_size(fileno: int) -> Tuple[int, int]:
     return size.lines, size.columns
 
 
+Size = NamedTuple("Size", [("rows", int), ("columns", int)])
+
 class Vt100(Output):
     """
     :param get_size: A callable which returns the `Size` of the output terminal.
@@ -450,7 +452,7 @@ class Vt100(Output):
         term: Optional[str] = None,
         default_color_depth: Optional[ColorDepth] = None,
         enable_bell: bool = True,
-    ) -> "Vt100_Output":
+    ) -> "Vt100":
         """
         Create an Output class from a pseudo terminal.
         (This will take the dimensions by reading the pseudo
@@ -585,7 +587,11 @@ class Vt100(Output):
     def reset_attributes(self) -> None:
         self.write_raw("\x1b[0m")
 
-    def set_attributes(self, attrs: Attrs, color_depth: ColorDepth) -> None:
+    def set_attributes(
+            self,
+            attrs: Attrs, 
+            color_depth: ColorDepth
+            ) -> None:
         """
         Create new style and output.
 
@@ -725,7 +731,7 @@ class Vt100(Output):
     def responds_to_cpr(self) -> bool:
         # When the input is a tty, we assume that CPR is supported.
         # It's not when the input is piped from Pexpect.
-        if os.environ.get("PROMPT_TOOLKIT_NO_CPR", "") == "1":
+        if os.environ.get("QUO_NO_CPR", "") == "1":
             return False
 
         if is_dumb_terminal(self.term):
@@ -758,10 +764,10 @@ class Vt100(Output):
             return ColorDepth.DEFAULT
 
         if is_dumb_terminal(term):
-            return ColorDepth.DEPTH_1_BIT
+            return ColorDepth.one_bit
 
         if term in ("linux", "eterm-color"):
-            return ColorDepth.DEPTH_4_BIT
+            return ColorDepth.four_bit
 
         return ColorDepth.DEFAULT
 

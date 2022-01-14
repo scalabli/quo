@@ -6,7 +6,6 @@ This could be used as inspiration for a REPL.
 import quo
 
 from quo.filters import has_focus
-from quo.styles import Style
 
 help_text = """
 Type any expression (e.g. "4 + 4") followed by enter to execute.
@@ -70,23 +69,25 @@ def main():
         event.app.exit()
 
     # Style.
-    style = Style(
+    style = quo.styles.Style(
         [
-            ("output-field", "bg:#000044 #ffffff"),
-            ("input-field", "bg:#000000 #ffffff"),
-            ("line", "#004400"),
+            ("output-field", "bg:blue fg:yellow"),
+            ("input-field", "bg: yellow  #ffffff"),
+            ("line", "magenta"),
         ]
     )
 
+    layout = quo.layout.Layout(container, focused_element=input_field)
+
+
     # Run application.
     application = quo.Suite(
-        layout=quo.layout.Layout(container, focused_element=input_field),
-        key_bindings=kb,
-        style=style,
-        mouse_support=True,
-        full_screen=True,
-    )
-
+            layout=layout,
+            bind=kb,
+            style=style,
+            mouse_support=True,
+            full_screen=True,
+            )
     application.run()
 
 

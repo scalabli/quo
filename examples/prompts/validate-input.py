@@ -18,7 +18,7 @@ class NumberValidator(quo.types.Validator):
                 if not cursor.isdigit():
                     break
 
-                raise quo.errors.ValidationError(message='This input contains non-numeric characters', cursor_position=i)
+                raise quo.errors.ValidationError(message='This input contains non-numeric characters', line=i)
 
 number = int(session.prompt('Give a number: ', validator=NumberValidator()))
 

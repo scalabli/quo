@@ -1,9 +1,8 @@
 from ctypes import byref, windll
 from ctypes.wintypes import DWORD, HANDLE
-from typing import Any, Optional, TextIO
+from typing import Any, Optional, TextIO, NamedTuple
 
-from quo.data_structures import Size
-from quo.utils import is_windows
+from quo.utils.utils import is_windows
 from quo.win32_types import STD_OUTPUT_HANDLE
 
 from .core import Output
@@ -19,6 +18,8 @@ __all__ = [
 ENABLE_PROCESSED_INPUT = 0x0001
 ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
 
+
+Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 class Windows10_Output:
     """

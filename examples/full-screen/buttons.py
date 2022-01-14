@@ -81,7 +81,7 @@ style = Style(
 
 
 # Build a main application object.
-application = quo.Suite(layout=layout, key_bindings=kb, style=style, full_screen=True)
+application = quo.Suite(layout=layout, bind=kb, style=style, full_screen=True)
 
 
 def main():

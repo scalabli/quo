@@ -4,9 +4,11 @@ Mark the start and end of the prompt with Final term (iterm2) escape sequences.
 See: https://iterm2.com/finalterm.html
 """
 import sys
+import quo
+from quo.text import ANSI
 
-from prompt_toolkit import prompt
-from prompt_toolkit.formatted_text import ANSI
+session = quo.Prompt()
+
 
 BEFORE_PROMPT = "\033]133;A\a"
 AFTER_PROMPT = "\033]133;B\a"
@@ -30,12 +32,12 @@ def get_prompt_text():
 
 if __name__ == "__main__":
     # Option 1: Using a `get_prompt_text` function:
-    answer = prompt(get_prompt_text)
+    answer = session.prompt(get_prompt_text)
 
     # Option 2: Using ANSI escape sequences.
     before = "\001" + BEFORE_PROMPT + "\002"
     after = "\001" + AFTER_PROMPT + "\002"
-    answer = prompt(ANSI("{}Say something: # {}".format(before, after)))
+    answer = session.prompt(ANSI("{}Say something: # {}".format(before, after)))
 
     # Output.
     sys.stdout.write(BEFORE_OUTPUT)

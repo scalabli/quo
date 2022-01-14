@@ -6,6 +6,7 @@ from typing import (
     Dict,
     Iterable,
     List,
+    NamedTuple,
     Optional,
     Tuple,
     TypeVar,
@@ -16,7 +17,6 @@ from typing import (
 from quo.suite.current import get_app
 from quo.buffer import CompletionState
 from quo.completion import Completion
-from quo.data_structures import Point
 from quo.filters import (
     Condition,
     FilterOrBool,
@@ -51,6 +51,7 @@ __all__ = [
 
 E = KeyPressEvent
 
+Point = NamedTuple("Point", [("x", int), ("y", int)])
 
 class CompletionsMenuControl(UIControl):
     """

@@ -9,7 +9,7 @@ import quo
 
 from quo.progress import formatters
 
-style = quo.styles.Style.custom_tag({"": "cyan"})
+style = quo.styles.Style.add({"": "cyan"})
 
 
 def main():

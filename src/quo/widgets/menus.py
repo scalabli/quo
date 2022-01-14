@@ -142,7 +142,7 @@ class MenuContainer:
 
         # Controls.
         self.control = FormattedTextControl(
-            self._get_menu_fragments, key_bindings=kb, focusable=True, show_cursor=False
+            self._get_menu_fragments, bind=kb, focusable=True, show_cursor=False
         )
 
         self.window = Window(height=1, content=self.control, style="class:menu-bar")

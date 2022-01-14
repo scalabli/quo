@@ -1,16 +1,12 @@
-#
-#
-#
-from quo.accordance import filename_to_ui, get_text_stderr
-from quo.expediency import inscribe
-from typing import (
-        Any,
-        Dict, 
-        Optional,
-        Sequence, 
-        Type
-        )
+import typing as ty
+import gettext
+import os
 
+from quo.accordance import filename_to_ui, get_text_stderr
+
+from quo.expediency import inscribe
+
+_ = gettext.gettext
 
 
 def _join_param_hints(param_hint):
@@ -25,8 +21,12 @@ class Outlier(Exception):
     #: The exit code for this exception.
     exit_code = 1
 
-    def __init__(self, message):
+    def __init__(
+            self, 
+            message: ty.Optional[str]
+            ):
         super().__init__(message)
+        print("\a")
         self.message = message
 
     def format_message(self):
@@ -38,26 +38,33 @@ class Outlier(Exception):
     def show(self, file=None):
         if file is None:
             file = get_text_stderr()
-        inscribe(f"Error: {self.format_message()}", file=file)
+        inscribe(_(f"Error: {self.format_message()}", file=file))
 
-class ValidationError(Exception):
+class ValidationError(Outlier):
     """
     Error raised by :meth:`.Validator.validate`.
-    :param cursor_position: The cursor position where the error occurred.
+    :param line: The cursor position where the error occurred.
     :param message: Text.
     """
 
-    def __init__(self, cursor_position: int = 0, message: str = "") -> None:
+    def __init__(
+            self,
+            line: int = 0,
+            message: str = ""
+            ) -> None:
         super().__init__(message)
-        self.cursor_position = cursor_position
+        self.line = line
         self.message = message
 
     def __repr__(self) -> str:
-        return "%s(cursor_position=%r, message=%r)" % (
+        return "_%s(line=%r, message=%r)" % (
             self.__class__.__name__,
-            self.cursor_position,
+            self.line,
             self.message,
         )
+
+class LayoutError(Outlier):
+    pass
 
 class UsageError(Outlier):
     """An internal exception that signals a usage error.This typically aborts any further handling.
@@ -68,7 +75,11 @@ class UsageError(Outlier):
 
     exit_code = 2
 
-    def __init__(self, message, clime=None):
+    def __init__(
+            self,
+            message: ty.Optional[str],
+            clime=None
+            ):
         super().__init__(message)
         self.clime = clime
         self.cmd = self.clime.command if self.clime else None
@@ -89,6 +100,28 @@ class UsageError(Outlier):
         inscribe(f"Error: {self.format_message()}", file=file, color=color)
 
 
+class NoConsoleScreenBufferError(Outlier):
+    """
+    Raised when the application is not running inside a Windows Console, but the user tries to instantiate Win32Output.
+    """
+    def __init__(self) -> None:
+        # Are we running in 'xterm' on Windows, like git-bash for instance?
+        xterm = "xterm" in os.environ.get("TERM", "")
+        if xterm:
+            message = (
+                    "Found %s, while expecting a Windows console. "
+                    'Maybe try to run this program using "winpty" '
+                    "or run it in cmd.exe instead. Or otherwise, "
+                    "in case of Cygwin, use the Python executable "
+                    "that is compiled for Cygwin." % os.environ["TERM"]
+                    )
+        else:
+            message = "No Windows console found. Are you running cmd.exe?"
+            super().__init__(message)
+
+
+
+
 class BadParameter(UsageError):
     """This exception formats out a standardized error message for a bad parameter.
 
@@ -97,7 +130,13 @@ class BadParameter(UsageError):
     :param param_hint: a string that shows up as parameter name.This can be used as alternative to `param` in cases where custom validation should happen.  If it is a string it's used as such, if it's a list then each item is quoted and separated.
     """
 
-    def __init__(self, message, clime=None, param=None, param_hint=None):
+    def __init__(
+            self, 
+            message: ty.Optional[str], 
+            clime=None, 
+            param: ty.Optional["Parameter"] = None,
+            param_hint=None
+            ):
         super().__init__(message, clime)
         self.param = param
         self.param_hint = param_hint
@@ -121,8 +160,13 @@ class MissingParameter(BadParameter):
     """
 
     def __init__(
-        self, message=None, clime=None, param=None, param_hint=None, param_type=None
-    ):
+            self, 
+            message: ty.Optional[str] = None, 
+            clime=None,
+            param: ty.Optional["Parameter"] = None,
+            param_hint=None, 
+            param_type=None
+            ):
         super().__init__(message, clime, param, param_hint)
         self.param_type = param_type
 
@@ -165,11 +209,22 @@ class NoSuchApp(UsageError):
 
     """
 
-    def __init__(self, appname, message=None, possibilities=None, clime=None):
+    def __init__(
+            self, 
+            appname, 
+            intro: ty.Optional[str] = None,
+            message: ty.Optional[str] =None, 
+            possibilities=None, 
+            clime=None
+            ):
         if message is None:
-            message = f"no such app: {appname}"
+            from quo.shortcuts import inscribe
+            from quo.text import HTML
+            intro = inscribe(HTML('<style fg="red" bg="white"><b>⚠️ Error</b></style>'))
+            message = f"{appname}"
 
         super().__init__(message, clime)
+        self.intro = intro
         self.appname = appname
         self.possibilities = possibilities
 
@@ -229,7 +284,7 @@ class Exit(RuntimeError):
 
     __slots__ = ("exit_code",)
 
-    def __init__(self, code=0):
+    def __init__(self, code: ty.Optional[int] =0):
         self.exit_code = code
 
 

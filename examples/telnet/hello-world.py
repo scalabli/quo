@@ -2,15 +2,20 @@
 """
 A simple Telnet application that asks for input and responds.
 
-The interaction function is a prompt_toolkit coroutine.
+The interaction function is a quo coroutine.
 Also see the `hello-world-asyncio.py` example which uses an asyncio coroutine.
 That is probably the preferred way if you only need Python 3 support.
 """
 import logging
 
-from prompt_toolkit.contrib.telnet.server import TelnetServer
-from prompt_toolkit.eventloop import get_event_loop
-from prompt_toolkit.shortcuts import clear, prompt
+import quo
+
+from quo.contrib.telnet.server import TelnetServer
+from asyncio import get_event_loop
+
+session = quo.Prompt()
+
+
 
 # Set up logging
 logging.basicConfig()
@@ -18,11 +23,11 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 async def interact(connection):
-    clear()
+    quo.clear()
     connection.send("Welcome!\n")
 
     # Ask for input.
-    result = await prompt(message="Say something: ", async_=True)
+    result = await session.prompt(message="Say something: ", async_=True)
 
     # Send output.
     connection.send("You said: {}\n".format(result))

@@ -10,6 +10,7 @@ from typing import (
     Callable,
     Dict,
     List,
+    NamedTuple,
     Optional,
     Sequence,
     Tuple,
@@ -19,7 +20,6 @@ from typing import (
 
 from quo.suite.current import get_app
 from quo.cache import SimpleCache
-from quo.data_structures import Point
 from quo.filters import (
     FilterOrBool,
     emacs_insert_mode,
@@ -35,6 +35,7 @@ from quo.text.utils import (
     fragment_list_to_text,
     fragment_list_width,
 )
+from quo import errors
 from quo.keys.key_binding import KeyBindingsBase
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils.utils import get_width as get_cwidth
@@ -84,6 +85,8 @@ __all__ = [
     "is_container",
     "DynamicContainer",
 ]
+
+Point = NamedTuple("Point", [("x", int), ("y", int)])
 
 
 class Container(metaclass=ABCMeta):
@@ -2713,7 +2716,8 @@ def to_container(container: AnyContainer) -> Container:
     elif hasattr(container, "__pt_container__"):
         return to_container(container.__pt_container__())
     else:
-        raise ValueError("Not a container object: %r" % (container,))
+        import quo
+        raise errors.UsageError("⚠️ Not a container object: %r" % (container,))
 
 
 def to_window(container: AnyContainer) -> Window:
@@ -2725,7 +2729,7 @@ def to_window(container: AnyContainer) -> Window:
     elif hasattr(container, "__pt_container__"):
         return to_window(cast("MagicContainer", container).__pt_container__())
     else:
-        raise ValueError("Not a Window object: %r." % (container,))
+        raise errors.UsageError("⚠️ Not a Window object: %r." % (container,))
 
 
 def is_container(value: object) -> bool:

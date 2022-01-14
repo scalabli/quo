@@ -18,7 +18,6 @@ from typing import (
 from quo.suite.current import get_app
 from quo.buffer import Buffer
 from quo.cache import SimpleCache
-from quo.data_structures import Point
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
 from quo.text import (
@@ -77,6 +76,7 @@ __all__ = [
 
 GetLinePrefixCallable = Callable[[int, int], AnyFormattedText]
 
+Point = NamedTuple("Point", [("x", int), ("y", int)])
 
 class UIControl(metaclass=ABCMeta):
     """
@@ -269,8 +269,7 @@ class UIContent:
 class FormattedTextControl(UIControl):
     """
     Control that displays formatted text. This can be either plain text, an
-    :class:`~quo.text.HTML` object an
-    :class:`~quo.text.ANSI` object, a list of ``(style_str,
+    :class:`~quo.text.HTML` object, a list of ``(style_str,
     text)`` tuples or a callable that takes no argument and returns one of
     those, depending on how you prefer to do the formatting. See
     ``quo.layout.formatted_text`` for more information.
@@ -304,7 +303,7 @@ class FormattedTextControl(UIControl):
     :param style: Style string applied to the content. (If you want to style
         the whole :class:`~quo.layout.Window`, pass the style to the
         :class:`~quo.layout.Window` instead.)
-    :param key_bindings: a :class:`.KeyBindings` object.
+    :param bind: a :class:`.KeyBinder` object.
     :param get_cursor_position: A callable that returns the cursor position as
         a `Point` instance.
     """
@@ -314,7 +313,7 @@ class FormattedTextControl(UIControl):
         text: AnyFormattedText = "",
         style: str = "",
         focusable: FilterOrBool = False,
-        key_bindings: Optional["KeyBindingsBase"] = None,
+        bind: Optional["KeyBindingsBase"] = None,
         show_cursor: bool = True,
         modal: bool = False,
         get_cursor_position: Optional[Callable[[], Optional[Point]]] = None,
@@ -325,7 +324,7 @@ class FormattedTextControl(UIControl):
         self.focusable = to_filter(focusable)
 
         # Key bindings.
-        self.key_bindings = key_bindings
+        self.bind = bind
         self.show_cursor = show_cursor
         self.modal = modal
         self.get_cursor_position = get_cursor_position
@@ -482,7 +481,7 @@ class FormattedTextControl(UIControl):
         return self.modal
 
     def get_key_bindings(self) -> Optional["KeyBindingsBase"]:
-        return self.key_bindings
+        return self.bind
 
 
 class DummyControl(UIControl):

@@ -5,7 +5,6 @@ Example of a checkbox-list-based dialog.
 import quo
 
 from quo.shortcuts import checkbox, message
-from quo.styles import Style
 
 results = checkbox(
     title="CheckboxList dialog",
@@ -16,7 +15,7 @@ results = checkbox(
         ("croissants", "20 Croissants"),
         ("daily", "The breakfast of the day"),
     ],
-    style=Style.from_dict(
+    style=quo.styles.Style.add(
         {
             "dialog": "bg:#cdbbb3",
             "button": "bg:#bf99a4",

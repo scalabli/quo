@@ -30,6 +30,7 @@ from typing import (
     Hashable,
     Iterable,
     List,
+    NamedTuple,
     Optional,
     Tuple,
     Type,
@@ -41,9 +42,9 @@ from typing import (
 
 from quo.buffer import Buffer
 from quo.i_o.termui import echo
+from quo import errors
 from quo.cache import SimpleCache
 from quo.clipboard import Clipboard, InMemoryClipboard
-from quo.data_structures import Size
 from quo.enums import EditingMode
 from quo.eventloop import (
     get_traceback_from_context,
@@ -105,6 +106,9 @@ except ImportError:
 
 E = KeyPressEvent
 _AppResult = TypeVar("_AppResult")
+
+#Data structure
+Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 
 # event handler
@@ -1045,10 +1049,10 @@ class Suite(Generic[_AppResult]):
         assert result is None or exception is None
 
         if self.future is None:
-            raise Exception("Suite is not running. Suite.exit() failed.")
+            raise errors.Outlier("Suite is not running. Suite.exit() failed.")
 
         if self.future.done():
-            raise Exception("Return value already set. Suite.exit() failed.")
+            raise errors.Outlier("Return value already set. Suite.exit() failed.")
 
         self.exit_style = style
 

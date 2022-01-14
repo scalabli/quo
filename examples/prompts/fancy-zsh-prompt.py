@@ -10,18 +10,17 @@ See:
 - https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1111
 """
 import datetime
+import quo
 
-from prompt_toolkit import prompt
-from prompt_toolkit.application import get_app
-from prompt_toolkit.formatted_text import (
-    HTML,
+session = quo.Prompt()
+
+from quo.text import (
     fragment_list_width,
     merge_formatted_text,
     to_formatted_text,
 )
-from prompt_toolkit.styles import Style
 
-style = Style.from_dict(
+style = quo.styles.Style.add(
     {
         "username": "#aaaaaa italic",
         "path": "#ffffff bold",
@@ -35,18 +34,18 @@ style = Style.from_dict(
 )
 
 
-def get_prompt() -> HTML:
+def get_prompt() -> quo.text.HTML:
     """
     Build the prompt dynamically every time its rendered.
     """
-    left_part = HTML(
+    left_part = quo.text.HTML(
         "<left-part>"
         " <username>root</username> "
         " abc "
         "<path>~/.oh-my-zsh/themes</path>"
         "</left-part>"
     )
-    right_part = HTML(
+    right_part = quo.text.HTML(
         "<right-part> "
         "<branch> master<exclamation-mark>!</exclamation-mark> </branch> "
         " <env> py36 </env> "
@@ -61,17 +60,17 @@ def get_prompt() -> HTML:
         ]
     )
 
-    total_width = get_app().output.get_size().columns
+    total_width = quo.suite.get_app().output.get_size().columns
     padding_size = total_width - used_width
 
-    padding = HTML("<padding>%s</padding>") % (" " * padding_size,)
+    padding = quo.text.HTML("<padding>%s</padding>") % (" " * padding_size,)
 
     return merge_formatted_text([left_part, padding, right_part, "\n", "# "])
 
 
 def main() -> None:
     while True:
-        answer = prompt(get_prompt, style=style, refresh_interval=1)
+        answer = session.prompt(get_prompt, style=style, refresh_interval=1)
         print("You said: %s" % answer)
 
 

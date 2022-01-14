@@ -5,11 +5,11 @@ import asyncio
 import contextvars  # Requires Python3.7!
 import socket
 from asyncio import get_event_loop
-from typing import Awaitable, Callable, List, Optional, Set, TextIO, Tuple, cast
+from typing import Awaitable, Callable, List, NamedTuple, Optional, Set, TextIO, Tuple, cast
 
-from quo.application.current import create_app_session, get_app
-from quo.application.run_in_terminal import run_in_terminal
-from quo.data_structures import Size
+from quo.suite.current import create_app_session, get_app
+from quo.suite.run_in_terminal import run_in_terminal
+
 from quo.text import AnyFormattedText, to_formatted_text
 from quo.input import create_pipe_input
 from quo.output.videoterminal import Vt100
@@ -37,6 +37,7 @@ __all__ = [
     "TelnetServer",
 ]
 
+Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 def int2byte(number: int) -> bytes:
     return bytes((number,))

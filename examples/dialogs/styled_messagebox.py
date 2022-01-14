@@ -14,7 +14,7 @@ from quo.shortcuts import message
 from quo.styles import Style
 
 # Custom color scheme.
-example_style = Style.from_dict(
+example_style = Style.add(
     {
         "dialog": "bg:aquamarine",
         "dialog frame-label": "bg:#ffffff #000000",

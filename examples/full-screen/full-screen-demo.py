@@ -12,7 +12,6 @@ from quo.layout.dimension import D
 from quo.layout.layout import Layout
 from quo.layout.menus import CompletionsMenu
 from quo.lexers import PygmentsLexer
-from quo.styles import Style
 from quo.widgets import (
     Box,
     Button,
@@ -100,7 +99,7 @@ root_container = HSplit(
     [
         VSplit(
             [
-                quo.Frame(body=Label(text="Left frame\ncontent")),
+                quo.widgets.Frame(body=Label(text="Left frame\ncontent")),
                 Dialog(title="The custom window", body=Label("hello\ntest")),
                 textfield,
             ],
@@ -108,16 +107,16 @@ root_container = HSplit(
         ),
         VSplit(
             [
-                quo.Frame(body=ProgressBar(), title="Progress bar"),
-                quo.Frame(
+                quo.widgets.Frame(body=ProgressBar(), title="Progress bar"),
+                quo.widgets.Frame(
                     title="Checkbox list",
                     body=HSplit([checkbox1, checkbox2]),
                 ),
-                quo.Frame(title="Radio list", body=radios),
+                quo.widgets.Frame(title="Radio list", body=radios),
             ],
             padding=1,
         ),
-        quo.Box(
+        quo.widgets.Box(
             body=VSplit([yes_button, no_button], align="CENTER", padding=3),
             style="class:button-bar",
             height=3,
@@ -190,7 +189,7 @@ bindings.add("tab")(quo.keys.focus.next)
 bindings.add("s-tab")(quo.keys.focus.previous)
 
 
-style = Style.from_dict(
+style = quo.styles.Style.from_dict(
     {
         "window.border": "#888888",
         "shadow": "bg:#222222",
@@ -208,7 +207,7 @@ style = Style.from_dict(
 
 application = quo.Suite(
     layout=Layout(root_container, focused_element=yes_button),
-    key_bindings=bindings,
+    bind=bindings,
     style=style,
     mouse_support=True,
     full_screen=True,

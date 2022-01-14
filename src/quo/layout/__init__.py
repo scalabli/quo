@@ -82,7 +82,7 @@ from .dimension import (
     sum_layout_dimensions,
     to_dimension,
 )
-from .layout import InvalidLayoutError, Layout, walk
+from .layout import Layout, walk
 from .margins import (
     ConditionalMargin,
     Margin,
@@ -96,7 +96,6 @@ from .scrollable_pane import ScrollablePane
 __all__ = [
     # Layout.
     "Layout",
-    "InvalidLayoutError",
     "walk",
     # Dimensions.
     "AnyDimension",

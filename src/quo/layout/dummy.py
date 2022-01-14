@@ -30,8 +30,8 @@ def create_dummy_layout() -> Layout:
         event.app.exit()
 
     control = FormattedTextControl(
-        HTML("No layout specified. Press <reverse>ENTER</reverse> to quit."),
-        key_bindings=kb,
+            HTML("<i><green>🚫 No layout was specified.</green></i> \nPress <reverse>ENTER</reverse> to quit."),
+        bind=kb,
     )
     window = Window(content=control, height=D(min=1))
     return Layout(container=window, focused_element=window)
