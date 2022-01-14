@@ -54,6 +54,12 @@ Quo's Documentation
    unicode-support.rst
    appendix.rst
 
+Support
+========
+Subscribe to one of our mailing lists to stay up to date with everything in the Quo community:
+
+You can also subscribe by sending an email to secretum+subscribe@googlegroups.com
+
 Indices and tables
 ==================
 
