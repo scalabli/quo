@@ -108,6 +108,22 @@ It also supports handling of ANSI color sequences.
 ```
 ![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
+### Message Box
+
+Example of a message box window.
+```python
+   import quo
+
+   def main():
+       quo.MessageBox(
+           title="Message pop up window",
+           text="Do you want to continue?\nPress ENTER to quit.",
+       ).run()                                       
+
+   if __name__ == "__main__":
+      main()
+```
+
 ### Quo tabular
 ```python
    import quo
