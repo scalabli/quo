@@ -4,9 +4,10 @@ Demonstration of a custom completer class and the possibility of styling
 completions independently by passing formatted text objects to the "display"
 and "display_meta" arguments of "Completion".
 """
-from prompt_toolkit.completion import Completer, Completion
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.shortcuts import CompleteStyle, prompt
+
+import quo
+
+session = quo.Prompt()
 
 animals = [
     "alligator",
@@ -53,40 +54,40 @@ animal_family = {
 }
 
 family_colors = {
-    "mammal": "ansimagenta",
-    "insect": "ansigreen",
-    "reptile": "ansired",
-    "bird": "ansiyellow",
+    "mammal": "magenta",
+    "insect": "green",
+    "reptile": "red",
+    "bird": "yellow",
 }
 
 meta = {
-    "alligator": HTML(
-        "An <ansired>alligator</ansired> is a <u>crocodilian</u> in the genus Alligator of the family Alligatoridae."
+    "alligator": quo.text.HTML(
+        "An <red>alligator</red> is a <u>crocodilian</u> in the genus Alligator of the family Alligatoridae."
     ),
-    "ant": HTML(
-        "<ansired>Ants</ansired> are eusocial <u>insects</u> of the family Formicidae."
+    "ant": quo.text.HTML(
+        "<red>Ants</red> are eusocial <u>insects</u> of the family Formicidae."
     ),
-    "ape": HTML(
-        "<ansired>Apes</ansired> (Hominoidea) are a branch of Old World tailless anthropoid catarrhine <u>primates</u>."
+    "ape": quo.text.HTML(
+        "<red>Apes</red> (Hominoidea) are a branch of Old World tailless anthropoid catarrhine <u>primates</u>."
     ),
-    "bat": HTML("<ansired>Bats</ansired> are mammals of the order <u>Chiroptera</u>."),
-    "bee": HTML(
-        "<ansired>Bees</ansired> are flying <u>insects</u> closely related to wasps and ants."
+    "bat": quo.text.HTML("<red>Bats</red> are mammals of the order <u>Chiroptera</u>."),
+    "bee": quo.text.HTML(
+        "<red>Bees</red> are flying <u>insects</u> closely related to wasps and ants."
     ),
-    "beaver": HTML(
-        "The <ansired>beaver</ansired> (genus Castor) is a large, primarily <u>nocturnal</u>, semiaquatic <u>rodent</u>."
+    "beaver": quo.text.HTML(
+        "The <red>beaver</red> (genus Castor) is a large, primarily <u>nocturnal</u>, semiaquatic <u>rodent</u>."
     ),
-    "bear": HTML(
-        "<ansired>Bears</ansired> are carnivoran <u>mammals</u> of the family Ursidae."
+    "bear": quo.text.HTML(
+        "<red>Bears</red> are carnivoran <u>mammals</u> of the family Ursidae."
     ),
-    "butterfly": HTML(
-        "<ansiblue>Butterflies</ansiblue> are <u>insects</u> in the macrolepidopteran clade Rhopalocera from the order Lepidoptera."
+    "butterfly": quo.text.HTML(
+        "<blue>Butterflies</blue> are <u>insects</u> in the macrolepidopteran clade Rhopalocera from the order Lepidoptera."
     ),
     # ...
 }
 
 
-class AnimalCompleter(Completer):
+class AnimalCompleter(quo.completion.Completer):
     def get_completions(self, document, complete_event):
         word = document.get_word_before_cursor()
         for animal in animals:
@@ -95,17 +96,17 @@ class AnimalCompleter(Completer):
                     family = animal_family[animal]
                     family_color = family_colors.get(family, "default")
 
-                    display = HTML(
-                        "%s<b>:</b> <ansired>(<"
+                    display = quo.text.HTML(
+                        "%s<b>:</b> <red>(<"
                         + family_color
                         + ">%s</"
                         + family_color
-                        + ">)</ansired>"
+                        + ">)</red>"
                     ) % (animal, family)
                 else:
                     display = animal
 
-                yield Completion(
+                yield quo.completion.Completion(
                     animal,
                     start_position=-len(word),
                     display=display,
@@ -116,20 +117,20 @@ class AnimalCompleter(Completer):
 def main():
     # Simple completion menu.
     print("(The completion menu displays colors.)")
-    prompt("Type an animal: ", completer=AnimalCompleter())
+    session.prompt("Type an animal: ", completer=AnimalCompleter())
 
     # Multi-column menu.
-    prompt(
+    session.prompt(
         "Type an animal: ",
         completer=AnimalCompleter(),
-        complete_style=CompleteStyle.MULTI_COLUMN,
+        complete_style=quo.completion.CompleteStyle.multi_column,
     )
 
     # Readline-like
-    prompt(
+    session.prompt(
         "Type an animal: ",
         completer=AnimalCompleter(),
-        complete_style=CompleteStyle.READLINE_LIKE,
+        complete_style=quo.completion.CompleteStyle.neat,
     )
 
 

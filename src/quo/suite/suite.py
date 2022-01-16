@@ -1307,7 +1307,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
         pass
 
     session: Prompt[None] = Prompt(
-        text=wait_text, key_bindings=key_bindings
+        text=wait_text, bind=key_bindings
     )
     await session.app.run_async()
 

@@ -10,29 +10,25 @@ text.
 
 import quo
 
-from quo.shortcuts import message
-from quo.styles import Style
 
 # Custom color scheme.
-example_style = Style.add(
+example_style = quo.styles.Style.add(
     {
         "dialog": "bg:aquamarine",
-        "dialog frame-label": "bg:#ffffff #000000",
+        "dialog frame-label": "bg:purple",
         "dialog.body": "bg:#000000 #00ff00",
-        "dialog shadow": "bg:#00aa00",
+        "dialog shadow": "bg:yellow",
     }
 )
 
 
 def main():
-    message(
-        title=quo.text.HTML(
-            '<style bg="blue" fg="white">Styled</style> '
-            '<style fg="red">dialog</style> window'
-        ),
+    quo.MessageBox(
+            title=quo.text.HTML(
+                '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window'  ),
         text="Do you want to continue?\nPress ENTER to quit.",
         style=example_style,
-    ).run()
+        ).run()
 
 
 if __name__ == "__main__":

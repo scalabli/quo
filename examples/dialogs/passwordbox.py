@@ -2,17 +2,16 @@
 """
 Example of an password input dialog.
 """
-from quo.shortcuts import evoke
-
+import quo
 
 def main():
-    result = evoke(
+    result = quo.PromptBox(
         title="Password dialog example",
         text="Please type your password:",
         password=True,
     ).run()
 
-    print("Result = {}".format(result))
+    quo.echo(f"{result}")
 
 
 if __name__ == "__main__":

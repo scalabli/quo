@@ -7,10 +7,11 @@ Press [Tab] to complete the current word.
     and shows all the completions. (In the menu)
 - Any following tab press cycles through all the possible completions.
 """
-from prompt_toolkit.completion import FuzzyWordCompleter
-from prompt_toolkit.shortcuts import prompt
+import quo
 
-animal_completer = FuzzyWordCompleter(
+session = quo.Prompt()
+
+animal_completer = quo.completion.FuzzyWordCompleter(
     [
         "alligator",
         "ant",
@@ -49,7 +50,7 @@ animal_completer = FuzzyWordCompleter(
 
 
 def main():
-    text = prompt(
+    text = session.prompt(
         "Give some animals: ", completer=animal_completer, complete_while_typing=True
     )
     print("You said: %s" % text)

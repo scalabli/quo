@@ -133,7 +133,7 @@ COLORS_STYLE = [(name, "fg:" + name) for name in ANSI_COLOR_NAMES] + [
 
 WIDGETS_STYLE = [
     # Dialog windows.
-    ("dialog", "bg:#4444ff"),
+    ("dialog", "bg:magenta"),
     ("dialog.body", "bg:#ffffff #000000"),
     ("dialog.body text-area", "bg:#cccccc"),
     ("dialog.body text-area last-line", "underline"),

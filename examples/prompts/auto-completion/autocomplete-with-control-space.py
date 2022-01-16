@@ -64,7 +64,7 @@ def main():
         "Give some animals: ",
         completer=animal_completer,
         complete_while_typing=False,
-        key_bindings=kb,
+        bind=kb,
     )
     print("You said: %s" % text)
 

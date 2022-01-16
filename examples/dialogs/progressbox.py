@@ -5,8 +5,7 @@ Example of a progress bar dialog.
 import os
 import time
 
-from quo.shortcuts import progress
-
+import quo
 
 def worker(set_percentage, log_text):
     """
@@ -35,8 +34,8 @@ def worker(set_percentage, log_text):
 
 
 def main():
-    progress(
-        title="Progress dialog example",
+    quo.ProgressBox(
+        title="Progress box example",
         text="As an examples, we walk through the filesystem and print "
         "all directories",
         run_callback=worker,

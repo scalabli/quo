@@ -3,10 +3,12 @@
 Example of a telnet application that displays a dialog window.
 """
 import logging
+import asyncio
 
-from prompt_toolkit.contrib.telnet.server import TelnetServer
-from prompt_toolkit.eventloop import get_event_loop
-from prompt_toolkit.shortcuts.dialogs import yes_no_dialog
+import quo
+
+
+from quo.shortcuts.dialogs import confirmation
 
 # Set up logging
 logging.basicConfig()
@@ -14,7 +16,7 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 async def interact(connection):
-    result = await yes_no_dialog(
+    result = await confirmation(
         title="Yes/no dialog demo", text="Press yes or no"
     ).run_async()
 
@@ -23,9 +25,9 @@ async def interact(connection):
 
 
 def main():
-    server = TelnetServer(interact=interact, port=2323)
+    server = quo.contrib.telnet.TelnetServer(interact=interact, port=2323)
     server.start()
-    get_event_loop().run_forever()
+    ayncio.get_event_loop().run_forever()
 
 
 if __name__ == "__main__":

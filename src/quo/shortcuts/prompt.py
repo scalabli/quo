@@ -387,7 +387,7 @@ class Prompt(Generic[_T]):
         mouse_support: FilterOrBool = False,
         input_processors: Optional[List[Processor]] = None,
         placeholder: Optional[AnyFormattedText] = None,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         erase_when_done: bool = False,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
         tempfile: Optional[Union[str, Callable[[], str]]] = None,
@@ -414,7 +414,7 @@ class Prompt(Generic[_T]):
         self.completer = completer
         self.complete_in_thread = complete_in_thread
         self.is_password = is_password
-        self.key_bindings = key_bindings
+        self.bind= bind
         self.bottom_toolbar = bottom_toolbar
         self.style = style
         self.style_transformation = style_transformation
@@ -727,7 +727,7 @@ class Prompt(Generic[_T]):
                             elicit_bindings,
                         ]
                     ),
-                    DynamicKeyBindings(lambda: self.key_bindings),
+                    DynamicKeyBindings(lambda: self.bind),
                 ]
             ),
             mouse_support=dyncond("mouse_support"),
@@ -836,7 +836,7 @@ class Prompt(Generic[_T]):
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
         is_password: Optional[bool] = None,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
         color_depth: Optional[ColorDepth] = None,
@@ -928,8 +928,8 @@ class Prompt(Generic[_T]):
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
             self.is_password = is_password
-        if key_bindings is not None:
-            self.key_bindings = key_bindings
+        if bind is not None:
+            self.bind = bind
         if bottom_toolbar is not None:
             self.bottom_toolbar = bottom_toolbar
         if style is not None:
@@ -1019,10 +1019,10 @@ class Prompt(Generic[_T]):
         self.output.write(fragment_list_to_text(to_formatted_text(self.text)))
         self.output.flush()
 
-        # Key bindings for the dumb elicit: mostly the same as the full elicit.
-        key_bindings: KeyBindingsBase = self._create_elicit_bindings()
-        if self.key_bindings:
-            key_bindings = merge_key_bindings([self.key_bindings, key_bindings])
+        # Key bindings for the dumb elicit: mostly the same as the full elicit(prompt)
+        bind: KeyBindingsBase = self._create_elicit_bindings()
+        if self.bind:
+            bind = merge_key_bindings([self.bind, bind])
 
         # Create and run application.
         application = cast(
@@ -1031,7 +1031,7 @@ class Prompt(Generic[_T]):
                 input=self.input,
                 output=DummyOutput(),
                 layout=self.layout,
-                key_bindings=key_bindings,
+                bind=bind,
             ),
         )
 

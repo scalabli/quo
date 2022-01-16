@@ -105,8 +105,8 @@ def choices(
 def evoke(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "OK",
-    cancel_text: str = "Cancel",
+    ok_text: str = "🄾🄺",
+    cancel_text: str = "🄲🄰🄽🄲🄴🄻",
     completer: Optional[Completer] = None,
     validator: Optional[Validator] = None,
     password: FilterOrBool = False,
@@ -155,7 +155,7 @@ def evoke(
 def message(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "Ok",
+    ok_text: str = "𝕆𝕜",
     style: Optional[BaseStyle] = None,
 ) -> Suite[None]:
     """
@@ -177,8 +177,8 @@ def message(
 def radiolist(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "Ok",
-    cancel_text: str = "Cancel",
+    ok_text: str = "🄾🄺",
+    cancel_text: str = "🄲🄰🄽🄲🄴🄻",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     style: Optional[BaseStyle] = None,
 ) -> Suite[_T]:

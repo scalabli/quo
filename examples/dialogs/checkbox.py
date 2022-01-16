@@ -4,9 +4,7 @@ Example of a checkbox-list-based dialog.
 """
 import quo
 
-from quo.shortcuts import checkbox, message
-
-results = checkbox(
+results = quo.CheckBox(
     title="CheckboxList dialog",
     text="What would you like in your breakfast ?",
     values=[
@@ -28,9 +26,9 @@ results = checkbox(
     ),
 ).run()
 if results:
-    message(
+    quo.MessageBox(
         title="Room service",
         text="You selected: %s\nGreat choice sir !" % ",".join(results),
     ).run()
 else:
-    message("*starves*").run()
+    quo.MessageBox("*starves*").run()

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Demonstration of a custom completer wrapped in a `FuzzyCompleter` for fuzzy
-matching.
+Demonstration of a custom completer wrapped in a `FuzzyCompleter
+
 """
-from prompt_toolkit.completion import Completer, Completion, FuzzyCompleter
-from prompt_toolkit.output.color_depth import ColorDepth
-from prompt_toolkit.shortcuts import CompleteStyle, prompt
+import quo
+
+session = quo.Prompt()
 
 colors = [
     "red",
@@ -20,12 +20,12 @@ colors = [
 ]
 
 
-class ColorCompleter(Completer):
+class ColorCompleter(quo.completion.Completer):
     def get_completions(self, document, complete_event):
         word = document.get_word_before_cursor()
         for color in colors:
             if color.startswith(word):
-                yield Completion(
+                yield quo.completion.Completion(
                     color,
                     start_position=-len(word),
                     style="fg:" + color,
@@ -36,20 +36,20 @@ class ColorCompleter(Completer):
 def main():
     # Simple completion menu.
     print("(The completion menu displays colors.)")
-    prompt("Type a color: ", completer=FuzzyCompleter(ColorCompleter()))
+    session.prompt("Type a color: ", completer=quo.completion.FuzzyCompleter(ColorCompleter()))
 
     # Multi-column menu.
-    prompt(
+    session.prompt(
         "Type a color: ",
-        completer=FuzzyCompleter(ColorCompleter()),
-        complete_style=CompleteStyle.MULTI_COLUMN,
+        completer=quo.completion.FuzzyCompleter(ColorCompleter()),
+        complete_style=quo.completion.CompleteStyle.multi_column,
     )
 
     # Readline-like
-    prompt(
+    session.prompt(
         "Type a color: ",
-        completer=FuzzyCompleter(ColorCompleter()),
-        complete_style=CompleteStyle.READLINE_LIKE,
+        completer=quo.completion.FuzzyCompleter(ColorCompleter()),
+        complete_style=quo.completion.CompleteStyle.neat,
     )
 
 

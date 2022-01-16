@@ -5,16 +5,15 @@ Example of button dialog window.
 
 import quo
 
-from quo.shortcuts import button
 
 def main():
-    result = button(
-        title="Button dialog example",
+    result = quo.ChoiceBox(
+        title="ChoiceBox example",
         text="Are you sure?",
         buttons=[("Yes", True), ("No", False), ("Maybe...", None)],
     ).run()
 
-    print("Result = {}".format(result))
+    quo.echo(f"Result = {result}")
 
 
 if __name__ == "__main__":
