@@ -94,10 +94,7 @@ It also supports handling of ANSI color sequences.
   
    import quo
 
-   @quo.command()
-   @quo.app("@frame", help="Print a frame")
-
-   def _frame(frame):
+   def frame():
     """ Example of a simple layout"""
    content = quo.widgets.TextArea(text="Hello world🌍")
    quo.container(
@@ -107,7 +104,7 @@ It also supports handling of ANSI color sequences.
          )
 
    if __name__ == "__main__":
-       _frame()
+       frame()
 ```
 ![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
