@@ -123,6 +123,7 @@ Example of a message box window.
    if __name__ == "__main__":
       main()
 ```
+![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
 
 ### Quo tabular
 ```python
