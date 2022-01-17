@@ -1,8 +1,7 @@
-#
--*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 #
 # quo documentation build configuration file, created by
-# sphinx-quickstart on Thu Jul 31 14:17:08 2014.
+# sphinx-quickstart on Thu Jul 31 14:17:08 2020.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
