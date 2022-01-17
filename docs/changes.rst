@@ -3,7 +3,15 @@
 
 Changelog
 ==========
-Version 2021.1.5
+
+Version 2022.1.6
+----------------
+Released on 2022-1-17
+
+- Under the hood optimizations
+- Introduced :func:`quo.MessageBox`, :func:`quo.PromptBox`, :func:`quo.RadiolistBox`, :func:`quo.ConfirmationBox`, :func:`quo.CheckBox`, :func:`quo.ChoiceBox` widgets for displaying formatted text in a window.
+
+Version 2022.1.5
 -----------------
 Released on 2022-1-11
 

@@ -12,7 +12,7 @@ Simple example:
    import quo
 
    @quo.command()
-   @quo.app('@count', default=1, help='number of greetings')
+   @quo.app('| count', default=1, help='number of greetings')
    @quo.app('@name', prompt="What is your name?", help="The person to greet")
    def hello(count, name):
        """This script prints hello NAME COUNT times."""
