@@ -4,6 +4,7 @@
 [![Windows Build Status](https://img.shields.io/appveyor/build/gerrishons/quo/master?logo=appveyor&cacheSeconds=600)](https://ci.appveyor.com/project/gerrishons/quo)
 [![pyimp](https://img.shields.io/pypi/implementation/quo.svg)](https://pypi.com/project/quo)
 [![RTD](https://readthedocs.org/projects/quo/badge/)](https://quo.readthedocs.io)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5848515.svg)](https://doi.org/10.5281/zenodo.5848515)
 [![licence](https://img.shields.io/pypi/l/quo.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
 
