@@ -1,6 +1,6 @@
-.. _progress_bars:
+.. _progress:
 
-`Progress bars` 📊
+Progress bars📊
 ================
 
 Simple progress bar
