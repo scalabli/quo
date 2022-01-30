@@ -172,6 +172,10 @@ customized) and wait for the user to press a key.  In addition to that,
 it will also become a NOP (no operation instruction) if the script is not
 run interactively.
 
+Parameters. 
+
+- ``info: Optional[str]`` - The message to display. 
+
 .. code:: python
 
     import quo
