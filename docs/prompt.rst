@@ -106,16 +106,16 @@ takes a :class:`~quo.document.Document` as input and raises
 .. image:: ./images/number-validator.png
 
 By default, the input is validated in real-time while the user is typing, but
-prompt_toolkit can also validate after the user presses the enter key:
+Quo can also validate after the user presses the enter key:
 
 .. code:: python
 
-    prompt('Give a number: ', validator=NumberValidator(),
+    session.prompt('Give a number: ', validator=NumberValidator(),
            validate_while_typing=False)
 
 If the input validation contains some heavy CPU intensive code, but you don't
 want to block the event loop, then it's recommended to wrap the validator class
-in a :class:`~prompt_toolkit.validation.ThreadedValidator`.
+in a :class:`~quo.validation.ThreadedValidator`.
 
 Input Prompts using Prompt() object
 -------------------------------------
@@ -244,34 +244,32 @@ Auto suggestion is a way to propose some input completions to the user like the
 
 Usually, the input is compared to the history and when there is another entry
 starting with the given text, the completion will be shown as gray text behind
-the current input. Pressing the right arrow :kbd:`→` or :kbd:`c-e` will insert
+the current input. Pressing the right arrow :kbd:`→` or :kbd:`ctrl-e` will insert
 this suggestion, :kbd:`alt-f` will insert the first word of the suggestion.
 
 .. note::
 
     When suggestions are based on the history, don't forget to share one
-    :class:`~prompt_toolkit.history.History` object between consecutive
-    :func:`~prompt_toolkit.shortcuts.prompt` calls. Using a
-    :class:`~prompt_toolkit.shortcuts.PromptSession` does this for you.
+    :class:`~quo.history.History` object between consecutive prompt calls. Using a
+    :class:`~quo.Prompt`
 
 Example:
 
 .. code:: python
 
-    from prompt_toolkit import PromptSession
-    from prompt_toolkit.history import InMemoryHistory
-    from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-
-    session = PromptSession()
+    import quo
+    from quo.history import InMemoryHistory
+    
+    session = quo.Prompt()
 
     while True:
-        text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
-        print('You said: %s' % text)
+        text = session.prompt('> ', auto_suggest=quo.completion.AutoSuggestFromHistory())
+        print(f"You said: {text}")
 
-.. image:: ../images/auto-suggestion.png
+.. image:: ./images/auto-suggestion.png
 
 A suggestion does not have to come from the history. Any implementation of the
-:class:`~prompt_toolkit.auto_suggest.AutoSuggest` abstract base class can be
+:class:`~quo.completion.AutoSuggest` abstract base class can be
 passed as an argument.
 
 
@@ -305,23 +303,24 @@ Syntax highlighting
 
 Adding syntax highlighting is as simple as adding a lexer. All of the `Pygments
 <http://pygments.org/>`_ lexers can be used after wrapping them in a
-:class:`~prompt_toolkit.lexers.PygmentsLexer`. It is also possible to create a
-custom lexer by implementing the :class:`~prompt_toolkit.lexers.Lexer` abstract
+:class:`~quo.lexers.PygmentsLexer`. It is also possible to create a
+custom lexer by implementing the :class:`~quo.lexers.Lexer` abstract
 base class.
 
 .. code:: python
 
+    import quo
     from pygments.lexers.html import HtmlLexer
-    from prompt_toolkit.shortcuts import prompt
-    from prompt_toolkit.lexers import PygmentsLexer
+    
+    session = quo.Prompt()
 
-    text = prompt('Enter HTML: ', lexer=PygmentsLexer(HtmlLexer))
-    print('You said: %s' % text)
+    text = session.prompt('Enter HTML: ', lexer=quo.lexers.PygmentsLexer(HtmlLexer))
+    print(f"You said: {text}")
 
-.. image:: ../images/html-input.png
+.. image:: ./images/html-input.png
 
 The default Pygments colorscheme is included as part of the default style in
-prompt_toolkit. If you want to use another Pygments style along with the lexer,
+quo. If you want to use another Pygments style along with the lexer,
 you can do the following:
 
 .. code:: python
