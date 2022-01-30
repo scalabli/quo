@@ -198,7 +198,7 @@ their ordering. An ``OrderedDict`` works as well.
 
     import quo
 
-    style = quo.styles.Style.from_dict({
+    style = quo.styles.Style.add({
          'header body left.text': 'underline',
     })
 
