@@ -624,38 +624,36 @@ Adding custom key bindings
 
 By default, every prompt already has a set of key bindings which implements the
 usual Vi or Emacs behaviour. We can extend this by passing another
-:class:`~prompt_toolkit.key_binding.KeyBindings` instance to the
-``key_bindings`` argument of the :func:`~prompt_toolkit.shortcuts.prompt`
-function or the :class:`~prompt_toolkit.shortcuts.PromptSession` class.
+:class:`~quo.keys.KeyBinder` instance to the ``bind`` argument of the :class:`~quo.Prompt` class.
 
 An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pressed.
 
 .. code:: python
 
-    from prompt_toolkit import prompt
-    from prompt_toolkit.application import run_in_terminal
-    from prompt_toolkit.key_binding import KeyBindings
+    import quo
+    from quo.suite import run_in_terminal
 
-    bindings = KeyBindings()
+    bindings = quo.keys.KeyBinder()
+    session = quo.Prompt()
 
-    @bindings.add('c-t')
+    @bindings.add('ctrl-t')
     def _(event):
         " Say 'hello' when `c-t` is pressed. "
         def print_hello():
             print('hello world')
         run_in_terminal(print_hello)
 
-    @bindings.add('c-x')
+    @bindings.add('ctrl-x')
     def _(event):
-        " Exit when `c-x` is pressed. "
+        " Exit when `ctrl-x` is pressed. "
         event.app.exit()
 
-    text = prompt('> ', key_bindings=bindings)
-    print('You said: %s' % text)
+    text = session.prompt('> ', bind=bindings)
+    print(f"You said: {text}")
 
 
 Note that we use
-:meth:`~prompt_toolkit.application.run_in_terminal` for the first key binding.
+:meth:`~quo.suite.run_in_terminal` for the first key binding.
 This ensures that the output of the print-statement and the prompt don't mix
 up. If the key bindings doesn't print anything, then it can be handled directly
 without nesting functions.
@@ -669,29 +667,28 @@ same time, but it is possible to switch between Emacs and Vi bindings at run
 time.
 
 In order to enable a key binding according to a certain condition, we have to
-pass it a :class:`~prompt_toolkit.filters.Filter`, usually a
-:class:`~prompt_toolkit.filters.Condition` instance. (:ref:`Read more about
+pass it a :class:`~quo.filters.Filter`, usually a
+:class:`~quo.filters.Condition` instance. (:ref:`Read more about
 filters <filters>`.)
 
 .. code:: python
 
-    from prompt_toolkit import prompt
-    from prompt_toolkit.filters import Condition
-    from prompt_toolkit.key_binding import KeyBindings
+    import quo
+    
+    bindings = quo.keys.KeyBinder()
+    session = quo.Prompt()
 
-    bindings = KeyBindings()
-
-    @Condition
+    @quo.filters.Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-    @bindings.add('c-t', filter=is_active)
+    @bindings.add('ctrl-t', filter=is_active)
     def _(event):
         # ...
         pass
 
-    prompt('> ', key_bindings=bindings)
+    session.prompt('> ', bind=bindings)
 
 Using control-space for completion
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -706,7 +703,7 @@ the following key binding.
 
     kb = quo.KeyBinder()
 
-    @kb.add('c-space')
+    @kb.add('ctrl-space')
     def _(event):
         " Initialize autocompletion, or select the next completion. "
         buff = event.app.current_buffer
