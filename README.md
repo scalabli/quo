@@ -156,7 +156,7 @@ Example of an prompt box window
      ["Dave", "M", 24]
    ]
 
-   quo.echo(quo.tabular(table))
+   quo.echo(quo.tabulate.tabular(table))
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
    
