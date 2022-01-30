@@ -220,6 +220,14 @@ This can be used to launch web browsers or picture viewers, for instance.
 In addition to this, it can also launch the file manager and automatically
 select the provided file.
 
+**Parameters**
+    - ``url`` *(str)* – URL or filename of the thing to launch.
+
+    - ``wait`` *(bool)* – Wait for the program to exit before returning. This only works if the launched program blocks. In particular, xdg-open on Linux does not block.
+
+    - ``locate`` *(bool)* – if this is set to True then instead of launching the application associated with the URL it will attempt to launch a file manager with the file located. This might have weird effects if the URL does not point to the filesystem.
+
+
 .. code:: python
   
    import quo
