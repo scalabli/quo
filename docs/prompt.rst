@@ -702,7 +702,9 @@ the following key binding.
 
 .. code:: python
 
-    kb = KeyBindings()
+    import quo
+
+    kb = quo.KeyBinder()
 
     @kb.add('c-space')
     def _(event):
@@ -714,7 +716,7 @@ the following key binding.
             buff.start_completion(select_first=False)
 
 
-Other prompt options
+Other Prompt options
 --------------------
 
 Multiline input
@@ -724,9 +726,10 @@ Reading multiline input is as easy as passing the ``multiline=True`` parameter.
 
 .. code:: python
 
-    from prompt_toolkit import prompt
+    import quo
 
-    prompt('> ', multiline=True)
+    session = quo.Prompt()
+    session.prompt('> ', multiline=True)
 
 A side effect of this is that the enter key will now insert a newline instead
 of accepting and returning the input. The user will now have to press
@@ -742,13 +745,15 @@ prompt.)
 
 .. code:: python
 
-    from prompt_toolkit import prompt
+    import quo
+
+    session = quo.Prompt()
 
     def prompt_continuation(width, line_number, is_soft_wrap):
         return '.' * width
         # Or: return [('', '.' * width)]
 
-    prompt('multiline input> ', multiline=True,
+    session.prompt('multiline input> ', multiline=True,
            prompt_continuation=prompt_continuation)
 
 .. image:: ../images/multiline-input.png
@@ -763,9 +768,10 @@ Enabling can be done by passing the ``mouse_support=True`` option.
 
 .. code:: python
 
-    from prompt_toolkit import prompt
+    import quo
 
-    prompt('What is your name: ', mouse_support=True)
+    session = quo.Prompt()
+    session.prompt('What is your name: ', mouse_support=True)
 
 
 Line wrapping
@@ -777,6 +783,7 @@ scroll horizontally.
 
 .. code:: python
 
-    from prompt_toolkit import prompt
+    import quo
 
-    prompt('What is your name: ', wrap_lines=False)
+    session = quo.Prompt()
+    session.prompt('What is your name: ', wrap_lines=False)
