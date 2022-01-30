@@ -32,7 +32,7 @@ these.
     `sys.stdout`, because these can change any time when the rendering
     algorithm changes, and are not so meaningful anyway. Instead, we want to
     test the return value from the
-    :class:`~prompt_toolkit.application.Application` or test how data
+    :class:`~quo.Suite` or test how data
     structures (like text buffers) change over time.
 
 So we programmatically feed some input to the input pipe, have the key
