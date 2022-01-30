@@ -60,7 +60,7 @@ inscribe
 ----------
 quo ships with a
 :func:`~quo.inscribe` function that's meant to
-be (as much as possible) compatible with the built-in print function, but on
+be (as much as possible) compatible with the built-in print function, and :func:`quo.echo` but on
 top of that, also supports colors and formatting.
 
 On Linux systems, this will output VT100 escape sequences, while on Windows it
@@ -114,9 +114,9 @@ italic and underline: ``<b>``, ``<i>`` and ``<u>``.
     quo.inscribe(quo.text.HTML('<green>This is green</green>'))
 
     # Named colors (256 color palette, or true color, depending on the output).
-    print_formatted_text(HTML('<skyblue>This is sky blue</skyblue>'))
-    print_formatted_text(HTML('<seagreen>This is sea green</seagreen>'))
-    print_formatted_text(HTML('<violet>This is violet</violet>'))
+    quo.inscribe(quo.text.HTML('<skyblue>This is sky blue</skyblue>'))
+    quo.inscribe(quo.text.HTML('<seagreen>This is sea green</seagreen>'))
+    quo.inscribe(quo.text.HTML('<violet>This is violet</violet>'))
 
 Both foreground and background colors can also be specified setting the `fg`
 and `bg` attributes of any HTML tag:
@@ -133,7 +133,7 @@ assign a style for a custom tag.
 
     import quo
 
-    style = quo.styles.Style.from_dict({
+    style = quo.styles.Style.add({
         'aaa': '#ff0066',
         'bbb': '#44ff00 italic',
     })
@@ -222,22 +222,20 @@ Similarly, it is also possible to print the output of a Pygments lexer:
 .. code:: python
 
     import pygments
+    import quo
     from pygments.token import Token
     from pygments.lexers.python import PythonLexer
 
-    from prompt_toolkit.formatted_text import PygmentsTokens
-    from prompt_toolkit import print_formatted_text
-
     # Printing the output of a pygments lexer.
     tokens = list(pygments.lex('print("Hello")', lexer=PythonLexer()))
-    print_formatted_text(PygmentsTokens(tokens))
+    quo.inscribe(quo.text.PygmentsTokens(tokens))
 
-Prompt_toolkit ships with a default colorscheme which styles it just like
+Quo ships with a default colorscheme which styles it just like
 Pygments would do, but if you'd like to change the colors, keep in mind that
 Pygments tokens map to classnames like this:
 
 +-----------------------------------+---------------------------------------------+
-| pygments.Token                    | prompt_toolkit classname                    |
+| pygments.Token                    | quo classname                               |
 +===================================+=============================================+
 | - ``Token.Keyword``               | - ``"class:pygments.keyword"``              |
 | - ``Token.Punctuation``           | - ``"class:pygments.punctuation"``          |
@@ -254,11 +252,11 @@ changing the style from these Pygments tokens can be done as follows:
 
 .. code:: python
 
-    from prompt_toolkit.styles import Style
+    import quo
 
-    style = Style.from_dict({
+    style = quo.styles.Style.add({
         'pygments.keyword': 'underline',
         'pygments.literal.string': 'bg:#00ff00 #ffffff',
     })
-    print_formatted_text(PygmentsTokens(tokens), style=style)
+    quo.inscribe(PygmentsTokens(tokens), style=style)
 
