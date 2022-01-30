@@ -18,7 +18,7 @@
 Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API.
 Simple to code, easy to learn, and does not come with needless baggage. 
 
-Quo requires Python `3.6.1` or later. 
+Quo requires Python `3.8` or later. 
 
 
 ## Features
