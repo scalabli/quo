@@ -224,13 +224,13 @@ to a certain condition. This is possible by wrapping it in a
 
     import quo
 
-    @Condition
+    @quo.filters.Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
      bindings = quo.keys.ConditionalKeyBindings(
-         key_bindings=my_bindings,
+         bind=my_bindings,
          filter=is_active)
 
 If the condition is not satisfied, all the key bindings in `my_bindings` above
@@ -363,5 +363,5 @@ Processing `.inputrc`
 ---------------------
 
 GNU readline can be configured using an `.inputrc` configuration file. This file
-contains key bindings as well as certain settings. Right now, prompt_toolkit
+contains key bindings as well as certain settings. Right now, quo
 doesn't support `.inputrc`, but it should be possible in the future.
