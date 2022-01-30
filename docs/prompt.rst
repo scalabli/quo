@@ -80,11 +80,11 @@ takes a :class:`~quo.document.Document` as input and raises
 
 .. code:: python
 
-    import quo validation import Validator, ValidationError
+    import quo
     
     session = quo.Prompt()
 
-    class NumberValidator(Validator):
+    class NumberValidator(quo.types.Validator):
         def validate(self, document):
             text = document.text
 
@@ -325,16 +325,16 @@ you can do the following:
 
 .. code:: python
 
+    import quo
     from pygments.lexers.html import HtmlLexer
     from pygments.styles import get_style_by_name
-    from prompt_toolkit.shortcuts import prompt
-    from prompt_toolkit.lexers import PygmentsLexer
-    from prompt_toolkit.styles.pygments import style_from_pygments_cls
+    from quo.styles.pygments import style_from_pygments_cls
 
     style = style_from_pygments_cls(get_style_by_name('monokai'))
-    text = prompt('Enter HTML: ', lexer=PygmentsLexer(HtmlLexer), style=style,
+    session = quo.Prompt()
+    text = session.prompt('Enter HTML: ', lexer=quo.lexers.PygmentsLexer(HtmlLexer), style=style,
                   include_default_pygments_style=False)
-    print('You said: %s' % text)
+    print(f"You said: {text}")
 
 We pass ``include_default_pygments_style=False``, because otherwise, both
 styles will be merged, possibly giving slightly different colors in the outcome
@@ -346,25 +346,24 @@ Colors
 ------
 
 The colors for syntax highlighting are defined by a
-:class:`~prompt_toolkit.styles.Style` instance. By default, a neutral
+:class:`~quo.styles.Style` instance. By default, a neutral
 built-in style is used, but any style instance can be passed to the
-:func:`~prompt_toolkit.shortcuts.prompt` function. A simple way to create a
-style, is by using the :meth:`~prompt_toolkit.styles.Style.from_dict`
+:func:`~quo.Prompt` function. A simple way to create a
+style, is by using the :meth:`~quo.styles.Style.add`
 function:
 
 .. code:: python
 
+    import quo
     from pygments.lexers.html import HtmlLexer
-    from prompt_toolkit.shortcuts import prompt
-    from prompt_toolkit.styles import Style
-    from prompt_toolkit.lexers import PygmentsLexer
 
-    our_style = Style.from_dict({
+    session = quo.Prompt()
+    our_style = quo.styles.Style.add({
         'pygments.comment':   '#888888 bold',
         'pygments.keyword':   '#ff88ff bold',
     })
 
-    text = prompt('Enter HTML: ', lexer=PygmentsLexer(HtmlLexer),
+    text = session.prompt('Enter HTML: ', lexer=quo.lexers.PygmentsLexer(HtmlLexer),
                   style=our_style)
 
 
@@ -388,11 +387,11 @@ creating a list of style/text tuples. In the following example, we use class
 names to refer to the style.
 
 .. code:: python
+ 
+    import quo
 
-    from prompt_toolkit.shortcuts import prompt
-    from prompt_toolkit.styles import Style
-
-    style = Style.from_dict({
+    session = quo.Prompt()
+    style = quo.styles.Style.add({
         # User input (default text).
         '':          '#ff0066',
 
@@ -414,9 +413,9 @@ names to refer to the style.
         ('class:pound',    '# '),
     ]
 
-    text = prompt(message, style=style)
+    text = session.prompt(message, style=style)
 
-.. image:: ../images/colored-prompt.png
+.. image:: ./images/colored-prompt.png
 
 The `message` can be any kind of formatted text, as discussed :ref:`here
 <formatted_text>`. It can also be a callable that returns some formatted text.
