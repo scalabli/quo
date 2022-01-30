@@ -12,14 +12,14 @@ Many user interface controls, like :class:`~quo.layout.Window`
 accept a ``style`` argument which can be used to pass the formatting as a
 string. For instance, we can select a foreground color:
 
-- ``"fg:ansired"``  (ANSI color palette)
-- ``"fg:ansiblue"`` (ANSI color palette)
+- ``"fg:red"``  
+- ``"fg:blue"``
 - ``"fg:#ffaa33"``  (hexadecimal notation)
 - ``"fg:darkred"``  (named color)
 
 Or a background color:
 
-- ``"bg:ansired"``  (ANSI color palette)
+- ``"bg:green"``
 - ``"bg:#ffaa33"``  (hexadecimal notation)
 
 Or we can add one of the following flags:
@@ -40,9 +40,9 @@ Or their negative variants:
 - ``"noreverse"``
 - ``"nohidden"``
 
-All of these formatting options can be combined as well:
+All of these formatting options can be combined like so:
 
-- ``"fg:ansiyellow bg:black bold underline"``
+- ``"fg:yellow bg:black bold underline"``
 
 The style string can be given to any user control directly, or to a
 :class:`~quo.layout.Container` object from where it will propagate
