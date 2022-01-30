@@ -132,7 +132,7 @@ standard input.  However, this is buffered input and will not show up until
 the line has been terminated.  In certain circumstances, you might not want
 to do that and instead read individual characters as they are being written.
 
-For this, Quo provides the :func:`interpose` function which reads a single
+For this, Quo provides the :func:`getchar` function which reads a single
 character from the terminal buffer and returns it as a Unicode character.
 
 Note that this function will always read from the terminal, even if stdin
@@ -141,16 +141,16 @@ is instead a pipe.
 .. code:: python
 
     import quo
-    from quo import echo, interpose, confirm
-    confirm(f"Start Interpose")
-    c = interpose()
+    
+    quo.confirm(f"Start Interpose")
+    c = quo.getchar()
     quo.echo()
     if c == 'y':
-        echo('We will go on')
+        quo.echo('We will go on')
     elif c == 'n':
-        echo('Abort!')
+        quo.echo('Abort!')
     else:
-        echo('Invalid input :(')
+        quo.echo('Invalid input :(')
 
 Note that this reads raw input, which means that things like arrow keys
 will show up in the platform's native escape format.  The only characters
@@ -161,7 +161,7 @@ cannot be properly exited.
 
 
 Waiting for Key Press(pause)
----------------------
+----------------------------
 
 Sometimes, it's useful to pause until the user presses any key on the
 keyboard.
