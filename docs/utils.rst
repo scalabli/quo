@@ -172,9 +172,9 @@ customized) and wait for the user to press a key.  In addition to that,
 it will also become a NOP (no operation instruction) if the script is not
 run interactively.
 
-Parameters. 
+**Parameters**
+    - ``info`` *(Optional[str])* – The message to print before pausing. Defaults to "Press any key to proceed >> ..".
 
-- ``info: Optional[str]`` - The message to display. 
 
 .. code:: python
 
