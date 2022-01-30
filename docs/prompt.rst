@@ -280,6 +280,18 @@ Confirmation Prompts
 To ask if a user wants to continue with an action, the :func:`confirm`
 function comes in handy.  By default, it returns the result of the prompt
 as a boolean value:
+**Parameters**
+    - ``text`` *(str)* – the question to ask.
+
+    - ``default`` *(Optional[bool])* – The default value to use when no input is given. If None, repeat until input is given.
+
+    - ``abort`` *(bool)* – if this is set to True a negative answer aborts the exception by raising Abort.
+
+    - ``suffix`` *(str)* – a suffix that should be added to the prompt.
+
+    - ``show_default`` *(bool)* – shows or hides the default value in the prompt.
+
+    - ``err`` *(bool)* – if set to true the file defaults to stderr instead of stdout, the same as with echo.
 
 .. code:: python
 
