@@ -1,4 +1,4 @@
-.. _key_bindings:
+.. _kb:
 
 Key binding 🗝️
 ===============
