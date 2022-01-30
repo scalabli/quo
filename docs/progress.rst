@@ -1,7 +1,7 @@
 .. _progress_bars:
 
-Progress bars
-=============
+`Progress bars` 📊
+==================
 A progress bar is a user interface element that indicates the progress of an operation. Progress bar supports two modes to represent progress: determinate, and indeterminate.
 Showing Progress Bars
 Sometimes, you have command line scripts that need to process a lot of data,
