@@ -80,8 +80,9 @@ takes a :class:`~quo.document.Document` as input and raises
 
 .. code:: python
 
-    from prompt_toolkit.validation import Validator, ValidationError
-    from prompt_toolkit import prompt
+    import quo validation import Validator, ValidationError
+    
+    session = quo.Prompt()
 
     class NumberValidator(Validator):
         def validate(self, document):
@@ -96,13 +97,13 @@ takes a :class:`~quo.document.Document` as input and raises
                     if not c.isdigit():
                         break
 
-                raise ValidationError(message='This input contains non-numeric characters',
+                raise quo.errors.ValidationError(message='This input contains non-numeric characters',
                                       cursor_position=i)
 
-    number = int(prompt('Give a number: ', validator=NumberValidator()))
-    print('You said: %i' % number)
+    number = int(session.prompt('Give a number: ', validator=NumberValidator()))
+    print(f"You said: {number}")
 
-.. image:: ../images/number-validator.png
+.. image:: ./images/number-validator.png
 
 By default, the input is validated in real-time while the user is typing, but
 prompt_toolkit can also validate after the user presses the enter key:
