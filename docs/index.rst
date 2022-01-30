@@ -4,7 +4,7 @@
 
 Quo's Documentation
 ================================
-:Version: 2021.7
+:Version: 2022.x
 :Web: http://quo.readthedocs.io/
 :Download: http://pypi.org/project/quo
 :Source: http://github.com/secretum-inc/quo
@@ -39,7 +39,7 @@ Quo's Documentation
    help_text.rst
    filters.rst
    full_screen_apps.rst
-   key_bindings.rst
+   kb.rst
    progress_bars.rst
    syntax.rst
    styling.rst
