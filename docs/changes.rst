@@ -4,6 +4,14 @@
 Changelog
 ==========
 
+Version 2022.2
+---------------
+Unrealeased
+
+- Fixed minor bugs
+- Introduced c++ extensions(only works with Linux systems for now)
+
+
 Version 2022.1.6
 ----------------
 Released on 2022-1-17
