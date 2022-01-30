@@ -146,49 +146,45 @@ assign a style for a custom tag.
 (style, text) tuples
 ^^^^^^^^^^^^^^^^^^^^
 
-Internally, both :class:`~prompt_toolkit.formatted_text.HTML` and
-:class:`~prompt_toolkit.formatted_text.ANSI` objects are mapped to a list of
+Internally, :class:`~quo.text.HTML` objects are mapped to a list of
 ``(style, text)`` tuples. It is however also possible to create such a list
-manually with :class:`~prompt_toolkit.formatted_text.FormattedText` class.
+manually with :class:`~quo.text.FormattedText` class.
 This is a little more verbose, but it's probably the most powerful
 way of expressing formatted text.
 
 .. code:: python
 
-    from prompt_toolkit import print_formatted_text
-    from prompt_toolkit.formatted_text import FormattedText
+    import quo
 
-    text = FormattedText([
+    text = quo.text.FormattedText([
         ('#ff0066', 'Hello'),
         ('', ' '),
         ('#44ff00 italic', 'World'),
     ])
 
-    print_formatted_text(text)
+    quo.inscribe(text)
 
-Similar to the :class:`~prompt_toolkit.formatted_text.HTML` example, it is also
+Similar to the :class:`~quo.text.HTML` example, it is also
 possible to use class names, and separate the styling in a style sheet.
 
 .. code:: python
 
-    from prompt_toolkit import print_formatted_text
-    from prompt_toolkit.formatted_text import FormattedText
-    from prompt_toolkit.styles import Style
+    import quo
 
     # The text.
-    text = FormattedText([
+    text = quo.text.FormattedText([
         ('class:aaa', 'Hello'),
         ('', ' '),
         ('class:bbb', 'World'),
     ])
 
     # The style sheet.
-    style = Style.from_dict({
+    style = quo.styles.Style.add({
         'aaa': '#ff0066',
         'bbb': '#44ff00 italic',
     })
 
-    print_formatted_text(text, style=style)
+    quo.inscribe(text, style=style)
 
 
 Pygments ``(Token, text)`` tuples
@@ -196,14 +192,13 @@ Pygments ``(Token, text)`` tuples
 
 When you have a list of `Pygments <http://pygments.org/>`_ ``(Token, text)``
 tuples, then these can be printed by wrapping them in a
-:class:`~prompt_toolkit.formatted_text.PygmentsTokens` object.
+:class:`~quo.text.PygmentsTokens` object.
 
 .. code:: python
-
+     
+    import quo
     from pygments.token import Token
-    from prompt_toolkit import print_formatted_text
-    from prompt_toolkit.formatted_text import PygmentsTokens
-
+    
     text = [
         (Token.Keyword, 'print'),
         (Token.Punctuation, '('),
@@ -214,7 +209,7 @@ tuples, then these can be printed by wrapping them in a
         (Token.Text, '\n'),
     ]
 
-    print_formatted_text(PygmentsTokens(text))
+    quo.inscribe(quo.text.PygmentsTokens(text))
 
 
 Similarly, it is also possible to print the output of a Pygments lexer:
