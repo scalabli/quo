@@ -9,7 +9,8 @@ Version 2022.2
 Unrealeased
 
 - Fixed minor bugs
-- Introduced c++ extensions(only works with Linux systems for now)
+- Introduced c++ extensions
+- Dropped support for `< python3.8`
 
 
 Version 2022.1.6
