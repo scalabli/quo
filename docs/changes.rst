@@ -40,7 +40,7 @@ Released on 2021-12-25
 
 - Streamlined a number of features
 - Fixed broken placeholder() issue :issue:`30`
-- Faced out positional arguments ``foreground`` and ``background`` in favor of ``fg`` and ``bg``
+- Deprecated parameters ``foreground`` and ``background`` in favor of ``fg`` and ``bg``
 
 Version 2021.6
 ---------------
