@@ -10,7 +10,7 @@ Unrealeased
 
 - Fixed minor bugs
 - Introduced c++ extensions
-- Dropped support for `< python3.8`
+- Dropped support for `python < 3.8`
 
 
 Version 2022.1.6
