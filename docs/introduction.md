@@ -8,26 +8,26 @@ Requirements
 
 Quo works flawlessly with Linux, OSX and Windows.
 
-Quo requires Python ``3.6.1`` or later
+Quo requires Python ``3.8`` or later
 
 Installation
 ------------
 
 You can install Quo from PyPi with `pip`
 
-.. code-block:: console
+```console
 
     pip install -U quo
-
-
+```
 
 Quick Start
 -----------
-.. code-block:: python
+```python
 
     import quo
 
     quo.echo(f"Hello World!", fg="red", italic=True, bold=True)
+```
 
 This will print ``"Hello World!"`` plus a new line to the terminal. Unlike the builtin print function, echo function has improved support for handling Unicode and binary data. If colorama is installed, the echo function will also support handling of ANSI color sequences.
 
