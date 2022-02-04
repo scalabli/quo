@@ -15,7 +15,8 @@ h2 { size: 200%; }
 h3 { size: 150%; }
 
 .wy-menu.wy-menu-vertical p.caption {
-    color: #fcfcfc;
+    color: #40e0d0; 
+/* #fcfcfc; */
 }
 
 
