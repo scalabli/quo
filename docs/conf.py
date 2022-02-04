@@ -28,7 +28,7 @@ import sys
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.graphviz"]
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.graphviz", "sphinx_rtd_dark_mode"]
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ["_templates"]
@@ -100,14 +100,6 @@ pygments_style = "sphinx"
 # a list of builtin themes.
 
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
-
-if on_rtd:
-    html_theme = "default" 
-else:
-    try:
-        import sphinx_pdj_theme
-        html_theme = 'sphinx_pdj_theme'
-        html_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
 
 if on_rtd:
     html_theme = "default"
@@ -216,7 +208,7 @@ latex_documents = [
     (
         "index",
         "quo.tex",
-        "quo Documentation",
+        "Quo Documentation",
         "Gerrishon Sirere",
         "manual",
     ),
@@ -251,7 +243,7 @@ man_pages = [
     (
         "index",
         "quo",
-        "quo Documentation",
+        "Quo Documentation",
         ["Gerrishon Sirere"],
         1,
     )
@@ -270,7 +262,7 @@ texinfo_documents = [
     (
         "index",
         "quo",
-        "quo Documentation",
+        "Quo Documentation",
         "Gerrishon Sirere",
         "quo",
         "One line description of project.",
