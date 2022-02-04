@@ -1,5 +1,3 @@
-.. _progress_bars:
-
 `Progress bars` 📊
 ==================
 A progress bar is a user interface element that indicates the progress of an operation. Progress bar supports two modes to represent progress: determinate, and indeterminate.
