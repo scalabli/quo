@@ -30,8 +30,19 @@ Quo requires Python `3.8` or later.
 :caption: Tutorials & Explanations
 introduction
 utils
+commands.rst
+apps.rst
+args.rst
+printing_text.rst
+prompt.rst
+exceptions.rst
+dialogs.rs
+full_screen_apps.rst
+kb.rst
 progress
+filters.rst
 styling
+help_text.rst
 changes.rst
 reference.rst
 unicode-support.rst
@@ -137,14 +148,10 @@ Quo's Documentation
    :caption: Contents:
 
    introduction.rst
-   commands.rst
-   apps.rst
-   args.rst
+   
    confirm.rst.
-   printing_text.rst
-   prompt.rst
-   exceptions.rst
-   dialogs.rsr
+   
+   r
    terminal.rst
    style.rst
    markup.rst
@@ -157,10 +164,7 @@ Quo's Documentation
    columns.rst
    padding.rst
    panel.rst
-   help_text.rst
-   filters.rst
-   full_screen_apps.rst
-   kb.rst
+   
    progress_bars.rst
    syntax.rst
    styling.rst
