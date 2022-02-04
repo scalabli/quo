@@ -25,7 +25,8 @@ h3 { size: 150%; }
 }
 
 .wy-nav-content-wrap, .wy-menu li.current > a  {
-    background-color: #40e0d0;
+    background-color: #36454F;
+/*#40e0d0;*/
 /*#fff;*/
 }
 
