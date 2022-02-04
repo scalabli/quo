@@ -29,6 +29,7 @@ Quo requires Python `3.8` or later.
 :maxdepth: 1
 :caption: Tutorials & Explanations
 introduction
+styling
 ```
    
 ## Donate🎁
