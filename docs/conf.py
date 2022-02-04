@@ -102,6 +102,14 @@ pygments_style = "sphinx"
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
 if on_rtd:
+    html_theme = "default" 
+else:
+    try:
+        import sphinx_pdj_theme
+        html_theme = 'sphinx_pdj_theme'
+        html_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
+
+if on_rtd:
     html_theme = "default"
 else:
     try:
