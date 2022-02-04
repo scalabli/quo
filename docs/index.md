@@ -10,15 +10,15 @@ Simple to code, easy to learn, and does not come with needless baggage.
 Quo requires Python `3.8` or later. 
 
 
-- [x] Support for Ansi, RGB and HTML color models
-- [x] Support for tabular presentation of data
-- [x] Interactive progressbars
-- [x] Code completions
-- [x] Nesting of commands
-- [x] Automatic help page generation
-- [x] Syntax highlighting
-- [x] Autosuggestions
-- [x] Key Binders
+- [x] `Support for Ansi, RGB and HTML color models`
+- [x] `Support for tabular presentation of data`
+- [x] `Interactive progressbars`
+- [x] `Code completions`
+- [x] `Nesting of commands`
+- [x] `Automatic help page generation`
+- [x] `Syntax highlighting`
+- [x] `Autosuggestions`
+- [x] `Key Binders`
 
 # Quo is...
 
@@ -26,12 +26,16 @@ Quo requires Python `3.8` or later.
      If you know Python you can  easily use Quo and it can integrate with just about anything.
 
 ```{toctree}
-:maxdepth: 1
+:maxdepth: 2
 :caption: Tutorials & Explanations
 introduction
 utils
 progress
 styling
+changes.rst
+reference.rst
+unicode-support.rst
+appendix.rst
 ```
    
 ## Donate🎁
@@ -166,10 +170,7 @@ Quo's Documentation
 
    protocol.rst
 
-   changes.rst
-   reference.rst
-   unicode-support.rst
-   appendix.rst
+   
 
 Support
 ========
