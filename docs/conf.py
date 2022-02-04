@@ -139,8 +139,15 @@ html_logo = "images/quo.png"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ["_static"]
+html_static_path = ["_static"]
 
+html_css_files = ['css/quo_theme.css']
+
+# myst options
+myst_admonition_enable = True
+# myst_amsmath_enable = True
+myst_html_img_enable = True
+# myst_dmath_enable = True
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
