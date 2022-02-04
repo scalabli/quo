@@ -1,32 +1,29 @@
-Utilities
-=========
-
-.. currentmodule:: quo
+# Utilities
 
 Besides the functionality that quo provides to interface with argument
 parsing and handling, it also provides a bunch of addon functionality that
 is useful for writing command line utilities.
 
 
-Printing to Stdout
-------------------
+## Printing to Stdout
 
 The most obvious helper is the :func:`echo` and :func:`inscribe` function, which in many ways works like the Python ``print`` statement or function.
 Example:
 
-.. code:: python
-
+```python
     import quo
+
     quo.echo('Hello World!')
+```
 
 It can output both text and binary data. It will emit a trailing newline
 by default, which needs to be suppressed by passing ``nl=False``:
 
-.. code:: python
-
+```python
    import quo
 
    quo.echo(b'\xe2\x98\x83', nl=False)
+```
 
 Last but not least :func:`echo` uses quo's intelligent internal output
 streams to stdout and stderr which support unicode output on the Windows
@@ -301,8 +298,7 @@ it like this:
    f.write('Hello World!\n')
 
 
-Finding Application Folders
----------------------------
+## Finding Application Folders
 
 Very often, you want to open a configuration file that belongs to your
 application.  However, different operating systems store these configuration
@@ -328,12 +324,10 @@ for per-user config files for your application depending on the OS.
                 rv[f"{section}.{key}"] = value
         return rv
 
-Printing tabular data
-----------------------
+## Printing tabular data
 :func:`quo.tabular` function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
-.. code:: python
-
+```python
    import quo
 
    table = [ 
@@ -343,5 +337,6 @@ Printing tabular data
      ["Dave", "M", 24]
      ]
    quo.echo(quo.tabulate.tabular(table))
+```
 
 
