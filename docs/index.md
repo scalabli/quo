@@ -30,6 +30,7 @@ Quo requires Python `3.8` or later.
 :caption: Tutorials & Explanations
 introduction
 utils
+progress
 styling
 ```
    
