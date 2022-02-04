@@ -25,6 +25,11 @@ Quo requires Python `3.8` or later.
 **Simple**
      If you know Python you can  easily use Quo and it can integrate with just about anything.
 
+```{toctree}
+:maxdepth: 1
+:caption: Tutorials & Explanations
+introduction
+```
    
 ## Donate🎁
 
