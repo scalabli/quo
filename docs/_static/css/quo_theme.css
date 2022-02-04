@@ -15,10 +15,9 @@ h2 { size: 200%; }
 h3 { size: 150%; }
 
 .wy-menu.wy-menu-vertical p.caption {
-    color: #36454F;
+    color: #fcfcfc;
 
 /*#40e0d0; */
-/* #fcfcfc; */
 }
 
 
@@ -27,9 +26,9 @@ h3 { size: 150%; }
 }
 
 .wy-nav-content-wrap, .wy-menu li.current > a  {
-    background-color: #36454F;
+    background-color: #fff;
 /*#40e0d0;*/
-/*#fff;*/
+
 }
 
 th p, td div.line-block {
