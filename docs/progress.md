@@ -1,5 +1,5 @@
-`Progress bars` 📊
-==================
+# Progress bars 📊
+
 A progress bar is a user interface element that indicates the progress of an operation. Progress bar supports two modes to represent progress: determinate, and indeterminate.
 Showing Progress Bars
 Sometimes, you have command line scripts that need to process a lot of data,
@@ -10,8 +10,8 @@ The basic usage is very simple: the idea is that you have an iterable that
 you want to operate on.  For each item in the iterable it might take some
 time to do processing.
 
-Simple progress bar
--------------------
+## `Simple progress bar`
+
 Creating a new progress bar can be done by calling the
 :class:`~quo.progress.ProgressBar`
 
@@ -47,8 +47,7 @@ in order to make displaying the progress possible:
             time.sleep(.01)
 
 
-Multiple parallel tasks
------------------------
+## `Multiple parallel tasks`
 
 A quo :class:`~quo.ProgressBar` can display the
 progress of multiple tasks running in parallel. Each task can run in a separate
@@ -95,7 +94,7 @@ want this depends on the application.
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/two_tasks.png
 
 
-Adding a title and label
+## `Adding a title and label`
 ------------------------
 
 Each progress bar can have one title, and for each task an individual label.
@@ -117,7 +116,7 @@ Each progress bar can have one title, and for each task an individual label.
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/coloredlabel.png
 
 
-Formatting the progress bar
+## `Formatting the progress bar`
 ---------------------------
 
 The visualisation of a :class:`~quo.ProgressBar` can be
@@ -179,7 +178,7 @@ modify the progress bar to look like an apt-get style progress bar:
 .. image:: ../images/progress-bars/apt-get.png
 
 
-Adding key bindings and toolbar
+## `Adding key bindings and toolbar`
 -------------------------------
 
 Like other quo  applications, we can add custom key bindings, by passing a :class:`~quo.key_binding.KeyBindings` object:
