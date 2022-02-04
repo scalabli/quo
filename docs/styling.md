@@ -1,7 +1,6 @@
 .. _styling:
 
-Styling 🎨
-==================
+# Styling 🎨
 
 This page will attempt to explain in more detail how to use styling in quo.
 
