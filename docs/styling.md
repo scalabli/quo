@@ -4,8 +4,7 @@
 
 This page will attempt to explain in more detail how to use styling in quo.
 
-Style strings
--------------
+## Style strings
 
 Many user interface controls, like :class:`~quo.layout.Window`
 accept a ``style`` argument which can be used to pass the formatting as a
@@ -67,8 +66,7 @@ possible to call :meth:`~Application.get_used_style_strings`, when the
 application is done.
 
 
-Class names
------------
+## Class names
 
 Like we do for web design, it is not a good habit to specify all styling
 inline. Instead, we can attach class names to UI controls and have a style
@@ -113,8 +111,7 @@ the "header" class, and then override that with a red background color.
     quo.layout.Window(quo.layout.BufferControl(...), style='class:header bg:red'),
 
 
-Dot notation in class names
----------------------------
+## Dot notation in class names
 
 The dot operator has a special meaning in a class name. If we write:
 ``style="class:a.b.c"``, then this will actually expand to the following:
@@ -124,8 +121,7 @@ This is mainly added for `Pygments <http://pygments.org/>`_ lexers, which
 specify "Tokens" like this, but it's useful in other situations as well.
 
 
-Multiple classes in a style sheet
----------------------------------
+## Multiple classes in a style sheet
 
 A style sheet can be more complex as well. We can for instance specify two
 class names. The following will underline the left part within the header, or
@@ -158,7 +154,7 @@ It is possible to combine this:
      ])
 
 
-Evaluation order of rules in a style sheet
+## Evaluation order of rules in a style sheet
 ------------------------------------------
 
 The style is determined as follows:
@@ -185,7 +181,7 @@ The style is determined as follows:
 - Then this final style is applied to this user interface element.
 
 
-Using a dictionary as a style sheet
+## Using a dictionary as a style sheet
 -----------------------------------
 
 The order of the rules in a style sheet is meaningful, so typically, we use a
@@ -234,8 +230,7 @@ follows:
     ])
 
 
-Color depths
-------------
+## Color depths
 
 There are four different levels of color depths available:
 
@@ -280,8 +275,7 @@ An application can also decide to set the color depth manually by passing a
     )
 
 
-Style transformations
----------------------
+## Style transformations
 
 Quo supports a way to apply certain transformations to the styles
 near the end of the rendering pipeline. This can be used for instance to change
