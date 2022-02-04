@@ -2,9 +2,11 @@
 
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/changelog.png
 
+.. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 Version 2022.2
 ---------------
+
 Unrealeased
 
 - Fixed minor bugs
