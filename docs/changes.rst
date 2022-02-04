@@ -1,5 +1,6 @@
 .. currentmodule:: quo
 
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/changelog.png
 
 Changelog
 ==========
