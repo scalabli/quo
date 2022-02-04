@@ -23,7 +23,6 @@ You can install Quo from PyPi with `pip`
 Quick Start
 -----------
 ```python
-
     import quo
 
     quo.echo(f"Hello World!", fg="red", italic=True, bold=True)
