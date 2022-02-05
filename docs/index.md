@@ -62,7 +62,7 @@ In order to for us to maintain this project and grow our community of contributo
 
 For discussions about the usage, development, and the future of quo, please join our Google community
 
-* [Community👨‍👩‍👦‍👦](https://groups.google.com/forum/#!forum/secretum)
+* [Community👨‍👩‍👦‍👦](https://groups.google.com/forum/#!forum/secretum){:target="_blank"}
 
 ## Resources
 
@@ -82,52 +82,6 @@ This software is licensed under the `MIT License`. See the [License](https://git
 
 
 
-## Example
-
-### Create it
-
-* Create a file `main.py` with:
-
-```Python
-from typing import Optional
-
-from fastapi import FastAPI
-
-app = FastAPI()
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
-```
-
-<details markdown="1">
-<summary>Or use <code>async def</code>...</summary>
-
-If your code uses `async` / `await`, use `async def`:
-
-```Python hl_lines="9  14"
-from typing import Optional
-
-from fastapi import FastAPI
-
-app = FastAPI()
-
-
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
-```
 
 
 ..
