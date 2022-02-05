@@ -62,7 +62,7 @@ In order to for us to maintain this project and grow our community of contributo
 
 For discussions about the usage, development, and the future of quo, please join our Google community
 
-* [Community👨‍👩‍👦‍👦](https://groups.google.com/forum/#!forum/secretum){:target="_blank"}
+* [Community👨‍👩‍👦‍👦](https://groups.google.com/forum/#!forum/secretum)
 
 ## Resources
 
@@ -130,13 +130,13 @@ Quo's Documentation
 
    
 
-Support
-========
+# Support
+
 Subscribe to one of our mailing lists to stay up to date with everything in the Quo community:
 
-  `Community👨‍👩‍👦‍👦 <https://groups.google.com/g/secretum/>`_
+  [Community👨‍👩‍👦‍👦](https://groups.google.com/g/secretum/)
 
-You can also subscribe by sending an email to secretum+subscribe@googlegroups.com
+You can also subscribe by sending an email to `secretum+subscribe@googlegroups.com`
 
 Indices and tables
 ==================
