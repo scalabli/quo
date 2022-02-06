@@ -101,8 +101,7 @@ It also supports handling of ANSI color sequences.
    quo.container(
         quo.widgets.Frame(
             content,
-            title="Quo: python🐍")
-         )
+            title="Quo: python🐍"))
 
    if __name__ == "__main__":
        frame()
@@ -117,8 +116,7 @@ Example of a message box window.
    def main():
        quo.MessageBox(
            title="Message pop up window",
-           text="Do you want to continue?\nPress ENTER to quit.",
-       ).run()                                       
+           text="Do you want to continue?\nPress ENTER to quit.").run()                                       
 
    if __name__ == "__main__":
       main()
@@ -134,10 +132,9 @@ Example of an prompt box window
    def main():
        result = quo.PromptBox(
                     title="PromptBox shenanigans",
-                    text="What Country are you from?:"
-       ).run()
+                    text="What Country are you from?:").run()
 
-       quo.echo("Result = {}".format(result))
+       quo.echo(f"Result = {result}")
 
    if __name__ == "__main__":
        main()

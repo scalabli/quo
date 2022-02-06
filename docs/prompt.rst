@@ -24,17 +24,18 @@ and returns the text. Just like ``input``.
 
 .. image:: ./images/prompt.png
 
-App Prompts
+``App Prompts``
 --------------
 
 App prompts are integrated into the app interface.  See
 :ref:`app-prompting` for more information.  Internally, it
 automatically calls either :func:`prompt` or :func:`confirm` as necessary.
 
-Input Validation
+``Input Validation``
 ----------------------------
 A prompt can have a validator attached. To manually ask for user input, you can use the :func:`prompt` function or the :class:`quo.Prompt` object.
 For instance, you can ask for a valid integer:
+
 
 .. code:: python
 
@@ -73,7 +74,8 @@ Parameters
 
    * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
 
-A validator should implements the :class:`~quo.types.Validator`
+Alternatively, you can use class:`quo.types.Validator`
+This should implement the :class:`~quo.types.Validator`
 abstract base class. This requires only one method, named ``validate`` that
 takes a :class:`~quo.document.Document` as input and raises
 :class:`~quo.errors.ValidationError` when the validation fails.
@@ -83,8 +85,9 @@ takes a :class:`~quo.document.Document` as input and raises
     import quo
     
     session = quo.Prompt()
+    verify  = quo.types.Validator
 
-    class NumberValidator(quo.types.Validator):
+    class NumberValidator(verify):
         def validate(self, document):
             text = document.text
 
@@ -101,7 +104,7 @@ takes a :class:`~quo.document.Document` as input and raises
                                       cursor_position=i)
 
     number = int(session.prompt('Give a number: ', validator=NumberValidator()))
-    print(f"You said: {number}")
+    quo.echo(f"You said: {number}")
 
 .. image:: ./images/number-validator.png
 
@@ -117,9 +120,9 @@ If the input validation contains some heavy CPU intensive code, but you don't
 want to block the event loop, then it's recommended to wrap the validator class
 in a :class:`~quo.validation.ThreadedValidator`.
 
-Input Prompts using Prompt() object
+``Input Prompts using Prompt() class``
 -------------------------------------
-Input history can be kept between consecutive Prompt() calls incase you want to ask for multiple inputs, but each input call needs about the same arguments.
+Input history can be kept between consecutive :class:`quo.Prompt` calls incase you want to ask for multiple inputs, but each input call needs about the same arguments.
 
 .. code:: python
     
@@ -132,16 +135,80 @@ Input history can be kept between consecutive Prompt() calls incase you want to 
   text1 = session.prompt("What's your name?")
   text2 = session.prompt("Where are you from?")
 
+``Multiline Input``
+-------------------
+Reading multiline input is as easy as passing the ``multiline=True`` parameter.
+
+
+.. code:: python
+
+   import quo
+
+   session = quo.Prompt()
+   session.prompt('> ', multiline=True)                                                                                               
+
+ 
+A side effect of this is that the enter key will now insert a newline instead of accepting and returning the input. The user will now have to press :kbd:`Meta+Enter` in order to accept the input. (Or :kbd:`Escape` followed by :kbd:`Enter`.)
+
+
+
+It is possible to specify a continuation prompt. This works by passing a
+``prompt_continuation`` callable to :func:`~prompt_toolkit.shortcuts.prompt`.
+This function is supposed to return :ref:`formatted text <formatted_text>`, or
+a list of ``(style, text)`` tuples. The width of the returned text should not
+exceed the given width. (The width of the prompt margin is defined by the
+prompt.)
+
+.. code:: python
+
+    import quo
+
+    session = quo.Prompt()
+
+    def prompt_continuation(width, line_number, is_soft_wrap):
+        return '.' * width
+        # Or: return [('', '.' * width)]
+
+    session.prompt('multiline input> ', multiline=True,
+           prompt_continuation=prompt_continuation)
+
+.. image:: ../images/multiline-input.png
+
+
+
+`Hide Input`
+------------
+When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.Prompt` has been given, the input is hidden or
+ replaced by asterisks (``*`` characters) .
+
+ [1] ``Using :func:`quo.prompt```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+   import quo
+
+   quo.prompt("Enter password: ", hide=True)
+
+[2] ``Using :class:`quo.Prompt```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+   import quo
+
+   session = quo.Prompt()
+
+   session.prompt("Enter password: ", is_password=True)
+
+
+
 Parameters
    * ``text`` - Plain text or formatted text to be shown before the prompt. This can also be a callable that returns formatted text.
-   * ``multiline`` - `bool` or :class:`~quo.filters.Filter`.
-        When True, prefer a layout that is more adapted for multiline input.
-        Text after newlines is automatically indented, and search/arg input is
-        shown below the input, instead of replacing the elicit.
     * ``wrap_lines`` `bool` or :class:`~quo.filters.Filter`.
         When True (the default), automatically wrap long lines instead of
         scrolling horizontally.
-    * ``is_password`` - Show asterisks instead of the actual typed characters.
+
+
     * ``editing_mode`` - ``EditingMode.VI`` or ``EditingMode.EMACS``.
     * ``vi_mode`` - `bool`, if True, Identical to ``editing_mode=EditingMode.VI``.
     * ``complete_while_typing`` - `bool` or
@@ -208,10 +275,7 @@ Parameters
         ``CompleteStyle.MULTI_COLUMN`` or ``CompleteStyle.READLINE_LIKE``.
     * ``mouse_support`` - `bool` or :class:`~quo.filters.Filter`
         to enable mouse support.
-    * ``placeholder`` - Text to be displayed when no input has been given
-        yet. Unlike the `default` parameter, this won't be returned as part of
-        the output ever. This can be formatted text or a callable that returns
-        formatted text.
+
     * ``refresh_interval`` - (number; in seconds) When given, refresh the UI
         every so many seconds.
     * ``input`` - `Input` object. (Note that the preferred way to change the
@@ -298,8 +362,15 @@ as a boolean value:
    
    quo.confirm('Do you want to continue?')
 
-Syntax highlighting
--------------------
+``Prompt toolbar``
+------------------
+
+
+``Right prompt(rprompt)``
+--------------------------
+
+``Syntax highlighting``
+-----------------------
 
 Adding syntax highlighting is as simple as adding a lexer. All of the `Pygments
 <http://pygments.org/>`_ lexers can be used after wrapping them in a
@@ -340,25 +411,33 @@ We pass ``include_default_pygments_style=False``, because otherwise, both
 styles will be merged, possibly giving slightly different colors in the outcome
 for cases where where our custom Pygments style doesn't specify a color.
 
-Placeholder text
------------------
+``Placeholder text``
+--------------------
 A placeholer is a text that's displayed as long as no input is given.
+This won't be returned as part of the otput.
+This can be string, formatted text or a callable that returns formatted text.
+
+.. code:: python
+
+   import quo
+
+   session = quo.Prompt(placeholder="..(please type something)")
+
+   session.prompt("What is your name?: ")
+ 
 
 .. code:: python
 
   import quo
 
   session = quo.Prompt(placeholder=quo.text.HTML('<style color="#888888">(please type something)</style>'))
-
-  if __name__ == "__main__":
-      answer = session.prompt("")
-      quo.echo(f"You said: {answer}")
-
+  session.prompt("What is your name?: ")
+  
 
 .. _colors:
 
-Colors
-------
+``Colors``
+---------
 
 The colors for syntax highlighting are defined by a
 :class:`~quo.styles.Style` instance. By default, a neutral
@@ -495,23 +574,6 @@ Notice that this setting is incompatible with the ``enable_history_search``
 option. The reason for this is that the up and down key bindings would conflict
 otherwise. So, make sure to disable history search for this.
 
-Password input
-^^^^^^^^^^^^^^
-
-When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.Prompt` has been given, the input is hidden or replaced by
-asterisks (``*`` characters) .
-
-.. code:: python
-    import quo
-     
-    quo.prompt("Enter password", hide=True) 
-
-
-.. code:: python
-
-    from prompt_toolkit import prompt
-
-    prompt('Enter password: ', is_password=True)
 
 History
 -------
