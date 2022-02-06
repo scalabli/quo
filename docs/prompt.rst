@@ -340,6 +340,21 @@ We pass ``include_default_pygments_style=False``, because otherwise, both
 styles will be merged, possibly giving slightly different colors in the outcome
 for cases where where our custom Pygments style doesn't specify a color.
 
+Placeholder text
+-----------------
+A placeholer is a text that's displayed as long as no input is given.
+
+.. code:: python
+
+  import quo
+
+  session = quo.Prompt(placeholder=quo.text.HTML('<style color="#888888">(please type something)</style>'))
+
+  if __name__ == "__main__":
+      answer = session.prompt("")
+      quo.echo(f"You said: {answer}")
+
+
 .. _colors:
 
 Colors
