@@ -35,7 +35,7 @@ Quo requires Python `3.8` or later.
 :maxdepth: 2
 :caption: Tutorials & Explanations
 introduction
-utils
+utils.rst
 commands.rst
 apps.rst
 args.rst
