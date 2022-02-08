@@ -21,8 +21,8 @@ them together.
     missing.
 
 
-A simple application
---------------------
+``A simple application``
+------------------------
 
 Almost every quo application is an instance of an :class:`~quo.Suite` object. The simplest full screen example would look like this:
 
@@ -53,8 +53,8 @@ An application consists of several components. The most important are:
 We will discuss all of these in more detail below.
 
 
-I/O objects
------------
+``I/O objects``
+---------------
 
 Every :class:`~quo.Suite` instance requires an I/O
 object for input and output:
@@ -79,8 +79,8 @@ loop will run until the application is done. An application will quit when
 :func:`~quo.Suite.exit()` is called.
 
 
-The layout
-----------
+``The layout``
+-------------
 
 A layered layout architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -248,8 +248,8 @@ for getting the active application.
 Changing the focus is something which is typically done in a key binding, so
 read on to see how to define key bindings.
 
-Key bindings
-------------
+``Key bindings``
+-----------------
 
 In order to react to user actions, we need to create a
 :class:`~quo.keys.KeyBinder` object and pass

@@ -4,60 +4,64 @@
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
-Version 2022.2
----------------
+Changelog
+=========
+
+``Version 2022.2``
+-------------------
 
 Unrealeased
 
 - Fixed minor bugs
 - Introduced c++ extensions
+- Deprecated :param:`r_elicit` in favor of :param:`rprompt`
 - Dropped support for `python < 3.8`
 
 
-Version 2022.1.6
-----------------
+``Version 2022.1.6``
+---------------------
 Released on 2022-1-17
 
 - Under the hood optimizations
 - Introduced :func:`quo.MessageBox`, :func:`quo.PromptBox`, :func:`quo.RadiolistBox`, :func:`quo.ConfirmationBox`, :func:`quo.CheckBox`, :func:`quo.ChoiceBox` widgets for displaying formatted text in a window.
 
-Version 2022.1.5
------------------
+``Version 2022.1.5``
+---------------------
 Released on 2022-1-11
 
 - ImportError: :issue:`37` affecting Windows OS
 
-Version 2022.1
------------------
+``Version 2022.1``
+-------------------
 Released on 2022-1-11
 
 - Dependency update :issue:`32` to :issue:`35`
-- TypeError: prompt() got an unexpected keyword argument :issue:`36`
+- Unexpected argument in :func:`quo.prompt()` :issue:`36`
 
 
-Version 2021.7
---------------
+``Version 2021.7``
+-------------------
 Released on 2021-12-25
 
 - Streamlined a number of features
 - Fixed broken placeholder() issue :issue:`30`
-- Deprecated parameters ``foreground`` and ``background`` in favor of ``fg`` and ``bg``
+- Deprecated :param:`foreground` and :param:`background`` in favor of :param:`fg` and :param:`bg`
 
-Version 2021.6
----------------
+``Version 2021.6``
+-------------------
 Released on 2021-11-20
 
 - Added Support of a placeholder text that is displayed as long as no input is given.
 - Fixed minor bugs
 
-Version 2021.5.5.2
-------------------
+``Version 2021.5.5.2``
+----------------------
 Released on 2021-09-28
 
 - Pypi README fix
 
-Version 2021.5.5
------------------
+``Version 2021.5.5``
+---------------------
 
 Released on 2021-09-23
 
@@ -65,15 +69,15 @@ Released on 2021-09-23
 
 - Added support for colorful error messages
 
-- Added parameter ``ul`` to ``echo`` function. Its the short form of the ``underline`` parameter
+- Added :param:`ul` to :func:`quo.echo`. Can be used as a substitute for :param:`underline`  parameter.
 
 - Added a ``strike`` parameter to print strikethrough text.
 
 - Added a ``hidden`` parameter to hide printed text
 
 
-Version 2021.4.5
-----------------
+``Version 2021.4.5``
+--------------------
 
 Released on 2021-08-22
 
@@ -83,8 +87,8 @@ Released on 2021-08-22
 
 
 
-Version 2021.3.5
------------------
+``Version 2021.3.5``
+---------------------
 
 Released on 2021-07-19
 
@@ -102,8 +106,8 @@ Released on 2021-07-19
 
 
 
-Version 2021.2
--------------
+``Version 2021.2``
+-------------------
 
 Released on 2021-06-28
 
@@ -112,8 +116,9 @@ Released on 2021-06-28
 
 
 
-Version 2021.1
----------------
+``Version 2021.1``
+-------------------
+
 Released on 2021-06-18
 
 -   Added support for ``ANSI colors`` for better coloring of the terminal

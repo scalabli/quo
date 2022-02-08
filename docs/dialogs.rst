@@ -7,34 +7,34 @@ quo ships with a high level API for displaying dialogs, similar to
 the Whiptail program, but in pure Python.
 
 
-Message box
+Message Box
 -----------
 
-Use the :func:`~quo.shortcuts.message` function to display a
+Use the :func:`~quo.MessageBox` function to display a
 simple message box. For instance:
 
 .. code:: python
 
-    from quo.shortcuts import message
+    import quo
 
-    message(
+    quo.MessageBox(
         title='Example dialog window',
         text='Do you want to continue?\nPress ENTER to quit.').run()
 
 .. image:: ./images/messagebox.png
 
 
-Evoke(Input) box
----------
+Prompt Box
+------------
 
-The :func:`~quo.shortcuts.evoke` function can display an
+The :func:`~quo.PromptBox` function can display an
 input box. It will return the user input as a string.
 
 .. code:: python
 
-    from quo.shortcuts import evoke
+    import quo
 
-    text = evoke(
+    quo.PromptBox(
         title='Input dialog example',
         text='Please type your name:').run()
 
@@ -42,83 +42,79 @@ input box. It will return the user input as a string.
 
 
 The ``password=True`` option can be passed to the
-:func:`~quo.shortcuts.evoke` function to turn this into a
-password input box.
+:func:`~quo.PromptBox` function to turn this into a password input box.
 
 
-Confirmation dialog
---------------------------
+Confirmation Box
+--------------------
 
-The :func:`~quo.shortcuts.confirmation` function displays a yes/no
+The :func:`~quo.ConfirmationBox` function displays a yes/no
 confirmation dialog. It will return a boolean according to the selection.
 
 .. code:: python
 
-    from quo.shortcuts import confirmation
+    import quo
 
-    result = confirmation(
+    quo.ConfirmationBox(
         title='Yes/No dialog example',
         text='Do you want to confirm?').run()
 
 .. image:: ./images/confirm.png
 
 
-Chooses dialog
+Choice Box
 -------------
 
-The :func:`~quo.shortcuts.choices` function displays a dialog
-with choices offered as buttons. Buttons are indicated as a list of tuples,
-each providing the label (first) and return value if clicked (second).
+The :func:`~quo.ChoiceBox` function displays a dialog
+with choices offered as buttons. Buttons are indicated as a list of tuples, each providing the label (first) and return value if clicked (second).
 
 .. code:: python
 
-    from quo.shortcuts import choices
+    import quo
 
-    result = choices(
+    quo.ChoiceBox(
         title='Button dialog example',
         text='Do you want to confirm?',
         buttons=[
             ('Yes', True),
             ('No', False),
             ('Maybe...', None)
-        ],
-    ).run()
+        ],).run()
 
 .. image:: ./images/button.png
 
 
-Radiolist dialog
+Radiolist Box
 -----------------
 
-The :func:`~quo.shortcuts.radiolist` function displays a dialog
+The :func:`~quo.RadiolistBox` function displays a dialog
 with choices offered as a radio list. The values are provided as a list of tuples,
 each providing the return value (first element) and the displayed value (second element).
 
 .. code:: python
 
-    from quo.shortcuts import radiolist
+    import quo
 
-    result = radiolist( 
+    quo.RadiolistBox( 
         title="RadioList dialog", 
         text="Which breakfast would you like ?", 
         values=[ 
             ("breakfast1", "Eggs and beacon"), 
             ("breakfast2", "French breakfast"), 
             ("breakfast3", "Equestrian breakfast") 
-        ] 
-    ).run()
+        ]).run()
 
 
-Checkbox dialog
---------------------
+``Check Box``
+-------------
 
-The :func:`~quo.shortcuts.checkbox` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
+The :func:`~quo.CheckBox` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
 
 .. code:: python
 
-    from quo.shortcuts import checkbox
+    import quo
 
-    results_array = checkbox( 
+    results_array = quo.CheckBox( 
         title="CheckboxList dialog", 
         text="What would you like in your breakfast ?",
         values=[ 
@@ -141,16 +137,17 @@ dialogs to override the default style. Also, text can be styled by passing an
 .. code:: python
 
     import quo
-    from quo.shortcuts import message
 
-    example_style = quo.styles.Style.from_dict({
+    style = quo.styles.Style
+
+    example_style = style.add({
         'dialog':             'bg:#88ff88',
         'dialog frame.label': 'bg:#ffffff #000000',
         'dialog.body':        'bg:#000000 #00ff00',
         'dialog shadow':      'bg:#00aa00',
     })
 
-    message(
+    quo.MessageBox(
         title=quo.text.HTML('<style bg="blue" fg="white">Styled</style> '
                    '<style fg="ansired">dialog</style> window'),
         text='Do you want to continue?\nPress ENTER to quit.',
@@ -165,33 +162,33 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 
 .. note:: All the shortcuts use the ``Dialog`` component, therefore it isn't specified explicitly below.
 
-+------------------+-------------------------+
-| Shortcut         | Components used         |
-+==================+=========================+
-| ``confirmation`` | - ``Label``             |
-|                  | - ``Button`` (x2)       |
-+------------------+-------------------------+
-| ``choices``      | - ``Label``             |
-|                  | - ``Button``            |
-+------------------+-------------------------+
-| ``evoke``        | - ``TextArea``          |
-|                  | - ``Button`` (x2)       |
-+------------------+-------------------------+
-| ``message``      | - ``Label``             |
-|                  | - ``Button``            |
-+------------------+-------------------------+
-| ``radiolist``    | - ``Label``             |
-|                  | - ``RadioList``         |
-|                  | - ``Button`` (x2)       |
-+------------------+-------------------------+
-| ``checkbox``     | - ``Label``             |
-|                  | - ``CheckboxList``      |
-|                  | - ``Button`` (x2)       |
-+------------------+-------------------------+
-| ``progress``     | - ``Label``             |
-|                  | - ``TextArea`` (locked) |
-|                  | - ``ProgressBar``       |
-+------------------+-------------------------+
++-------------------------+-------------------------+
+| Shortcut                | Components used         |
++=========================+=========================+
+| ``quo.ConfirmationBox`` | - ``Label``             |
+|                         | - ``Button`` (x2)       |
++-------------------------+-------------------------+
+| ``quo.ChoiceBox``       | - ``Label``             |
+|                         | - ``Button``            |
++-------------------------+-------------------------+
+| ``quo.PromptBox``       | - ``TextArea``          |
+|                         | - ``Button`` (x2)       |
++-------------------------+-------------------------+
+| ``quo.MessageBox``      | - ``Label``             |
+|                         | - ``Button``            |
++-------------------------+-------------------------+
+| ``quo.RadiolistBox``    | - ``Label``             |
+|                         | - ``RadioList``         |
+|                         | - ``Button`` (x2)       |
++-------------------------+-------------------------+
+| ``quo.CheckBox``        | - ``Label``             |
+|                         | - ``CheckboxList``      |
+|                         | - ``Button`` (x2)       |
++-------------------------+-------------------------+
+| ``quo.ProgressBox``     | - ``Label``             |
+|                         | - ``TextArea`` (locked) |
+|                         | - ``ProgressBar``       |
++-------------------------+-------------------------+
 
 +----------------+------------------------+
 | Components     | Available classnames   |
@@ -246,9 +243,10 @@ Therefore we can customize each of these elements separately, using for instance
 .. code:: python
 
     import quo
-    from quo.shortcuts import checkbox
 
-    results = checkbox(
+    styles = quo.styles.Style
+
+    quo.CheckBox(
         title="CheckboxList dialog",
         text="What would you like in your breakfast ?",
         values=[
@@ -257,7 +255,7 @@ Therefore we can customize each of these elements separately, using for instance
             ("croissants", "20 Croissants"),
             ("daily", "The breakfast of the day")
         ],
-        style=quo.styles.Style.from_dict({
+        style = styles.add({
             'dialog': 'bg:#cdbbb3',
             'button': 'bg:#bf99a4',
             'checkbox': '#e8612c',
@@ -265,5 +263,4 @@ Therefore we can customize each of these elements separately, using for instance
             'dialog shadow': 'bg:#c98982',
             'frame.label': '#fcaca3',
             'dialog.body label': '#fd8bb6',
-        })
-    ).run()
+        })).run()

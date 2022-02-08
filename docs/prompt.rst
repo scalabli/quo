@@ -176,21 +176,21 @@ prompt.)
 
 
 
-`Hide Input`
+``Hide Input``
 ------------
 When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.Prompt` has been given, the input is hidden or
  replaced by asterisks (``*`` characters) .
 
- [1] ``Using :func:`quo.prompt```
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[1] ``Using function quo.prompt()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
    import quo
 
    quo.prompt("Enter password: ", hide=True)
 
-[2] ``Using :class:`quo.Prompt```
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2] ``Using class `quo.Prompt()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -368,6 +368,23 @@ as a boolean value:
 
 ``Right prompt(rprompt)``
 --------------------------
+The :class:`quo.Prompt` class has out of the box support for right prompts as well. People familiar to ZSH could recognise this as the RPROMPT option.
+
+This can be either plain text, formatted text or a callable which returns either.
+
+.. code:: python
+
+   import quo
+   
+   style = quo.styles.Style
+   
+   example_style = style.add({'rprompt': 'bg:#ff0066 fg:#ffffff',})
+   
+   def get_rprompt():
+     return '<rprompt>'
+
+  answer = prompt('> ', rprompt=get_rprompt, style=example_style)
+
 
 ``Syntax highlighting``
 -----------------------
@@ -414,8 +431,8 @@ for cases where where our custom Pygments style doesn't specify a color.
 ``Placeholder text``
 --------------------
 A placeholer is a text that's displayed as long as no input is given.
-This won't be returned as part of the otput.
-This can be string, formatted text or a callable that returns formatted text.
+This won't be returned as part of the output.
+This can be a string, formatted text or a callable that returns formatted text.
 
 .. code:: python
 
@@ -430,7 +447,7 @@ This can be string, formatted text or a callable that returns formatted text.
 
   import quo
 
-  session = quo.Prompt(placeholder=quo.text.HTML('<style color="#888888">(please type something)</style>'))
+  session = quo.Prompt(placeholder=quo.text.HTML('<style fg="#888888">(please type something)</style>'))
   session.prompt("What is your name?: ")
   
 

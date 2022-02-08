@@ -1,5 +1,11 @@
 [![Logo](https://raw.githubusercontent.com/secretum-inc/quo/master/pics/quo.png)](https://github.com/secretum-inc/quo)
 
+| Version    |  2022.x
+|------------|------------------------------------
+| Web        | http://quo.readthedocs.io/
+| Download   | http://pypi.org/project/quo
+| Source     | http://github.com/secretum-inc/quo
+
 
 `Forever Scalable`
 
@@ -36,7 +42,7 @@ args.rst
 printing_text.rst
 prompt.rst
 exceptions.rst
-dialogs.rs
+dialogs.rst
 full_screen_apps.rst
 kb.rst
 progress

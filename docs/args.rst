@@ -8,7 +8,7 @@ Args
 Args work similarly to :ref:`apps <apps>` but are positional.
 They also only support a subset of the features ofapps  due to their syntactical nature.
 
-Basic Args
+``Basic Args``
 ---------------
 
 The most basic option is a simple string arg of one value.  If no
@@ -26,7 +26,7 @@ value is provided, the type is assumed to be :data:`STRING`.
         quo.echo(filename)
 
 
-Variadic Args
+``Variadic Args``
 ------------------
 
 The second most common version is variadic args where a specific (or
@@ -61,8 +61,8 @@ this, see the next sections.
 
 .. _file-args:
 
-File Arguments
---------------
+``File Arguments``
+-------------------
 
 Since all the examples have already worked with filenames, it makes sense
 to explain how to deal with files properly.  Command line tools are more
@@ -89,7 +89,7 @@ Example:
             output.write(chunk)
 
 
-File Path Args
+``File Path Args``
 -------------------
 
 In the previous example, the files were opened immediately.  But what if
@@ -117,8 +117,8 @@ Example:
         quo.echo(quo.formatfilename(filename))
 
 
-File Opening Safety
--------------------
+``File Opening Safety``
+-----------------------
 
 The :class:`FileType` type has one problem it needs to deal with, and that
 is to decide when to open a file.  The default behavior is to be
@@ -149,8 +149,8 @@ file in the same folder, and upon completion, the file will be moved over to
 the original location.  This is useful if a file regularly read by other
 users is modified.
 
-Environment Variables
----------------------
+``Environment Variables``
+-------------------------
 
 Like apps, args can also grab values from an environment variable.
 Unlike apps, however, this is only supported for explicitly named
@@ -175,7 +175,7 @@ where the first one is picked.
 Generally, this feature is not recommended because it can cause the user
 a lot of confusion.
 
-App-Like Args
+``App-Like Args``
 ---------------------
 
 Sometimes, you want to process args that look like apps.  For

@@ -9,8 +9,8 @@ Apps can be added to commands using the :func:`app` decorator.
 
 Apps in quo are profoundly configurable and ought not to be mistaken for :ref:`positional arguments <arguments>`.
 
-How to name Apps
------------------
+``How to name Apps``
+--------------------
 
 For the purpose of uniformity, a name is chosen in the following order
 
@@ -49,8 +49,8 @@ converted to underscores.
 -   ``"-f", "--fb"``, the name is ``f``
 -   ``"-f", "--foo-bar"``, the name is ``f``
 
-Basic Value Apps
--------------------
+``Basic Value Apps``
+---------------------
 
 The most basic app is a value app.  These apps accept one
 argument which is a value.  If no type is provided, the type of the default
@@ -108,8 +108,8 @@ To show the default values when showing command help, use ``show_default=True``
         quo.echo('.' * n)
 
 
-Multi Value Apps
--------------------
+``Multi Value Apps``
+---------------------
 
 Sometimes, you have apps that take more than one arg.  For apps,
 only a fixed number of arguments is supported.  This can be configured by
@@ -129,8 +129,8 @@ the ``nargs`` parameter.  The values are then stored as a tuple.
 
 .. _tuple-type:
 
-Tuples as Multi Value Apps
------------------------------
+``Tuples as Multi Value Apps``
+-------------------------------
 
 
 As you can see that by using `nargs` set to a specific number each item in
@@ -165,8 +165,8 @@ used.  The above example is thus equivalent to this:
 
 .. _multiple-apps:
 
-Multiple Apps
-----------------
+``Multiple Apps``
+------------------
 
 Similarly to ``nargs``, there is also the case of wanting to support a
 parameter being provided multiple times and have all the values recorded --
@@ -197,8 +197,8 @@ single characters.
     @quo.app("--format", multiple=True, default=["json"])
 
 
-Counting
---------
+``Counting``
+-------------
 
 In some very rare circumstances, it is interesting to use the repetition
 of apps to count an integer up.  This can be used for verbosity flags,
@@ -214,8 +214,8 @@ for instance:
         quo.echo(f"Verbosity: {verbose}")
 
 
-Boolean Flags
--------------
+``Boolean Flags``
+----------------
 
 Boolean flags are apps that can be enabled or disabled.  This can be
 accomplished by defining two flags in one go separated by a slash (``/``)
@@ -292,8 +292,8 @@ Example:
         quo.echo(rv)
 
 
-Feature Switches
-----------------
+``Feature Switches``
+--------------------
 
 In addition to boolean flags, there are also feature switches.  These are
 implemented by setting multiple apps to the same parameter name and
@@ -317,8 +317,8 @@ the default.
 
 .. _choice-apps:
 
-Choice Apps
---------------
+``Choice Apps``
+---------------
 
 Sometimes, you want to have a parameter be a choice of a list of values.
 In that case you can use :class:`Choice` type.  It can be instantiated
@@ -351,8 +351,8 @@ Choices should be unique after considering the effects of
 
 .. _option-prompting:
 
-Prompting
----------
+``Prompting``
+-------------
 
 In some cases, you want parameters that can be provided from the command line,
 but if not provided, ask for user input instead.  This can be implemented with
@@ -390,8 +390,8 @@ through the command line. To turn this behavior off, see
 :ref:`optional-value`.
 
 
-Password Prompts
-----------------
+``Password Prompts``
+--------------------
 
 quo also supports hidden prompts and asking for confirmation.  This is
 useful for password input:
@@ -408,8 +408,8 @@ useful for password input:
 
 
 
-Dynamic Defaults for Prompts
-----------------------------
+``Dynamic Defaults for Prompts``
+--------------------------------
 
 The ``auto_envvar_prefix`` and ``default_map`` apps for the context
 allow the program to read option values from the environment or a
@@ -444,20 +444,20 @@ To describe what the default value will be, set it in ``show_default``.
         quo.echo(f"Hello, {username}!")
 
 
-Callbacks and Eager Apps
----------------------------
+``Callbacks and Eager Apps``
+-----------------------------
 
 Sometimes, you want a parameter to completely change the execution flow.
-For instance, this is the case when you want to have a ``@version``
+For instance, this is the case when you want to have a ``--version``
 parameter that prints out the version and then exits the application.
 
 In such cases, you need two concepts: eager parameters and a callback.  An
 eager parameter is a parameter that is handled before others, and a
 callback is what executes after the parameter is handled.  The eagerness
 is necessary so that an earlier required parameter does not produce an
-error message.  For instance, if ``@version`` was not eager and a
-parameter ``@foo`` was required and defined before, you would need to
-specify it for ``@version`` to work.  For more information, see
+error message.  For instance, if ``--version`` was not eager and a
+parameter ``--foo`` was required and defined before, you would need to
+specify it for ``--version`` to work.  For more information, see
 :ref:`callback-evaluation-order`.
 
 A callback is a function that is invoked with two parameters: the current
@@ -490,8 +490,8 @@ without any destructive behavior that would change the execution flow.  In
 this case, because we would exit the program, we instead do nothing.
 
 
-Yes Parameters
---------------
+``Yes Parameters``
+-------------------
 
 For dangerous operations, it's very useful to be able to ask a user for
 confirmation.  This can be done by adding a boolean ``@yes`` flag and
@@ -514,8 +514,8 @@ callback:
 .. admonition:: Callback Signature Changes
 
     
-Values from Environment Variables
----------------------------------
+``Values from Environment Variables``
+---------------------------------------
 
 A very useful feature of quo is the ability to accept parameters from
 environment variables in addition to regular parameters.  This allows
@@ -593,8 +593,8 @@ Example usage:
 In that case it can also be a list of different environment variables
 where the first one is picked.
 
-Multiple Values from Environment Values
----------------------------------------
+``Multiple Values from Environment Values``
+---------------------------------------------
 
 As apps can accept multiple values, pulling in such values from
 environment variables (which are strings) is a bit more complex.  The way
@@ -625,10 +625,10 @@ Example usage:
         perform()
 
 
-Other Prefix Characters
------------------------
+``Other Prefix Characters``
+---------------------------((
 
-quo can deal with alternative prefix characters other than ``@`` for
+quo can deal with alternative prefix characters other than ``--`` for
 apps.  This is for instance useful if you want to handle slashes as
 parameters ``/`` or something similar.
 
@@ -661,8 +661,8 @@ boolean flag you need to separate it with ``;`` instead of ``/``:
 
 .. _ranges:
 
-Range Apps
--------------
+``Range Apps``
+--------------
 
 The :class:`IntRange` type extends the :data:`INT` type to ensure the
 value is contained in the given range. The :class:`FloatRange` type does
@@ -690,8 +690,8 @@ bounds are *closed* (the default).
         quo.echo(str(digit) * count)
 
 
-Callbacks for Validation
-------------------------
+``Callbacks for Validation``
+-----------------------------
 
 If you want to apply custom validation logic, you can do this in the
 parameter callbacks. These callbacks can both modify values as well as
@@ -722,8 +722,8 @@ type conversion. It is called for all sources, including prompts.
 
 .. _optional-value:
 
-Optional Value
---------------
+``Optional Value``
+-------------------
 
 Providing the value to an app can be made optional, in which case
 providing only the app's flag without a value will either show a

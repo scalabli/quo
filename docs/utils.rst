@@ -1,11 +1,13 @@
-# Utilities
+Utilities
+===============
 
 Besides the functionality that quo provides to interface with argument
 parsing and handling, it also provides a bunch of addon functionality that
 is useful for writing command line utilities.
 
 
-## Printing to Stdout
+``Printing to Stdout``
+---------------------
 
 The most obvious helper is the :func:`echo` and :func:`inscribe` function, which in many ways works like the Python ``print`` statement or function.
 Example:
@@ -35,8 +37,8 @@ Quo emulates output streams on Windows to support unicode to the
 Windows console through separate APIs.  For more information see
 :doc:`wincmd`.
 
-Printing to Standard error
----------------------------
+``Printing to Standard error``
+------------------------------
 You can easily print to standard error by passing ``err=True``:
 
 .. code:: python
@@ -47,7 +49,7 @@ You can easily print to standard error by passing ``err=True``:
 
 .. _ansi-colors:
 
-American National Standards Institute(ANSI) Colors
+``American National Standards Institute(ANSI) Colors
 -----------
 
 The :func:`echo` function gained extra functionality to deal with ANSI
@@ -83,8 +85,8 @@ For styling and adding more flair to  a string, :meth: fg or :meth: bg; amongst 
 
 .. _colorama: https://pypi.org/project/colorama/
 
-Scrollable test
--------------
+``Scrollable test``
+-------------------
 
 In some situations, you might want to show long texts on the terminal and
 let a user scroll through it.  This can be achieved by using the
@@ -108,8 +110,8 @@ If you want to print a lot of text, especially if generating everything in advan
         quo.scrollable(_generate_output())
 
 
-Screen Clearing
----------------
+`'Screen Clearing``
+--------------------
 
 To clear the terminal screen, you can use the :func:`clear` function. It does what the name suggests: it
 clears the entire visible screen in a platform-agnostic way:
@@ -121,8 +123,8 @@ clears the entire visible screen in a platform-agnostic way:
     quo.clear()
 
 
-Getting Characters from Terminal
---------------------------------
+``Getting Characters from Terminal``
+------------------------------------
 
 Normally, when reading input from the terminal, you would read from
 standard input.  However, this is buffered input and will not show up until
@@ -157,8 +159,8 @@ otherwise, it's too easy to forget about that and to create scripts that
 cannot be properly exited.
 
 
-Waiting for Key Press(pause)
-----------------------------
+``Waiting for Key Press(pause)``
+--------------------------------
 
 Sometimes, it's useful to pause until the user presses any key on the
 keyboard.
@@ -180,8 +182,8 @@ run interactively.
     quo.pause()
 
 
-Launching Editors
------------------
+``Launching Editors``
+-----------------------
 
 Quo supports launching editors automatically through :func:`quo.edit`.  This
 is very useful for asking users for multi-line input.  It will
@@ -208,8 +210,8 @@ Alternatively, the function can also be used to launch editors for files by a sp
     quo.edit(filename='/etc/passwd')
 
 
-Launching Applications
-----------------------
+``Launching Applications``
+---------------------------
 
 Quo supports launching applications through :func:`quo.launch`.  This can be
 used to open the default application associated with a URL or filetype.
@@ -233,8 +235,8 @@ select the provided file.
    quo.launch("/home/downloads/file.txt", locate=True)
 
 
-Printing Filenames
-------------------
+``Printing Filenames``
+-----------------------
 
 Because filenames might not be Unicode, formatting them can be a bit
 tricky.
@@ -251,8 +253,8 @@ context of a full Unicode string.
    quo.echo(f"Path: {quo.formatfilename(b'foo.txt')}")
 
 
-Standard Streams
-----------------
+``Standard Streams``
+---------------------
 
 For command line utilities, it's very important to get access to input and
 output streams reliably.  Python generally provides access to these
@@ -271,8 +273,8 @@ stream object (except in very odd cases; see :doc:`/unicode-support`).
     stdout_b = quo.binarystream('stdout')
 
 
-Intelligent File Opening
-------------------------
+``Intelligent File Opening``
+-----------------------------
 
 The logic for opening files from the :class:`quo.types.File`
 type is exposed through the :func:`quo.openfile` function.  It can
@@ -298,7 +300,8 @@ it like this:
    f.write('Hello World!\n')
 
 
-## Finding Application Folders
+``Finding Application Folders``
+---------------------------------
 
 Very often, you want to open a configuration file that belongs to your
 application.  However, different operating systems store these configuration
@@ -324,10 +327,11 @@ for per-user config files for your application depending on the OS.
                 rv[f"{section}.{key}"] = value
         return rv
 
-## Printing tabular data
+``Printing tabular data``
+--------------------------
 :func:`quo.tabular` function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
-```python
+.. code:: python
    import quo
 
    table = [ 

@@ -7,12 +7,11 @@ Quo internally uses exceptions to signal various error conditions that
 the user of the application might have caused.  Primarily this is things
 like incorrect usage.
 
-Where are Errors Handled?
--------------------------
+``Where are Errors Handled?``
+----------------------------
 
 Quo's main error handling is happening in :meth:`BaseCommand.main`.  In
-there it handles all subclasses of :exc:`Outlier` as well as the
-standard :exc:`EOFError` and :exc:`KeyboardInterrupt` exceptions.  The
+there it handles all subclasses of :exc:`Outlier` as well as the standard :exc:`EOFError` and :exc:`KeyboardInterrupt` exceptions.  The
 latter are internally translated into a :exc:`Abort`.
 
 The logic applied is the following:
@@ -26,8 +25,8 @@ The logic applied is the following:
     to standard error and exit the program with exit code ``1``.
 4.  if it goes through well, exit the program with exit code ``0``.
 
-What if I don't want that?
---------------------------
+``What if I don't want that?``
+------------------------------
 
 Generally you always have the option to invoke the :meth:`invoke` method
 yourself.  For instance if you have a :class:`Command` you can invoke it
@@ -49,8 +48,8 @@ So you can do something like this::
     command.main(['command-name', 'args', 'go', 'here'],
                  standalone_mode=False)
 
-Which Exceptions Exist?
------------------------
+``Which Exceptions Exist?``
+---------------------------
 
 Quo has two exception bases: :exc:`Outlier` which is raised for
 all exceptions that quo wants to signal to the user and :exc:`Abort`
@@ -70,4 +69,4 @@ The following common subclasses exist:
     are raised from a callback quo will automatically augment it with
     the parameter name if possible.
 *   :exc:`FileError` this is an error that is raised by the :exc:`FileType` if quo encounters issues opening the file.
-*   :exc:`ValidationError` if quo encounters issues validating an input
+*   :exc:`ValidationError` if quo encounters issues validating an input.

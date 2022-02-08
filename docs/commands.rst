@@ -6,8 +6,8 @@ Commands and Tethers
 This is implemented through the :class:`Command`
 and :class:`Tether` (actually :class:`MultiCommand`).
 
-Callback Invocation
--------------------
+``Callback Invocation``
+-----------------------
 
 For a regular command, the callback is executed whenever the command runs.
 If the script is the only command, it will always fire (unless a parameter
@@ -33,8 +33,8 @@ when an inner command runs:
         quo.echo('Syncing')
 
 
-Passing Parameters
-------------------
+``Passing Parameters``
+----------------------
 
 quo strictly separates parameters between commands and subcommands. What this
 means is that apps and args for a specific command have to be specified
@@ -53,8 +53,8 @@ Suppose we have a program called ``tool.py``, containing a subcommand called
   program. quo then invokes the callback for ``--help``, which prints the
   help and aborts the program before quo can process the subcommand.
 
-Nested Handling and Contexts
-----------------------------
+``Nested Handling and Climes``
+---------------------------------
 
 As you can see from the earlier example, the basic command group accepts a
 debug arg which is passed to its callback, but not to the sync
@@ -62,7 +62,7 @@ command itself.  The sync command only accepts its own args.
 
 This allows tools to act completely independent of each other, but how
 does one command talk to a nested one?  The answer to this is the
-:class:`Context`.
+:class:`Clime`.
 
 Each time a command is invoked, a new context is created and linked with the
 parent context.  Normally, you can't see these contexts, but they are
@@ -105,12 +105,12 @@ In addition to that, instead of passing an object down, nothing stops the
 application from modifying global state.  For instance, you could just flip
 a global ``DEBUG`` variable and be done with it.
 
-Decorating Commands
--------------------
+``Decorating Commands``
+-----------------------
 
 As you have seen in the earlier example, a decorator can change how a
 command is invoked.  What actually happens behind the scenes is that
-callbacks are always invoked through the :meth:`Context.invoke` method
+callbacks are always invoked through the :meth:`Clime.invoke` method
 which automatically invokes a command correctly (by either passing the
 context or not).
 
@@ -132,7 +132,7 @@ For instance, the :func:`pass_obj` decorator can be implemented like this:
             return clime.invoke(f, clime.obj, *args, **kwargs)
         return update_wrapper(new_func, f)
 
-The :meth:`Context.invoke` command will automatically invoke the function
+The :meth:`Clime.invoke` command will automatically invoke the function
 in the correct way, so the function will either be called with ``f(clime,
 obj)`` or ``f(obj)`` depending on whether or not it itself is decorated with
 :func:`pass_context`.
@@ -141,8 +141,8 @@ This is a very powerful concept that can be used to build very complex
 nested applications; see :ref:`complex-guide` for more information.
 
 
-Tether Invocation Without Command
---------------------------------
+``Tether Invocation Without Command``
+-------------------------------------
 
 By default, a tether or multi command is not invoked unless a subcommand is
 passed.  In fact, not providing a command automatically passes ``--help``
@@ -171,8 +171,8 @@ Example:
         quo.echo('The subcommand')
 
 
-Merging Multi Commands
-----------------------
+``Merging Multi Commands``
+---------------------------
 
 In addition to implementing custom multi commands, it can also be
 interesting to merge multiple together into one script.  While this is
@@ -215,8 +215,8 @@ In case a command exists in more than one source, the first source wins.
 
 .. _multi-command-chaining:
 
-Multi Command Chaining
-----------------------
+``Multi Command Chaining``
+---------------------------
 
 Sometimes it is useful to be allowed to invoke more than one subcommand in
 one go.  For instance if you have installed a setuptools package before
@@ -262,8 +262,8 @@ be handled are not yet available when the callback fires.
     will be fixed in future versions of quo.
 
 
-Multi Command Pipelines
------------------------
+``Multi Command Pipelines``
+----------------------------
 
 A very common usecase of multi command chaining is to have one command
 process the result of the previous command.  There are various ways in
@@ -289,7 +289,7 @@ To make this a bit more concrete consider this example:
     import quo
 
     @quo.tether(chain=True, invoke_without_command=True)
-    @quo.app('@i', '@input', type=quo.types.File('r'))
+    @quo.app('-i', '--input', type=quo.types.File('r'))
     def cli(input):
         pass
 
@@ -357,8 +357,8 @@ the quo repository.  It implements a pipeline based image editing tool
 that has a nice internal structure for the pipelines.
 
 
-Overriding Defaults
--------------------
+``Overriding Defaults``
+------------------------
 
 By default, the default value for a parameter is pulled from the
 ``default`` flag that is provided when it's defined, but that's not the
@@ -407,8 +407,8 @@ Example usage:
 
 
 
-Context Defaults
-----------------
+``Clime Defaults``
+-------------------
 
 You can override defaults for contexts not just
 when calling your script, but also in the decorator that declares a
@@ -439,8 +439,8 @@ This example does the same as the previous example:
 
 
 
-Command Return Values
----------------------
+``Command Return Values``
+---------------------------
 
 Quo supports return values from command callbacks.  This enables a whole range of features
 that were previously hard to implement.
@@ -469,8 +469,8 @@ know:
         list of all return values in chain mode, or the single return
         value in case of non chained commands.
 
--   The return value is bubbled through from the :meth:`Context.invoke`
-    and :meth:`Context.forward` methods.  This is useful in situations
+-   The return value is bubbled through from the :meth:`Clime.invoke`
+    and :meth:`Clime.forward` methods.  This is useful in situations
     where you internally want to call into another command.
 
 -   quo does not have any hard requirements for the return values and
