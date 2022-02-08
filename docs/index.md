@@ -53,8 +53,8 @@ reference.rst
 unicode-support.rst
 ```
 
-```{toctree}                                          :maxdepth: 2
-:caption: Tutorials & Explanations
+```{toctree}                                          :maxdepth: 1
+:caption: Miscellaneous pages
 LICENCE.rst
 changes.rst
 appendix.rst
