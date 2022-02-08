@@ -49,12 +49,18 @@ progress
 filters.rst
 styling
 help_text.rst
-changes.rst
 reference.rst
 unicode-support.rst
+```
+
+```{toctree}                                          :maxdepth: 2
+:caption: Tutorials & Explanations
+LICENCE.rst
+changes.rst
 appendix.rst
 ```
-   
+
+
 ## Donate🎁
 
 In order to for us to maintain this project and grow our community of contributors.
