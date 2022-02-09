@@ -86,6 +86,17 @@ loop will run until the application is done. An application will quit when
 ^^^^^^^^^^^^
 Margins are used for displaying line numbers and scroll bars, but could be used to display any other kind of information as well.
 
+[1] NumberedMargin
+-------------------
+
+A margin that displays the line numbers
+
+[2] ScrollbarMargin
+-------------------
+A margin that displays a  scrollbar.
+
+
+
 .. code:: python
 
  import quo

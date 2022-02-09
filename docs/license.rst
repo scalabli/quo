@@ -1,6 +1,8 @@
-MIT License
-============
-## License📑
+License📜
+==========
+
+``MIT License``
+---------------
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :alt: Licence:MIT

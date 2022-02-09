@@ -88,10 +88,6 @@ to our issue tracker at
  📥 secretum@googlegroups.com
 
 
-## License📑
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
-This software is licensed under the `MIT License`. See the [License](https://github.com/secretum-inc/quo/blob/master/LICENSE) file in the top distribution directory for the full license text.
 
 
 
