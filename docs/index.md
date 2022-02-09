@@ -56,7 +56,7 @@ unicode-support.rst
 ```{toctree}
 :maxdepth: 1
 :caption: Miscellaneous pages
-LICENCE.rst
+license.rst
 changes.rst
 appendix.rst
 ```
