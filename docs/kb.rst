@@ -58,8 +58,8 @@ If the user presses only `q`, then nothing will happen until either a second
 key (like `u` or `o`) has been pressed or until the timeout expires.
 
 
-List of special keys
---------------------
+``List of special keys``
+-------------------------
 
 Besides literal characters, any of the following keys can be used in a key
 binding:
@@ -154,8 +154,8 @@ There are a couple of useful aliases as well:
     supported.
 
 
-Binding alt+something, option+something or meta+something
----------------------------------------------------------
+``Binding alt+something, option+something or meta+something``
+---------------------------------------------------------------
 
 Vt100 terminals translate the alt key into a leading :kbd:`escape` key.
 For instance, in order to handle :kbd:`alt-f`, we have to handle
@@ -172,8 +172,8 @@ In code that looks as follows:
         " Do something if alt-f or meta-f have been pressed. "
 
 
-Wildcards
----------
+``Wildcards``
+-------------
 
 Sometimes you want to catch any key that follows after a certain key stroke.
 This is possible by binding the '<any>' key:
@@ -188,8 +188,8 @@ This will handle `aa`, `ab`, `ac`, etcetera. The key binding can check the
 `event` object for which keys exactly have been pressed.
 
 
-Attaching a filter (condition)
-------------------------------
+``Attaching a filter (condition)``
+-----------------------------------
 
 In order to enable a key binding according to a certain condition, we have to
 pass it a :class:`~quo.filters.Filter`, usually a
@@ -200,7 +200,9 @@ filters <filters>`.)
 
     import quo
 
-    @quo.filters.Condition
+    filters = quo.filters.Condition 
+
+    @filters
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
@@ -213,8 +215,8 @@ filters <filters>`.)
 The key binding will be ignored when this condition is not satisfied.
 
 
-ConditionalKeyBindings: Disabling a set of key bindings
--------------------------------------------------------
+``ConditionalKeyBindings: Disabling a set of key bindings``
+-------------------------------------------------------------
 
 Sometimes you want to enable or disable a whole set of key bindings according
 to a certain condition. This is possible by wrapping it in a
@@ -237,8 +239,8 @@ If the condition is not satisfied, all the key bindings in `my_bindings` above
 will be ignored.
 
 
-Merging key bindings
---------------------
+``Merging key bindings``
+-------------------------
 
 Sometimes you have different parts of your application generate a collection of
 key bindings. It is possible to merge them together through the
@@ -256,8 +258,8 @@ object around and having everyone populate it.
     ])
 
 
-Eager
------
+``Eager``
+----------
 
 Usually not required, but if ever you have to override an existing key binding,
 the `eager` flag can be useful.
@@ -283,8 +285,8 @@ called, even if there's an active `ab` binding.
 
 This is mainly useful in order to conditionally override another binding.
 
-Asyncio coroutines
-------------------
+``Asyncio coroutines``
+-------------------------
 
 Key binders handlers can be asyncio coroutines.
 
@@ -311,8 +313,8 @@ finished , an `asyncio.CancelledError` exception will be thrown in this
 coroutine.
 
 
-Timeouts
---------
+``Timeouts``
+---------------
 
 There are two timeout settings that effect the handling of keys.
 
@@ -332,8 +334,8 @@ There are two timeout settings that effect the handling of keys.
   timeout.
 
 
-Recording macros
-----------------
+``Recording macros``
+----------------------
 
 Both Emacs and Vi mode allow macro recording. By default, all key presses are
 recorded during a macro, but it is possible to exclude certain keys by setting
@@ -347,8 +349,8 @@ the `record_in_macro` parameter to `False`:
         pass
 
 
-Creating new Vi text objects and operators
-------------------------------------------
+``Creating new Vi text objects and operators``
+------------------------------------------------
 
 We tried very hard to ship prompt_toolkit with as many as possible Vi text
 objects and operators, so that text editing feels as natural as possible to Vi

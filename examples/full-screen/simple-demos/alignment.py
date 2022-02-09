@@ -5,10 +5,6 @@ Demo of the different Window alignment options.
 
 import quo
 
-from prompt_toolkit.layout.containers import HSplit, Window, WindowAlign
-from prompt_toolkit.layout.controls import FormattedTextControl
-from prompt_toolkit.layout.layout import Layout
-
 LIPSUM = """Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Maecenas
 quis interdum enim. Nam viverra, mauris et blandit malesuada, ante est bibendum
 mauris, ac dignissim dui tellus quis ligula. Aenean condimentum leo at
@@ -27,14 +23,17 @@ left_text = '\nLeft aligned text. - (Press "q" to quit)\n\n' + LIPSUM
 center_text = "Centered text.\n\n" + LIPSUM
 right_text = "Right aligned text.\n\n" + LIPSUM
 
-
-body = HSplit(
+hsplit = quo.layout.HSplit
+window = quo.layout.Window
+windowalign = quo.layout.WindowAlign
+formattedtextcontrol = quo.layout.FormattedTextControl
+body = hsplit(
     [
-        Window(FormattedTextControl(left_text), align=WindowAlign.LEFT),
-        Window(height=1, char="-"),
-        Window(FormattedTextControl(center_text), align=WindowAlign.CENTER),
-        Window(height=1, char="-"),
-        Window(FormattedTextControl(right_text), align=WindowAlign.RIGHT),
+        window(formattedtextcontrol(left_text), align=windowalign.LEFT),
+        window(height=1, char="-"),
+        window(formattedtextcontrol(center_text), align=windowalign.CENTER),
+        window(height=1, char="-"),
+        window(formattedtextcontrol(right_text), align=windowalign.RIGHT),
     ]
 )
 
@@ -48,9 +47,10 @@ def _(event):
     "Quit application."
     event.app.exit()
 
+layout = quo.layout.Layout
 
 # 3. The `Application`
-application = quo.Suite(layout=Layout(body), key_bindings=kb, full_screen=True)
+application = quo.Suite(layout=layout(body), bind=kb, full_screen=True)
 
 
 def run():

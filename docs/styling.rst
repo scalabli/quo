@@ -113,8 +113,8 @@ the "header" class, and then override that with a red background color.
     quo.layout.Window(quo.layout.BufferControl(...), style='class:header bg:red'),
 
 
-Dot notation in class names
-----------------------------
+``Dot notation in class names``
+--------------------------------
 
 The dot operator has a special meaning in a class name. If we write:
 ``style="class:a.b.c"``, then this will actually expand to the following:
@@ -124,8 +124,8 @@ This is mainly added for `Pygments <http://pygments.org/>`_ lexers, which
 specify "Tokens" like this, but it's useful in other situations as well.
 
 
-Multiple classes in a style sheet
-----------------------------------
+``Multiple classes in a style sheet``
+-------------------------------------
 
 A style sheet can be more complex as well. We can for instance specify two
 class names. The following will underline the left part within the header, or
@@ -158,8 +158,8 @@ It is possible to combine this:
      ])
 
 
-Evaluation order of rules in a style sheet
--------------------------------------------
+``Evaluation order of rules in a style sheet``
+-----------------------------------------------
 
 The style is determined as follows:
 
@@ -185,8 +185,8 @@ The style is determined as follows:
 - Then this final style is applied to this user interface element.
 
 
-Using a dictionary as a style sheet
--------------------------------------
+``Using a dictionary as a style sheet``
+----------------------------------------
 
 The order of the rules in a style sheet is meaningful, so typically, we use a
 list of tuples to specify the style. But is also possible to use a dictionary
@@ -202,8 +202,8 @@ their ordering. An ``OrderedDict`` works as well.
     })
 
 
-Loading a style from Pygments
------------------------------
+``Loading a style from Pygments``
+----------------------------------
 
 `Pygments <http://pygments.org/>`_ has a slightly different notation for
 specifying styles, because it maps styling to Pygments "Tokens". A Pygments
@@ -217,9 +217,8 @@ style can however be loaded and used as follows:
     style = style_from_pygments_cls(get_style_by_name('monokai'))
 
 
-Merging styles together
------------------------
-
+``Merging styles together``
+----------------------------
 Multiple :class:`~quo.styles.Style` objects can be merged together as
 follows:
 
@@ -234,9 +233,8 @@ follows:
     ])
 
 
-Color depths
--------------
-
+``Color depths``
+-----------------
 There are four different levels of color depths available:
 
 +--------+-----------------+--------------------------------+---------------------------------+
@@ -280,8 +278,8 @@ An application can also decide to set the color depth manually by passing a
     )
 
 
-## Style transformations
-
+``Style transformations``
+-----------------------------
 Quo supports a way to apply certain transformations to the styles
 near the end of the rendering pipeline. This can be used for instance to change
 certain colors to improve the rendering in some terminals.

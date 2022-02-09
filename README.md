@@ -145,14 +145,13 @@ Example of an prompt box window
 ```python
    import quo
 
-
    table = [
      ["Name", "Gender", "Age"],
      ["Alice", "F", 24],
      ["Bob", "M", 19],
      ["Dave", "M", 24]
    ]
-   tabular = quo.tabulate.tabular()
+   tabular = quo.tabular
    quo.echo(tabular(table))
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)

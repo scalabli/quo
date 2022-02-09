@@ -12,7 +12,10 @@ import quo
 
 
 # Custom color scheme.
-example_style = quo.styles.Style.add(
+
+styling = quo.styles.Style
+
+example_style = styling.add(
     {
         "dialog": "bg:aquamarine",
         "dialog frame-label": "bg:purple",

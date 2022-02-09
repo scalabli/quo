@@ -5,10 +5,9 @@ any layout in a non-interactive way.
 """
 import quo
 
-@quo.command()
-@quo.app("--frame", help="Print a frame")
-
-def _frame(frame):
+@quo.command("frame")
+@quo.app("--frames")
+def _frame(frames):
     """ Example of a simple layout
     """
     content = quo.widgets.TextArea(text="Hello world🌍")

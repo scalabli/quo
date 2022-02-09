@@ -5,8 +5,6 @@ This could be used as inspiration for a REPL.
 """
 import quo
 
-from quo.filters import has_focus
-
 help_text = """
 Type any expression (e.g. "4 + 4") followed by enter to execute.
 Press Control-C to exit.
@@ -20,7 +18,7 @@ def main():
     output_field = quo.widgets.TextArea(style="class:output-field", text=help_text)
     input_field = quo.widgets.TextArea(
         height=2,
-        prompt="▶️ ",
+        prompt=">>",
         style="class:input-field",
         multiline=False,
         wrap_lines=False,
@@ -69,7 +67,8 @@ def main():
         event.app.exit()
 
     # Style.
-    style = quo.styles.Style(
+    styling = quo.styles.Style
+    style = styling(
         [
             ("output-field", "bg:blue fg:yellow"),
             ("input-field", "bg: yellow  #ffffff"),

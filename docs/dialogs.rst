@@ -7,8 +7,8 @@ quo ships with a high level API for displaying dialogs, similar to
 the Whiptail program, but in pure Python.
 
 
-Message Box
------------
+``Message Box``
+---------------
 
 Use the :func:`~quo.MessageBox` function to display a
 simple message box. For instance:
@@ -24,8 +24,8 @@ simple message box. For instance:
 .. image:: ./images/messagebox.png
 
 
-Prompt Box
-------------
+``Prompt Box``
+--------------
 
 The :func:`~quo.PromptBox` function can display an
 input box. It will return the user input as a string.
@@ -45,7 +45,7 @@ The ``password=True`` option can be passed to the
 :func:`~quo.PromptBox` function to turn this into a password input box.
 
 
-Confirmation Box
+``Confirmation Box``
 --------------------
 
 The :func:`~quo.ConfirmationBox` function displays a yes/no
@@ -62,8 +62,8 @@ confirmation dialog. It will return a boolean according to the selection.
 .. image:: ./images/confirm.png
 
 
-Choice Box
--------------
+``Choice Box``
+---------------
 
 The :func:`~quo.ChoiceBox` function displays a dialog
 with choices offered as buttons. Buttons are indicated as a list of tuples, each providing the label (first) and return value if clicked (second).
@@ -84,7 +84,7 @@ with choices offered as buttons. Buttons are indicated as a list of tuples, each
 .. image:: ./images/button.png
 
 
-Radiolist Box
+``Radiolist Box``
 -----------------
 
 The :func:`~quo.RadiolistBox` function displays a dialog

@@ -15,6 +15,8 @@ Unrealeased
 - Fixed minor bugs
 - Introduced c++ extensions
 - Deprecated :param:`r_elicit` in favor of :param:`rprompt`
+- Full support for Windows
+- Renamed tabulate to table
 - Dropped support for `python < 3.8`
 
 

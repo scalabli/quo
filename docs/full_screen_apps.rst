@@ -82,6 +82,51 @@ loop will run until the application is done. An application will quit when
 ``The layout``
 -------------
 
+``Margins``
+^^^^^^^^^^^^
+Margins are used for displaying line numbers and scroll bars, but could be used to display any other kind of information as well.
+
+.. code:: python
+
+ import quo
+ from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
+ from prompt_toolkit.layout.margins import NumberedMargin, ScrollbarMargin
+ 
+ intro = """ Quo is scallable\n""" * 30
+ 
+ # Create text buffers. The margins will update if you scroll up or down.
+ 
+ buff = quo.buffer.Buffer()
+ buff.text = LIPSUM
+
+ # 1. The layout
+ hsplit = quo.layout.HSplit
+ window = quo.layout.Window
+
+ window1 = window(FormattedTextControl('Press "q" to quit.'), height= 1, style="bg:red fg:yellow")
+
+ window2 = window(BufferControl(buffer=buff),                                        # Add margins
+            left_margins=[NumberedMargin(), ScrollbarMargin()],
+            right_margins=[ScrollbarMargin(), ScrollbarMarg
+in()])
+
+ body = hsplit(
+    [
+    window1,
+    window2
+    ]
+)
+# 2 Key bindings
+ kb = quo.keys.KeyBinder()
+
+@kb.add("q")
+@kb.add("ctrl-c")
+def _(event):
+    "Quit application."
+    event.app.exit()
+
+# Layout
+layout = quo.layout.Layout
 A layered layout architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

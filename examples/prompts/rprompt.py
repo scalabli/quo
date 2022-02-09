@@ -12,7 +12,7 @@ session = quo.Prompt()
 
 example_style = quo.styles.Style.add(
     {
-        "r_elicit": "bg:#ff0066 #ffffff",
+        "rprompt": "bg:#ff0066 #ffffff",
     }
 )
 
@@ -20,30 +20,24 @@ example_style = quo.styles.Style.add(
 def get_rprompt_text():
     return [
         ("", " "),
-        ("underline", "<r_elicit>"),
+        ("underline", "<rprompt>"),
         ("", " "),
     ]
 
 
 def main():
     # Option 1: pass a string to 'rprompt':
-    answer = session.prompt("> ", r_elicit=" <r_elicit> ", style=example_style)
+    answer = session.prompt("> ", rprompt=" <Quo> ", style=example_style)
     print("You said: %s" % answer)
 
     # Option 2: pass HTML:
-    answer = session.prompt("> ", r_elicit=quo.text.HTML(" <u>&lt;rprompt&gt;</u> "), style=example_style)
+    answer = session.prompt("> ", rprompt=quo.text.HTML(" <u><bold>prompt</bold></u> "), style=example_style)
     print("You said: %s" % answer)
 
-    # Option 3: pass ANSI:
-    answer = session.prompt(
-        "> ", r_elicit=quo.text.ANSI(" \x1b[4m<rprompt>\x1b[0m "), style=example_style
-    )
-    print("You said: %s" % answer)
-
-    # Option 4: Pass a callable. (This callable can either return plain text,
-    #           an HTML object, an ANSI object or a list of (style, text)
+    # Option 3: Pass a callable. (This callable can either return plain text,
+    #           an HTML object, or a list of (style, text)
     #           tuples.
-    answer = session.prompt("> ", r_elicit=get_rprompt_text, style=example_style)
+    answer = session.prompt("> ", rprompt=get_rprompt_text, style=example_style)
     print("You said: %s" % answer)
 
 

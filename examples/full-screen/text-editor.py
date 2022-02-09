@@ -344,7 +344,7 @@ root_container = quo.widgets.MenuContainer(
 )
 
 
-style = Style.from_dict(
+style = Style.add(
     {
         "status": "reverse",
         "shadow": "bg:#440044",

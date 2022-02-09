@@ -4,36 +4,36 @@ A simple example of a few buttons and click handlers.
 """
 import quo
 
-from quo.suite.current import get_app
+from quo.suite import get_app
 
-from quo.styles import Style
 
 
 
 # Event handlers for all the buttons.
-def button1_clicked():
+def button1():
+    get_app()
     text_area.text = "Button 1 clicked"
 
 
-def button2_clicked():
+def button2():
     text_area.text = "Button 2 clicked"
 
+import os 
+def button3():
+    text_area.text = os.system("ls") # "Button 3 clicked"
 
-def button3_clicked():
-    text_area.text = "Button 3 clicked"
 
-
-def exit_clicked():
+def exit():
     get_app().exit()
 
 
 # All the widgets for the UI.
 
 
-button1 = quo.widgets.Button("Button 1", handler=button1_clicked)
-button2 = quo.widgets.Button("Button 2", handler=button2_clicked)
-button3 = quo.widgets.Button("Button 3", handler=button3_clicked)
-button4 = quo.widgets.Button("Exit", handler=exit_clicked)
+b1 = quo.widgets.Button("Button 1", handler=button1)
+b2 = quo.widgets.Button("Button 2", handler=button2)
+b3 = quo.widgets.Button("Button 3", handler=button3)
+b4 = quo.widgets.Button("Exit", handler=exit)
 text_area = quo.widgets.TextArea(focusable=True)
 
 
@@ -47,7 +47,7 @@ root_container = quo.widgets.Box(
             quo.layout.VSplit(
                 [
                     quo.widgets.Box(
-                        body=quo.layout.HSplit([button1, button2, button3, button4], padding=1),
+                        body=quo.layout.HSplit([b1, b2, b3, b4], padding=1),
                         padding=1,
                         style="class:left-pane",
                     ),
@@ -58,17 +58,21 @@ root_container = quo.widgets.Box(
     ),
 )
 
-layout = quo.layout.Layout(container=root_container, focused_element=button1)
+layout = quo.layout.Layout(container=root_container, focused_element=b1)
 
 
 # Key bindings.
 kb = quo.keys.KeyBinder()
+
 kb.add("tab")(quo.keys.focus.next)
 kb.add("s-tab")(quo.keys.focus.previous)
 
 
 # Styling.
-style = Style(
+
+styling = quo.styles.Style
+
+style = styling(
     [
         ("left-pane", "bg:#888800 #000000"),
         ("right-pane", "bg:#00aa00 #000000"),

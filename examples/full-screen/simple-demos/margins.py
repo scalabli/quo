@@ -5,13 +5,10 @@ Example of Window margins.
 This is mainly used for displaying line numbers and scroll bars, but it could
 be used to display any other kind of information as well.
 """
-from prompt_toolkit.application import Application
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.layout.containers import HSplit, Window
-from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
-from prompt_toolkit.layout.layout import Layout
-from prompt_toolkit.layout.margins import NumberedMargin, ScrollbarMargin
+import quo
+
+from quo.layout.controls import BufferControl, FormattedTextControl
+from quo.layout.margins import NumberedMargin, ScrollbarMargin
 
 LIPSUM = (
     """
@@ -31,14 +28,16 @@ quis sodales maximus."""
 
 # Create text buffers. The margins will update if you scroll up or down.
 
-buff = Buffer()
+buff = quo.buffer.Buffer()
 buff.text = LIPSUM
 
 # 1. The layout
-body = HSplit(
+hsplit = quo.layout.HSplit
+window = quo.layout.Window
+body = hsplit(
     [
-        Window(FormattedTextControl('Press "q" to quit.'), height=1, style="reverse"),
-        Window(
+        window(FormattedTextControl('Press "q" to quit.'), height=1, style="reverse"),
+        window(
             BufferControl(buffer=buff),
             # Add margins.
             left_margins=[NumberedMargin(), ScrollbarMargin()],
@@ -49,18 +48,18 @@ body = HSplit(
 
 
 # 2. Key bindings
-kb = KeyBindings()
-
+kb = quo.keys.KeyBinder()
 
 @kb.add("q")
-@kb.add("c-c")
+@kb.add("ctrl-c")
 def _(event):
     "Quit application."
     event.app.exit()
 
-
+# Layout
+layout = quo.layout.Layout
 # 3. The `Application`
-application = Application(layout=Layout(body), key_bindings=kb, full_screen=True)
+application = quo.Suite(layout=layout(body), bind=kb, full_screen=True)
 
 
 def run():

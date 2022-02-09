@@ -34,13 +34,13 @@ Quo requires Python `3.8` or later.
 ```{toctree}
 :maxdepth: 2
 :caption: Tutorials & Explanations
-introduction
+introduction.rst
+printing_text.rst
+prompt.rst
 utils.rst
 commands.rst
 apps.rst
 args.rst
-printing_text.rst
-prompt.rst
 exceptions.rst
 dialogs.rst
 full_screen_apps.rst

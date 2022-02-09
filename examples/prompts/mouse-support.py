@@ -8,4 +8,4 @@ if __name__ == "__main__":
     )
     print("You can click with the mouse in order to select text.")
     answer = session.prompt("Multiline input: ", multiline=True, mouse_support=True)
-    print("You said: %s" % answer)
+    print(f"You said: {answer}")

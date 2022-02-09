@@ -189,7 +189,7 @@ bindings.add("tab")(quo.keys.focus.next)
 bindings.add("s-tab")(quo.keys.focus.previous)
 
 
-style = quo.styles.Style.from_dict(
+style = quo.styles.Style.add(
     {
         "window.border": "#888888",
         "shadow": "bg:#222222",

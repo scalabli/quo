@@ -13,6 +13,8 @@ def main():
         buttons=[("Yes", True), ("No", False), ("Maybe...", None)],
     ).run()
 
+    if result == True:
+        print("fff")
     quo.echo(f"Result = {result}")
 
 

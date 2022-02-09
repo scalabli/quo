@@ -12,24 +12,25 @@ is useful for writing command line utilities.
 The most obvious helper is the :func:`echo` and :func:`inscribe` function, which in many ways works like the Python ``print`` statement or function.
 Example:
 
-```python
+.. code:: python
+
     import quo
 
     quo.echo('Hello World!')
-```
 
 It can output both text and binary data. It will emit a trailing newline
 by default, which needs to be suppressed by passing ``nl=False``:
 
-```python
+.. code:: python
+
    import quo
 
    quo.echo(b'\xe2\x98\x83', nl=False)
-```
+
 
 Last but not least :func:`echo` uses quo's intelligent internal output
 streams to stdout and stderr which support unicode output on the Windows
-console.  This means for as long as you are using `quo.echo` you can
+console.  This means for as long as you are using :func:`quo.echo` you can
 output unicode characters (there are some limitations on the default font
 with regards to which characters can be displayed).
 
@@ -44,13 +45,14 @@ You can easily print to standard error by passing ``err=True``:
 .. code:: python
 
    import quo
+
    quo.echo('Hello World!', err=True)
 
 
 .. _ansi-colors:
 
-``American National Standards Institute(ANSI) Colors
------------
+``American National Standards Institute(ANSI) Colors``
+-------------
 
 The :func:`echo` function gained extra functionality to deal with ANSI
 colors and styles.  Note that on Windows, this functionality is only
@@ -110,10 +112,10 @@ If you want to print a lot of text, especially if generating everything in advan
         quo.scrollable(_generate_output())
 
 
-`'Screen Clearing``
+``Screen Clearing``
 --------------------
 
-To clear the terminal screen, you can use the :func:`clear` function. It does what the name suggests: it
+To clear the terminal screen, you can use the :func:`quo.clear` function. It does what the name suggests: it
 clears the entire visible screen in a platform-agnostic way:
 
 .. code:: python
@@ -123,8 +125,8 @@ clears the entire visible screen in a platform-agnostic way:
     quo.clear()
 
 
-``Getting Characters from Terminal``
-------------------------------------
+``Getting Characters from Terminal(getchar)``
+----------------------------------------------
 
 Normally, when reading input from the terminal, you would read from
 standard input.  However, this is buffered input and will not show up until
@@ -334,13 +336,14 @@ for per-user config files for your application depending on the OS.
 .. code:: python
    import quo
 
+   tabulate = quo.table.tabular()
+
    table = [ 
      ["Name", "Gender", "Age"], 
      ["Alice", "F", 24],
      ["Bob", "M", 19],
      ["Dave", "M", 24]
      ]
-   quo.echo(quo.tabulate.tabular(table))
-```
+   quo.echo(tabulate(table))
 
 

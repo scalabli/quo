@@ -3,8 +3,8 @@
 Printing (and using) formatted text
 ===================================
 
-echo
------
+``echo``
+--------
 :func:`quo.echo` prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode, binary data and formatted text.
 
 Supported color names:
@@ -56,13 +56,11 @@ Parameters
 
    * ``reset``  – by default a reset-all code is added at the end of the string which means that styles do not carry over. This can be disabled to compose styles.
 
-inscribe
+`'inscribe``
 ----------
 quo ships with a
 :func:`~quo.inscribe` function that's meant to
-be (as much as possible) compatible with the built-in print function, and :func:`quo.echo` but on
-top of that, also supports colors and formatting.
-
+be (as much as possible) compatible with the built-in print function, and :func:`quo.echo`. It also supports colors and formatting jist link :func:`quo.echo` 
 On Linux systems, this will output VT100 escape sequences, while on Windows it
 will use Win32 API calls or VT100 sequences, depending on what is available.
 
@@ -75,8 +73,8 @@ will use Win32 API calls or VT100 sequences, depending on what is available.
         "formatted text".
 
 
-Formatted text
----------------
+``Formatted text``
+-------------------
 
 There are several ways to display colors:
 
@@ -87,12 +85,12 @@ There are several ways to display colors:
 
 An instance of any of these three kinds of objects is called "formated text".
 
-quo.echo
-^^^^^^^^^
+``[1] Using quo.echo``
+^^^^^^^^^^^^^^^^^^^^^^^
 
 
-quo.text.HTML
-^^^^^^^^^^^^^
+``[2] Using quo.text.HTML
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :class:`~quo.text.HTML` can be used to indicate that a
 string contains HTML-like formatting. It recognizes the basic tags for bold,
@@ -143,8 +141,8 @@ assign a style for a custom tag.
 
 
 
-(style, text) tuples
-^^^^^^^^^^^^^^^^^^^^
+``(style, text) tuples``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Internally, :class:`~quo.text.HTML` objects are mapped to a list of
 ``(style, text)`` tuples. It is however also possible to create such a list
@@ -187,8 +185,8 @@ possible to use class names, and separate the styling in a style sheet.
     quo.inscribe(text, style=style)
 
 
-Pygments ``(Token, text)`` tuples
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``Pygments ``(Token, text)`` tuples``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When you have a list of `Pygments <http://pygments.org/>`_ ``(Token, text)``
 tuples, then these can be printed by wrapping them in a

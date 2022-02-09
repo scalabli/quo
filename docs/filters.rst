@@ -1,7 +1,7 @@
 .. _filters:
 
 Filters
-=======
+=========
 
 Many places in `quo` require a boolean value that can change over
 time. For instance:
@@ -40,6 +40,7 @@ from a function. For instance, the following condition will evaluate to
     import quo
 
     is_searching = quo.filters.Condition(lambda: quo.suite.get_app().is_searching)
+
 
 A different way of writing this, is by using the decorator syntax:
 
