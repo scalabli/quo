@@ -53,7 +53,8 @@ reference.rst
 unicode-support.rst
 ```
 
-```{toctree}                                          :maxdepth: 1
+```{toctree}
+:maxdepth: 1
 :caption: Miscellaneous pages
 LICENCE.rst
 changes.rst
@@ -94,65 +95,3 @@ This software is licensed under the `MIT License`. See the [License](https://git
 
 
 
-
-
-..
-
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/pics/quo.png
-
-Quo's Documentation
-================================
-:Version: 2022.x
-:Web: http://quo.readthedocs.io/
-:Download: http://pypi.org/project/quo
-:Source: http://github.com/secretum-inc/quo
-
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   introduction.rst
-   
-   confirm.rst.
-   
-   r
-   terminal.rst
-   style.rst
-   markup.rst
-   text.rst
-   highlighting.rst
-   pretty.rst
-   logging.rst
-   traceback.rst
-
-   columns.rst
-   padding.rst
-   panel.rst
-   
-   progress_bars.rst
-   syntax.rst
-   styling.rst
-   tables.rst
-   utils.rst
-   tree.rst
-
-   protocol.rst
-
-   
-
-# Support
-
-Subscribe to one of our mailing lists to stay up to date with everything in the Quo community:
-
-  [Community👨‍👩‍👦‍👦](https://groups.google.com/g/secretum/)
-
-You can also subscribe by sending an email to `secretum+subscribe@googlegroups.com`
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
