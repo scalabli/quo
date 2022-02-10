@@ -17,6 +17,8 @@ QUO_STYLE = [
     # Highlighting of search matches in document.
     ("search", "bg:ansibrightyellow ansiblack"),
     ("search.current", ""),
+    #Rule
+    ("rule", "fg:yellow bg:blue"),
     # Incremental search.
     ("incsearch", ""),
     ("incsearch.current", "reverse"),
@@ -36,8 +38,6 @@ QUO_STYLE = [
     ("line-number.current", "bold"),
     ("tilde", "#8888ff"),
     # Default prompt.
-    # Rule
-    ("rule", "fg:yellow bg:red")
     ("prompt", ""),
     ("prompt.arg", "noinherit"),
     ("prompt.arg.text", ""),

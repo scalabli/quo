@@ -10,7 +10,7 @@ from quo.exit import quick_exit as exit
 from quo.console.console import Console as Console
 from .core import Context as Clime
 from .core import Parameter as Parameter
-from .core import App as App, 
+from .core import App as App 
 from .core import Tether as Tether
 from .getchar import getchar as getchar
 from .pause import pause as pause
