@@ -78,7 +78,7 @@ def _(event):
     event.app.exit()
 
 
-style = quo.styles.Style.from_dict(
+style = quo.styles.Style.add(
     {
         "status": "reverse",
         "status.position": "#aaaa00",
@@ -91,7 +91,7 @@ layout = quo.layout.Layout(root_container, focused_element=text_area)
 
 # create application.
 
-application = quo.Suite(
+application = quo.Console(
     layout=layout,
     bind=bindings,
     enable_page_navigation_bindings=True,

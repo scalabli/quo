@@ -14,7 +14,7 @@ from typing import (
     cast,
 )
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.buffer import CompletionState
 from quo.completion import Completion
 from quo.filters import (
@@ -37,7 +37,7 @@ from quo.utils.utils import get_width
 from .containers import ConditionalContainer, HSplit, ScrollOffsets, Window
 from .controls import GetLinePrefixCallable, UIContent, UIControl
 from .dimension import Dimension
-from .margins import ScrollbarMargin
+from .margin import ScrollbarMargin
 
 if TYPE_CHECKING:
     from quo.keys.key_binding.key_bindings import KeyBindings

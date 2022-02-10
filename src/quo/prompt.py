@@ -5,13 +5,14 @@ Line editing functionality.
 This provides a UI for a line input, similar to GNU Readline, libedit and
 linenoise.
 
-Either call the `prompt` function for every line input. Or create an instance
+Either call the :func:`prompt` function for every line input. Or create an instance
 of the :class:`.Prompt` class and call the `prompt` method from that
 class. In the second case, we'll have an instance that keeps all the state like
 the history in between several calls.
 
 """
 from asyncio import get_event_loop
+import warnings
 from contextlib import contextmanager
 from enum import Enum
 from functools import partial
@@ -29,8 +30,8 @@ from typing import (
 )
 
 
-from quo.suite.suite import Suite
-from quo.suite.current import get_app
+from quo.console.console import Console
+from quo.console.current import get_app
 from quo.completion.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
 from quo.clipboard import Clipboard, DynamicClipboard, InMemoryClipboard
@@ -94,6 +95,7 @@ from quo.layout.processors import (
     ReverseSearchProcessor,
     merge_processors,
 )
+
 from quo.layout.utils import explode_text_fragments
 from quo.lexers import DynamicLexer, Lexer
 from quo.output import ColorDepth, DummyOutput, Output
@@ -105,7 +107,8 @@ from quo.styles import (
     StyleTransformation,
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
-)
+    )
+
 from quo.utils.utils import get_width as get_cwidth
 from quo.utils.utils import (
     is_dumb_terminal,
@@ -123,6 +126,7 @@ if TYPE_CHECKING:
     from quo.text.core import MagicFormattedText
 
 __all__ = [
+    "prompt",
     "Prompt",
     "CompleteStyle",
 ]
@@ -173,20 +177,20 @@ def _split_multiline_elicit(
 
 class _Relicit(Window):
     """
-    The elicit that is displayed on the right side of the Window.
+    The prompt that is displayed on the right side of the Window.
     """
 
     def __init__(self, text: AnyFormattedText) -> None:
         super().__init__(
             FormattedTextControl(text=text),
             align=WindowAlign.RIGHT,
-            style="class:r_elicit",
+            style="class:rprompt",
         )
 
 
 class CompleteStyle(str, Enum):
     """
-    How to display autocompletions for the elicit.
+    How to display autocompletions for the prompt.
     """
 
     value: str
@@ -207,6 +211,99 @@ ElicitContinuationText = Union[
 ]
 
 _T = TypeVar("_T")
+
+##
+
+def prompt(
+    text,
+    default=None,
+    hide=False,
+    affirm=False,
+    type=None,
+    value_proc=None,
+    suffix=":> ",
+    show_default=True,
+    err=False,
+    show_choices=True,
+):
+
+    """Prompts a user for input.  This is a convenience function that can be used to prompt a user for input later.
+
+    If the user aborts the input by sending a interrupt signal, this  function will catch it and raise a :exc:`Abort` exception.
+
+    :param text: the text to show for the prompt.
+    :param default: the default value to use if no input happens.  If this  is not given it will prompt until it's aborted.
+    :param hide: if this is set to true then the input value will  be hidden.
+    :param affirm: asks for confirmation for the value.
+    :param type: the type to use to check the value against.
+    :param value_proc: if this parameter is provided it's a function that is invoked instead of the type conversion to convert a value.
+    :param suffix: a suffix that should be added to the prompt.
+    :param show_default: shows or hides the default value in the prompt.
+    :param err: if set to true the file defaults to ``stderr`` instead of ``stdout``, the same as with echo.
+    :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
+    Example usage::                                                                                                                     s = prompt("")
+
+
+    """
+    from quo.types import convert_type
+    from quo.expediency import inscribe
+    from quo.errors import Abort, UsageError
+    from quo.i_o.termui import _build_prompt, hidden_prompt_func
+    insert = input
+    result = None
+
+
+    def prompt_func(text):
+        f = hidden_prompt_func if hide else insert
+        try:
+            inscribe(text, nl=False, err=err)
+            return f("")
+        except (KeyboardInterrupt, EOFError):
+            # getpass doesn't print a newline if the user aborts input with ^C.
+            # Allegedly this behavior is inherited from getpass(3).
+            # A doc bug has been filed at https://bugs.python.org/issue24711
+            if hide:
+                inscribe(None, err=err)
+            raise Abort("You've aborted input")
+
+    if value_proc is None:
+        value_proc = convert_type(type, default)
+
+    prompt = _build_prompt(
+        text, suffix, show_default, default, show_choices, type
+    )
+
+    while 1:
+        while 1:
+            value = prompt_func(prompt)
+            if value:
+                break
+            elif default is not None:
+                value = default
+                break
+        try:
+            result = value_proc(value)
+        except UsageError as e:
+            if hide:
+                inscribe("ERROR: the value you entered was invalid", err=err)
+            else:
+                inscribe(f"Error: {e.message}", err=err)  # noqa: B306
+            continue
+        if not affirm:
+            return result
+        while 1:
+            value2 = prompt_func("Repeat for confirmation: ")
+            if value2:
+                break
+        if value == value2:
+            return result
+        from quo.i_o.termui import echo
+        echo(f"ERROR:", nl=False, fg="black", bg="red")
+        echo(f" ", nl=False)
+        echo(f"The two entered values do not match", err=err, fg="black", bg="yellow")
+
+
+
 
 
 class Prompt(Generic[_T]):
@@ -250,7 +347,7 @@ class Prompt(Generic[_T]):
         :class:`~quo.filters.Filter`. Search case insensitive.
     :param lexer: :class:`~quo.lexers.Lexer` to be used for the
         syntax highlighting.
-    :param validator: :class:`~quo.validation.Validator` instance
+    :param validator: :class:`~quo.types.Validator` instance
         for input validation.
     :param completer: :class:`~quo.completion.Completer` instance
         for input completion.
@@ -261,7 +358,7 @@ class Prompt(Generic[_T]):
         we always run the completions in the main thread.
     :param reserve_space_for_menu: Space to be reserved for displaying the menu.
         (0 means that no space needs to be reserved.)
-    :param auto_suggest: :class:`~quo.auto_suggest.AutoSuggest`
+    :param auto_suggest: :class:`~quo.completion.auto_suggest.AutoSuggest`
         instance for input suggestions.
     :param style: :class:`.Style` instance for the color scheme.
     :param include_default_pygments_style: `bool` or
@@ -288,7 +385,7 @@ class Prompt(Generic[_T]):
     :param history: :class:`~quo.history.History` instance.
     :param clipboard: :class:`~quo.clipboard.Clipboard` instance.
         (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
-    :param r_elicit: Text or formatted text to be displayed on the right side.
+    :param rprompt: Text or formatted text to be displayed on the right side.
         This can also be a callable that returns (formatted) text.
     :param bottom_toolbar: Formatted text or callable which is supposed to
         return formatted text.
@@ -319,7 +416,7 @@ class Prompt(Generic[_T]):
         "complete_in_thread",
         "is_password",
         "editing_mode",
-        "key_bindings",
+        "bind",
         "is_password",
         "bottom_toolbar",
         "style",
@@ -327,7 +424,7 @@ class Prompt(Generic[_T]):
         "swap_light_and_dark_colors",
         "color_depth",
         "include_default_pygments_style",
-        "r_elicit",
+        "rprompt",
         "multiline",
         "elicit_continuation",
         "wrap_lines",
@@ -382,7 +479,7 @@ class Prompt(Generic[_T]):
         history: Optional[History] = None,
         clipboard: Optional[Clipboard] = None,
         elicit_continuation: Optional[ElicitContinuationText] = None,
-        r_elicit: AnyFormattedText = None,
+        rprompt: AnyFormattedText = None,
         bottom_toolbar: AnyFormattedText = None,
         mouse_support: FilterOrBool = False,
         input_processors: Optional[List[Processor]] = None,
@@ -421,7 +518,7 @@ class Prompt(Generic[_T]):
         self.swap_light_and_dark_colors = swap_light_and_dark_colors
         self.color_depth = color_depth
         self.include_default_pygments_style = include_default_pygments_style
-        self.r_elicit = r_elicit
+        self.rprompt = rprompt
         self.multiline = multiline
         self.elicit_continuation = elicit_continuation
         self.wrap_lines = wrap_lines
@@ -666,7 +763,7 @@ class Prompt(Generic[_T]):
                             right=0,
                             bottom=0,
                             hide_when_covering_content=True,
-                            content=_Relicit(lambda: self.r_elicit),
+                            content=_Relicit(lambda: self.rprompt),
                         ),
                     ],
                 ),
@@ -688,9 +785,9 @@ class Prompt(Generic[_T]):
 
     def _create_application(
         self, editing_mode: EditingMode, erase_when_done: bool
-    ) -> Suite[_T]:
+    ) -> Console[_T]:
         """
-        Create the `Suite` object.
+        Create the `Console` object.
         """
         dyncond = self._dyncond
 
@@ -699,8 +796,8 @@ class Prompt(Generic[_T]):
         open_in_editor_bindings = load_open_in_editor_bindings()
         elicit_bindings = self._create_elicit_bindings()
 
-        # Create application
-        application: Suite[_T] = Suite(
+        # Create console application
+        application: Console[_T] = Console(
             layout=self.layout,
             style=DynamicStyle(lambda: self.style),
             style_transformation=merge_style_transformations(
@@ -843,7 +940,7 @@ class Prompt(Generic[_T]):
         include_default_pygments_style: Optional[FilterOrBool] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-        r_elicit: Optional[AnyFormattedText] = None,
+        rprompt: Optional[AnyFormattedText] = None,
         multiline: Optional[FilterOrBool] = None,
         elicit_continuation: Optional[ElicitContinuationText] = None,
         wrap_lines: Optional[FilterOrBool] = None,
@@ -942,8 +1039,8 @@ class Prompt(Generic[_T]):
             self.style_transformation = style_transformation
         if swap_light_and_dark_colors is not None:
             self.swap_light_and_dark_colors = swap_light_and_dark_colors
-        if r_elicit is not None:
-            self.r_elicit = r_elicit
+        if rprompt is not None:
+            self.rprompt = rprompt
         if multiline is not None:
             self.multiline = multiline
         if elicit_continuation is not None:
@@ -1002,9 +1099,9 @@ class Prompt(Generic[_T]):
         )
 
     @contextmanager
-    def _dumb_elicit(self, message: AnyFormattedText = "") -> Iterator[Suite[_T]]:
+    def _dumb_elicit(self, message: AnyFormattedText = "") -> Iterator[Console[_T]]:
         """
-        Create prompt `Suite` for prompt function for dumb terminals.
+        Create prompt `Console` for prompt function for dumb terminals.
 
         Dumb terminals have minimum rendering capabilities. We can only print
         text to the screen. We can't use colors, and we can't do cursor
@@ -1026,8 +1123,8 @@ class Prompt(Generic[_T]):
 
         # Create and run application.
         application = cast(
-            Suite[_T],
-            Suite(
+            Console[_T],
+            Console(
                 input=self.input,
                 output=DummyOutput(),
                 layout=self.layout,
@@ -1072,7 +1169,7 @@ class Prompt(Generic[_T]):
         include_default_pygments_style: Optional[FilterOrBool] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: Optional[FilterOrBool] = None,
-        r_elicit: Optional[AnyFormattedText] = None,
+        rprompt: Optional[AnyFormattedText] = None,
         multiline: Optional[FilterOrBool] = None,
         elicit_continuation: Optional[ElicitContinuationText] = None,
         wrap_lines: Optional[FilterOrBool] = None,
@@ -1130,8 +1227,8 @@ class Prompt(Generic[_T]):
             self.style_transformation = style_transformation
         if swap_light_and_dark_colors is not None:
             self.swap_light_and_dark_colors = swap_light_and_dark_colors
-        if r_elicit is not None:
-            self.r_elicit = r_elicit
+        if rprompt is not None:
+            self.rprompt = rprompt
         if multiline is not None:
             self.multiline = multiline
         if elicit_continuation is not None:

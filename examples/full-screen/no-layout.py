@@ -2,6 +2,6 @@
 """
 An empty full screen application without layout.
 """
-import quo
+from quo.console import Console
 
-quo.Suite(full_screen=True).run()
+Console(full_screen=True).run()

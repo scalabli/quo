@@ -36,6 +36,8 @@ QUO_STYLE = [
     ("line-number.current", "bold"),
     ("tilde", "#8888ff"),
     # Default prompt.
+    # Rule
+    ("rule", "fg:yellow bg:red")
     ("prompt", ""),
     ("prompt.arg", "noinherit"),
     ("prompt.arg.text", ""),
@@ -51,7 +53,7 @@ QUO_STYLE = [
     ("arg-toolbar", "bold"),
     ("arg-toolbar.text", "nobold"),
     # Validation toolbar.
-    ("validation-toolbar", "bg:#550000 #ffffff"),
+    ("validation-toolbar", "bg:brown fg:white"),
     ("window-too-small", "bg:#550000 #ffffff"),
     # Completions toolbar.
     ("completion-toolbar", "bg:#bbbbbb #000000"),

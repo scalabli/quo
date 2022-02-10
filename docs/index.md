@@ -36,6 +36,7 @@ Quo requires Python `3.8` or later.
 :caption: Tutorials & Explanations
 introduction.rst
 printing_text.rst
+console.rst
 prompt.rst
 utils.rst
 commands.rst

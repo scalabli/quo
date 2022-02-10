@@ -1,5 +1,5 @@
 from typing import Callable, Iterable, List, Optional, Sequence, Union
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.filters import Condition
 from quo.text.core import OneStyleAndTextTuple, StyleAndTextTuples
 from quo.keys.key_binding.key_bindings import KeyBindingsBase

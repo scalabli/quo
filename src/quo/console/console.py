@@ -32,6 +32,7 @@ from typing import (
     List,
     NamedTuple,
     Optional,
+    TextIO,
     Tuple,
     Type,
     TypeVar,
@@ -112,19 +113,19 @@ Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 
 # event handler
-onSuite = Callable[["Suite[_AppResult]"], None]
+onSuite = Callable[["Console[_AppResult]"], None]
 
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 _SIGTSTP = getattr(signal, "SIGTSTP", None)
 
 
-class Suite(Generic[_AppResult]):
+class Console(Generic[_AppResult]):
     """
-    The main Suite class!
+    The main Console class!
     This glues everything together.
 
     :param layout: A :class:`~quo.layout.Layout` instance.
-    :param key_bindings:
+    :param bind:
         :class:`~quo.keys.key_binding.KeyBindingsBase` instance for
         the key bindings.
     :param clipboard: :class:`~quo.clipboard.Clipboard` to use.
@@ -188,11 +189,11 @@ class Suite(Generic[_AppResult]):
 
     :param input: :class:`~quo.input.Input` instance.
     :param output: :class:`~quo.output.Output` instance. (Probably
-                   Vt100_Output or Win32Output.)
+                   Vt100 or Win32Output.)
 
     Usage:
 
-        app = Suite(...)
+        app = Console(...)
         app.run()
 
         # Or
@@ -638,13 +639,13 @@ class Suite(Generic[_AppResult]):
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
-        Run the quo :class:`~quo.Suite`
+        Run the quo :class:`~quo.Console`
         until :meth:`~quo.Suite.exit` has been
         called. Return the value that was passed to
         :meth:`~quo.Suite.exit`.
 
         This is the main entry point for a prompt_toolkit
-        :class:`~quo.Suite` and usually the only
+        :class:`~quo.Console` and usually the only
         place where the event loop is actually running.
 
         :param pre_run: Optional callable, which is called right after the
@@ -653,7 +654,7 @@ class Suite(Generic[_AppResult]):
             of the alternate screen and hide the application, display the
             exception, and wait for the user to press ENTER.
         """
-        assert not self._is_running, "Suite is already running."
+        assert not self._is_running, "Console app is already running."
 
         async def _run_async() -> _AppResult:
             "Coroutine."
@@ -819,6 +820,150 @@ class Suite(Generic[_AppResult]):
                     loop.set_exception_handler(previous_exc_handler)
 
         return await _run_async2()
+    def edit(
+            text=None,
+            editor=None,
+            env=None,
+            require_save=True,
+            extension=".txt",
+            filename=None
+            ) -> _AppResult:
+        from quo.i_o.termui import edit as ed
+        return ed()
+
+    def launch(
+            url, 
+            wait=False, 
+            locate=False
+            ) -> _AppResult:
+
+        from quo.implementation import open_url
+        open_url(url, wait=wait, locate=locate)
+        """
+        This function launches the given URL (or filename) in the default
+    viewer application for this file type.  If this is an executable, it
+    might launch the executable in a new session.  The return value is
+    the exit code of the launched application.  Usually, ``0`` indicates success.
+
+    Examples::
+       from quo import Console
+
+       console = Console()
+       console.launch('https://quo.readthedocs.org/')
+       console.launch('/my/downloaded/file', locate=True)
+
+    :param url: URL or filename of the thing to launch.
+    :param wait: Wait for the program to exit before returning. This
+    only works if the launched program blocks. In particular,
+    ``xdg-open`` on Linux does not block.
+    :param locate: if this is set to `True` then instead of launching the
+      application associated with the URL it will attempt to
+      launch a file manager with the file located.  This
+      might have weird effects if the URL does not point to the filesystem.
+      """
+     # from quo.implementation import open_url
+ #    return open_url(url, wait=wait, locate=locate)
+  #  def inscribe(
+  #          *values: Any,
+ #           sep: str = " ",
+  #          end: str = "\n",
+ #           file: Optional[TextIO] = None,
+  #          flush: bool = False,
+#            style: Optional[BaseStyle] = None,
+ #           output: Optional[Output] = None,
+  #          color_depth: Optional[ColorDepth] = None,
+ #           style_transformation: Optional[StyleTransformation]# = None,
+  #          include_default_pygments_style: bool = True,
+  #          ) -> None:
+
+
+     #       """
+ #           ::
+#            inscribe(*values, sep=' ', end='\\n', file=None, flush=False, style=None, output=None)
+#
+ #   Print text to stdout. This is supposed to be compatible with Python's print
+#    function, but supports printing of formatted text. You can pass a
+#    :class:`~quo.text.FormattedText`,
+   # :class:`~quo.text.HTML` or
+#    :class:`~quo.text.ANSI` object to print formatted
+#    text.
+
+   # * Print HTML as follows::
+#
+#        quo.inscribe(quo.text.HTML('<i>Some italic text</i> <red>This is red!</red>'))
+
+  #      style = Style.from_dict({
+   #         'hello': '#ff0066',
+   #         'world': '#884444 italic',
+  #      })
+  #      quo.inscribe(quo.text.HTML('<hello>Hello</hello> <world>world</world>!'), style=style)
+
+  #  * Print a list of (style_str, text) tuples in the given style to the
+  #    output.  E.g.::
+
+  #      style = Style.from_dict({
+    #        'hello': '#ff0066',
+  #          'world': '#884444 italic',
+   #     })
+   #     fragments = FormattedText([
+    #        ('class:hello', 'Hello'),
+   #         ('class:world', 'World'),
+    #    ])
+   #     quo.inscribe(fragments, style=style)
+
+  #  If you want to print a list of Pygments tokens, wrap it in
+  #  :class:`~quo.text.PygmentsTokens` to do the
+ #   conversion.
+
+ #   :param values: Any kind of printable object, or formatted string.
+#    :param sep: String inserted between values, default a space.
+ #   :param end: String appended after the last value, default a newline.
+ #   :param style: :class:`.Style` instance for the color scheme.
+ #   :param include_default_pygments_style: `bool`. Include the default Pygments
+    #    style when set to `True` (the default). """
+    
+    def echo(
+            *values: Any,
+            sep: str = " ",
+            end: str = "\n",
+            file: Optional[TextIO] = None,
+            flush: bool = False,
+            style: Optional[BaseStyle] = None,
+            output: Optional[Output] = None,
+            color_depth: Optional[ColorDepth] = None,
+            style_transformation: Optional[StyleTransformation] = None,
+            include_default_pygments_style: bool = True,
+            ) -> None:
+        from quo.shortcuts.utils import inscribe
+        return inscribe()
+    def size() -> _AppResult:
+        from quo.i_o.termui import terminalsize as ts
+        return ts()
+
+    def openfile():
+        from quo.expediency.vitals import openfile as of
+        return of()
+    def rule(message: Optional[str] = None) -> _AppResult:
+
+        from quo.layout import HSplit, Window, FormattedTextControl, WindowAlign as WA
+        intro = ""
+        buff = Buffer()
+        buff.text = intro
+        body = HSplit(
+                [
+                    Window(FormattedTextControl(message), height=1, style="class:rule", align=WA.CENTER),
+                    Window(BufferControl(buffer=buff),)
+                        
+                    ]
+                    )
+        from quo.keys import KeyBinder
+        kb = KeyBinder()
+        @kb.add(Keys.Any)
+        def _(event):
+            event.app.exit()
+
+        Console(layout=Layout(body), bind=kb, full_screen=False).run()
+
 
     def run(
         self,
@@ -1033,9 +1178,9 @@ class Suite(Generic[_AppResult]):
 
         .. note::
 
-            If `Suite.exit` is called before `Suite.run()` is
-            called, then the `Suite` won't exit (because the
-            `Suite.future` doesn't correspond to the current run). Use a
+            If `Console.exit` is called before `Console.run()` is
+            called, then the `Console` won't exit (because the
+            `Console.future` doesn't correspond to the current run). Use a
             `pre_run` hook and an event to synchronize the closing if there's a
             chance this can happen.
 
@@ -1049,10 +1194,10 @@ class Suite(Generic[_AppResult]):
         assert result is None or exception is None
 
         if self.future is None:
-            raise errors.Outlier("Suite is not running. Suite.exit() failed.")
+            raise errors.Outlier("Console app is not running. Console.exit() failed.")
 
         if self.future.done():
-            raise errors.Outlier("Return value already set. Suite.exit() failed.")
+            raise errors.Outlier("Return value already set. Console.exit() failed.")
 
         self.exit_style = style
 
@@ -1076,7 +1221,7 @@ class Suite(Generic[_AppResult]):
         command: str,
         wait_for_enter: bool = True,
         display_before_text: AnyFormattedText = "",
-        wait_text: str = "𝙿𝚛𝚎𝚜𝚜 𝙴𝙽𝚃𝙴𝚁 𝚝𝚘 𝚌𝚘𝚗𝚝𝚒𝚗𝚞𝚎...⏳",
+        wait_text: str = "Press enter to continue...",
     ) -> None:
         """
         Run system command (While hiding the prompt. When finished, all the
@@ -1194,7 +1339,7 @@ class _CombinedRegistry(KeyBindingsBase):
     """
 
     def __init__(self, 
-            app: Suite[_AppResult]
+            app: Console[_AppResult]
             )-> None:
         self.app = app
         self._cache: SimpleCache[
@@ -1292,7 +1437,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
     - This will share the same input/output I/O.
     - This doesn't block the event loop.
     """
-    from quo.shortcuts import Prompt
+    from quo.prompt import Prompt
     from quo.keys import KeyBinder
 
     key_bindings = KeyBinder()

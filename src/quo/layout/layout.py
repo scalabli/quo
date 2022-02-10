@@ -38,7 +38,7 @@ FocusableElement = Union[str, Buffer, UIControl, AnyContainer]
 class Layout:
     """
     The layout for a quo
-    :class:`~quo.Suite`.
+    :class:`~quo.console.Console`.
     This also keeps track of which user control is focused.
 
     :param container: The "root" container for the layout.
@@ -318,7 +318,7 @@ class Layout:
         if len(self._stack) > 1:
             self._stack = self._stack[:-1]
 
-    def focus_next(self) -> None:
+    def next(self) -> None:
         """
         Focus the next visible/focusable Window.
         """
@@ -334,7 +334,7 @@ class Layout:
 
             self.focus(windows[index])
 
-    def focus_previous(self) -> None:
+    def previous(self) -> None:
         """
         Focus the previous visible/focusable Window.
         """

@@ -1,8 +1,8 @@
 from asyncio import get_event_loop
 from typing import TYPE_CHECKING, Any, Optional, TextIO
 
-from quo.suite.suite import Suite
-from quo.suite.current import get_app_session
+from quo.console.console import Console
+from quo.console.current import get_app_session
 from quo.text import FormattedText, StyleAndTextTuples, to_formatted_text
 from quo.input import DummyInput
 from quo.layout.layout import Layout
@@ -58,7 +58,7 @@ def inscribe(
 
         quo.inscribe(quo.text.HTML('<i>Some italic text</i> <red>This is red!</red>'))
 
-        style = Style.from_dict({
+        style = Style.add({
             'hello': '#ff0066',
             'world': '#884444 italic',
         })
@@ -67,7 +67,7 @@ def inscribe(
     * Print a list of (style_str, text) tuples in the given style to the
       output.  E.g.::
 
-        style = Style.from_dict({
+        style = Style.add({
             'hello': '#ff0066',
             'world': '#884444 italic',
         })
@@ -160,7 +160,7 @@ def container(
         # initial time, before exiting the application.
         get_event_loop().call_soon(lambda: app.exit())
 
-    app: Suite[None] = Suite(
+    app: Console[None] = Console(
         layout=Layout(container=container),
         output=output,
         input=DummyInput(),

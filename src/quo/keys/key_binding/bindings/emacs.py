@@ -1,7 +1,7 @@
 # pylint: disable=function-redefined
 from typing import Dict, Union
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.buffer import Buffer, indent, unindent
 from quo.completion import CompleteEvent
 from quo.filters import (

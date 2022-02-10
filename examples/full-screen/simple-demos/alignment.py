@@ -49,8 +49,8 @@ def _(event):
 
 layout = quo.layout.Layout
 
-# 3. The `Application`
-application = quo.Suite(layout=layout(body), bind=kb, full_screen=True)
+# 3. The `Console` app
+application = quo.Console(layout=layout(body), bind=kb, full_screen=True)
 
 
 def run():

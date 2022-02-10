@@ -7,16 +7,21 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import importlib
 
 from quo.exit import quick_exit as exit
-from quo.suite.suite import Suite
-from .core import Context as Clime, Parameter
-#             App,
+from quo.console.console import Console as Console
+from .core import Context as Clime
+from .core import Parameter as Parameter
+from .core import App as App, 
+from .core import Tether as Tether
+from .getchar import getchar as getchar
+from .pause import pause as pause
+from .prompt import prompt as prompt  # dont confuse this with :class: quo.prompt.Prompt()
+
+
 #             Arg,
 #             BaseCommand,
 #             Command,
 #             CommandCollection,
 #             MultiCommand,
-#             Parameter,
-#             Tethe)
 
 
 
@@ -28,39 +33,41 @@ from .core import Context as Clime, Parameter
 
 #from quo.context.current import resolve_color_default
 #from quo.expediency import inscribe # LazyFile
-from quo.shortcuts.utils import inscribe
-from quo.shortcuts import Prompt
-from quo.pause import pause
-from quo.shortcuts import message as MessageBox, evoke as PromptBox, progress as ProgressBox, radiolist as RadiolistBox, confirmation as ConfirmationBox, checkbox as CheckBox, choices as ChoiceBox
+#from quo.shortcuts.utils import inscribe as inscriber
+#nscribe = inscriber
+
+
+#from quo.shortcuts import MessageBox, PromptBox, ProgressBox, RadiolistBox, ConfirmationBox, CheckBox, ChoiceBox
+
+#from .table import tabular
 from quo.decorators import (
                        app,
                        arg,
                        command,
                        tether
                        )
-from quo.progress import ProgressBar
 
-#from quo.decorators import (
-#             contextualize,
+from quo.decorators import (
+             contextualize,
 #             objectualize,
-#             make_pass_decorator,
+             make_pass_decorator
 #             autoversion,
 #             autopasswd,
 #             autohelp,
 #             autoconfirm
-#             )
+)
 
 #from .setout import HelpFormatter, wraptext
 #from quo.context.current import currentcontext
 #from .parser import AppParser
+
 from quo.expediency import (
-                  appdir,
-                  formatfilename,
-                  os_args,
-                  textstream,
-                  binarystream,
-                  openfile
-                  )
+    appdir,
+    formatfilename,
+    os_args,
+    textstream,
+    binarystream,
+    )
         
 
 def clear():
@@ -80,14 +87,10 @@ def clear():
 
 from quo.i_o import (
               confirm,
-              launch,
               echo,
-              edit,
-              terminalsize,
               unstyle,
-              prompt,
               )
 
 from quo.shortcuts import container
 
-__version__ = "2022.1.6"
+__version__ = "2022.2"

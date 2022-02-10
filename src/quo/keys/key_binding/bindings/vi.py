@@ -5,7 +5,7 @@ from enum import Enum
 from itertools import accumulate
 from typing import Callable, Iterable, List, Optional, Tuple, TypeVar, Union, cast
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.buffer import Buffer, indent, reshape_text, unindent
 from quo.clipboard import Data
 from quo.document import Document

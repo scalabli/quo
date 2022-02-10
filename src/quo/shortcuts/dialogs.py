@@ -2,8 +2,8 @@ import functools
 from asyncio import get_event_loop
 from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
-from quo.suite import Suite
-from quo.suite.current import get_app
+from quo.console.console import Console
+from quo.console.current import get_app
 from quo.buffer import Buffer
 from quo.completion import Completer
 from quo.eventloop import run_in_executor_with_context
@@ -31,23 +31,23 @@ from quo.widgets import (
 )
 
 __all__ = [
-    "confirmation",
-    "choices",
-    "evoke",
-    "message",
-    "radiolist_dialog",
-    "checkbox",
-    "progress",
+    "ConformationBox",
+    "ChoiceBox",
+    "PromptBox",
+    "MessageBox",
+    "RadiolistBox",
+    "CheckBox",
+    "ProgressBox",
 ]
 
 
-def confirmation(
+def ConfirmationBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     yes_text: str = "Yes",
     no_text: str = "No",
     style: Optional[BaseStyle] = None,
-) -> Suite[bool]:
+) -> Console[bool]:
     """
     Display a Yes/No dialog.
     Return a boolean.
@@ -75,12 +75,12 @@ def confirmation(
 _T = TypeVar("_T")
 
 
-def choices(
+def ChoiceBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     buttons: List[Tuple[str, _T]] = [],
     style: Optional[BaseStyle] = None,
-) -> Suite[_T]:
+) -> Console[_T]:
     """
     Display a dialog with button choices (given as a list of tuples).
     Return the value associated with button.
@@ -102,16 +102,16 @@ def choices(
     return _create_app(dialog, style)
 
 
-def evoke(
+def PromptBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "🄾🄺",
-    cancel_text: str = "🄲🄰🄽🄲🄴🄻",
+    ok_text: str = "Ok",
+    cancel_text: str = "Cancel",
     completer: Optional[Completer] = None,
     validator: Optional[Validator] = None,
     password: FilterOrBool = False,
     style: Optional[BaseStyle] = None,
-) -> Suite[str]:
+) -> Console[str]:
     """
     Display a text input box.
     Return the given text, or None when cancelled.
@@ -152,12 +152,12 @@ def evoke(
     return _create_app(dialog, style)
 
 
-def message(
+def MessageBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "𝕆𝕜",
+    ok_text: str = "Ok",
     style: Optional[BaseStyle] = None,
-) -> Suite[None]:
+) -> Console[None]:
     """
     Display a simple message box and wait until the user presses enter.
     """
@@ -174,14 +174,14 @@ def message(
     return _create_app(dialog, style)
 
 
-def radiolist(
+def RadiolistBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "🄾🄺",
-    cancel_text: str = "🄲🄰🄽🄲🄴🄻",
+    ok_text: str = "Ok",
+    cancel_text: str = "Cancel",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     style: Optional[BaseStyle] = None,
-) -> Suite[_T]:
+) -> Console[_T]:
     """
     Display a simple list of element the user can choose amongst.
 
@@ -212,14 +212,14 @@ def radiolist(
     return _create_app(dialog, style)
 
 
-def checkbox(
+def CheckBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
     cancel_text: str = "Cancel",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     style: Optional[BaseStyle] = None,
-) -> Suite[List[_T]]:
+) -> Console[List[_T]]:
     """
     Display a simple list of element the user can choose multiple values amongst.
 
@@ -250,14 +250,14 @@ def checkbox(
     return _create_app(dialog, style)
 
 
-def progress(
+def ProgressBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (
         lambda *a: None
     ),
     style: Optional[BaseStyle] = None,
-) -> Suite[None]:
+) -> Console[None]:
     """
     :param run_callback: A function that receives as input a `set_percentage`
         function and it does the work.
@@ -308,7 +308,7 @@ def progress(
     return app
 
 
-def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Suite[Any]:
+def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Console[Any]:
     # Key bindings.
     bindings = KeyBinder()
     bindings.add("tab")(next)

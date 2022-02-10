@@ -273,7 +273,7 @@ class AppParser:
             self._process_args_for_apps(state)
             self._process_args_for_args(state)
         except UsageError:
-            if self.clime is None or not self.clime.resilient_parsing:
+            if self.clime is None or not self.clime.parse:
                 raise
         return state.opts, state.largs, state.order
 

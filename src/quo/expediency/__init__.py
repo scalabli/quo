@@ -6,7 +6,6 @@ from .vitals import (
         openfile,
         os_args,
         pick_bool,
-        terminal_ui,
         textstream,
         inscribe,
         LazyFile,

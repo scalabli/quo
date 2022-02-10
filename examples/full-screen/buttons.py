@@ -4,10 +4,6 @@ A simple example of a few buttons and click handlers.
 """
 import quo
 
-from quo.suite import get_app
-
-
-
 
 # Event handlers for all the buttons.
 def button1():
@@ -85,7 +81,7 @@ style = styling(
 
 
 # Build a main application object.
-application = quo.Suite(layout=layout, bind=kb, style=style, full_screen=True)
+application = quo.console.Console(layout=layout, bind=kb, style=style, full_screen=True)
 
 
 def main():

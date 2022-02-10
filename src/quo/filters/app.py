@@ -1,13 +1,13 @@
 """
-Filters that accept a `Application` as argument.
+Filters that accept a `Console` as argument.
 """
 from typing import TYPE_CHECKING, cast
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.cache import memoized
 from quo.enums import EditingMode
 
-from quo.filters.core import Condition
+from .core import Condition
 
 if TYPE_CHECKING:
     from quo.layout.layout import FocusableElement

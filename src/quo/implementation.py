@@ -101,7 +101,8 @@ def _pipepager(generator, cmd, color):
             color = True
 
     c = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, env=env)
-    encoding = get_best_encoding(c.stdin)
+    from quo.accordance import default_system_encoding as gg
+    encoding = gg(c.stdin)
     try:
         for text in generator:
             if not color:

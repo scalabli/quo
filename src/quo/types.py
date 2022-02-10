@@ -470,7 +470,7 @@ class FloatParamType(_NumberParamTypeBase):
 
 
 from quo.eventloop import run_in_executor_with_context
-from .document import Document
+from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
 
 #__all__ = [

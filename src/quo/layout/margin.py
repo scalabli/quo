@@ -243,63 +243,63 @@ class ScrollbarMargin(Margin):
             return result
 
 
-class PromptMargin(Margin):
-    """
-    [Deprecated]
+#class PromptMargin(Margin):
+ ##   """
+#    [Deprecated]
 
-    Create margin that displays a prompt.
-    This can display one prompt at the first line, and a continuation prompt
-    (e.g, just dots) on all the following lines.
+  #  Create margin that displays a prompt.
+#    This can display one prompt at the first line, and a continuation prompt
+#    (e.g, just dots) on all the following lines.
 
-    This `PromptMargin` implementation has been largely superseded in favor of
-    the `get_line_prefix` attribute of `Window`. The reason is that a margin is
-    always a fixed width, while `get_line_prefix` can return a variable width
-    prefix in front of every line, making it more powerful, especially for line
-    continuations.
+#    This `PromptMargin` implementation has been largely superseded in favor of
+  #  the `get_line_prefix` attribute of `Window`. The reason is that a margin is
+ #   always a fixed width, while `get_line_prefix` can return a variable width
+ #   prefix in front of every line, making it more powerful, especially for line
+#    continuations.
 
-    :param get_prompt: Callable returns formatted text or a list of
-        `(style_str, type)` tuples to be shown as the prompt at the first line.
-    :param get_continuation: Callable that takes three inputs. The width (int),
-        line_number (int), and is_soft_wrap (bool). It should return formatted
-        text or a list of `(style_str, type)` tuples for the next lines of the
-        input.
-    """
+ #   :param get_prompt: Callable returns formatted text or a list of
+#        `(style_str, type)` tuples to be shown as the prompt at the first line.
+#    :param get_continuation: Callable that takes three input#s. The width (int),
+  #      line_number (int), and is_soft_wrap (bool). It should return formatted
+ #       text or a list of `(style_str, type)` tuples for the next lines of the
+#       input.
+#    """
 
-    def __init__(
-        self,
-        get_prompt: Callable[[], StyleAndTextTuples],
-        get_continuation: Optional[
-            Callable[[int, int, bool], StyleAndTextTuples]
-        ] = None,
-    ) -> None:
+#    def __init__(
+ #       self,
+ #       get_prompt: Callable[[], StyleAndTextTuples],
+#        get_continuation: Optional[
+#            Callable[[int, int, bool], StyleAndTextTuples]
+ #       ] = None,
+#    ) -> None:
 
-        self.get_prompt = get_prompt
-        self.get_continuation = get_continuation
+#        self.get_prompt = get_prompt
+#        self.get_continuation = get_continuation
 
-    def get_width(self, get_ui_content: Callable[[], UIContent]) -> int:
-        "Width to report to the `Window`."
+#    def get_width(self, get_ui_content: Callable[[], UICont#ent]) -> int:
+#        "Width to report to the `Window`."
         # Take the width from the first line.
-        text = fragment_list_to_text(self.get_prompt())
-        return g_w(text)
+#        text = fragment_list_to_text(self.get_prompt())
+ #       return g_w(text)
 
-    def create_margin(
-        self, window_render_info: "WindowRenderInfo", width: int, height: int
-    ) -> StyleAndTextTuples:
-        get_continuation = self.get_continuation
-        result: StyleAndTextTuples = []
+#    def create_margin(
+#        self, window_render_info: "WindowRenderInfo", width: int, height: int
+#    ) -> StyleAndTextTuples:
+#        get_continuation = self.get_continuation
+#        result: StyleAndTextTuples = []
 
         # First line.
-        result.extend(to_formatted_text(self.get_prompt()))
+ #       result.extend(to_formatted_text(self.get_prompt()))
 
         # Next lines.
-        if get_continuation:
-            last_y = None
+#        if get_continuation:
+ #           last_y = None
 
-            for y in window_render_info.displayed_lines[1:]:
-                result.append(("", "\n"))
-                result.extend(
-                    to_formatted_text(get_continuation(width, y, y == last_y))
-                )
-                last_y = y
+#            for y in window_render_info.displayed_lines[1:]:
+   #             result.append(("", "\n"))
+ #               result.extend(
+#                    to_formatted_text(get_continuation(width, y, y == last_y))
+ #               )
+#                last_y = y
 
-        return result
+#        return result

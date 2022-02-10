@@ -15,7 +15,7 @@ from typing import (
     Union,
 )
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.buffer import Buffer
 from quo.cache import SimpleCache
 from quo.document import Document

@@ -3,7 +3,7 @@ Key bindings for auto suggestion (for fish-style auto suggestion).
 """
 import re
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.filters import Condition, emacs_mode
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent

@@ -1,14 +1,10 @@
 import sys
-from .interpose import interpose
+
 from .accordance import isatty
-from quo.expediency import inscribe
-from quo.i_o.termui import echo
-
-
 
 def pause(
-        info: str ="Press any key to proceed >> ...", 
-        err=False
+        info: str = "Press any key to proceed >> ...", 
+        err: bool = False
         ):
     """This command stops execution and waits for the user to press any key to continue.  This is similar to the Windows batch "pause"
     command.  If the program is not run through a terminal, this command
@@ -22,11 +18,14 @@ def pause(
         return
     try:
         if info:
+            from quo.i_o.termui import echo
             echo(info, nl=False, err=err)
         try:
-            interpose()
+            from .getchar import getchar
+            getchar()
         except (KeyboardInterrupt, EOFError):
             pass
     finally:
         if info:
+            from quo.expediency import inscribe
             inscribe(err=err)

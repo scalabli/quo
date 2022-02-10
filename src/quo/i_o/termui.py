@@ -14,16 +14,17 @@ from quo.accordance import (
         strip_ansi_colors,
         )
 from quo.color import ansi_color_codes, _ansi_reset_all
-from quo.errors import Abort, UsageError
+from quo.errors import Abort
 from quo.context.current import resolve_color_default
-from quo.types import Choice, convert_type
-from quo.expediency import inscribe, LazyFile
+from quo.types import Choice # convert_type
+from quo.expediency import LazyFile, inscribe
+#convert_type
 
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
 
-insert = input
+#insert = input
 
 
 
@@ -34,8 +35,13 @@ def hidden_prompt_func(prompt):
 
 
 def _build_prompt(
-    text, suffix, show_default=False, default=None, show_choices=True, type=None
-):
+        text, 
+        suffix, 
+        show_default=False,
+        default=None,
+        show_choices=True,
+        type=None
+        ):
     prompt = text
     if type is not None and show_choices and isinstance(type, Choice):
         prompt += f" ({', '.join(map(str, type.choices))})"
@@ -60,9 +66,9 @@ def _format_default(default):
 
 
 def confirm(
-        text,
-        default=False, 
-        abort=False,
+        text: Optional[str],
+        default: bool = False, 
+        abort: bool = False,
         suffix=":>", 
         show_default=True, 
         err=False
@@ -87,6 +93,7 @@ def confirm(
     while 1:
         try:
             echo(prompt, nl=False, err=err)
+            insert = input
             value = insert("").lower().strip()
         except (KeyboardInterrupt, EOFError):
             raise Abort()
@@ -98,6 +105,7 @@ def confirm(
             rv = default
         else:
             echo(f"ERROR:", bg="red", fg="black", nl=False)
+            echo(" ", nl=False)
             echo(f"invalid input", bg="yellow", fg="black", err=err)
             continue
         break
@@ -106,86 +114,6 @@ def confirm(
     return rv
 ############
 ########################################################
-
-def prompt(
-    text,
-    default=None,
-    hide=False,
-    affirm=False,
-    type=None,
-    value_proc=None,
-    suffix=":> ",
-    show_default=True,
-    err=False,
-    show_choices=True,
-):
-
-    """Prompts a user for input.  This is a convenience function that can be used to prompt a user for input later.
-
-    If the user aborts the input by sending a interrupt signal, this  function will catch it and raise a :exc:`Abort` exception.
-
-    :param text: the text to show for the prompt.
-    :param default: the default value to use if no input happens.  If this  is not given it will prompt until it's aborted.
-    :param hide: if this is set to true then the input value will  be hidden.
-    :param affirm: asks for confirmation for the value.
-    :param type: the type to use to check the value against.
-    :param value_proc: if this parameter is provided it's a function that is invoked instead of the type conversion to convert a value.
-    :param suffix: a suffix that should be added to the prompt.
-    :param show_default: shows or hides the default value in the prompt.
-    :param err: if set to true the file defaults to ``stderr`` instead of ``stdout``, the same as with echo.
-    :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
-
-    """
-    result = None
-
-    def prompt_func(text):
-        f = hidden_prompt_func if hide else insert
-        try:
-            inscribe(text, nl=False, err=err)
-            return f("")
-        except (KeyboardInterrupt, EOFError):
-            # getpass doesn't print a newline if the user aborts input with ^C.
-            # Allegedly this behavior is inherited from getpass(3).
-            # A doc bug has been filed at https://bugs.python.org/issue24711
-            if hide:
-                inscribe(None, err=err)
-            raise Abort("You've aborted input")
-
-    if value_proc is None:
-        value_proc = convert_type(type, default)
-
-    prompt = _build_prompt(
-        text, suffix, show_default, default, show_choices, type
-    )
-
-    while 1:
-        while 1:
-            value = prompt_func(prompt)
-            if value:
-                break
-            elif default is not None:
-                value = default
-                break
-        try:
-            result = value_proc(value)
-        except UsageError as e:
-            if hide:
-                inscribe("ERROR: the value you entered was invalid", err=err)
-            else:
-                inscribe(f"Error: {e.message}", err=err)  # noqa: B306
-            continue
-        if not affirm:
-            return result
-        while 1:
-            value2 = prompt_func("Repeat for confirmation: ")
-            if value2:
-                break
-        if value == value2:
-            return result
-        echo(f"ERROR:", nl=False, fg="black", bg="red")
-        echo(f"The two entered values do not match", err=err, fg="black", bg="yellow")
-
-
 
 
 
@@ -254,9 +182,9 @@ def scrollable(text_or_generator, color=None):
     # convert every element of i to a text type if necessary
     text_generator = (el if isinstance(el, str) else str(el) for el in i)
 
-    from quo.implementation import pager
+    from quo.implementation import scrollable
 
-    return pager(itertools.chain(text_generator, "\n"), color)
+    return scrollable(itertools.chain(text_generator, "\n"), color)
 
 
 
@@ -459,42 +387,16 @@ def edit(
     editor.edit_file(filename)
 
 
-def launch(url, wait=False, locate=False):
-    """This function launches the given URL (or filename) in the default
-    viewer application for this file type.  If this is an executable, it
-    might launch the executable in a new session.  The return value is
-    the exit code of the launched application.  Usually, ``0`` indicates
-    success.
-
-    Examples::
-
-        quo.launch('https://quo.readthedocs.org/')
-        quo.launch('/my/downloaded/file', locate=True)
-
-    :param url: URL or filename of the thing to launch.
-    :param wait: Wait for the program to exit before returning. This
-        only works if the launched program blocks. In particular,
-        ``xdg-open`` on Linux does not block.
-    :param locate: if this is set to `True` then instead of launching the
-                   application associated with the URL it will attempt to
-                   launch a file manager with the file located.  This
-                   might have weird effects if the URL does not point to
-                   the filesystem.
-    """
-    from quo.implementation import open_url
-
-    return open_url(url, wait=wait, locate=locate)
-
 def raw_terminal():
     from quo.implementation import raw_terminal as f
     return f()
 
 
 def echo(
-        message=None,
+        message: Optional[str] = None,
         file: Optional[IO[str]] = None,
-        nl=True,
-        err=False,
+        nl: bool = True,
+        err: bool = False,
         color=None,
         **styles
         ):
@@ -511,4 +413,5 @@ def echo(
             message = flair(message, **styles)
 
         return inscribe(message, file=file, nl=nl, err=err, color=color)
+
 

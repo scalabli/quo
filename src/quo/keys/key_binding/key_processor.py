@@ -11,7 +11,7 @@ from asyncio import Task, sleep
 from collections import deque
 from typing import TYPE_CHECKING, Any, Deque, Generator, List, Optional, Union
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.enums import EditingMode
 from quo.filters.app import vi_navigation_mode
 from quo.keys import Keys
@@ -20,7 +20,7 @@ from quo.utils.utils import Event
 from quo.keys.key_binding.key_bindings import Binding, KeyBindingsBase
 
 if TYPE_CHECKING:
-    from quo.suite import Suite
+    from quo.console import Console
     from quo.buffer import Buffer
 
 
@@ -467,9 +467,9 @@ class KeyPressEvent:
         return processor
 
     @property
-    def app(self) -> "Suite[Any]":
+    def app(self) -> "Console[Any]":
         """
-        The current `Suite` object.
+        The current `Console` object.
         """
         return self._app
 
@@ -523,6 +523,6 @@ class KeyPressEvent:
         self.key_processor.arg = result
 
     @property
-    def cli(self) -> "Suite[Any]":
+    def cli(self) -> "Console[Any]":
         "For backward-compatibility."
         return self.app

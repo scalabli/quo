@@ -21,8 +21,6 @@ from quo.context.current import resolve_color_default
 
 inscribe_functionality = (bytes, bytearray, str)
 
-_console: Optional["Terminal"] = None
-
 
 def _posixify(name):
     return "-".join(name.split()).lower()
@@ -271,17 +269,6 @@ def inscribe(message=None, file=None, nl=True, err=False, color=None):
     file.flush()
 
 
-
-if TYPE_CHECKING:
-    from .terminal import Terminal
-def terminal_ui() -> "Terminal":
-    """Get a global :class:`~quo.terminal.Terminal` instance. This function is used when Rich requires a Console, and hasn't been explicitly given one.
-    Returns A Console: A console instance.                                """
-    global _console
-    if _console is None:
-        from quo.terminal import Terminal
-        _console = Terminal()
-    return _console
 
 def binarystream(name):
     """Returns a system stream for byte processing.

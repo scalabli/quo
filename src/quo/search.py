@@ -8,7 +8,7 @@ instead of calling these function directly.)
 from enum import Enum
 from typing import TYPE_CHECKING, Dict, Optional
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.filters import FilterOrBool, is_searching, to_filter
 from quo.keys.key_binding.vi_state import InputMode
 

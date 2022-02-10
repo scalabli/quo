@@ -3,9 +3,6 @@
 """Print tabular data.
 Modified code from Sergey Astanin and Contributors
 """
-
-from __future__ import print_function
-from __future__ import unicode_literals
 import math
 import re
 import sys
@@ -67,8 +64,6 @@ except ImportError:
 
 
 __all__ = ["tabular", "tabular_formats", "simple_separated_format"]
-__version__ = "0.8.10"
-
 
 # minimum extra space in headers
 MIN_PADDING = 2

@@ -1,14 +1,13 @@
 from .dialogs import (
-    choices,
-    checkbox,
-    evoke,
-    message,
-    progress,
-    radiolist,
-    confirmation,
+    ChoiceBox,
+    CheckBox,
+    PromptBox,
+    MessageBox,
+    ProgressBox,
+    RadiolistBox,
+    ConfirmationBox,
 )
 
-from .prompt import CompleteStyle, Prompt
 
  
 from .utils import (

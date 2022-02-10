@@ -17,7 +17,7 @@ from typing import (
 )
 
 from quo.clipboard import Data
-from quo.filters import vi_mode
+from quo.filters.app import vi_mode
 from .selection import PasteMode, SelectionState, SelectionType
 
 __all__ = [

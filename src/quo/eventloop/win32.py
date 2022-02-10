@@ -1,6 +1,6 @@
 from ctypes import pointer
 
-from ..utils import SPHINX_AUTODOC_RUNNING
+from quo.utils.utils import SPHINX_AUTODOC_RUNNING
 
 # Do not import win32-specific stuff when generating documentation.
 # Otherwise RTD would be unable to generate docs for this module.

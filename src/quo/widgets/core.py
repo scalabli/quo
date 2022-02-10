@@ -15,7 +15,7 @@ container object.
 from functools import partial
 from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.completion.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer, BufferAcceptHandler
 from quo.completion import Completer, DynamicCompleter
@@ -54,7 +54,7 @@ from quo.layout.controls import BufferControl, FormattedTextControl, GetLinePref
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 from quo.layout.dimension import to_dimension
-from quo.layout.margins import ConditionalMargin, NumberedMargin, ScrollbarMargin
+from quo.layout.margin import ConditionalMargin, NumberedMargin, ScrollbarMargin
 from quo.layout.processors import AppendAutoSuggestion, BeforeInput, ConditionalProcessor, PasswordProcessor, Processor
 from quo.lexers import DynamicLexer, Lexer
 from quo.mouse_events import MouseEvent, MouseEventType
@@ -84,8 +84,8 @@ E = KeyPressEvent
 class Border:
     "Box drawing characters."
 
-    HORIZONTAL = "\u2592"
-    # "\u2501"
+    HORIZONTAL = "\u2501"
+    # "\u2501" #2593
     VERTICAL = "\u2593"
     #"\u2503"
     TOP_LEFT = "\u256D"
@@ -118,7 +118,7 @@ class TextArea:
     :param accept_handler: Called when `Enter` is pressed (This should be a
         callable that takes a buffer as input).
     :param history: :class:`~quo.history.History` instance.
-    :param auto_suggest: :class:`~prompt_toolkit.auto_suggest.AutoSuggest`
+    :param auto_suggest: :class:`~quo.completion.auto_suggest.AutoSuggest`
         instance for input suggestions.
 
     BufferControl attributes:
@@ -128,7 +128,7 @@ class TextArea:
     :param focus_on_click: When `True`, focus after mouse click.
     :param input_processors: `None` or a list of
         :class:`~quo.layout.Processor` objects.
-    :param validator: `None` or a :class:`~quo.validation.Validator`
+    :param validator: `None` or a :class:`~quo.types.Validator`
         object.
 
     Window attributes:
@@ -136,8 +136,8 @@ class TextArea:
     :param lexer: :class:`~quo.lexers.Lexer` instance for syntax
         highlighting.
     :param wrap_lines: When `True`, don't scroll horizontally, but wrap lines.
-    :param width: Window width. (:class:`~prompt_toolkit.layout.Dimension` object.)
-    :param height: Window height. (:class:`~prompt_toolkit.layout.Dimension` object.)
+    :param width: Window width. (:class:`~quo.layout.Dimension` object.)
+    :param height: Window height. (:class:`~quo.layout.Dimension` object.)
     :param scrollbar: When `True`, display a scroll bar.
     :param style: A style string.
     :param dont_extend_width: When `True`, don't take up more width then the
@@ -378,8 +378,8 @@ class Button:
         text: str,
         handler: Optional[Callable[[], None]] = None,
         width: int = 12,
-        left_symbol: str = "◀️",
-        right_symbol: str = "▶️",
+        left_symbol: str = "<<¦",
+        right_symbol: str = "¦>>",
     ) -> None:
 
         self.text = text

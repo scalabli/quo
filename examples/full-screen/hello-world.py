@@ -30,7 +30,7 @@ def _(event):
 
 
 # Build a main application object.
-application = quo.Suite(
+application = quo.Console(
         layout=layout,
         bind=kb, 
         full_screen=True

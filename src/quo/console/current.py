@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from quo.input.core import Input
     from quo.output.core import Output
 
-    from .suite import Suite
+    from .console import Console
 
 __all__ = [
         "AppSession",
@@ -49,7 +49,7 @@ class AppSession:
 
         # The application will be set dynamically by the `set_app` context
         # manager. This is called in the application itself.
-        self.app: Optional["Suite[Any]"] = None
+        self.app: Optional["Console[Any]"] = None
 
     def __repr__(self) -> str:
         return "AppSession(app=%r)" % (self.app,)
@@ -80,21 +80,21 @@ def get_app_session() -> AppSession:
     return _current_app_session.get()
 
 
-def get_app() -> "Suite[Any]":
+def get_app() -> "Console[Any]":
     """
     Get the current active (running) Application.
-    An :class:`.Suite` is active during the
-    :meth:`.Suite.run_async` call.
+    An :class:`.Console` is active during the
+    :meth:`.Console.run_async` call.
 
     We assume that there can only be one :class:`.Application` active at the
     same time. There is only one terminal window, with only one stdin and
     stdout. This makes the code significantly easier than passing around the
-    :class:`.Suite` everywhere.
+    :class:`.Console` everywhere.
 
-    If no :class:`.Suite` is running, then return by default a
+    If no :class:`.Console` is running, then return by default a
     :class:`.DummyApplication`. For practical reasons, we prefer to not raise
     an exception. This way, we don't have to check all over the place whether
-    an actual `Suite` was returned.
+    an actual `Console` was returned.
     """
     session = _current_app_session.get()
     if session.app is not None:
@@ -105,7 +105,7 @@ def get_app() -> "Suite[Any]":
     return DummyApplication()
 
 
-def get_app_or_none() -> Optional["Suite[Any]"]:
+def get_app_or_none() -> Optional["Console[Any]"]:
     """
     Get the current active (running) Application, or return `None` if no
     application is running.
@@ -115,12 +115,12 @@ def get_app_or_none() -> Optional["Suite[Any]"]:
 
 
 @contextmanager
-def set_app(app: "Suite[Any]") -> Generator[None, None, None]:
+def set_app(app: "Console[Any]") -> Generator[None, None, None]:
     """
-    Context manager that sets the given :class:`.Suite` active in an
+    Context manager that sets the given :class:`.Console` active in an
     `AppSession`.
 
-    This should only be called by the `Suite` itself.
+    This should only be called by the `Console` itself.
     The application will automatically be active while its running. If you want
     the application to be active in other threads/coroutines, where that's not
     the case, use `contextvars.copy_context()`, or use `Suite.context` to

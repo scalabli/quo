@@ -30,7 +30,7 @@ class Windows10_Output:
         self, stdout: TextIO, default_color_depth: Optional[ColorDepth] = None
     ) -> None:
         self.win32_output = Win32Output(stdout, default_color_depth=default_color_depth)
-        self.vt100_output = Vt100_Output(
+        self.vt100_output = Vt100(
             stdout, lambda: Size(0, 0), default_color_depth=default_color_depth
         )
         self._hconsole = HANDLE(windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE))

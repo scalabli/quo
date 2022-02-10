@@ -6,7 +6,7 @@ from collections import deque
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Callable, Deque, Dict, Hashable, NamedTuple, Optional, Tuple
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.filters import FilterOrBool, to_filter
 from quo.text import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
@@ -20,7 +20,7 @@ from quo.styles import (
 )
 
 if TYPE_CHECKING:
-    from quo.suite.suite import Suite
+    from quo.console.console import Console
     from quo.layout.layout import Layout
 
 
@@ -34,7 +34,7 @@ Point = NamedTuple("Point", [("x", int), ("y", int)])
 Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 def _output_screen_diff(
-    app: "Suite[Any]",
+    app: "Console[Any]",
     output: Output,
     screen: Screen,
     current_pos: Point,
@@ -579,7 +579,7 @@ class Renderer:
             task.cancel()
 
     def render(
-        self, app: "Application[Any]", layout: "Layout", is_done: bool = False
+        self, app: "Console[Any]", layout: "Layout", is_done: bool = False
     ) -> None:
         """
         Render the current interface to the output.

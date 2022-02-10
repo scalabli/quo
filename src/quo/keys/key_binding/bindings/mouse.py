@@ -134,7 +134,7 @@ def load_mouse_bindings() -> KeyBinder:
         output = event.app.renderer.output
 
         from quo.output.win32 import Win32Output
-        from quo.windows10 import Windows10_Output
+        from quo.output.windows10 import Windows10_Output
 
         if isinstance(output, (Win32Output, Windows10_Output)):
             screen_buffer_info = output.get_win32_screen_buffer_info()

@@ -1,8 +1,15 @@
+import warnings
+
 from quo.expediency import inscribe
 
 
 _interpose = None
-def interpose(inscribe=False):
+def getchar(inscribe=False):
+    warnings.warn(
+            DeprecationWarning(                                       '"interpose" is deprecated and will be removed in Quo 2022.2, use "getchar" instead.'
+            )
+            )
+
     """Fetches a single character from the terminal and returns it.  This
     will always return a unicode character and under certain rare
     circumstances this might return more than one character.  The

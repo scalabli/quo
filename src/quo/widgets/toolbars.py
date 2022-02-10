@@ -1,6 +1,6 @@
 from typing import Any, Optional
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.buffer import Buffer
 from quo.enums import SYSTEM_BUFFER
 from quo.filters import Condition, FilterOrBool, emacs_mode, has_arg, has_completions, has_focus, has_validation_error, to_filter, vi_mode, vi_navigation_mode

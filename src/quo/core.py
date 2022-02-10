@@ -18,10 +18,9 @@ from .parser import split_opt
 from quo.expediency.vitals import inscribe as echo
 from quo.i_o import (
            confirm,
-           prompt,
            flair
            )
-
+from quo.prompt import prompt
 from .types import (
         _NumberRangeBase,
         BOOL,
@@ -43,6 +42,10 @@ SUBCOMMANDS_METAVAR = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
 
 DEPRECATED_HELP_NOTICE = " (DEPRECATED)"
 DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
+
+WIN = sys.platform.startswith("win")
+
+LINUX = sys.platform.startswith("linux")
 
 
 def deprecated_notice(cmd):
@@ -583,7 +586,7 @@ class Context:
 
         :param message: the error message to fail with.
         """
-        raise UsageError(message, self)
+        raise errors.UsageError(message, self)
 
     def abort(self):
         """Aborts the script."""
@@ -967,7 +970,7 @@ class Command(BaseCommand):
         help=None,
         epilog=None,
         short_help=None,
-        apps_metavar="[💬ᕼᕮしᑭ ᖘᗩᎶᕮ]",
+        apps_metavar= "[HELP PAGE]",
         add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
@@ -1057,8 +1060,11 @@ class Command(BaseCommand):
             return
 
         def show_help(clime, param, value):
-            if value and not clime.resilient_parsing:
-                echo(clime.get_help(), color=clime.color)
+            if value and not clime.parse:
+                from quo import inscribe
+                from quo.text import HTML
+                from quo import MessageBox
+                MessageBox(title="Help", text=f"{clime.get_help()}").run()
                 clime.exit()
 
         return App(
@@ -1158,7 +1164,7 @@ class Command(BaseCommand):
         for param in iter_params_for_processing(param_order, self.get_params(clime)):
             value, args = param.handle_parse_result(clime, opts, args)
 
-        if args and not clime.allow_extra_args and not clime.resilient_parsing:
+        if args and not clime.allow_extra_args and not clime.parse:
             clime.fail(
                 "Got unexpected extra"
                 f" argument{'s' if len(args) != 1 else ''}"
@@ -1363,7 +1369,7 @@ class MultiCommand(Command):
                     formatter.write_dl(rows)
 
     def parse_args(self, clime, args):
-        if not args and self.no_args_is_help and not clime.resilient_parsing:
+        if not args and self.no_args_is_help and not clime.parse:
             echo(clime.get_help(), color=clime.color)
             clime.exit()
 
@@ -1462,7 +1468,7 @@ class MultiCommand(Command):
         # an app we want to kick off parsing again for arguments to
         # resolve things like --help which now should go to the main
         # place.
-        if cmd is None and not clime.resilient_parsing:
+        if cmd is None and not clime.parse:
             if split_opt(cmd_name)[0]:
                 self.parse_args(clime, clime.args)
             clime.fail(f"No such command '{original_cmd_name}'.")
@@ -2172,6 +2178,7 @@ class App(Parameter):
         if name is None:
             if not expose_value:
                 return None, opts, secondary_opts
+            
             raise TypeError("Could not determine name for app")
 
         if not opts and not secondary_opts:

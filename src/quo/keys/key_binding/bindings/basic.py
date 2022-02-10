@@ -1,5 +1,5 @@
 # pylint: disable=function-redefined
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.filters import (
     Condition,
     emacs_insert_mode,

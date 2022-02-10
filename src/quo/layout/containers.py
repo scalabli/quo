@@ -18,7 +18,7 @@ from typing import (
     cast,
 )
 
-from quo.suite.current import get_app
+from quo.console.current import get_app
 from quo.cache import SimpleCache
 from quo.filters import (
     FilterOrBool,
@@ -55,7 +55,7 @@ from .dimension import (
     sum_layout_dimensions,
     to_dimension,
 )
-from .margins import Margin
+from .margin import Margin
 from .mouse_handlers import MouseHandlers
 from .screen import _CHAR_CACHE, Screen, WritePosition
 from .utils import explode_text_fragments

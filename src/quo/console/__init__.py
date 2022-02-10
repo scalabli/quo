@@ -1,4 +1,4 @@
-from .suite import Suite
+from quo.console.console import Console
 from .current import (
     AppSession,
     create_app_session,

@@ -5,7 +5,7 @@ import asyncio
 import math
 from typing import TYPE_CHECKING, List
 
-from quo.suite.run_in_terminal import in_terminal
+from quo.console.run_in_terminal import in_terminal
 from quo.completion import (
     CompleteEvent,
     Completion,
@@ -17,7 +17,7 @@ from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.utils.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
-    from quo.suite.suite import Suite
+    from quo.console import Console
     from quo.shortcuts import Prompt
 
 __all__ = [
@@ -79,7 +79,7 @@ def display_completions_like_readline(event: E) -> None:
 
 
 def _display_completions_like_readline(
-    app: "Suite[object]", completions: List[Completion]
+    app: "Console[object]", completions: List[Completion]
 ) -> "asyncio.Task[None]":
     """
     Display the list of completions in columns above the prompt.
@@ -88,7 +88,6 @@ def _display_completions_like_readline(
     """
     from quo.text import to_formatted_text
     from quo.i_o.termui import confirm as confirm_
-   # from quo.shortcuts.elicit import create_confirm_session
 
     # Get terminal dimensions.
     term_size = app.output.get_size()
@@ -171,11 +170,11 @@ def _display_completions_like_readline(
     return app.create_background_task(run_compl())
 
 
-def _create_more_session(message: str = "--MORE--") -> "Elicit[bool]":
+def _create_more_session(message: str = "--MORE--") -> "Prompt[bool]":
     """
-    Create an `Elicit` object for displaying the "--MORE--".
+    Create a `Prompt` object for displaying the "--MORE--".
     """
-    from quo.shortcuts import Prompt
+    from quo.prompt import Prompt
 
     bindings = KeyBinder()
 
@@ -200,4 +199,4 @@ def _create_more_session(message: str = "--MORE--") -> "Elicit[bool]":
     def _ignore(event: E) -> None:
         "Disable inserting of text."
 
-    return Prompt(message, key_bindings=bindings, erase_when_done=True)
+    return Prompt(message, bind=bindings, erase_when_done=True)
