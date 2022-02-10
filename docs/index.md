@@ -32,10 +32,11 @@ Quo requires Python `3.8` or later.
      If you know Python you can  easily use Quo and it can integrate with just about anything.
 
 ```{toctree}
-:maxdepth: 2
+:maxdepth: 3
 :caption: Tutorials & Explanations
 introduction.rst
 printing_text.rst
+
 console.rst
 prompt.rst
 utils.rst
