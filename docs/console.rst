@@ -93,8 +93,9 @@ Quo supports launching editors automatically through :func:`quo.Console.edit`.  
         MARKER = '# Everything below is ignored\n'
         message = console.edit('\n\n' + MARKER)
         if message is not None:
-            return message.split(MARKER, 1)[0].rstrip('\n')                                         
- Alternatively, the function can also be used to launch editors for files by a specific filename.  In this case, the return value is always `None`.
+            return message.split(MARKER, 1)[0].rstrip('\n')
+           
+Alternatively, the function can also be used to launch editors for files by a specific filename.  In this case, the return value is always `None`.
 
 .. code:: python
 
@@ -148,10 +149,7 @@ ce. In addition to this, it can also launch the file manager and automatically s
     - ``url`` *(str)* – URL or filename of the thing to launch.
     - ``wait`` *(bool)* – Wait for the program to exit before returning. This only works if the launched program blocks. In particular, xdg- open on Linux does not block.
       
-    - ``locate`` Optional *(bool)* – if this is set to True then instead of lau
-nching the application associated with the URL it will attempt to laun
-ch a file manager with the file located. This might have weird effects
- if the URL does not point to the filesystem.
+    - ``locate`` Optional *(bool)* – if this is set to True then instead of launching the application associated with the URL it will attempt to launch a file manager with the file located. This might have weird effects if the URL does not point to the filesystem.
 
 
 .. code:: python
@@ -199,6 +197,8 @@ provided file.
    console = Console()
 
    console.rule("Chapter One")
+
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/rule.png
 
 
 Status
