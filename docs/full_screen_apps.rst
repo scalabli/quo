@@ -24,13 +24,13 @@ them together.
 ``A simple application``
 ------------------------
 
-Almost every quo application is an instance of an :class:`~quo.Suite` object. The simplest full screen example would look like this:
+Almost every quo application is an instance of an :class:`~quo.Console` object. The simplest full screen example would look like this:
 
 .. code:: python
 
-    import quo
+    from quo import Console
 
-    app = quo.Suite(full_screen=True)
+    app = Console(full_screen=True)
     app.run()
 
 This will display an application with no layout specified.
@@ -38,8 +38,7 @@ This will display an application with no layout specified.
 .. note::
 
         If we wouldn't set the ``full_screen`` option, the application would
-        not run in the alternate screen buffer, and only consume the least
-        amount of space required for the layout.
+        not run in the alternate screen buffer, and only consume the least amount of space required for the layout.
 
 An application consists of several components. The most important are:
 
@@ -56,7 +55,7 @@ We will discuss all of these in more detail below.
 ``I/O objects``
 ---------------
 
-Every :class:`~quo.Suite` instance requires an I/O
+Every :class:`~quo.Console` instance requires an I/O
 object for input and output:
 
     - An :class:`~quo.input.Input` instance, which is an abstraction
@@ -74,9 +73,9 @@ while-true loop that waits for user input, and when it receives something (like
 a key press), it will send that to the the appropriate handler, like for
 instance, a key binding.
 
-When :func:`~quo.Suite.run()` is called, the event
+When :func:`~quo.Console.run()` is called, the event
 loop will run until the application is done. An application will quit when 
-:func:`~quo.Suite.exit()` is called.
+:func:`~quo.Console.exit()` is called.
 
 
 ``The layout``
@@ -100,8 +99,8 @@ A margin that displays a  scrollbar.
 .. code:: python
 
  import quo
- from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
- from prompt_toolkit.layout.margins import NumberedMargin, ScrollbarMargin
+ from quo.layout.controls import BufferControl, FormattedTextControl
+ from quo.layout.margins import NumberedMargin, ScrollbarMargin
  
  intro = """ Quo is scallable\n""" * 30
  
@@ -138,6 +137,7 @@ def _(event):
 
 # Layout
 layout = quo.layout.Layout
+
 A layered layout architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -286,12 +286,11 @@ flexible and accepts a :class:`~quo.layout.Window`, a
 :class:`~quo.buffer.Buffer`, a
 :class:`~quo.layout.controls.UIControl` and more.
 
-In the following example, we use :func:`~quo.suite.get_app`
-for getting the active application.
+In the following example, we use :func:`~quo.console.get_app` for getting the active application.
 
 .. code:: python
 
-    import quo
+    from quo.console import get_app
 
     # This window was created earlier.
     w = Window()
@@ -299,7 +298,7 @@ for getting the active application.
     # ...
 
     # Now focus it.
-    quo.suite.get_app().layout.focus(w)
+    get_app().layout.focus(w)
 
 Changing the focus is something which is typically done in a key binding, so
 read on to see how to define key bindings.
@@ -309,7 +308,7 @@ read on to see how to define key bindings.
 
 In order to react to user actions, we need to create a
 :class:`~quo.keys.KeyBinder` object and pass
-that to our :class:`~quo.Suite`.
+that to our :class:`~quo.Console`.
 
 There are two kinds of key bindings:
 
@@ -329,21 +328,22 @@ Key bindings can be passed to the application as follows:
 
 .. code:: python
 
-    import quo
+    from quo import Console
+    from quo.keys import KeyBinder
 
-    kb = quo.keys.KeyBinder()
-    app = quo.Suite(bind=kb)
+    kb = KeyBinder()
+
+    app = Console(bind=kb)
     app.run()
 
 To register a new keyboard shortcut, we can use the
-:meth:`~quo.keys.KeyBinder.add` method as a decorator of
-the key handler:
+:meth:`~quo.keys.KeyBinder.add` method as a decorator of the key handler:
 
 .. code:: python
 
-    import quo
+    from quo.keys import KeyBinder
 
-    bindings = quo.keys.KeyBinder()
+    kb = KeyBinder()
 
     @bindings.add('ctrl-q')
     def exit_(event):
@@ -355,7 +355,7 @@ the key handler:
         """
         event.app.exit()
 
-    app = quo.Suite(bind=bindings, full_screen=True)
+    app = Console(bind=kb, full_screen=True)
     app.run()
 
 The callback function is named ``exit_`` for clarity, but it could have been

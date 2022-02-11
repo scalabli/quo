@@ -198,6 +198,7 @@ provided file.
 
    console.rule("Chapter One")
 
+
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/rule.png
 
 

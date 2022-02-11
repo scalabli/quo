@@ -184,59 +184,6 @@ run interactively.
     quo.pause()
 
 
-``Launching Editors``
------------------------
-
-Quo supports launching editors automatically through :func:`quo.edit`.  This
-is very useful for asking users for multi-line input.  It will
-automatically open the user's defined editor or fall back to a sensible
-default.  If the user closes the editor without saving, the return value
-will be ``None``, otherwise the entered text.
-
-.. code:: python
-
-    import quo
-
-    def get_commit_message():
-        MARKER = '# Everything below is ignored\n'
-        message = quo.edit('\n\n' + MARKER)
-        if message is not None:
-            return message.split(MARKER, 1)[0].rstrip('\n')
-
-Alternatively, the function can also be used to launch editors for files by a specific filename.  In this case, the return value is always `None`.
-
-.. code:: python
-
-    import quo
-    
-    quo.edit(filename='/etc/passwd')
-
-
-``Launching Applications``
----------------------------
-
-Quo supports launching applications through :func:`quo.launch`.  This can be
-used to open the default application associated with a URL or filetype.
-This can be used to launch web browsers or picture viewers, for instance.
-In addition to this, it can also launch the file manager and automatically
-select the provided file.
-
-**Parameters**
-    - ``url`` *(str)* – URL or filename of the thing to launch.
-
-    - ``wait`` *(bool)* – Wait for the program to exit before returning. This only works if the launched program blocks. In particular, xdg-open on Linux does not block.
-
-    - ``locate`` *(bool)* – if this is set to True then instead of launching the application associated with the URL it will attempt to launch a file manager with the file located. This might have weird effects if the URL does not point to the filesystem.
-
-
-.. code:: python
-  
-   import quo
-
-   quo.launch("https://quo.rtfd.io/")
-   quo.launch("/home/downloads/file.txt", locate=True)
-
-
 ``Printing Filenames``
 -----------------------
 
@@ -275,32 +222,6 @@ stream object (except in very odd cases; see :doc:`/unicode-support`).
     stdout_b = quo.binarystream('stdout')
 
 
-``Intelligent File Opening``
------------------------------
-
-The logic for opening files from the :class:`quo.types.File`
-type is exposed through the :func:`quo.openfile` function.  It can
-intelligently open stdin/stdout as well as any other file.
-
-.. code:: python
-
-    import quo
-
-    stdout = quo.openfile('-', 'w')
-    test_file = quo.openfile('test.txt', 'w')
-
-If stdin or stdout are returned, the return value is wrapped in a special
-file where the context manager will prevent the closing of the file.  This
-makes the handling of standard streams transparent and you can always use
-it like this:
-
-.. code:: python
-
-   import quo
-
-   with quo.openfile(filename, 'w') as f:
-   f.write('Hello World!\n')
-
 
 ``Finding Application Folders``
 ---------------------------------
@@ -336,7 +257,7 @@ for per-user config files for your application depending on the OS.
 .. code:: python
    import quo
 
-   tabulate = quo.table.tabular()
+   tabulate = quo.table.Table()
 
    table = [ 
      ["Name", "Gender", "Age"], 

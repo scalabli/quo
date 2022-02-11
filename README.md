@@ -44,18 +44,18 @@ pip install -U quo
 ### quo.echo
 **Example 1**
 ```python
-   import quo
+   from quo import echo
 
-   quo.echo(f"Hello, World!", fg="red", italic=True, bold=True))
+   echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
 
 **Example 2**
 ```python
-   import quo
+   from quo import echo
 
-   quo.echo(f"Quo is ", nl=False)
-   quo.echo(f"scalable", bg="red", fg="black") 
+   echo(f"Quo is ", nl=False)
+   echo(f"scalable", bg="red", fg="black") 
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
@@ -64,17 +64,17 @@ It also supports handling of ANSI color sequences.
 
 ### quo.prompt
 ```python
-   import quo
+   from quo import prompt
 
-   quo.prompt("What is your name?")
+   prompt("What is your name?")
 ```
 ![quo.prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
-### quo.Prompt
+### quo.Prompt toolbar
 ```python
-   import quo
+   from quo.prompt import Prompt
    
-   session = quo.Prompt(bottom_toolbar="Python 🐍 is great")
+   session = Prompt(bottom_toolbar="Python 🐍 is great")
    session.prompt("Type something:") 
 ```
 ![quo.Prompt.prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
@@ -82,10 +82,11 @@ It also supports handling of ANSI color sequences.
 ### Quo autocompletion
 ```python
    # Press [Tab] to autocomplete
-   import quo
+   from quo.prompt import Prompt
+   from quo.completion import WordCompleter
 
-   completer = quo.completion.WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
-   session = quo.Prompt(completer=completer)
+   example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+   session = Prompt(completer=example)
    session.prompt('Which country are you from?: ')
 ```
 ![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
@@ -93,66 +94,56 @@ It also supports handling of ANSI color sequences.
 ### Quo frame
 ```python
   
-   import quo
+   from quo import container
+   from quo.widgets import Frame, TextArea
 
-   def frame():
-    """ Example of a simple layout"""
-   content = quo.widgets.TextArea(text="Hello world🌍")
-   quo.container(
-        quo.widgets.Frame(
+   # Example of a simple layout
+   content = TextArea(text="Hello world🌍")
+   container(
+        Frame(
             content,
             title="Quo: python🐍"))
 
-   if __name__ == "__main__":
-       frame()
 ```
 ![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
 ### Message Box
 Example of a message box window.
 ```python
-   import quo
+   from quo import MessageBox
 
-   def main():
-       quo.MessageBox(
+   MessageBox(
            title="Message pop up window",
            text="Do you want to continue?\nPress ENTER to quit.").run()                                       
 
-   if __name__ == "__main__":
-      main()
 ```
 ![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
 
 
 ### Prompt Box
-Example of an prompt box window
+Example of a prompt box window
 ```python
-   import quo
+   from quo import PromptBox
 
-   def main():
-       result = quo.PromptBox(
-                    title="PromptBox shenanigans",
-                    text="What Country are you from?:").run()
+   PromptBox(
+             title="PromptBox shenanigans",
+             text="What Country are you from?:").run()
 
-       quo.echo(f"Result = {result}")
-
-   if __name__ == "__main__":
-       main()
 ```
 ![Prompt Box](https://github.com/secretum-inc/quo/raw/master/docs/images/promptbox.png)
 
 ### Quo tabular
 ```python
-   import quo
+   from quo import echo
+   from quo.table import Table
 
-   table = [
+   data = [
      ["Name", "Gender", "Age"],
      ["Alice", "F", 24],
      ["Bob", "M", 19],
      ["Dave", "M", 24]
    ]
-   tabular = quo.tabular
-   quo.echo(tabular(table))
+   echo(Table(data))
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
    

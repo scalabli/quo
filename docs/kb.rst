@@ -14,17 +14,17 @@ Key bindings can be defined by creating a
 
 .. code:: python
 
-    import quo
+    from quo.keys import KeyBinder
 
-    bindings = quo.keys.KeyBinder()
+    kb = KeyBinder()
 
-    @bindings.add('a')
+    @kb.add('a')
     def _(start):
         " Do something if 'a' has been pressed. "
         ...
 
 
-    @bindings.add('ctrl-t')
+    @kb.add('ctrl-t')
     def _(event):
         " Do something if Control-T has been pressed. "
         ...
@@ -44,12 +44,11 @@ Key bindings can be defined by creating a
 
         stty -ixon
 
-Key bindings can even consist of a sequence of multiple keys. The binding is
-only triggered when all the keys in this sequence are pressed.
+Key bindings can even consist of a sequence of multiple keys. The binding is only triggered when all the keys in this sequence are pressed.
 
 .. code:: python
 
-    @bindings.add('q', 'u', 'o')
+    @kb.add('q', 'u', 'o')
     def _(start):
         " Do something if 'a' is pressed and then 'b' is pressed. "
         ...
@@ -167,7 +166,7 @@ In code that looks as follows:
 
 .. code:: python
 
-    @bindings.add('escape', 'f')
+    @kb.add('escape', 'f')
     def _(event):
         " Do something if alt-f or meta-f have been pressed. "
 
@@ -188,26 +187,23 @@ This will handle `aa`, `ab`, `ac`, etcetera. The key binding can check the
 `event` object for which keys exactly have been pressed.
 
 
-``Attaching a filter (condition)``
------------------------------------
+``Attaching a Condition to key bindings``
+---------------------------------------
 
 In order to enable a key binding according to a certain condition, we have to
-pass it a :class:`~quo.filters.Filter`, usually a
-:class:`~quo.filters.Condition` instance. (:ref:`Read more about
-filters <filters>`.)
+pass it to :class:`~quo.Condition` instance. (:ref:`Read more about filters <filters>`.)
 
 .. code:: python
 
-    import quo
+    import datetime
+    from quo import Condition
 
-    filters = quo.filters.Condition 
-
-    @filters
+    @Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-    @bindings.add('ctrl-t', filter=is_active)
+    @kb.add('ctrl-t', filter=is_active)
     def _(event):
         # ...
         pass
@@ -224,9 +220,9 @@ to a certain condition. This is possible by wrapping it in a
 
 .. code:: python
 
-    import quo
+    from quo import Condition
 
-    @quo.filters.Condition
+    @Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
@@ -244,9 +240,7 @@ will be ignored.
 
 Sometimes you have different parts of your application generate a collection of
 key bindings. It is possible to merge them together through the
-:func:`~quo.keys.merge_key_bindings` function. This is
-preferred above passing a :class:`~quo.keys.KeyBinder`
-object around and having everyone populate it.
+:func:`~quo.keys.merge_key_bindings` function. This is preferred above passing a :class:`~quo.keys.KeyBinder` object around and having everyone populate it.
 
 .. code:: python
 
@@ -269,17 +263,15 @@ a second binding that only handles `a`. When the user presses only `a`,
 quo  has to wait for the next key press in order to know which
 handler to call.
 
-By passing the `eager` flag to this second binding, we are actually saying that quo shouldn't wait for longer matches when all the keys in this key
-binding are matched. So, if `a` has been pressed, this second binding will be
-called, even if there's an active `ab` binding.
+By passing the `eager` flag to this second binding, we are actually saying that quo shouldn't wait for longer matches when all the keys in this key binding are matched. So, if `a` has been pressed, this second binding will be called, even if there's an active `ab` binding.
 
 .. code:: python
 
-    @bindings.add('a', 'b')
+    @kb.add('a', 'b')
     def binding_1(event):
         ...
 
-    @bindings.add('a', eager=True)
+    @kb.add('a', eager=True)
     def binding_2(event):
         ...
 
@@ -292,9 +284,8 @@ Key binders handlers can be asyncio coroutines.
 
 .. code:: python
 
-    from quo.suite import in_terminal
 
-    @bindings.add('x')
+    @kb.add('x')
     async def print_hello(event):
         """
         Pressing 'x' will print 5 times "hello" in the background above the
@@ -302,8 +293,7 @@ Key binders handlers can be asyncio coroutines.
         """
         for i in range(5):
             # Print hello above the current prompt.
-            async with in_terminal():
-                print('hello')
+            print("Hello")
 
             # Sleep, but allow further input editing in the meantime.
             await asyncio.sleep(1)
@@ -343,7 +333,7 @@ the `record_in_macro` parameter to `False`:
 
 .. code:: python
 
-    @bindings.add('ctrl-t', record_in_macro=False)
+    @kb.add('ctrl-t', record_in_macro=False)
     def _(event):
         # ...
         pass
