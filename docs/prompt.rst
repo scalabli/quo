@@ -16,10 +16,10 @@ and returns the text. Just like ``input``.
 
 .. code:: python
 
-    import quo
+    from quo import prompt, echo
 
-    text = quo.prompt('Give me some input: ')
-    quo.echo(f"You said: {text}")
+    text = prompt('Give me some input: ')
+    echo(f"You said: {text}")
 
 .. image:: ./images/prompt.png
 
@@ -38,18 +38,18 @@ For instance, you can ask for a valid integer:
 
 .. code:: python
 
-   import quo
+   from quo import prompt
    
-   quo.prompt('Please enter a valid integer', type=int)
+   prompt('Please enter a valid integer', type=int)
 
 Additionally, the type will be determined automatically if a default value is
 provided.  For instance, the following will only accept floats:
 
 .. code:: python
 
-   import quo
+   from quo import prompt
 
-   quo.prompt('Please enter a number', default=42.0)
+   prompt('Please enter a number', default=42.0)
 
 
 
@@ -81,12 +81,13 @@ takes a :class:`~quo.document.Document` as input and raises
 
 .. code:: python
 
-    import quo
+    from quo.prompt import Prompt
+    from quo.errors import ValidationError
+    from quo.types import Validator
     
-    session = quo.prompt.Prompt()
-    verify  = quo.types.Validator
+    session = Prompt()
 
-    class NumberValidator(verify):
+    class NumberValidator(Validator):
         def validate(self, document):
             text = document.text
 
@@ -99,11 +100,11 @@ takes a :class:`~quo.document.Document` as input and raises
                     if not c.isdigit():
                         break
 
-                raise quo.errors.ValidationError(message='This input contains non-numeric characters',
+                raise ValidationError(message='This input contains non-numeric characters',
                                       cursor_position=i)
 
     number = int(session.prompt('Give a number: ', validator=NumberValidator()))
-    quo.echo(f"You said: {number}")
+    print(f"You said: {number}")
 
 .. image:: ./images/number-validator.png
 
@@ -125,10 +126,10 @@ Input history can be kept between consecutive :class:`quo.prompt.Prompt` calls i
 
 .. code:: python
     
-  import quo
+  from quo.prompt import Prompt
 
   # Create prompt object.
-  session = quo.prompt.Prompt()
+  session = Prompt()
 
   # Do multiple input calls.
   text1 = session.prompt("What's your name?")
@@ -141,9 +142,9 @@ Reading multiline input is as easy as passing the ``multiline=True`` parameter.
 
 .. code:: python
 
-   import quo
+   from quo.prompt import Prompt
 
-   session = quo.prompt.Prompt()
+   session = Prompt()
    session.prompt('> ', multiline=True)                                                                                               
 
  
@@ -175,26 +176,26 @@ exceed the given width. (The width of the prompt margin is defined by the prompt
 
 
 ``Hide Input``
-------------
-When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.prompt.Prompt` has been given, the input is hidden or
- replaced by asterisks (``*`` characters) .
+---------------
+
+When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.prompt.Prompt` has been given, the input is hidden or replaced by asterisks (``*`` characters) .
 
 ``Using function quo.prompt()``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
-   import quo
+   from quo import prompt
 
-   quo.prompt("Enter password: ", hide=True)
+   prompt("Enter password: ", hide=True)
 
 ``Using class `quo.prompt.Prompt()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
-   import quo
+   from quo.prompt import Prompt
 
-   session = quo.prompt.Prompt()
+   session = Prompt()
 
    session.prompt("Enter password: ", is_password=True)
 
@@ -312,20 +313,20 @@ this suggestion, :kbd:`alt-f` will insert the first word of the suggestion.
 .. note::
 
     When suggestions are based on the history, don't forget to share one
-    :class:`~quo.history.History` object between consecutive prompt calls. Using a
-    :class:`~quo.prompt.Prompt`
+    :class:`~quo.history.History` object between consecutive prompt calls. Using a :class:`~quo.prompt.Prompt`
 
 Example:
 
 .. code:: python
 
-    import quo
+    from quo.prompt import Prompt
+    from quo.completion import AutoSuggestFromHistory
     from quo.history import InMemoryHistory
     
-    session = quo.prompt.Prompt()
+    session = Prompt()
 
     while True:
-        text = session.prompt('> ', auto_suggest=quo.completion.AutoSuggestFromHistory())
+        text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
         print(f"You said: {text}")
 
 .. image:: ./images/auto-suggestion.png
@@ -356,9 +357,9 @@ as a boolean value:
 
 .. code:: python
 
-   import quo
+   from quo import confirm
    
-   quo.confirm('Do you want to continue?')
+   confirm('Do you want to continue?')
 
 ``Prompt toolbar``
 ------------------
@@ -397,12 +398,13 @@ base class.
 
 .. code:: python
 
-    import quo
+    from quo.prompt import Prompt
+    from quo.lexers import PygmentsLexer
     from pygments.lexers.html import HtmlLexer
     
-    session = quo.prompt.Prompt()
+    session = Prompt()
 
-    text = session.prompt('Enter HTML: ', lexer=quo.lexers.PygmentsLexer(HtmlLexer))
+    text = session.prompt('Enter HTML: ', lexer=quo.PygmentsLexer(HtmlLexer))
     print(f"You said: {text}")
 
 .. image:: ./images/html-input.png
@@ -439,9 +441,9 @@ Plain text placeholder
 
 .. code:: python
 
-   import quo
+   from quo.prompt import Prompt
 
-   session = quo.prompt.Prompt(placeholder="..(please type something)")
+   session = Prompt(placeholder="..(please type something)")
 
    session.prompt("What is your name?: ")
  
@@ -449,9 +451,10 @@ Formatted text placeholder
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
-  import quo
+  from quo.prompt import Prompt
+  from quo.text import Text
 
-  session = quo.Prompt(placeholder=quo.text.HTML('<style fg="gray">(please type something)</style>'))
+  session = Prompt(placeholder=Text('<style fg="gray">(please type something)</style>'))
   session.prompt("What is your name?: ")
   
 
@@ -625,7 +628,7 @@ has the **reversed style**, which is why we are setting the background instead o
     # Returns a callable
     text = session.prompt('> ', bottom_toolbar=bottom_toolbar)
 
-.. image:: ../images/bottom-toolbar.png
+.. image:: ./images/bottom-toolbar.png
 
 Similar, we could use a list of style/text tuples.
 
@@ -665,22 +668,21 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
 
     from quo.prompt import Prompt
     from quo.keys import KeyBinder
-    from quo.suite import run_in_l
 
-    bindings = quo.keys.KeyBinder()
-    session = quo.Prompt()
+    kb = KeyBinder()
+    session = Prompt()
 
-    @bindings.add('ctrl-t')
+    @kb.add('ctrl-t')
     def _(event):
     # Say 'hello' when `ctrl-t` is pressed."
         print("Hello, World!")
 
-    @bindings.add('ctrl-x')
+    @kb.add('ctrl-x')
     def _(event):
       #Exit when `ctrl-x` is pressed. "
         event.app.exit()
 
-    text = session.prompt('> ', bind=bindings)
+    text = session.prompt('> ', bind=kb)
 
 Enable key bindings according to a condition
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
