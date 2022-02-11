@@ -1,4 +1,5 @@
-# Progress bars 📊
+Progress bars 📊
+================
 
 A progress bar is a user interface element that indicates the progress of an operation. Progress bar supports two modes to represent progress: determinate, and indeterminate.
 Showing Progress Bars
@@ -10,7 +11,8 @@ The basic usage is very simple: the idea is that you have an iterable that
 you want to operate on.  For each item in the iterable it might take some
 time to do processing.
 
-## `Simple progress bar`
+`Simple progress bar`
+----------------------
 
 Creating a new progress bar can be done by calling the
 :class:`~quo.progress.ProgressBar`
@@ -23,11 +25,11 @@ when progress happens.
 
 .. code:: python
 
-    import quo
     import time
+    from quo.progress import ProgressBar
 
 
-    with quo.progress.ProgressBar() as pb:
+    with ProgressBar() as pb:
         for i in pb(range(800)):
             time.sleep(.01)
 
@@ -47,11 +49,12 @@ in order to make displaying the progress possible:
             time.sleep(.01)
 
 
-## `Multiple parallel tasks`
+`Multiple parallel tasks`
+-----------------------------
 
-A quo :class:`~quo.ProgressBar` can display the
+A quo :class:`~quo.progress.ProgressBar` can display the
 progress of multiple tasks running in parallel. Each task can run in a separate
-thread and the :class:`~quo.ProgressBar` user interface
+thread and the :class:`~quo.progress.ProgressBar` user interface
 runs in its own thread.
 
 Notice that we set the "daemon" flag for both threads that run the tasks. This
@@ -94,8 +97,8 @@ want this depends on the application.
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/two_tasks.png
 
 
-## `Adding a title and label`
-------------------------
+`Adding a title and label`
+----------------------------
 
 Each progress bar can have one title, and for each task an individual label.
 
@@ -116,10 +119,10 @@ Each progress bar can have one title, and for each task an individual label.
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/coloredlabel.png
 
 
-## `Formatting the progress bar`
----------------------------
+`Formatting the progress bar`
+-------------------------------
 
-The visualisation of a :class:`~quo.ProgressBar` can be
+The visualisation of a :class:`~quo.progress.ProgressBar` can be
 customized by using a different sequence of formatters. The default formatting looks something like this:
 
 .. code:: python
@@ -142,7 +145,7 @@ customized by using a different sequence of formatters. The default formatting l
     ]
 
 That sequence of
-:class:`~quo.shortcut.formatters.Formatter` can be
+:class:`~quo.shortcuts.formatters.Formatter` can be
 passed to the `formatter` argument of
 :class:`~quo.progress.ProgressBar`. So, we could change this and
 modify the progress bar to look like an apt-get style progress bar:
@@ -153,7 +156,7 @@ modify the progress bar to look like an apt-get style progress bar:
     from quo.styles import Style
     import time
 
-    style = Style.from_dict({
+    style = Style.add({
         'label': 'bg:#ffff00 #000000',
         'percentage': 'bg:#ffff00 #000000',
         'current': '#448844',
@@ -178,14 +181,14 @@ modify the progress bar to look like an apt-get style progress bar:
 .. image:: ../images/progress-bars/apt-get.png
 
 
-## `Adding key bindings and toolbar`
--------------------------------
+`Adding key bindings and toolbar`
+---------------------------------
 
-Like other quo  applications, we can add custom key bindings, by passing a :class:`~quo.key_binding.KeyBindings` object:
+Like other quo  applications, we can add custom key bindings, by passing a :class:`~quo.keys.KeyBinder` object:
 
 .. code:: python
 
-    from quo import HTML
+    from quo.text import Text
     from quo.progress import ProgressBar
     from quo.keys import KeyBinder
     from quo.patch_stdout import patch_stdout
@@ -194,7 +197,7 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
     import time
     import signal
 
-    bottom_toolbar = HTML(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
+    example = Text(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
 
     # Create custom key bindings first.
     kb = KeyBinder()
@@ -213,7 +216,7 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
     # Use `patch_stdout`, to make sure that prints go above the
     # application.
     with patch_stdout():
-        with ProgressBar(key_bindings=kb, bottom_toolbar=bottom_toolbar) as pb:
+        with ProgressBar(bind=kb, bottom_toolbar=example) as pb:
             for i in pb(range(800)):
                 time.sleep(.01)
 

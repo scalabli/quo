@@ -40,14 +40,16 @@ printing_text.rst
 console.rst
 prompt.rst
 utils.rst
+table.rst
 commands.rst
 apps.rst
 args.rst
 exceptions.rst
 dialogs.rst
+widgets.rst
 full_screen_apps.rst
 kb.rst
-progress
+progress.rst
 filters.rst
 styling
 help_text.rst
