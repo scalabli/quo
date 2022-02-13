@@ -99,7 +99,7 @@ Quo can also validate after the user presses the enter key:
 
 .. code:: python
 
-    session.prompt('Give a number: ', type=NumberValidator(), validate_while_typing=False)
+    session.prompt('Give a number: ', type=Number, validate_while_typing=False)
 
 If the input validation contains some heavy CPU intensive code, but you don't
 want to block the event loop, then it's recommended to wrap the validator class
@@ -346,9 +346,44 @@ as a boolean value:
    
    confirm('Do you want to continue?')
 
-``Prompt toolbar``
-------------------
+``Prompt bottom toolbar``
+---------------------------
+Adding a bottom toolbar is as easy as passing a bottom_toolbar argument to prompt(). This argument be either plain text, formatted text or a callable that returns plain or formatted text.
 
+When a function is given, it will be called every time the prompt is rendered, so the bottom toolbar can be used to display dynamic information.
+
+The toolbar is always erased when the prompt returns. Here we have an example of a callable that returns a :class:`quo.text.Text` object. By default, the toolbar has the reversed style, which is why we are setting the background instead of the foreground.
+
+.. code:: python
+   from quo.prompt import Prompt
+   from quo.text import Text
+
+   session = Prompt()
+
+   def toolbar():
+      return Text('This is a <b><style bg="red">Toolbar</style></b>!')
+   # Returns a callable
+   text = session.prompt('> ', bottom_toolbar=toolbar)
+
+.. image:: ./images/bottom-toolbar.png
+
+Similar, we could use a list of style/text tuples.
+
+.. code:: python
+   from quo.prompt import Prompt
+   from quo.styles import Style
+
+   session = Prompt()
+
+   def toolbar():
+       return [('class:bottom-toolbar', ' This is a toolbar. ')]
+
+   style = Style.add({
+     'bottom-toolbar': 'fg:white bg:green',})
+
+   text = session.prompt('> ', bottom_toolbar=toolbar, style=style)
+   print(f'You said: {text}')
+The default class name is bottom-toolbar and that will also be used to fill the background of the toolbar.
 
 ``Right prompt(rprompt)``
 --------------------------

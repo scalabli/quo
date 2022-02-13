@@ -3,6 +3,53 @@ Widgets
 
 A collection of reusable components for building full screen applications.
 
+TextArea
+---------
+A simple input field.
+This is a higher level abstraction on top of several other classes with sane defaults.
+
+This widget does have the most common options, but it does not intend to cover every single use case.
+For more configurations options, you can always build a text area manually, using a
+    - :class:`~quo.buffer.Buffer`
+    - :class:`~quo.layout.BufferControl`
+    - :class:`~quo.layout.Window`
+
+Buffer attributes
+^^^^^^^^^^^^^^^^^^
+
+- ``text`` - The initial text.
+- ``multiline`` - If True, allow multiline input.
+- ``completer`` - :class:`~quo.ompletion.Completer` instance for auto completion.
+- ``complete_while_typing`` -  Boolean.
+- ``accept_handler`` - Called when `Enter` is pressed *(This should be a callable that takes a buffer as input)*.
+- ``history`` - :class:`~quo.history.History` instance.
+- ``auto_suggest`` - :class:`~quo.completion.auto_suggest.AutoSuggest` instance for input suggestions.
+
+BufferControl attributes
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- ``password`` -  When `True`, display using asterisks.
+- ``focusable`` -  When `True`, allow this widget to receive the focus.
+- ``focus_on_click`` -  When `True`, focus after mouse click.
+- ``input_processors`` - `None` or a list of :class:`~quo.layout.Processor` objects.
+- ``type`` - `None` or a :class:`~quo.types.Validator` object.
+
+Window attributes
+^^^^^^^^^^^^^^^^^^
+- ``lexer`` - :class:`~quo.lexers.Lexer` instance for syntax highlighting.
+- ``wrap_lines`` - When `True`, don't scroll horizontally, but wrap lines.
+- ``width`` - Window width. (:class:`~quo.layout.Dimension` object.)
+- ``height`` - Window height. (:class:`~quo.layout.Dimension` object.)
+- ``scrollbar`` - When `True`, display a scroll bar.
+- ``style`` - A style string.
+- ``dont_extend_width`` - When `True`, don't take up more width than the preferred width reported by the control.
+- ``dont_extend_height`` - When `True`, don't take up more width than the preferred height reported by the control.
+- ``get_line_prefix`` - None or a callable that returns formatted text to be inserted before a line. It takes a line number *(int)* and a wrap_count and returns formatted text. This can be used for implementation of line continuations, things like Vim "breakindent" and so on.
+
+Other attributes
+^^^^^^^^^^^^^^^^^
+- ``search_field`` - An optional `SearchToolbar` object.
+
 
 ``Label``
 ---------
@@ -40,7 +87,7 @@ Widget that displays the given text. It is not editable or focusable.
    def _(event):
       event.app.exit()
 
-   Console
+   Console(
    layout=layout,
    bind=kb,
    style=example_style,
