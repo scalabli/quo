@@ -94,8 +94,13 @@ It also supports handling of ANSI color sequences.
 ![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
 
 ### Using the Console
-For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/reference/console.html#quo.console.Console) object.
-                                            ```python                                   from rich.console import Console                                                        console = Console()                         ```                                                                                     The Console object has a `print` method which has an intentionally similar interface to the builtin `print` function. Here's an example of use:
+For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/console.html) object.
+                                            ```python                                   from quo import Console
+
+console = Console()
+```
+The Console object has a `print` method which has an intentionally similar interface to the builtin `print` function. Here's an example of use:
+
 ### Quo frame
 ```python
   
