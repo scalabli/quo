@@ -15,6 +15,4 @@ shrinking other elements. Wrapping something in a ``Box`` makes it flexible.
      - ``style`` - A style string.
      - ``char``  - Character to be used for filling the space around the body. *(This is supposed tobe a character with a terminal width of 1.)*
 
-.. code:: python
-
-   https://github.com/secretum-inc/quo/src/master/examples/widgets/box/example1.py
+.. code:: python https://github.com/secretum-inc/quo/src/master/examples/widgets/box/example1.py
