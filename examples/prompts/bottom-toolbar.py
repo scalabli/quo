@@ -11,41 +11,37 @@ inside will get 'bottom-toolbar.text'. These can be used to change the default
 style.
 """
 import time
-import quo
+from quo import echo
+from quo.prompt import Prompt
+from quo.style import Style
+from quo.text import Text
 
-session = quo.Prompt()
+
+session = Prompt()
 
 def main():
     # Example 1: fixed text.
     text = session.prompt("Say something: ", bottom_toolbar="This is quo toolbar")
-    quo.echo(f"You said: {text}")
+    echo(f"You said: {text}")
 
     # Example 2: fixed text from a callable:
     def get_toolbar():
         return "Bottom toolbar: time=%r" % time.time()
 
     text = session.prompt("Say something: ", bottom_toolbar=get_toolbar, refresh_interval=0.5)
-    quo.echo(f"You said: {text}")
+    echo(f"You said: {text}")
 
     # Example 3: Using HTML:
     text = session.prompt(
         "Say something: ",
-        bottom_toolbar=quo.text.HTML(
-            '(html) <b>This</b> <u>is</u> a <style bg="ansired">toolbar</style>'
+        bottom_toolbar=Text( '(html) <b>This</b> <u>is</u> a <style bg="red">toolbar</style>'
         ),
     )
-    quo.echo(f"You said: {text}")
+    echo(f"You said: {text}")
 
-    # Example 4: Using ANSI:
-    text = session.prompt(
-        "Say something: ",
-        bottom_toolbar=quo.text.ANSI("(ansi): \x1b[1mThis\x1b[0m \x1b[4mis\x1b[0m a \x1b[91mtoolbar"
-        ),
-    )
-    print("You said: %s" % text)
 
-    # Example 5: styling differently.
-    style = quo.styles.Style.add(
+    # Example 4: styling differently.
+    style = Style.add(
         {
             "bottom-toolbar": "#aaaa00 bg:#ff0000",
             "bottom-toolbar.text": "#aaaa44 bg:#aa4444",

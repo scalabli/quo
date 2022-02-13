@@ -32,33 +32,24 @@ An example
 
 The most obvious way to create such a :class:`~quo.filters.Filter`
 instance is by creating a :class:`~quo.filters.Condition` instance
-from a function. For instance, the following condition will evaluate to
-``True`` when the user is searching:
+from a function. For instance, the following condition will evaluate to ``True`` when the user is searching:
 
 .. code:: python
 
-    import quo
+    from quo import Condition
+    from quo.console import get_app
 
-    is_searching = quo.filters.Condition(lambda: quo.suite.get_app().is_searching)
-
-
-A different way of writing this, is by using the decorator syntax:
-
-.. code:: python
-
-    import quo
-
-    @quo.filters.Condition
+    @Condition
     def is_searching():
-        return quo.suite.get_app().is_searching
+        return get_app().is_searching
 
 This filter can then be used in a key binding, like in the following snippet:
 
 .. code:: python
 
-    import quo
+    from quo.keys import KeyBinder
 
-    kb = quo.keys.KeyBinder()
+    kb = KeyBinder()
 
     @kb.add('ctrl-t', filter=is_searching)
     def _(event):
@@ -122,9 +113,9 @@ Some examples:
 
 .. code:: python
 
-    import quo
+    from quo.keys import KeyBinder
 
-    kb = quo.keys.KeyBinder()
+    kb = KeyBinder()
 
     @kb.add('ctrl-t', filter=~is_searching)
     def _(event):

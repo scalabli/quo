@@ -1,11 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Example of a placeholer that's displayed as long as no input is given.
 """
-import quo
+from quo import echo
+from quo.prompt import Prompt
+from quo.text import Text
 
-session = quo.Prompt(placeholder=quo.text.HTML('<style fg="gray">(please type something)</style>'))
+session = Prompt(placeholder=Text('<style fg="gray">(please type something)</style>'))
 
 if __name__ == "__main__":
     answer = session.prompt("")
-    quo.echo(f"You said: {answer}")
+    echo(f"You said: {answer}")

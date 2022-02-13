@@ -4,9 +4,10 @@ Example of a 'dynamic' prompt. On that shows the current time in the prompt.
 """
 import datetime
 
-import quo
+from quo import echo
+from quo.prompt import Prompt
 
-console = quo.Prompt()
+console = Prompt()
 
 def get_prompt():
     "Tokens to be shown before the prompt."
@@ -19,7 +20,7 @@ def get_prompt():
 
 def main():
     result = console.prompt(get_prompt, refresh_interval=0.5)
-    quo.echo(f"You said: {result}")
+    echo(f"You said: {result}")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is the most simple example possible.
 """
-import quo
+from quo import Console
 
-app = quo.Suite(full_screen=False)
-app.run()
+Console(full_screen=True).run()

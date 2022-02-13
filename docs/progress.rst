@@ -11,8 +11,8 @@ The basic usage is very simple: the idea is that you have an iterable that
 you want to operate on.  For each item in the iterable it might take some
 time to do processing.
 
-`Simple progress bar`
-----------------------
+``Simple progress bar``
+-------------------------
 
 Creating a new progress bar can be done by calling the
 :class:`~quo.progress.ProgressBar`
@@ -49,7 +49,7 @@ in order to make displaying the progress possible:
             time.sleep(.01)
 
 
-`Multiple parallel tasks`
+``Multiple parallel tasks``
 -----------------------------
 
 A quo :class:`~quo.progress.ProgressBar` can display the
@@ -97,8 +97,8 @@ want this depends on the application.
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/two_tasks.png
 
 
-`Adding a title and label`
-----------------------------
+``Adding a title and label``
+-------------------------------
 
 Each progress bar can have one title, and for each task an individual label.
 
@@ -119,8 +119,8 @@ Each progress bar can have one title, and for each task an individual label.
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/coloredlabel.png
 
 
-`Formatting the progress bar`
--------------------------------
+``Formatting the progress bar``
+----------------------------------
 
 The visualisation of a :class:`~quo.progress.ProgressBar` can be
 customized by using a different sequence of formatters. The default formatting looks something like this:
@@ -178,11 +178,11 @@ modify the progress bar to look like an apt-get style progress bar:
         for i in pb(range(1600), label='Installing'):
             time.sleep(.01)
 
-.. image:: ../images/progress-bars/apt-get.png
+.. image:: ./images/progress-bars/apt-get.png
 
 
-`Adding key bindings and toolbar`
----------------------------------
+``Adding key bindings and toolbar``
+------------------------------------
 
 Like other quo  applications, we can add custom key bindings, by passing a :class:`~quo.keys.KeyBinder` object:
 
@@ -234,6 +234,6 @@ always considered a clean way of cancelling something.
 In the example above, we also display a toolbar at the bottom which shows the
 key bindings.
 
-.. image:: ../images/progress-bars/custom-key-bindings.png
+.. image:: ./images/progress-bars/custom-key-bindings.png
 
 :ref:`Read more about key bindings ...<key_bindings>`

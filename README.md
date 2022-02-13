@@ -18,6 +18,8 @@
 Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API.
 Simple to code, easy to learn, and does not come with needless baggage. 
 
+## Compatibility
+Quo works flawlessly  with Linux, OSX, and Windows.
 Quo requires Python `3.8` or later. 
 
 
@@ -41,7 +43,7 @@ pip install -U quo
 ```
 
 
-### quo.echo
+### Quo echo
 **Example 1**
 ```python
    from quo import echo
@@ -62,7 +64,7 @@ pip install -U quo
 Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
 It also supports handling of ANSI color sequences.
 
-### quo.prompt
+### Quo prompt
 ```python
    from quo import prompt
 
@@ -91,6 +93,9 @@ It also supports handling of ANSI color sequences.
 ```
 ![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
 
+### Using the Console
+For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/reference/console.html#quo.console.Console) object.
+                                            ```python                                   from rich.console import Console                                                        console = Console()                         ```                                                                                     The Console object has a `print` method which has an intentionally similar interface to the builtin `print` function. Here's an example of use:
 ### Quo frame
 ```python
   

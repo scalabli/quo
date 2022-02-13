@@ -79,7 +79,7 @@ will use Win32 API calls or VT100 sequences, depending on what is available.
 There are several ways to display colors:
 
 - By creating a :func:`quo.echo` object.
-- By creating an :class:`~quo.text.HTML` object
+- By creating an :class:`~quo.text.Text` object
 - By creating a list of ``(style, text)`` tuples.
 
 
@@ -89,10 +89,10 @@ An instance of any of these three kinds of objects is called "formated text".
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 
-``[2] Using quo.text.HTML
+``[2] Using quo.text.Text
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:class:`~quo.text.HTML` can be used to indicate that a
+:class:`~quo.text.Text` can be used to indicate that a
 string contains HTML-like formatting. It recognizes the basic tags for bold,
 italic and underline: ``<b>``, ``<i>`` and ``<u>``.
 
@@ -101,15 +101,15 @@ italic and underline: ``<b>``, ``<i>`` and ``<u>``.
     import quo
 
 
-    quo.inscribe(quo.text.HTML('<b>This is bold</b>'))
-    quo.inscribe(quo.text.HTML('<i>This is italic</i>'))
-    quo.inscribe(quo.text.HTML('<u>This is underlined</u>'))
+    quo.inscribe(quo.text.Text('<b>This is bold</b>'))
+    quo.inscribe(quo.text.Text('<i>This is italic</i>'))
+    quo.inscribe(quo.text.Text('<u>This is underlined</u>'))
 
 .. code:: python
 
     # Colors from the ANSI palette.
-    quo.inscribe(quo.text.HTML('<red>This is red</red>'))
-    quo.inscribe(quo.text.HTML('<green>This is green</green>'))
+    quo.inscribe(quo.text.Text('<red>This is red</red>'))
+    quo.inscribe(quo.text.Text('<green>This is green</green>'))
 
     # Named colors (256 color palette, or true color, depending on the output).
     quo.inscribe(quo.text.HTML('<skyblue>This is sky blue</skyblue>'))
@@ -129,14 +129,15 @@ assign a style for a custom tag.
 
 .. code:: python
 
-    import quo
+    from quo.style import Style
+    from quo.text import Text
 
-    style = quo.styles.Style.add({
+    style = Style.add({
         'aaa': '#ff0066',
         'bbb': '#44ff00 italic',
     })
 
-    quo.inscribe(quo.text.HTML('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
+    quo.inscribe(Text('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
 
 
 
@@ -152,9 +153,9 @@ way of expressing formatted text.
 
 .. code:: python
 
-    import quo
+    from quo.text import FormattedText
 
-    text = quo.text.FormattedText([
+    text = FormattedText([
         ('#ff0066', 'Hello'),
         ('', ' '),
         ('#44ff00 italic', 'World'),
@@ -162,22 +163,23 @@ way of expressing formatted text.
 
     quo.inscribe(text)
 
-Similar to the :class:`~quo.text.HTML` example, it is also
+Similar to the :class:`~quo.text.Text` example, it is also
 possible to use class names, and separate the styling in a style sheet.
 
 .. code:: python
 
     import quo
-
+    from quo.text import FormattedText
+    from quo.style import Style
     # The text.
-    text = quo.text.FormattedText([
+    text = FormattedText([
         ('class:aaa', 'Hello'),
         ('', ' '),
         ('class:bbb', 'World'),
     ])
 
     # The style sheet.
-    style = quo.styles.Style.add({
+    style = Style.add({
         'aaa': '#ff0066',
         'bbb': '#44ff00 italic',
     })

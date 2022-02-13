@@ -14,15 +14,18 @@ Unrealeased
 
 - Fixed minor bugs
 - Introduced c++ extensions
+- Added :class:`quo.types.Number`
+- Deprecated :class:`quo.text.HTML` in favor of :class:`quo.text.Text`
 - Deprecated :param:`r_elicit` in favor of :param:`rprompt`
 - Deprecated :class:`quo.Suite` in favor of :class:`quo.Console`
+- Deprecated :param:`validator` in favor of :param:`type`
 - Added :func:`quo.Console.edit`
 - Added :func:`quo.Console.launch`
 - Added :func:`quo.Console.size`
 - Added :func:`quo.Console.rule`
 - Added :func:`quo.Console.openfile`
+- Added :class:`quo.text.Text`
 - Full support for Windows
-- Renamed tabulate to table
 - Dropped support for `python < 3.8`
 
 

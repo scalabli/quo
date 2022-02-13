@@ -15,9 +15,9 @@ simple message box. For instance:
 
 .. code:: python
 
-    import quo
+    from quo import MessageBox
 
-    quo.MessageBox(
+    MessageBox(
         title='Example dialog window',
         text='Do you want to continue?\nPress ENTER to quit.').run()
 
@@ -32,9 +32,9 @@ input box. It will return the user input as a string.
 
 .. code:: python
 
-    import quo
+    from quo import PromptBox
 
-    quo.PromptBox(
+    PromptBox(
         title='Input dialog example',
         text='Please type your name:').run()
 
@@ -53,9 +53,9 @@ confirmation dialog. It will return a boolean according to the selection.
 
 .. code:: python
 
-    import quo
+    from quo import ConfirmationBox
 
-    quo.ConfirmationBox(
+    ConfirmationBox(
         title='Yes/No dialog example',
         text='Do you want to confirm?').run()
 
@@ -70,9 +70,9 @@ with choices offered as buttons. Buttons are indicated as a list of tuples, each
 
 .. code:: python
 
-    import quo
+    from quo import ChoiceBox
 
-    quo.ChoiceBox(
+    ChoiceBox(
         title='Button dialog example',
         text='Do you want to confirm?',
         buttons=[
@@ -93,9 +93,9 @@ each providing the return value (first element) and the displayed value (second 
 
 .. code:: python
 
-    import quo
+    from quo import RadiolistBox
 
-    quo.RadiolistBox( 
+    RadiolistBox( 
         title="RadioList dialog", 
         text="Which breakfast would you like ?", 
         values=[ 
@@ -129,29 +129,29 @@ The :func:`~quo.CheckBox` has the same usage and purpose than the Radiolist dial
 Styling of dialogs
 ------------------
 
-A custom :class:`~quo.styles.Style` instance can be passed to all
+A custom :class:`~quo.style.Style` instance can be passed to all
 dialogs to override the default style. Also, text can be styled by passing an
-:class:`~quo.text.HTML` object.
+:class:`~quo.text.Text` object.
 
 
 .. code:: python
 
-    import quo
+    from quo import MessageBox
+    from quo.style import Style
+    from quo.text import Text
 
-    style = quo.styles.Style
-
-    example_style = style.add({
+    example = Style.add({
         'dialog':             'bg:#88ff88',
         'dialog frame.label': 'bg:#ffffff #000000',
         'dialog.body':        'bg:#000000 #00ff00',
         'dialog shadow':      'bg:#00aa00',
     })
 
-    quo.MessageBox(
-        title=quo.text.HTML('<style bg="blue" fg="white">Styled</style> '
-                   '<style fg="ansired">dialog</style> window'),
+    MessageBox(
+        title=Text('<style bg="blue" fg="white">Styled</style> '
+        '<style fg="red">dialog</style> window'),
         text='Do you want to continue?\nPress ENTER to quit.',
-        style=example_style).run()
+        style=example).run()
 
 .. image:: ./images/styled.png
 
@@ -235,18 +235,17 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 Example
 _______
 
-Let's customize the example of the ``checkbox``.
+Let's customize the example of the ``Check Box``.
 
 It uses 2 ``Button``, a ``CheckboxList`` and a ``Label``, packed inside a ``Dialog``.
 Therefore we can customize each of these elements separately, using for instance:
 
 .. code:: python
 
-    import quo
+    from quo import CheckBox
+    from quo.style import Style
 
-    styles = quo.styles.Style
-
-    quo.CheckBox(
+    CheckBox(
         title="CheckboxList dialog",
         text="What would you like in your breakfast ?",
         values=[
@@ -255,7 +254,7 @@ Therefore we can customize each of these elements separately, using for instance
             ("croissants", "20 Croissants"),
             ("daily", "The breakfast of the day")
         ],
-        style = styles.add({
+        style = Style.add({
             'dialog': 'bg:#cdbbb3',
             'button': 'bg:#bf99a4',
             'checkbox': '#e8612c',

@@ -3,7 +3,7 @@
 Console API
 ===========
 
-For complete control over terminal formatting, Rich offers a :class:`~quo.console.Console` class. Most applications will require a single Console instance, so you may want to create one at the module level or as an attribute of your top-level object. For example, you  could add a file called "console.py" to your project::
+For complete control over terminal formatting, Quo offers a :class:`~quo.console.Console` class. Most applications will require a single Console instance, so you may want to create one at the module level or as an attribute of your top-level object. For example, you  could add a file called "console.py" to your project::
 
     from quo import Console
     console = Console()
@@ -139,7 +139,7 @@ If stdin or stdout are returned, the return value is wrapped in a special file w
 ``Launching Applications``
 ---------------------------
 
-Quo supports launching applications through :func:`quo.launch`.  This
+Quo supports launching applications through :func:`quo.Console.launch`.  This
 can be used to open the default application associated with a URL or filetype.
 
 This can be used to launch web browsers or picture viewers, for instan
@@ -153,13 +153,24 @@ ce. In addition to this, it can also launch the file manager and automatically s
 
 
 .. code:: python
-
-  from quo import Console
+   :lineos:
+   :emphasize-lines: 5
+   
+   from quo import Console
   
-  console = Console()
+   console = Console()
  
-  console.launch("https://quo.rtfd.io/")
-  console.launch("/home/downloads/file.txt", locate=True)
+   console.launch("https://quo.rtfd.io/"
+
+.. code:: python
+   :lineos:
+   :emphasize-lines: 5
+
+   from quo import Console
+
+   console = Console()
+
+   console.launch("/home/downloads/file.txt", locate=True)
 
 ``Terminal size``
 -----------------
@@ -180,8 +191,8 @@ Here's an example::
     >>> console.out("Locals", locals())
 
 
-Rules
------
+``Rules``
+----------
 
 The :meth:`~quo.Console.rule` method will draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
 provided file.

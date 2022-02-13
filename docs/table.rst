@@ -7,6 +7,7 @@ Table
 
 .. code:: python
 
+  from quo import echo
   from quo.table import Table
   
   example = [
@@ -15,4 +16,4 @@ Table
   ["Bob", "M", 19],
   ["Dave", "M", 24]
   ]
-  print(Table(example))
+  echo(Table(example))

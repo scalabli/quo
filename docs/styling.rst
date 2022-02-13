@@ -64,7 +64,7 @@ The following ANSI colors are available (both for foreground and background):
     ansibrightblue, ansibrightmagenta, ansibrightcyan, ansiwhite
 
 In order to know which styles are actually used in an application, it is
-possible to call :meth:`~Application.get_used_style_strings`, when the
+possible to call :meth:`~Console.get_used_style_strings`, when the
 application is done.
 
 ``Class names``
@@ -73,22 +73,26 @@ application is done.
 Like we do for web design, it is not a good habit to specify all styling
 inline. Instead, we can attach class names to UI controls and have a style
 sheet that refers to these class names. The
-:class:`~quo.styles.Style` can be passed as an argument to the
-:class:`~quo.Suite`.
+:class:`~quo.style.Style` can be passed as an argument to the :class:`~quo.Console`.
 
 .. code:: python
 
-    import quo
+    from quo.layout import VSplit
+    from quo.layout import HSplit
+    from quo.layout import Window
+    from quo.layout import BufferControl
+    from quo.style import Style
 
-    layout = quo.layout.VSplit([
-        quo.layout.Window(quo.layout.BufferControl(...), style='class:left'),
-        quo.layout.HSplit([
-            quo.layout.Window(quo.layout.BufferControl(...), style='class:top'),
-            quo.layout.Window(quo.layout.BufferControl(...), style='class:bottom'),
+
+    layout = VSplit([
+        Window(BufferControl(...), style='class:left'),
+        HSplit([
+            Window(BufferControl(...), style='class:top'),
+            Window(BufferControl(...), style='class:bottom'),
         ], style='class:right')
     ])
 
-    style = quo.styles.Style([
+    style = Style([
          ('left', 'bg:ansired'),
          ('top', 'fg:#00aaaa'),
          ('bottom', 'underline bold'),
@@ -110,7 +114,7 @@ the "header" class, and then override that with a red background color.
 
 .. code:: python
 
-    quo.layout.Window(quo.layout.BufferControl(...), style='class:header bg:red'),
+    Window(BufferControl(...), style='class:header bg:red'),
 
 
 ``Dot notation in class names``
@@ -134,7 +138,7 @@ matter).
 
 .. code:: python
 
-    style = quo.styles.Style([
+    style = Style([
          ('header left', 'underline'),
      ])
 
@@ -145,7 +149,7 @@ style sheet (just typing ``c`` or ``b.c`` doesn't work if the class is
 
 .. code:: python
 
-    style = quo.styles.Style([
+    style = Style([
          ('a.b.c', 'underline'),
      ])
 
@@ -153,7 +157,7 @@ It is possible to combine this:
 
 .. code:: python
 
-    style = quo.styles.Style([
+    style = Style([
          ('header body left.text', 'underline'),
      ])
 
@@ -195,9 +199,9 @@ their ordering. An ``OrderedDict`` works as well.
 
 .. code:: python
 
-    import quo
+    from quo.style import Style
 
-    style = quo.styles.Style.add({
+    style = Style.add({
          'header body left.text': 'underline',
     })
 
@@ -211,7 +215,7 @@ style can however be loaded and used as follows:
 
 .. code:: python
 
-    from quo.styles.pygments import style_from_pygments_cls
+    from quo.style.pygments import style_from_pygments_cls
     from pygments.styles import get_style_by_name
 
     style = style_from_pygments_cls(get_style_by_name('monokai'))
@@ -219,12 +223,12 @@ style can however be loaded and used as follows:
 
 ``Merging styles together``
 ----------------------------
-Multiple :class:`~quo.styles.Style` objects can be merged together as
+Multiple :class:`~quo.style.Style` objects can be merged together as
 follows:
 
 .. code:: python
 
-    from quo.styles import merge_styles
+    from quo.style import merge_styles
 
     style = merge_styles([
         style1,
@@ -266,14 +270,14 @@ for instance copy the following into your `.bashrc` file.
 
 An application can also decide to set the color depth manually by passing a
 :class:`~quo.color.ColorDepth` value to the
-:class:`~quo.Suite` object:
+:class:`~quo.Console` object:
 
 .. code:: python
 
-    import quo
+    from quo import Console
+    from quo.color import ColorDepth
 
-    app = quo.Suite(
-        color_depth=quo.color.ColorDepth.ANSI_COLORS_ONLY,
+    app = Console(color_depth=ColorDepth.ANSI_COLORS_ONLY,
         # ...
     )
 
@@ -285,18 +289,17 @@ near the end of the rendering pipeline. This can be used for instance to change
 certain colors to improve the rendering in some terminals.
 
 One useful example is the
-:class:`~quo.styles.AdjustBrightnessStyleTransformation` class,
+:class:`~quo.style.AdjustBrightnessStyleTransformation` class,
 which takes `min_brightness` and `max_brightness` as arguments which by default
 have 0.0 and 1.0 as values. In the following code snippet, we increase the
 minimum brightness to improve rendering on terminals with a dark background.
 
 .. code:: python
 
-    import quo
-    
-    from quo.styles import AdjustBrightnessStyleTransformation
+    from quo import Console
+    from quo.style import AdjustBrightnessStyleTransformation
 
-    app = quo.Suite(
+    app = Console(
         style_transformation=AdjustBrightnessStyleTransformation(
             min_brightness=0.5,  # Increase the minimum brightness.
             max_brightness=1.0,

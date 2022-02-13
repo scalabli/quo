@@ -36,6 +36,7 @@ A prompt can have a validator attached. To manually ask for user input, you can 
 For instance, you can ask for a valid integer:
 
 
+
 .. code:: python
 
    from quo import prompt
@@ -79,31 +80,16 @@ This should implement the :class:`~quo.types.Validator` abstract base class. Thi
 takes a :class:`~quo.document.Document` as input and raises
 :class:`~quo.errors.ValidationError` when the validation fails.
 
+`Number Validator`
+^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.errors import ValidationError
-    from quo.types import Validator
+    from quo.types import Number
     
     session = Prompt()
-
-    class NumberValidator(Validator):
-        def validate(self, document):
-            text = document.text
-
-            if text and not text.isdigit():
-                i = 0
-
-                # Get index of first non numeric character.
-                # We want to move the cursor here.
-                for i, c in enumerate(text):
-                    if not c.isdigit():
-                        break
-
-                raise ValidationError(message='This input contains non-numeric characters',
-                                      cursor_position=i)
-
-    number = int(session.prompt('Give a number: ', validator=NumberValidator()))
+    
+    number = int(session.prompt('Give a number: ', type=Number()))
     print(f"You said: {number}")
 
 .. image:: ./images/number-validator.png
@@ -113,8 +99,7 @@ Quo can also validate after the user presses the enter key:
 
 .. code:: python
 
-    session.prompt('Give a number: ', validator=NumberValidator(),
-           validate_while_typing=False)
+    session.prompt('Give a number: ', type=NumberValidator(), validate_while_typing=False)
 
 If the input validation contains some heavy CPU intensive code, but you don't
 want to block the event loop, then it's recommended to wrap the validator class

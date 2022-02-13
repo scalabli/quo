@@ -3,7 +3,12 @@
 A simple example of a calculator program.
 This could be used as inspiration for a REPL.
 """
-import quo
+from quo import Console
+from quo.document import Document
+from quo.keys import KeyBinder
+from quo.widgets import SearchToolbar, TextArea
+from quo.layout import Layout, Window, HSplit
+from quo.style import Style
 
 help_text = """
 Type any expression (e.g. "4 + 4") followed by enter to execute.
@@ -13,10 +18,10 @@ Press Control-C to exit.
 
 def main():
     # The layout.
-    search_field = quo.widgets.SearchToolbar()  # For reverse search.
+    search_field = SearchToolbar()  # For reverse search.
 
-    output_field = quo.widgets.TextArea(style="class:output-field", text=help_text)
-    input_field = quo.widgets.TextArea(
+    output_field = TextArea(style="class:output-field", text=help_text)
+    input_field = TextArea(
         height=2,
         prompt=">>",
         style="class:input-field",
@@ -25,10 +30,10 @@ def main():
         search_field=search_field,
     )
 
-    container = quo.layout.HSplit(
+    container = HSplit(
         [
             output_field,
-            quo.layout.Window(height=1, char="-", style="class:line"),
+            Window(height=1, char="-", style="class:line"),
             input_field,
             search_field,
         ]
@@ -51,14 +56,14 @@ def main():
         new_text = output_field.text + output
 
         # Add text to output buffer.
-        output_field.buffer.document = quo.document.Document(
+        output_field.buffer.document = Document(
             text=new_text, cursor_position=len(new_text)
         )
 
     input_field.accept_handler = accept
 
     # The key bindings.
-    kb = quo.keys.KeyBinder()
+    kb = KeyBinder()
 
     @kb.add("ctrl-c")
     @kb.add("ctrl-q")
@@ -67,28 +72,25 @@ def main():
         event.app.exit()
 
     # Style.
-    styling = quo.styles.Style
-    style = styling(
+    sample = Style(
         [
             ("output-field", "bg:blue fg:yellow"),
-            ("input-field", "bg: yellow  #ffffff"),
-            ("line", "magenta"),
+            ("input-field", "bg: yellow fg:white"),
+            ("line", "fg:magenta"),
         ]
     )
 
-    layout = quo.layout.Layout(container, focused_element=input_field)
+    layout = Layout(container, focused_element=input_field)
 
 
     # Run application.
-    application = quo.Suite(
+    Console(
             layout=layout,
             bind=kb,
-            style=style,
+            style=sample,
             mouse_support=True,
             full_screen=True,
-            )
-    application.run()
-
+            ).run()
 
 if __name__ == "__main__":
     main()
