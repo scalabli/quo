@@ -1,5 +1,5 @@
 from quo import Console
-from quo.widgets import Box, Label
+from quo.widgets import Label
 from quo.keys import KeyBinder
 from quo.layout import Layout
 from quo.style import Style
@@ -11,8 +11,7 @@ example_style = Style(
             ]
         )
 
-root = Box(
-        Label("Hello, World", style="class:hello-world"), padding=2)
+root = Label("Hello, World", style="class:hello-world")
 
 layout = Layout(container=root)
 

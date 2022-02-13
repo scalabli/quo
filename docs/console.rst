@@ -153,8 +153,6 @@ ce. In addition to this, it can also launch the file manager and automatically s
 
 
 .. code:: python
-   :lineos:
-   :emphasize-lines: 5
    
    from quo import Console
   
@@ -163,8 +161,6 @@ ce. In addition to this, it can also launch the file manager and automatically s
    console.launch("https://quo.rtfd.io/"
 
 .. code:: python
-   :lineos:
-   :emphasize-lines: 5
 
    from quo import Console
 
