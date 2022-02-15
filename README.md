@@ -172,7 +172,6 @@ Example of a message box dialog.
    MessageBox(
            title="Message pop up window",
            text="Do you want to continue?\nPress ENTER to quit.").run()                                       
-
 ```
 The above produces the following output
 ![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
@@ -192,7 +191,8 @@ Example of a prompt box dialog
 
 <details>
 <summary>Table</summary>
-Function [Table](https://quo.readthedocs.io/en/latest/table.html) offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
+
+Function [Table](https://quo.readthedocs.io/en/latest/table.html)offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
 Example
 ```python
@@ -214,7 +214,7 @@ Example
 <summary>Widgets</summary>
 A collection of reusable components for building full screen applications.
 
-``Label``
+## ``Label``
 Widget that displays the given text. It is not editable or focusable.
 ```python
 
@@ -225,7 +225,7 @@ Widget that displays the given text. It is not editable or focusable.
    from quo.style import Style
 
    # Styling for the label
-   example_style = Style(                                                                       [
+   example_style = Style(                                 [
         ("hello-world", "bg:red fg:black")
         ] 
           )
