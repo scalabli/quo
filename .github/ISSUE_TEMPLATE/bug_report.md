@@ -1,11 +1,12 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+title: "[BUG]"
+labels: Needs triage
+assignees: ""
 ---
+
+You may find a solution to your problem in the [docs](https://quo.readthedocs.io) or [issues](https://github.com/secretum-inc/quo/issues).
 
 **Describe the bug**
 A clear and concise description of what the bug is.

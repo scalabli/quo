@@ -1,20 +1,24 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: ''
+title: "[REQUEST]"
+labels: Needs triage
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+Consider posting in https://github.com/secretum-inc/quo/discussions for feedback before raising a feature request.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+Have you checked the issues for a similar suggestions?
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**How would you improve Quo?**
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+Give as much detail as you can. Example code of how you would like it to work would help.
+
+**What problem does it solve for you?**
+
+What problem do you have that this feature would solve? I may be able to suggest an existing way of solving it.
+
+**Did I help**
+
+If I was able to resolve your problem, consider [sponsoring](https://ko-fi.com/gerrishon) my work on Quo

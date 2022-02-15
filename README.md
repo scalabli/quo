@@ -148,9 +148,9 @@ Example of a prompt box dialog
 
 <details>
 <summary>Table</summary>
-`Table` function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
+[Table](https://quo.readthedocs.io/en/latest/table.html) function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
-### Quo tabular
+Example
 ```python
    from quo import echo
    from quo.table import Table
