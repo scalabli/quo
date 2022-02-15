@@ -163,12 +163,12 @@ A key binding is an association between a physical key on a keyboard and a param
 
 <details>
 <summary>Dialog</summary>
-High level API for displaying dialog boxes to the user for informational purposes, or get input fromthe user.
+High level API for displaying [dialog](https://quo.readthedocs.io/en/latest/dialogs.html) boxes to the user for informational purposes, or get input fromthe user.
 
-Example of a message box dialog.
+1) Example of a message box dialog.
 ```python
 
-   from quo import MessageBox
+   from quo.dialog import MessageBox
 
    MessageBox(
            title="Message pop up window",
@@ -177,7 +177,7 @@ Example of a message box dialog.
 The above produces the following output
 ![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
 
-Example of a prompt box dialog
+2) Example of a prompt box dialog
 ```python
    from quo.dialog import PromptBox
 
