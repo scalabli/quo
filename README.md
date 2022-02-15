@@ -139,7 +139,7 @@ orks by wrapping the iterable (like ``range``) with the class `ProgressBar`.
                  for i in pb(range(800)):
                                time.sleep(.01)
 ```
-![Progress]( https://raw.githubusercontent.com/secretum-inc/quo/master/docs/pics/progressbars/simplepb.png)
+![Progress]( https://raw.githubusercontent.com/secretum-inc/quo/master/docs/pics/simplepb.png)
 </details>
 
 <details>
@@ -214,7 +214,7 @@ Example
 <summary>Widgets</summary>
 A collection of reusable components for building full screen applications.
 
-## Label
+``Label``
 Widget that displays the given text. It is not editable or focusable.
 ```python
 
@@ -248,6 +248,8 @@ Widget that displays the given text. It is not editable or focusable.
 
 ```
 Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
+
+</details>
 
 For more intricate  examples, have a look in the [examples](https://github.com/secretum-inc/quo/tree/master/examples) directory and the documentation.
 
