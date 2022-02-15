@@ -5,14 +5,14 @@
 import quo
 from pygments.lexers.html import HtmlLexer
 
-from quo.suite.current import get_app
+from quo.console.urrent import get_app
 from quo.completion import WordCompleter
 from quo.layout.containers import Float, HSplit, VSplit
 from quo.layout.dimension import D
 from quo.layout.layout import Layout
 from quo.layout.menus import CompletionsMenu
 from quo.lexers import PygmentsLexer
-from quo.widgets import (
+from quo.widget import (
     Box,
     Button,
     Checkbox,
@@ -99,7 +99,7 @@ root_container = HSplit(
     [
         VSplit(
             [
-                quo.widgets.Frame(body=Label(text="Left frame\ncontent")),
+                Frame(body=Label(text="Left frame\ncontent")),
                 Dialog(title="The custom window", body=Label("hello\ntest")),
                 textfield,
             ],
@@ -107,16 +107,16 @@ root_container = HSplit(
         ),
         VSplit(
             [
-                quo.widgets.Frame(body=ProgressBar(), title="Progress bar"),
-                quo.widgets.Frame(
+                Frame(body=ProgressBar(), title="Progress bar"),
+                Frame(
                     title="Checkbox list",
                     body=HSplit([checkbox1, checkbox2]),
                 ),
-                quo.widgets.Frame(title="Radio list", body=radios),
+                Frame(title="Radio list", body=radios),
             ],
             padding=1,
         ),
-        quo.widgets.Box(
+        Box(
             body=VSplit([yes_button, no_button], align="CENTER", padding=3),
             style="class:button-bar",
             height=3,
@@ -184,12 +184,13 @@ root_container = MenuContainer(
 )
 
 # Global key bindings.
-bindings = quo.keys.KeyBinder()
+bindings = KeyBinder()
+from 
 bindings.add("tab")(quo.keys.focus.next)
 bindings.add("s-tab")(quo.keys.focus.previous)
 
 
-style = quo.styles.Style.add(
+style = Style.add(
     {
         "window.border": "#888888",
         "shadow": "bg:#222222",
@@ -205,7 +206,7 @@ style = quo.styles.Style.add(
 )
 
 
-application = quo.Suite(
+application = Console(
     layout=Layout(root_container, focused_element=yes_button),
     bind=bindings,
     style=style,

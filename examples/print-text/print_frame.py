@@ -4,15 +4,14 @@ Example usage of 'container', a tool to print
 any layout in a non-interactive way.
 """
 import quo
-
 @quo.command("frame")
 @quo.app("--frames")
 def _frame(frames):
     """ Example of a simple layout
     """
-    content = quo.widgets.TextArea(text="Hello world🌍")
+    content = quo.widget.TextArea(text="Hello world🌍")
     quo.container(
-        quo.widgets.Frame(
+        quo.widget.Frame(
             content,
             title="Quo: python🐍")
         )

@@ -33,7 +33,7 @@ when progress happens.
         for i in pb(range(800)):
             time.sleep(.01)
 
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/simplepb.png
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png
 
 Keep in mind that not all iterables can report their total length. This happens
 with a typical generator. In that case, you can still pass the total as follows

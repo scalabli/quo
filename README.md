@@ -43,11 +43,12 @@ pip install -U quo
 
 ```
 Run the following to test Quo output on your terminal:
-                                                           ```
+```
 python -m quo
 
 ```
-To output formatted text to your terminal you can import the [echo](https://quo.readthedocs.io/en/latest/introduction.html) method.
+## Quo echo
+To output formatted text to your terminal you can import the [echo](https://quo.readthedocs.io/en/latest/introduction.html#quick-start) method.
 Try this:
 
 **Example 1**
@@ -68,7 +69,8 @@ Try this:
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
 
-### Quo prompt
+## Quo prompt
+ - Using ``quo.prompt`` method.
 ```python
    from quo import prompt
 
@@ -76,26 +78,15 @@ Try this:
 ```
 ![quo.prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
-### quo.Prompt toolbar
+- Using ``quo.prompt.Prompt`` object
+
 ```python
    from quo.prompt import Prompt
    
-   session = Prompt(bottom_toolbar="Python 🐍 is great")
+   session = Prompt()
    session.prompt("Type something:") 
 ```
-![quo.Prompt.prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
-
-### Quo autocompletion
-```python
-   # Press [Tab] to autocomplete
-   from quo.prompt import Prompt
-   from quo.completion import WordCompleter
-
-   example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
-   session = Prompt(completer=example)
-   session.prompt('Which country are you from?: ')
-```
-![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
+![quo.prompt.Prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
 
 ### Using the Console
 For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/console.html) object.
@@ -124,11 +115,47 @@ The Console object has a `print` method which has an intentionally similar inter
 ```
 ![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
+# Quo Library
+Quo contains a number of builtin features you can use to create elegant output in your CLI.
+
+Click the following headings for details:
+<details>
+<summary>Completion</summary>
+- **Autocompletion**
+Press [Tab] to autocomplete
+```python
+   # Press [Tab] to autocomplete
+   from quo.prompt import Prompt
+   from quo.completion import WordCompleter
+   example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+   session = Prompt(completer=example)
+   session.prompt('Which country are you from?: ')
+```
+![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
+
+- **Autosuggestion**
+Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f willinsert the first word of the suggestion.
+```python
+
+   from quo.prompt import Prompt
+   from quo.completion import AutoSuggestFromHistory
+   from quo.history import InMemoryHistory
+
+   session = Prompt()
+
+   while True:
+      text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
+
+```
+![Autosuggest](https://github.com/secretum-inc/quo/docs/images/auto-suggestion.png)
+
+[Read more on Completions](https://quo.readthedocs.io/en/latest/prompt.html#completion)
+</details>
+
 <details>
 <summary>Progress</summary>
 Creating a new progress bar can be done by calling the class [ProgressBar](https://quo.readthedocs.io/en/latest/progress.html)
-The progress can be displayed for any iterable. This w
-orks by wrapping the iterable (like ``range``) with the class `ProgressBar`.
+The progress can be displayed for any iterable. This works by wrapping the iterable (like ``range``) with the class `ProgressBar`.
 
 ```python
 
@@ -139,7 +166,7 @@ orks by wrapping the iterable (like ``range``) with the class `ProgressBar`.
                  for i in pb(range(800)):
                                time.sleep(.01)
 ```
-![Progress]( https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png)
+![Progress](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png)
 </details>
 
 <details>
@@ -226,7 +253,8 @@ Widget that displays the given text. It is not editable or focusable.
    from quo.style import Style
 
    # Styling for the label
-   example_style = Style(                                 [
+   example_style = Style(
+       [
         ("hello-world", "bg:red fg:black")
         ] 
           )
