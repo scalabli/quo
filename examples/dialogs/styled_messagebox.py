@@ -8,7 +8,7 @@ This also demonstrates that the `title` argument can be any kind of formatted
 text.
 """
 
-from quo import MessageBox
+from quo.dialog import MessageBox
 from quo.text import Text
 from quo.style import Style
 

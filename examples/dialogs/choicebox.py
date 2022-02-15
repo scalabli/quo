@@ -3,7 +3,8 @@
 Example of button dialog window.
 """
 
-from quo import echo, ChoiceBox
+from quo import echo
+from quo.dialog import ChoiceBox
 
 result = ChoiceBox(
         title="ChoiceBox example",

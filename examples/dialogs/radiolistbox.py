@@ -2,7 +2,8 @@
 """
 Example of a radio list box dialog.
 """
-from quo import echo, RadiolistBox
+from quo import echo
+from quo.dialog import RadiolistBox
 from quo.text import Text
 
 

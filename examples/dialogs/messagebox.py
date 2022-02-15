@@ -2,7 +2,8 @@
 """
 Example of a message box window.
 """
-from quo import echo, MessageBox
+from quo import echo
+from quo.dialog import MessageBox
 
 MessageBox(
         title="Message pop up window",

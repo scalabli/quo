@@ -438,12 +438,14 @@ you can do the following:
     import quo
     from pygments.lexers.html import HtmlLexer
     from pygments.styles import get_style_by_name
-    from quo.styles.pygments import style_from_pygments_cls
+    from quo.prompt import Prompt
+    from quo.style.pygments import style_from_pygments_cls
+    from quo.lexers import PygmentsLexer
 
     style = style_from_pygments_cls(get_style_by_name('monokai'))
-    session = quo.prompt.Prompt()
+    session = Prompt()
 
-    text = session.prompt('Enter HTML: ', lexer=quo.lexers.PygmentsLexer(HtmlLexer), style=style, include_default_pygments_style=False)
+    text = session.prompt('Enter HTML: ', lexer=PygmentsLexer(HtmlLexer), style=style, include_default_pygments_style=False)
     quo.echo(f"You said: {text}")
 
 We pass ``include_default_pygments_style=False``, because otherwise, both
@@ -484,14 +486,14 @@ Formatted text placeholder
 ---------
 
 The colors for syntax highlighting are defined by a
-:class:`~quo.styles.Style` instance. By default, a neutral
+:class:`~quo.style.Style` instance. By default, a neutral
 built-in style is used, but any style instance can be passed to the :class:`~quo.prompt.Prompt` class.
 
 .. note::
       ;func:`quo.prompt` has different semantics and cannot output colored text but :class:`quo.prompt.Prompt` is packed with several ways on how this can be achieved.
 
 
-A simple way to add color to create a style, is by using the :meth:`~quo.styles.Style.add` function
+A simple way to add color to create a style, is by using the :meth:`~quo.style.Style.add` function
 
 :ref:`Read more about styling <styling>`.
 
@@ -505,7 +507,7 @@ creating a list of style/text tuples. In the following example, we use class nam
 .. code:: python
  
     from quo.prompt import Prompt
-    from quo.styles import Style
+    from quo.style import Style
 
     session = Prompt()
 
@@ -633,18 +635,18 @@ so the bottom toolbar can be used to display dynamic information.
 
 The toolbar is always erased when the prompt returns.
 Here we have an example of a callable that returns an
-:class:`~quo.text.HTML` object. By default, the toolbar
+:class:`~quo.text.Text` object. By default, the toolbar
 has the **reversed style**, which is why we are setting the background instead of the foreground.
 
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.text import HTML
+    from quo.text import Text
 
     session = Prompt()
 
     def bottom_toolbar():
-        return HTML('This is a <b><style bg="red">Toolbar</style></b>!')
+        return Text('This is a <b><style bg="red">Toolbar</style></b>!')
     # Returns a callable
     text = session.prompt('> ', bottom_toolbar=bottom_toolbar)
 
@@ -655,7 +657,7 @@ Similar, we could use a list of style/text tuples.
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.styles import Style
+    from quo.style import Style
 
     session = Prompt()
 
@@ -718,9 +720,9 @@ pass it a :class:`~quo.filters.Condition` instance. (:ref:`Read more about filte
 .. code:: python
 
     import datetime
+    from quo import Condition
     from quo.prompt import Prompt
     from quo.keys import KeyBinder
-    from quo.filters import Condition
 
     kb = KeyBinder()
     session = Prompt()

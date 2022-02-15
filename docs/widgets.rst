@@ -65,7 +65,7 @@ Widget that displays the given text. It is not editable or focusable.
 .. code:: python
 
    from quo import Console
-   from quo.widgets import Label
+   from quo.widget import Label
    from quo.keys import KeyBinder
    from quo.layout import Layout
    from quo.style import Style

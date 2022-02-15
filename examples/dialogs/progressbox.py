@@ -4,7 +4,7 @@ Example of a progress bar dialog.
 """
 import os
 import time
-from quo import ProgressBox
+from quo.dialog import ProgressBox
 
 def worker(set_percentage, log_text):
     """

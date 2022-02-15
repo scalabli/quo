@@ -2,7 +2,8 @@
 """
 Example of an password input dialog.
 """
-from quo import echo, PromptBox
+from quo import echo
+from quo.dialog import PromptBox
 
 result = PromptBox(
         title="Password dialog example",

@@ -29,5 +29,4 @@ Quick Start
 
     quo.echo(f"Hello World!", fg="red", italic=True, bold=True)
 
-This will print ``"Hello World!"`` plus a new line to the terminal. Unlike the builtin print function, echo function has improved support for handling Unicode and binary data. If colorama is installed, the echo function will also support handling of ANSI color sequences.
-
+This will print ``"Hello World!"`` plus a new line to the terminal. Unlike the builtin print function, echo function has improved support for handling formatted text.

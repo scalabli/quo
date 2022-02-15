@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from quo import echo, ConfirmationBox
+from quo import echo
+from quo.dialog import ConfirmationBox
 
 """Example of a confirmation window"""
 

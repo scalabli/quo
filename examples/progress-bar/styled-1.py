@@ -4,9 +4,11 @@ A very simple progress bar which keep track of the progress as we consume an
 iterator.
 """
 import time
-import quo
+from quo.progress import ProgressBar
+from quo.style import Style
 
-style = quo.styles.Style.add(
+
+style = Style.add(
     {
         "title": "#4444ff underline",
         "label": "#ff4400 bold",
@@ -23,7 +25,7 @@ style = quo.styles.Style.add(
 
 
 def main():
-    with quo.ProgressBar(
+    with ProgressBar(
         style=style, title="Progress bar example with custom styling."
     ) as pb:
         for i in pb(range(1600), label="Downloading..."):

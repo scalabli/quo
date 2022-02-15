@@ -2,29 +2,30 @@
 """
 Styled similar to tqdm, another progress bar impl
 """
-import quo
 import time
+from quo.style import Style
+from quo.progress import ProgressBar, formatters
 
-style = quo.styles.Style.add({"bar-a": "reverse"})
+style = Style.add({"bar-a": "reverse"})
 
 
 def main():
     custom_formatters = [
-        quo.progress.formatters.Label(suffix=": "),
-        quo.progress.formatters.Percentage(),
-        quo.progress.formatters.Bar(start="|", end="|", sym_a=" ", sym_b=" ", sym_c=" "),
-        quo.progress.formatters.Text(" "),
-        quo.progress.formatters.Progress(),
-        quo.progress.formatters.Text(" ["),
-        quo.progress.formatters.TimeElapsed(),
-        quo.progress.formatters.Text("<"),
-        quo.progress.formatters.TimeLeft(),
-        quo.progress.formatters.Text(", "),
-        quo.progress.formatters.IterationsPerSecond(),
-        quo.progress.formatters.Text("it/s]"),
+        formatters.Label(suffix=": "),
+        formatters.Percentage(),
+        formatters.Bar(start="|", end="|", sym_a=" ", sym_b=" ", sym_c=" "),
+        formatters.Text(" "),
+        formatters.Progress(),
+        formatters.Text(" ["),
+        formatters.TimeElapsed(),
+        formatters.Text("<"),
+        formatters.TimeLeft(),
+        formatters.Text(", "),
+        formatters.IterationsPerSecond(),
+        formatters.Text("it/s]"),
     ]
 
-    with quo.ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label="Installing"):
             time.sleep(0.01)
 

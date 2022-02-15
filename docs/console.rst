@@ -490,3 +490,20 @@ Rich respects some standard environment variables.
 Setting the environment variable ``TERM`` to ``"dumb"`` or ``"unknown"`` will disable color/style and some features that require moving the cursor, such as progress bars.
 
 If the environment variable ``NO_COLOR`` is set, Rich will disable all color in the output.
+
+``A simple console application``
+---------------------------------
+
+Almost every quo application is an instance of an :class:`~quo.Console` object. The simplest full screen example would look like this:
+.. code:: python
+
+    from quo import Console
+    
+    Console(full_screen=True).run()
+
+This will display an application with no layout specified.
+.. note::
+
+        If we wouldn't set the ``full_screen`` option, the application would not run in the alternate screen buffer, and only consume the least amount of space required for the layout.
+
+:ref:`Read more about full-screen console applications ...<full_screen_app>`

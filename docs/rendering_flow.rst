@@ -47,8 +47,8 @@ The visualisation happens in several steps:
    The user control receives the dimensions of the window, but can still
    decide to create more or less content.
 
-   Inside the :meth:`~prompt_toolkit.layout.UIControl.create_content`
-   method of :class:`~prompt_toolkit.layout.UIControl`, there are several
+   Inside the :meth:`~quo.layout.UIControl.create_content`
+   method of :class:`~quo.layout.UIControl`, there are several
    steps:
 
    2. First, the buffer's text is passed to the
@@ -83,4 +83,4 @@ Note that this process is lazy: if a certain line is not displayed in the
 :class:`~quo.layout.Window`, then it is not requested
 from the :class:`~quo.layout.UIContent`. And from there, the line is
 not passed through the processors or even asked from the
-:class:`~quo..lexers.Lexer`.
+:class:`~quo.lexers.Lexer`.

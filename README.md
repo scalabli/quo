@@ -40,10 +40,16 @@ You can install quo via the Python Package Index (PyPI)
 
 ```
 pip install -U quo
+
 ```
+Run the following to test Quo output on your terminal:
+                                                           ```
+python -m quo
 
+```
+To output formatted text to your terminal you can import the [echo](https://quo.readthedocs.io/en/latest/introduction.html) method.
+Try this:
 
-### Quo echo
 **Example 1**
 ```python
    from quo import echo
@@ -61,8 +67,6 @@ pip install -U quo
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
-Unlike the builtin print function, ``echo`` function has improved support for handling Unicode and binary data.
-It also supports handling of ANSI color sequences.
 
 ### Quo prompt
 ```python
@@ -95,9 +99,12 @@ It also supports handling of ANSI color sequences.
 
 ### Using the Console
 For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/console.html) object.
-                                            ```python                                   from quo import Console
 
-console = Console()
+```python
+
+  from quo import Console
+
+  console = Console()
 ```
 The Console object has a `print` method which has an intentionally similar interface to the builtin `print` function. Here's an example of use:
 
@@ -116,6 +123,43 @@ The Console object has a `print` method which has an intentionally similar inter
 
 ```
 ![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
+
+<details>
+<summary>Progress</summary>
+Creating a new progress bar can be done by calling the class [ProgressBar](https://quo.readthedocs.io/en/latest/progress.html)
+The progress can be displayed for any iterable. This w
+orks by wrapping the iterable (like ``range``) with the class `ProgressBar`.
+
+```python
+
+   import time
+   from quo.progress import ProgressBar
+  
+   with ProgressBar() as pb:
+                 for i in pb(range(800)):
+                               time.sleep(.01)
+```
+![Progress]( https://raw.githubusercontent.com/secretum-inc/quo/master/docs/pics/progressbars/simplepb.png)
+</details>
+
+<details>
+<summary>Key Binding</summary>
+A key binding is an association between a physical key on a keyboard and a parameter.
+```python
+  
+   from quo import echo
+   from quo.prompt import Prompt
+   from quo.keys import KeyBinder
+  
+   kb = KeyBinder()
+   # Print "Hello world" when ctrl-h is pressed
+   @kb.add("ctrl-h")
+   def _(event):
+       echo("Hello, World!")
+   session.prompt(">>", bind=kb)
+```
+
+</details>
 
 <details>
 <summary>Dialog</summary>
@@ -165,6 +209,45 @@ Example
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
 </details>
+
+<details>
+<summary>Widgets</summary>
+A collection of reusable components for building full screen applications.
+
+## Label
+Widget that displays the given text. It is not editable or focusable.
+```python
+
+   from quo import Console
+   from quo.widget import Label
+   from quo.keys import KeyBinder
+   from quo.layout import Layout
+   from quo.style import Style
+
+   # Styling for the label
+   example_style = Style(                                                                       [
+        ("hello-world", "bg:red fg:black")
+        ] 
+          )
+   root = Label("Hello, World", style="class:hello-world")
+  
+   layout = Layout(container=root)
+  
+   # Ctrl-c to exit
+   kb = KeyBinder()
+  
+   @kb.add("ctrl-c")
+   def _(event):
+      event.app.exit()
+
+   Console(
+       layout=layout,
+       bind=kb,
+       style=example_style
+       full_screen=True).run()
+
+```
+Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
 
 For more intricate  examples, have a look in the [examples](https://github.com/secretum-inc/quo/tree/master/examples) directory and the documentation.
 

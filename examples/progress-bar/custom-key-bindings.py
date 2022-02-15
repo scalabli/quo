@@ -7,19 +7,19 @@ import os
 import signal
 import time
 
-from prompt_toolkit import HTML
-from prompt_toolkit.key_binding import KeyBindings
+from quo.text import Text
+from quo.keys import KeyBinder
 from prompt_toolkit.patch_stdout import patch_stdout
-from prompt_toolkit.shortcuts import ProgressBar
+from quo.progress import ProgressBar
 
 
 def main():
-    bottom_toolbar = HTML(
+    bottom_toolbar = Text(
         ' <b>[f]</b> Print "f" <b>[q]</b> Abort  <b>[x]</b> Send Control-C.'
     )
 
     # Create custom key bindings first.
-    kb = KeyBindings()
+    kb = KeyBinder()
     cancel = [False]
 
     @kb.add("f")
@@ -38,8 +38,8 @@ def main():
 
     # Use `patch_stdout`, to make sure that prints go above the
     # application.
-    with patch_stdout():
-        with ProgressBar(key_bindings=kb, bottom_toolbar=bottom_toolbar) as pb:
+  #  with patch_stdout():
+    with ProgressBar(bind=kb, bottom_toolbar=bottom_toolbar) as pb:
             for i in pb(range(800)):
                 time.sleep(0.01)
 

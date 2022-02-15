@@ -12,8 +12,7 @@ Changelog
 
 Unrealeased
 
-- Fixed minor bugs
-- Introduced c++ extensions
+- Fixed minor bugss
 - Added :class:`quo.types.Number`
 - Deprecated :param:`password` in favor of :param:`hide`
 - Deprecated :class:`quo.text.HTML` in favor of :class:`quo.text.Text`
@@ -25,7 +24,6 @@ Unrealeased
 - Added :func:`quo.Console.size`
 - Added :func:`quo.Console.rule`
 - Added :func:`quo.Console.openfile`
-- Added :class:`quo.text.Text`
 - Full support for Windows
 - Dropped support for `python < 3.8`
 
