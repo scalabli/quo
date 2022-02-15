@@ -2,20 +2,18 @@
 
 Dialogs
 =======
-
-quo ships with a high level API for displaying dialogs, similar to
-the Whiptail program, but in pure Python.
+Quo ships with a high level API for displaying `dialog boxes <https://en.m.wikipedia.org/wiki/Dialog_box>`_ to the user for informational purposes, or get input from the user.
 
 
 ``Message Box``
 ---------------
 
-Use the :func:`~quo.MessageBox` function to display a
+Use the :func:`~quo.dialog.MessageBox` function to display a
 simple message box. For instance:
 
 .. code:: python
 
-    from quo import MessageBox
+    from quo.dialog import MessageBox
 
     MessageBox(
         title='Example dialog window',
@@ -27,12 +25,12 @@ simple message box. For instance:
 ``Prompt Box``
 --------------
 
-The :func:`~quo.PromptBox` function can display an
+The :func:`~quo.dialog.PromptBox` function can display an
 input box. It will return the user input as a string.
 
 .. code:: python
 
-    from quo import PromptBox
+    from quo.dialog import PromptBox
 
     PromptBox(
         title='Input dialog example',
@@ -41,19 +39,19 @@ input box. It will return the user input as a string.
 .. image:: ./images/inputbox.png
 
 
-The ``password=True`` option can be passed to the
-:func:`~quo.PromptBox` function to turn this into a password input box.
+The ``hide=True`` option can be passed to the
+:func:`~quo.dialog.PromptBox` function to turn this into a password input box.
 
 
 ``Confirmation Box``
 --------------------
 
-The :func:`~quo.ConfirmationBox` function displays a yes/no
+The :func:`~quo.dialog.ConfirmationBox` function displays a yes/no
 confirmation dialog. It will return a boolean according to the selection.
 
 .. code:: python
 
-    from quo import ConfirmationBox
+    from quo.dialog import ConfirmationBox
 
     ConfirmationBox(
         title='Yes/No dialog example',
@@ -65,12 +63,12 @@ confirmation dialog. It will return a boolean according to the selection.
 ``Choice Box``
 ---------------
 
-The :func:`~quo.ChoiceBox` function displays a dialog
+The :func:`~quo.dialog.ChoiceBox` function displays a dialog
 with choices offered as buttons. Buttons are indicated as a list of tuples, each providing the label (first) and return value if clicked (second).
 
 .. code:: python
 
-    from quo import ChoiceBox
+    from quo.dialog import ChoiceBox
 
     ChoiceBox(
         title='Button dialog example',
@@ -87,13 +85,13 @@ with choices offered as buttons. Buttons are indicated as a list of tuples, each
 ``Radiolist Box``
 -----------------
 
-The :func:`~quo.RadiolistBox` function displays a dialog
+The :func:`~quo.dialog.RadiolistBox` function displays a dialog
 with choices offered as a radio list. The values are provided as a list of tuples,
 each providing the return value (first element) and the displayed value (second element).
 
 .. code:: python
 
-    from quo import RadiolistBox
+    from quo.dialog import RadiolistBox
 
     RadiolistBox( 
         title="RadioList dialog", 
@@ -108,13 +106,13 @@ each providing the return value (first element) and the displayed value (second 
 ``Check Box``
 -------------
 
-The :func:`~quo.CheckBox` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
+The :func:`~quo.dialog.CheckBox` has the same usage and purpose than the Radiolist dialog, but allows several values to be selected and therefore returned.
 
 .. code:: python
 
-    import quo
+    from quo.dialog import CheckBox
 
-    results_array = quo.CheckBox( 
+    CheckBox( 
         title="CheckboxList dialog", 
         text="What would you like in your breakfast ?",
         values=[ 
@@ -136,7 +134,7 @@ dialogs to override the default style. Also, text can be styled by passing an
 
 .. code:: python
 
-    from quo import MessageBox
+    from quo.dialog import MessageBox
     from quo.style import Style
     from quo.text import Text
 
@@ -162,33 +160,33 @@ In reality, the shortcut commands presented above build a full-screen frame by u
 
 .. note:: All the shortcuts use the ``Dialog`` component, therefore it isn't specified explicitly below.
 
-+-------------------------+-------------------------+
-| Shortcut                | Components used         |
-+=========================+=========================+
-| ``quo.ConfirmationBox`` | - ``Label``             |
-|                         | - ``Button`` (x2)       |
-+-------------------------+-------------------------+
-| ``quo.ChoiceBox``       | - ``Label``             |
-|                         | - ``Button``            |
-+-------------------------+-------------------------+
-| ``quo.PromptBox``       | - ``TextArea``          |
-|                         | - ``Button`` (x2)       |
-+-------------------------+-------------------------+
-| ``quo.MessageBox``      | - ``Label``             |
-|                         | - ``Button``            |
-+-------------------------+-------------------------+
-| ``quo.RadiolistBox``    | - ``Label``             |
-|                         | - ``RadioList``         |
-|                         | - ``Button`` (x2)       |
-+-------------------------+-------------------------+
-| ``quo.CheckBox``        | - ``Label``             |
-|                         | - ``CheckboxList``      |
-|                         | - ``Button`` (x2)       |
-+-------------------------+-------------------------+
-| ``quo.ProgressBox``     | - ``Label``             |
-|                         | - ``TextArea`` (locked) |
-|                         | - ``ProgressBar``       |
-+-------------------------+-------------------------+
++--------------------------------+-------------------------+
+| Shortcut                       | Components used         |
++================================+=========================+
+| ``quo.dialog.ConfirmationBox`` | - ``Label``             |
+|                                | - ``Button`` (x2)       |
++--------------------------------+-------------------------+
+| ``quo.dialog.ChoiceBox``       | - ``Label``             |
+|                                | - ``Button``            |
++--------------------------------+-------------------------+
+| ``quo.dialog.PromptBox``       | - ``TextArea``          |
+|                                | - ``Button`` (x2)       |
++--------------------------------+-------------------------+
+| ``quo.dialog.MessageBox``      | - ``Label``             |
+|                                | - ``Button``            |
++--------------------------------+-------------------------+
+| ``quo.dialog.RadiolistBox``    | - ``Label``             |
+|                                | - ``RadioList``         |
+|                                | - ``Button`` (x2)       |
++--------------------------------+-------------------------+
+| ``quo.dialog.CheckBox``        | - ``Label``             |
+|                                | - ``CheckboxList``      |
+|                                | - ``Button`` (x2)       |
++--------------------------------+-------------------------+
+| ``quo.dialog.ProgressBox``     | - ``Label``             |
+|                                | - ``TextArea`` (locked) |
+|                                | - ``ProgressBar``       |
++--------------------------------+-------------------------+
 
 +----------------+------------------------+
 | Components     | Available classnames   |
@@ -242,7 +240,7 @@ Therefore we can customize each of these elements separately, using for instance
 
 .. code:: python
 
-    from quo import CheckBox
+    from quo.dialog import CheckBox
     from quo.style import Style
 
     CheckBox(

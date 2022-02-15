@@ -2,17 +2,12 @@
 """
 Example of an password input dialog.
 """
-import quo
+from quo import echo, PromptBox
 
-def main():
-    result = quo.PromptBox(
+result = PromptBox(
         title="Password dialog example",
         text="Please type your password:",
-        password=True,
-    ).run()
+        hide=True).run()
 
-    quo.echo(f"{result}")
+echo(f"{result}")
 
-
-if __name__ == "__main__":
-    main()

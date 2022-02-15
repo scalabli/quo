@@ -2,14 +2,9 @@
 """
 Example of a message box window.
 """
-import quo
+from quo import echo, MessageBox
 
-def main():
-    quo.MessageBox(
+MessageBox(
         title="Message pop up window",
-        text="Do you want to continue?\nPress ENTER to quit.",
-    ).run()
+        text="Do you want to continue?\nPress ENTER to quit.").run()
 
-
-if __name__ == "__main__":
-    main()

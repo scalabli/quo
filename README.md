@@ -117,8 +117,11 @@ The Console object has a `print` method which has an intentionally similar inter
 ```
 ![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
-### Message Box
-Example of a message box window.
+<details>
+<summary>Dialog</summary>
+High level API for displaying dialog boxes to the user for informational purposes, or get input fromthe user.
+
+Example of a message box dialog.
 ```python
    from quo import MessageBox
 
@@ -127,13 +130,12 @@ Example of a message box window.
            text="Do you want to continue?\nPress ENTER to quit.").run()                                       
 
 ```
+The above produces the following output
 ![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
 
-
-### Prompt Box
-Example of a prompt box window
+Example of a prompt box dialog
 ```python
-   from quo import PromptBox
+   from quo.dialog import PromptBox
 
    PromptBox(
              title="PromptBox shenanigans",
@@ -141,6 +143,12 @@ Example of a prompt box window
 
 ```
 ![Prompt Box](https://github.com/secretum-inc/quo/raw/master/docs/images/promptbox.png)
+
+</details>
+
+<details>
+<summary>Table</summary>
+`Table` function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
 ### Quo tabular
 ```python
@@ -156,8 +164,7 @@ Example of a prompt box window
    echo(Table(data))
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
-   
-
+</details>
 
 For more intricate  examples, have a look in the [examples](https://github.com/secretum-inc/quo/tree/master/examples) directory and the documentation.
 

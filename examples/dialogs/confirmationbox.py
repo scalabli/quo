@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-import quo
+from quo import echo, ConfirmationBox
 
-def main():
-    """Example of a confirmation window"""
-    result = quo.ConfirmationBox(title="Yes/No example", text="Do you want to confirm?").run()
+"""Example of a confirmation window"""
 
-    quo.echo(f"Result = {result}")
+result = ConfirmationBox(
+        title="Yes/No example",
+        text="Do you want to confirm?").run()
 
+echo(f"Result = {result}")
 
-if __name__ == "__main__":
-    main()

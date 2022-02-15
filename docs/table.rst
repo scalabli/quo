@@ -3,7 +3,7 @@ Table
 
 ``Printing tabular data``
 --------------------------
-:func:`quo.table.Table` function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
+:class:`quo.table.Table` function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
 .. code:: python
 

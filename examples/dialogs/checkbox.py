@@ -2,20 +2,20 @@
 """
 Example of a checkbox-list-based dialog.
 """
-import quo
+from quo import echo, CheckBox, MessageBox
+from quo.text import Text
+from quo.style import Style
 
-styling = quo.styles.Style
-
-results = quo.CheckBox(
+results = CheckBox(
     title="CheckboxList dialog",
     text="What would you like in your breakfast ?",
     values=[
         ("eggs", "Eggs"),
-        ("bacon", quo.text.HTML("<blue>Bacon</blue>")),
+        ("bacon", Text("<blue>Bacon</blue>")),
         ("croissants", "20 Croissants"),
         ("daily", "The breakfast of the day"),
     ],
-    style=styling.add(
+    style= Style.add(
         {
             "dialog": "bg:#cdbbb3",
             "button": "bg:#bf99a4",
@@ -24,13 +24,11 @@ results = quo.CheckBox(
             "dialog shadow": "bg:#c98982",
             "frame.label": "#fcaca3",
             "dialog.body label": "#fd8bb6",
-        }
-    ),
-).run()
+        })).run()
+
 if results:
-    quo.MessageBox(
+    MessageBox(
         title="Room service",
-        text="You selected: %s\nGreat choice sir !" % ",".join(results),
-    ).run()
+        text="You selected: %s\nGreat choice sir !" % ",".join(results)).run()
 else:
-    quo.MessageBox("*starves*").run()
+    MessageBox("*starves*").run()

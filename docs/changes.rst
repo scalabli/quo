@@ -15,6 +15,7 @@ Unrealeased
 - Fixed minor bugs
 - Introduced c++ extensions
 - Added :class:`quo.types.Number`
+- Deprecated :param:`password` in favor of :param:`hide`
 - Deprecated :class:`quo.text.HTML` in favor of :class:`quo.text.Text`
 - Deprecated :param:`r_elicit` in favor of :param:`rprompt`
 - Deprecated :class:`quo.Suite` in favor of :class:`quo.Console`

@@ -8,14 +8,13 @@ This also demonstrates that the `title` argument can be any kind of formatted
 text.
 """
 
-import quo
-
+from quo import MessageBox
+from quo.text import Text
+from quo.style import Style
 
 # Custom color scheme.
 
-styling = quo.styles.Style
-
-example_style = styling.add(
+example_style = Style.add(
     {
         "dialog": "bg:aquamarine",
         "dialog frame-label": "bg:purple",
@@ -24,15 +23,8 @@ example_style = styling.add(
     }
 )
 
+MessageBox(
+        title=Text(
+            '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window'),
+        text="Do you want to continue?\nPress ENTER to quit.", style=example_style).run()
 
-def main():
-    quo.MessageBox(
-            title=quo.text.HTML(
-                '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window'  ),
-        text="Do you want to continue?\nPress ENTER to quit.",
-        style=example_style,
-        ).run()
-
-
-if __name__ == "__main__":
-    main()
