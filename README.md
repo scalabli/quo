@@ -139,7 +139,7 @@ orks by wrapping the iterable (like ``range``) with the class `ProgressBar`.
                  for i in pb(range(800)):
                                time.sleep(.01)
 ```
-![Progress]( https://raw.githubusercontent.com/secretum-inc/quo/master/docs/pics/simplepb.png)
+![Progress]( https://raw.githubusercontent.com/secretum-inc/quo/master/docs/pics/simple-progress-bar.png)
 </details>
 
 <details>
