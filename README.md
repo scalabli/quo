@@ -121,10 +121,11 @@ Quo contains a number of builtin features you can use to create elegant output i
 Click the following headings for details:
 <details>
 <summary>Completion</summary>
+
 - **Autocompletion**
 Press [Tab] to autocomplete
 ```python
-   # Press [Tab] to autocomplete
+
    from quo.prompt import Prompt
    from quo.completion import WordCompleter
    example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
