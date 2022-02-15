@@ -145,6 +145,7 @@ orks by wrapping the iterable (like ``range``) with the class `ProgressBar`.
 <details>
 <summary>Key Binding</summary>
 A key binding is an association between a physical key on a keyboard and a parameter.
+
 ```python
   
    from quo import echo
@@ -158,7 +159,6 @@ A key binding is an association between a physical key on a keyboard and a param
        echo("Hello, World!")
    session.prompt(">>", bind=kb)
 ```
-
 </details>
 
 <details>
@@ -167,6 +167,7 @@ High level API for displaying dialog boxes to the user for informational purpose
 
 Example of a message box dialog.
 ```python
+
    from quo import MessageBox
 
    MessageBox(
@@ -192,7 +193,7 @@ Example of a prompt box dialog
 <details>
 <summary>Table</summary>
 
-Function [Table](https://quo.readthedocs.io/en/latest/table.html)offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
+Function [Table](https://quo.readthedocs.io/en/latest/table.html) offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
 Example
 ```python
