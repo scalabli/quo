@@ -148,7 +148,7 @@ Example of a prompt box dialog
 
 <details>
 <summary>Table</summary>
-[Table](https://quo.readthedocs.io/en/latest/table.html) function offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
+Function [Table](https://quo.readthedocs.io/en/latest/table.html) offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
 
 Example
 ```python
