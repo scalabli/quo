@@ -68,7 +68,7 @@ Try this:
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
-Alternatively, you can import [print]((https://quo.readthedocs.io/en/latest/printing_text.html#print)
+Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
 ```python
 
    from quo import print
