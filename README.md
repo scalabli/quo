@@ -124,7 +124,7 @@ Quo contains a number of builtin features you can use to create elegant output i
 Click the following headings for details:
 <details>
 <summary>Console</summary>
-For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/console.html) object.
+For more control over quo terminal content, import and construct a ``Console`` object.
 
 ```python
    
@@ -145,6 +145,8 @@ Quo supports launching applications through `Console.launch`. This can be used t
    console.launch("https://quo.rtfd.io/")
                                                     
 ```
+Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
+
 </details>
 
 <details>
@@ -177,9 +179,7 @@ Auto suggestion is a way to propose some input completions to the user. Usually,
       text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
 
 ```
-![Autosuggest](https://github.com/secretum-inc/quo/docs/images/auto-suggestion.png)
-
-[Read more on Completions](https://quo.readthedocs.io/en/latest/prompt.html#completion)
+Read more on [Completions](https://quo.readthedocs.io/en/latest/prompt.html#completion)
 </details>
 
 <details>
