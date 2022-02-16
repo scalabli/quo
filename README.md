@@ -53,84 +53,66 @@ Try this:
 
 **Example 1**
 ```python
-   from quo import echo
+ from quo import echo
 
-   echo(f"Hello, World!", fg="red", italic=True, bold=True))
+ echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
 ![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
 
 **Example 2**
 ```python
-   from quo import echo
+ from quo import echo
 
-   echo(f"Quo is ", nl=False)
-   echo(f"scalable", bg="red", fg="black") 
+ echo(f"Quo is ", nl=False)
+ echo(f"scalable", bg="red", fg="black") 
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
 Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
 ```python
+ from quo import print
+ from quo.text import Text
 
-   from quo import print
-   from quo.text import Text
-
-   print(Text('<b>This is bold</b>'))
-   print(Text('<i>This is italic</i>'))
-   print(Text('<u>This is underlined</u>'))                        
-   # Colors from the ANSI palette.
-   print(Text('<red>This is red</red>'))
-   print(Text('<style fg="green" bg="red">Green on red background</stlye>'))
+ print(Text('<b>This is bold</b>'))
+ print(Text('<i>This is italic</i>'))
+ print(Text('<u>This is underlined</u>'))                        
+ # Colors from the ANSI palette.
+ print(Text('<red>This is red</red>'))
+ print(Text('<style fg="green" bg="red">Green on red background</stlye>'))
 
 ```
 ## Quo prompt
  - Using ``quo.prompt`` method.
 ```python
-   from quo import prompt
+ from quo import prompt
 
-   prompt("What is your name?")
+ prompt("What is your name?")
 ```
 ![quo.prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
 
 - Using ``quo.prompt.Prompt`` object
 
 ```python
-   from quo.prompt import Prompt
+ from quo.prompt import Prompt
    
-   session = Prompt()
-   session.prompt("Type something:") 
+ session = Prompt()
+ session.prompt("Type something:") 
 ```
 Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
-
-
-### Quo frame
-```python
-  
-   from quo import container
-   from quo.widgets import Frame, TextArea
-
-   # Example of a simple layout
-   content = TextArea(text="Hello world🌍")
-   container(
-        Frame(
-            content,
-            title="Quo: python🐍"))
-
-```
-![Frame](https://github.com/secretum-inc/quo/raw/master/docs/images/print_frame.png)
 
 # Quo Library
 Quo contains a number of builtin features you can use to create elegant output in your CLI.
 
-Click the following headings for details»:
+Click the following headings for details:»
 <details>
 <summary>Console</summary>
 For more control over quo terminal content, import and construct a `Console` object.
 
 ```python
    
-    from quo import Console
+  from quo import Console
 
-    console = Console()
+  console = Console()
 
 ```
 
@@ -139,10 +121,10 @@ For more control over quo terminal content, import and construct a `Console` obj
 Quo supports launching applications through `Console.launch`. This can be used to open the default application associated with a URL or filetype.
 ```python
 
-   from quo import Console
+ from quo import Console
    
-   console = Console()
-   console.launch("https://quo.rtfd.io/")
+ console = Console()
+ console.launch("https://quo.rtfd.io/")
                                                     
 ```
 Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
@@ -157,11 +139,11 @@ Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
 Press [Tab] to autocomplete
 ```python
 
-   from quo.prompt import Prompt
-   from quo.completion import WordCompleter
-   example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
-   session = Prompt(completer=example)
-   session.prompt('Which country are you from?: ')
+ from quo.prompt import Prompt
+ from quo.completion import WordCompleter
+ example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+ session = Prompt(completer=example)
+ session.prompt('Which country are you from?: ')
 ```
 ![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
 
@@ -169,14 +151,14 @@ Press [Tab] to autocomplete
 Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f willinsert the first word of the suggestion.
 ```python
 
-   from quo.prompt import Prompt
-   from quo.completion import AutoSuggestFromHistory
-   from quo.history import InMemoryHistory
+ from quo.prompt import Prompt
+ from quo.completion import AutoSuggestFromHistory
+ from quo.history import InMemoryHistory
 
-   session = Prompt()
+ session = Prompt()
 
-   while True:
-      text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
+ while True:
+    text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
 
 ```
 Read more on [Completions](https://quo.readthedocs.io/en/latest/prompt.html#completion)
@@ -189,12 +171,12 @@ The progress can be displayed for any iterable. This works by wrapping the itera
 
 ```python
 
-   import time
-   from quo.progress import ProgressBar
+ import time
+ from quo.progress import ProgressBar
   
-   with ProgressBar() as pb:
-                 for i in pb(range(800)):
-                               time.sleep(.01)
+ with ProgressBar() as pb:
+               for i in pb(range(800)):
+                             time.sleep(.01)
 ```
 ![Progress](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png)
 
@@ -208,16 +190,16 @@ A key binding is an association between a physical key on a keyboard and a param
 
 ```python
   
-   from quo import echo
-   from quo.prompt import Prompt
-   from quo.keys import KeyBinder
-  
-   kb = KeyBinder()
-   # Print "Hello world" when ctrl-h is pressed
-   @kb.add("ctrl-h")
-   def _(event):
-       echo("Hello, World!")
-   session.prompt(">>", bind=kb)
+ from quo import echo
+ from quo.prompt import Prompt
+ from quo.keys import KeyBinder
+ 
+ kb = KeyBinder()
+ # Print "Hello world" when ctrl-h is pressed
+ @kb.add("ctrl-h")
+ def _(event):
+     echo("Hello, World!")
+ session.prompt(">>", bind=kb)
 ```
 Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
 
@@ -230,22 +212,22 @@ High level API for displaying dialog boxes to the user for informational purpose
 1) Example of a message box dialog.
 ```python
 
-   from quo.dialog import MessageBox
+ from quo.dialog import MessageBox
 
-   MessageBox(
-           title="Message pop up window",
-           text="Do you want to continue?\nPress ENTER to quit.").run()                                       
+ MessageBox(
+         title="Message pop up window",
+         text="Do you want to continue?\nPress ENTER to quit.").run()                                       
 ```
 The above produces the following output
 ![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
 
 2) Example of a prompt box dialog
 ```python
-   from quo.dialog import PromptBox
+ from quo.dialog import PromptBox
 
-   PromptBox(
-             title="PromptBox shenanigans",
-             text="What Country are you from?:").run()
+ PromptBox(
+           title="PromptBox shenanigans",
+           text="What Country are you from?:").run()
 
 ```
 ![Prompt Box](https://github.com/secretum-inc/quo/raw/master/docs/images/promptbox.png)
@@ -261,16 +243,16 @@ Function [Table](https://quo.readthedocs.io/en/latest/table.html) offers a numbe
 
 Example
 ```python
-   from quo import echo
-   from quo.table import Table
+ from quo import echo
+ from quo.table import Table
 
-   data = [
-     ["Name", "Gender", "Age"],
-     ["Alice", "F", 24],
-     ["Bob", "M", 19],
-     ["Dave", "M", 24]
-   ]
-   echo(Table(data))
+ data = [
+   ["Name", "Gender", "Age"],
+   ["Alice", "F", 24],
+   ["Bob", "M", 19],
+   ["Dave", "M", 24]
+ ]
+ echo(Table(data))
 ```
 ![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
 </details>
@@ -283,34 +265,34 @@ A collection of reusable components for building full screen applications.
 Widget that displays the given text. It is not editable or focusable.
 ```python
 
-   from quo import Console
-   from quo.widget import Label
-   from quo.keys import KeyBinder
-   from quo.layout import Layout
-   from quo.style import Style
+ from quo import Console
+ from quo.widget import Label
+ from quo.keys import KeyBinder
+ from quo.layout import Layout
+ from quo.style import Style
 
-   # Styling for the label
-   example_style = Style(
-       [
-        ("hello-world", "bg:red fg:black")
-        ] 
-          )
-   root = Label("Hello, World", style="class:hello-world")
+ # Styling for the label
+ example_style = Style(
+     [
+      ("hello-world", "bg:red fg:black")
+      ] 
+        )
+ root = Label("Hello, World", style="class:hello-world")
   
-   layout = Layout(container=root)
+ layout = Layout(container=root)
   
-   # Ctrl-c to exit
-   kb = KeyBinder()
+ # Ctrl-c to exit
+ kb = KeyBinder()
   
-   @kb.add("ctrl-c")
-   def _(event):
-      event.app.exit()
+ @kb.add("ctrl-c")
+ def _(event):
+    event.app.exit()
 
-   Console(
-       layout=layout,
-       bind=kb,
-       style=example_style
-       full_screen=True).run()
+ Console(
+     layout=layout,
+     bind=kb,
+     style=example_style
+     full_screen=True).run()
 
 ```
 Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
