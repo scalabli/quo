@@ -124,7 +124,7 @@ Quo contains a number of builtin features you can use to create elegant output i
 Click the following headings for details:
 <details>
 <summary>Console</summary>
-For more control over quo terminal content, import and construct a `Console` object.
+For more control over quo terminal content, import and construct a ``Console`` object.
 
 ```python
    
