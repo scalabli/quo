@@ -124,7 +124,7 @@ Quo contains a number of builtin features you can use to create elegant output i
 Click the following headings for details:
 <details>
 <summary>Console</summary>
-For more control over quo terminal content, import and construct a ``Console`` object.
+For more control over quo terminal content, import and construct a `Console` object.
 
 ```python
    
@@ -184,8 +184,8 @@ Read more on [Completions](https://quo.readthedocs.io/en/latest/prompt.html#comp
 
 <details>
 <summary>Progress</summary>
-Creating a new progress bar can be done by calling the class [ProgressBar](https://quo.readthedocs.io/en/latest/progress.html)
-The progress can be displayed for any iterable. This works by wrapping the iterable (like ``range``) with the class `ProgressBar`.
+Creating a new progress bar can be done by calling the class **ProgressBar**
+The progress can be displayed for any iterable. This works by wrapping the iterable (like ``range``) with the class **ProgressBar**
 
 ```python
 
@@ -197,6 +197,9 @@ The progress can be displayed for any iterable. This works by wrapping the itera
                                time.sleep(.01)
 ```
 ![Progress](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png)
+
+Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
+
 </details>
 
 <details>
