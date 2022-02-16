@@ -33,40 +33,6 @@ To write rich content to the terminal use the :meth:`~quo.Console.echo` method. 
     console.echo(locals())
     console.echo("FOO", style="white on blue")
 
-Logging
--------
-
-The :meth:`~rich.console.Console.log` methods offers the same capabilities as print, but adds some features useful for debugging a running application. Logging writes the current time in a column to the left, and the file and line where the method was called to a column on the right. Here's an example::
-
-    >>> console.log("Hello, World!")
-
-.. raw:: html
-
-    <pre style="font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf">[16:32:08] </span>Hello, World!                                         <span style="color: #7f7f7f">&lt;stdin&gt;:1</span>
-    </pre>
-
-To help with debugging, the log() method has a ``log_locals`` parameter. If you set this to ``True``, Rich will display a table of local variables where the method was called.
-
-
-Printing JSON
--------------
-
-The :meth:`~rich.console.Console.print_json` method will pretty print (format and style) a string containing JSON. Here's a short example::
-
-    console.print_json('[false, true, null, "foo"]')
-
-You can also *log* json by logging a :class:`~rich.json.JSON` object::
-
-    from rich.json import JSON
-    console.log(JSON('["foo", "bar"]'))
-
-Because printing JSON is a common requirement, you may import ``print_json`` from the main namespace::
-
-    from rich import print_json
-
-You can also pretty print JSON via the command line with the following::
-
-    python -m rich.json cats.json
 
 ``Launching Editors``
 -----------------------
@@ -180,12 +146,17 @@ Function :func:`quo.Console.size` returns the current size of the terminal as tu
    console.size()
 
 
-In additional to :meth:`~rich.console.Console.print` and :meth:`~rich.console.Console.log`, Rich has a :meth:`~rich.console.Console.out` method which provides a lower-level way of writing to the terminal. The out() method converts all the positional arguments to strings and won't pretty print, word wrap, or apply markup to the output, but can apply a basic style and will optionally do highlighting.
+``Encoding``
+-------------
+The default encoding of the Terminal (typically "utf-8")
 
-Here's an example::
+.. code:: python
 
-    >>> console.out("Locals", locals())
+   from quo import Console
 
+   console = Console()
+
+   console.encoding()
 
 ``Rules``
 ----------

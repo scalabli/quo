@@ -56,10 +56,10 @@ Parameters
 
    * ``reset``  – by default a reset-all code is added at the end of the string which means that styles do not carry over. This can be disabled to compose styles.
 
-`'inscribe``
+`'print``
 ----------
 quo ships with a
-:func:`~quo.inscribe` function that's meant to
+:func:`~quo.print` function that's meant to
 be (as much as possible) compatible with the built-in print function, and :func:`quo.echo`. It also supports colors and formatting jist link :func:`quo.echo` 
 On Linux systems, this will output VT100 escape sequences, while on Windows it
 will use Win32 API calls or VT100 sequences, depending on what is available.
@@ -68,9 +68,8 @@ will use Win32 API calls or VT100 sequences, depending on what is available.
 
         This page is also useful if you'd like to learn how to use formatting
         in other places, like in a prompt or a toolbar. Just like
-        :func:`~quo.inscribe` takes any kind
-        of "formatted text" as input, prompts and toolbars also accept
-        "formatted text".
+        :func:`~quo.print` takes any kind
+        of "formatted text" as input, prompts and toolbars also accept "formatted text".
 
 
 ``Formatted text``
@@ -88,9 +87,24 @@ An instance of any of these three kinds of objects is called "formated text".
 ``[1] Using quo.echo``
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+.. code:: python
 
-``[2] Using quo.text.Text
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   from quo import echo
+
+   echo("This is bold", bold=True)
+   echo("This is italic", italic=True)
+   echo("This is underlined", underline=True)
+
+   # Colors from the ANSI palette
+
+   echo("This is red", fg="red")
+   echo("This is green", fg="green")
+
+
+
+
+``[2] Using quo.text.Text``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :class:`~quo.text.Text` can be used to indicate that a
 string contains HTML-like formatting. It recognizes the basic tags for bold,
@@ -98,23 +112,23 @@ italic and underline: ``<b>``, ``<i>`` and ``<u>``.
 
 .. code:: python
 
-    import quo
+    from quo import print
+    from quo.text import Text
 
-
-    quo.inscribe(quo.text.Text('<b>This is bold</b>'))
-    quo.inscribe(quo.text.Text('<i>This is italic</i>'))
-    quo.inscribe(quo.text.Text('<u>This is underlined</u>'))
+    print(Text('<b>This is bold</b>'))
+    print(Text('<i>This is italic</i>'))
+    print(Text('<u>This is underlined</u>'))
 
 .. code:: python
 
     # Colors from the ANSI palette.
-    quo.inscribe(quo.text.Text('<red>This is red</red>'))
-    quo.inscribe(quo.text.Text('<green>This is green</green>'))
+    print(Text('<red>This is red</red>'))
+    print(Text('<green>This is green</green>'))
 
     # Named colors (256 color palette, or true color, depending on the output).
-    quo.inscribe(quo.text.HTML('<skyblue>This is sky blue</skyblue>'))
-    quo.inscribe(quo.text.HTML('<seagreen>This is sea green</seagreen>'))
-    quo.inscribe(quo.text.HTML('<violet>This is violet</violet>'))
+    print(Text('<skyblue>This is sky blue</skyblue>'))
+    print(Text('<seagreen>This is sea green</seagreen>'))
+    print(Text('<violet>This is violet</violet>'))
 
 Both foreground and background colors can also be specified setting the `fg`
 and `bg` attributes of any HTML tag:
@@ -122,9 +136,9 @@ and `bg` attributes of any HTML tag:
 .. code:: python
 
     # Colors from the ANSI palette.
-    quo.inscribe(quo.text.HTML('<aaa fg="white" bg="green">White on green</aaa>'))
+    print(Text('<aaa fg="white" bg="green">White on green</aaa>'))
 
-Underneath, all HTML tags are mapped to classes from a stylesheet, so you can
+Underneath, all Text tags are mapped to classes from a stylesheet, so you can
 assign a style for a custom tag.
 
 .. code:: python
@@ -133,11 +147,11 @@ assign a style for a custom tag.
     from quo.text import Text
 
     style = Style.add({
-        'aaa': '#ff0066',
-        'bbb': '#44ff00 italic',
+        'aaa': 'fg:red',
+        'bbb': 'fg:blue italic',
     })
 
-    quo.inscribe(Text('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
+    print(Text('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
 
 
 
@@ -145,30 +159,30 @@ assign a style for a custom tag.
 ``(style, text) tuples``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Internally, :class:`~quo.text.HTML` objects are mapped to a list of
+Internally, :class:`~quo.text.Text` objects are mapped to a list of
 ``(style, text)`` tuples. It is however also possible to create such a list
 manually with :class:`~quo.text.FormattedText` class.
-This is a little more verbose, but it's probably the most powerful
-way of expressing formatted text.
+This is a little more verbose, but it's probably the most powerful way of expressing formatted text.
 
 .. code:: python
-
+   
+    from quo import print
     from quo.text import FormattedText
 
     text = FormattedText([
-        ('#ff0066', 'Hello'),
+        ('fg:red', 'Hello'),
         ('', ' '),
-        ('#44ff00 italic', 'World'),
+        ('fg:blue italic', 'World'),
     ])
 
-    quo.inscribe(text)
+    print(text)
 
 Similar to the :class:`~quo.text.Text` example, it is also
 possible to use class names, and separate the styling in a style sheet.
 
 .. code:: python
 
-    import quo
+    from quo import print
     from quo.text import FormattedText
     from quo.style import Style
     # The text.
@@ -180,11 +194,11 @@ possible to use class names, and separate the styling in a style sheet.
 
     # The style sheet.
     style = Style.add({
-        'aaa': '#ff0066',
-        'bbb': '#44ff00 italic',
+        'aaa': 'fg:red',
+        'bbb': 'fg:green italic',
     })
 
-    quo.inscribe(text, style=style)
+    print(text, style=style)
 
 
 ``Pygments ``(Token, text)`` tuples``
@@ -196,7 +210,8 @@ tuples, then these can be printed by wrapping them in a
 
 .. code:: python
      
-    import quo
+    from quo import print
+    from quo.text import PygmentsToken
     from pygments.token import Token
     
     text = [
@@ -209,7 +224,7 @@ tuples, then these can be printed by wrapping them in a
         (Token.Text, '\n'),
     ]
 
-    quo.inscribe(quo.text.PygmentsTokens(text))
+    print(PygmentsTokens(text))
 
 
 Similarly, it is also possible to print the output of a Pygments lexer:
@@ -217,13 +232,15 @@ Similarly, it is also possible to print the output of a Pygments lexer:
 .. code:: python
 
     import pygments
-    import quo
     from pygments.token import Token
     from pygments.lexers.python import PythonLexer
+    from quo import print
+    from quo.text import PygmentsTokens
+
 
     # Printing the output of a pygments lexer.
     tokens = list(pygments.lex('print("Hello")', lexer=PythonLexer()))
-    quo.inscribe(quo.text.PygmentsTokens(tokens))
+    print(PygmentsTokens(tokens))
 
 Quo ships with a default colorscheme which styles it just like
 Pygments would do, but if you'd like to change the colors, keep in mind that
@@ -247,11 +264,12 @@ changing the style from these Pygments tokens can be done as follows:
 
 .. code:: python
 
-    import quo
+    from quo import print
+    from quo.style import Style
 
-    style = quo.styles.Style.add({
+    style = Style.add({
         'pygments.keyword': 'underline',
         'pygments.literal.string': 'bg:#00ff00 #ffffff',
     })
-    quo.inscribe(PygmentsTokens(tokens), style=style)
+    print(PygmentsTokens(tokens), style=style)
 

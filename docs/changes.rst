@@ -22,6 +22,8 @@ Unrealeased
 - Added :func:`quo.Console.edit`
 - Added :func:`quo.Console.launch`
 - Added :func:`quo.Console.size`
+- Added :func:`quo.Console.encoding`
+- Added :func:`quo.Console.bell`
 - Added :func:`quo.Console.rule`
 - Added :func:`quo.Console.openfile`
 - Full support for Windows

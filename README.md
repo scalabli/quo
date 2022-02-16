@@ -68,7 +68,20 @@ Try this:
 ```
 ![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
 
+Alternatively, you can import [print]((https://quo.readthedocs.io/en/latest/printing_text.html#print)
+```python
 
+   from quo import print
+   from quo.text import Text
+
+   print(Text('<b>This is bold</b>'))
+   print(Text('<i>This is italic</i>'))
+   print(Text('<u>This is underlined</u>'))                        
+   # Colors from the ANSI palette.
+   print(Text('<red>This is red</red>')
+   print(Text('<style fg="green" bg="red">Green on red background</stlye>'
+
+```
 ## Quo prompt
  - Using ``quo.prompt`` method.
 ```python
@@ -88,16 +101,7 @@ Try this:
 ```
 ![quo.prompt.Prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
 
-### Using the Console
-For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/console.html) object.
 
-```python
-
-  from quo import Console
-
-  console = Console()
-```
-The Console object has a `print` method which has an intentionally similar interface to the builtin `print` function. Here's an example of use:
 
 ### Quo frame
 ```python
@@ -120,9 +124,35 @@ Quo contains a number of builtin features you can use to create elegant output i
 
 Click the following headings for details:
 <details>
+<summary>Console</summary>
+For more control over quo terminal content, import and construct a [Console](https://quo.readthedocs.io/en/latest/console.html) object.
+
+```python
+   
+    from quo import Console
+
+    console = Console()
+
+```
+
+## ``Launching Applications``
+
+Quo supports launching applications through `Console.launch`. This can be used to open the default application associated with a URL or filetype.
+```python
+
+   from quo import Console
+   
+   console = Console()
+   console.launch("https://quo.rtfd.io/")
+                                                    
+```
+</details>
+
+<details>
 <summary>Completion</summary>
 
-- **Autocompletion**
+## ``Autocompletion``
+
 Press [Tab] to autocomplete
 ```python
 
@@ -134,7 +164,7 @@ Press [Tab] to autocomplete
 ```
 ![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
 
-- **Autosuggestion**
+## ``Autosuggestion``
 Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f willinsert the first word of the suggestion.
 ```python
 
