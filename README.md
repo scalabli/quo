@@ -121,7 +121,7 @@ Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
 # Quo Library
 Quo contains a number of builtin features you can use to create elegant output in your CLI.
 
-Click the following headings for details:
+Click the following headings for details»:
 <details>
 <summary>Console</summary>
 For more control over quo terminal content, import and construct a `Console` object.
