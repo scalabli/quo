@@ -12,7 +12,7 @@ from ctypes.wintypes import DWORD, HANDLE
 from typing import Callable, Dict, List, NamedTuple, Optional, TextIO, Tuple, Type, TypeVar, Union
 
 from quo.errors import NoConsoleScreenBufferError
-from quo.styles import ANSI_COLOR_NAMES, Attrs
+from quo.style import ANSI_COLOR_NAMES, Attrs
 from quo.utils.utils import get_width
 from quo.win32_types import (
     CONSOLE_SCREEN_BUFFER_INFO,

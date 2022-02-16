@@ -85,7 +85,7 @@ def _(event):
 
 
 # The `Application`
-application = quo.Suite(layout=quo.layout.Layout(body), bind=kb, full_screen=True)
+application = quo.Console(layout=quo.layout.Layout(body), bind=kb, full_screen=True)
 
 
 def run():

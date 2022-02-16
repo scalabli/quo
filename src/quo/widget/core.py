@@ -81,7 +81,7 @@ __all__ = [
 E = KeyPressEvent
 
 
-class Border:
+class Border():
     "Box drawing characters."
 
     HORIZONTAL = "\u2501"
@@ -159,12 +159,12 @@ class TextArea:
         self,
         text: str = "",
         multiline: FilterOrBool = True,
-        password: FilterOrBool = False,
+        hide: FilterOrBool = False,
         lexer: Optional[Lexer] = None,
         auto_suggest: Optional[AutoSuggest] = None,
         completer: Optional[Completer] = None,
         complete_while_typing: FilterOrBool = True,
-        validator: Optional[Validator] = None,
+        type: Optional[Validator] = None,
         accept_handler: Optional[BufferAcceptHandler] = None,
         history: Optional[History] = None,
         focusable: FilterOrBool = True,
@@ -200,7 +200,7 @@ class TextArea:
         self.auto_suggest = auto_suggest
         self.read_only = read_only
         self.wrap_lines = wrap_lines
-        self.validator = validator
+        self.type = type
 
         self.buffer = Buffer(
             document=Document(text, 0),
@@ -210,7 +210,7 @@ class TextArea:
             complete_while_typing=Condition(
                 lambda: is_true(self.complete_while_typing)
             ),
-            validator=DynamicValidator(lambda: self.validator),
+            type=DynamicValidator(lambda: self.type),
             auto_suggest=DynamicAutoSuggest(lambda: self.auto_suggest),
             accept_handler=accept_handler,
             history=history,
@@ -224,7 +224,7 @@ class TextArea:
                     AppendAutoSuggestion(), has_focus(self.buffer) & ~is_done
                 ),
                 ConditionalProcessor(
-                    processor=PasswordProcessor(), filter=to_filter(password)
+                    processor=PasswordProcessor(), filter=to_filter(hide)
                 ),
                 BeforeInput(prompt, style="class:text-area.prompt"),
             ]

@@ -12,7 +12,7 @@ from quo.text import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
 from quo.layout.screen import Char, Screen, WritePosition
 from quo.output import ColorDepth, Output
-from quo.styles import (
+from quo.style import (
     Attrs,
     BaseStyle,
     DummyStyleTransformation,

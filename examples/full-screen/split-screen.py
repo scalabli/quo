@@ -5,31 +5,31 @@ Simple example of a full screen application with a vertical split.
 This will show a window on the left for user input. When the user types, the
 reversed input is shown on the right. Pressing Ctrl-Q will quit the application.
 """
-
-import quo
-
-from quo.layout.controls import BufferControl, FormattedTextControl
+from quo import Console
+from quo.buffer import Buffer
+from quo.keys import KeyBinder
+from quo.layout import Layout, Window, BufferControl, FormattedTextControl, VSplit, HSplit, WindowAlign
 
 # 3. Create the buffers
 #    ------------------
 
-left_buffer = quo.buffer.Buffer()
-right_buffer = quo.buffer.Buffer()
+left_buffer = Buffer()
+right_buffer =Buffer()
 
 # 1. First we create the layout
 #    --------------------------
 
-left_window = quo.layout.Window(BufferControl(buffer=left_buffer))
-right_window = quo.layout.Window(BufferControl(buffer=right_buffer))
+left_window = Window(BufferControl(left_buffer))
+right_window = Window(BufferControl(right_buffer))
 
 
-body = quo.layout.VSplit(
+body = VSplit(
     [
         left_window,
         # A vertical line in the middle. We explicitly specify the width, to make
         # sure that the layout engine will not try to divide the whole width by
         # three for all these windows.
-        quo.layout.Window(width=1, char="|", style="class:line"),
+        Window(width=1, char="|", style="class:line"),
         # Display the Result buffer on the right.
         right_window,
     ]
@@ -50,16 +50,16 @@ def get_titlebar_text():
     ]
 
 
-root_container = quo.layout.HSplit(
+root_container = HSplit(
     [
         # The titlebar.
-        quo.layout.Window(
+        Window(
             height=1,
             content=FormattedTextControl(get_titlebar_text),
-            align=quo.layout.WindowAlign.CENTER,
+            align=WindowAlign.CENTER,
         ),
         # Horizontal separator.
-        quo.layout.Window(height=1, char="-", style="class:line"),
+        Window(height=1, char="-", style="class:line"),
         # The 'body', like defined above.
         body,
     ]
@@ -70,12 +70,8 @@ root_container = quo.layout.HSplit(
 #   --------------------
 
 # As a demonstration, we will add just a ControlQ key binding to exit the
-# application.  Key bindings are registered in a
-# `prompt_toolkit.key_bindings.registry.Registry` instance. We use the
-# `load_default_key_bindings` utility function to create a registry that
-# already contains the default key bindings.
-
-kb = quo.keys.KeyBinder()
+# application.
+kb = KeyBinder()
 
 # Now add the Ctrl-Q binding. We have to pass `eager=True` here. The reason is
 # that there is another key *sequence* that starts with Ctrl-Q as well. Yes, a
@@ -125,13 +121,13 @@ def default_buffer_changed(_):
 left_buffer.on_text_changed += default_buffer_changed
 
 
-# 3. Creating an `Application` instance
+# 3. Creating an `Console` instance
 #    ----------------------------------
 
 # This glues everything together.
-layout = quo.layout.Layout(root_container, focused_element=left_window)
+layout = Layout(root_container, focused_element=left_window)
 
-application = quo.Suite(
+application = Console(
         layout=layout,
         bind=kb,
     # Let's add mouse support!

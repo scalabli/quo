@@ -141,7 +141,7 @@ class UIControl(metaclass=ABCMeta):
         """
         The key bindings that are specific for this user control.
 
-        Return a :class:`.KeyBindings` object if some key bindings are
+        Return a :class:`.KeyBinder` object if some key bindings are
         specified, or `None` otherwise.
         """
 
@@ -269,7 +269,7 @@ class UIContent:
 class FormattedTextControl(UIControl):
     """
     Control that displays formatted text. This can be either plain text, an
-    :class:`~quo.text.HTML` object, a list of ``(style_str,
+    :class:`~quo.text.Text` object, a list of ``(style_str,
     text)`` tuples or a callable that takes no argument and returns one of
     those, depending on how you prefer to do the formatting. See
     ``quo.layout.formatted_text`` for more information.
@@ -532,7 +532,7 @@ class BufferControl(UIControl):
         cursor position will move, but the text won't be highlighted.
     :param focusable: `bool` or :class:`.Filter`: Tell whether this control is focusable.
     :param focus_on_click: Focus this buffer when it's click, but not yet focused.
-    :param key_bindings: a :class:`.KeyBindings` object.
+    :param bind: a :class:`.KeyBinder` object.
     """
 
     def __init__(
@@ -548,7 +548,7 @@ class BufferControl(UIControl):
         ] = None,
         menu_position: Optional[Callable[[], Optional[int]]] = None,
         focus_on_click: FilterOrBool = False,
-        key_bindings: Optional["KeyBindingsBase"] = None,
+        bind: Optional["KeyBindingsBase"] = None,
     ):
 
         self.input_processors = input_processors
@@ -568,7 +568,7 @@ class BufferControl(UIControl):
         self.buffer = buffer or Buffer()
         self.menu_position = menu_position
         self.lexer = lexer or SimpleLexer()
-        self.key_bindings = key_bindings
+        self.bind = bind
         self._search_buffer_control = search_buffer_control
 
         #: Cache for the lexer.
@@ -919,7 +919,7 @@ class BufferControl(UIControl):
         """
         When additional key bindings are given. Return these.
         """
-        return self.key_bindings
+        return self.bind
 
     def get_invalidate_events(self) -> Iterable["Event[object]"]:
         """
@@ -947,7 +947,7 @@ class SearchBufferControl(BufferControl):
         input_processors: Optional[List[Processor]] = None,
         lexer: Optional[Lexer] = None,
         focus_on_click: FilterOrBool = False,
-        key_bindings: Optional["KeyBindingsBase"] = None,
+        bind: Optional["KeyBindingsBase"] = None,
         ignore_case: FilterOrBool = False,
     ):
 
@@ -956,7 +956,7 @@ class SearchBufferControl(BufferControl):
             input_processors=input_processors,
             lexer=lexer,
             focus_on_click=focus_on_click,
-            key_bindings=key_bindings,
+            bind=bind,
         )
 
         # If this BufferControl is used as a search field for one or more other

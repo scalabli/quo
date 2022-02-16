@@ -79,7 +79,7 @@ from quo.layout.layout import Layout, walk
 from quo.output import ColorDepth, Output
 from quo.renderer import Renderer, print_formatted_text
 from quo.search import SearchState
-from quo.styles import (
+from quo.style import (
     BaseStyle,
     DummyStyle,
     DummyStyleTransformation,
@@ -516,7 +516,7 @@ class Console(Generic[_AppResult]):
     def _redraw(self, render_as_done: bool = False) -> None:
         """
         Render the command line again. (Not thread safe!) (From other threads,
-        or if unsure, use :meth:`.Suite.invalidate`.)
+        or if unsure, use :meth:`.Console.invalidate`.)
 
         :param render_as_done: make sure to put the cursor after the UI.
         """
@@ -831,6 +831,12 @@ class Console(Generic[_AppResult]):
         from quo.i_o.termui import edit as ed
         return ed()
 
+    def encoding() -> _AppResult:
+        return sys.getdefaultencoding()
+
+    def bell() -> _AppResult:
+        print("\a" *3)
+
     def launch(
             url, 
             wait=False, 
@@ -861,68 +867,8 @@ class Console(Generic[_AppResult]):
       launch a file manager with the file located.  This
       might have weird effects if the URL does not point to the filesystem.
       """
-     # from quo.implementation import open_url
- #    return open_url(url, wait=wait, locate=locate)
-  #  def inscribe(
-  #          *values: Any,
- #           sep: str = " ",
-  #          end: str = "\n",
- #           file: Optional[TextIO] = None,
-  #          flush: bool = False,
-#            style: Optional[BaseStyle] = None,
- #           output: Optional[Output] = None,
-  #          color_depth: Optional[ColorDepth] = None,
- #           style_transformation: Optional[StyleTransformation]# = None,
-  #          include_default_pygments_style: bool = True,
-  #          ) -> None:
-
-
-     #       """
- #           ::
-#            inscribe(*values, sep=' ', end='\\n', file=None, flush=False, style=None, output=None)
-#
- #   Print text to stdout. This is supposed to be compatible with Python's print
-#    function, but supports printing of formatted text. You can pass a
-#    :class:`~quo.text.FormattedText`,
-   # :class:`~quo.text.HTML` or
-#    :class:`~quo.text.ANSI` object to print formatted
-#    text.
-
-   # * Print HTML as follows::
-#
-#        quo.inscribe(quo.text.HTML('<i>Some italic text</i> <red>This is red!</red>'))
-
-  #      style = Style.from_dict({
-   #         'hello': '#ff0066',
-   #         'world': '#884444 italic',
-  #      })
-  #      quo.inscribe(quo.text.HTML('<hello>Hello</hello> <world>world</world>!'), style=style)
-
-  #  * Print a list of (style_str, text) tuples in the given style to the
-  #    output.  E.g.::
-
-  #      style = Style.from_dict({
-    #        'hello': '#ff0066',
-  #          'world': '#884444 italic',
-   #     })
-   #     fragments = FormattedText([
-    #        ('class:hello', 'Hello'),
-   #         ('class:world', 'World'),
-    #    ])
-   #     quo.inscribe(fragments, style=style)
-
-  #  If you want to print a list of Pygments tokens, wrap it in
-  #  :class:`~quo.text.PygmentsTokens` to do the
- #   conversion.
-
- #   :param values: Any kind of printable object, or formatted string.
-#    :param sep: String inserted between values, default a space.
- #   :param end: String appended after the last value, default a newline.
- #   :param style: :class:`.Style` instance for the color scheme.
- #   :param include_default_pygments_style: `bool`. Include the default Pygments
-    #    style when set to `True` (the default). """
     
-    def echo(
+    def inscribe(
             *values: Any,
             sep: str = " ",
             end: str = "\n",
@@ -933,9 +879,9 @@ class Console(Generic[_AppResult]):
             color_depth: Optional[ColorDepth] = None,
             style_transformation: Optional[StyleTransformation] = None,
             include_default_pygments_style: bool = True,
-            ) -> None:
+            ) -> _AppResult:
         from quo.shortcuts.utils import inscribe
-        return inscribe()
+        inscribe()
     def size() -> _AppResult:
         from quo.i_o.termui import terminalsize as ts
         return ts()
@@ -945,25 +891,9 @@ class Console(Generic[_AppResult]):
         return of()
     def rule(message: Optional[str] = None) -> _AppResult:
 
-        from quo.layout import HSplit, Window, FormattedTextControl, WindowAlign as WA
-        intro = ""
-        buff = Buffer()
-        buff.text = intro
-        body = HSplit(
-                [
-                    Window(FormattedTextControl(message), height=1, style="class:rule", align=WA.CENTER),
-                    Window(BufferControl(buffer=buff),)
-                        
-                    ]
-                    )
-        from quo.keys import KeyBinder
-        kb = KeyBinder()
-        @kb.add(Keys.Any)
-        def _(event):
-            event.app.exit()
-
-        Console(layout=Layout(body), bind=kb, full_screen=False).run()
-
+        from quo.layout import Window, FormattedTextControl, WindowAlign as WA
+        from quo.shortcuts import container
+        container(Window(FormattedTextControl(message), height=1, style="class:rule", align=WA.CENTER))
 
     def run(
         self,

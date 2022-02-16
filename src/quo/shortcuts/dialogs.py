@@ -16,9 +16,9 @@ from quo.keys.key_binding.key_bindings import merge_key_bindings
 from quo.layout.layout import Layout
 from quo.layout.containers import AnyContainer, HSplit
 from quo.layout.dimension import Dimension as D
-from quo.styles import BaseStyle
+from quo.style import BaseStyle
 from quo.types import Validator
-from quo.widgets import (
+from quo.widget import (
     Box,
     Button,
     CheckboxList,
@@ -31,7 +31,7 @@ from quo.widgets import (
 )
 
 __all__ = [
-    "ConformationBox",
+    "ConfirmationBox",
     "ChoiceBox",
     "PromptBox",
     "MessageBox",
@@ -108,8 +108,8 @@ def PromptBox(
     ok_text: str = "Ok",
     cancel_text: str = "Cancel",
     completer: Optional[Completer] = None,
-    validator: Optional[Validator] = None,
-    password: FilterOrBool = False,
+    type: Optional[Validator] = None,
+    hide: FilterOrBool = False,
     style: Optional[BaseStyle] = None,
 ) -> Console[str]:
     """
@@ -129,9 +129,9 @@ def PromptBox(
 
     textfield = TextArea(
         multiline=False,
-        password=password,
+        hide=hide,
         completer=completer,
-        validator=validator,
+        type=type,
         accept_handler=accept,
     )
 
@@ -314,7 +314,7 @@ def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Console[Any
     bindings.add("tab")(next)
     bindings.add("s-tab")(previous)
 
-    return Suite(
+    return Console(
         layout=Layout(dialog),
         bind=merge_key_bindings([load_key_bindings(), bindings]),
         mouse_support=True,

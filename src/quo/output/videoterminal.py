@@ -30,7 +30,7 @@ from typing import (
 )
 
 from quo.output import Output
-from quo.styles import ANSI_COLOR_NAMES, Attrs
+from quo.style import ANSI_COLOR_NAMES, Attrs
 from quo.utils.utils import is_dumb_terminal
 
 from .color import ColorDepth

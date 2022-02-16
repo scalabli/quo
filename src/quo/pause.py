@@ -1,9 +1,9 @@
 import sys
 
-from .accordance import isatty
-
+from quo.text import AnyFormattedText
+from quo.accordance import isatty
 def pause(
-        info: str = "Press any key to proceed >> ...", 
+        info: AnyFormattedText = "Press any key to proceed >> ...", 
         err: bool = False
         ):
     """This command stops execution and waits for the user to press any key to continue.  This is similar to the Windows batch "pause"

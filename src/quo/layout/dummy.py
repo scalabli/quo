@@ -1,8 +1,7 @@
 """
-Dummy layout. Used when somebody creates an `Application` without specifying a
-`Layout`.
+Dummy layout. Used when somebody creates a `Console Application` without specifying a `Layout`.
 """
-from quo.text import HTML
+from quo.text import Text
 from quo.keys import KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
 
@@ -30,7 +29,7 @@ def create_dummy_layout() -> Layout:
         event.app.exit()
 
     control = FormattedTextControl(
-            HTML("<i><green>🚫 No layout was specified.</green></i> \nPress <reverse>ENTER</reverse> to quit."),
+            Text("<i><green>🚫 No layout was specified.</green></i> \nPress <reverse>ENTER</reverse> to quit."),
         bind=kb,
     )
     window = Window(content=control, height=D(min=1))

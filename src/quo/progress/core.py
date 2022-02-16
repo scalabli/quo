@@ -23,8 +23,8 @@ from typing import (
     cast,
 )
 
-from quo.suite.suite import Suite
-from quo.suite.current import get_app_session
+from quo.console.console import Console
+from quo.console.current import get_app_session
 from quo.filters import Condition, is_done, renderer_height_is_known
 from quo.text import (
     AnyFormattedText,
@@ -43,7 +43,7 @@ from quo.layout.layout import Layout
 from quo.layout.controls import UIContent, UIControl
 from quo.layout.dimension import AnyDimension, D
 from quo.output import ColorDepth, Output
-from quo.styles import BaseStyle
+from quo.style import BaseStyle
 from quo.utils.utils import in_main_thread
 
 from .formatters import Formatter, create_default_formatters
@@ -179,7 +179,7 @@ class ProgressBar:
             for f in self.formatters
         ]
 
-        self.app: Suite[None] = Suite(
+        self.app: Console[None] = Console(
             min_redraw_interval=0.05,
             layout=Layout(
                 HSplit(

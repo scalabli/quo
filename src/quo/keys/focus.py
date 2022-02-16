@@ -1,1 +1,1 @@
-from quo.keys.key_binding.bindings.focus import next, previous
+from quo.keys.key_binding.bindings.focus import next as next, previous

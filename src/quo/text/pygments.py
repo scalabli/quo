@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, List, Tuple
 
-from quo.styles.pygments import pygments_token_to_classname
+from quo.style.pygments import pygments_token_to_classname
 
 from .core import StyleAndTextTuples
 

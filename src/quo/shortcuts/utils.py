@@ -11,7 +11,7 @@ from quo.output.defaults import create_output
 from quo.renderer import (
     print_formatted_text as renderer_print_formatted_text,
 )
-from quo.styles import (
+from quo.style import (
     BaseStyle,
     StyleTransformation,
     default_pygments_style,

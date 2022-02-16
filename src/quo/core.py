@@ -1061,8 +1061,6 @@ class Command(BaseCommand):
 
         def show_help(clime, param, value):
             if value and not clime.parse:
-                from quo import inscribe
-                from quo.text import HTML
                 from quo import MessageBox
                 MessageBox(title="Help", text=f"{clime.get_help()}").run()
                 clime.exit()
@@ -1073,7 +1071,7 @@ class Command(BaseCommand):
             is_eager=True,
             expose_value=False,
             callback=show_help,
-            help="😵 Check the documentation for more mitigation steps.",
+            help="Check the documentation for more mitigation steps.",
         )
 
     def make_parser(self, clime):

@@ -66,7 +66,7 @@ class SystemToolbar:
             input_processors=[
                 BeforeInput(lambda: self.prompt, style="class:system-toolbar")
             ],
-            key_bindings=self._bindings,
+            bind=self._bindings,
         )
 
         self.window = Window(

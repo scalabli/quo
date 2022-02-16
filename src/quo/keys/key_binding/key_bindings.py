@@ -610,11 +610,11 @@ class DynamicKeyBindings(_Proxy):
         self._dummy = KeyBinder()  # Empty key bindings.
 
     def _update_cache(self) -> None:
-        key_bindings = self.get_key_bindings() or self._dummy
-        assert isinstance(key_bindings, KeyBindingsBase)
-        version = id(key_bindings), key_bindings._version
+        bind = self.get_key_bindings() or self._dummy
+        assert isinstance(bind, KeyBindingsBase)
+        version = id(bind), bind._version
 
-        self._bindings2 = key_bindings
+        self._bindings2 = bind
         self._last_version = version
 
 

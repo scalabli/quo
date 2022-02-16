@@ -1,16 +1,15 @@
 """
-Many places in prompt_toolkit can take either plain text, or formatted text.
-For instance the :func:`~prompt_toolkit.shortcuts.prompt` function takes either
+Many places in quo can take either plain text, or formatted text.
+For instance the :class:`~quo.prompt.Pompt` function takes either
 plain text or formatted text for the prompt. The
-:class:`~prompt_toolkit.layout.FormattedTextControl` can also take either plain
-text or formatted text.
+:class:`~quo.layout.FormattedTextControl` can also take either plain text or formatted text.
 
 In any case, there is an input that can either be just plain text (a string),
 an :class:`.HTML` object, an :class:`.ANSI` object or a sequence of
 `(style_string, text)` tuples. The :func:`.to_formatted_text` conversion
 function takes any of these and turns all of them into such a tuple sequence.
 """
-from quo.i_o.output.html import HTML
+from quo.i_o.output.html import Text
 from quo.i_o.output.ansi import ANSI
 from .core import (
     AnyFormattedText,

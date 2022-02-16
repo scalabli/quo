@@ -2,6 +2,10 @@
 """
 A simple example of a few buttons and click handlers.
 """
+from quo import Console
+from quo.console import get_app
+from quo.widget import Button, TextArea, Box, Frame, Label
+from quo.layout import Layout, VSplit, HSplit
 import quo
 
 
@@ -16,7 +20,7 @@ def button2():
 
 import os 
 def button3():
-    text_area.text = os.system("ls") # "Button 3 clicked"
+    text_area.text = os.system("clear") #"Button 3 clicked"
 
 
 def exit():
@@ -26,39 +30,39 @@ def exit():
 # All the widgets for the UI.
 
 
-b1 = quo.widgets.Button("Button 1", handler=button1)
-b2 = quo.widgets.Button("Button 2", handler=button2)
-b3 = quo.widgets.Button("Button 3", handler=button3)
-b4 = quo.widgets.Button("Exit", handler=exit)
-text_area = quo.widgets.TextArea(focusable=True)
+b1 = Button("Button 1", handler=button1)
+b2 = Button("Button 2", handler=button2)
+b3 = Button("Button 3", handler=button3)
+b4 = Button("Exit", handler=exit)
+text_area = TextArea(focusable=True)
 
 
 # Combine all the widgets in a UI.
 # The `Box` object ensures that padding will be inserted around the containing
 # widget. It adapts automatically, unless an explicit `padding` amount is given.
-root_container = quo.widgets.Box(
-    quo.layout.HSplit(
+root_container = Box(
+        (
         [
-            quo.widgets.Label(text="Press `Tab` to move the focus."),
-            quo.layout.VSplit(
+            Label(text="Press `Tab` to move the focus."),
+            VSplit(
                 [
-                    quo.widgets.Box(
-                        body=quo.layout.HSplit([b1, b2, b3, b4], padding=1),
+                    Box(
+                        body=HSplit([b1, b2, b3, b4], padding=1),
                         padding=1,
                         style="class:left-pane",
                     ),
-                    quo.widgets.Box(body=quo.widgets.Frame(text_area), padding=1, style="class:right-pane"),
+                    Box(body=Frame(text_area), padding=1, style="class:right-pane"),
                 ]
             ),
         ]
     ),
 )
 
-layout = quo.layout.Layout(container=root_container, focused_element=b1)
+layout = Layout(container=root_container, focused_element=b1)
 
 
 # Key bindings.
-kb = quo.keys.KeyBinder()
+kb = KeyBinder()
 
 kb.add("tab")(quo.keys.focus.next)
 kb.add("s-tab")(quo.keys.focus.previous)
@@ -66,7 +70,7 @@ kb.add("s-tab")(quo.keys.focus.previous)
 
 # Styling.
 
-styling = quo.styles.Style
+styling = Style
 
 style = styling(
     [
@@ -81,7 +85,7 @@ style = styling(
 
 
 # Build a main application object.
-application = quo.console.Console(layout=layout, bind=kb, style=style, full_screen=True)
+application = Console(layout=layout, bind=kb, style=style, full_screen=True)
 
 
 def main():

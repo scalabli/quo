@@ -218,9 +218,9 @@ class NoSuchApp(UsageError):
             clime=None
             ):
         if message is None:
-            from quo.shortcuts import inscribe
-            from quo.text import HTML
-            intro = inscribe(HTML('<style fg="red" bg="white"><b>⚠️ Error</b></style>'))
+            from quo.shortcuts.utils import inscribe
+            from quo.text import Text
+            intro = inscribe(Text('<style fg="red" bg="white"><b>⚠️ Error</b></style>'))
             message = f"{appname}"
 
         super().__init__(message, clime)

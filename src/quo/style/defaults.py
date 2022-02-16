@@ -18,7 +18,7 @@ QUO_STYLE = [
     ("search", "bg:ansibrightyellow ansiblack"),
     ("search.current", ""),
     #Rule
-    ("rule", "fg:yellow bg:blue"),
+    ("rule", "fg:yellow bg:brown bold"),
     # Incremental search.
     ("incsearch", ""),
     ("incsearch.current", "reverse"),
@@ -54,7 +54,8 @@ QUO_STYLE = [
     ("arg-toolbar.text", "nobold"),
     # Validation toolbar.
     ("validation-toolbar", "bg:brown fg:white"),
-    ("window-too-small", "bg:#550000 #ffffff"),
+    ("window-too-small", "bg:gold fg:black bold"),
+    ("window-too-small-ex", "fg:white"),
     # Completions toolbar.
     ("completion-toolbar", "bg:#bbbbbb #000000"),
     ("completion-toolbar.arrow", "bg:#bbbbbb #000000 bold"),

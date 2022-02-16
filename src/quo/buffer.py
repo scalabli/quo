@@ -235,7 +235,7 @@ class Buffer:
         completer: Optional[Completer] = None,
         auto_suggest: Optional[AutoSuggest] = None,
         history: Optional[History] = None,
-        validator: Optional[Validator] = None,
+        type: Optional[Validator] = None,
         tempfile_suffix: Union[str, Callable[[], str]] = "",
         tempfile: Union[str, Callable[[], str]] = "",
         name: str = "",
@@ -262,7 +262,7 @@ class Buffer:
 
         self.completer = completer or DummyCompleter()
         self.auto_suggest = auto_suggest
-        self.validator = validator
+        self.type = type
         self.tempfile_suffix = tempfile_suffix
         self.tempfile = tempfile
         self.name = name
@@ -550,7 +550,7 @@ class Buffer:
         # Input validation.
         # (This happens on all change events, unlike auto completion, also when
         # deleting text.)
-        if self.validator and self.validate_while_typing():
+        if self.type and self.validate_while_typing():
             get_app().create_background_task(self._async_validator())
 
     def _cursor_position_changed(self) -> None:
@@ -1313,9 +1313,9 @@ class Buffer:
             return self.validation_state == ValidationState.VALID
 
         # Call validator.
-        if self.validator:
+        if self.type:
             try:
-                self.validator.validate(self.document)
+                self.type.validate(self.document)
             except ValidationError as e:
                 # Set cursor position (don't allow invalid values.)
                 if set_cursor:
@@ -1355,9 +1355,9 @@ class Buffer:
             error = None
             document = self.document
 
-            if self.validator:
+            if self.type:
                 try:
-                    await self.validator.validate_async(self.document)
+                    await self.type.validate_async(self.document)
                 except ValidationError as e:
                     error = e
 

@@ -1238,7 +1238,7 @@ def _wrap_text_to_colwidths(list_of_lists, colwidths, numparses=True):
     return result
 
 
-def tabular(
+def Table(
     tabular_data,
     headers=(),
     theme="fancy_grid",
@@ -1253,7 +1253,7 @@ def tabular(
 ):
     """Format a fixed width table for pretty printing.
 
-    >>> echo(tabular([[1, 2.34], [-56, "8.999"], ["2", "10001"]]))
+    >>> echo(Table([[1, 2.34], [-56, "8.999"], ["2", "10001"]]))
     ---  ---------
       1      2.34
     -56      8.999

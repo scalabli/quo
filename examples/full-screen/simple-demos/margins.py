@@ -7,8 +7,8 @@ be used to display any other kind of information as well.
 """
 import quo
 
-from quo.layout.controls import BufferControl, FormattedTextControl
-from quo.layout.margins import NumberedMargin, ScrollbarMargin
+from quo.layout import BufferControl, FormattedTextControl
+from quo.layout import NumberedMargin, ScrollbarMargin
 
 LIPSUM = (
     """

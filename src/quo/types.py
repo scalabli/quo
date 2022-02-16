@@ -508,7 +508,6 @@ class Validator(metaclass=ABCMeta):
         :param document: :class:`~quo.document.Document` instance.
         """
         pass
-
     async def validate_async(self, document: Document) -> None:
         """
         Return a `Future` which is set when the validation is ready.
@@ -631,12 +630,12 @@ class DynamicValidator(Validator):
         self.get_validator = get_validator
 
     def validate(self, document: Document) -> None:
-        validator = self.get_validator() or DummyValidator()
-        validator.validate(document)
+        type = self.get_validator() or DummyValidator()
+        type.validate(document)
 
     async def validate_async(self, document: Document) -> None:
-        validator = self.get_validator() or DummyValidator()
-        await validator.validate_async(document)
+        type = self.get_validator() or DummyValidator()
+        await type.validate_async(document)
 
 
 class FloatRange(_NumberRangeBase, FloatParamType):
@@ -1079,15 +1078,43 @@ STRING = StringParamType()
 
 #: An integer parameter.  This can also be selected by using ``int`` as
 #: type.
-INT = IntParamType()
-
+#INT = IntParamType()
 #: A floating point value parameter.  This can also be selected by using
 #: ``float`` as type.
 FLOAT = FloatParamType()
-
 #: A boolean parameter.  This is the default for boolean flags.  This can
 #: also be selected by using ``bool`` as a type.
 BOOL = BoolParamType()
 
 #: A UUID parameter.
 UUID = UUIDParameterType()
+
+class integer(Validator):
+    def validate(self, document):
+        text = document.text
+        if text and not text.isdigit():
+            i = 0
+
+
+            # Get index of first non numeric character.
+            # We want to move the cursor here.
+            for i, c in enumerate(text):
+                if not c.isdigit():
+                    break
+                raise ValidationError(message='This input contains non-numeric characters', line=i)
+
+class Float(Validator):
+    def validate(self, document):
+        text = document.text
+        if text and not text.isdecimal():
+            i = 0.0
+
+            for i, k in enumerate(text):
+                if not k.isdecimal():
+                    break
+                raise ValidationError(message='This input does not contain a float', line=i)
+
+
+INT = IntParamType()
+
+

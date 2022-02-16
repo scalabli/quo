@@ -99,7 +99,7 @@ from quo.layout.processors import (
 from quo.layout.utils import explode_text_fragments
 from quo.lexers import DynamicLexer, Lexer
 from quo.output import ColorDepth, DummyOutput, Output
-from quo.styles import (
+from quo.style import (
     BaseStyle,
     ConditionalStyleTransformation,
     DynamicStyle,
@@ -116,7 +116,7 @@ from quo.utils.utils import (
     to_str,
 )
 from quo.types import DynamicValidator, Validator
-from quo.widgets.toolbars import (
+from quo.widget.toolbars import (
     SearchToolbar,
     SystemToolbar,
     ValidationToolbar,
@@ -465,7 +465,7 @@ class Prompt(Generic[_T]):
         enable_system_elicit: FilterOrBool = False,
         enable_suspend: FilterOrBool = False,
         enable_open_in_editor: FilterOrBool = False,
-        validator: Optional[Validator] = None,
+        type: Optional[Validator] = None,
         completer: Optional[Completer] = None,
         complete_in_thread: bool = False,
         reserve_space_for_menu: int = 8,
@@ -510,7 +510,7 @@ class Prompt(Generic[_T]):
         self.lexer = lexer
         self.completer = completer
         self.complete_in_thread = complete_in_thread
-        self.is_password = is_password
+        self.is_password =is_password
         self.bind= bind
         self.bottom_toolbar = bottom_toolbar
         self.style = style
@@ -530,7 +530,7 @@ class Prompt(Generic[_T]):
         self.mouse_support = mouse_support
         self.auto_suggest = auto_suggest
         self.clipboard = clipboard
-        self.validator = validator
+        self.type = type
         self.refresh_interval = refresh_interval
         self.input_processors = input_processors
         self.placeholder = placeholder
@@ -575,7 +575,7 @@ class Prompt(Generic[_T]):
         def accept(buff: Buffer) -> bool:
             """Accept the content of the default buffer. This is called when
             the validation succeeds."""
-            cast(Suite[str], get_app()).exit(result=buff.document.text)
+            cast(Console[str], get_app()).exit(result=buff.document.text)
             return True  # Keep text, we call 'reset' later on.
 
         return Buffer(
@@ -590,7 +590,7 @@ class Prompt(Generic[_T]):
             ),
             validate_while_typing=dyncond("validate_while_typing"),
             enable_history_search=dyncond("enable_history_search"),
-            validator=DynamicValidator(lambda: self.validator),
+            type=DynamicValidator(lambda: self.type),
             completer=DynamicCompleter(
                 lambda: ThreadedCompleter(self.completer)
                 if self.complete_in_thread and self.completer
@@ -608,7 +608,7 @@ class Prompt(Generic[_T]):
 
     def _create_layout(self) -> Layout:
         """
-        Create `Layout` for this elicit.
+        Create `Layout` for this prompt.
         """
         dyncond = self._dyncond
 
@@ -950,7 +950,7 @@ class Prompt(Generic[_T]):
         validate_while_typing: Optional[FilterOrBool] = None,
         complete_style: Optional[CompleteStyle] = None,
         auto_suggest: Optional[AutoSuggest] = None,
-        validator: Optional[Validator] = None,
+        type: Optional[Validator] = None,
         clipboard: Optional[Clipboard] = None,
         mouse_support: Optional[FilterOrBool] = None,
         input_processors: Optional[List[Processor]] = None,
@@ -1024,7 +1024,7 @@ class Prompt(Generic[_T]):
         if complete_in_thread is not None:
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
-            self.is_password = is_password
+            self.is_password = is_password or hide
         if bind is not None:
             self.bind = bind
         if bottom_toolbar is not None:
@@ -1059,8 +1059,8 @@ class Prompt(Generic[_T]):
             self.complete_style = complete_style
         if auto_suggest is not None:
             self.auto_suggest = auto_suggest
-        if validator is not None:
-            self.validator = validator
+        if type is not None:
+            self.type = type
         if clipboard is not None:
             self.clipboard = clipboard
         if mouse_support is not None:
@@ -1162,7 +1162,7 @@ class Prompt(Generic[_T]):
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
         is_password: Optional[bool] = None,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
         color_depth: Optional[ColorDepth] = None,
@@ -1179,7 +1179,7 @@ class Prompt(Generic[_T]):
         validate_while_typing: Optional[FilterOrBool] = None,
         complete_style: Optional[CompleteStyle] = None,
         auto_suggest: Optional[AutoSuggest] = None,
-        validator: Optional[Validator] = None,
+        type: Optional[Validator] = None,
         clipboard: Optional[Clipboard] = None,
         mouse_support: Optional[FilterOrBool] = None,
         input_processors: Optional[List[Processor]] = None,
@@ -1213,8 +1213,8 @@ class Prompt(Generic[_T]):
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
             self.is_password = is_password
-        if key_bindings is not None:
-            self.key_bindings = key_bindings
+        if bind is not None:
+            self.bind = bind
         if bottom_toolbar is not None:
             self.bottom_toolbar = bottom_toolbar
         if style is not None:
@@ -1247,8 +1247,8 @@ class Prompt(Generic[_T]):
             self.complete_style = complete_style
         if auto_suggest is not None:
             self.auto_suggest = auto_suggest
-        if validator is not None:
-            self.validator = validator
+        if type is not None:
+            self.type = type
         if clipboard is not None:
             self.clipboard = clipboard
         if mouse_support is not None:

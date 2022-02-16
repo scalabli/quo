@@ -3,25 +3,25 @@ import typing as ty
 
 from quo.text.core import FormattedText, StyleAndTextTuples
 
-__all__ = ["HTML"]
+__all__ = ["Text"]
 
 
-class HTML:
+class Text:
     """
-    HTML formatted text.
+    Rich formatted text.
     Take something HTML-like, for use as a formatted string.
 
     ::
 
         # Turn something into red.
-        HTML('<style fg="ansired" bg="#00ff44">...</style>')
+        Text('<style fg="red" bg="#00ff44">...</style>')
 
         # Italic, bold and underline.
-        HTML('<i>...</i>')
-        HTML('<b>...</b>')
-        HTML('<u>...</u>')
+        Text('<i>...</i>')
+        Text('<b>...</b>')
+        Text('<u>...</u>')
 
-    All HTML elements become available as a "class" in the style sheet.
+    All Text elements become available as a "class" in the style sheet.
     E.g. ``<username>...</username>`` can be styled, by setting a style for
     ``username``.
     """
@@ -96,12 +96,12 @@ class HTML:
         self.formatted_text = FormattedText(result)
 
     def __repr__(self) -> str:
-        return "HTML(%r)" % (self.value,)
+        return "Text(%r)" % (self.value,)
 
     def __pt_formatted_text__(self) -> StyleAndTextTuples:
         return self.formatted_text
 
-    def format(self, *args: object, **kwargs: object) -> "HTML":
+    def format(self, *args: object, **kwargs: object) -> "Text":
         """
         Like `str.format`, but make sure that the arguments are properly
         escaped.
@@ -110,17 +110,17 @@ class HTML:
         escaped_args = [html_escape(a) for a in args]
         escaped_kwargs = {k: html_escape(v) for k, v in kwargs.items()}
 
-        return HTML(self.value.format(*escaped_args, **escaped_kwargs))
+        return Text(self.value.format(*escaped_args, **escaped_kwargs))
 
-    def __mod__(self, value: ty.Union[object, ty.Tuple[object, ...]]) -> "HTML":
+    def __mod__(self, value: ty.Union[object, ty.Tuple[object, ...]]) -> "Text":
         """
-        HTML('<b>%s</b>') % value
+        Text('<b>%s</b>') % value
         """
         if not isinstance(value, tuple):
             value = (value,)
 
         value = tuple(html_escape(i) for i in value)
-        return HTML(self.value % value)
+        return Text(self.value % value)
 
 
 def html_escape(text: object) -> str:

@@ -2,12 +2,36 @@ import quo
 from quo.i_o import echo
 from quo.color.rgb import *
 from quo.shortcuts import container
-from quo.widgets import Frame, TextArea
+from quo.widget import Frame,Box, Label, TextArea
+from quo.style import Style
 
-if __name__ == "__main__":
-    quo.main()
+style = Style(
+        [
+            ("lab", "reverse")
+            ]
+        )
 
-container(Frame(TextArea(text="         FEATURES"), title="Quo"))
+root = Label("Quo",
+        Box(
+            Label("Features"), 
+            padding=3
+            ))
+from quo.layout import Layout
+from quo.keys import KeyBinder
+
+kb = KeyBinder()
+@kb.add("ctrl-c")
+def _(event):
+    event.app.exit()
+layout = Layout(root)
+from quo import Console
+Console(
+        layout=layout,
+        bind=kb,
+        style=style,
+        full_screen=True).run()
+
+    #(TextArea(text="         FEATURES"), title="Quo"))
 
 
 echo(f"* ", fg="red", nl=False)
