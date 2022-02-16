@@ -78,8 +78,8 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
    print(Text('<i>This is italic</i>'))
    print(Text('<u>This is underlined</u>'))                        
    # Colors from the ANSI palette.
-   print(Text('<red>This is red</red>')
-   print(Text('<style fg="green" bg="red">Green on red background</stlye>'
+   print(Text('<red>This is red</red>'))
+   print(Text('<style fg="green" bg="red">Green on red background</stlye>'))
 
 ```
 ## Quo prompt
@@ -99,8 +99,7 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
    session = Prompt()
    session.prompt("Type something:") 
 ```
-![quo.prompt.Prompt](https://github.com/secretum-inc/quo/raw/master/docs/images/prompt2.png)
-
+Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
 
 
 ### Quo frame
