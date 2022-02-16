@@ -124,7 +124,7 @@ Quo contains a number of builtin features you can use to create elegant output i
 Click the following headings for details:
 <details>
 <summary>Console</summary>
-For more control over quo terminal content, import and construct a ``Console`` object.
+For more control over quo terminal content, import and construct a `Console` object.
 
 ```python
    
@@ -219,11 +219,13 @@ A key binding is an association between a physical key on a keyboard and a param
        echo("Hello, World!")
    session.prompt(">>", bind=kb)
 ```
+Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
+
 </details>
 
 <details>
 <summary>Dialog</summary>
-High level API for displaying [dialog](https://quo.readthedocs.io/en/latest/dialogs.html) boxes to the user for informational purposes, or get input fromthe user.
+High level API for displaying dialog boxes to the user for informational purposes, or get input fromthe user.
 
 1) Example of a message box dialog.
 ```python
@@ -247,6 +249,8 @@ The above produces the following output
 
 ```
 ![Prompt Box](https://github.com/secretum-inc/quo/raw/master/docs/images/promptbox.png)
+
+Read more on [Dialogs](https://quo.readthedocs.io/en/latest/dialogs.html)
 
 </details>
 
