@@ -8,7 +8,7 @@ be used to display any other kind of information as well.
 import quo
 
 from quo.layout import BufferControl, FormattedTextControl
-from quo.layout import NumberedMargin, ScrollbarMargin
+from quo.layout.margin import NumberedMargin, ScrollbarMargin
 
 LIPSUM = (
     """
@@ -59,7 +59,7 @@ def _(event):
 # Layout
 layout = quo.layout.Layout
 # 3. The `Application`
-application = quo.Suite(layout=layout(body), bind=kb, full_screen=True)
+application = quo.Console(layout=layout(body), bind=kb, full_screen=True)
 
 
 def run():

@@ -16,10 +16,9 @@ and returns the text. Just like ``input``.
 
 .. code:: python
 
-    from quo import prompt, echo
+    from quo import prompt
 
-    text = prompt('Give me some input: ')
-    echo(f"You said: {text}")
+    prompt('Give me some input: ')
 
 .. image:: ./images/prompt.png
 
@@ -85,11 +84,13 @@ takes a :class:`~quo.document.Document` as input and raises
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.types import Number
+    from quo.types import integer
+
+    type = integer()
     
-    session = Prompt()
+    session = Prompt(type=type)
     
-    number = int(session.prompt('Give a number: ', type=Number()))
+    number = int(session.prompt('Give a number: '))
     print(f"You said: {number}")
 
 .. image:: ./images/number-validator.png
@@ -98,16 +99,26 @@ By default, the input is validated in real-time while the user is typing, but
 Quo can also validate after the user presses the enter key:
 
 .. code:: python
+    session = Prompt(
+              type=type,
+              validate_while_typing=False
+              )
 
-    session.prompt('Give a number: ', type=Number, validate_while_typing=False)
+    session.prompt('Give a number: ')
 
 If the input validation contains some heavy CPU intensive code, but you don't
-want to block the event loop, then it's recommended to wrap the validator class
-in a :class:`~quo.validation.ThreadedValidator`.
+want to block the event loop, then it's recommended to wrap the validation class in a :class:`~quo.types.ThreadedValidator`.
 
 ``Input Prompts using Prompt() class``
 -------------------------------------
-Input history can be kept between consecutive :class:`quo.prompt.Prompt` calls incase you want to ask for multiple inputs, but each input call needs about the same arguments.
+Input history can be kept between consecutive :func:`quo.prompt` and :class:`quo.prompt.Prompt` calls incase you want to ask for multiple inputs, but each input call needs about the same arguments.
+
+.. code:: python
+
+   from quo import prompt
+
+   tex1 = prompt("What is your name?")
+   text2 = prompt("Where are you from?")
 
 .. code:: python
     
@@ -129,8 +140,8 @@ Reading multiline input is as easy as passing the ``multiline=True`` parameter.
 
    from quo.prompt import Prompt
 
-   session = Prompt()
-   session.prompt('> ', multiline=True)                                                                                               
+   session = Prompt(multiline=True)
+   session.prompt('> ')                                                                                             
 
  
 A side effect of this is that the enter key will now insert a newline instead of accepting and returning the input. The user will now have to press :kbd:`Meta+Enter` in order to accept the input. (Or :kbd:`Escape` followed by :kbd:`Enter`.)
@@ -163,7 +174,8 @@ exceed the given width. (The width of the prompt margin is defined by the prompt
 ``Hide Input``
 ---------------
 
-When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag in :class:`quo.prompt.Prompt` has been given, the input is hidden or replaced by asterisks (``*`` characters) .
+When the ``hide=True`` flag in :func:`quo.prompt` or :class:`quo.prompt.Prompt` has been given, the input is hidden in :func:`quo.prompt` or replaced by asterisks (``*`` characters) in :class:`quo.prompt.Prompt`
+
 
 ``Using function quo.prompt()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -180,9 +192,9 @@ When the ``hide=True`` flag in :func:`quo.prompt` or ``is_password=True`` flag i
 
    from quo.prompt import Prompt
 
-   session = Prompt()
+   session = Prompt(hide=True)
 
-   session.prompt("Enter password: ", is_password=True)
+   session.prompt("Enter password: ")
 
 
 
@@ -308,10 +320,10 @@ Example:
     from quo.completion import AutoSuggestFromHistory
     from quo.history import InMemoryHistory
     
-    session = Prompt()
+    session = Prompt(auto_suggest=AutoSuggestFromHistory())
 
     while True:
-        text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
+        text = session.prompt('> ')
         print(f"You said: {text}")
 
 .. image:: ./images/auto-suggestion.png
@@ -358,12 +370,11 @@ The toolbar is always erased when the prompt returns. Here we have an example of
    from quo.prompt import Prompt
    from quo.text import Text
 
-   session = Prompt()
-
    def toolbar():
       return Text('This is a <b><style bg="red">Toolbar</style></b>!')
    # Returns a callable
-   text = session.prompt('> ', bottom_toolbar=toolbar)
+   session = Prompt(bottom_toolbar=toolbar)
+   text = session.prompt('> ')
 
 .. image:: ./images/bottom-toolbar.png
 
@@ -373,7 +384,6 @@ Similar, we could use a list of style/text tuples.
    from quo.prompt import Prompt
    from quo.styles import Style
 
-   session = Prompt()
 
    def toolbar():
        return [('class:bottom-toolbar', ' This is a toolbar. ')]
@@ -381,8 +391,14 @@ Similar, we could use a list of style/text tuples.
    style = Style.add({
      'bottom-toolbar': 'fg:white bg:green',})
 
+   session = Prompt(
+              bottom_toolbar=toolbar,
+              style=style
+              )
+           
    text = session.prompt('> ', bottom_toolbar=toolbar, style=style)
    print(f'You said: {text}')
+
 The default class name is bottom-toolbar and that will also be used to fill the background of the toolbar.
 
 ``Right prompt(rprompt)``
@@ -396,14 +412,19 @@ This can be either plain text, formatted text or a callable which returns either
    from quo.prompt import Prompt
    from quo.styles import Style
 
-   session = Prompt()
    
-   example_style = Style.add({'rprompt': 'bg:green fg:red',})
+   style = Style.add({'rprompt': 'bg:green fg:red',})
    
    def get_rprompt():
      return '<rprompt>'
 
-  answer = session.prompt('> ', rprompt=get_rprompt, style=example_style)
+   session = Prompt(
+             rprompt=get_rprompt,
+             style=style
+             )
+
+   session.prompt('> ')
+
 
 .. image:: ./images/rprompt.png
 
@@ -422,10 +443,9 @@ base class.
     from quo.lexers import PygmentsLexer
     from pygments.lexers.html import HtmlLexer
     
-    session = Prompt()
+    session = Prompt(lexer=PygmentsLexer(HtmlLexer))
 
-    text = session.prompt('Enter HTML: ', lexer=quo.PygmentsLexer(HtmlLexer))
-    print(f"You said: {text}")
+    session.prompt('Enter HTML: ')
 
 .. image:: ./images/html-input.png
 
@@ -533,23 +553,27 @@ creating a list of style/text tuples. In the following example, we use class nam
         ('class:pound',    '# '),
     ]
 
-    text = session.prompt(message, style=style)
+    session.prompt(message, style=style)
 
 .. image:: ./images/colored-prompt.png
 
 The `message` can be any kind of formatted text, as discussed :ref:`here
 <formatted_text>`. It can also be a callable that returns some formatted text.
 
-By default, colors are taken from the 256 color palette. If you want to have 24bit true color, this is possible by adding the ``color_depth=ColorDepth.TRUE_COLOR`` option to the :func:`~quo.prompt.Prompt.prompt` function.
+By default, colors are taken from the 256 color palette. If you want to have 24bit true color, this is possible by adding the ``color_depth=ColorDepth.TRUE_COLOR`` option to the :class:`~quo.prompt.Prompt` .
 
 .. code:: python
 
     from quo.prompt import Prompt
     from quo.color import ColorDepth
 
-    session = Prompt()
-
-    text = session.prompt(message, style=style, color_depth=ColorDepth.TRUE_COLOR)
+    session = Prompt(
+                style=style,
+                color_depth=ColorDepth.TRUE.COLOR
+                )
+    
+             
+    session.prompt(message)
 
 
 Nested completion
@@ -564,8 +588,7 @@ A simple :class:`~quo.completion.WordCompleter` is not enough in that case. We w
     from quo.prompt import Prompt
     from quo.completion import NestedCompleter
 
-    session = Prompt()
-    completer = NestedCompleter.from_nested_dict({
+    completer = NestedCompleter.add({
         'show': {
             'version': None,
             'clock': None,
@@ -573,11 +596,10 @@ A simple :class:`~quo.completion.WordCompleter` is not enough in that case. We w
                 'interface': {'brief'}
             }
         },
-        'exit': None,
-    })
-
-    text = session.prompt('# ', completer=completer)
-    print('You said: %s' % text)
+        'exit': None
+     })  
+     session = Prompt(completer=completer)  
+     session.prompt('# ')
 
 Whenever there is a ``None`` value in the dictionary, it means that there is no further nested completion at that point. When all values of a dictionary would be ``None``, it can also be replaced with a set.
 
@@ -625,55 +647,6 @@ For instance:
    while True:
        session.prompt()
 
-Adding a bottom toolbar
------------------------
-
-Adding a bottom toolbar is as easy as passing a ``bottom_toolbar`` argument to :func:`~quo.prompt.Prompt.prompt`. This argument be either plain text, :ref:`formatted text <formatted_text>` or a callable that returns plain or formatted text.
-
-When a function is given, it will be called every time the prompt is rendered,
-so the bottom toolbar can be used to display dynamic information.
-
-The toolbar is always erased when the prompt returns.
-Here we have an example of a callable that returns an
-:class:`~quo.text.Text` object. By default, the toolbar
-has the **reversed style**, which is why we are setting the background instead of the foreground.
-
-.. code:: python
-
-    from quo.prompt import Prompt
-    from quo.text import Text
-
-    session = Prompt()
-
-    def bottom_toolbar():
-        return Text('This is a <b><style bg="red">Toolbar</style></b>!')
-    # Returns a callable
-    text = session.prompt('> ', bottom_toolbar=bottom_toolbar)
-
-.. image:: ./images/bottom-toolbar.png
-
-Similar, we could use a list of style/text tuples.
-
-.. code:: python
-
-    from quo.prompt import Prompt
-    from quo.style import Style
-
-    session = Prompt()
-
-    def bottom_toolbar():
-        return [('class:bottom-toolbar', ' This is a toolbar. ')]
-
-    style = Style.add({
-        'bottom-toolbar': 'fg:white bg:green',
-    })
-
-    text = session.prompt('> ', bottom_toolbar=bottom_toolbar, style=style)
-    print(f'You said: {text}')
-
-The default class name is ``bottom-toolbar`` and that will also be used to fill the background of the toolbar.
-
-
 Adding custom key bindings
 --------------------------
 
@@ -692,7 +665,6 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
     from quo.keys import KeyBinder
 
     kb = KeyBinder()
-    session = Prompt()
 
     @kb.add('ctrl-t')
     def _(event):
@@ -703,8 +675,8 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
     def _(event):
       #Exit when `ctrl-x` is pressed. "
         event.app.exit()
-
-    text = session.prompt('> ', bind=kb)
+    session = Prompt(bind=kb)
+    session.prompt('> ', bind=kb)
 
 Enable key bindings according to a condition
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -725,7 +697,6 @@ pass it a :class:`~quo.filters.Condition` instance. (:ref:`Read more about filte
     from quo.keys import KeyBinder
 
     kb = KeyBinder()
-    session = Prompt()
 
     @Condition
     def second_half():
@@ -736,8 +707,8 @@ pass it a :class:`~quo.filters.Condition` instance. (:ref:`Read more about filte
     def _(event):
         # ...
         pass
-
-    session.prompt('> ', bind=kb)
+    session = Prompt(bind=kb)
+    session.prompt('> ')
 
 Using control-space for completion
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

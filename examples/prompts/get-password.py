@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-import quo
+#!/usr/bin/env python3
 
-session = quo.Prompt(is_password=True)
+from quo.prompt import Prompt
+
+session = Prompt(hide=True)
 
 if __name__ == "__main__":
-    password = session.prompt("Password: ")
-    quo.echo("You said: %s" % password)
+    session.prompt("Password: ")

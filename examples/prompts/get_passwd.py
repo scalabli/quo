@@ -1,3 +1,3 @@
-import quo
+from quo import prompt
 
-quo.prompt("Password: ", hide=True)
+prompt("Password: ", hide=True)

@@ -422,6 +422,13 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
+        from quo.shortcuts.utils import container
+        from quo.layout import Window, FormattedTextControl, WindowAlign as WA
+        container(
+                Window(
+                    FormattedTextControl(""),
+                    height=1, 
+                    align=WA.CENTER))
         raise UsageError(f"Invalid key: {key,}")
     return key
 

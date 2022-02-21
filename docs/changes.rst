@@ -7,13 +7,22 @@
 Changelog
 =========
 
+``Version 2022.2.1``
+---------------------
+
+Unreleased
+
+Changed
+--------
+Deprecated :param:`is_password` in favor of :param:`hide`
+
 ``Version 2022.2``
 -------------------
 
-Unrealeased
+Released on 2022-2-16
 
-- Fixed minor bugss
-- Added :class:`quo.types.Number`
+- Fixed minor bugs
+- Added :func:`quo.types.integer`
 - Deprecated :param:`password` in favor of :param:`hide`
 - Deprecated :class:`quo.text.HTML` in favor of :class:`quo.text.Text`
 - Deprecated :param:`r_elicit` in favor of :param:`rprompt`
