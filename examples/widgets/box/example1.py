@@ -1,5 +1,5 @@
 from quo import Console
-from quo.widgets import Box, Label
+from quo.widget import Box, Label
 from quo.keys import KeyBinder
 from quo.layout import Layout
 from quo.style import Style

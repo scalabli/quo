@@ -3,8 +3,8 @@ Widgets
 
 A collection of reusable components for building full screen applications.
 
-TextArea
----------
+``TextArea``
+--------------
 A simple input field.
 This is a higher level abstraction on top of several other classes with sane defaults.
 
@@ -139,4 +139,36 @@ shrinking other elements. Wrapping something in a ``Box`` makes it flexible.
      bind=kb,
      style=example_style,
      full_screen=True).run()
+     
+     
+``Button``
+------------
 
+Clickable button.
+
+**Parameters**
+      - ``text`` - The caption for the button.
+      - ``handler`` - `None` or callable. Called when the button is clicked. No parameters are passed to this callable. Use for instance Python's `functools.partial` to pass parameters to this callable if nee
+ded.
+      - ``width`` - Width of the button. 
+
+      
+``Frame``
+---------
+
+Draw a border around any container, optionally with a title text.
+Changing the title and body of the frame is possible at runtime by assigning to the `body` and `title` attributes of this class.
+
+**Parameters**
+      - ``body`` - Another container object.
+      - ``title`` - Text to be displayed in the top of the frame *(can be formatted text)*
+      - ``style`` - Style string to be applied to this widget.
+
+
+``Shadow``
+-----------
+
+Draw a shadow underneath/behind this container. *(This applies `class:shadow` the the cells under the shadow. The Style should define the colors for the shadow.)*
+
+**Parameters**
+      - ``body`` - Another container object.

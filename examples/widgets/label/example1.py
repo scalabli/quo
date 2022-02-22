@@ -1,11 +1,11 @@
 from quo import Console
-from quo.widgets import Label
+from quo.widget import Label
 from quo.keys import KeyBinder
 from quo.layout import Layout
 from quo.style import Style
 
 # Styling for the label
-example_style = Style(
+example = Style(
         [
             ("hello-world", "bg:red fg:black")
             ]
@@ -21,5 +21,5 @@ kb = KeyBinder()
 def _(event):
     event.app.exit()
 
-Console(layout=layout, bind=kb, style=example_style, full_screen=True).run()
+Console(layout=layout, bind=kb, style=example, full_screen=True).run()
 

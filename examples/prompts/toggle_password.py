@@ -9,18 +9,15 @@ from quo.keys import KeyBinder
 
 session = Prompt()
 kb = KeyBinder()
-def main():
-    hidden = [True]  # Nonlocal
 
-    @kb.add("ctrl-t")
-    def _(event):
-        "When ControlT has been pressed, toggle visibility."
-        hidden[0] = not hidden[0]
+hidden = [True]  # Nonlocal
 
+@kb.add("ctrl-t")
+def _(event):
+    "When ControlT has been pressed, toggle visibility."
+    hidden[0] = not hidden[0]
     print("Type Control-T to toggle password visible.")
-    password = session.prompt( "Password: ", is_password=Condition(lambda: hidden[0]), bind=kb)
-    print("You said: %s" % password)
 
+password = session.prompt( "Password: ", is_password=Condition(lambda: hidden[0]), bind=kb)
+print("You said: %s" % password)
 
-if __name__ == "__main__":
-    main()
