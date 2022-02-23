@@ -218,8 +218,7 @@ Parameters
         string matching.
     * ``search_ignore_case`` - 
         :class:`~quo.filters.Filter`. Search case insensitive.
-    * ``lexer`` - :class:`~quo.lexers.Lexer` to be used for the
-        syntax highlighting
+
     * ``completer`` - :class:`~quo.completion.Completer` instance
         for input completion.
     * ``complete_in_thread`` - `bool` or
@@ -427,11 +426,8 @@ This can be either plain text, formatted text or a callable which returns either
 ``Syntax highlighting``
 -----------------------
 
-Adding syntax highlighting is as simple as adding a lexer. All of the `Pygments
-<http://pygments.org/>`_ lexers can be used after wrapping them in a
-:class:`~quo.lexers.PygmentsLexer`. It is also possible to create a
-custom lexer by implementing the :class:`~quo.lexers.Lexer` abstract
-base class.
+Quo ships with an intuitive syntax highligher.
+It is also possible to create a custom highligher by implementing the :class:`~quo.highlight.Lexer` abstract base class.
 
 .. code:: python
 
