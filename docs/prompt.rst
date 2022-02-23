@@ -460,7 +460,7 @@ or:»
    session = Prompt(highlighter=css)
    session.prompt('Enter css: ')
 
-Syntax highlighting is as simple as adding a highlighter. All of the available syntax styles can be found `here <http://quo.readthedocs.io/en/latest/syntax_styles.html/>`_ 
+Syntax highlighting is as simple as adding a highlighter. All of the available syntax styles can be found `here <http://quo.readthedocs.io/en/latest/syntax_styles.html>`_ 
 
 ``Placeholder text``
 --------------------
