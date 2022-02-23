@@ -5,21 +5,21 @@ A simple example of a scrollable pane.
 
 import quo
 
-from quo.suite import get_app
+from quo.console import Console, get_app
 
 def main():
     # Create a big layout of many text areas, then wrap them in a `ScrollablePane`.
-    root_container = quo.widgets.Frame(
+    root_container = quo.widget.Frame(
         quo.layout.ScrollablePane(
             quo.layout.HSplit(
                 [
-                    quo.widgets.Frame(quo.widgets.TextArea(text=f"label-{i}"), width=quo.layout.Dimension())
+                    quo.widget.Frame(quo.widget.TextArea(text=f"label-{i}"), width=quo.layout.Dimension())
                     for i in range(20)
                 ]
             )
-        )
-  #       quo.layout.ScrollablePane(quo.layout.HSplit([quo.widgets.TextArea(text=f"label-{i}") for i in range(20)]))
- #   )
+        ),
+         quo.layout.ScrollablePane(quo.layout.HSplit([quo.widget.TextArea(text=f"label-{i}") for i in range(20)]))
+    )
 
     layout = quo.layout.Layout(container=root_container)
 
@@ -34,11 +34,10 @@ def main():
     kb.add("s-tab")(quo.keys.focus.previous)
 
     # Create and run application.
-    application = quo.Suite(
+    Console(
             layout=layout,
             bind=kb, 
-            full_screen=True)
-    application.run()
+            full_screen=True).run()
 
 
 if __name__ == "__main__":

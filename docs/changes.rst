@@ -12,10 +12,10 @@ Changelog
 
 Unreleased
 
-Changed
---------
+**Changed**
+-----------
 Deprecated :param:`is_password` in favor of :param:`hide`
-
+Fixed :func:`quo.Console.edit`, :func:`quo.Console.rule`, :func:`quo.Console.openfile`, :func:`quo.Console.encoding`
 ``Version 2022.2``
 -------------------
 

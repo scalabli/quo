@@ -6,7 +6,7 @@ This could be used as inspiration for a REPL.
 from quo import Console
 from quo.document import Document
 from quo.keys import KeyBinder
-from quo.widgets import SearchToolbar, TextArea
+from quo.widget import SearchToolbar, TextArea
 from quo.layout import Layout, Window, HSplit
 from quo.style import Style
 

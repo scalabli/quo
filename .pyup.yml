@@ -32,6 +32,9 @@ search: True
 # default: empty
 # allowed: list
 requirements:
+  - docs/requirements:
+    update: all
+    pin: True
   - requirements/staging.txt:
       # update all dependencies and pin them
       update: all
@@ -61,8 +64,8 @@ branch_prefix: pyup/
 
 # set a global prefix for PRs
 # default: empty
-pr_prefix: "Bug #12345"
+pr_prefix: "Update dependancies🖲️🖥️"
 
 # allow to close stale PRs
 # default: True
-close_prs: True
+close_prs: False

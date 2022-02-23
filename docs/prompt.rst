@@ -219,9 +219,7 @@ Parameters
     * ``search_ignore_case`` - 
         :class:`~quo.filters.Filter`. Search case insensitive.
     * ``lexer`` - :class:`~quo.lexers.Lexer` to be used for the
-        syntax highlighting.
-    * ``validator`` - :class:`~quo.validation.Validator` instance
-        for input validation.
+        syntax highlighting
     * ``completer`` - :class:`~quo.completion.Completer` instance
         for input completion.
     * ``complete_in_thread`` - `bool` or
@@ -258,10 +256,6 @@ Parameters
     * ``history`` - :class:`~quo.history.History` instance.
     * ``clipboard`` - :class:`~quo.clipboard.Clipboard` instance.
         (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
-    * ``r_elicit`` - Text or formatted text to be displayed on the right side.
-        This can also be a callable that returns (formatted) text.
-    * ``bottom_toolbar`` - Formatted text or callable which is supposed to
-        return formatted text.
     * ``elicit_continuation`` - Text that needs to be displayed for a multiline
         elicit continuation. This can either be formatted text or a callable
         that takes a `elicit_width`, `line_number` and `wrap_count` as input
@@ -284,12 +278,14 @@ Autocompletion can be added by passing a completer parameter.
 
 .. code:: python
 
-    import quo
+    from quo import echo
+    from quo.completion import WordCompleter
+    from quo.prompt import Prompt
      
-    session = quo.prompt.Prompt()
-    suggest = quo.completion.WordCompleter(['<html>', '<body>', '<head>', '<title>'])
+    session = Prompt()
+    suggest = WordCompleter(['<html>', '<body>', '<head>', '<title>'])
     text =  session.prompt('Enter HTML: ', completer=suggest)
-    quo.echo(f"You said: {text}")
+    echo(f"You said: {text}")
 
 :class:`~quo.completion.WordCompleter` is a simple completer that
 completes the last word before the cursor with any of the given words.
@@ -440,37 +436,35 @@ base class.
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.lexers import PygmentsLexer
-    from pygments.lexers.html import HtmlLexer
+    from quo.highlight import HTML
     
-    session = Prompt(lexer=PygmentsLexer(HtmlLexer))
+    session = Prompt(highlighter=HTML)
 
     session.prompt('Enter HTML: ')
 
 .. image:: ./images/html-input.png
 
-The default Pygments colorscheme is included as part of the default style in
-quo. If you want to use another Pygments style along with the lexer,
-you can do the following:
+If you want to use another style you can do the following:»
 
 .. code:: python
 
-    import quo
-    from pygments.lexers.html import HtmlLexer
-    from pygments.styles import get_style_by_name
-    from quo.prompt import Prompt
-    from quo.style.pygments import style_from_pygments_cls
-    from quo.lexers import PygmentsLexer
+   from quo.prompt import Prompt
+   from quo.highlight import Python
 
-    style = style_from_pygments_cls(get_style_by_name('monokai'))
-    session = Prompt()
+   session = Prompt(highlighter=Python)
+   session.prompt('Enter Python code: ')
 
-    text = session.prompt('Enter HTML: ', lexer=PygmentsLexer(HtmlLexer), style=style, include_default_pygments_style=False)
-    quo.echo(f"You said: {text}")
+or:»
 
-We pass ``include_default_pygments_style=False``, because otherwise, both
-styles will be merged, possibly giving slightly different colors in the outcome
-for cases where where our custom Pygments style doesn't specify a color.
+.. code:: python
+
+   from quo.prompt import Prompt
+   from quo.highlight import css
+
+   session = Prompt(highlighter=css)
+   session.prompt('Enter css: ')
+
+Syntax highlighting is as simple as adding a highlighter. All of the available syntax styles can be found `here <http://quo.readthedocs.io/en/latest/syntax_styles.html/>`_ 
 
 ``Placeholder text``
 --------------------

@@ -173,14 +173,17 @@ provided file.
 ``A simple console application``
 ---------------------------------
 
-Almost every quo application is an instance of an :class:`~quo.Console` object. The simplest full screen example would look like this:
+Almost every quo application is an instance of an :class:`~quo.Console` object.
+The simplest full screen example would look like this:
+
 .. code:: python
 
-    from quo import Console
-    
-    Console(full_screen=True).run()
+  from quo import Console
+ 
+  Console(full_screen=True).run()
 
-This will display an application with no layout specified.
+This will display an application with no layout specified
+
 .. note::
 
         If we wouldn't set the ``full_screen`` option, the application would not run in the alternate screen buffer, and only consume the least amount of space required for the layout.
