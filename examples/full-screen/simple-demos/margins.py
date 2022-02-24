@@ -10,21 +10,7 @@ import quo
 from quo.layout import BufferControl, FormattedTextControl
 from quo.layout.margin import NumberedMargin, ScrollbarMargin
 
-LIPSUM = (
-    """
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Maecenas
-quis interdum enim. Nam viverra, mauris et blandit malesuada, ante est bibendum
-mauris, ac dignissim dui tellus quis ligula. Aenean condimentum leo at
-dignissim placerat. In vel dictum ex, vulputate accumsan mi. Donec ut quam
-placerat massa tempor elementum. Sed tristique mauris ac suscipit euismod. Ut
-tempus vehicula augue non venenatis. Mauris aliquam velit turpis, nec congue
-risus aliquam sit amet. Pellentesque blandit scelerisque felis, faucibus
-consequat ante. Curabitur tempor tortor a imperdiet tincidunt. Nam sed justo
-sit amet odio bibendum congue. Quisque varius ligula nec ligula gravida, sed
-convallis augue faucibus. Nunc ornare pharetra bibendum. Praesent blandit ex
-quis sodales maximus."""
-    * 40
-)
+LIPSUM = ( """Quo is scallable\n"""  * 40)
 
 # Create text buffers. The margins will update if you scroll up or down.
 

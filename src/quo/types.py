@@ -1104,7 +1104,7 @@ class integer(Validator):
                 raise ValidationError(message='This input contains non-numeric characters', line=i)
 
 class Float(Validator):
-    def validate(self, document):
+    def validate(self, document: Document):
         text = document.text
         if text and not text.isdecimal():
             i = 0.0

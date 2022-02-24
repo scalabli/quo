@@ -30,7 +30,7 @@ __all__ = [
 ]
 
 
-def inscribe(
+def print(
     *values: Any,
     sep: str = " ",
     end: str = "\n",

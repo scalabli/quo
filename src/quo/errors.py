@@ -16,6 +16,8 @@ def _join_param_hints(param_hint):
 
 
 class Outlier(Exception):
+  #  from quo.rule import Rule
+  #  Rule()
     """An exception that Quo can handle and show to the user."""
 
     #: The exit code for this exception.

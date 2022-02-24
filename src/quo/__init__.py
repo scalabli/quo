@@ -16,7 +16,7 @@ from .getchar import getchar as getchar
 from .pause import pause as pause
 from .prompt import prompt as prompt  # dont confuse this with :class: quo.prompt.Prompt()
 from quo.filters.core import Condition as Condition
-from quo.shortcuts import inscribe as print
+from quo.shortcuts import print as print
 
 
 
@@ -92,4 +92,4 @@ from quo.i_o import (
 
 from quo.shortcuts import container
 
-__version__ = "2022.2"
+__version__ = "2022.2.1"

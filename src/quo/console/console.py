@@ -319,7 +319,7 @@ class Console(Generic[_AppResult]):
 
         #: The `Renderer` instance.
         # Make sure that the same stdout is used, when a custom renderer has been passed.
-        self._merged_style = self._create_merged_style(include_default_pygments_style)
+        self._merged_style = self._create_merged_style(default_pygments_style)
 
         self.renderer = Renderer(
             self._merged_style,
@@ -353,7 +353,7 @@ class Console(Generic[_AppResult]):
         # Trigger initialize callback.
         self.reset()
 
-    def _create_merged_style(self, include_default_pygments_style: Filter) -> BaseStyle:
+    def _create_merged_style(self, default_pygments_style: Filter) -> BaseStyle:
         """
         Create a `Style` object that merges the default UI style, the default
         pygments style, and the custom user style.
@@ -363,7 +363,7 @@ class Console(Generic[_AppResult]):
 
         @DynamicStyle
         def conditional_pygments_style() -> BaseStyle:
-            if include_default_pygments_style():
+            if default_pygments_style():
                 return pygments_style
             else:
                 return dummy_style
@@ -642,7 +642,7 @@ class Console(Generic[_AppResult]):
         Run the quo :class:`~quo.Console`
         until :meth:`~quo.Suite.exit` has been
         called. Return the value that was passed to
-        :meth:`~quo.Suite.exit`.
+        :meth:`~quo.Console.exit`.
 
         This is the main entry point for a prompt_toolkit
         :class:`~quo.Console` and usually the only
@@ -820,6 +820,8 @@ class Console(Generic[_AppResult]):
                     loop.set_exception_handler(previous_exc_handler)
 
         return await _run_async2()
+
+    @property
     def edit(
             text=None,
             editor=None,
@@ -827,21 +829,24 @@ class Console(Generic[_AppResult]):
             require_save=True,
             extension=".txt",
             filename=None
-            ) -> _AppResult:
+            ) -> "Console":
         from quo.i_o.termui import edit as ed
-        return ed()
+        return ed
 
-    def encoding() -> _AppResult:
-        return sys.getdefaultencoding()
+    @property
+    def encoding(self) -> "Console":
+        encode = sys.getdefaultencoding()
+        print(encode)
 
-    def bell() -> _AppResult:
+    def bell(self) -> _AppResult:
         print("\a" *3)
 
     def launch(
+            self,
             url, 
             wait=False, 
             locate=False
-            ) -> _AppResult:
+            ) -> "Console":
 
         from quo.implementation import open_url
         open_url(url, wait=wait, locate=locate)
@@ -869,6 +874,7 @@ class Console(Generic[_AppResult]):
       """
     
     def inscribe(
+            self,
             *values: Any,
             sep: str = " ",
             end: str = "\n",
@@ -880,16 +886,23 @@ class Console(Generic[_AppResult]):
             style_transformation: Optional[StyleTransformation] = None,
             include_default_pygments_style: bool = True,
             ) -> _AppResult:
-        from quo.shortcuts.utils import inscribe
-        inscribe()
-    def size() -> _AppResult:
+        from quo.shortcuts.utils import print
+        print()
+    @property
+    def size(self):
         from quo.i_o.termui import terminalsize as ts
-        return ts()
+        termsize = ts
+        print(termsize)
 
-    def openfile():
+    @property
+    def openfile(self):
         from quo.expediency.vitals import openfile as of
-        return of()
-    def rule(message: Optional[str] = None) -> _AppResult:
+        return of
+    @property
+    def rule(
+            self,
+            message: Optional[str] = None
+            )-> "Console":
 
         from quo.layout import Window, FormattedTextControl, WindowAlign as WA
         from quo.shortcuts import container
@@ -998,7 +1011,7 @@ class Console(Generic[_AppResult]):
                 echo(formatted_tb)
                 print("Exception %s" % (context.get("exception"),))
 
-                await _do_wait_for_enter("𝙿𝚛𝚎𝚜𝚜 𝙴𝙽𝚃𝙴𝚁 𝚝𝚘 𝚌𝚘𝚗𝚝𝚒𝚗𝚞𝚎...⏳")
+                await _do_wait_for_enter("Press ENTER to continue...")
 
         ensure_future(in_term())
 
@@ -1395,7 +1408,7 @@ def attach_winch_signal_handler(
     Attach the given callback as a WINCH signal handler within the context
     manager. Restore the original signal handler when done.
 
-    The `Suite.run` method will register SIGWINCH, so that it will
+    The `Console.run` method will register SIGWINCH, so that it will
     properly repaint when the terminal window resizes. However, using
     `run_in_terminal`, we can temporarily send an application to the
     background, and run an other app in between, which will then overwrite the

@@ -212,7 +212,7 @@ class _Split(Container):
         height: AnyDimension = None,
         z_index: Optional[int] = None,
         modal: bool = False,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
@@ -227,14 +227,14 @@ class _Split(Container):
         self.z_index = z_index
 
         self.modal = modal
-        self.key_bindings = key_bindings
+        self.bind = bind
         self.style = style
 
     def is_modal(self) -> bool:
         return self.modal
 
     def get_key_bindings(self) -> Optional[KeyBindingsBase]:
-        return self.key_bindings
+        return self.bind
 
     def get_children(self) -> List[Container]:
         return self.children
@@ -286,7 +286,7 @@ class HSplit(_Split):
         height: AnyDimension = None,
         z_index: Optional[int] = None,
         modal: bool = False,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
@@ -300,7 +300,7 @@ class HSplit(_Split):
             height=height,
             z_index=z_index,
             modal=modal,
-            key_bindings=key_bindings,
+            bind=bind,
             style=style,
         )
 
@@ -524,7 +524,7 @@ class VSplit(_Split):
         height: AnyDimension = None,
         z_index: Optional[int] = None,
         modal: bool = False,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
@@ -538,7 +538,7 @@ class VSplit(_Split):
             height=height,
             z_index=z_index,
             modal=modal,
-            key_bindings=key_bindings,
+            bind=bind,
             style=style,
         )
 
@@ -767,7 +767,7 @@ class FloatContainer(Container):
         content: AnyContainer,
         floats: List["Float"],
         modal: bool = False,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
         style: Union[str, Callable[[], str]] = "",
         z_index: Optional[int] = None,
     ) -> None:
@@ -776,7 +776,7 @@ class FloatContainer(Container):
         self.floats = floats
 
         self.modal = modal
-        self.key_bindings = key_bindings
+        self.bind = bind
         self.style = style
         self.z_index = z_index
 
@@ -1020,7 +1020,7 @@ class FloatContainer(Container):
         return self.modal
 
     def get_key_bindings(self) -> Optional[KeyBindingsBase]:
-        return self.key_bindings
+        return self.bind
 
     def get_children(self) -> List[Container]:
         children = [self.content]

@@ -71,7 +71,7 @@ class Dialog:
                     ),
                     # The buttons.
                     Box(
-                        body=VSplit(buttons, padding=1, key_bindings=buttons_kb),
+                        body=VSplit(buttons, padding=1, bind=buttons_kb),
                         height=D(min=1, max=3, preferred=3),
                     ),
                 ]
@@ -90,7 +90,7 @@ class Dialog:
                 body=frame_body,
                 style="class:dialog.body",
                 width=(None if with_background is None else width),
-                key_bindings=kb,
+                bind=kb,
                 modal=modal,
             )
         )

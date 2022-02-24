@@ -13,7 +13,7 @@ from quo.layout.containers import ConditionalContainer, Container, Window
 from quo.layout.controls import BufferControl, FormattedTextControl, SearchBufferControl, UIContent, UIControl
 from quo.layout.dimension import Dimension
 from quo.layout.processors import BeforeInput
-from quo.lexers import SimpleLexer
+from quo.highlight import SimpleLexer
 from quo.search import SearchDirection
 
 __all__ = [
@@ -62,7 +62,7 @@ class SystemToolbar:
 
         self.buffer_control = BufferControl(
             buffer=self.system_buffer,
-            lexer=SimpleLexer(style="class:system-toolbar.text"),
+            highlighter=SimpleLexer(style="class:system-toolbar.text"),
             input_processors=[
                 BeforeInput(lambda: self.prompt, style="class:system-toolbar")
             ],
@@ -220,7 +220,7 @@ class SearchToolbar:
             input_processors=[
                 BeforeInput(get_before_input, style="class:search-toolbar.prompt")
             ],
-            lexer=SimpleLexer(style="class:search-toolbar.text"),
+            highlighter=SimpleLexer(style="class:search-toolbar.text"),
             ignore_case=ignore_case,
         )
 

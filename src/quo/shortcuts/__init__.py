@@ -13,7 +13,7 @@ from .dialogs import (
 from .utils import (
         clear_title,
         container,
-        inscribe,
+        print,
         terminal_title
         )
 

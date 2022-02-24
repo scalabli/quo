@@ -422,14 +422,22 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        from quo.shortcuts.utils import container
-        from quo.layout import Window, FormattedTextControl, WindowAlign as WA
-        container(
-                Window(
-                    FormattedTextControl(""),
-                    height=1, 
-                    align=WA.CENTER))
-        raise UsageError(f"Invalid key: {key,}")
+        from quo.rule import Rule
+        Rule("Key Error!")
+        from quo.shortcuts import print
+        from quo.text import Text
+        from quo import getchar
+        from quo.console.console import Console
+        console = Console()
+        console.launch("https//quo.readthedocs.io/en/latest/kb.html")
+        print(Text('<b><style fg="black" bg="red">Key</style> <style2 fg="red" bg="black">Error</style2></b>'))
+        def dd():
+            char = getchar()
+            if char == "yes" or "Yes" or "y" or "Y":
+                console.launch("https//quo.readthedocs.io/en/latest/kb.html")
+            else:
+                pass
+        raise UsageError(f"Invalid key: {key}")
     return key
 
 

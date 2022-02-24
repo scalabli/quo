@@ -67,7 +67,7 @@ class History(metaclass=ABCMeta):
         """
         return self._loaded_strings[::-1]
 
-    def append_string(self, string: str) -> None:
+    def append(self, string: str) -> None:
         "Add string to the history."
         self._loaded_strings.insert(0, string)
         self.store_string(string)
@@ -100,9 +100,8 @@ class ThreadedHistory(History):
     Wrapper around `History` implementations that run the `load()` generator in
     a thread.
 
-    Use this to increase the start-up time of prompt_toolkit applications.
-    History entries are available as soon as they are loaded. We don't have to
-    wait for everything to be loaded.
+    Use this to increase the start-up time of quo applications.
+    History entries are available as soon as they are loaded. We don't have to  wait for everything to be loaded.
     """
 
     def __init__(self, history: History) -> None:
@@ -196,7 +195,7 @@ class ThreadedHistory(History):
             for event in self._string_load_events:
                 event.set()
 
-    def append_string(self, string: str) -> None:
+    def append(self, string: str) -> None:
         with self._lock:
             self._loaded_strings.insert(0, string)
         self.store_string(string)

@@ -1383,7 +1383,7 @@ class Buffer:
         if self.text:
             history_strings = self.history.get_strings()
             if not len(history_strings) or history_strings[-1] != self.text:
-                self.history.append_string(self.text)
+                self.history.append(self.text)
 
     def _search(
         self,

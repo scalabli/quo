@@ -30,7 +30,7 @@ from quo.text.utils import (
     fragment_list_width,
     split_lines,
 )
-from quo.lexers import Lexer, SimpleLexer
+from quo.highlight import Lexer, SimpleLexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.search import SearchState
 from quo.selection import SelectionType
@@ -540,7 +540,7 @@ class BufferControl(UIControl):
         buffer: Optional[Buffer] = None,
         input_processors: Optional[List[Processor]] = None,
         include_default_input_processors: bool = True,
-        lexer: Optional[Lexer] = None,
+        highlighter: Optional[Lexer] = None,
         preview_search: FilterOrBool = False,
         focusable: FilterOrBool = True,
         search_buffer_control: Union[
@@ -567,7 +567,7 @@ class BufferControl(UIControl):
 
         self.buffer = buffer or Buffer()
         self.menu_position = menu_position
-        self.lexer = lexer or SimpleLexer()
+        self.highlighter = highlighter or SimpleLexer()
         self.bind = bind
         self._search_buffer_control = search_buffer_control
 
@@ -673,9 +673,9 @@ class BufferControl(UIControl):
         """
         # Cache using `document.text`.
         def get_formatted_text_for_line() -> Callable[[int], StyleAndTextTuples]:
-            return self.lexer.lex_document(document)
+            return self.highlighter.lex_document(document)
 
-        key = (document.text, self.lexer.invalidation_hash())
+        key = (document.text, self.highlighter.invalidation_hash())
         return self._fragment_cache.get(key, get_formatted_text_for_line)
 
     def _create_get_processed_line_func(
@@ -945,7 +945,7 @@ class SearchBufferControl(BufferControl):
         self,
         buffer: Optional[Buffer] = None,
         input_processors: Optional[List[Processor]] = None,
-        lexer: Optional[Lexer] = None,
+        highlighter: Optional[Lexer] = None,
         focus_on_click: FilterOrBool = False,
         bind: Optional["KeyBindingsBase"] = None,
         ignore_case: FilterOrBool = False,
@@ -954,7 +954,7 @@ class SearchBufferControl(BufferControl):
         super().__init__(
             buffer=buffer,
             input_processors=input_processors,
-            lexer=lexer,
+            highlighter=highlighter,
             focus_on_click=focus_on_click,
             bind=bind,
         )

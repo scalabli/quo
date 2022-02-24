@@ -56,7 +56,7 @@ from quo.layout.dimension import Dimension as D
 from quo.layout.dimension import to_dimension
 from quo.layout.margin import ConditionalMargin, NumberedMargin, ScrollbarMargin
 from quo.layout.processors import AppendAutoSuggestion, BeforeInput, ConditionalProcessor, PasswordProcessor, Processor
-from quo.lexers import DynamicLexer, Lexer
+from quo.highlight import DynamicLexer, Lexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils.utils import get_width as get_cwidth
 from quo.types import DynamicValidator, Validator
@@ -160,7 +160,7 @@ class TextArea:
         text: str = "",
         multiline: FilterOrBool = True,
         hide: FilterOrBool = False,
-        lexer: Optional[Lexer] = None,
+        highlighter: Optional[Lexer] = None,
         auto_suggest: Optional[AutoSuggest] = None,
         completer: Optional[Completer] = None,
         complete_while_typing: FilterOrBool = True,
@@ -196,7 +196,7 @@ class TextArea:
         # Writeable attributes.
         self.completer = completer
         self.complete_while_typing = complete_while_typing
-        self.lexer = lexer
+        self.highlighter = highlighter
         self.auto_suggest = auto_suggest
         self.read_only = read_only
         self.wrap_lines = wrap_lines
@@ -218,7 +218,7 @@ class TextArea:
 
         self.control = BufferControl(
             buffer=self.buffer,
-            lexer=DynamicLexer(lambda: self.lexer),
+            highlighter=DynamicLexer(lambda: self.highlighter),
             input_processors=[
                 ConditionalProcessor(
                     AppendAutoSuggestion(), has_focus(self.buffer) & ~is_done
@@ -470,7 +470,7 @@ class Frame:
         style: str = "",
         width: AnyDimension = None,
         height: AnyDimension = None,
-        key_bindings: Optional[KeyBinder] = None,
+        bind: Optional[KeyBinder] = None,
         modal: bool = False,
     ) -> None:
 
@@ -539,7 +539,7 @@ class Frame:
             width=width,
             height=height,
             style=style,
-            key_bindings=key_bindings,
+            bind=bind,
             modal=modal,
         )
 
@@ -615,7 +615,7 @@ class Box:
         style: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
-        key_bindings: Optional[KeyBinder] = None,
+        bind: Optional[KeyBinder] = None,
     ) -> None:
 
         if padding is None:
@@ -648,7 +648,7 @@ class Box:
             height=height,
             style=style,
             modal=modal,
-            key_bindings=None,
+            bind=None,
         )
 
     def __pt_container__(self) -> Container:

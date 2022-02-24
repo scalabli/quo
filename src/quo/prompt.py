@@ -97,7 +97,7 @@ from quo.layout.processors import (
 )
 
 from quo.layout.utils import explode_text_fragments
-from quo.lexers import DynamicLexer, Lexer
+from quo.highlight import DynamicLexer, Lexer
 from quo.output import ColorDepth, DummyOutput, Output
 from quo.style import (
     BaseStyle,
@@ -418,6 +418,7 @@ class Prompt(Generic[_T]):
         "editing_mode",
         "bind",
         "is_password",
+        "hide",
         "bottom_toolbar",
         "style",
         "style_transformation",
@@ -436,7 +437,7 @@ class Prompt(Generic[_T]):
         "mouse_support",
         "auto_suggest",
         "clipboard",
-        "validator",
+        "type",
         "refresh_interval",
         "input_processors",
         "placeholder",
@@ -455,13 +456,14 @@ class Prompt(Generic[_T]):
         multiline: FilterOrBool = False,
         wrap_lines: FilterOrBool = True,
         is_password: FilterOrBool = False,
+        hide: FilterOrBool = False,
         vi_mode: bool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         complete_while_typing: FilterOrBool = True,
         validate_while_typing: FilterOrBool = True,
-        enable_history_search: FilterOrBool = False,
+        enable_history_search: FilterOrBool = True, #False,
         search_ignore_case: FilterOrBool = False,
-        lexer: Optional[Lexer] = None,
+        highlighter: Optional[Lexer] = None,
         enable_system_elicit: FilterOrBool = False,
         enable_suspend: FilterOrBool = False,
         enable_open_in_editor: FilterOrBool = False,
@@ -507,10 +509,10 @@ class Prompt(Generic[_T]):
         # Store attributes.
         # (All except 'editing_mode'.)
         self.text = text
-        self.lexer = lexer
+        self.highlighter = highlighter
         self.completer = completer
         self.complete_in_thread = complete_in_thread
-        self.is_password =is_password
+        self.is_password =is_password or hide
         self.bind= bind
         self.bottom_toolbar = bottom_toolbar
         self.style = style
@@ -685,7 +687,7 @@ class Prompt(Generic[_T]):
             search_buffer_control=get_search_buffer_control,
             input_processors=all_input_processors,
             include_default_input_processors=False,
-            lexer=DynamicLexer(lambda: self.lexer),
+            highlighter=DynamicLexer(lambda: self.highlighter),
             preview_search=True,
         )
 
@@ -861,7 +863,7 @@ class Prompt(Generic[_T]):
 
     def _create_elicit_bindings(self) -> KeyBinder:
         """
-        Create the KeyBindings for a elicit application.
+        Create the KeyBindings for a prompt application.
         """
         kb = KeyBinder()
         handle = kb.add
@@ -929,15 +931,16 @@ class Prompt(Generic[_T]):
         editing_mode: Optional[EditingMode] = None,
         refresh_interval: Optional[float] = None,
         vi_mode: Optional[bool] = None,
-        lexer: Optional[Lexer] = None,
+        highlighter: Optional[Lexer] = None,
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
         is_password: Optional[bool] = None,
+        hide: Optional[bool] = False,
         bind: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
         color_depth: Optional[ColorDepth] = None,
-        include_default_pygments_style: Optional[FilterOrBool] = None,
+        default_pygments_style: Optional[FilterOrBool] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: Optional[FilterOrBool] = None,
         rprompt: Optional[AnyFormattedText] = None,
@@ -1017,14 +1020,16 @@ class Prompt(Generic[_T]):
             self.refresh_interval = refresh_interval
         if vi_mode:
             self.editing_mode = EditingMode.VI
-        if lexer is not None:
-            self.lexer = lexer
+        if highlighter is not None:
+            self.highlighter = highlighter
         if completer is not None:
             self.completer = completer
         if complete_in_thread is not None:
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
             self.is_password = is_password or hide
+        if hide is not None:
+            self.hide = hide or is_password
         if bind is not None:
             self.bind = bind
         if bottom_toolbar is not None:
@@ -1033,8 +1038,8 @@ class Prompt(Generic[_T]):
             self.style = style
         if color_depth is not None:
             self.color_depth = color_depth
-        if include_default_pygments_style is not None:
-            self.include_default_pygments_style = include_default_pygments_style
+        if default_pygments_style is not None:
+            self.default_pygments_style = default_pygments_style
         if style_transformation is not None:
             self.style_transformation = style_transformation
         if swap_light_and_dark_colors is not None:
@@ -1158,15 +1163,16 @@ class Prompt(Generic[_T]):
         editing_mode: Optional[EditingMode] = None,
         refresh_interval: Optional[float] = None,
         vi_mode: Optional[bool] = None,
-        lexer: Optional[Lexer] = None,
+        highlighter: Optional[Lexer] = None,
         completer: Optional[Completer] = None,
         complete_in_thread: Optional[bool] = None,
         is_password: Optional[bool] = None,
+        hide: Optional[bool] = None,
         bind: Optional[KeyBindingsBase] = None,
         bottom_toolbar: Optional[AnyFormattedText] = None,
         style: Optional[BaseStyle] = None,
         color_depth: Optional[ColorDepth] = None,
-        include_default_pygments_style: Optional[FilterOrBool] = None,
+        default_pygments_style: Optional[FilterOrBool] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: Optional[FilterOrBool] = None,
         rprompt: Optional[AnyFormattedText] = None,
@@ -1205,14 +1211,14 @@ class Prompt(Generic[_T]):
             self.refresh_interval = refresh_interval
         if vi_mode:
             self.editing_mode = EditingMode.VI
-        if lexer is not None:
-            self.lexer = lexer
+        if highlighter is not None:
+            self.highlighter = highlighter
         if completer is not None:
             self.completer = completer
         if complete_in_thread is not None:
             self.complete_in_thread = complete_in_thread
         if is_password is not None:
-            self.is_password = is_password
+            self.is_password = is_password or hide
         if bind is not None:
             self.bind = bind
         if bottom_toolbar is not None:
@@ -1221,8 +1227,8 @@ class Prompt(Generic[_T]):
             self.style = style
         if color_depth is not None:
             self.color_depth = color_depth
-        if include_default_pygments_style is not None:
-            self.include_default_pygments_style = include_default_pygments_style
+        if default_pygments_style is not None:
+            self.default_pygments_style = default_pygments_style
         if style_transformation is not None:
             self.style_transformation = style_transformation
         if swap_light_and_dark_colors is not None:
