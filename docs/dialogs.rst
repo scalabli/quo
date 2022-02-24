@@ -139,10 +139,9 @@ dialogs to override the default style. Also, text can be styled by passing an
     from quo.text import Text
 
     example = Style.add({
-        'dialog':             'bg:#88ff88',
-        'dialog frame.label': 'bg:#ffffff #000000',
-        'dialog.body':        'bg:#000000 #00ff00',
-        'dialog shadow':      'bg:#00aa00',
+        'dialog':         'bg:aquamarine',
+        'dialog.body':    'bg:black fg:green',
+        'dialog shadow':  'bg:yellow',
     })
 
     MessageBox(

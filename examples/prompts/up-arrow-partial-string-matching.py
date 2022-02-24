@@ -6,25 +6,26 @@ When you type some input, it's possible to use the up arrow to filter the
 history on the items starting with the given input text.
 """
 
-import quo
+from quo import print
+from quo.prompt import Prompt
+from quo.history import InMemoryHistory
 
 
 def main():
     # Create some history first. (Easy for testing.)
-    history = quo.history.InMemoryHistory()
-    history.append_string("import os")
-    history.append_string('print("hello")')
-    history.append_string('print("world")')
-    history.append_string("import path")
+    history = InMemoryHistory()
+    history.append("import os")
+    history.append('print("hello")')
+    history.append('print("world")')
+    history.append("import path")
 
     # Print help.
-    quo.echo("This CLI has up-arrow partial string matching enabled.")
-    quo.echo('Type for instance "pri" followed by up-arrow and you')
-    quo.echo('get the last items starting with "pri".')
-    quo.echo("Press Control-C to retry. Control-D to exit.")
-    quo.echo()
+    print("This CLI has up-arrow partial string matching enabled.")
+    print('Type for instance "pri" followed by up-arrow and you')
+    print('get the last items starting with "pri".')
+    print("Press Control-C to retry. Control-D to exit.")
 
-    session = quo.Prompt(history=history, enable_history_search=True)
+    session = Prompt(history=history)
 
     while True:
         try:
@@ -34,7 +35,7 @@ def main():
         else:
             break
 
-    quo.echo(f"You said: {text}")
+    print(f"You said: {text}")
 
 
 if __name__ == "__main__":

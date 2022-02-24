@@ -24,11 +24,12 @@ Quo requires Python `3.8` or later.
 
 
 ## Features
-- [x] Support for Ansi, RGB and HTML color models
+- [x] Support for Ansi, RGB and Hex color models
 - [x] Support for tabular presentation of data
-- [x] Interactive progressbars
+- [x] Intuitive progressbars
 - [x] Code completions
 - [x] Nesting of commands
+- [x] Customizable Text User Interface _(TUI)_ dialogs.
 - [x] Automatic help page generation
 - [x] Syntax highlighting
 - [x] Autosuggestions

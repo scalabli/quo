@@ -15,13 +15,12 @@ from quo.style import Style
 # Custom color scheme.
 
 example_style = Style.add(
-    {
-        "dialog": "bg:aquamarine",
-        "dialog frame-label": "bg:purple",
-        "dialog.body": "bg:#000000 #00ff00",
-        "dialog shadow": "bg:yellow",
-    }
-)
+        {
+            "dialog": "bg:aquamarine",
+            "dialog.body": "bg:black fg:green",
+            "dialog shadow": "bg:yellow",
+            }
+        )
 
 MessageBox(
         title=Text(

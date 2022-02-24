@@ -9,6 +9,7 @@ from quo.keys import KeyBinder
 from quo.widget import SearchToolbar, TextArea
 from quo.layout import Layout, Window, HSplit
 from quo.style import Style
+from quo.text import Text
 
 help_text = """
 Type any expression (e.g. "4 + 4") followed by enter to execute.
@@ -20,7 +21,9 @@ def main():
     # The layout.
     search_field = SearchToolbar()  # For reverse search.
 
-    output_field = TextArea(style="class:output-field", text=help_text)
+    output_field = TextArea(text=Text(f'<style fg="yellow" bg="blue">{help_text}</style>'))
+
+         #   tyle="class:output-field", text=help_text)
     input_field = TextArea(
         height=2,
         prompt=">>",

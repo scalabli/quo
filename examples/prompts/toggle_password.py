@@ -7,7 +7,6 @@ from quo import Condition
 from quo.prompt import Prompt
 from quo.keys import KeyBinder
 
-session = Prompt()
 kb = KeyBinder()
 
 hidden = [True]  # Nonlocal
@@ -16,8 +15,10 @@ hidden = [True]  # Nonlocal
 def _(event):
     "When ControlT has been pressed, toggle visibility."
     hidden[0] = not hidden[0]
-    print("Type Control-T to toggle password visible.")
+    print("\nType Control-T to toggle password visible.")
 
-password = session.prompt( "Password: ", is_password=Condition(lambda: hidden[0]), bind=kb)
+session = Prompt(hide=Condition(lambda: hidden[0]), bind=kb)
+
+password = session.prompt( "Password: ")
 print("You said: %s" % password)
 

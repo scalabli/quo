@@ -251,8 +251,7 @@ Parameters
         Enable Control-Z style suspension.
     * ``enable_open_in_editor`` - `bool` or
         :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
-        C-X C-E in emacs mode will open an external editor.
-    * ``history`` - :class:`~quo.history.History` instance.
+        C-X C-E in emacs mode will open an external editor..
     * ``clipboard`` - :class:`~quo.clipboard.Clipboard` instance.
         (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
     * ``elicit_continuation`` - Text that needs to be displayed for a multiline
@@ -401,6 +400,19 @@ The default class name is bottom-toolbar and that will also be used to fill the 
 The :class:`quo.prompt.Prompt` class has out of the box support for right prompts as well. People familiar to ZSH could recognise this as the RPROMPT option.
 
 This can be either plain text, formatted text or a callable which returns either.
+
+The following example returns a formatted text:
+
+.. code:: python
+
+   from quo.prompt import Prompt
+   from quo.text import Text
+
+   session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>')
+
+   session.prompt("")
+
+The following example returns a callable
 
 .. code:: python
 
@@ -607,24 +619,34 @@ option. The reason for this is that the up and down key bindings would conflict
 otherwise. So, make sure to disable history search for this.
 
 
-History
--------
+``History``
+------------
 
 A :class:`~quo.history.History` object keeps track of all the previously entered strings, so that the up-arrow can reveal previously entered items.
 
-The recommended way is to use a :class:`~quo.prompt.Prompt`, which uses an :class:`~quo.history.InMemoryHistory` for the entire session by default. The following example has a history out of the box:
+``InMemoryHistory``
+^^^^^^^^^^^^^^^^^^^^
+The recommended way is to use a :class:`~quo.prompt.Prompt`, which uses an :class:`~quo.history.InMemoryHistory` which has `^` (up) arrow partial string matching enabled by default.
 
 .. code:: python
 
    from quo.prompt import Prompt
+   from quo.history import InMemoryHistory
 
-   session = Prompt()
+   history = InMemoryHistory()
+   history.append("import os")
+   history.append('print("hello")')
+   history.append('print("world")')
+   history.append("import path")
+
+   session = Prompt(history=history)
 
    while True:
        session.prompt()
 
-To persist a history to disk, use a :class:`~quo.history.FileHistory` instead of the default :class:`~quo.history.InMemoryHistory`. This history object can be
-passed either to a :class:`~quo.prompt.Prompt`.
+``FileHistory``
+^^^^^^^^^^^^^^^^
+To persist a history to disk, use a :class:`~quo.history.FileHistory` instead of the default :class:`~quo.history.InMemoryHistory`. This history object can be passed to a :class:`~quo.prompt.Prompt`.
 For instance:
 
 .. code:: python
@@ -637,8 +659,10 @@ For instance:
    while True:
        session.prompt()
 
-Adding custom key bindings
---------------------------
+
+
+``Adding custom key bindings``
+-------------------------------
 
 By default, every prompt already has a set of key bindings which implements the usual Vi or Emacs behaviour. We can extend this by passing another
 :class:`~quo.keys.KeyBinder` instance to the ``bind`` argument of the :class:`~quo.prompt.Prompt` class.
@@ -651,6 +675,7 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
 
 .. code:: python
 
+    from quo import print
     from quo.prompt import Prompt
     from quo.keys import KeyBinder
 
@@ -666,10 +691,10 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
       #Exit when `ctrl-x` is pressed. "
         event.app.exit()
     session = Prompt(bind=kb)
-    session.prompt('> ', bind=kb)
+    session.prompt('> ')
 
 Enable key bindings according to a condition
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Often, some key bindings can be enabled or disabled according to a certain
 condition. For instance, the Emacs and Vi bindings will never be active at the
@@ -677,7 +702,7 @@ same time, but it is possible to switch between Emacs and Vi bindings at run
 time.
 
 In order to enable a key binding according to a certain condition, we have to
-pass it a :class:`~quo.filters.Condition` instance. (:ref:`Read more about filters <filters>`.)
+pass it a :class:`~quo.Condition` instance. (:ref:`Read more about filters <filters>`.)
 
 .. code:: python
 
@@ -699,6 +724,29 @@ pass it a :class:`~quo.filters.Condition` instance. (:ref:`Read more about filte
         pass
     session = Prompt(bind=kb)
     session.prompt('> ')
+
+``Toggle visibility of input``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Display asterisks instead of the actual characters with the addition of a ControlT shortcut to hide/show the input.
+
+.. code:: python
+
+   from quo import Condition
+   from quo.prompt import Prompt
+   from quo.keys import KeyBinder
+   
+   hidden = [True]  # Nonlocal
+
+   kb = KeyBinder()
+
+   @kb.add("ctrl-t")
+   def _(event):
+       "When ControlT has been pressed, toggle visibility."
+       hidden[0] = not hidden[0]
+
+   session = Prompt(hide=Condition(lambda : hidden[0], bind=kb)   
+   session.prompt( "Password: ")
+
 
 Using control-space for completion
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
