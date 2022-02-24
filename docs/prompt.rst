@@ -420,7 +420,7 @@ The following example returns a callable
    from quo.styles import Style
 
    
-   style = Style.add({'rprompt': 'bg:green fg:red',})
+   style = Style.add({'rprompt': 'bg:red fg:white',})
    
    def get_rprompt():
      return '<rprompt>'
