@@ -167,7 +167,7 @@ exceed the given width. (The width of the prompt margin is defined by the prompt
     session.prompt('multiline input> ', multiline=True,
            prompt_continuation=prompt_continuation)
 
-.. image:: ../images/multiline-input.png
+.. image:: ./images/multiline-input.png
 
 
 

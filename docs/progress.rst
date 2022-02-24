@@ -94,7 +94,7 @@ want this depends on the application.
             while t.is_alive():
                 t.join(timeout=.5)
 
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/two_tasks.png
+.. image:: ./images/two_tasks.png
 
 
 ``Adding a title and label``
@@ -116,7 +116,7 @@ Each progress bar can have one title, and for each task an individual label.
         for i in pb(range(800), label=label):
             time.sleep(.01)
 
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/main/docs/pics/progressbars/coloredlabel.png
+.. image:: ./images/coloredlabel.png
 
 
 ``Formatting the progress bar``
@@ -178,7 +178,7 @@ modify the progress bar to look like an apt-get style progress bar:
         for i in pb(range(1600), label='Installing'):
             time.sleep(.01)
 
-.. image:: ./images/progress-bars/apt-get.png
+.. image:: ./images/apt-get.png
 
 
 ``Adding key bindings and toolbar``
@@ -234,6 +234,6 @@ always considered a clean way of cancelling something.
 In the example above, we also display a toolbar at the bottom which shows the
 key bindings.
 
-.. image:: ./images/progress-bars/custom-key-bindings.png
+.. image:: ./images/custom-key-bindings.png
 
 :ref:`Read more about key bindings ...<key_bindings>`
