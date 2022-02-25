@@ -498,7 +498,7 @@ Formatted text placeholder
   from quo.prompt import Prompt
   from quo.text import Text
 
-  session = Prompt(placeholder=Text('<style fg="gray">(please type something)</style>'))
+  session = Prompt(placeholder=Text('<gray>(please type something)</gray>'))
   session.prompt("What is your name?: ")
   
 

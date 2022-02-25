@@ -7,10 +7,19 @@
 Changelog
 =========
 
+``Version 2022.3``
+--------------------
+
+Unreleased
+
+**Added**
+----------
+Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
+
 ``Version 2022.2.1``
 ---------------------
 
-Unreleased
+Released on 2022-2-25
 
 **Changed**
 -----------
