@@ -6,7 +6,6 @@ from quo import Console
 from quo.console import get_app
 from quo.widget import Button, TextArea, Box, Frame, Label
 from quo.layout import Layout, VSplit, HSplit
-import quo
 
 
 # Event handlers for all the buttons.
@@ -20,7 +19,7 @@ def button2():
 
 import os 
 def button3():
-    text_area.text = os.system("clear") #"Button 3 clicked"
+    text_area.text = "Button 3 clicked"
 
 
 def exit():

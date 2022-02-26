@@ -2,35 +2,31 @@
 """
 Demonstration of all the ANSI colors.
 """
-import quo
+from quo import print
+from quo.text import Text, FormattedText
 
-@quo.command()
-@quo.app("--ansi")
-def main(ansi):
-    wide_space = ("", "       ")
-    space = ("", " ")
+wide_space = ("", "       ")
+space = ("", " ")
 
-    quo.inscribe(quo.text.HTML("\n<u>Foreground colors</u>"))
-    quo.inscribe(
-        quo.text.FormattedText(
-            [
-                ("black", "black"),
-                wide_space,
-                ("red", "red"),
-                wide_space,
-                ("green", "green"),
-                wide_space,
-                ("ansiyellow", "ansiyellow"),
-                wide_space,
-                ("ansiblue", "ansiblue"),
-                wide_space,
-                ("ansimagenta", "ansimagenta"),
-                wide_space,
-                ("ansicyan", "ansicyan"),
-                wide_space,
-                ("ansigray", "ansigray"),
-                wide_space,
-                ("", "\n"),
+print(Text("\n<u>Foreground colors</u>"))
+print(FormattedText([
+    ("black", "black"),
+    wide_space,
+    ("red", "red"),
+    wide_space,
+    ("green", "green"),
+    wide_space,
+    ("ansiyellow", "ansiyellow"),
+    wide_space,
+    ("ansiblue", "ansiblue"),
+    wide_space,
+    ("ansimagenta", "ansimagenta"),
+    wide_space,
+    ("ansicyan", "ansicyan"),
+    wide_space,
+    ("ansigray", "ansigray"),
+    wide_space,
+    ("", "\n"),
                 ("ansibrightblack", "ansibrightblack"),
                 space,
                 ("ansibrightred", "ansibrightred"),

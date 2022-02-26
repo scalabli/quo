@@ -4,14 +4,16 @@
 
 import quo
 from pygments.lexers.html import HtmlLexer
-
-from quo.console.urrent import get_app
+from quo.console import Console
+from quo.console.current import get_app
 from quo.completion import WordCompleter
+from quo.keys import KeyBinder
 from quo.layout.containers import Float, HSplit, VSplit
 from quo.layout.dimension import D
 from quo.layout.layout import Layout
 from quo.layout.menus import CompletionsMenu
-from quo.lexers import PygmentsLexer
+from quo.highlight import PygmentsLexer
+from quo.style import Style
 from quo.widget import (
     Box,
     Button,
@@ -41,7 +43,7 @@ def do_exit():
 
 yes_button = Button(text="Yes", handler=accept_yes)
 no_button = Button(text="No", handler=accept_no)
-textfield = TextArea(lexer=PygmentsLexer(HtmlLexer))
+textfield = TextArea(highlighter=PygmentsLexer(HtmlLexer))
 checkbox1 = Checkbox(text="Checkbox")
 checkbox2 = Checkbox(text="Checkbox")
 
@@ -184,8 +186,7 @@ root_container = MenuContainer(
 )
 
 # Global key bindings.
-bindings = KeyBinder()
-from 
+bindings = KeyBinder() 
 bindings.add("tab")(quo.keys.focus.next)
 bindings.add("s-tab")(quo.keys.focus.previous)
 

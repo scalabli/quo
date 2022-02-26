@@ -21,8 +21,7 @@ def main():
     # The layout.
     search_field = SearchToolbar()  # For reverse search.
 
-    output_field = TextArea(text=Text(f'<style fg="yellow" bg="blue">{help_text}</style>'))
-
+    output_field = TextArea(f'{help_text}')
          #   tyle="class:output-field", text=help_text)
     input_field = TextArea(
         height=2,

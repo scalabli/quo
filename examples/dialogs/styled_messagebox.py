@@ -18,7 +18,7 @@ example_style = Style.add(
         {
             "dialog": "bg:aquamarine",
             "dialog.body": "bg:black fg:green",
-            "dialog shadow": "bg:yellow",
+            "dialog.shadow": "bg:yellow",
             }
         )
 

@@ -93,8 +93,8 @@ sheet that refers to these class names. The
     ])
 
     style = Style([
-         ('left', 'bg:ansired'),
-         ('top', 'fg:#00aaaa'),
+         ('left', 'bg:red'),
+         ('top', 'fg:green'),
          ('bottom', 'underline bold'),
      ])
 

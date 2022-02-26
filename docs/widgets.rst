@@ -163,6 +163,21 @@ Changing the title and body of the frame is possible at runtime by assigning to 
       - ``title`` - Text to be displayed in the top of the frame *(can be formatted text)*
       - ``style`` - Style string to be applied to this widget.
 
+.. code:: python
+
+  # Example usage of 'container', a tool to print
+  #any layout in a non-interactive way.
+
+  from quo import container
+  from quo.widget import Frame, TextArea
+
+  content = TextArea(text="Hello world🌍")
+  container(
+          Frame(
+             content,
+                title="Quo: python🐍")
+            )
+                                 
 
 ``Shadow``
 -----------
