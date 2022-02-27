@@ -79,7 +79,13 @@ loop will run until the application is done. An application will quit when
 
 
 ``The layout``
--------------
+----------------
+:class:`~quo.layout.Layout` is the layout for a quo :class:`~quo.console.Console`. This also keeps track of which user control is focused or used in the application.
+
+**Parameters**
+      - ``container`` -  The "root" container for the layout.
+      - ``focused_element`` - Element to be focused initially. *(Can be anything
+                              the `focus` function accepts.)*
 
 ``Margins``
 ^^^^^^^^^^^^
@@ -179,15 +185,14 @@ abstraction.
 - A higher level abstraction of building a layout is by using "widgets". A
   widget is a reusable layout component that can contain multiple containers
   and controls. Widgets have a ``__pt_container__`` function, which returns
-  the root container for this widget. Quocontains several widgets like :class:`~quo.widgets.TextArea`,
-  :class:`~quo.widgets.Button`,
-  :class:`~quo.widgets.Frame`,
-  :class:`~quo.widgets.VerticalLine` and so on.
+  the root container for this widget. Quocontains several widgets like :class:`~quo.widget.TextArea`,
+  :class:`~quo.widget.Button`,
+  :class:`~quo.widget.Frame`,
+  :class:`~quo.widget.VerticalLine` and so on.
 
-- The highest level abstractions can be found in the ``shortcuts`` module.
+- The highest level abstractions can be found in the ``dialog`` module.
   There we don't have to think about the layout, controls and containers at
-  all. This is the simplest way to use quo, but is only meant for
-  specific use cases, like a prompt or a simple dialog window.
+  all. This is the simplest way to use quo, but is only meant for specific use cases, like a prompt or a simple dialog window.
 
 Containers and controls
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -236,29 +241,31 @@ vertical line:
 
 .. code:: python
 
-    import quo
+    from quo.buffer import Buffer
+    from quo.console import Console
+    from quo.layout import BufferControl, FormattedTextControl, Layout, VSplit, Window
 
-    buffer1 = quo.buffer.Buffer()  # Editable buffer.
+    buffer1 = Buffer()  # Editable buffer.
 
-    root_container = quo.layout.VSplit([
-        # One window that holds the BufferControl with the default buffer on
-        # the left.
-        quo.layout.Window(content=quo.layout.BufferControl(buffer=buffer1)),
+    root_container = VSplit([
+        # One window that holds the BufferControl with the default buffer on the left.
+        Window(BufferControl(buffer=buffer1)),
 
         # A vertical line in the middle. We explicitly specify the width, to
         # make sure that the layout engine will not try to divide the whole
         # width by three for all these windows. The window will simply fill its
         # content by repeating this character.
-        quo.layout.Window(width=1, char='|'),
+        Window(width=1, char='|'),
 
         # Display the text 'Hello world' on the right.
-        quo.layout.Window(content=quo.layout.FormattedTextControl(text='Hello world')),
+        Window(FormattedTextControl('Hello world')),
     ])
 
-    layout = quo.layout.Layout(root_container)
+    layout = Layout(root_container)
 
-    app = quo.Suite(layout=layout, full_screen=True)
-    app.run() # You won't be able to Exit this app
+    Console(layout=layout, full_screen=True).run() 
+    # You won't be able to Exit this app unless you add a key binder
+
 
 Notice that if you execute this right now, there is no way to quit this
 application yet. This is something we explain in the next section below.
@@ -345,7 +352,7 @@ To register a new keyboard shortcut, we can use the
 
     kb = KeyBinder()
 
-    @bindings.add('ctrl-q')
+    @kb.add('ctrl-q')
     def exit_(event):
         """
         Pressing Ctrl-Q will exit the user interface.

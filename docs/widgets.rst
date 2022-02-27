@@ -36,7 +36,7 @@ BufferControl attributes
 
 Window attributes
 ^^^^^^^^^^^^^^^^^^
-- ``lexer`` - :class:`~quo.lexers.Lexer` instance for syntax highlighting.
+- ``highlighter`` - :class:`~quo.highlight.Lexer` instance for syntax highlighting.
 - ``wrap_lines`` - When `True`, don't scroll horizontally, but wrap lines.
 - ``width`` - Window width. (:class:`~quo.layout.Dimension` object.)
 - ``height`` - Window height. (:class:`~quo.layout.Dimension` object.)

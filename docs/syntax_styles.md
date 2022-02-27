@@ -10,3 +10,4 @@
 - HTML
 - Javascript
 - Python
+- Sql

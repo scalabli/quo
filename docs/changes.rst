@@ -16,16 +16,37 @@ Unreleased
 ----------
 Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
 
+``Version 2022.2.2``
+--------------------
+
+Released on 2022-2-2
+
+**Added**
+^^^^^^^^^^
+- Added :func:`quo.console.command`
+- Added :func:`quo.console.app`
+- Added :func:`quo.console.arg`
+- Added :func:`quo.console.tether`
+- Added highlighters : `Actionscript`, `Arrow`, `Bibtex`, `Cpp`, `Css`, `Email, Fortran, Go, Haskell, HTML, Javascript,  Julia, Perl, Php, Python, Ruby, Rust, Shell, Solidity, Sql`
+
+**Fixed**
+^^^^^^^^^^
+- Under the hood optimizations.
+
 ``Version 2022.2.1``
 ---------------------
 
 Released on 2022-2-25
 
 **Changed**
------------
-Deprecated :param:`is_password` in favor of :param:`hide`
-Fixed :func:`quo.Console.edit`, :func:`quo.Console.rule`, :func:`quo.Console.openfile`, :func:`quo.Console.encoding`
-``Version 2022.2``
+^^^^^^^^^^^^
+- Deprecated :param:`is_password` in favor of :param:`hide`
+  
+**Fixed**
+^^^^^^^^^^
+- Fixed :func:`quo.Console.edit`, :func:`quo.Console.rule`, :func:`quo.Console.openfile`, :func:`quo.Console.encoding`
+
+ ``Version 2022.2``
 -------------------
 
 Released on 2022-2-16

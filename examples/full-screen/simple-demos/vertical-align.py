@@ -4,18 +4,18 @@ Vertical align demo with VSplit.
 """
 import quo
 
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.layout.containers import (
+from quo.text import Text as HTML
+from quo.layout.containers import (
     HSplit,
     VerticalAlign,
     VSplit,
     Window,
     WindowAlign,
 )
-from prompt_toolkit.layout.controls import FormattedTextControl
-from prompt_toolkit.layout.dimension import D
-from prompt_toolkit.layout.layout import Layout
-from prompt_toolkit.widgets import Frame
+from quo.layout.controls import FormattedTextControl
+from quo.layout.dimension import D
+from quo.layout.layout import Layout
+from quo.widget import Frame
 
 TITLE = HTML(
     """ <u>VSplit VerticalAlign</u> example.
@@ -29,12 +29,12 @@ mauris, ac dignissim dui tellus quis ligula. Aenean condimentum leo at
 dignissim placerat."""
 
 # 1. The layout
-body = quo.layout.HSplit(
+body = HSplit(
     [
-        quo.widgets.Frame(
+        Frame(
             Window(FormattedTextControl(TITLE), height=2), style="bg:#88ff88 #000000"
         ),
-        quo.layout.VSplit(
+        VSplit(
             [
                 Window(
                     FormattedTextControl(HTML("  <u>VerticalAlign.TOP</u>")),
@@ -157,7 +157,7 @@ def _(event):
 
 
 # 3. The `Application`
-application = quo.Suite(layout=quo.layout.Layout(body), key_bindings=kb, full_screen=True)
+application = quo.Console(layout=quo.layout.Layout(body), bind=kb, full_screen=True)
 
 
 def run():

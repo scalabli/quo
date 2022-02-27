@@ -52,8 +52,8 @@ The visualisation happens in several steps:
    steps:
 
    2. First, the buffer's text is passed to the
-      :meth:`~quo.lexers.Lexer.lex_document` method of a
-      :class:`~quo.lexers.Lexer`. This returns a function which
+      :meth:`~quo.highlight.Lexer.lex_document` method of a
+      :class:`~quo.highlight.Lexer`. This returns a function which
       for a given line number, returns a "formatted text list" for that line
       (that's a list of ``(style_string, text)`` tuples).
 
@@ -83,4 +83,4 @@ Note that this process is lazy: if a certain line is not displayed in the
 :class:`~quo.layout.Window`, then it is not requested
 from the :class:`~quo.layout.UIContent`. And from there, the line is
 not passed through the processors or even asked from the
-:class:`~quo.lexers.Lexer`.
+:class:`~quo.highlight.Lexer`.

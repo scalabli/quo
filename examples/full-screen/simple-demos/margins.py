@@ -5,8 +5,11 @@ Example of Window margins.
 This is mainly used for displaying line numbers and scroll bars, but it could
 be used to display any other kind of information as well.
 """
-import quo
 
+from quo.buffer import Buffer
+from quo.console import Console
+from quo.keys import Bind
+from quo.layout import HSplit, Layout, Window
 from quo.layout import BufferControl, FormattedTextControl
 from quo.layout.margin import NumberedMargin, ScrollbarMargin
 
@@ -14,16 +17,14 @@ LIPSUM = ( """Quo is scallable\n"""  * 40)
 
 # Create text buffers. The margins will update if you scroll up or down.
 
-buff = quo.buffer.Buffer()
+buff = Buffer()
 buff.text = LIPSUM
 
 # 1. The layout
-hsplit = quo.layout.HSplit
-window = quo.layout.Window
-body = hsplit(
+body = HSplit(
     [
-        window(FormattedTextControl('Press "q" to quit.'), height=1, style="reverse"),
-        window(
+        Window(FormattedTextControl('Press "q" to quit.'), height=1, style="fg:red bg:yellow bold"),
+        Window(
             BufferControl(buffer=buff),
             # Add margins.
             left_margins=[NumberedMargin(), ScrollbarMargin()],
@@ -34,7 +35,7 @@ body = hsplit(
 
 
 # 2. Key bindings
-kb = quo.keys.KeyBinder()
+kb = Bind()
 
 @kb.add("q")
 @kb.add("ctrl-c")
@@ -43,9 +44,9 @@ def _(event):
     event.app.exit()
 
 # Layout
-layout = quo.layout.Layout
+layout = Layout(body)
 # 3. The `Application`
-application = quo.Console(layout=layout(body), bind=kb, full_screen=True)
+application = Console(layout=layout, bind=kb)# full_screen=True)
 
 
 def run():

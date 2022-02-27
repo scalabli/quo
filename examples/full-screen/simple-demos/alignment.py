@@ -2,8 +2,11 @@
 """
 Demo of the different Window alignment options.
 """
+from quo.console import Console
+from quo.keys import Bind
+from quo.layout import Layout, FormattedTextControl, HSplit, Window, WindowAlign as WA
+from quo.text import Text
 
-import quo
 
 LIPSUM = """Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Maecenas
 quis interdum enim. Nam viverra, mauris et blandit malesuada, ante est bibendum
@@ -23,23 +26,23 @@ left_text = '\nLeft aligned text. - (Press "q" to quit)\n\n' + LIPSUM
 center_text = "Centered text.\n\n" + LIPSUM
 right_text = "Right aligned text.\n\n" + LIPSUM
 
-hsplit = quo.layout.HSplit
-window = quo.layout.Window
-windowalign = quo.layout.WindowAlign
-formattedtextcontrol = quo.layout.FormattedTextControl
-body = hsplit(
+#hsplit = quo.layout.HSplit
+#window = quo.lw
+#windowalign = quo.layout.WindowAlign
+#formattedtextcontrol = quo.layout.FormattedTextControl
+body = HSplit(
     [
-        window(formattedtextcontrol(left_text), align=windowalign.LEFT),
-        window(height=1, char="-"),
-        window(formattedtextcontrol(center_text), align=windowalign.CENTER),
-        window(height=1, char="-"),
-        window(formattedtextcontrol(right_text), align=windowalign.RIGHT),
+        Window(FormattedTextControl(left_text), align=WA.LEFT),
+        Window(height=1, char="-"),
+        Window(FormattedTextControl(center_text), align=WA.CENTER),
+        Window(height=1, char="-"),
+        Window(FormattedTextControl(right_text), align=WA.RIGHT),
     ]
 )
 
 
 # 2. Key bindings
-kb = quo.keys.KeyBinder()
+kb = Bind()
 
 
 @kb.add("q")
@@ -47,10 +50,8 @@ def _(event):
     "Quit application."
     event.app.exit()
 
-layout = quo.layout.Layout
-
 # 3. The `Console` app
-application = quo.Console(layout=layout(body), bind=kb, full_screen=True)
+application = Console(layout=Layout(body), bind=kb, full_screen=True)
 
 
 def run():

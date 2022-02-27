@@ -5,24 +5,23 @@ A simple application that shows a Pager application.
 
 import quo
 from pygments.lexers.python import PythonLexer
-from quo import Console
-from quo.layout import HSplit, Window
+from quo.console import Console
+from quo.keys import Bind
+from quo.layout import HSplit, Window, Layout
 from quo.layout.controls import FormattedTextControl
 from quo.layout.dimension import LayoutDimension as D
-from quo.widget import TextArea
-from quo.lexers import PygmentsLexer
+from quo.widget import TextArea, SearchToolbar
+from quo.highlight import Python
+from quo.style import Style
 # Create one text buffer for the main content.
 
-_pager_py_path = __file__
-
-
-with open(_pager_py_path, "rb") as f:
+with open(__file__, "rb") as f:
     text = f.read().decode("utf-8")
 
 
 def get_statusbar_text():
     return [
-        ("class:status", _pager_py_path + " - "),
+        ("class:status", __file__ + " - "),
         (
             "class:status.position",
             "{}:{}".format(
@@ -38,7 +37,7 @@ def get_statusbar_text():
     ]
 
 
-search_field = quo.widgets.SearchToolbar(
+search_field =  SearchToolbar(
     text_if_not_searching=[("class:not-searching", "Press '/' to start searching.")]
 )
 
@@ -49,7 +48,7 @@ text_area = TextArea(
     scrollbar=True,
     line_numbers=True,
     search_field=search_field,
-    lexer=PygmentsLexer(PythonLexer),
+    highlighter=Python,
 )
 
 
@@ -69,7 +68,7 @@ root_container = HSplit(
 
 
 # Key bindings.
-bindings = quo.keys.KeyBinder()
+bindings = Bind()
 
 
 @bindings.add("ctrl-c")
@@ -79,7 +78,7 @@ def _(event):
     event.app.exit()
 
 
-style = quo.styles.Style.add(
+style = Style.add(
     {
         "status": "reverse",
         "status.position": "#aaaa00",
@@ -88,7 +87,7 @@ style = quo.styles.Style.add(
     }
 )
 
-layout = quo.layout.Layout(root_container, focused_element=text_area)
+layout = Layout(root_container, focused_element=text_area)
 
 # create application.
 
@@ -98,5 +97,5 @@ Console(
     enable_page_navigation_bindings=True,
     mouse_support=True,
     style=style,
-    full_screen=True,
+   # full_screen=True,
     ).run()

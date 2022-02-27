@@ -10,15 +10,17 @@ Simple example:
 
 .. code:: python
 
-   import quo
+   from quo import print
+   from quo.console import command
+   from quo.console import app
 
-   @quo.command()
-   @quo.app('--count', default=1, help='number of greetings')
-   @quo.app('--name', prompt="What is your name?", help="The person to greet")
+   @command()
+   @app('--count', default=1, help='number of greetings')
+   @app('--name', prompt="What is your name?", help="The person to greet")
    def hello(count, name):
        """This script prints hello NAME COUNT times."""
        for x in range(count):
-           quo.echo(f"Hello {name}!")
+           print(f"Hello {name}!")
 And what it looks like:
 
 $ hello.py --help
