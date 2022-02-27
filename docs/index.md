@@ -1,9 +1,9 @@
 [![Logo](https://raw.githubusercontent.com/secretum-inc/quo/master/pics/quo.png)](https://github.com/secretum-inc/quo)
 
 | Version    | [![PyPI version](https://badge.fury.io/py/quo.svg)](https:/quo.rtfd.io)
-|------------|-------------------------------------------------------------------------
+|------------|----------------------------------------------------------------------------
 | Web        | http://quo.readthedocs.io/
-| Download   | http://pypi.org/project/quo
+| Download   | [![Downloads](https://pepy.tech/badge/quo)](https://pypi.org/project/quo)
 | Source     | http://github.com/secretum-inc/quo
 
 
