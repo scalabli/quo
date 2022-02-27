@@ -12,6 +12,10 @@ Changelog
 
 Unreleased
 
+**Fixed**
+^^^^^^^^^
+- Optimized the help parameter.
+
 **Added**
 ----------
 Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`

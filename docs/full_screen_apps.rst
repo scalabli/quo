@@ -84,8 +84,7 @@ loop will run until the application is done. An application will quit when
 
 **Parameters**
       - ``container`` -  The "root" container for the layout.
-      - ``focused_element`` - Element to be focused initially. *(Can be anything
-                              the `focus` function accepts.)*
+      - ``focused_element`` - Element to be focused initially. *(Can be anything the `focus` function accepts.)*
 
 ``Margins``
 ^^^^^^^^^^^^
