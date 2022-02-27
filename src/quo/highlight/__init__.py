@@ -30,6 +30,7 @@ css = PygmentsLexer(CL)
 CSS = css
 Css = css
 
+# Actionscript
 from pygments.lexers.actionscript import ActionScriptLexer as ActionLexer
 actionscript = PygmentsLexer(ActionLexer)
 #agile = PygmentsLexer(CL)
@@ -47,7 +48,7 @@ automation = PygmentsLexer(AutomationL)
 
 #bare.py
 #basic.py
-#bibtex.py
+#bibtex
 from pygments.lexers.bibtex import BibTeXLexer as BibL
 bibtex = PygmentsLexer(BibL)
 Bibtex = bibtex
@@ -109,11 +110,14 @@ Haskell = haskell
 #int_fiction.py
 #iolang.py
 #j.py
-
+# Javascript
 from pygments.lexers.javascript import JavascriptLexer as JavasL
 javascript = PygmentsLexer(JavasL)
 Javascript = javascript
-#julia.py
+# Julia
+from pygments.lexers.julia import JuliaLexer
+julia = PygmentsLexer(JuliaLexer)
+Julia = julia
 #jvm.py
 #lisp.py
 #make.py
@@ -134,24 +138,52 @@ Javascript = javascript
 
 #pascal.py
 #pawn.py
-#perl.py
-#php.py
+#perl
+from pygments.lexers.perl import PerlLexer
+perl = PygmentsLexer(EmailL)
+Perl = perl
+
+#php
+from pygments.lexers.php import PhpLexer
+php =  PygmentsLexer(PhpLexer)
+Php = php
+PHP = php
 
 #r.py
 #rdf.py
 
-#ruby.py
-#rust.py
+#ruby
+from pygments.lexers.ruby import RubyLexer
+ruby = PygmentsLexer(RubyLexer)
+Ruby = ruby
+
+#rust
+from pygments.lexers.rust import RustLexer
+rust = PygmentsLexer(RustLexer)
+Rust = rust
 #sas.py
 #scdoc.py
 #scripting.py
 #sgf.py
-#shell.py
+#shell
+from pygments.lexers.shell import BashLexer
+shell = PygmentsLexer(BashLexer)
+Shell = shell
 
 #snobol.py
-#solidity.py
+#solidity
+from pygments.lexers.solidity import SolidityLexer
+solidity = PygmentsLexer(SolidityLexer)
+Solidity = solidity
+
 #special.py
-#sql.py
+
+#sql
+from pygments.lexers.sql import SqlLexer
+sql = PygmentsLexer(SqlLexer)
+Sql = sql
+SQL = sql
+
 #stata.py
 
 #usd

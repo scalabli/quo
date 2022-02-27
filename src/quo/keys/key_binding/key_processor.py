@@ -20,7 +20,7 @@ from quo.utils.utils import Event
 from quo.keys.key_binding.key_bindings import Binding, KeyBindingsBase
 
 if TYPE_CHECKING:
-    from quo.console import Console
+    from quo.console.console import Console
     from quo.buffer import Buffer
 
 

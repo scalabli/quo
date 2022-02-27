@@ -1061,7 +1061,7 @@ class Command(BaseCommand):
 
         def show_help(clime, param, value):
             if value and not clime.parse:
-                from quo import MessageBox
+                from quo.dialog import MessageBox
                 MessageBox(title="Help", text=f"{clime.get_help()}").run()
                 clime.exit()
 
@@ -2371,7 +2371,7 @@ class App(Parameter):
             source in {None, ParameterSource.DEFAULT}
             and self.prompt is not None
             and (self.required or self.prompt_required)
-            and not clime.resilient_parsing
+            and not clime.parse
         ):
             value = self.prompt_for_value(clime)
             source = ParameterSource.PROMPT

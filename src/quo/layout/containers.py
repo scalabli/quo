@@ -267,7 +267,7 @@ class HSplit(_Split):
         element in front of floating elements.  `None` means: inherit from parent.
     :param style: A style string.
     :param modal: ``True`` or ``False``.
-    :param key_bindings: ``None`` or a :class:`.KeyBindings` object.
+    :param key_bindings: ``None`` or a :class:`.KeyBinder` object.
 
     :param padding: (`Dimension` or int), size to be used for the padding.
     :param padding_char: Character to be used for filling in the padding.

@@ -898,7 +898,7 @@ class Console(Generic[_AppResult]):
     def openfile(self):
         from quo.expediency.vitals import openfile as of
         return of
-    @property
+
     def rule(
             self,
             message: Optional[str] = None

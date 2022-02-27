@@ -31,7 +31,7 @@ class MenuContainer:
         body: AnyContainer,
         menu_items: List["MenuItem"],
         floats: Optional[List[Float]] = None,
-        key_bindings: Optional[KeyBindingsBase] = None,
+        bind: Optional[KeyBindingsBase] = None,
     ) -> None:
 
         self.body = body
@@ -197,7 +197,7 @@ class MenuContainer:
                 # --
             ]
             + (floats or []),
-            key_bindings=key_bindings,
+            bind=bind,
         )
 
     def _get_menu(self, level: int) -> "MenuItem":

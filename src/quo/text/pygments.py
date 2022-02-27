@@ -14,7 +14,7 @@ __all__ = [
 
 class PygmentsTokens:
     """
-    Turn a pygments token list into a list of prompt_toolkit text fragments
+    Turn a pygments token list into a list of quo text fragments
     (``(style_str, text)`` tuples).
     """
 

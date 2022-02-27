@@ -46,13 +46,12 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
-    cast,
+   # cast,
 )
 
 from quo.cache import SimpleCache
 from quo.errors import UsageError
 from quo.filters import FilterOrBool, Never, to_filter
-from quo.i_o import echo
 from quo.keys.list import KEY_ALIASES, Keys
 
 # Avoid circular imports.
@@ -159,7 +158,7 @@ class KeyBindingsBase(metaclass=ABCMeta):
     def bindings(self) -> List[Binding]:
         """
         List of `Binding` objects.
-        (These need to be exposed, so that `KeyBindings` objects can be merged
+        (These need to be exposed, so that `KeyBinder` objects can be merged
         together.)
         """
         return []
@@ -270,6 +269,7 @@ class KeyBinder(KeyBindingsBase):
                         )
                     )
                 else:
+                    from typing import cast
                     self.bindings.append(
                         Binding(
                             keys,
@@ -318,6 +318,7 @@ class KeyBinder(KeyBindingsBase):
 
         else:
             assert len(args) > 0
+            from typing import cast
             args = cast(Tuple[Union[Keys, str]], args)
 
             # Remove this sequence of key bindings.
@@ -334,9 +335,6 @@ class KeyBinder(KeyBindingsBase):
             # No key binding found for this function. Raise ValueError.
             raise UsageError("Binding not found: %r" % (function,))
 
-    # For backwards-compatibility.
-    add_binding = add
-    remove_binding = remove
 
     def get_bindings_for_keys(self, keys: KeysTuple) -> List[Binding]:
         """
@@ -422,22 +420,14 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        from quo.rule import Rule
-        Rule("Key Error!")
-        from quo.shortcuts import print
-        from quo.text import Text
-        from quo import getchar
-        from quo.console.console import Console
+        from quo.console import Console
         console = Console()
-        console.launch("https//quo.readthedocs.io/en/latest/kb.html")
-        print(Text('<b><style fg="black" bg="red">Key</style> <style2 fg="red" bg="black">Error</style2></b>'))
-        def dd():
-            char = getchar()
-            if char == "yes" or "Yes" or "y" or "Y":
-                console.launch("https//quo.readthedocs.io/en/latest/kb.html")
-            else:
-                pass
-        raise UsageError(f"Invalid key: {key}")
+
+        console.rule("Key Error!")
+        from quo.text import Text
+        from quo.shortcuts.utils import print
+        print(Text('<aquamarine>»</aquamarine> <b>Check the documentation for mitigation steps</b>\n<green>*</green><b> https//quo.readthedocs.io/en/latest/kb.html</b>'))
+        raise UsageError(f'Invalid key: {key}')
     return key
 
 

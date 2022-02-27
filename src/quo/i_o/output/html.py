@@ -28,8 +28,8 @@ class Text:
 
     def __init__(self, value: str) -> None:
         self.value = value
-        document = minidom.parseString("<html-root>%s</html-root>" % (value,))
-
+        document = minidom.parseString(f"<html-root>{value}</html-root>")# % (value,))
+#%s
         result: StyleAndTextTuples = []
         name_stack: ty.List[str] = []
         fg_stack: ty.List[str] = []
