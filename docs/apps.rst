@@ -289,7 +289,7 @@ can alternatively split the parameters through ``;`` instead:
     @command()
     @app('/debug;/no-debug')
     def log(debug):
-        printf"debug={debug}")
+        print(f"debug={debug}")
 
     if __name__ == '__main__':
         log()
@@ -329,13 +329,14 @@ the default.
 .. code-block:: python
 
     import sys
-    import quo
+    from quo import print
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app('--upper', 'transformation', flag_value='upper',default=True)
-    @quo.app('--lower', 'transformation', flag_value='lower')
+    @command()
+    @app('--upper', 'transformation', flag_value='upper',default=True)
+    @app('--lower', 'transformation', flag_value='lower')
     def info(transformation):
-        quo.echo(getattr(sys.platform, transformation)())
+        print(getattr(sys.platform, transformation)())
 
 
 .. _choice-apps:
@@ -353,12 +354,14 @@ Example:
 
 .. code-block:: python
 
-    import quo
+    from quo import print
+    from quo.console import app, comman
+    from quo.types import Choice
 
-    @quo.command()
-    @quo.app('--hash-type', type= quo.types.Choice(['MD5', 'SHA1'], case_sensitive=False))
+    @command()
+    @qapp('--hash-type', type=Choice(['MD5', 'SHA1'], case_sensitive=False))
     def digest(hash_type):
-        quo.echo(hash_type)
+        print(hash_type)
 
 
 Only pass the choices as list or tuple. Other iterables (like
@@ -385,12 +388,13 @@ Example:
 
 .. code-block:: python
 
-    import quo
+    from quo import print
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app('--name', prompt=True)
+    @command()
+    @app('--name', prompt=True)
     def hello(name):
-        quo.echo(f"Hello {name}!")
+        print(f"Hello {name}!")
 
 
 If you are not happy with the default prompt string, you can ask for
@@ -398,12 +402,13 @@ a different one:
 
 .. code-block:: python
 
-    import quo
+    from quo import print
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app('--name', prompt='Your name please')
+    @command()
+    @app('--name', prompt='Your name please')
     def hello(name):
-        quo.echo(f"Hello {name}!")
+        print(f"Hello {name}!")
 
 It is advised that prompt not be used in conjunction with the multiple
 flag set to True. Instead, prompt in the function interactively.
@@ -422,12 +427,13 @@ useful for password input:
 .. code-block:: python
 
     import codecs
-    import quo
+    from quo import print
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app("--password", prompt=True, hide=True, affirm==True)
+    @command()
+    @app("--password", prompt=True, hide=True, affirm==True)
     def encode(password):
-        quo.echo(f"encoded: {codecs.encode(password, 'rot13')}")
+        print(f"encoded: {codecs.encode(password, 'rot13')}")
 
 
 
@@ -447,24 +453,27 @@ from the environment:
 .. code-block:: python
 
     import os
-    import quo
+    from quo import print
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app("--username", prompt= True, default=lambda: os.environ.get("USER", ""))
+
+    @command()
+    @app("--username", prompt= True, default=lambda: os.environ.get("USER", ""))
     def hello(username):
-        quo.cho(f"Hello, {username}!")
+        print(f"Hello, {username}!")
 
 To describe what the default value will be, set it in ``show_default``.
 
 .. code-block:: python
 
     import os
-    import quo
+    from quo import print
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app("--username", prompt=True, default=lambda: os.environ.get("USER", ""), show_default="current user")
+    @command()
+    @app("--username", prompt=True, default=lambda: os.environ.get("USER", ""), show_default="current user")
     def hello(username):
-        quo.echo(f"Hello, {username}!")
+        print(f"Hello, {username}!")
 
 
 ``Callbacks and Eager Apps``
@@ -484,7 +493,7 @@ specify it for ``--version`` to work.  For more information, see
 :ref:`callback-evaluation-order`.
 
 A callback is a function that is invoked with two parameters: the current
-:class:`Context` and the value.  The context provides some useful features
+:class:`Clime` and the value.  The context provides some useful features
 such as quitting the application and gives access to other already
 processed parameters.
 
@@ -492,18 +501,19 @@ Here an example for a ``--version`` flag:
 
 .. code-block:: python
    
-    import quo
+    from quo import print
+    from quo.console import app, command
 
     def print_version(clime, param, value):
-    if not value or clime.resilient_parsing:
+    if not value or clime.parse:
     return
-    quo.echo('Version 1.0')
+    print('Version 1.0')
         clime.exit()
 
-    @quo.command()
-    @quo.app('--version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
+    @command()
+    @app('--version', is_flag=True, callback=print_version, expose_value=False, is_eager=True)
     def hello():
-        quo.echo('Hello World!')
+        print('Hello World!')
 
 The `expose_value` parameter prevents the pretty pointless ``version``
 parameter from being passed to the callback.  If that was not specified, a
@@ -517,22 +527,23 @@ this case, because we would exit the program, we instead do nothing.
 -------------------
 
 For dangerous operations, it's very useful to be able to ask a user for
-confirmation.  This can be done by adding a boolean ``@yes`` flag and
+confirmation.  This can be done by adding a boolean ``--yes`` flag and
 asking for confirmation if the user did not provide it and to fail in a
 callback:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
 
     def abort_if_false(clime, param, value):
         if not value:
             clime.abort()
 
-    @quo.command()
-    @quo.app('--yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
+    @command()
+    @app('--yes', is_flag=True, callback=abort_if_false, expose_value=False, prompt='Are you sure you want to drop the db?')
     def dropdb():
-        quo.echo('Dropped all tables!')
+        echo('Dropped all tables!')
 
 .. admonition:: Callback Signature Changes
 
@@ -559,12 +570,13 @@ Example usage:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
 
-    @quo.ccommand()
-    @quo.app('--username')
+    @command()
+    @app('--username')
     def greet(username):
-        quo.echo(f'Hello {username}!')
+        echo(f'Hello {username}!')
 
     if __name__ == '__main__':
         greet(auto_envvar_prefix='GREETER')
@@ -580,17 +592,18 @@ Example:
 
 .. code-block:: python
 
-   import quo
+   from quo import echo
+   from quo.console import app, tether
 
-   @quo.tether()
-   @quo.app('--debug/--no-debug')
+   @tether()
+   @app('--debug/--no-debug')
    def cli(debug):
-       quo.echo(f"Debug mode is {'on' if debug else 'off'}")
+       echo(f"Debug mode is {'on' if debug else 'off'}")
 
    @cli.command()
-   @quo.app('--username')
+   @app('--username')
    def greet(username):
-       quo.echo(f"Hello {username}!")
+       echo(f"Hello {username}!")
 
    if __name__ == '__main__':
        cli(auto_envvar_prefix='GREETER')
@@ -603,12 +616,13 @@ Example usage:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app('--username', envvar='USERNAME')
+    @command()
+    @app('--username', envvar='USERNAME')
     def greet(username):
-       quo.echo(f"Hello {username}!")
+       echo(f"Hello {username}!")
 
     if __name__ == '__main__':
         greet()
@@ -627,7 +641,7 @@ behavior.  For both ``multiple`` and ``nargs`` with values other than
 perform the splitting.
 
 The default implementation for all types is to split on whitespace.  The
-exceptions to this rule are the :class:`File` and :class:`Path` types
+exceptions to this rule are the :class:`quo.types.File` and :class:`quo.types.Path` types
 which both split according to the operating system's path splitting rules.
 On Unix systems like Linux and OS X, the splitting happens for those on
 every colon (``:``), and for Windows, on every semicolon (``;``).
@@ -636,20 +650,22 @@ Example usage:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
+    from quo.types import Path
 
-    @quo.command()
-    @quo.app('paths', '--path', envvar='PATHS', multiple=True, type=quo.types.Path())
+    @command()
+    @app('paths', '--path', envvar='PATHS', multiple=True, type=Path())
     def perform(paths):
         for path in paths:
-            quo.echo(path)
+            echo(path)
 
     if __name__ == '__main__':
         perform()
 
 
 ``Other Prefix Characters``
----------------------------((
+-----------------------------
 
 quo can deal with alternative prefix characters other than ``--`` for
 apps.  This is for instance useful if you want to handle slashes as
@@ -657,12 +673,13 @@ parameters ``/`` or something similar.
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app('+w/-w')
+    @command()
+    @app('+w/-w')
     def chmod(w):
-        quo.echo(f"writable={w}")
+        echo(f"writable={w}")
 
     if __name__ == '__main__':
         chmod()
@@ -672,12 +689,13 @@ boolean flag you need to separate it with ``;`` instead of ``/``:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
 
-    @quo.command()
-    @quo.app('/debug;/no-debug')
+    @command()
+    @app('/debug;/no-debug')
     def log(debug):
-        quo.echo(f"debug={debug}")
+        echo(f"debug={debug}")
 
     if __name__ == '__main__':
         log()
@@ -704,13 +722,15 @@ bounds are *closed* (the default).
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
+    from quo.types import IntRange
 
-    @quo.command()
-    @quo.app("--count", type= quo.types.IntRange(0, 20, clamp=True))
-    @quo.app("--digit", type= quo.types.IntRange(0, 9))
+    @command()
+    @app("--count", type= IntRange(0, 20, clamp=True))
+    @app("--digit", type= IntRange(0, 9))
     def repeat(count, digit):
-        quo.echo(str(digit) * count)
+        echo(str(digit) * count)
 
 
 ``Callbacks for Validation``
@@ -723,7 +743,9 @@ type conversion. It is called for all sources, including prompts.
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, command
+    from quo.types import BadParameter, UNPROCESSED
 
     def validate_rolls(clime, param, value):
         if isinstance(value, tuple):
@@ -733,13 +755,13 @@ type conversion. It is called for all sources, including prompts.
             rolls, _, dice = value.partition("d")
             return int(dice), int(rolls)
         except ValueError:
-            raise quo.types.BadParameter("format must be 'NdM'")
+            raise BadParameter("format must be 'NdM'")
 
-    @quo.command()
-    @quo.app( "--rolls", type= quo.types.UNPROCESSED, callback=validate_rolls, default="1d6", prompt=True)
+    @command()
+    @app( "--rolls", type = UNPROCESSED, callback=validate_rolls, default="1d6", prompt=True)
     def roll(rolls):
         sides, times = rolls
-        quo.echo(f"Rolling a {sides}-sided dice {times} time(s)")
+        echo(f"Rolling a {sides}-sided dice {times} time(s)")
 
 
 

@@ -21,16 +21,17 @@ when an inner command runs:
 
 .. code-block:: python
       
-    import quo
+    from quo import echo
+    from quo.console import app, tether
 
-    @quo.tether()
-    @quo.app('@debug/@no-debug', default=False)
+    @tether()
+    @app('@debug/@no-debug', default=False)
     def cli(debug):
-        quo.echo(f"Debug mode is {'on' if debug else 'off'}")
+        echo(f"Debug mode is {'on' if debug else 'off'}")
 
-    @cli.quo.command()
+    @cli.command()
     def sync():
-        quo.echo('Syncing')
+        echo('Syncing')
 
 
 ``Passing Parameters``
@@ -77,11 +78,12 @@ script like this:
 
 .. code-block:: python
 
-    import quo
+    from quo import pass_context
+    from quo.console import app, tether
 
-    @quo.tether()
-    @quo.app('--debug/--no-debug', default=False)
-    @quo.pass_context
+    @tether()
+    @app('--debug/--no-debug', default=False)
+    @pass_context
     def cli(clime, debug):
         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
         # by means other than the `if` block below)
@@ -90,9 +92,9 @@ script like this:
         clime.obj['DEBUG'] = debug
 
     @cli.command()
-    @quo.pass_context
+    @pass_context
     def sync(clime):
-        quo.echo(f"Debug is {'on' if clime.obj['DEBUG'] else 'off'}")
+        echo(f"Debug is {'on' if clime.obj['DEBUG'] else 'off'}")
 
     if __name__ == '__main__':
         cli(obj={})
@@ -125,9 +127,10 @@ For instance, the :func:`pass_obj` decorator can be implemented like this:
 .. code:: python
 
     from functools import update_wrapper
+    from quo import pass_context
 
     def pass_obj(f):
-        @quo.pass_context
+        @pass_context
         def new_func(clime, **args, **kwargs):
             return clime.invoke(f, clime.obj, *args, **kwargs)
         return update_wrapper(new_func, f)
@@ -156,19 +159,20 @@ Example:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo, pass_context
+    from quo.console import tether
 
-    @quo.tether(invoke_without_command=True)
+    @tether(invoke_without_command=True)
     @quo.pass_context
     def cli(clime):
         if clime.invoked_subcommand is None:
-            quo.echo('I was invoked without subcommand')
+            echo('I was invoked without subcommand')
         else:
-            quo.echo(f"I am about to invoke {clime.invoked_subcommand}")
+            echo(f"I am about to invoke {clime.invoked_subcommand}")
 
     @cli.command()
     def sync():
-        quo.echo('The subcommand')
+        echo('The subcommand')
 
 
 ``Merging Multi Commands``
@@ -187,7 +191,9 @@ Example usage:
 
 .. code-block:: python
 
-    from quo import tether, command
+    from quo import CommandCollection
+    from quo.console import tether, command
+
     @tether()
     def cli1():
         pass
@@ -204,7 +210,7 @@ Example usage:
     def cmd2():
         """Command on cli2"""
 
-    cli = quo.CommandCollection(sources=[cli1, cli2])
+    cli = CommandCollection(sources=[cli1, cli2])
 
     if __name__ == '__main__':
         cli()
@@ -226,21 +232,22 @@ All you have to do is to pass ``chain=True`` to your multicommand:
 
 .. code-block:: python
 
-    import quo
+    from quo import echo
+    from quo.console import command, tether
 
-    @quo.tether(chain=True)
+    @tether(chain=True)
     def cli():
         pass
 
 
-    @cli.quo.command('sdist')
+    @cli.command('sdist')
     def sdist():
-        quo.echo('sdist called')
+        echo('sdist called')
 
 
-    @cli.quo.command('bdist_wheel')
+    @cli.command('bdist_wheel')
     def bdist_wheel():
-        quo.echo('bdist_wheel called')
+        echo('bdist_wheel called')
 
 
 When using multi command chaining you can only have one command (the last)
@@ -250,7 +257,7 @@ restrictions on how they work.  They can accept apps and args as
 normal. The order between apps and args is limited for chained
 commands. Currently only ``--apps args`` order is allowed.
 
-Another note: the :attr:`Context.invoked_subcommand` attribute is a bit
+Another note: the :attr:`Clime.invoked_subcommand` attribute is a bit
 useless for multi commands as it will give ``'*'`` as value if more than
 one command is invoked.  This is necessary because the handling of
 subcommands happens one after another so the exact subcommands that will
@@ -286,10 +293,12 @@ To make this a bit more concrete consider this example:
 
 .. code:: python
 
-    import quo
+    from quo import echo
+    from quo.console import app, tether
+    from quo.types import File
 
-    @quo.tether(chain=True, invoke_without_command=True)
-    @quo.app('-i', '--input', type=quo.types.File('r'))
+    @tether(chain=True, invoke_without_command=True)
+    @app('-i', '--input', type=File('r'))
     def cli(input):
         pass
 
@@ -299,7 +308,7 @@ To make this a bit more concrete consider this example:
         for processor in processors:
             iterator = processor(iterator)
         for item in iterator:
-            quo.echo(item)
+            echo(item)
 
     @cli.command('uppercase')
     def make_uppercase():
@@ -324,7 +333,7 @@ To make this a bit more concrete consider this example:
 
 That's a lot in one go, so let's go through it step by step.
 
-1.  The first thing is to make a :func:`tether` that is chainable.  In
+1.  The first thing is to make a :func:`quo.console.tether` that is chainable.  In
     addition to that we also instruct quo to invoke even if no
     subcommand is defined.  If this would not be done, then invoking an
     empty pipeline would produce the help page instead of running the
@@ -363,7 +372,7 @@ that has a nice internal structure for the pipelines.
 By default, the default value for a parameter is pulled from the
 ``default`` flag that is provided when it's defined, but that's not the
 only place defaults can be loaded from.  The other place is the
-:attr:`Context.default_map` (a dictionary) on the context.  This allows
+:attr:`Clime.default_map` (a dictionary) on the context.  This allows
 defaults to be loaded from a configuration file to override the regular
 defaults.
 
@@ -387,16 +396,17 @@ Example usage:
 
 .. code-block:: python
 
-    import quo
+    from quo import print
+    from quo.console import app, tether
 
-    @quo.tether()
+    @tether()
     def cli():
         pass
 
     @cli.command()
-    @quo.app('@port', default=8000)
+    @app('--port', default=8000)
     def runserver(port):
-        quo.echo(f"Serving on http://127.0.0.1:{port}/")
+        print(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli(default_map={
@@ -419,20 +429,21 @@ This example does the same as the previous example:
 
 .. code:: python
 
-    import quo
+    from quo import print
+    from quo.console import app, tether
 
     CONTEXT_SETTINGS = dict(
         default_map={'runserver': {'port': 5000}}
     )
 
-    @quo.tether(context_settings=CONTEXT_SETTINGS)
+    @tether(context_settings=CONTEXT_SETTINGS)
     def cli():
         pass
 
     @cli.command()
-    @quo.app('@port', default=8000)
+    @app('@port', default=8000)
     def runserver(port):
-        quo.echo(f"Serving on http://127.0.0.1:{port}/")
+        print(f"Serving on http://127.0.0.1:{port}/")
 
     if __name__ == '__main__':
         cli()
