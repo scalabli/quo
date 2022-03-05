@@ -487,7 +487,9 @@ A suggestion does not have to come from the history. Any implementation of the :
 Autocompletion
 ^^^^^^^^^^^^^^^
 Autocompletion can be added by passing a completer parameter.
+
 .. code:: python
+
  from quo.completion import WordCompleter
  from quo.prompt import Prompt
  
