@@ -230,37 +230,38 @@ When a function is given, it will be called every time the prompt is rendered, s
 The toolbar is always erased when the prompt returns. Here we have an example of a callable that returns a :class:`quo.text.Text` object. By default, the toolbar has the reversed style, which is why we are setting the background instead of the foreground.
 
 .. code:: python
-   from quo.prompt import Prompt
-   from quo.text import Text
 
-   def toolbar():
-      return Text('This is a <b><style bg="red">Toolbar</style></b>!')
-   # Returns a callable
-   session = Prompt(bottom_toolbar=toolbar)
-   text = session.prompt('> ')
+ from quo.prompt import Prompt
+ from quo.text import Text
+
+ def toolbar():
+    return Text('This is a <b><style bg="red">Toolbar</style></b>!')
+ # Returns a callable
+ session = Prompt(bottom_toolbar=toolbar)
+ session.prompt('> ')
 
 .. image:: ./images/bottom-toolbar.png
 
 Similar, we could use a list of style/text tuples.
 
 .. code:: python
-   from quo.prompt import Prompt
-   from quo.style import Style
+
+ from quo.prompt import Prompt
+ from quo.style import Style
 
 
-   def toolbar():
-       return [('class:bottom-toolbar', ' This is a toolbar. ')]
+ def toolbar():
+     return [('class:bottom-toolbar', ' This is a toolbar. ')]
 
-   style = Style.add({
-     'bottom-toolbar': 'fg:white bg:green',})
+ style = Style.add({
+   'bottom-toolbar': 'fg:white bg:green',})
 
-   session = Prompt(
-              bottom_toolbar=toolbar,
-              style=style
-              )
+ session = Prompt(
+            bottom_toolbar=toolbar,
+            style=style
+            )
            
-   text = session.prompt('> ', bottom_toolbar=toolbar, style=style)
-   print(f'You said: {text}')
+ session.prompt('> ', bottom_toolbar=toolbar, style=style)
 
 The default class name is bottom-toolbar and that will also be used to fill the background of the toolbar.
 
@@ -274,32 +275,32 @@ The following example returns a formatted text:
 
 .. code:: python
 
-   from quo.prompt import Prompt
-   from quo.text import Text
+ from quo.prompt import Prompt
+ from quo.text import Text
 
-   session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>')
+ session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>')
 
-   session.prompt("")
+ session.prompt("")
 
 The following example returns a callable
 
 .. code:: python
 
-   from quo.prompt import Prompt
-   from quo.style import Style
+ from quo.prompt import Prompt
+ from quo.style import Style
 
    
-   style = Style.add({'rprompt': 'bg:red fg:white',})
+ style = Style.add({'rprompt': 'bg:red fg:white',})
    
-   def get_rprompt():
-     return '<rprompt>'
+ def get_rprompt():
+   return '<rprompt>'
 
-   session = Prompt(
-             rprompt=get_rprompt,
-             style=style
-             )
+ session = Prompt(
+           rprompt=get_rprompt,
+           style=style
+           )
 
-   session.prompt('> ')
+ session.prompt('> ')
 
 
 .. image:: ./images/rprompt.png
