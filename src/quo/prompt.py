@@ -1454,19 +1454,9 @@ def create_confirm_session(
 
     complete_message = merge_formatted_text([text, suffix])
     session: Prompt[bool] = Prompt(
-        complete_message, key_bindings=bindings
+        complete_message, bind=bindings
     )
     return session
 
 
 
-
-hidden = [True]  # Nonlocal
-kb = KeyBinder()
-@kb.add("ctrl-t")
-def _(event):
-    "When ControlT has been pressed, toggle visibility."
-    hidden[0] = not hidden[0]
-    print("\nType Control-T to toggle password visible.")
-
-Toggle = Condition(lambda: hidden[0]) #,bind=kb

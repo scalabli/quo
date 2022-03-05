@@ -1,21 +1,21 @@
 """
 Key binder egistry.
 
-A `KeyBinder` object is a container that holds a list of key bindings. It has a
+A `Bind` object is a container that holds a list of key bindings. It has a
 very efficient internal data structure for checking which key bindings apply
 for a pressed key.
 
 Typical usage::
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add(Keys.ControlX, Keys.ControlC, filter=INSERT)
+    @bind.add(Keys.ControlX, Keys.ControlC, filter=INSERT)
     def handler(event):
         # Handle ControlX-ControlC key sequence.
         pass
 
-It is also possible to combine multiple KeyBinder objects. We do this in the
-default key bindings. There are some KeyBinder bjects that contain the Emacs
+It is also possible to combine multiple Bind objects. We do this in the
+default key bindings. There are some Bind bjects that contain the Emacs
 bindings, while others contain the Vi bindings. They are merged together using
 `merge_key_bindings`.
 
@@ -32,7 +32,7 @@ been assigned, through the `key_binding` decorator.::
         ...
 
     # Later, add it to the key bindings.
-    kb.add(Keys.A, my_key_binding)
+    bind.add(Keys.A, my_key_binding)
 """
 from abc import ABCMeta, abstractmethod, abstractproperty
 from typing import (
@@ -62,7 +62,7 @@ if TYPE_CHECKING:
 __all__ = [
     "Binding",
     "KeyBindingsBase",
-    "KeyBinder",
+    "Bind",
     "ConditionalKeyBindings",
     "merge_key_bindings",
     "DynamicKeyBindings",
@@ -169,23 +169,23 @@ class KeyBindingsBase(metaclass=ABCMeta):
 T = TypeVar("T", bound=Union[KeyHandlerCallable, Binding])
 
 
-class KeyBinder(KeyBindingsBase):
+class Bind(KeyBindingsBase):
     """
     A container for a set of key bindings.
 
     Example usage::
 
-        kb = quo.keys.KeyBinder()
+        bind = Bind()
 
-        @kb.add('ctrl-t')
+        @bind.add('ctrl-t')
         def _(event):
             print('Control-T pressed')
 
-        @kb.add('ctrl-a', 'ctrl-b')
+        @bind.add('ctrl-a', 'ctrl-b')
         def _(event):
             print('Control-A pressed, followed by Control-B')
 
-        @kb.add('ctrl-x', filter=is_searching)
+        @bind.add('ctrl-x', filter=is_searching)
         def _(event):
             print('Control-X pressed')  # Works only if we are searching.
 
@@ -420,7 +420,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
 
     # Final validation.
     if len(key) != 1:
-        from quo.console import Console
+        from quo.console.console import Console
         console = Console()
 
         console.rule("Key Error!")
@@ -472,7 +472,7 @@ class _Proxy(KeyBindingsBase):
 
     def __init__(self) -> None:
         # `KeyBindings` to be synchronized with all the others.
-        self._bindings2: KeyBindingsBase = KeyBinder()
+        self._bindings2: KeyBindingsBase = Bind()
         self._last_version: Hashable = ()
 
     def _update_cache(self) -> None:
@@ -505,7 +505,7 @@ class _Proxy(KeyBindingsBase):
 
 class ConditionalKeyBindings(_Proxy):
     """
-    Wraps around a `KeyBinder`. Disable/enable all the key bindings according to
+    Wraps around a `Bind`. Disable/enable all the key bindings according to
     the given (additional) filter.::
 
         @Condition
@@ -517,30 +517,30 @@ class ConditionalKeyBindings(_Proxy):
     When new key bindings are added to this object. They are also
     enable/disabled according to the given `filter`.
 
-    :param registries: List of :class:`.KeyBinder` objects.
+    :param registries: List of :class:`.Bind` objects.
     :param filter: :class:`~quo.filters.Filter` object.
     """
 
     def __init__(
             self,
-            key_bindings: KeyBindingsBase, 
+            bind: KeyBindingsBase, 
             filter: FilterOrBool = True
             ) -> None:
 
         _Proxy.__init__(self)
 
-        self.key_bindings = key_bindings
+        self.bind = bind
         self.filter = to_filter(filter)
 
     def _update_cache(self) -> None:
         "If the original key bindings was changed. Update our copy version."
-        expected_version = self.key_bindings._version
+        expected_version = self.bind._version
 
         if self._last_version != expected_version:
-            bindings2 = KeyBinder()
+            bindings2 = Bind()
 
             # Copy all bindings from `self.key_bindings`, adding our condition.
-            for b in self.key_bindings.bindings:
+            for b in self.bind.bindings:
                 bindings2.bindings.append(
                     Binding(
                         keys=b.keys,
@@ -579,7 +579,7 @@ class _MergedKeyBindings(_Proxy):
         expected_version = tuple(r._version for r in self.registries)
 
         if self._last_version != expected_version:
-            bindings2 = KeyBinder()
+            bindings2 = Bind()
 
             for reg in self.registries:
                 bindings2.bindings.extend(reg.bindings)
@@ -590,7 +590,7 @@ class _MergedKeyBindings(_Proxy):
 
 def merge_key_bindings(bindings: Sequence[KeyBindingsBase]) -> _MergedKeyBindings:
     """
-    Merge multiple :class:`.Keybinder` objects together.
+    Merge multiple :class:`.Bind` objects together.
 
     Usage::
 
@@ -612,7 +612,7 @@ class DynamicKeyBindings(_Proxy):
         self.get_key_bindings = get_key_bindings
         self.__version = 0
         self._last_child_version = None
-        self._dummy = KeyBinder()  # Empty key bindings.
+        self._dummy = Bind()  # Empty key bindings.
 
     def _update_cache(self) -> None:
         bind = self.get_key_bindings() or self._dummy
@@ -625,25 +625,25 @@ class DynamicKeyBindings(_Proxy):
 
 class GlobalOnlyKeyBindings(_Proxy):
     """
-    Wrapper around a :class:`.KeyBinder` object that only exposes the global
+    Wrapper around a :class:`.Bind` object that only exposes the global
     key bindings.
     """
 
-    def __init__(self, key_bindings: KeyBindingsBase) -> None:
+    def __init__(self, bind: KeyBindingsBase) -> None:
         _Proxy.__init__(self)
-        self.key_bindings = key_bindings
+        self.bind = bind
 
     def _update_cache(self) -> None:
         """
         If one of the original registries was changed. Update our merged
         version.
         """
-        expected_version = self.key_bindings._version
+        expected_version = self.bind._version
 
         if self._last_version != expected_version:
-            bindings2 = KeyBinder()
+            bindings2 = Bind()
 
-            for b in self.key_bindings.bindings:
+            for b in self.bind.bindings:
                 if b.is_global():
                     bindings2.bindings.append(b)
 

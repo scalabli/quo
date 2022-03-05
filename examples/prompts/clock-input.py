@@ -7,19 +7,17 @@ import datetime
 from quo import echo
 from quo.prompt import Prompt
 
-session = Prompt()
-
 def get_prompt():
     "Tokens to be shown before the prompt."
     now = datetime.datetime.now()
     return [
-            ("bg:green fg:black", "%s:%s:%s" % (now.hour, now.minute, now.second)),
-            ("bg:cornsilk fg:maroon", " Enter something: ")
+            ("bg:green fg:black", "%s:%s:%s"  % (now.hour, now.minute, now.second)),
+            ("bg:cornsilk fg:maroon", "Enter something: ")
     ]
 
-
+session = Prompt(refresh_interval=0.5)
 def main():
-    result = session.prompt(get_prompt, refresh_interval=0.5)
+    result = session.prompt(get_prompt)
     echo(f"You said: {result}")
 
 

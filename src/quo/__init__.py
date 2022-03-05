@@ -58,7 +58,7 @@ from quo.decorators import (
 )
 
 #from .setout import HelpFormatter, wraptext
-#from quo.context.current import currentcontext
+from quo.context.current import currentcontext as pass_clime
 #from .parser import AppParser
 
 from quo.expediency import (

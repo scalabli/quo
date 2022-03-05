@@ -1,7 +1,7 @@
 from .key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
-    KeyBinder,
+    Bind,
     KeyBindingsBase,
     merge_key_bindings,
 )
@@ -18,3 +18,6 @@ __all__ = [
     "KeyPress",
     "KeyPressEvent",
 ]
+
+# Bind alias
+KeBinder = Bind
