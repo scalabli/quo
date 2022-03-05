@@ -166,6 +166,31 @@ Read more on [Completions](https://quo.readthedocs.io/en/latest/prompt.html#comp
 </details>
 
 <details>
+<summary>Documenting Scripts</summary>
+Quo automatically generates help pages for your command-line tools.
+
+```python
+ from quo import print
+ from quo.console import command
+ from quo.console import app
+
+ @command()
+ @app('--count', default=1, help='number of greetings')
+ @app('--name', prompt="What is your name?", help="The person to greet")
+
+ def hello(count: int, name: str):
+    """This script prints hello NAME COUNT times."""
+       for x in range(count):
+           print(f"Hello {name}!)"
+
+if __name__ == "__main__:
+          hello()
+```
+And what it looks like:
+![Help Text](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/help-text.png)
+
+</details>
+<details>
 <summary>Progress</summary>
 Creating a new progress bar can be done by calling the class **ProgressBar**
 The progress can be displayed for any iterable. This works by wrapping the iterable (like ``range``) with the class **ProgressBar**
@@ -193,14 +218,14 @@ A key binding is an association between a physical key on a keyboard and a param
   
  from quo import echo
  from quo.prompt import Prompt
- from quo.keys import KeyBinder
+ from quo.keys import Bind
  
- kb = KeyBinder()
+ bind = Bind()
  # Print "Hello world" when ctrl-h is pressed
- @kb.add("ctrl-h")
+ @bind.add("ctrl-h")
  def _(event):
      echo("Hello, World!")
- session.prompt(">>", bind=kb)
+ session.prompt(">>", bind=bind)
 ```
 Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
 
@@ -266,33 +291,25 @@ A collection of reusable components for building full screen applications.
 Widget that displays the given text. It is not editable or focusable.
 ```python
 
- from quo import Console
- from quo.widget import Label
- from quo.keys import KeyBinder
+ from quo.console import Console
+ from quo.keys import Bind
  from quo.layout import Layout
- from quo.style import Style
+ from quo.widget import Label
 
- # Styling for the label
- example_style = Style(
-     [
-      ("hello-world", "bg:red fg:black")
-      ] 
-        )
- root = Label("Hello, World", style="class:hello-world")
+ root = Label("Hello, World", style="fg:black bg:red")
   
- layout = Layout(container=root)
+ layout = Layout(root)
   
  # Ctrl-c to exit
- kb = KeyBinder()
+ bind = Bind()
   
- @kb.add("ctrl-c")
+ @bind.add("ctrl-c")
  def _(event):
     event.app.exit()
 
  Console(
      layout=layout,
-     bind=kb,
-     style=example_style
+     bind=bind,
      full_screen=True).run()
 
 ```

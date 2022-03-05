@@ -64,33 +64,24 @@ Widget that displays the given text. It is not editable or focusable.
 
 .. code:: python
 
-   from quo import Console
+   from quo.console import Console
    from quo.widget import Label
-   from quo.keys import KeyBinder
+   from quo.keys import Bind
    from quo.layout import Layout
-   from quo.style import Style
 
-   # Styling for the label
-   example_style = Style(
-          [
-          ("hello-world", "bg:red fg:black")
-          ]
-      )
+   root = Label("Hello, World", style="fg:black bg:red")
 
-   root = Label("Hello, World", style="class:hello-world")
+   layout = Layout(root)
 
-   layout = Layout(container=root)
+   bind = Bind()
 
-   kb = KeyBinder()
-
-   @kb.add("ctrl-c")
+   @bind.add("ctrl-c")
    def _(event):
       event.app.exit()
 
    Console(
    layout=layout,
-   bind=kb,
-   style=example_style,
+   bind=bind,
    full_screen=True).run()
 
 
@@ -109,35 +100,27 @@ shrinking other elements. Wrapping something in a ``Box`` makes it flexible.
 
 .. code:: python
 
-  from quo import Console
-  from quo.widgets import Box, Label
-  from quo.keys import KeyBinder
+  from quo.console import Console
+  from quo.widget import Box, Label
+  from quo.keys import Bind
   from quo.layout import Layout
-  from quo.style import Style
-
-  # Styling for the label
-  example_style = Style(
-     [
-     ("hello-world", "bg:red fg:black") 
-     ]
-     )
      
   root = Box(
-          Label("Hello, World", style="class:hello-world"), padding=5)
+          Label("Hello, World", style="fg:black bg:red"),
+          padding=5)
           
           
-  layout = Layout(container=root)
+  layout = Layout(root)
   
-  kb = KeyBinder()
+  bind = Bind()
 
-  @kb.add("ctrl-c")
+  @bind.add("ctrl-c")
   def _(event):
       event.app.exit()
     
   Console(
      layout=layout,
-     bind=kb,
-     style=example_style,
+     bind=bind,
      full_screen=True).run()
      
      
@@ -165,18 +148,28 @@ Changing the title and body of the frame is possible at runtime by assigning to 
 
 .. code:: python
 
-  # Example usage of 'container', a tool to print
-  #any layout in a non-interactive way.
+  from quo.console import Console
+  from quo.keys import Bind
+  from quo.layout import Layout
+  from quo.widget import Frame, Label
 
-  from quo import container
-  from quo.widget import Frame, TextArea
+  bind = Bind()
 
-  content = TextArea(text="Hello world🌍")
-  container(
-          Frame(
-             content,
-                title="Quo: python🐍")
-            )
+  root = Frame(
+            Label("Hello, World!"),
+            title="Quo: python")
+  
+  layout = Layout(root)
+
+       
+  @bind.add("ctrl-c")
+  def _(event):
+         event.app.exit()
+  
+  Console(
+        layout=layout,
+        bind=bind,
+        full_screen=True).run
                                  
 
 ``Shadow``

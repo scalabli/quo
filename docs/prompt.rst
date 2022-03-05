@@ -665,7 +665,7 @@ For instance:
 -------------------------------
 
 By default, every prompt already has a set of key bindings which implements the usual Vi or Emacs behaviour. We can extend this by passing another
-:class:`~quo.keys.KeyBinder` instance to the ``bind`` argument of the :class:`~quo.prompt.Prompt` class.
+:class:`~quo.keys.Bind` instance to the ``bind`` argument of the :class:`~quo.prompt.Prompt` class.
 
 .. note::
     :func:`quo.prompt` function does not support key bindings but :class:`quo.prompt.Prompt` does
@@ -677,20 +677,20 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
 
     from quo import print
     from quo.prompt import Prompt
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add('ctrl-t')
+    @bind.add('ctrl-t')
     def _(event):
     # Say 'hello' when `ctrl-t` is pressed."
         print("Hello, World!")
 
-    @kb.add('ctrl-x')
+    @bind.add('ctrl-x')
     def _(event):
       #Exit when `ctrl-x` is pressed. "
         event.app.exit()
-    session = Prompt(bind=kb)
+    session = Prompt(bind=bind)
     session.prompt('> ')
 
 Enable key bindings according to a condition
@@ -709,20 +709,20 @@ pass it a :class:`~quo.Condition` instance. (:ref:`Read more about filters <filt
     import datetime
     from quo import Condition
     from quo.prompt import Prompt
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
     @Condition
     def second_half():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-    @kb.add('ctrl-t', filter=second_half)
+    @bind.add('ctrl-t', filter=second_half)
     def _(event):
         # ...
         pass
-    session = Prompt(bind=kb)
+    session = Prompt(bind=bind)
     session.prompt('> ')
 
 ``Toggle visibility of input``
@@ -733,18 +733,18 @@ Display asterisks instead of the actual characters with the addition of a Contro
 
    from quo import Condition
    from quo.prompt import Prompt
-   from quo.keys import KeyBinder
+   from quo.keys import Bind
    
    hidden = [True]  # Nonlocal
 
-   kb = KeyBinder()
+   bind = Bind()
 
-   @kb.add("ctrl-t")
+   @bind.add("ctrl-t")
    def _(event):
        "When ControlT has been pressed, toggle visibility."
        hidden[0] = not hidden[0]
 
-   session = Prompt(hide=Condition(lambda : hidden[0], bind=kb)   
+   session = Prompt(hide=Condition(lambda : hidden[0], bind=bind)   
    session.prompt( "Password: ")
 
 
@@ -756,11 +756,11 @@ opening the autocompletion menu instead of the tab key. This can be done with th
 
 .. code:: python
 
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add('ctrl-space')
+    @bind.add('ctrl-space')
     def _(event):
         " Initialize autocompletion, or select the next completion. "
         buff = event.app.current_buffer

@@ -28,10 +28,9 @@ Almost every quo application is an instance of an :class:`~quo.Console` object. 
 
 .. code:: python
 
-    from quo import Console
+    from quo.console import Console
 
-    app = Console(full_screen=True)
-    app.run()
+    Console(full_screen=True).run()
 
 This will display an application with no layout specified.
 
@@ -55,7 +54,7 @@ We will discuss all of these in more detail below.
 ``I/O objects``
 ---------------
 
-Every :class:`~quo.Console` instance requires an I/O
+Every :class:`~quo.console.Console` instance requires an I/O
 object for input and output:
 
     - An :class:`~quo.input.Input` instance, which is an abstraction
@@ -73,9 +72,9 @@ while-true loop that waits for user input, and when it receives something (like
 a key press), it will send that to the the appropriate handler, like for
 instance, a key binding.
 
-When :func:`~quo.Console.run()` is called, the event
+When :func:`~quo.console.Console.run()` is called, the event
 loop will run until the application is done. An application will quit when 
-:func:`~quo.Console.exit()` is called.
+:func:`~quo.console.Console.exit()` is called.
 
 
 ``The layout``
@@ -86,62 +85,6 @@ loop will run until the application is done. An application will quit when
       - ``container`` -  The "root" container for the layout.
       - ``focused_element`` - Element to be focused initially. *(Can be anything the `focus` function accepts.)*
 
-``Margins``
-^^^^^^^^^^^^
-Margins are used for displaying line numbers and scroll bars, but could be used to display any other kind of information as well.
-
-[1] NumberedMargin
--------------------
-
-A margin that displays the line numbers
-
-[2] ScrollbarMargin
--------------------
-A margin that displays a  scrollbar.
-
-
-
-.. code:: python
-
- import quo
- from quo.layout.controls import BufferControl, FormattedTextControl
- from quo.layout.margins import NumberedMargin, ScrollbarMargin
- 
- intro = """ Quo is scallable\n""" * 30
- 
- # Create text buffers. The margins will update if you scroll up or down.
- 
- buff = quo.buffer.Buffer()
- buff.text = LIPSUM
-
- # 1. The layout
- hsplit = quo.layout.HSplit
- window = quo.layout.Window
-
- window1 = window(FormattedTextControl('Press "q" to quit.'), height= 1, style="bg:red fg:yellow")
-
- window2 = window(BufferControl(buffer=buff),                                        # Add margins
-            left_margins=[NumberedMargin(), ScrollbarMargin()],
-            right_margins=[ScrollbarMargin(), ScrollbarMarg
-in()])
-
- body = hsplit(
-    [
-    window1,
-    window2
-    ]
-)
-# 2 Key bindings
- kb = quo.keys.KeyBinder()
-
-@kb.add("q")
-@kb.add("ctrl-c")
-def _(event):
-    "Quit application."
-    event.app.exit()
-
-# Layout
-layout = quo.layout.Layout
 
 A layered layout architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -313,8 +256,8 @@ read on to see how to define key bindings.
 -----------------
 
 In order to react to user actions, we need to create a
-:class:`~quo.keys.KeyBinder` object and pass
-that to our :class:`~quo.Console`.
+:class:`~quo.keys.Bind` object and pass
+that to our :class:`~quo.console.Console`.
 
 There are two kinds of key bindings:
 
@@ -334,24 +277,23 @@ Key bindings can be passed to the application as follows:
 
 .. code:: python
 
-    from quo import Console
-    from quo.keys import KeyBinder
+    from quo.console import Console
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    app = Console(bind=kb)
-    app.run()
+    Console(bind=bind).run()
 
 To register a new keyboard shortcut, we can use the
-:meth:`~quo.keys.KeyBinder.add` method as a decorator of the key handler:
+:meth:`~quo.keys.Bind.add` method as a decorator of the key handler:
 
 .. code:: python
 
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add('ctrl-q')
+    @bind.add('ctrl-q')
     def exit_(event):
         """
         Pressing Ctrl-Q will exit the user interface.
@@ -361,8 +303,7 @@ To register a new keyboard shortcut, we can use the
         """
         event.app.exit()
 
-    app = Console(bind=kb, full_screen=True)
-    app.run()
+    Console(bind=bind, full_screen=True).run()
 
 The callback function is named ``exit_`` for clarity, but it could have been
 named ``_`` (underscore) as well, because we won't refer to this name.

@@ -47,17 +47,16 @@ This filter can then be used in a key binding, like in the following snippet:
 
 .. code:: python
 
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add('ctrl-t', filter=is_searching)
+    @bind.add('ctrl-t', filter=is_searching)
     def _(event):
         # Do, something, but only when searching.
         pass
 
-If we want to know the boolean value of this filter, we have to call it like a
-function:
+If we want to know the boolean value of this filter, we have to call it like a function:
 
 .. code:: python
 
@@ -113,16 +112,16 @@ Some examples:
 
 .. code:: python
 
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add('ctrl-t', filter=~is_searching)
+    @bind.add('ctrl-t', filter=~is_searching)
     def _(event):
         " Do something, but not while searching. "
         pass
 
-    @kb.add('ctrl-t', filter=has_search | has_selection)
+    @bind.add('ctrl-t', filter=has_search | has_selection)
     def _(event):
         " Do something, but only when searching or when there is a selection. "
         pass

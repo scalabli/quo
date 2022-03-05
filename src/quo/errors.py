@@ -214,19 +214,14 @@ class NoSuchApp(UsageError):
     def __init__(
             self, 
             appname, 
-            intro: ty.Optional[str] = None,
             message: ty.Optional[str] =None, 
             possibilities=None, 
             clime=None
             ):
         if message is None:
-            from quo.shortcuts.utils import print
-            from quo.text import Text
-            intro = print(Text('<style fg="red" bg="white"><b>⚠️ Error</b></style>'))
             message = f"{appname}"
 
         super().__init__(message, clime)
-        self.intro = intro
         self.appname = appname
         self.possibilities = possibilities
 

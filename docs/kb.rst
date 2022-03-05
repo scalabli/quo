@@ -9,33 +9,31 @@ A key binding is an association between a physical key on a keyboard and a param
   This page contains a couple of extra notes about key bindings.
 
 Key bindings can be defined by creating a
-:class:`~quo.keys.KeyBinder` instance:
+:class:`~quo.keys.Bind` instance:
 
 
 .. code:: python
 
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
 
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add('a')
+    @bind.add('a')
     def _(start):
         " Do something if 'a' has been pressed. "
         ...
 
 
-    @kb.add('ctrl-t')
+    @bind.add('ctrl-t')
     def _(event):
         " Do something if Control-T has been pressed. "
         ...
 
 .. note::
 
-    :kbd:`ctrl-q` (control-q) and :kbd:`ctrl-s` (control-s) are often captured by the
-    terminal, because they were used traditionally for software flow control.
+    :kbd:`ctrl-q` (control-q) and :kbd:`ctrl-s` (control-s) are often captured by the terminal, because they were used traditionally for software flow control.
     When this is enabled, the application will automatically freeze when
-    :kbd:`ctrl-s` is pressed, until :kbd:`ctrl-q` is pressed. It won't be possible to
-    bind these keys.
+    :kbd:`ctrl-s` is pressed, until :kbd:`ctrl-q` is pressed. It won't be possible to bind these keys.
 
     In order to disable this, execute the following command in your shell, or even
     add it to your `.bashrc`.
@@ -48,7 +46,7 @@ Key bindings can even consist of a sequence of multiple keys. The binding is onl
 
 .. code:: python
 
-    @kb.add('q', 'u', 'o')
+    @bind.add('q', 'u', 'o')
     def _(start):
         " Do something if 'a' is pressed and then 'b' is pressed. "
         ...
@@ -166,7 +164,7 @@ In code that looks as follows:
 
 .. code:: python
 
-    @kb.add('escape', 'f')
+    @bind.add('escape', 'f')
     def _(event):
         " Do something if alt-f or meta-f have been pressed. "
 
@@ -179,7 +177,7 @@ This is possible by binding the '<any>' key:
 
 .. code:: python
 
-    @bindings.add('a', '<any>')
+    @bind.add('a', '<any>')
     def _(start):
         ...
 
@@ -203,7 +201,7 @@ pass it to :class:`~quo.Condition` instance. (:ref:`Read more about filters <fil
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-    @kb.add('ctrl-t', filter=is_active)
+    @bind.add('ctrl-t', filter=is_active)
     def _(event):
         # ...
         pass
@@ -214,25 +212,24 @@ The key binding will be ignored when this condition is not satisfied.
 ``ConditionalKeyBindings: Disabling a set of key bindings``
 -------------------------------------------------------------
 
-Sometimes you want to enable or disable a whole set of key bindings according
-to a certain condition. This is possible by wrapping it in a
+Sometimes you want to enable or disable a whole set of key bindings according to a certain condition. This is possible by wrapping it in a
 :class:`~quo.keys.ConditionalKeyBindings` object.
 
 .. code:: python
 
-    from quo import Condition
+    from quo import Conditio
+    from quo.keys ConditionalKeyBindings
 
     @Condition
     def is_active():
         " Only activate key binding on the second half of each minute. "
         return datetime.datetime.now().second > 30
 
-     bindings = quo.keys.ConditionalKeyBindings(
+     bindings = ConditionalKeyBindings(
          bind=my_bindings,
          filter=is_active)
 
-If the condition is not satisfied, all the key bindings in `my_bindings` above
-will be ignored.
+If the condition is not satisfied, all the key bindings in `my_bindings` above will be ignored.
 
 
 ``Merging key bindings``
@@ -240,7 +237,7 @@ will be ignored.
 
 Sometimes you have different parts of your application generate a collection of
 key bindings. It is possible to merge them together through the
-:func:`~quo.keys.merge_key_bindings` function. This is preferred above passing a :class:`~quo.keys.KeyBinder` object around and having everyone populate it.
+:func:`~quo.keys.merge_key_bindings` function. This is preferred above passing a :class:`~quo.keys.Bind` object around and having everyone populate it.
 
 .. code:: python
 
@@ -267,11 +264,11 @@ By passing the `eager` flag to this second binding, we are actually saying that 
 
 .. code:: python
 
-    @kb.add('a', 'b')
+    @bind.add('a', 'b')
     def binding_1(event):
         ...
 
-    @kb.add('a', eager=True)
+    @bind.add('a', eager=True)
     def binding_2(event):
         ...
 
@@ -285,7 +282,7 @@ Key binders handlers can be asyncio coroutines.
 .. code:: python
 
 
-    @kb.add('x')
+    @bind.add('x')
     async def print_hello(event):
         """
         Pressing 'x' will print 5 times "hello" in the background above the
@@ -333,7 +330,7 @@ the `record_in_macro` parameter to `False`:
 
 .. code:: python
 
-    @kb.add('ctrl-t', record_in_macro=False)
+    @bind.add('ctrl-t', record_in_macro=False)
     def _(event):
         # ...
         pass

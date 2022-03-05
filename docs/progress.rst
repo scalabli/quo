@@ -190,7 +190,7 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
 
     from quo.text import Text
     from quo.progress import ProgressBar
-    from quo.keys import KeyBinder
+    from quo.keys import Bind
     from quo.patch_stdout import patch_stdout
 
     import os
@@ -200,14 +200,14 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
     example = Text(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
 
     # Create custom key bindings first.
-    kb = KeyBinder()
+    bind = Bind()
     cancel = [False]
 
-    @kb.add('f')
+    @bind.add('f')
     def _(event):
         print('You pressed `f`.')
 
-    @kb.add('x')
+    @bind.add('x')
     def _(event):
         " Send Abort (control-c) signal. "
         cancel[0] = True
@@ -216,7 +216,7 @@ Like other quo  applications, we can add custom key bindings, by passing a :clas
     # Use `patch_stdout`, to make sure that prints go above the
     # application.
     with patch_stdout():
-        with ProgressBar(bind=kb, bottom_toolbar=example) as pb:
+        with ProgressBar(bind=bind, bottom_toolbar=example) as pb:
             for i in pb(range(800)):
                 time.sleep(.01)
 

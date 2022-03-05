@@ -15,10 +15,12 @@ Unreleased
 **Fixed**
 ^^^^^^^^^
 - Optimized the help parameter.
+- Deprecated notice `TypeError`
 
 **Added**
 ----------
 Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
+Added :kbd:`<any>` enabling the user to press any key to exit the help page
 
 ``Version 2022.2.2``
 --------------------

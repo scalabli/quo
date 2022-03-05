@@ -21,6 +21,7 @@ from quo.i_o import (
            flair
            )
 from quo.prompt import prompt
+from quo.text import AnyFormattedText
 from .types import (
         _NumberRangeBase,
         BOOL,
@@ -40,6 +41,7 @@ _missing = object()
 SUBCOMMAND_METAVAR = "COMMAND [ARGS]..."
 SUBCOMMANDS_METAVAR = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
 
+from quo.text import Text
 DEPRECATED_HELP_NOTICE = " (DEPRECATED)"
 DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
@@ -50,7 +52,7 @@ LINUX = sys.platform.startswith("linux")
 
 def deprecated_notice(cmd):
     if cmd.deprecated:
-        echo(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), fg="black", bg="yellow", err=True)
+        echo(DEPRECATED_INVOKE_NOTICE.format(name=cmd.name), err=True)
 
 
 def _complete_visible_commands(clime, incomplete):
@@ -801,34 +803,6 @@ class BaseCommand:
         """
         raise NotImplementedError("Base commands are not invokable by default")
 
-    def shell_complete(self, clime, incomplete):
-        """Return a list of completions for the incomplete value. Looks
-        at the names of chained multi-commands.
-
-        Any command could be part of a chained multi-command, so sibling
-        commands are valid at any point during command completion. Other
-        command classes will return more completions.
-
-        :param clime: Invocation context for this command.
-        :param incomplete: Value being completed. May be empty.
-
-        """
-        from quo.shelldone import CompletionItem
-
-        results = []
-
-        while clime.parent is not None:
-            clime = clime.parent
-
-            if isinstance(clime.command, MultiCommand) and clime.command.chain:
-                results.extend(
-                    CompletionItem(name, help=command.get_short_help_str())
-                    for name, command in _complete_visible_commands(clime, incomplete)
-                    if name not in clime.protected_args
-                )
-
-        return results
-
     def main(
         self,
         args=None,
@@ -968,13 +942,13 @@ class Command(BaseCommand):
         callback=None,
         params=None,
         help=None,
-        epilog=None,
+        epilog="Check the documentation.\n\nhttps://quo.rtfd.io", #None,
         short_help=None,
         apps_metavar= "[HELP PAGE]",
         add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
-        deprecated=False,
+        deprecated= False,
     ):
         super().__init__(name, context_settings)
         #: the callback to execute when the command fires.  This might be
@@ -1061,8 +1035,25 @@ class Command(BaseCommand):
 
         def show_help(clime, param, value):
             if value and not clime.parse:
-                from quo.dialog import MessageBox
-                MessageBox(title="Help", text=f"{clime.get_help()}").run()
+                from quo.layout import Layout, Window, WindowAlign as WA, FormattedTextControl, HSplit
+                from quo.keys import Bind
+                from quo.console import Console
+                from quo.text import Text
+                from quo.widget import Label
+                root = HSplit([
+                    Window(
+                        FormattedTextControl('[HELP PAGE]'), style='reverse', align=WA.CENTER, height=1),
+                    Label(
+                        Text(f'{clime.get_help()}')
+                        ),
+                    ])
+                layout = Layout(root)
+                bind = Bind()
+                @bind.add('<any>')
+                def _(event):
+                    event.app.exit()
+
+                Console(layout=layout, bind=bind).run()
                 clime.exit()
 
         return App(
@@ -1071,7 +1062,7 @@ class Command(BaseCommand):
             is_eager=True,
             expose_value=False,
             callback=show_help,
-            help="Check the documentation for more mitigation steps.",
+            help=("Check the documentation for more mitigation steps."),
         )
 
     def make_parser(self, clime):
@@ -1484,23 +1475,23 @@ class MultiCommand(Command):
         """
         return []
 
-    def shell_complete(self, clime, incomplete):
-        """Return a list of completions for the incomplete value. Looks
-        at the names of apps, subcommands, and chained
-        multi-commands.
+  # def shell_complete(self, clime, incomplete):
+ #       """Return a list of completions for the incomplete value. Looks
+ #       at the names of apps, subcommands, and chained
+   #     multi-commands.
 
-        :param clime: Invocation context for this command.
-        :param incomplete: Value being completed. May be empty.
+  #      :param clime: Invocation context for this command.
+  #      :param incomplete: Value being completed. May be empty.
 
-        """
-        from quo.shelldone import CompletionItem
-
-        results = [
-            CompletionItem(name, help=command.get_short_help_str())
-            for name, command in _complete_visible_commands(clime, incomplete)
-        ]
-        results.extend(super().shell_complete(clime, incomplete))
-        return results
+    #    """
+  #      from quo.shelldone import CompletionItem
+#
+   #     results = [
+  #          CompletionItem(name, help=command.get_short_help_str())
+   #         for name, command in _complete_visible_commands(clime, incomplete)
+   #     ]
+    #    results.extend(super().shell_complete(clime, incomplete))
+    #    return results
 
 
 class Tether(MultiCommand):
@@ -2034,7 +2025,7 @@ class App(Parameter):
         count=False,
         allow_from_autoenv=True,
         type=None,
-        help=None,
+        help: str = None,
         hidden=False,
         show_choices=True,
         show_envvar=False,

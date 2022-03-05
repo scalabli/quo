@@ -7,7 +7,7 @@ from typing import Callable, Dict, Optional
 from quo.document import Document
 from quo.text.core import StyleAndTextTuples
 from quo.text.utils import split_lines
-from quo.lexers import Lexer
+from quo.highlight import Lexer
 
 from .compiler import _CompiledGrammar
 
