@@ -42,19 +42,20 @@ $ hello.py --help
 ``Documenting Arguments``
 -------------------------
 
-:func:`quo.arg()` does not take a help parameter. This is to follow the general convention of Unix tools of using arguments for only the most necessary things, and to document them in the command help text by referring to them by name.
+:func:`quo.console.arg()` does not take a help parameter. This is to follow the general convention of Unix tools of using arguments for only the most necessary things, and to document them in the command help text by referring to them by name.
 
 You might prefer to reference the argument in the description like so:
 
 .. code:: python
 
-  import quo
+  from quo import print
+  from quo.console import arg, command
 
-  @quo.command()
-  @quo.arg('filename')
+  @command()
+  @arg('filename')
   def touch(filename):
       """Print FILENAME."""
-      quo.echo(filename)
+      print(filename)
 
 And what it looks like:
 
@@ -74,15 +75,17 @@ Or you might prefer to explicitly provide a description of the argument:
 
 .. code:: python
 
-  import quo
-  @quo.command()
-  @quo.arg('filename')
-  def touch(filename):
+  from quo import echo
+  from quo.console import arg, command
+
+  @command()
+  @arg('filename')
+  def touch(filename:str):
       """Print FILENAME.
 
       FILENAME is the name of the file to check.
       """
-      quo.echo(filename)
+      echo(filename)
 
 And what it looks like:
 
@@ -112,9 +115,9 @@ Example:
 
 .. code:: python
 
-   import quo
+   from quo.console import command
 
-   @quo.command()
+   @command()
    def cli():
        """First paragraph.
 
@@ -165,11 +168,11 @@ You can use the \f escape marker to have Quo truncate the help text after the ma
 Example:
 
 .. code:: python
+  from quo import pass_clime
+  from quo.console import command
 
-  import quo
-
-  @quo.command()
-  @quo.pass_context
+  @command()
+  @pass_clime
   def cli(clime):
       """First paragraph.
 
@@ -204,15 +207,16 @@ Apps and parameters accept a metavar argument that can change the meta variable 
 
 .. code:: python
 
-  import quo
+  from quo import echo
+  from quo.console import app, command
 
-  @quo.command(apps_metavar='<options>')
-  @quo.app('--count', default=1, help='number of greetings', metavar='<int>')
-  @quo.arg('name', metavar='<name>')
+  @command(apps_metavar='<options>')
+  @app('--count', default=1, help='number of greetings', metavar='<int>')
+  @arg('name', metavar='<name>')
   def hello(count, name):
       """This script prints hello <name> <int> times."""
       for x in range(count):
-          quo.echo(f"Hello {name}!")
+          echo(f"Hello {name}!")
 
 Example:
 
@@ -235,9 +239,9 @@ For commands, a short help snippet is generated. By default, it’s the first se
 
 .. code:: python
 
-  import quo
+  from quo.console import command, tether
 
-  @quo.tether()
+  @tether()
   def cli():
       """A simple command line tool."""
 
@@ -271,10 +275,11 @@ $ repo.py
 This example changes the default parameters to -h and --help instead of just --help:
 
 .. code:: python
+  from quo.console import command
 
   CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
-  @quo.command(context_settings=CONTEXT_SETTINGS)
+  @command(context_settings=CONTEXT_SETTINGS)
   def cli():
       pass
 
