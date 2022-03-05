@@ -261,7 +261,7 @@ Similar, we could use a list of style/text tuples.
             style=style
             )
            
- session.prompt('> ', bottom_toolbar=toolbar, style=style)
+ session.prompt('> ')
 
 The default class name is bottom-toolbar and that will also be used to fill the background of the toolbar.
 
