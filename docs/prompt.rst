@@ -149,23 +149,22 @@ A side effect of this is that the enter key will now insert a newline instead of
 
 
 It is possible to specify a continuation prompt. This works by passing a
-``prompt_continuation`` callable to :func:`~quo.prompt.Prompt.prompt`.
+``prompt_continuation`` callable to :class:`~quo.prompt.Prompt`.
 This function is supposed to return :ref:`formatted text <formatted_text>`, or
 a list of ``(style, text)`` tuples. The width of the returned text should not
 exceed the given width. (The width of the prompt margin is defined by the prompt.)
 
 .. code:: python
 
-    import quo
+    from quo.prompt import Prompt
 
-    session = quo..prompt.Prompt()
+    session = Prompt(multiline=True)
 
-    def prompt_continuation(width, line_number, is_soft_wrap):
+    def continuation(width, line_number, is_soft_wrap):
         return '.' * width
         # Or: return [('', '.' * width)]
 
-    session.prompt('multiline input> ', multiline=True,
-           prompt_continuation=prompt_continuation)
+    session.prompt('multiline input> ', prompt_continuation=continuation)
 
 .. image:: ./images/multiline-input.png
 
@@ -195,136 +194,6 @@ When the ``hide=True`` flag in :func:`quo.prompt` or :class:`quo.prompt.Prompt` 
    session = Prompt(hide=True)
 
    session.prompt("Enter password: ")
-
-
-
-Parameters
-   * ``text`` *(str)*  - Plain text or formatted text to be shown before the prompt. This can also be a callable that returns formatted text.
-    * ``wrap_lines`` `bool` or :class:`~quo.filters.Filter`.
-        When True (the default), automatically wrap long lines instead of
-        scrolling horizontally.
-
-
-    * ``editing_mode`` - ``EditingMode.VI`` or ``EditingMode.EMACS``.
-    * ``vi_mode`` - `bool`, if True, Identical to ``editing_mode=EditingMode.VI``.
-    * ``complete_while_typing`` - `bool` or
-        :class:`~quo.filters.Filter`. Enable autocompletion while
-        typing.
-    * ``validate_while_typing`` - `bool` or
-        :class:`~quo.filters.Filter`. Enable input validation while
-        typing.
-    * ``enable_history_search`` - `bool` or
-        :class:`~quo.filters.Filter`. Enable up-arrow parting
-        string matching.
-    * ``search_ignore_case`` - 
-        :class:`~quo.filters.Filter`. Search case insensitive.
-
-    * ``completer`` - :class:`~quo.completion.Completer` instance
-        for input completion.
-    * ``complete_in_thread`` - `bool` or
-        :class:`~quo.filters.Filter`. Run the completer code in a
-        background thread in order to avoid blocking the user interface.
-        For ``CompleteStyle.READLINE_LIKE``, this setting has no effect. There
-        we always run the completions in the main thread.
-    * ``reserve_space_for_menu`` - Space to be reserved for displaying the menu.
-        (0 means that no space needs to be reserved.)
-    * ``auto_suggest`` - :class:`~quo.auto_suggest.AutoSuggest`
-        instance for input suggestions.
-    * ``style`` - :class:`.Style` instance for the color scheme.
-    * ``include_default_pygments_style`` - `bool` or
-        :class:`~quo.filters.Filter`. Tell whether the default
-        styling for Pygments lexers has to be included. By default, this is
-        true, but it is recommended to be disabled if another Pygments style is
-        passed as the `style` argument, otherwise, two Pygments styles will be
-        merged.
-    * ``style_transformation`` -
-        :class:`~quo.style.StyleTransformation` instance.
-    * ``swap_light_and_dark_colors`` - `bool` or
-        :class:`~quo.filters.Filter`. When enabled, apply
-        :class:`~quo.style.SwapLightAndDarkStyleTransformation`.
-        This is useful for switching between dark and light terminal
-        backgrounds.
-    * ``enable_system_elicit`` - `bool` or
-        :class:`~quo.filters.Filter`. Pressing Meta+'!' will show
-        a system elicit.
-    * ``enable_suspend`` - `bool` or :class:`~quo.filters.Filter`.
-        Enable Control-Z style suspension.
-    * ``enable_open_in_editor`` - `bool` or
-        :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
-        C-X C-E in emacs mode will open an external editor..
-    * ``clipboard`` - :class:`~quo.clipboard.Clipboard` instance.
-        (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
-    * ``elicit_continuation`` - Text that needs to be displayed for a multiline
-        elicit continuation. This can either be formatted text or a callable
-        that takes a `elicit_width`, `line_number` and `wrap_count` as input
-        and returns formatted text. When this is `None` (the default), then
-        `elicit_width` spaces will be used.
-    * ``complete_style`` - ``CompleteStyle.COLUMN``,
-        ``CompleteStyle.MULTI_COLUMN`` or ``CompleteStyle.READLINE_LIKE``.
-    * ``mouse_support`` - `bool` or :class:`~quo.filters.Filter`
-        to enable mouse support.
-
-    * ``refresh_interval`` - (number; in seconds) When given, refresh the UI
-        every so many seconds.
-    * ``input`` - `Input` object. (Note that the preferred way to change the
-        input/output is by creating an `AppSession`.)
-    * ``output`` - `Output` object.
-
-Autocompletion
-----------------
-Autocompletion can be added by passing a completer parameter.
-
-.. code:: python
-
-    from quo import echo
-    from quo.completion import WordCompleter
-    from quo.prompt import Prompt
-     
-    session = Prompt()
-    suggest = WordCompleter(['<html>', '<body>', '<head>', '<title>'])
-    text =  session.prompt('Enter HTML: ', completer=suggest)
-    echo(f"You said: {text}")
-
-:class:`~quo.completion.WordCompleter` is a simple completer that
-completes the last word before the cursor with any of the given words.
-
-.. image:: ./images/html-completion.png
-
-Auto suggestion
----------------
-
-Auto suggestion is a way to propose some input completions to the user like the
-`fish shell <http://fishshell.com/>`_.
-
-Usually, the input is compared to the history and when there is another entry
-starting with the given text, the completion will be shown as gray text behind
-the current input. Pressing the right arrow :kbd:`→` or :kbd:`ctrl-e` will insert
-this suggestion, :kbd:`alt-f` will insert the first word of the suggestion.
-
-.. note::
-
-    When suggestions are based on the history, don't forget to share one
-    :class:`~quo.history.History` object between consecutive prompt calls. Using a :class:`~quo.prompt.Prompt`
-
-Example:
-
-.. code:: python
-
-    from quo.prompt import Prompt
-    from quo.completion import AutoSuggestFromHistory
-    from quo.history import InMemoryHistory
-    
-    session = Prompt(auto_suggest=AutoSuggestFromHistory())
-
-    while True:
-        text = session.prompt('> ')
-        print(f"You said: {text}")
-
-.. image:: ./images/auto-suggestion.png
-
-A suggestion does not have to come from the history. Any implementation of the
-:class:`~quo.completion.AutoSuggest` abstract base class can be
-passed as an argument.
 
 
 Confirmation Prompts
@@ -376,7 +245,7 @@ Similar, we could use a list of style/text tuples.
 
 .. code:: python
    from quo.prompt import Prompt
-   from quo.styles import Style
+   from quo.style import Style
 
 
    def toolbar():
@@ -417,7 +286,7 @@ The following example returns a callable
 .. code:: python
 
    from quo.prompt import Prompt
-   from quo.styles import Style
+   from quo.style import Style
 
    
    style = Style.add({'rprompt': 'bg:red fg:white',})
@@ -578,8 +447,61 @@ By default, colors are taken from the 256 color palette. If you want to have 24b
     session.prompt(message)
 
 
+
+``Completion``
+--------------
+
+Auto suggestion
+^^^^^^^^^^^^^^^^
+Auto suggestion is a way to propose some input completions to the user like the `fish shell <http://fishshell.com/>`_.
+
+Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow :kbd:`→` or :kbd:`ctrl-e` will insert this suggestion, :kbd:`alt-f` will insert the first word of the suggestion.
+
+.. note::
+    
+   When suggestions are based on the history, don't forget to share one :class:`~quo.history.History` object between consecutive prompt calls. Using a :class:`~quo.prompt.Prompt`
+
+Example:
+
+.. code:: python
+
+    from quo.prompt import Prompt
+    from quo.completion import AutoSuggestFromHistory
+    from quo.history import InMemoryHistory
+    
+    history = InMemoryHistory()
+    history.append("import os")
+    history.append('print("hello")') 
+    history.append('print("world")')
+    history.append("import path")
+    
+    session = Prompt(auto_suggest=AutoSuggestFromHistory(), history=history)
+    
+    while True:
+          text = session.prompt('> ')
+          print(f"You said: {text}")                                                                                    
+.. image:: ./images/auto-suggestion.png
+
+A suggestion does not have to come from the history. Any implementation of the :class:`~quo.completion.AutoSuggest` abstract base class can be passed as an argument.
+
+Autocompletion
+^^^^^^^^^^^^^^^
+Autocompletion can be added by passing a completer parameter.
+.. code:: python
+ from quo.completion import WordCompleter
+ from quo.prompt import Prompt
+ 
+ session = Prompt()
+ completer = WordCompleter(['<html>', '<body>', '<head>','<title>'])
+ session.prompt('Enter HTML: ', completer=completer)
+
+:class:`~quo.completion.WordCompleter` is a simple completer that completes the last word before the cursor with any of the given words.
+
+.. image:: ./images/html-completion.png
+
+
 Nested completion
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 Sometimes you have a command line interface where the completion depends on the
 previous words from the input. Examples are the CLIs from routers and switches.

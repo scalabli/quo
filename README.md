@@ -156,11 +156,16 @@ Auto suggestion is a way to propose some input completions to the user. Usually,
  from quo.completion import AutoSuggestFromHistory
  from quo.history import InMemoryHistory
 
- session = Prompt()
+ history = InMemoryHistory(
+ history.append("import os")
+ history.append('print("hello")') 
+ history.append('print("world")')  
+ history.append("import path"
+
+ session = Prompt(auto_suggest=AutoSuggestFromHistory(), history=history)
 
  while True:
-    text = session.prompt('> ', auto_suggest=AutoSuggestFromHistory())
-
+    session.prompt('> ')
 ```
 Read more on [Completions](https://quo.readthedocs.io/en/latest/prompt.html#completion)
 </details>
