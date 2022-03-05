@@ -7,13 +7,15 @@ Table
 
 .. code:: python
 
-  from quo import echo
-  from quo.table import Table
+ from quo import echo
+ from quo.table import Table
   
-  example = [
-  ["Name", "Gender", "Age"],
-  ["Alice", "F", 24],
-  ["Bob", "M", 19],
-  ["Dave", "M", 24]
-  ]
-  echo(Table(example))
+ example = [
+ ["Name", "Gender", "Age"],
+ ["Alice", "F", 24],
+ ["Bob", "M", 19],
+ ["Dave", "M", 24]
+ ]
+ echo(Table(example))
+
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/table.png

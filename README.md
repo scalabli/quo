@@ -280,7 +280,7 @@ Example
  ]
  echo(Table(data))
 ```
-![tabulate](https://github.com/secretum-inc/quo/raw/master/pics/tabulate.png)
+![tabulate](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/table.png)
 </details>
 
 <details>
