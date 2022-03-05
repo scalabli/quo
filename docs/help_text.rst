@@ -25,18 +25,7 @@ And what it looks like:
 
 $ hello.py --help
 
-.. code:: shell
-
-  Usage: hello.py [HELP PAGE]
-
-    Simple program that greets NAME for a total of
-    COUNT times.
-
-  Apps:
-    --count INTEGER  number of greetings.
-    --name TEXT      The person to greet.
-    --help          Check the documentation for more
-                    mitigation steps.
+.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/help-text.png
 
 
 ``Documenting Arguments``
