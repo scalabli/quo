@@ -6,22 +6,28 @@ import datetime
 import asyncio
 import quo
 
-from quo.suite.current import get_app
+from quo.console import Console, get_app
 from quo.completion import PathCompleter
 from quo.filters import Condition
 from quo.layout.containers import (
     ConditionalContainer,
     Float
 )
-from quo.layout.controls import FormattedTextControl
+from quo.keys import Bind
+from quo.layout import FormattedTextControl, Layout, HSplit, VSplit, Window, WindowAlign as WA
 from quo.layout.dimension import D
 from quo.layout.menus import CompletionsMenu
-from quo.lexers import DynamicLexer, PygmentsLexer
+from quo.highlight import DynamicLexer, PygmentsLexer
 from quo.search import start_search
-from quo.styles import Style
-from quo.widgets import (
+from quo.style import Style
+from quo.widget import (
+    Button,
     Dialog,
+    Label,
+    MenuContainer,
+    MenuItem,
     SearchToolbar,
+    TextArea,
 )
 
 
@@ -48,9 +54,9 @@ def get_statusbar_right_text():
     )
 
 
-search_toolbar = quo.widgets.SearchToolbar()
-text_field = quo.widgets.TextArea(
-    lexer=DynamicLexer(
+search_toolbar = quo.widget.SearchToolbar()
+text_field = quo.widget.TextArea(
+    highlighter=DynamicLexer(
         lambda: PygmentsLexer.from_filename(
             ApplicationState.current_path or ".txt", sync_from_start=False
         )
@@ -76,19 +82,19 @@ class TextInputDialog:
         def cancel():
             self.future.set_result(None)
 
-        self.text_area = quo.widgets.TextArea(
+        self.text_area = TextArea(
             completer=completer,
             multiline=False,
             width=D(preferred=40),
             accept_handler=accept_text,
         )
 
-        ok_button = quo.widgets.Button(text="OK", handler=accept)
-        cancel_button = quo.widgets.Button(text="Cancel", handler=cancel)
+        ok_button = Button(text="OK", handler=accept)
+        cancel_button = Button(text="Cancel", handler=cancel)
 
-        self.dialog = quo.widgets.Dialog(
+        self.dialog = Dialog(
             title=title,
-            body=quo.layout.HSplit([quo.widgets.Label(text=label_text), self.text_area]),
+            body=HSplit([Label(text=label_text), self.text_area]),
             buttons=[ok_button, cancel_button],
             width=D(preferred=80),
             modal=True,
@@ -105,11 +111,11 @@ class MessageDialog:
         def set_done():
             self.future.set_result(None)
 
-        ok_button = quo.widgets.Button(text="OK", handler=(lambda: set_done()))
+        ok_button = Button(text="OK", handler=(lambda: set_done()))
 
         self.dialog = Dialog(
             title=title,
-            body=quo.layout.HSplit([quo.widgets.Label(text=text)]),
+            body=HSplit([Label(text=text)]),
             buttons=[ok_button],
             width=D(preferred=80),
             modal=True,
@@ -119,21 +125,21 @@ class MessageDialog:
         return self.dialog
 
 
-body = quo.layout.HSplit(
+body = HSplit(
     [
         text_field,
         search_toolbar,
         ConditionalContainer(
-            content=quo.layout.VSplit(
+            content=VSplit(
                 [
-                    quo.layout.Window(
+                    Window(
                         FormattedTextControl(get_statusbar_text), style="class:status"
                     ),
-                    quo.layout.Window(
+                    Window(
                         FormattedTextControl(get_statusbar_right_text),
                         style="class:status.right",
                         width=9,
-                        align=quo.layout.WindowAlign.RIGHT,
+                        align=WA.RIGHT,
                     ),
                 ],
                 height=1,
@@ -145,10 +151,10 @@ body = quo.layout.HSplit(
 
 
 # Global key bindings.
-bindings = quo.keys.KeyBinder()
+bind = Bind()
 
 
-@bindings.add("ctrl-c")
+@bind.add("ctrl-c")
 def _(event):
     "Focus menu."
     event.app.layout.focus(root_container.window)
@@ -293,44 +299,44 @@ def do_status_bar():
 #
 
 
-root_container = quo.widgets.MenuContainer(
+root_container = MenuContainer(
     body=body,
     menu_items=[
-        quo.widgets.MenuItem(
+        MenuItem(
             "File",
             children=[
-                quo.widgets.MenuItem("New...", handler=do_new_file),
-                quo.widgets.MenuItem("Open...", handler=do_open_file),
-                quo.widgets.MenuItem("Save"),
-                quo.widgets.MenuItem("Save as..."),
-                quo.widgets.MenuItem("-", disabled=True),
-                quo.widgets.MenuItem("Exit", handler=do_exit),
+                MenuItem("New...", handler=do_new_file),
+                MenuItem("Open...", handler=do_open_file),
+                MenuItem("Save"),
+                MenuItem("Save as..."),
+                MenuItem("-", disabled=True),
+                MenuItem("Exit", handler=do_exit),
             ],
         ),
-        quo.widgets.MenuItem(
+        MenuItem(
             "Edit",
             children=[
-                quo.widgets.MenuItem("Undo", handler=do_undo),
-                quo.widgets.MenuItem("Cut", handler=do_cut),
-                quo.widgets.MenuItem("Copy", handler=do_copy),
-                quo.widgets.MenuItem("Paste", handler=do_paste),
-                quo.widgets.MenuItem("Delete", handler=do_delete),
-                quo.widgets.MenuItem("-", disabled=True),
-                quo.widgets.MenuItem("Find", handler=do_find),
-                quo.widgets.MenuItem("Find next", handler=do_find_next),
-                quo.widgets.MenuItem("Replace"),
-                quo.widgets.MenuItem("Go To", handler=do_go_to),
-                quo.widgets.MenuItem("Select All", handler=do_select_all),
-                quo.widgets.MenuItem("Time/Date", handler=do_time_date),
+                MenuItem("Undo", handler=do_undo),
+                MenuItem("Cut", handler=do_cut),
+                MenuItem("Copy", handler=do_copy),
+                MenuItem("Paste", handler=do_paste),
+                MenuItem("Delete", handler=do_delete),
+                MenuItem("-", disabled=True),
+                MenuItem("Find", handler=do_find),
+                MenuItem("Find next", handler=do_find_next),
+                MenuItem("Replace"),
+                MenuItem("Go To", handler=do_go_to),
+                MenuItem("Select All", handler=do_select_all),
+                MenuItem("Time/Date", handler=do_time_date),
             ],
         ),
-        quo.widgets.MenuItem(
+        MenuItem(
             "View",
-            children=[quo.widgets.MenuItem("Status Bar", handler=do_status_bar)],
+            children=[MenuItem("Status Bar", handler=do_status_bar)],
         ),
-        quo.widgets.MenuItem(
+        MenuItem(
             "Info",
-            children=[quo.widgets.MenuItem("About", handler=do_about)],
+            children=[MenuItem("About", handler=do_about)],
         ),
     ],
     floats=[
@@ -340,7 +346,7 @@ root_container = quo.widgets.MenuContainer(
             content=CompletionsMenu(max_height=16, scroll_offset=1),
         ),
     ],
-    key_bindings=bindings,
+    bind=bind,
 )
 
 
@@ -352,10 +358,10 @@ style = Style.add(
 )
 
 
-layout = quo.layout.Layout(root_container, focused_element=text_field)
+layout = Layout(root_container, focused_element=text_field)
 
 
-application = quo.Suite(
+application = Console(
     layout=layout,
     enable_page_navigation_bindings=True,
     style=style,

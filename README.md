@@ -183,12 +183,12 @@ Quo automatically generates help pages for your command-line tools.
  @app('--count', default=1, help='number of greetings')
  @app('--name', prompt="What is your name?", help="The person to greet")
 
- def hello(count: int, name: str):
+def hello(count: int, name: str):
     """This script prints hello NAME COUNT times."""
        for x in range(count):
-           print(f"Hello {name}!)"
+           print(f"Hello {name}!")
 
-if __name__ == "__main__:
+ if __name__ == "__main__:
           hello()
 ```
 And what it looks like:

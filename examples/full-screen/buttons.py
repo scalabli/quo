@@ -2,8 +2,7 @@
 """
 A simple example of a few buttons and click handlers.
 """
-from quo import Console
-from quo.console import get_app
+from quo.console import Console, get_app
 from quo.widget import Button, TextArea, Box, Frame, Label
 from quo.layout import Layout, VSplit, HSplit
 
@@ -43,14 +42,11 @@ root_container = Box(
         (
         [
             Label(text="Press `Tab` to move the focus."),
-            VSplit(
-                [
-                    Box(
-                        body=HSplit([b1, b2, b3, b4], padding=1),
+            VSplit([
+                Box(body=HSplit([b1, b2, b3, b4], padding=1),
                         padding=1,
-                        style="class:left-pane",
-                    ),
-                    Box(body=Frame(text_area), padding=1, style="class:right-pane"),
+                        style="class:left-pane"),
+                Box(body=Frame(text_area), padding=1, style="class:right-pane")
                 ]
             ),
         ]
