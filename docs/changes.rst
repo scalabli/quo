@@ -10,17 +10,23 @@ Changelog
 ``Version 2022.3``
 --------------------
 
-Unreleased
-
-**Fixed**
-^^^^^^^^^
-- Optimized the help parameter.
-- Deprecated notice `TypeError`
+Released on 2022-3-6
 
 **Added**
-----------
-Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
-Added :kbd:`<any>` enabling the user to press any key to exit the help page
+^^^^^^^^^^
+- Added :kbd:`<any>` enabling the user to press any key to exit the help page.
+- Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
+
+**Changed**
+^^^^^^^^^^^^
+- Changed :param:`enable_system_elicit` in favor of :param:`system_prompt`.
+- Changed :param:`enable_suspend` in favor of :param:`suspend`.
+
+**Fixed**
+^^^^^^^^^^
+- Optimized the help page.
+- Fixed Deprecated notice `TypeError`
+
 
 ``Version 2022.2.2``
 --------------------

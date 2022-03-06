@@ -215,13 +215,13 @@ _T = TypeVar("_T")
 ##
 
 def prompt(
-    text,
-    default=None,
+    text: str,
+    default: str = None,
     hide=False,
     affirm=False,
     type=None,
     value_proc=None,
-    suffix=":> ",
+    suffix: str = ":> ",
     show_default=True,
     err=False,
     show_choices=True,
@@ -241,7 +241,8 @@ def prompt(
     :param show_default: shows or hides the default value in the prompt.
     :param err: if set to true the file defaults to ``stderr`` instead of ``stdout``, the same as with echo.
     :param show_choices: Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is "Group by" then the  prompt will be "Group by (day, week): ".
-    Example usage::                                                                                                                     s = prompt("")
+    Example usage::
+    s = prompt("")
 
 
     """
@@ -331,7 +332,7 @@ class Prompt(Generic[_T]):
     :param wrap_lines: `bool` or :class:`~quo.filters.Filter`.
         When True (the default), automatically wrap long lines instead of
         scrolling horizontally.
-    :param is_password: Show asterisks instead of the actual typed characters.
+    :param hide: Show asterisks instead of the actual typed characters.
     :param editing_mode: ``EditingMode.VI`` or ``EditingMode.EMACS``.
     :param vi_mode: `bool`, if True, Identical to ``editing_mode=EditingMode.VI``.
     :param complete_while_typing: `bool` or
@@ -345,9 +346,9 @@ class Prompt(Generic[_T]):
         string matching.
     :param search_ignore_case:
         :class:`~quo.filters.Filter`. Search case insensitive.
-    :param lexer: :class:`~quo.lexers.Lexer` to be used for the
+    :param highlighter: :class:`~quo.lexers.Lexer` to be used for the
         syntax highlighting.
-    :param validator: :class:`~quo.types.Validator` instance
+    :param type: :class:`~quo.types.Validator` instance
         for input validation.
     :param completer: :class:`~quo.completion.Completer` instance
         for input completion.
@@ -374,7 +375,7 @@ class Prompt(Generic[_T]):
         :class:`~quo.style.SwapLightAndDarkStyleTransformation`.
         This is useful for switching between dark and light terminal
         backgrounds.
-    :param enable_system_elicit: `bool` or
+    :param system_prompt: `bool` or
         :class:`~quo.filters.Filter`. Pressing Meta+'!' will show
         a system elicit.
     :param enable_suspend: `bool` or :class:`~quo.filters.Filter`.
@@ -411,7 +412,7 @@ class Prompt(Generic[_T]):
 
     _fields = (
         "text",
-        "lexer",
+        "highlighter",
         "completer",
         "complete_in_thread",
         "is_password",
@@ -431,6 +432,7 @@ class Prompt(Generic[_T]):
         "wrap_lines",
         "enable_history_search",
         "search_ignore_case",
+        "dynamic_completion",
         "complete_while_typing",
         "validate_while_typing",
         "complete_style",
@@ -464,8 +466,8 @@ class Prompt(Generic[_T]):
         enable_history_search: FilterOrBool = True, #False,
         search_ignore_case: FilterOrBool = False,
         highlighter: Optional[Lexer] = None,
-        enable_system_elicit: FilterOrBool = False,
-        enable_suspend: FilterOrBool = False,
+        system_prompt: FilterOrBool = False,
+        suspend: FilterOrBool = False,
         enable_open_in_editor: FilterOrBool = False,
         type: Optional[Validator] = None,
         completer: Optional[Completer] = None,
@@ -536,8 +538,8 @@ class Prompt(Generic[_T]):
         self.refresh_interval = refresh_interval
         self.input_processors = input_processors
         self.placeholder = placeholder
-        self.enable_system_elicit = enable_system_elicit
-        self.enable_suspend = enable_suspend
+        self.system_prompt = system_prompt
+        self.suspend = suspend
         self.enable_open_in_editor = enable_open_in_editor
         self.reserve_space_for_menu = reserve_space_for_menu
         self.tempfile_suffix = tempfile_suffix
@@ -672,7 +674,7 @@ class Prompt(Generic[_T]):
         )
 
         system_toolbar = SystemToolbar(
-            enable_global_bindings=dyncond("enable_system_elicit")
+            enable_global_bindings=dyncond("system_prompt")
         )
 
         def get_search_buffer_control() -> SearchBufferControl:
@@ -771,7 +773,7 @@ class Prompt(Generic[_T]):
                 ),
                 ConditionalContainer(ValidationToolbar(), filter=~is_done),
                 ConditionalContainer(
-                    system_toolbar, dyncond("enable_system_elicit") & ~is_done
+                    system_toolbar, dyncond("system_prompt") & ~is_done
                 ),
                 # In multiline mode, we use two toolbars for 'arg' and 'search'.
                 ConditionalContainer(
@@ -913,7 +915,7 @@ class Prompt(Generic[_T]):
 
         @Condition
         def enable_suspend() -> bool:
-            return to_filter(self.enable_suspend)()
+            return to_filter(self.suspend)()
 
         @handle("ctrl-z", filter=suspend_supported & enable_suspend)
         def _suspend(event: E) -> None:
@@ -959,8 +961,8 @@ class Prompt(Generic[_T]):
         input_processors: Optional[List[Processor]] = None,
         placeholder: Optional[AnyFormattedText] = None,
         reserve_space_for_menu: Optional[int] = None,
-        enable_system_elicit: Optional[FilterOrBool] = None,
-        enable_suspend: Optional[FilterOrBool] = None,
+        system_prompt: Optional[FilterOrBool] = None,
+        suspend: Optional[FilterOrBool] = None,
         enable_open_in_editor: Optional[FilterOrBool] = None,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
         tempfile: Optional[Union[str, Callable[[], str]]] = None,
@@ -1076,10 +1078,10 @@ class Prompt(Generic[_T]):
             self.placeholder = placeholder
         if reserve_space_for_menu is not None:
             self.reserve_space_for_menu = reserve_space_for_menu
-        if enable_system_elicit is not None:
-            self.enable_system_elicit = enable_system_elicit
-        if enable_suspend is not None:
-            self.enable_suspend = enable_suspend
+        if system_prompt is not None:
+            self.system_prompt = system_prompt
+        if suspend is not None:
+            self.suspend = suspend
         if enable_open_in_editor is not None:
             self.enable_open_in_editor = enable_open_in_editor
         if tempfile_suffix is not None:
@@ -1191,8 +1193,8 @@ class Prompt(Generic[_T]):
         input_processors: Optional[List[Processor]] = None,
         placeholder: Optional[AnyFormattedText] = None,
         reserve_space_for_menu: Optional[int] = None,
-        enable_system_elicit: Optional[FilterOrBool] = None,
-        enable_suspend: Optional[FilterOrBool] = None,
+        system_prompt: Optional[FilterOrBool] = None,
+        suspend: Optional[FilterOrBool] = None,
         enable_open_in_editor: Optional[FilterOrBool] = None,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = None,
         tempfile: Optional[Union[str, Callable[[], str]]] = None,
@@ -1265,10 +1267,10 @@ class Prompt(Generic[_T]):
             self.placeholder = placeholder
         if reserve_space_for_menu is not None:
             self.reserve_space_for_menu = reserve_space_for_menu
-        if enable_system_elicit is not None:
-            self.enable_system_elicit = enable_system_elicit
-        if enable_suspend is not None:
-            self.enable_suspend = enable_suspend
+        if system_prompt is not None:
+            self.system_prompt = system_prompt
+        if suspend is not None:
+            self.suspend = suspend
         if enable_open_in_editor is not None:
             self.enable_open_in_editor = enable_open_in_editor
         if tempfile_suffix is not None:

@@ -221,6 +221,32 @@ as a boolean value:
    
    confirm('Do you want to continue?')
 
+``System prompt``
+------------------
+If you press :kbd:`meta-!` or :kbd:`esc-!`, you can enter system commands like `ls` or `cd`.
+
+.. code:: python
+
+   from quo.prompt import Prompt
+
+   session = Prompt(system_prompt=True)
+
+   session.prompt("Give me some input: ")
+
+
+``Suspend prompt``
+-------------------
+Pressing :kbd:`ctrl-z` will suspend the process from running and then run the command `fg` to continue the process.
+
+.. code:: python
+
+   from quo.prompt import Prompt
+
+   session = Prompt(suspend=True)
+
+   sessiom.prompr("Give me some input: ")
+
+
 ``Prompt bottom toolbar``
 ---------------------------
 Adding a bottom toolbar is as easy as passing a bottom_toolbar argument to prompt(). This argument be either plain text, formatted text or a callable that returns plain or formatted text.

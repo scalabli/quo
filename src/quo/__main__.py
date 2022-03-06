@@ -55,11 +55,9 @@ root = HSplit([
                     BufferControl(buffer=buff),
                 left_margins=[NumberedMargin(), ScrollbarMargin()],
                 right_margins=[ScrollbarMargin(), ScrollbarMargin()],),
-            VSplit([
-                Label("djdjd")]),
-              ]),
 
 
+        ]),
         ])
 root1 = Label(
         Text('<style fg="aquamarine" bg="purple"> Press Ctrl-L to launch the documentation</style>'))
