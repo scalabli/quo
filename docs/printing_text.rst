@@ -56,7 +56,7 @@ Parameters
 
    * ``reset``  – by default a reset-all code is added at the end of the string which means that styles do not carry over. This can be disabled to compose styles.
 
-`'print``
+``print``
 ----------
 quo ships with a
 :func:`~quo.print` function that's meant to

@@ -6,6 +6,9 @@ import datetime
 
 from quo import echo
 from quo.prompt import Prompt
+from quo.style import Style
+
+style = Style.add({'':'fg:red'})
 
 def get_prompt():
     "Tokens to be shown before the prompt."
@@ -15,7 +18,7 @@ def get_prompt():
             ("bg:cornsilk fg:maroon", "Enter something: ")
     ]
 
-session = Prompt(refresh_interval=0.5)
+session = Prompt(refresh_interval=0.5, style=style)
 def main():
     result = session.prompt(get_prompt)
     echo(f"You said: {result}")

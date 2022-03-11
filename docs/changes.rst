@@ -5,7 +5,15 @@
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 Changelog
-=========
+==========
+``Version 2022.3.1``
+---------------------
+
+Unreleased
+
+**Added**
+^^^^^^^^^^^
+- Added :param:`ul` as an alias of :param:`underline` for :class:`~quo.style.Style`.
 
 ``Version 2022.3``
 --------------------
@@ -14,8 +22,8 @@ Released on 2022-3-6
 
 **Added**
 ^^^^^^^^^^
-- Added :kbd:`<any>` enabling the user to press any key to exit the help page.
-- Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
+- Added key binder :kbd:`<any>` enabling the user to press any key to exit the help page.
+- Introduced :class:`~quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
 
 **Changed**
 ^^^^^^^^^^^^

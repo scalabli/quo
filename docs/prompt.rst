@@ -316,7 +316,7 @@ The following example returns a callable
  from quo.style import Style
 
    
- style = Style.add({'rprompt': 'bg:red fg:white',})
+ style = Style.add({'rprompt': 'bg:red fg:white'})
    
  def get_rprompt():
    return '<rprompt>'
@@ -424,34 +424,22 @@ creating a list of style/text tuples. In the following example, we use class nam
 
 .. code:: python
  
-    from quo.prompt import Prompt
-    from quo.style import Style
+   from quo.prompt import Prompt
+   from quo.style import Style
 
-    session = Prompt()
+   style = Style.add({' ':'fg:blue'}) # User input (default text)
+   session = Prompt(style=style)
 
-    style = Style.add({
-        # User input (default text).
-        '':         'fg:blue',
+   message = [
+       ('fg:red', 'john'),
+       ('fg:white', '@'),
+       ('fg:green bg:white', 'localhost'),
+       ('fg:yellow', ':'),
+       ('fg:cyan underline', '/user/john'),
+       ('fg:grey', '$ ')
+   ]
 
-        # Prompt.
-        'username': 'fg:red',
-        'at':       'fg:white',
-        'colon':    'fg:yellow',
-        'pound':    'fg:grey',
-        'host':     'fg:green bg:#444400',
-        'path':     'fg:cyan underline',
-    })
-
-    message = [
-        ('class:username', 'john'),
-        ('class:at',       '@'),
-        ('class:host',     'localhost'),
-        ('class:colon',    ':'),
-        ('class:path',     '/user/john'),
-        ('class:pound',    '# '),
-    ]
-
-    session.prompt(message, style=style)
+   session.prompt(message)
 
 .. image:: ./images/colored-prompt.png
 
@@ -467,7 +455,7 @@ By default, colors are taken from the 256 color palette. If you want to have 24b
 
     session = Prompt(
                 style=style,
-                color_depth=ColorDepth.TRUE.COLOR
+                color_depth=ColorDepth.TRUE_COLOR
                 )
     
              
