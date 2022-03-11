@@ -79,8 +79,8 @@ This should implement the :class:`~quo.types.Validator` abstract base class. Thi
 takes a :class:`~quo.document.Document` as input and raises
 :class:`~quo.errors.ValidationError` when the validation fails.
 
-`Number Validator`
-^^^^^^^^^^^^^^^^^^^
+`Interger Validator`
+^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
     from quo.prompt import Prompt
@@ -156,15 +156,11 @@ exceed the given width. (The width of the prompt margin is defined by the prompt
 
 .. code:: python
 
-    from quo.prompt import Prompt
+    from quo.prompt import Prompt, continuation
 
-    session = Prompt(multiline=True)
+    session = Prompt(multiline=True, prompt_continuation=continuation)
 
-    def continuation(width, line_number, is_soft_wrap):
-        return '.' * width
-        # Or: return [('', '.' * width)]
-
-    session.prompt('multiline input> ', prompt_continuation=continuation)
+    session.prompt('multiline input> ')
 
 .. image:: ./images/multiline-input.png
 
@@ -273,23 +269,14 @@ Similar, we could use a list of style/text tuples.
 .. code:: python
 
  from quo.prompt import Prompt
- from quo.style import Style
-
 
  def toolbar():
-     return [('class:bottom-toolbar', ' This is a toolbar. ')]
+     return [('fg:white bg:green', ' This is a toolbar. ')]
 
- style = Style.add({
-   'bottom-toolbar': 'fg:white bg:green',})
+ session = Prompt(bottom_toolbar=toolbar)
 
- session = Prompt(
-            bottom_toolbar=toolbar,
-            style=style
-            )
-           
  session.prompt('> ')
 
-The default class name is bottom-toolbar and that will also be used to fill the background of the toolbar.
 
 ``Right prompt(rprompt)``
 --------------------------
@@ -420,7 +407,23 @@ Coloring the prompt itself
 
 It is possible to add some colors to the prompt itself. For this, we need to
 build some :ref:`formatted text <formatted_text>`. One way of doing this is by
-creating a list of style/text tuples. In the following example, we use class names to refer to the style.
+creating a list of style/text tuples. In the following example, the input will be in red
+
+.. code:: python
+
+ from quo.prompt import Prompt
+ from quo.style import Style
+
+ style = Style.add({' ':'fg:red'}) #User input (default text) 
+
+ session = Prompt(style=style)
+
+ session.prompt("Type something: ")
+
+.. image:: ./images/colored-prompt1.png
+
+
+Here's an example upgrade:
 
 .. code:: python
  
@@ -436,12 +439,12 @@ creating a list of style/text tuples. In the following example, we use class nam
        ('fg:green bg:white', 'localhost'),
        ('fg:yellow', ':'),
        ('fg:cyan underline', '/user/john'),
-       ('fg:grey', '$ ')
+       ('fg:red', '$ ')
    ]
 
    session.prompt(message)
 
-.. image:: ./images/colored-prompt.png
+.. image:: ./images/colored-prompt2.png
 
 The `message` can be any kind of formatted text, as discussed :ref:`here
 <formatted_text>`. It can also be a callable that returns some formatted text.
