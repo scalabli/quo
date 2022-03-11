@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import quo
+from quo import echo
+from quo.prompt import Prompt
+from quo.text import Text
 
-session = quo.Prompt()
+session = Prompt()
 
 def prompt_continuation(width, line_number, wrap_count):
     """
@@ -19,12 +21,11 @@ def prompt_continuation(width, line_number, wrap_count):
         return " " * (width - 3) + "-> "
     else:
         text = ("- %i - " % (line_number + 1)).rjust(width)
-        return quo.text.HTML("<strong>%s</strong>") % text
+        return Text("<strong>%s</strong>") % text
 
 
+session = Prompt(multiline=True, prompt_continuation=prompt_continuation)
 if __name__ == "__main__":
-    quo.echo("Press [Meta+Enter] or [Esc] followed by [Enter] to accept input.")
-    answer = session.prompt(
-        "Multiline input: ", multiline=True, elicit_continuation=prompt_continuation
-    )
+    echo("Press [Meta+Enter] or [Esc] followed by [Enter] to accept input.")
+    answer = session.prompt("Multiline input: ")
     print("You said: %s" % answer)

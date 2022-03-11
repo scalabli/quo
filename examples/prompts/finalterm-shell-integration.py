@@ -4,10 +4,10 @@ Mark the start and end of the prompt with Final term (iterm2) escape sequences.
 See: https://iterm2.com/finalterm.html
 """
 import sys
-import quo
+from quo.prompt import Prompt
 from quo.text import ANSI
 
-session = quo.Prompt()
+session = Prompt()
 
 
 BEFORE_PROMPT = "\033]133;A\a"

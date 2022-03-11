@@ -150,8 +150,7 @@ A side effect of this is that the enter key will now insert a newline instead of
 
 It is possible to specify a continuation prompt. This works by passing a
 ``prompt_continuation`` callable to :class:`~quo.prompt.Prompt`.
-This function is supposed to return :ref:`formatted text <formatted_text>`, or
-a list of ``(style, text)`` tuples. The width of the returned text should not
+This function is supposed to return :ref:`formatted text <formatted_text>`, or a list of ``(style, text)`` tuples. The width of the returned text should not
 exceed the given width. (The width of the prompt margin is defined by the prompt.)
 
 .. code:: python
@@ -345,6 +344,7 @@ If you want to use another style you can do the following:»
    session = Prompt(highlighter=Python)
    session.prompt('Enter Python code: ')
 
+.. image:: ./images/python-input.png
 or:»
 
 .. code:: python
@@ -354,6 +354,7 @@ or:»
 
    session = Prompt(highlighter=css)
    session.prompt('Enter css: ')
+.. image:: ./images/css-input.png
 
 Syntax highlighting is as simple as adding a highlighter. All of the available syntax styles can be found `here <http://quo.readthedocs.io/en/latest/syntax_styles.html>`_ 
 
@@ -712,65 +713,22 @@ opening the autocompletion menu instead of the tab key. This can be done with th
             buff.start_completion(select_first=False)
 
 
-Other Prompt options
---------------------
-
-Multiline input
-^^^^^^^^^^^^^^^
-
-Reading multiline input is as easy as passing the ``multiline=True`` parameter.
-
-.. code:: python
-
-    import quo
-
-    session = quo.Prompt()
-    session.prompt('> ', multiline=True)
-
-A side effect of this is that the enter key will now insert a newline instead
-of accepting and returning the input. The user will now have to press
-:kbd:`Meta+Enter` in order to accept the input. (Or :kbd:`Escape` followed by
-:kbd:`Enter`.)
-
-It is possible to specify a continuation prompt. This works by passing a
-``prompt_continuation`` callable to :func:`~prompt_toolkit.shortcuts.prompt`.
-This function is supposed to return :ref:`formatted text <formatted_text>`, or
-a list of ``(style, text)`` tuples. The width of the returned text should not
-exceed the given width. (The width of the prompt margin is defined by the
-prompt.)
-
-.. code:: python
-
-    import quo
-
-    session = quo.Prompt()
-
-    def prompt_continuation(width, line_number, is_soft_wrap):
-        return '.' * width
-        # Or: return [('', '.' * width)]
-
-    session.prompt('multiline input> ', multiline=True,
-           prompt_continuation=prompt_continuation)
-
-.. image:: ../images/multiline-input.png
 
 Mouse support
-^^^^^^^^^^^^^
-
+--------------
 There is limited mouse support for positioning the cursor, for scrolling (in case of large multiline inputs) and for clicking in the autocompletion menu.
 
-Enabling can be done by passing the ``mouse_support=True`` option.
+Enabling this can be done by passing the ``mouse_support=True`` option.
 
 .. code:: python
 
     from quo.prompt import Prompt
 
-    session = Prompt()
-    session.prompt('What is your name: ', mouse_support=True)
-
+    session = Prompt(mouse_support=True)
+    session.prompt('What is your name: ')
 
 Line wrapping
-^^^^^^^^^^^^^
+---------------
 
 Line wrapping is enabled by default. This is what most people are used to and this is what GNU Readline does. When it is disabled, the input string will scroll horizontally.
 
@@ -778,5 +736,5 @@ Line wrapping is enabled by default. This is what most people are used to and th
 
     from quo.prompt import Prompt
 
-    session = Prompt()
-    session.prompt('What is your name: ', wrap_lines=False)
+    session = Prompt(wrap_lines=False)
+    session.prompt('What is your name: ')
