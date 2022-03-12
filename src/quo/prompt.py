@@ -428,7 +428,7 @@ class Prompt(Generic[_T]):
         "include_default_pygments_style",
         "rprompt",
         "multiline",
-        "elicit_continuation",
+        "prompt_continuation",
         "wrap_lines",
         "enable_history_search",
         "search_ignore_case",
@@ -482,7 +482,7 @@ class Prompt(Generic[_T]):
         include_default_pygments_style: FilterOrBool = True,
         history: Optional[History] = None,
         clipboard: Optional[Clipboard] = None,
-        elicit_continuation: Optional[ElicitContinuationText] = None,
+        prompt_continuation: Optional[ElicitContinuationText] = None,
         rprompt: AnyFormattedText = None,
         bottom_toolbar: AnyFormattedText = None,
         mouse_support: FilterOrBool = False,
@@ -524,7 +524,7 @@ class Prompt(Generic[_T]):
         self.include_default_pygments_style = include_default_pygments_style
         self.rprompt = rprompt
         self.multiline = multiline
-        self.elicit_continuation = elicit_continuation
+        self.prompt_continuation = prompt_continuation
         self.wrap_lines = wrap_lines
         self.enable_history_search = enable_history_search
         self.search_ignore_case = search_ignore_case
@@ -1347,21 +1347,20 @@ class Prompt(Generic[_T]):
         """
         Insert the elicit continuation.
 
-        :param width: The width that was used for the elicit. (more or less can
-            be used.)
+        :param width: The width that was used for the elicit. (more or less can  be used.)
         :param line_number:
         :param wrap_count: Amount of times that the line has been wrapped.
         """
-        elicit_continuation = self.elicit_continuation
+        prompt_continuation = self.prompt_continuation
 
-        if callable(elicit_continuation):
-            continuation: AnyFormattedText = elicit_continuation(
+        if callable(prompt_continuation):
+            continuation: AnyFormattedText = prompt_continuation(
                 width, line_number, wrap_count
             )
         else:
-            continuation = elicit_continuation
+            continuation = prompt_continuation
 
-        # When the continuation elicit is not given, choose the same width as
+        # When the continuation promt is not given, choose the same width as
         # the actual elicit.
         if continuation is None and is_true(self.multiline):
             continuation = " " * width
@@ -1460,5 +1459,5 @@ def create_confirm_session(
     )
     return session
 
-
-
+def continuation(width, line_number, wrap_count):
+    return '.' * width

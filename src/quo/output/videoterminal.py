@@ -284,6 +284,7 @@ class _EscapeCodeCache(Dict[Attrs, str]):
             fgcolor,
             bgcolor,
             bold,
+            ul,
             underline,
             strike,
             italic,
@@ -301,6 +302,8 @@ class _EscapeCodeCache(Dict[Attrs, str]):
             parts.append("3")
         if blink:
             parts.append("5")
+        if ul:
+            parts.append("4")
         if underline:
             parts.append("4")
         if reverse:

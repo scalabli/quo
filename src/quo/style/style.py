@@ -71,7 +71,7 @@ def parse_color(text: str) -> str:
     elif text in ("", "default"):
         return text
 
-    raise ValueError("Wrong color format %r" % text)
+    raise ValueError("Wrong color name/format %r" % text)
 
 
 # Attributes, when they are not filled in by a style. None means that we take
@@ -80,6 +80,7 @@ _EMPTY_ATTRS = Attrs(
     color=None,
     bgcolor=None,
     bold=None,
+    ul=None,
     underline=None,
     strike=None,
     italic=None,
@@ -127,6 +128,8 @@ def _parse_style_str(style_str: str) -> Attrs:
             attrs = attrs._replace(italic=True)
         elif part == "noitalic":
             attrs = attrs._replace(italic=False)
+        elif part =="ul":
+            attrs = attrs._replace(ul=True)
         elif part == "underline":
             attrs = attrs._replace(underline=True)
         elif part == "nounderline":
@@ -342,6 +345,7 @@ def _merge_attrs(list_of_attrs: List[Attrs]) -> Attrs:
         color=_or("", *[a.color for a in list_of_attrs]),
         bgcolor=_or("", *[a.bgcolor for a in list_of_attrs]),
         bold=_or(False, *[a.bold for a in list_of_attrs]),
+        ul=_or(False, *[a.ul for a in list_of_attrs]),
         underline=_or(False, *[a.underline for a in list_of_attrs]),
         strike=_or(False, *[a.strike for a in list_of_attrs]),
         italic=_or(False, *[a.italic for a in list_of_attrs]),
