@@ -322,12 +322,12 @@ Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
 
 </details>
 
-For more intricate  examples, have a look in the [examples](https://github.com/secretum-inc/quo/tree/master/examples) directory and the documentation.
+For more intricate  examples, have a look in the [examples](https://github.com/scalabli/quo/tree/master/examples) directory and the documentation.
 
 ## Donate🎁
 
 In order to for us to maintain this project and grow our community of contributors.
-[Donate](https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54)
+[Donate](https://ko-fi/scalabli)
 
 
 
@@ -353,7 +353,7 @@ For discussions about the usage, development, and the future of quo, please join
 
 If you have any suggestions, bug reports, or annoyances please report them
 to our issue tracker at 
-[Bug tracker](https://github.com/secretum-inc/quo/issues/) or send an email to:
+[Bug tracker](https://github.com/scalabli/quo/issues/) or send an email to:
 
  📥 secretum@googlegroups.com
 
@@ -361,7 +361,7 @@ to our issue tracker at
 ## License📑
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
-This software is licensed under the `MIT License`. See the [License](https://github.com/secretum-inc/quo/blob/master/LICENSE) file in the top distribution directory for the full license text.
+This software is licensed under the `MIT License`. See the [License](https://github.com/scalabli/quo/blob/master/LICENSE) file in the top distribution directory for the full license text.
 
 
 ## Code of Conduct

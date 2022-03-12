@@ -44,7 +44,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "quo"
-copyright = "2021, Secretum Inc"
+copyright = "2022, Scalabl!"
 author = "Gerrishon Sirere"
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

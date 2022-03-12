@@ -1,10 +1,10 @@
-[![Logo](https://raw.githubusercontent.com/secretum-inc/quo/master/pics/quo.png)](https://github.com/secretum-inc/quo)
+[![Logo](https://raw.githubusercontent.com/scalabli/quo/master/pics/quo.png)](https://github.com/scalabli/quo)
 
 | Version    | [![PyPI version](https://badge.fury.io/py/quo.svg)](https://quo.rtfd.io)
 |------------|----------------------------------------------------------------------------
-| Web        | http://quo.readthedocs.io/
+| Web        | [📃](https://quo.readthedocs.io/)
 | Download   | [![Downloads](https://pepy.tech/badge/quo)](https://pypi.org/project/quo)
-| Source     | http://github.com/secretum-inc/quo
+| Source     | [Github](https://github.com/scalabli/quo)
 
 
 `Forever Scalable`
@@ -69,7 +69,7 @@ appendix.rst
 ## Donate🎁
 
 In order to for us to maintain this project and grow our community of contributors.
-[Donate](https://www.paypal.com/donate?hosted_button_id=KP893BC2EKK54)
+[Donate](https://ko-fi/scalabli)
 
 
 
@@ -87,7 +87,7 @@ For discussions about the usage, development, and the future of quo, please join
 
 If you have any suggestions, bug reports, or annoyances please report them
 to our issue tracker at 
-[Bug tracker](https://github.com/secretum-inc/quo/issues/) or send an email to:
+[Bug tracker](https://github.com/scalabli/quo/issues/) or send an email to:
 
  📥 secretum@googlegroups.com
 
