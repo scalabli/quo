@@ -26,7 +26,7 @@ Or we can add one of the following flags:
 
 - ``"bold"``
 - ``"italic"``
-- ``"underline"``
+- ``"underline"`` or ``"ul"``
 - ``"blink"``
 - ``"reverse"``  (reverse foreground and background on the terminal.)
 - ``"hidden"``
@@ -270,11 +270,11 @@ for instance copy the following into your `.bashrc` file.
 
 An application can also decide to set the color depth manually by passing a
 :class:`~quo.color.ColorDepth` value to the
-:class:`~quo.Console` object:
+:class:`~quo.console.Console` object:
 
 .. code:: python
 
-    from quo import Console
+    from quo.console import Console
     from quo.color import ColorDepth
 
     app = Console(color_depth=ColorDepth.ANSI_COLORS_ONLY,
