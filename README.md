@@ -9,7 +9,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
 
 
-[![Logo](https://raw.githubusercontent.com/secretum-inc/quo/master/pics/quo.png)](https://github.com/secretum-inc/quo)
+[![Logo](https://raw.githubusercontent.com/scalabli/quo/master/pics/quo.png)](https://github.com/scalabli/quo)
 
 
 `Forever Scalable`
@@ -58,7 +58,7 @@ Try this:
 
  echo(f"Hello, World!", fg="red", italic=True, bold=True))
 ```
-![Hello World](https://github.com/secretum-inc/quo/raw/master/pics/print.png)
+![Hello World](https://github.com/scalabli/quo/raw/master/pics/print.png)
 
 **Example 2**
 ```python
@@ -67,7 +67,7 @@ Try this:
  echo(f"Quo is ", nl=False)
  echo(f"scalable", bg="red", fg="black") 
 ```
-![Scalable](https://github.com/secretum-inc/quo/raw/master/pics/scalable.png)
+![Scalable](https://github.com/scalabli/quo/raw/master/pics/scalable.png)
 
 Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
 ```python
@@ -89,7 +89,7 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 
  prompt("What is your name?")
 ```
-![quo.prompt](https://github.com/secretum-inc/quo/raw/master/pics/prompt.png)
+![quo.prompt](https://github.com/scalabli/quo/raw/master/pics/prompt.png)
 
 - Using ``quo.prompt.Prompt`` object
 
@@ -146,7 +146,7 @@ Press [Tab] to autocomplete
  session = Prompt(completer=example)
  session.prompt('Which country are you from?: ')
 ```
-![Autocompletion](https://github.com/secretum-inc/quo/raw/master/docs/images/autocompletion.png)
+![Autocompletion](https://github.com/scalabli/quo/raw/master/docs/images/autocompletion.png)
 
 ## ``Autosuggestion``
 Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f willinsert the first word of the suggestion.
@@ -209,7 +209,7 @@ The progress can be displayed for any iterable. This works by wrapping the itera
                for i in pb(range(800)):
                              time.sleep(.01)
 ```
-![Progress](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png)
+![Progress](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/simple-progress-bar.png)
 
 Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
 
@@ -250,7 +250,7 @@ High level API for displaying dialog boxes to the user for informational purpose
          text="Do you want to continue?\nPress ENTER to quit.").run()                                       
 ```
 The above produces the following output
-![Message Box](https://github.com/secretum-inc/quo/raw/master/docs/images/messagebox.png)
+![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messagebox.png)
 
 2) Example of a prompt box dialog
 ```python
@@ -261,7 +261,7 @@ The above produces the following output
            text="What Country are you from?:").run()
 
 ```
-![Prompt Box](https://github.com/secretum-inc/quo/raw/master/docs/images/promptbox.png)
+![Prompt Box](https://github.com/scalabli/quo/raw/master/docs/images/promptbox.png)
 
 Read more on [Dialogs](https://quo.readthedocs.io/en/latest/dialogs.html)
 
@@ -285,7 +285,7 @@ Example
  ]
  echo(Table(data))
 ```
-![tabulate](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/table.png)
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png)
 </details>
 
 <details>
