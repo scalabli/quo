@@ -226,6 +226,7 @@ A key binding is an association between a physical key on a keyboard and a param
  from quo.keys import Bind
  
  bind = Bind()
+ session = Prompt()
  # Print "Hello world" when ctrl-h is pressed
  @bind.add("ctrl-h")
  def _(event):
@@ -327,7 +328,7 @@ For more intricate  examples, have a look in the [examples](https://github.com/s
 ## Donate🎁
 
 In order to for us to maintain this project and grow our community of contributors.
-[Donate](https://ko-fi/scalabli)
+[Donate](https://ko-fi.com/scalabli)
 
 
 
