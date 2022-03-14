@@ -9,7 +9,10 @@ from quo.dialog import ChoiceBox
 result = ChoiceBox(
         title="ChoiceBox example",
         text="Are you sure?",
-        buttons= [("Yes", True), ("No", False), ("Maybe...", None)]).run()
-
+        buttons= [
+            ("Yes", True),
+            ("No", False),
+            ("Maybe...", None)]
+        )
 if result == True:
     echo(f"Result = {result}")

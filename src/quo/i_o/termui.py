@@ -401,12 +401,11 @@ def echo(
         **styles
         ):
         """
-        quo.echo('Hello World!', fg='green')
-        quo.inscribe(quo.style('Hello World!', fg='green'))
+        echo('Hello World!', fg='green')
+        echo('Hello World!', bg='green', italic=True)
         All keyword arguments are forwarded to the underlying functions  depending on which one they go with.
         Non-string types will be converted to :class:`str`. However,
-        :class:`bytes` are passed directly to :meth:`inscribe` without applying
-        style. If you want to style bytes that represent text, call
+        :class:`bytes` are passed directly to :meth:`inscribe` without applying style. If you want to style bytes that represent text, call
         :meth:`bytes.decode` first.
         """
         if message is not None and not bit_bytes(message):

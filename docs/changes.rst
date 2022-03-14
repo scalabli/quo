@@ -6,10 +6,24 @@
 
 Changelog
 ==========
+``Version 2022.3.2``
+----------------------
+
+Released on 2022-3-14
+
+**Added**
+^^^^^^^^^^
+- Added :meth:`~quo.console.Console.bar`
+- Added :meth:`~quo.console.Console.rule`
+
+**Changed**
+^^^^^^^^^^^^^
+- Deprecated :param:`.run()` in the Dialog boxes.
+
 ``Version 2022.3.1``
 ---------------------
 
-Unreleased
+Released on 2022-3-12
 
 **Added**
 ^^^^^^^^^^^

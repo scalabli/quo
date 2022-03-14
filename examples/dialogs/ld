@@ -1,0 +1,13 @@
+[?1000h[?1049h[22;0;0t[>4;2m[?1h=[?2004h[?1004h[1;25r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[25;1H"passwordbox.py"<ordbox.py" 14L, 271B[1;1H[34m#!/usr/bin/env python[m
+[31m"""
+Example of an password input dialog.
+"""[m
+[35mfrom[m quo [35mimport[m echo
+[35mfrom[m quo.dialog [35mimport[m PromptBox
+
+result = PromptBox([9;9Htitle=[31m"Password dialog example"[m,[10;9Htext=[31m"Please type your password:"[m,[11;9Hhide=[36mTrue[m).run()
+
+echo(f[31m"{result}"[m)
+
+[94m~                                                 [16;1H~                                                 [17;1H~                                                 [18;1H~                                                 [19;1H~                                                 [20;1H~                                                 [21;1H~                                                 [22;1H~                                                 [23;1H~                                                 [24;1H~                                                 [m[25;33H1,1[11CAll[1;1H[?25h[?25l[25;23Hl[1;1H[25;23H [1;2H[25;35H2[1;2H[?25h[?25l[25;23H~@k[1;2H[25;23H   [1;2H[?25h[?25l[25;1HType  :qa... exit Vim[25;33H[K[25;33H1,2[11CAll[1;2H[?25h[?25l[25;23H<20>[1;2H[25;23H    [1;3H[25;35H3[1;3H[?25h[?25l[25;23H^Z[1;3H[25;1H
+[?1004l[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t[?1000l

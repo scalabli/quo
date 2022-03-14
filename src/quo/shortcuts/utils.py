@@ -45,27 +45,24 @@ def print(
     """
     ::
 
-        inscribe(*values, sep=' ', end='\\n', file=None, flush=False, style=None, output=None)
+        print(*values, sep=' ', end='\\n', file=None, flush=False, style=None, output=None)
 
-    Print text to stdout. This is supposed to be compatible with Python's print
-    function, but supports printing of formatted text. You can pass a
+    Print text to stdout. This is supposed to be compatible with Python's print function, but supports printing of formatted text. You can pass a
     :class:`~quo.text.FormattedText`,
-    :class:`~quo.text.HTML` or
-    :class:`~quo.text.ANSI` object to print formatted
-    text.
+    :class:`~quo.text.Text` or
+    :class:`~quo.text.ANSI` object to print formatted  text.
 
-    * Print HTML as follows::
+    * Print Text as follows::
 
-        quo.inscribe(quo.text.HTML('<i>Some italic text</i> <red>This is red!</red>'))
+        print(Text('<i>Some italic text</i> <red>This is red!</red>'))
 
         style = Style.add({
-            'hello': '#ff0066',
-            'world': '#884444 italic',
+            'hello': 'red',
+            'world': 'green italic',
         })
-        quo.inscribe(quo.text.HTML('<hello>Hello</hello> <world>world</world>!'), style=style)
+        print(Text('<hello>Hello</hello> <world>world</world>!'), style=style)
 
-    * Print a list of (style_str, text) tuples in the given style to the
-      output.  E.g.::
+    * Print a list of (style_str, text) tuples in the given style to the output.  E.g.::
 
         style = Style.add({
             'hello': '#ff0066',
@@ -75,7 +72,7 @@ def print(
             ('class:hello', 'Hello'),
             ('class:world', 'World'),
         ])
-        quo.inscribe(fragments, style=style)
+        print(fragments, style=style)
 
     If you want to print a list of Pygments tokens, wrap it in
     :class:`~quo.text.PygmentsTokens` to do the
@@ -85,8 +82,7 @@ def print(
     :param sep: String inserted between values, default a space.
     :param end: String appended after the last value, default a newline.
     :param style: :class:`.Style` instance for the color scheme.
-    :param include_default_pygments_style: `bool`. Include the default Pygments
-        style when set to `True` (the default).
+    :param include_default_pygments_style: `bool`. Include the default Pygments style when set to `True` (the default).
     """
     assert not (output and file)
 

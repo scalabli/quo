@@ -378,8 +378,8 @@ class Button:
         text: str,
         handler: Optional[Callable[[], None]] = None,
         width: int = 12,
-        left_symbol: str = "<<¦",
-        right_symbol: str = "¦>>",
+        left_symbol: str = "«[",
+        right_symbol: str = "]»",
     ) -> None:
 
         self.text = text

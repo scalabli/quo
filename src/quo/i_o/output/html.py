@@ -5,7 +5,6 @@ from quo.text.core import FormattedText, StyleAndTextTuples
 
 __all__ = ["Text"]
 
-
 class Text:
     """
     Rich formatted text.
@@ -28,8 +27,8 @@ class Text:
 
     def __init__(self, value: str) -> None:
         self.value = value
-        document = minidom.parseString(f"<html-root>{value}</html-root>")# % (value,))
-#%s
+        mini = minidom.parseString(f"<html-root>{value}</html-root>")
+        document = mini
         result: StyleAndTextTuples = []
         name_stack: ty.List[str] = []
         fg_stack: ty.List[str] = []

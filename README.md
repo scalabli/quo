@@ -248,18 +248,18 @@ High level API for displaying dialog boxes to the user for informational purpose
 
  MessageBox(
          title="Message pop up window",
-         text="Do you want to continue?\nPress ENTER to quit.").run()                                       
+         text="Do you want to continue?\nPress ENTER to quit.")                                    
 ```
 The above produces the following output
 ![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messagebox.png)
 
 2) Example of a prompt box dialog
 ```python
- from quo.dialog import PromptBox
+ from quo.dialog import InputBox
 
- PromptBox(
+ InputBox(
            title="PromptBox shenanigans",
-           text="What Country are you from?:").run()
+           text="What Country are you from?:")
 
 ```
 ![Prompt Box](https://github.com/scalabli/quo/raw/master/docs/images/promptbox.png)

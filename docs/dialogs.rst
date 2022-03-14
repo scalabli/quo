@@ -17,7 +17,7 @@ simple message box. For instance:
 
     MessageBox(
         title='Example dialog window',
-        text='Do you want to continue?\nPress ENTER to quit.').run()
+        text='Do you want to continue?\nPress ENTER to quit.')
 
 .. image:: ./images/messagebox.png
 
@@ -30,33 +30,29 @@ input box. It will return the user input as a string.
 
 .. code:: python
 
-    from quo.dialog import PromptBox
-
-    PromptBox(
+    from quo.dialog import InputBox
+    InputBox(
         title='Input dialog example',
-        text='Please type your name:').run()
-
+        text='Please type your name:')
 .. image:: ./images/inputbox.png
 
 
 The ``hide=True`` option can be passed to the
-:func:`~quo.dialog.PromptBox` function to turn this into a password input box.
+:func:`~quo.dialog.InputBox` function to turn this into a password input box.
 
 
-``Confirmation Box``
+``Confirm Box``
 --------------------
 
-The :func:`~quo.dialog.ConfirmationBox` function displays a yes/no
-confirmation dialog. It will return a boolean according to the selection.
+The :func:`~quo.dialog.ConfirmBox` function displays a yes/no confirmation dialog. It will return a boolean according to the selection.
 
 .. code:: python
 
-    from quo.dialog import ConfirmationBox
+    from quo.dialog import ConfirmBox
 
-    ConfirmationBox(
+    ConfirmBox(
         title='Yes/No dialog example',
-        text='Do you want to confirm?').run()
-
+        text='Do you want to confirm?')
 .. image:: ./images/confirm.png
 
 
@@ -77,7 +73,7 @@ with choices offered as buttons. Buttons are indicated as a list of tuples, each
             ('Yes', True),
             ('No', False),
             ('Maybe...', None)
-        ],).run()
+        ],)
 
 .. image:: ./images/button.png
 
@@ -100,8 +96,7 @@ each providing the return value (first element) and the displayed value (second 
             ("breakfast1", "Eggs and beacon"), 
             ("breakfast2", "French breakfast"), 
             ("breakfast3", "Equestrian breakfast") 
-        ]).run()
-
+        ])
 
 ``Check Box``
 -------------
@@ -121,34 +116,30 @@ The :func:`~quo.dialog.CheckBox` has the same usage and purpose than the Radioli
             ("croissants", "20 Croissants"),
             ("daily", "The breakfast of the day")
         ] 
-    ).run()
-
+    )
 
 Styling of dialogs
 ------------------
 
-A custom :class:`~quo.style.Style` instance can be passed to all
-dialogs to override the default style. Also, text can be styled by passing an
-:class:`~quo.text.Text` object.
+A custom :class:`~quo.style.Style` instance can be passed to alldialogs to override the default style. Also, text can be styled by passing an :class:`~quo.text.Text` object.
 
 
 .. code:: python
 
-    from quo.dialog import MessageBox
-    from quo.style import Style
-    from quo.text import Text
+  from quo.dialog import MessageBox
+  from quo.style import Style
+  from quo.text import Text
 
-    example = Style.add({
-        'dialog':         'bg:aquamarine',
-        'dialog.body':    'bg:black fg:green',
-        'dialog shadow':  'bg:yellow',
-    })
+  style = Style.add({
+      'dialog': 'bg:aquamarine',
+      'dialog.body': 'bg:black fg:green',
+      'dialog shadow': 'bg:yellow' })
 
-    MessageBox(
-        title=Text('<style bg="blue" fg="white">Styled</style> '
-        '<style fg="red">dialog</style> window'),
-        text='Do you want to continue?\nPress ENTER to quit.',
-        style=example).run()
+  MessageBox(
+      title=Text('<style bg="blue" fg="white">Styled</style> '
+      '<style fg="red">dialog</style> window'),
+      text='Do you want to continue?\nPress ENTER to quit.',
+      style=style)
 
 .. image:: ./images/styled.png
 

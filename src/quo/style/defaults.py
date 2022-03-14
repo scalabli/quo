@@ -136,21 +136,21 @@ COLORS_STYLE = [(name, "fg:" + name) for name in ANSI_COLOR_NAMES] + [
 
 WIDGETS_STYLE = [
     # Dialog windows.
-    ("dialog", "bg:magenta"),
-    ("dialog.body", "bg:#ffffff #000000"),
-    ("dialog.body text-area", "bg:#cccccc"),
+    ("dialog", "bg:aquamarine"),
+    ("dialog.body", "bg:black fg:cyan"),
+    ("dialog.body text-area", "fg:blue bg:white bold"),
     ("dialog.body text-area last-line", "underline"),
-    ("dialog frame.label", "#ff0000 bold"),
+    ("dialog frame.label", "fg:yellow bg:purple bold"),#"#ff0000 bold"),
     # Scrollbars in dialogs.
     ("dialog.body scrollbar.background", ""),
-    ("dialog.body scrollbar.button", "bg:#000000"),
+    ("dialog.body scrollbar.button", "bg:grey"),#000000"),
     ("dialog.body scrollbar.arrow", ""),
     ("dialog.body scrollbar.start", "nounderline"),
     ("dialog.body scrollbar.end", "nounderline"),
     # Buttons.
     ("button", ""),
     ("button.arrow", "bold"),
-    ("button.focused", "bg:#aa0000 #ffffff"),
+    ("button.focused", "bg:red fg:yellow"),
     # Menu bars.
     ("menu-bar", "bg:#aaaaaa #000000"),
     ("menu-bar.selected-item", "bg:#ffffff #000000"),
@@ -158,7 +158,7 @@ WIDGETS_STYLE = [
     ("menu.border", "#aaaaaa"),
     ("menu.border shadow", "#444444"),
     # Shadows.
-    ("dialog shadow", "bg:#000088"),
+    ("dialog shadow", "bg:grey"),#000088"),
     ("dialog.body shadow", "bg:#aaaaaa"),
     ("progress-bar", "bg:#000088"),
     ("progress-bar.used", "bg:#ff0000"),

@@ -40,7 +40,7 @@ Quo supports launching editors automatically through :func:`quo.Console.edit`.  
 
 .. code:: python
 
-    from quo import Console
+    from quo.console import Console
 
     console = Console()
     
@@ -113,11 +113,11 @@ ce. In addition to this, it can also launch the file manager and automatically s
   
    console = Console()
  
-   console.launch("https://quo.rtfd.io/"
+   console.launch("https://quo.rtfd.io/")
 
 .. code:: python
 
-   from quo import Console
+   from quo.console import Console
 
    console = Console()
 
@@ -125,11 +125,11 @@ ce. In addition to this, it can also launch the file manager and automatically s
 
 ``Terminal size``
 -----------------
-Function :func:`quo.Console.size` returns the current size of the terminal as tuple in the form ``(width, height)`` in columns and rows.
+Function :func:`quo.console.Console.size` returns the current size of the terminal as tuple in the form ``(width, height)`` in columns and rows.
 
 .. code:: python
 
-   from quo import Console
+   from quo.console import Console
 
    console = Console()
    console.size()
@@ -141,21 +141,28 @@ The default encoding of the Terminal (typically "utf-8")
 
 .. code:: python
 
-   from quo import Console
+   from quo.console import Console
 
    console = Console()
 
    console.encoding()
 
-``Rules``
-----------
+``rule``
+---------
+The :meth:`~quo.console.Console.rule` method will draw a horizontal line.
+**Parameters**
+      - ``char`` Optional[*(str)*] - Character to be used to draw out the border.
+      - ``style`` Optional - Style to be applied.
 
-The :meth:`~quo.Console.rule` method will draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
-provided file.
+``bar``
+---------
+
+The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
 
 **Parameters**
-      - ``message`` Optional *(str)* – Message print on the terminal
-
+      - ``message`` Optional[*(str)*] – Message print on the terminal.
+      - ``align`` Optional[*(str)*] - Postion of the message to be printed. Default is ``center`` other options are ``left`` and ``right``.
+      - ``style`` Optional - Style to be applied.
 
 
 .. code:: python

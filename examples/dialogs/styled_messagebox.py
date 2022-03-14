@@ -14,7 +14,7 @@ from quo.style import Style
 
 # Custom color scheme.
 
-example_style = Style.add(
+style = Style.add(
         {
             "dialog": "bg:aquamarine",
             "dialog.body": "bg:black fg:green",
@@ -25,5 +25,5 @@ example_style = Style.add(
 MessageBox(
         title=Text(
             '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window'),
-        text="Do you want to continue?\nPress ENTER to quit.", style=example_style).run()
-
+        text="Do you want to continue?\nPress ENTER to quit.", 
+        style=style)

@@ -31,9 +31,9 @@ from quo.widget import (
 )
 
 __all__ = [
-    "ConfirmationBox",
+    "ConfirmBox",
     "ChoiceBox",
-    "PromptBox",
+    "InputBox",
     "MessageBox",
     "RadiolistBox",
     "CheckBox",
@@ -41,7 +41,7 @@ __all__ = [
 ]
 
 
-def ConfirmationBox(
+def _ConfirmationBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     yes_text: str = "Yes",
@@ -75,7 +75,7 @@ def ConfirmationBox(
 _T = TypeVar("_T")
 
 
-def ChoiceBox(
+def _ChoiceBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     buttons: List[Tuple[str, _T]] = [],
@@ -102,7 +102,7 @@ def ChoiceBox(
     return _create_app(dialog, style)
 
 
-def PromptBox(
+def _PromptBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -152,7 +152,7 @@ def PromptBox(
     return _create_app(dialog, style)
 
 
-def MessageBox(
+def _MessageBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -174,7 +174,7 @@ def MessageBox(
     return _create_app(dialog, style)
 
 
-def RadiolistBox(
+def _RadiolistBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -212,7 +212,7 @@ def RadiolistBox(
     return _create_app(dialog, style)
 
 
-def CheckBox(
+def _CheckBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
@@ -250,7 +250,7 @@ def CheckBox(
     return _create_app(dialog, style)
 
 
-def ProgressBox(
+def _ProgressBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (
@@ -326,3 +326,110 @@ def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Console[Any
 def _return_none() -> None:
     "Button handler that returns None."
     get_app().exit()
+
+# High level dialog API
+
+def CheckBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        ok_text: str = "Ok",
+        cancel_text: str = "Cancel",
+        values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+        style: Optional[BaseStyle] = None
+        ):
+    _CheckBox(
+            title=title,
+            text=text,
+            ok_text=ok_text,
+            cancel_text=cancel_text,
+            values=values,
+            style=style).run()
+
+def ChoiceBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        buttons: List[Tuple[str, _T]] = [],
+        style: Optional[BaseStyle] = None,):
+    _ChoiceBox(
+            title = title,
+            text = text,
+            buttons = buttons,
+            style = style).run()
+
+    
+def ConfirmBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        yes_text: str = "Yes",
+        no_text: str = "No",
+        style: Optional[BaseStyle] = None
+        ):
+    _ConfirmationBox(
+            title=title,
+            text = text,
+            yes_text=yes_text,
+            no_text=no_text,
+            style=style,
+            ).run()
+
+def InputBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        ok_text: str = "Ok",
+        cancel_text: str = "Cancel",
+        completer: Optional[Completer] = None,
+        type: Optional[Validator] = None,
+        hide: FilterOrBool = False,
+        style: Optional[BaseStyle] = None):
+
+    _PromptBox(
+            title = title,
+            text = text,
+            ok_text = ok_text,
+            cancel_text = cancel_text,
+            completer = completer,
+            type = type,
+            hide = hide,
+            style = style).run()
+
+def MessageBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        ok_text: str = "Ok",
+        style: Optional[BaseStyle] = None
+        ):
+    _MessageBox(
+            title = title,
+            text = text,
+            ok_text = ok_text,
+            style = style).run()
+
+def ProgressBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (lambda *a: None),
+        style: Optional[BaseStyle] = None):
+    _ProgressBox(
+            title=title,
+            text=text,
+            run_callback=run_callback,
+            style=style).run()                               
+
+def RadiolistBox(
+        title: AnyFormattedText = "",
+        text: AnyFormattedText = "",
+        ok_text: str = "Ok",
+        cancel_text: str = "Cancel",
+        values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+        style: Optional[BaseStyle] = None):
+    _RadiolistBox(
+            title=title,
+            text=text,
+            ok_text=ok_text,
+            cancel_text=cancel_text,
+            values=values,
+            style=style).run()
+
+# For backward compatibility
+PromptBox = InputBox
+ConfirmationBox = ConfirmBox

@@ -5,9 +5,9 @@ Simple example of a full screen application with a vertical split.
 This will show a window on the left for user input. When the user types, the
 reversed input is shown on the right. Pressing Ctrl-Q will quit the application.
 """
-from quo import Console
+from quo.console import Console
 from quo.buffer import Buffer
-from quo.keys import KeyBinder
+from quo.keys import Bind
 from quo.layout import Layout, Window, BufferControl, FormattedTextControl, VSplit, HSplit, WindowAlign
 
 # 3. Create the buffers
@@ -71,7 +71,7 @@ root_container = HSplit(
 
 # As a demonstration, we will add just a ControlQ key binding to exit the
 # application.
-kb = KeyBinder()
+kb = Bind()
 
 # Now add the Ctrl-Q binding. We have to pass `eager=True` here. The reason is
 # that there is another key *sequence* that starts with Ctrl-Q as well. Yes, a

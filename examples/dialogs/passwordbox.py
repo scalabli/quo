@@ -3,12 +3,12 @@
 Example of an password input dialog.
 """
 from quo import echo
-from quo.dialog import PromptBox
+from quo.dialog import InputBox
 
-result = PromptBox(
+result = InputBox(
         title="Password dialog example",
         text="Please type your password:",
-        hide=True).run()
+        hide=True)
 
 echo(f"{result}")
 

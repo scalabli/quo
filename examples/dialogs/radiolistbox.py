@@ -15,8 +15,7 @@ result = RadiolistBox(
             ("orange", "Orange")
             ],
         title="Radiolist dialog example",
-        text="Please select a color:").run()
-
+        text="Please select a color:")
 echo(f"Result = {result}")
 
 # With Text
@@ -28,7 +27,6 @@ result = RadiolistBox(
             ("orange", Text('<style bg="orange" fg="white">Orange</style>')),
         ],
         title=Text("RadiolistBox example <reverse>with colors</reverse>"),
-        text="Please select a color:").run()
-
+        text="Please select a color:")
 echo(f"Result = {result}")
 

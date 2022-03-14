@@ -93,6 +93,7 @@ from quo.utils.utils import Event, in_main_thread
 
 from .current import get_app_session, set_app
 from .run_in_terminal import in_terminal, run_in_terminal
+from quo.layout import Window, WindowAlign as WA
 
 try:
     import contextvars
@@ -101,7 +102,7 @@ except ImportError:
 
 
 #__all__ = [
-#    "Suite",
+#    "Console",
 #]
 
 
@@ -639,13 +640,13 @@ class Console(Generic[_AppResult]):
         set_exception_handler: bool = True,
     ) -> _AppResult:
         """
-        Run the quo :class:`~quo.Console`
+        Run the quo :class:`~quo.console.Console`
         until :meth:`~quo.Suite.exit` has been
         called. Return the value that was passed to
-        :meth:`~quo.Console.exit`.
+        :meth:`~quo.console.Console.exit`.
 
         This is the main entry point for a prompt_toolkit
-        :class:`~quo.Console` and usually the only
+        :class:`~quo.console.Console` and usually the only
         place where the event loop is actually running.
 
         :param pre_run: Optional callable, which is called right after the
@@ -873,21 +874,6 @@ class Console(Generic[_AppResult]):
       might have weird effects if the URL does not point to the filesystem.
       """
     
-    def inscribe(
-            self,
-            *values: Any,
-            sep: str = " ",
-            end: str = "\n",
-            file: Optional[TextIO] = None,
-            flush: bool = False,
-            style: Optional[BaseStyle] = None,
-            output: Optional[Output] = None,
-            color_depth: Optional[ColorDepth] = None,
-            style_transformation: Optional[StyleTransformation] = None,
-            include_default_pygments_style: bool = True,
-            ) -> _AppResult:
-        from quo.shortcuts.utils import print
-        print()
     @property
     def size(self):
         from quo.i_o.termui import terminalsize as ts
@@ -898,16 +884,32 @@ class Console(Generic[_AppResult]):
     def openfile(self):
         from quo.expediency.vitals import openfile as of
         return of
-
     def rule(
             self,
-            message: Optional[str] = None
-            )-> "Console":
-
-        from quo.layout import Window, FormattedTextControl, WindowAlign as WA
+            height: int = 1,
+            char: str = "_",
+            style = "fg:white bold"
+            ) -> "Console":
         from quo.shortcuts import container
-        container(Window(FormattedTextControl(message), height=1, style="class:rule", align=WA.CENTER))
+        container(Window(char=char, height=height, style=style))
 
+
+    def bar(
+            self,
+            message: Optional[str] = None,
+            align  = "center",
+            style = "fg:yellow bg:brown bold"
+            )-> "Console":
+        from quo.errors import UsageError
+        from quo.layout import Window, FormattedTextControl
+        from quo.shortcuts import container
+
+        if align == "left":
+            container(Window(FormattedTextControl(message), height=1, style=style, align=WA.LEFT))
+        if align == "right":
+            container(Window(FormattedTextControl(message), height=1, style=style, align=WA.RIGHT))
+        if align == "center":
+            container(Window(FormattedTextControl(message), height=1, style=style, align=WA.CENTER))
     def run(
         self,
         pre_run: Optional[Callable[[], None]] = None,

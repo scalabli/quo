@@ -148,7 +148,7 @@ class ParameterSource(enum.Enum):
     """Used a prompt to confirm a default or provide a value."""
 
 
-class Context:
+class Clime:
     """The context is a special internal object that holds state relevant
     for the script execution at every single level.  It's normally invisible
     to commands unless they opt-in to getting access to it.
@@ -720,7 +720,7 @@ class BaseCommand:
     #: The context class to create with :meth:`make_context`.
     #:
     #:
-    context_class = Context
+    context_class = Clime
     #: the default for the :attr:`Context.allow_extra_args` flag.
     allow_extra_args = False
     #: the default for the :attr:`Context.allow_interspersed_args` flag.
@@ -868,7 +868,7 @@ class BaseCommand:
                     # by its truthiness/falsiness
                     clime.exit()
             except (EOFError, KeyboardInterrupt):
-                echo(file=sys.stderr,fg="red")
+                echo(file=sys.stderr)
                 raise Abort()
             except errors.Outlier as e:
                 if not standalone_mode:
