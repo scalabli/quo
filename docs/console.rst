@@ -150,14 +150,16 @@ The default encoding of the Terminal (typically "utf-8")
 ``rule``
 ---------
 The :meth:`~quo.console.Console.rule` method will draw a horizontal line.
+*Added on v2022.3.2*
+
 **Parameters**
       - ``char`` Optional[*(str)*] - Character to be used to draw out the border.
       - ``style`` Optional - Style to be applied.
 
 ``bar``
 ---------
-
 The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
+*Added on v2022.3.2*
 
 **Parameters**
       - ``message`` Optional[*(str)*] – Message print on the terminal.
@@ -180,12 +182,12 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
 ``A simple console application``
 ---------------------------------
 
-Almost every quo application is an instance of an :class:`~quo.Console` object.
+Almost every quo application is an instance of an :class:`~quo.console.Console` object.
 The simplest full screen example would look like this:
 
 .. code:: python
 
-  from quo import Console
+  from quo.console import Console
  
   Console(full_screen=True).run()
 

@@ -4,7 +4,6 @@ Dialogs
 =======
 Quo ships with a high level API for displaying `dialog boxes <https://en.m.wikipedia.org/wiki/Dialog_box>`_ to the user for informational purposes, or get input from the user.
 
-
 ``Message Box``
 ---------------
 
@@ -230,10 +229,19 @@ Therefore we can customize each of these elements separately, using for instance
 
 .. code:: python
 
-    from quo.dialog import CheckBox
-    from quo.style import Style
+ from quo.dialog import CheckBox
+ from quo.style import Style
+ 
+ style = Style.add({
+            'dialog': 'bg:green',
+            'button': 'bg:red',
+            'checkbox': 'fg:blue',
+            'dialog.body': 'bg:yellow',
+            'dialog shadow': 'bg:khaki',
+            'frame.label': 'fg:black',
+            'dialog.body label': 'fg:aquamarine'})
 
-    CheckBox(
+ CheckBox(
         title="CheckboxList dialog",
         text="What would you like in your breakfast ?",
         values=[
@@ -242,12 +250,6 @@ Therefore we can customize each of these elements separately, using for instance
             ("croissants", "20 Croissants"),
             ("daily", "The breakfast of the day")
         ],
-        style = Style.add({
-            'dialog': 'bg:#cdbbb3',
-            'button': 'bg:#bf99a4',
-            'checkbox': '#e8612c',
-            'dialog.body': 'bg:#a9cfd0',
-            'dialog shadow': 'bg:#c98982',
-            'frame.label': '#fcaca3',
-            'dialog.body label': '#fd8bb6',
-        })).run()
+        style = style)
+
+.. image:: ./images/dialog/styled2.png

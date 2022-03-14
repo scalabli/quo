@@ -258,7 +258,7 @@ The above produces the following output
  from quo.dialog import InputBox
 
  InputBox(
-           title="PromptBox shenanigans",
+           title="InputBox shenanigans",
            text="What Country are you from?:")
 
 ```
