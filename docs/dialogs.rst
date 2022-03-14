@@ -21,10 +21,10 @@ simple message box. For instance:
 .. image:: ./images/messagebox.png
 
 
-``Prompt Box``
+``Input Box``
 --------------
 
-The :func:`~quo.dialog.PromptBox` function can display an
+The :func:`~quo.dialog.InputBox` function can display an
 input box. It will return the user input as a string.
 
 .. code:: python
@@ -96,6 +96,7 @@ each providing the return value (first element) and the displayed value (second 
             ("breakfast2", "French breakfast"), 
             ("breakfast3", "Equestrian breakfast") 
         ])
+.. image:: ./images/dialog/radiolist.png
 
 ``Check Box``
 -------------
@@ -140,7 +141,7 @@ A custom :class:`~quo.style.Style` instance can be passed to alldialogs to overr
       text='Do you want to continue?\nPress ENTER to quit.',
       style=style)
 
-.. image:: ./images/styled.png
+.. image:: ./images/dialog/styled1.png
 
 Styling reference sheet
 -----------------------
