@@ -7,7 +7,7 @@ import quo
 
 from quo.progress import formatters
 
-style = quo.styles.Style.add(
+style = quo.style.Style.add(
     {
         "label": "bg:#ffff00 #000000",
         "percentage": "bg:#ffff00 #000000",
@@ -28,7 +28,7 @@ def main():
         formatters.Text("  "),
     ]
 
-    with quo.ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with quo.progress.ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label="Installing"):
             time.sleep(0.01)
 

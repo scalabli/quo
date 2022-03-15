@@ -2,22 +2,20 @@
 """
 Vertical align demo with VSplit.
 """
-import quo
-
-from quo.text import Text as HTML
+from quo.console import Console
+from quo.keys import Bind
+from quo.text import Text
 from quo.layout.containers import (
     HSplit,
-    VerticalAlign,
     VSplit,
-    Window,
-    WindowAlign,
+    Window
 )
 from quo.layout.controls import FormattedTextControl
 from quo.layout.dimension import D
 from quo.layout.layout import Layout
 from quo.widget import Frame
 
-TITLE = HTML(
+TITLE = Text(
     """ <u>VSplit VerticalAlign</u> example.
  Press <b>'q'</b> to quit."""
 )
@@ -37,32 +35,32 @@ body = HSplit(
         VSplit(
             [
                 Window(
-                    FormattedTextControl(HTML("  <u>VerticalAlign.TOP</u>")),
+                    FormattedTextControl(Text("  <u>VerticalAlign.TOP</u>")),
                     height=4,
                     ignore_content_width=True,
                     style="bg:#ff3333 #000000 bold",
-                    align=WindowAlign.CENTER,
+                    align="center",
                 ),
                 Window(
-                    FormattedTextControl(HTML("  <u>VerticalAlign.CENTER</u>")),
+                    FormattedTextControl(Text("  <u>VerticalAlign.CENTER</u>")),
                     height=4,
                     ignore_content_width=True,
                     style="bg:#ff3333 #000000 bold",
-                    align=WindowAlign.CENTER,
+                    align="center",
                 ),
                 Window(
-                    FormattedTextControl(HTML("  <u>VerticalAlign.BOTTOM</u>")),
+                    FormattedTextControl(Text("  <u>VerticalAlign.BOTTOM</u>")),
                     height=4,
                     ignore_content_width=True,
                     style="bg:#ff3333 #000000 bold",
-                    align=WindowAlign.CENTER,
+                    align="center",
                 ),
                 Window(
-                    FormattedTextControl(HTML("  <u>VerticalAlign.JUSTIFY</u>")),
+                    FormattedTextControl(Text("  <u>VerticalAlign.JUSTIFY</u>")),
                     height=4,
                     ignore_content_width=True,
                     style="bg:#ff3333 #000000 bold",
-                    align=WindowAlign.CENTER,
+                    align="center",
                 ),
             ],
             height=1,
@@ -86,7 +84,7 @@ body = HSplit(
                     ],
                     padding=1,
                     padding_style="bg:#888888",
-                    align=VerticalAlign.TOP,
+                    align="top",
                     padding_char="~",
                 ),
                 # Center alignment.
@@ -104,7 +102,7 @@ body = HSplit(
                     ],
                     padding=1,
                     padding_style="bg:#888888",
-                    align=VerticalAlign.CENTER,
+                    align="center",
                     padding_char="~",
                 ),
                 # Bottom alignment.
@@ -122,7 +120,7 @@ body = HSplit(
                     ],
                     padding=1,
                     padding_style="bg:#888888",
-                    align=VerticalAlign.BOTTOM,
+                    align="bottom",
                     padding_char="~",
                 ),
                 # Justify
@@ -134,7 +132,7 @@ body = HSplit(
                     ],
                     padding=1,
                     padding_style="bg:#888888",
-                    align=VerticalAlign.JUSTIFY,
+                    align="justify",
                     padding_char="~",
                 ),
             ],
@@ -147,17 +145,17 @@ body = HSplit(
 
 
 # 2. Key bindings
-kb = quo.keys.KeyBinder()
+bind = Bind()
 
 
-@kb.add("q")
+@bind.add("q")
 def _(event):
     "Quit application."
     event.app.exit()
 
 
 # 3. The `Application`
-application = quo.Console(layout=quo.layout.Layout(body), bind=kb, full_screen=True)
+application = Console(layout=Layout(body), bind=bind, full_screen=True)
 
 
 def run():

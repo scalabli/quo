@@ -8,7 +8,7 @@ import quo
 
 from quo.progress import formatters
 
-style = quo.styles.Style.add(
+style = quo.style.Style.add(
     {
         "progressbar title": "#0000ff",
         "item-title": "#ff4400 underline",
@@ -29,12 +29,12 @@ def main():
         formatters.Text(" "),
         formatters.SpinningWheel(),
         formatters.Text(" "),
-        formatters.Text(quo.text.HTML("<tildes>~~~</tildes>")),
+        formatters.Text(quo.text.Text("<tildes>~~~</tildes>")),
         formatters.Bar(sym_a="#", sym_b="#", sym_c="."),
         formatters.Text(" left: "),
         formatters.TimeLeft(),
     ]
-    with quo.ProgressBar(
+    with quo.progress.ProgressBar(
         title="Progress bar example with custom formatter.",
         formatters=custom_formatters,
         style=style,

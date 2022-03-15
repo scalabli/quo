@@ -7,9 +7,10 @@ See: https://github.com/noamraph/tqdm
 import time
 import quo
 
-from quo.progress import formatters
+from quo.progress import ProgressBar, formatters
+from quo.style import Style
 
-style = quo.styles.Style.add({"": "cyan"})
+style = Style.add({"": "cyan"})
 
 
 def main():
@@ -30,7 +31,7 @@ def main():
         formatters.Text("  "),
     ]
 
-    with quo.ProgressBar(style=style, formatters=custom_formatters) as pb:
+    with ProgressBar(style=style, formatters=custom_formatters) as pb:
         for i in pb(range(1600), label="Installing"):
             time.sleep(0.01)
 

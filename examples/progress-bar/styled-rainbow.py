@@ -3,15 +3,15 @@
 A simple progress bar, visualised with rainbow colors (for fun).
 """
 import time
-import quo
 
-
-from quo.progress import formatters
+from quo import confirm
+from quo.color import ColorDepth
+from quo.progress import formatters, ProgressBar
 
 
 
 def main():
-    true_color = quo.confirm("Yes true colors? (y/n) ")
+    true_color = confirm("Yes true colors? (y/n) ")
 
     custom_formatters = [
         formatters.Label(),
@@ -22,11 +22,11 @@ def main():
     ]
 
     if true_color:
-        color_depth = quo.color.ColorDepth.four_bit
+        color_depth = ColorDepth.four_bit
     else:
-        color_depth = quo.color.ColorDepth.eight_bit
+        color_depth = ColorDepth.eight_bit
 
-    with quo.ProgressBar(formatters=custom_formatters, color_depth=color_depth) as pb:
+    with ProgressBar(formatters=custom_formatters, color_depth=color_depth) as pb:
         for i in pb(range(20), label="Downloading..."):
             time.sleep(1)
 

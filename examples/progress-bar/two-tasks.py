@@ -6,7 +6,7 @@ import threading
 import time
 from quo.progress import ProgressBar
 def main():
-    with ProgressBar() as pb:
+    with ProgressBar(title="Two tasks") as pb:
         # Two parallal tasks.
         def task_1():
             for i in pb(range(100)):

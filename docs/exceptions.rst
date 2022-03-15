@@ -25,28 +25,6 @@ The logic applied is the following:
     to standard error and exit the program with exit code ``1``.
 4.  if it goes through well, exit the program with exit code ``0``.
 
-``What if I don't want that?``
-------------------------------
-
-Generally you always have the option to invoke the :meth:`invoke` method
-yourself.  For instance if you have a :class:`Command` you can invoke it
-manually like this::
-
-    clime = command.make_context('command-name', ['args', 'go', 'here'])
-    with clime:
-        result = command.invoke(clime)
-
-In this case exceptions will not be handled at all and bubbled up as you
-would expect.
-
-You can also use the :meth:`Command.main` method
-but disable the standalone mode which will do two things: disable
-exception handling and disable the implicit :meth:`sys.exit` at the end.
-
-So you can do something like this::
-
-    command.main(['command-name', 'args', 'go', 'here'],
-                 standalone_mode=False)
 
 ``Which Exceptions Exist?``
 ---------------------------

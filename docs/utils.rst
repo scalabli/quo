@@ -1,92 +1,6 @@
 Utilities
 ===============
 
-Besides the functionality that quo provides to interface with argument
-parsing and handling, it also provides a bunch of addon functionality that
-is useful for writing command line utilities.
-
-
-``Printing to Stdout``
----------------------
-
-The most obvious helper is the :func:`echo` and :func:`inscribe` function, which in many ways works like the Python ``print`` statement or function.
-Example:
-
-.. code:: python
-
-    import quo
-
-    quo.echo('Hello World!')
-
-It can output both text and binary data. It will emit a trailing newline
-by default, which needs to be suppressed by passing ``nl=False``:
-
-.. code:: python
-
-   import quo
-
-   quo.echo(b'\xe2\x98\x83', nl=False)
-
-
-Last but not least :func:`echo` uses quo's intelligent internal output
-streams to stdout and stderr which support unicode output on the Windows
-console.  This means for as long as you are using :func:`quo.echo` you can
-output unicode characters (there are some limitations on the default font
-with regards to which characters can be displayed).
-
-Quo emulates output streams on Windows to support unicode to the
-Windows console through separate APIs.  For more information see
-:doc:`wincmd`.
-
-``Printing to Standard error``
-------------------------------
-You can easily print to standard error by passing ``err=True``:
-
-.. code:: python
-
-   import quo
-
-   quo.echo('Hello World!', err=True)
-
-
-.. _ansi-colors:
-
-``American National Standards Institute(ANSI) Colors``
--------------
-
-The :func:`echo` function gained extra functionality to deal with ANSI
-colors and styles.  Note that on Windows, this functionality is only
-available if `colorama`_ is installed.  If it is installed, then ANSI
-codes are intelligently handled.
-
-Primarily this means that:
-
--   Quo's :func:`echo` function will automatically strip ANSI color codes
-    if the stream is not connected to a terminal.
--   the :func:`echo` function will transparently connect to the terminal on
-    Windows and translate ANSI codes to terminal API calls.  This means
-    that colors will work on Windows the same way they do on other
-    operating systems.
-
-Note for `colorama` support: Quo will automatically detect when `colorama`
-is available and use it.  Do *not* call ``colorama.init()``!
-
-To install `colorama`, run this command::
-
-    $ pip install colorama
-
-For styling and adding more flair to  a string, :meth: fg or :meth: bg; amongst others, can be attached to the :func:`echo` :
-
-.. code:: python
-
-    import quo
-    from quo import echo
-    echo('Hello World!', fg='green')
-    echo('Some more text', bg='blue', fg='white')
-    echo('ATTENTION', blink= True, bold= True, italic= True)
-
-.. _colorama: https://pypi.org/project/colorama/
-
 ``Scrollable test``
 -------------------
 
@@ -114,15 +28,13 @@ If you want to print a lot of text, especially if generating everything in advan
 
 ``Screen Clearing``
 --------------------
-
-To clear the terminal screen, you can use the :func:`quo.clear` function. It does what the name suggests: it
-clears the entire visible screen in a platform-agnostic way:
+To clear the terminal screen, you can use the :func:`quo.clear` function. It does what the name suggests: it clears the entire visible screen in a platform-agnostic way:
 
 .. code:: python
 
-    import quo
+    from quo import clear
 
-    quo.clear()
+    clear()
 
 
 ``Getting Characters from Terminal(getchar)``
@@ -141,17 +53,15 @@ is instead a pipe.
 
 .. code:: python
 
-    import quo
+    from quo import echo, getchar
     
-    quo.confirm(f"Start Interpose")
-    c = quo.getchar()
-    quo.echo()
-    if c == 'y':
-        quo.echo('We will go on')
-    elif c == 'n':
-        quo.echo('Abort!')
-    else:
-        quo.echo('Invalid input :(')
+    gc = getchar()
+
+    if gc == 'y':
+        echo('We will go on')
+    elif gc == 'n':
+        echo('Abort!')
+ 
 
 Note that this reads raw input, which means that things like arrow keys
 will show up in the platform's native escape format.  The only characters
@@ -160,6 +70,12 @@ interrupts and end of file exceptions respectively.  This is done because
 otherwise, it's too easy to forget about that and to create scripts that
 cannot be properly exited.
 
+``Exitting``
+------------
+Quo has a low-level exit that skips Python's cleanup and speeds up exit by about 10ms for things like shell completion.
+
+**Parmameters**
+     - ``code`` - Exit code.
 
 ``Waiting for Key Press(pause)``
 --------------------------------
@@ -179,9 +95,9 @@ run interactively.
 
 .. code:: python
 
-    import quo
+    from quo import pause
     
-    quo.pause()
+    pause()
 
 
 ``Printing Filenames``

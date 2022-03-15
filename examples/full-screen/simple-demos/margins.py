@@ -12,11 +12,12 @@ from quo.keys import Bind
 from quo.layout import HSplit, Layout, Window
 from quo.layout import BufferControl, FormattedTextControl
 from quo.layout.margin import NumberedMargin, ScrollbarMargin
+from quo.text import Text
 
-LIPSUM = ( """Quo is scallable\n"""  * 40)
-
+LIPSUM = Text("""<b><purple>Quo</purple> is <style fg="black" bg="red">scallable\n</style></b>\n""")
 # Create text buffers. The margins will update if you scroll up or down.
 
+LIPSUM = LIPSUM *40
 buff = Buffer()
 buff.text = LIPSUM
 

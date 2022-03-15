@@ -4,7 +4,7 @@ A simple example of a a text area displaying "Hello World!".
 """
 
 from quo import container
-from quo import Console
+from quo.console import Console
 from quo.keys import Bind
 from quo.layout import Layout
 from quo.widget import Box, Frame, TextArea
@@ -24,7 +24,7 @@ layout = Layout(root_container)
 
 # Key bindings.
 bind = Bind()
-
+console = Console()
 
 @bind.add("ctrl-c")
 def _(event):
@@ -33,7 +33,7 @@ def _(event):
 
 
 # Build a main application object.
-Console(
+console(
         layout=layout,
         bind=bind, 
         full_screen=True

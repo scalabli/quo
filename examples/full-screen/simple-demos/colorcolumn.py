@@ -2,12 +2,12 @@
 """
 Colorcolumn example.
 """
-from prompt_toolkit.application import Application
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.layout.containers import ColorColumn, HSplit, Window
-from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
-from prompt_toolkit.layout.layout import Layout
+from quo.buffer import Buffer
+from quo.console import Console
+from quo.keys import Bind
+from quo.layout.containers import ColorColumn, HSplit, Window
+from quo.layout.controls import BufferControl, FormattedTextControl
+from quo.layout.layout import Layout
 
 LIPSUM = """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Maecenas
@@ -33,6 +33,8 @@ color_columns = [
     ColorColumn(10, style="bg:#ff0000"),
 ]
 
+console = Console()
+
 body = HSplit(
     [
         Window(FormattedTextControl('Press "q" to quit.'), height=1, style="reverse"),
@@ -42,22 +44,13 @@ body = HSplit(
 
 
 # 2. Key bindings
-kb = KeyBindings()
+bind =  Bind()
 
-
-@kb.add("q")
+@bind.add("q")
 def _(event):
     "Quit application."
     event.app.exit()
 
 
 # 3. The `Application`
-application = Application(layout=Layout(body), key_bindings=kb, full_screen=True)
-
-
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
+Console(layout=Layout(body), bind=bind, full_screen=True).run()

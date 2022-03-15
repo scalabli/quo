@@ -4,7 +4,7 @@ Demo of the different Window alignment options.
 """
 from quo.console import Console
 from quo.keys import Bind
-from quo.layout import Layout, FormattedTextControl, HSplit, Window, WindowAlign as WA
+from quo.layout import Layout, FormattedTextControl, HSplit, Window
 from quo.text import Text
 
 
@@ -26,17 +26,20 @@ left_text = '\nLeft aligned text. - (Press "q" to quit)\n\n' + LIPSUM
 center_text = "Centered text.\n\n" + LIPSUM
 right_text = "Right aligned text.\n\n" + LIPSUM
 
-#hsplit = quo.layout.HSplit
-#window = quo.lw
-#windowalign = quo.layout.WindowAlign
-#formattedtextcontrol = quo.layout.FormattedTextControl
+class Win:
+    def __init__(self, message, align):
+        self.nessage = message
+
+    def __repr__(self) -> str:
+        return "Window(message=%r)" % self.message
+
 body = HSplit(
     [
-        Window(FormattedTextControl(left_text), align=WA.LEFT),
+        Window(FormattedTextControl(left_text), align="left"),
         Window(height=1, char="-"),
-        Window(FormattedTextControl(center_text), align=WA.CENTER),
+        Window(FormattedTextControl(center_text), align="center"),
         Window(height=1, char="-"),
-        Window(FormattedTextControl(right_text), align=WA.RIGHT),
+        Window(FormattedTextControl(right_text), align="right")
     ]
 )
 

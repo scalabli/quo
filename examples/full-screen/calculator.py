@@ -5,10 +5,9 @@ This could be used as inspiration for a REPL.
 """
 from quo import Console
 from quo.document import Document
-from quo.keys import KeyBinder
+from quo.keys import Bind
 from quo.widget import SearchToolbar, TextArea
 from quo.layout import Layout, Window, HSplit
-from quo.style import Style
 from quo.text import Text
 
 help_text = """
@@ -21,12 +20,12 @@ def main():
     # The layout.
     search_field = SearchToolbar()  # For reverse search.
 
-    output_field = TextArea(f'{help_text}')
+    output_field = TextArea(f'{help_text}', style="bg:blue fg:yellow bold")
          #   tyle="class:output-field", text=help_text)
     input_field = TextArea(
         height=2,
         prompt=">>",
-        style="class:input-field",
+        style="bg:green", #class:input-field",
         multiline=False,
         wrap_lines=False,
         search_field=search_field,
@@ -35,7 +34,7 @@ def main():
     container = HSplit(
         [
             output_field,
-            Window(height=1, char="-", style="class:line"),
+            Window(height=1, char="-", style="fg:magenta"),
             input_field,
             search_field,
         ]
@@ -65,22 +64,13 @@ def main():
     input_field.accept_handler = accept
 
     # The key bindings.
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add("ctrl-c")
-    @kb.add("ctrl-q")
+    @bind.add("ctrl-c")
+    @bind.add("ctrl-q")
     def _(event):
         "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
         event.app.exit()
-
-    # Style.
-    sample = Style(
-        [
-            ("output-field", "bg:blue fg:yellow"),
-            ("input-field", "bg: yellow fg:white"),
-            ("line", "fg:magenta"),
-        ]
-    )
 
     layout = Layout(container, focused_element=input_field)
 
@@ -88,8 +78,7 @@ def main():
     # Run application.
     Console(
             layout=layout,
-            bind=kb,
-            style=sample,
+            bind=bind,
             mouse_support=True,
             full_screen=True,
             ).run()

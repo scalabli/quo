@@ -79,7 +79,7 @@ This should implement the :class:`~quo.types.Validator` abstract base class. Thi
 takes a :class:`~quo.document.Document` as input and raises
 :class:`~quo.errors.ValidationError` when the validation fails.
 
-`Interger Validator`
+Interger Validator
 ^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
@@ -191,8 +191,8 @@ When the ``hide=True`` flag in :func:`quo.prompt` or :class:`quo.prompt.Prompt` 
    session.prompt("Enter password: ")
 
 
-Confirmation Prompts
---------------------
+``Confirmation Prompts``
+-------------------------
 
 To ask if a user wants to continue with an action, the :func:`confirm`
 function comes in handy.  By default, it returns the result of the prompt
@@ -290,7 +290,7 @@ The following example returns a formatted text:
  from quo.prompt import Prompt
  from quo.text import Text
 
- session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>')
+ session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>'))
 
  session.prompt("")
 
@@ -636,8 +636,8 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
     session = Prompt(bind=bind)
     session.prompt('> ')
 
-Enable key bindings according to a condition
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Conditional Key bindings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Often, some key bindings can be enabled or disabled according to a certain
 condition. For instance, the Emacs and Vi bindings will never be active at the
@@ -668,7 +668,7 @@ pass it a :class:`~quo.Condition` instance. (:ref:`Read more about filters <filt
     session = Prompt(bind=bind)
     session.prompt('> ')
 
-``Toggle visibility of input``
+Toggle visibility of input
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Display asterisks instead of the actual characters with the addition of a ControlT shortcut to hide/show the input.
 

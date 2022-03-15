@@ -17,13 +17,14 @@ value is provided, the type is assumed to be :data:`STRING`.
 
 .. code:: python
 
-    import quo
+ from quo import echo
+ from quo.console import arg, command
 
-    @quo.command()
-    @quo.arg('filename')
-    def touch(filename):
-        """Print FILENAME."""
-        quo.echo(filename)
+ @command()
+ @arg('filename')
+ def touch(filename):
+     """Print FILENAME."""
+     echo(filename)
 
 
 ``Variadic Args``
@@ -41,15 +42,16 @@ Example
 
 .. code:: python
 
-     import quo
+     from quo import echo
+     from quo.console import arg, command
 
-     @quo.command()
-     @quo.arg('src', nargs=-1)
-     @quo.arg('dst', nargs=1)
+     @command()
+     @arg('src', nargs=-1)
+     @arg('dst', nargs=1)
      def copy(src, dst):
         """Move file SRC to DST."""
         for fn in src:
-            quo.echo(f"move {fn} to folder {dst}")
+            echo(f"move {fn} to folder {dst}")
 
 
 Note that this is not how you would write this application.  The reason
@@ -75,11 +77,12 @@ Example:
 
 .. code:: python
 
-    import quo
+    from quo.console import arg, command
+    from quo.types import File
 
-    @quo.command()
-    @quo.arg('input', type=quo.types.File('rb'))
-    @quo.arg('output', type=quo.types.File('wb'))
+    @command()
+    @arg('input', type=File('rb'))
+    @arg('output', type=File('wb'))
     def inout(input, output):
         """Copy contents of INPUT to OUTPUT."""
         while True:
@@ -108,13 +111,15 @@ Example:
 
 .. code:: python
 
-    import quo
+    from quo import echo, formatfilename
+    from quo.console import arg, command
+    from quo.types import Path
 
-    @quo.command()
-    @quo.arg('filename', type= quo.types.Path(exists=True))
+    @command()
+    @arg('filename', type=Path(exists=True))
     def touch(filename):
         """Print FILENAME if the file exists."""
-        quo.echo(quo.formatfilename(filename))
+        echo(formatfilename(filename))
 
 
 ``File Opening Safety``
@@ -160,13 +165,15 @@ Example usage:
 
 .. code:: python
 
-    import quo
+    from quo import echo
+    from quo.console import arg, command
+    from quo.types import File
 
-    @quo.command()
-    @quo.arg('src', envvar='SRC', type=quo.types.File('r'))
+    @command()
+    @arg('src', envvar='SRC', type=File('r'))
     def echo(src):
         """Print value of SRC environment variable."""
-        quo.echo(src.read())
+        echo(src.read())
 
 
 In that case, it can also be a list of different environment variables
@@ -191,28 +198,32 @@ Example usage:
 
 .. code:: python
 
-    import quo
+    from quo import echo
+    from quo.console import arg, command
+    from quo.types import Path
 
-    @quo.command()
-    @quo.arg('files', nargs=-1, type= quo.types.Path())
+    @command()
+    @arg('files', nargs=-1, type=Path())
     def touch(files):
         """Print all FILES file names."""
         for filename in files:
-            quo.echo(filename)
+            echo(filename)
 
 
-If you don't like the ``@`` marker, you can set ignore_unknown_apps to
+If you don't like the ``-`` marker, you can set ignore_unknown_apps to
 True to avoid checking unknown apps:
 
 .. code:: python
 
-    import quo
+ from quo import echo
+ from quo.console import arg, command
+ from quo.types import Path
 
-    @quo.command(context_settings={"ignore_unknown_options": True})
-    @quo.arg('files', nargs=-1, type= quo.types.Path())
-    def touch(files):
-        """Print all FILES file names."""
-        for filename in files:
-            quo.echo(filename)
+ @command(context_settings={"ignore_unknown_options": True})
+ @arg('files', nargs=-1, type=Path())
+ def touch(files):
+     """Print all FILES file names."""
+     for filename in files:
+         echo(filename)
 
 

@@ -4,6 +4,8 @@ Dialogs
 =======
 Quo ships with a high level API for displaying `dialog boxes <https://en.m.wikipedia.org/wiki/Dialog_box>`_ to the user for informational purposes, or get input from the user.
 
+*Deprecated :meth:`.run` on v2022.3.2*
+
 ``Message Box``
 ---------------
 
@@ -148,7 +150,7 @@ Styling reference sheet
 
 In reality, the shortcut commands presented above build a full-screen frame by using a list of components. The two tables below allow you to get the classnames available for each shortcut, therefore you will be able to provide a custom style for every element that is displayed, using the method provided above.
 
-.. note:: All the shortcuts use the ``Dialog`` component, therefore it isn't specified explicitly below.
+.. note:: All the dialogs use the ``Dialog`` component, therefore it isn't specified explicitly below.
 
 +--------------------------------+-------------------------+
 | Shortcut                       | Components used         |

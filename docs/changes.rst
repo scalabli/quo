@@ -6,6 +6,26 @@
 
 Changelog
 ==========
+``Version 2022.4``
+-------------------
+
+Unreleased
+
+**Added**
+^^^^^^^^^^
+
+- :meth:`quo.console.Console.pager`
+
+``Version 2022.3.3``
+---------------------
+
+Unreleased
+
+**Changed**
+^^^^^^^^^^^^
+- VerticalAlign and WindowAlign and HorizontalAlign
+
+
 ``Version 2022.3.2``
 ----------------------
 
@@ -37,7 +57,7 @@ Released on 2022-3-6
 **Added**
 ^^^^^^^^^^
 - Added key binder :kbd:`<any>` enabling the user to press any key to exit the help page.
-- Introduced :class:`~quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
+- Introduced :class:`quo.keys.Bind` as an alias of :class:`quo.keys.KeyBinder`
 
 **Changed**
 ^^^^^^^^^^^^

@@ -3,8 +3,7 @@
 A simple application that shows a Pager application.
 """
 
-import quo
-from pygments.lexers.python import PythonLexer
+
 from quo.console import Console
 from quo.keys import Bind
 from quo.layout import HSplit, Window, Layout
@@ -21,7 +20,7 @@ with open(__file__, "rb") as f:
 
 def get_statusbar_text():
     return [
-        ("class:status", __file__ + " - "),
+        ("reverse", __file__ + " - "),
         (
             "class:status.position",
             "{}:{}".format(
@@ -80,7 +79,6 @@ def _(event):
 
 style = Style.add(
     {
-        "status": "reverse",
         "status.position": "#aaaa00",
         "status.key": "#ffaa00",
         "not-searching": "#888888",

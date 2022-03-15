@@ -267,7 +267,7 @@ manually inform quo that something is a flag:
 
     import sys
     from quo import print
-    from quo.console import app, console
+    from quo.console import app, command
 
     @command()
     @app('--shout', is_flag=True)
@@ -355,7 +355,7 @@ Example:
 .. code-block:: python
 
     from quo import print
-    from quo.console import app, comman
+    from quo.console import app, command
     from quo.types import Choice
 
     @command()
@@ -517,7 +517,7 @@ Here an example for a ``--version`` flag:
 
 The `expose_value` parameter prevents the pretty pointless ``version``
 parameter from being passed to the callback.  If that was not specified, a
-boolean would be passed to the `hello` script.  The `resilient_parsing`
+boolean would be passed to the `hello` script.  The `parse`
 flag is applied to the context if quo wants to parse the command line
 without any destructive behavior that would change the execution flow.  In
 this case, because we would exit the program, we instead do nothing.
