@@ -26,13 +26,6 @@ left_text = '\nLeft aligned text. - (Press "q" to quit)\n\n' + LIPSUM
 center_text = "Centered text.\n\n" + LIPSUM
 right_text = "Right aligned text.\n\n" + LIPSUM
 
-class Win:
-    def __init__(self, message, align):
-        self.nessage = message
-
-    def __repr__(self) -> str:
-        return "Window(message=%r)" % self.message
-
 body = HSplit(
     [
         Window(FormattedTextControl(left_text), align="left"),

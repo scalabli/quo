@@ -2,12 +2,9 @@
 """
 Horizontal split example.
 """
-from prompt_toolkit.application import Application
-from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.layout.containers import HSplit, Window
-from prompt_toolkit.layout.controls import FormattedTextControl
-from prompt_toolkit.layout.layout import Layout
-
+from quo.console import Console
+from quo.keys import Bind
+from quo.layout import HSplit, Window, Layout, FormattedTextControl
 # 1. The layout
 left_text = "\nVertical-split example. Press 'q' to quit.\n\n(top pane.)"
 right_text = "\n(bottom pane.)"
@@ -23,17 +20,17 @@ body = HSplit(
 
 
 # 2. Key bindings
-kb = KeyBindings()
+bind = Bind()
 
 
-@kb.add("q")
+@bind.add("q")
 def _(event):
     "Quit application."
     event.app.exit()
 
 
 # 3. The `Application`
-application = Application(layout=Layout(body), key_bindings=kb, full_screen=True)
+application = Console(layout=Layout(body), bind=bind,full_screen=True)
 
 
 def run():

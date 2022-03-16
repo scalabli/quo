@@ -237,3 +237,7 @@ key bindings.
 .. image:: ./images/custom-key-bindings.png
 
 :ref:`Read more about key bindings ...<key_bindings>`
+
+
+» Check out more examples `here <https://github.com/scalabli/quo
+/tree/master/examples/progress/>`

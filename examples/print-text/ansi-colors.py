@@ -47,9 +47,9 @@ print(FormattedText([
         )
     )
 
-    quo.inscribe(quo.text.HTML("\n<u>Background colors</u>"))
-    quo.inscribe(
-        quo.text.FormattedText(
+print(Text("\n<u>Background colors</u>"))
+print(
+    FormattedText(
             [
                 ("bg:ansiblack ansiwhite", "ansiblack"),
                 wide_space,
@@ -87,8 +87,6 @@ print(FormattedText([
             ]
         )
     )
-    quo.inscribe()
+print()
 
 
-if __name__ == "__main__":
-    main()

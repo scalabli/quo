@@ -714,8 +714,8 @@ opening the autocompletion menu instead of the tab key. This can be done with th
 
 
 
-Mouse support
---------------
+``Mouse support``
+------------------
 There is limited mouse support for positioning the cursor, for scrolling (in case of large multiline inputs) and for clicking in the autocompletion menu.
 
 Enabling this can be done by passing the ``mouse_support=True`` option.
@@ -727,8 +727,8 @@ Enabling this can be done by passing the ``mouse_support=True`` option.
     session = Prompt(mouse_support=True)
     session.prompt('What is your name: ')
 
-Line wrapping
----------------
+``Line wrapping``
+------------------
 
 Line wrapping is enabled by default. This is what most people are used to and this is what GNU Readline does. When it is disabled, the input string will scroll horizontally.
 
@@ -738,3 +738,7 @@ Line wrapping is enabled by default. This is what most people are used to and th
 
     session = Prompt(wrap_lines=False)
     session.prompt('What is your name: ')
+
+    
+» Check out more examples `here <https://github.com/scalabli/quo
+/tree/master/examples/prompts/>`

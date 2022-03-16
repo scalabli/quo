@@ -120,8 +120,8 @@ The :func:`~quo.dialog.CheckBox` has the same usage and purpose than the Radioli
         ] 
     )
 
-Styling of dialogs
-------------------
+``Styling of dialogs``
+-----------------------
 
 A custom :class:`~quo.style.Style` instance can be passed to alldialogs to override the default style. Also, text can be styled by passing an :class:`~quo.text.Text` object.
 
@@ -145,10 +145,10 @@ A custom :class:`~quo.style.Style` instance can be passed to alldialogs to overr
 
 .. image:: ./images/dialog/styled1.png
 
-Styling reference sheet
------------------------
+``Styling reference sheet``
+----------------------------
 
-In reality, the shortcut commands presented above build a full-screen frame by using a list of components. The two tables below allow you to get the classnames available for each shortcut, therefore you will be able to provide a custom style for every element that is displayed, using the method provided above.
+In reality, the dialog commands presented above build a full-screen frame by using a list of components. The two tables below allow you to get the classnames available for each dialog therefore you will be able to provide a custom style for every element that is displayed, using the method provided above.
 
 .. note:: All the dialogs use the ``Dialog`` component, therefore it isn't specified explicitly below.
 
@@ -256,3 +256,7 @@ Therefore we can customize each of these elements separately, using for instance
         style = style)
 
 .. image:: ./images/dialog/styled2.png
+
+
+» Check out more examples `here <https://github.com/scalabli/quo
+/tree/master/examples/dialogs/>`

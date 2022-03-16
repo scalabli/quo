@@ -56,8 +56,8 @@ Unicode is an information technology standard for the consistent encoding, repre
     if the environment is misconfigured.
 
 
-Surrogate Handling
-------------------
+``Surrogate Handling``
+------------------------
 
 Quo does all the Unicode handling in the standard library and is
 subject to its behavior. Unicode requires extra care. The reason for

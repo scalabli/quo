@@ -347,10 +347,3 @@ If you wish to create a new text object or key binding, that is actually
 possible. Check the `custom-vi-operator-and-text-object.py` example for more
 information.
 
-
-Processing `.inputrc`
----------------------
-
-GNU readline can be configured using an `.inputrc` configuration file. This file
-contains key bindings as well as certain settings. Right now, quo
-doesn't support `.inputrc`, but it should be possible in the future.

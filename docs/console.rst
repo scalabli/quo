@@ -5,7 +5,7 @@ Console API
 
 For complete control over terminal formatting, Quo offers a :class:`~quo.console.Console` class. Most applications will require a single Console instance, so you may want to create one at the module level or as an attribute of your top-level object. For example, you  could add a file called "console.py" to your project::
 
-    from quo import Console
+    from quo.console import Console
     console = Console()
 
 Then you can import the console from anywhere in your project like this::
@@ -20,7 +20,6 @@ The console will auto-detect a number of properties required when rendering.
 
 * :obj:`~quo.Console.size` is the current dimensions of the terminal (which may change if you resize the window).
 * :obj:`~quo.Console.encoding` is the default encoding (typically "utf-8").
-* :obj:`~quo.Console.is_terminal` is a boolean that indicates if the Console instance is writing to a terminal or not.
 
 
 ``Launching Editors``
@@ -54,7 +53,7 @@ Alternatively, the function can also be used to launch editors for files by a sp
 
 .. code:: python
 
-    from quo import Console
+    from quo.console import Console
 
     console = Console()
     console.edit(filename='/etc/passwd')
@@ -73,7 +72,7 @@ The logic for opening files from the :class:`quo.types.File` type is exposed thr
 
 .. code:: python
 
-    from quo import Console
+    from quo.console import Console
 
     console = Console()
 
@@ -84,7 +83,7 @@ If stdin or stdout are returned, the return value is wrapped in a special file w
 
 .. code:: python
 
-   from quo import Console
+   from quo.console import Console
 
    console = Console()
 
@@ -109,7 +108,7 @@ ce. In addition to this, it can also launch the file manager and automatically s
 
 .. code:: python
    
-   from quo import Console
+   from quo.console import Console
   
    console = Console()
  
@@ -125,7 +124,7 @@ ce. In addition to this, it can also launch the file manager and automatically s
 
 ``Terminal size``
 -----------------
-Function :func:`quo.console.Console.size` returns the current size of the terminal as tuple in the form ``(width, height)`` in columns and rows.
+Function :obj:`quo.console.Console.size` returns the current size of the terminal as tuple in the form ``(width, height)`` in columns and rows.
 
 .. code:: python
 
@@ -156,6 +155,15 @@ The :meth:`~quo.console.Console.rule` method will draw a horizontal line.
       - ``char`` Optional[*(str)*] - Character to be used to draw out the border.
       - ``style`` Optional - Style to be applied.
 
+.. code:: python
+
+ from quo.console import Console
+
+ console = Console()
+
+ console.rule()
+
+
 ``bar``
 ---------
 The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
@@ -168,15 +176,11 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
 
 
 .. code:: python
-   from quo import Console
+   from quo.console import Console
    
    console = Console()
 
-   console.rule("Chapter One")
-
-
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/rule.png
-
+   console.bar()
 
 
 ``A simple console application``
@@ -198,3 +202,7 @@ This will display an application with no layout specified
         If we wouldn't set the ``full_screen`` option, the application would not run in the alternate screen buffer, and only consume the least amount of space required for the layout.
 
 :ref:`Read more about full-screen console applications ...<full_screen_app>`
+
+
+» Check out more examples `here <https://github.com/scalabli/quo
+/tree/master/examples/console/>`

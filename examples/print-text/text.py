@@ -30,19 +30,6 @@ print(Text("    <orange>orange</orange>"))
 print(Text("    <purple>purple</purple>"))
 print(Text("    <khaki>khaki</khaki>"))
 
-    # Background colors.
- #   title("Background colors")
-
- #   quo.inscribe(quo.text.HTML('    <style fg="ansiwhite" bg="ansired">ANSI Red</style>'))
- #   quo.inscribe(quo.text.HTML('    <style fg="ansiwhite" bg="ansiblue">ANSI Blue</style>'))
-
- #   # Interpolation.
-
-
-
-
- #   title("HTML interpolation (see source)")
-
 print(Text('<i>{}</i>').format("<test>"))
 print(Text('  <b>{text}</b>').format(text="<test>"))
 print(Text('    <u>%s</u>') % ("<text>"))

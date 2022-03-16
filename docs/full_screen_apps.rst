@@ -334,8 +334,8 @@ the layout.
 The global key bindings are always active.
 
 
-More about the Window class
----------------------------
+``More about the Window class``
+-------------------------------
 
 As said earlier, a :class:`~quo.layout.Window` is a
 :class:`~quo.layout.Container` that wraps a
@@ -361,9 +361,8 @@ the content, but there are much more options.
 - Finally, the background can be filled with a default character.
 
 
-More about buffers and `BufferControl`
---------------------------------------
-
+``More about buffers and BufferControl``
+------------------------------------------
 
 
 Input processors
@@ -405,6 +404,9 @@ Some build-in processors:
 +-----------------------------------------------------------------+----------------------------------------------------------------------+
 
 A :class:`~quo.layout.BufferControl` takes only one processor as
-input, but it is possible to "merge" multiple processors into one with the
-:func:`~quo.layout.processors.merge_processors` function.
-[1]
+input, but it is possible to "merge" multiple processors into one with the :func:`~quo.layout.processors.merge_processors` function
+
+
+» Check out more examples `here <https://github.com/scalabli/quo
+/tree/master/examples/full-screen/>`
+

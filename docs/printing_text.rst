@@ -85,7 +85,7 @@ There are several ways to display colors:
 
 An instance of any of these three kinds of objects is called "formated text".
 
-``Using quo.echo``
+Using quo.echo
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
@@ -104,7 +104,7 @@ An instance of any of these three kinds of objects is called "formated text".
 
 
 
-``Using quo.text.Text``
+Using quo.text.Text
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :class:`~quo.text.Text` can be used to indicate that a string contains HTML-like formatting. It recognizes the basic tags for bold, italic and underline: ``<b>``, ``<i>`` and ``<u>``.
@@ -155,7 +155,7 @@ assign a style for a custom tag.
 
 
 
-``Using (style, text) tuples``
+Using (style, text) tuples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 It is possible to create styles and text tuples using :class:`~quo.text.FormattedText` class
 .. code:: python
@@ -193,3 +193,4 @@ Similar to the :class:`~quo.text.Text` example, it is also possible to use class
   print(text, style=style)
 
 
+» Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/print-text/>`

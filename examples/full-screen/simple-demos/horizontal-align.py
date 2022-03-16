@@ -2,23 +2,15 @@
 """
 Horizontal align demo with HSplit.
 """
-from prompt_toolkit.application import Application
-from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.layout.containers import (
-    HorizontalAlign,
-    HSplit,
-    VerticalAlign,
-    VSplit,
-    Window,
-    WindowAlign,
-)
-from prompt_toolkit.layout.controls import FormattedTextControl
-from prompt_toolkit.layout.dimension import D
-from prompt_toolkit.layout.layout import Layout
-from prompt_toolkit.widgets import Frame
+from quo.console import Console
+from quo.keys import Bind
+from quo.layout import HSplit, VSplit,  Window, FormattedTextControl
+from quo.layout.dimension import D
+from quo.layout.layout import Layout
+from quo.text import Text
+from quo.widget import Frame
 
-TITLE = HTML(
+TITLE = Text(
     """ <u>HSplit HorizontalAlign</u> example.
  Press <b>'q'</b> to quit."""
 )
@@ -43,11 +35,11 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(HTML("<u>LEFT</u>")),
+                            FormattedTextControl(Text("<u>LEFT</u>")),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
-                            align=WindowAlign.CENTER,
+                            align="center"
                         ),
                         VSplit(
                             [
@@ -69,7 +61,7 @@ body = HSplit(
                             ],
                             padding=1,
                             padding_style="bg:#888888",
-                            align=HorizontalAlign.LEFT,
+                            align="left",
                             height=5,
                             padding_char="|",
                         ),
@@ -79,11 +71,11 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(HTML("<u>CENTER</u>")),
+                            FormattedTextControl(Text("<u>CENTER</u>")),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
-                            align=WindowAlign.CENTER,
+                            align="center"
                         ),
                         VSplit(
                             [
@@ -105,7 +97,7 @@ body = HSplit(
                             ],
                             padding=1,
                             padding_style="bg:#888888",
-                            align=HorizontalAlign.CENTER,
+                            align="center",
                             height=5,
                             padding_char="|",
                         ),
@@ -115,11 +107,11 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(HTML("<u>RIGHT</u>")),
+                            FormattedTextControl(Text("<u>RIGHT</u>")),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
-                            align=WindowAlign.CENTER,
+                            align="center"
                         ),
                         VSplit(
                             [
@@ -141,7 +133,7 @@ body = HSplit(
                             ],
                             padding=1,
                             padding_style="bg:#888888",
-                            align=HorizontalAlign.RIGHT,
+                            align="right",
                             height=5,
                             padding_char="|",
                         ),
@@ -151,11 +143,11 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(HTML("<u>JUSTIFY</u>")),
+                            FormattedTextControl(Text("<u>JUSTIFY</u>")),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
-                            align=WindowAlign.CENTER,
+                            align="center"
                         ),
                         VSplit(
                             [
@@ -171,7 +163,7 @@ body = HSplit(
                             ],
                             padding=1,
                             padding_style="bg:#888888",
-                            align=HorizontalAlign.JUSTIFY,
+                            align="justify",
                             height=5,
                             padding_char="|",
                         ),
@@ -181,24 +173,23 @@ body = HSplit(
             padding=1,
             padding_style="bg:#ff3333 #ffffff",
             padding_char=".",
-            align=VerticalAlign.TOP,
+            align="top"
         ),
     ]
 )
 
 
 # 2. Key bindings
-kb = KeyBindings()
+bind = Bind()
 
-
-@kb.add("q")
+@bind.add("q")
 def _(event):
     "Quit application."
     event.app.exit()
 
 
 # 3. The `Application`
-application = Application(layout=Layout(body), key_bindings=kb, full_screen=True)
+application = Console(layout=Layout(body), bind=bind,full_screen=True)
 
 
 def run():

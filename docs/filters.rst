@@ -27,44 +27,41 @@ wraps an expression that takes no input and evaluates to a boolean. Getting the
 state of a filter is done by simply calling it.
 
 
-An example
-----------
-
 The most obvious way to create such a :class:`~quo.filters.Filter`
 instance is by creating a :class:`~quo.filters.Condition` instance
 from a function. For instance, the following condition will evaluate to ``True`` when the user is searching:
 
 .. code:: python
 
-    from quo import Condition
-    from quo.console import get_app
+ from quo import Condition
+ from quo.console import get_app
 
-    @Condition
-    def is_searching():
-        return get_app().is_searching
+ @Condition
+ def is_searching():
+     return get_app().is_searching
 
-This filter can then be used in a key binding, like in the following snippet:
+This filter can then be used in a key binding, like in the following snippet:»
 
 .. code:: python
 
-    from quo.keys import Bind
+ from quo.keys import Bind
 
-    bind = Bind()
+ bind = Bind()
 
-    @bind.add('ctrl-t', filter=is_searching)
-    def _(event):
-        # Do, something, but only when searching.
-        pass
+ @bind.add('ctrl-t', filter=is_searching)
+ def _(event):
+     # Do, something, but only when searching.
+     pass
 
 If we want to know the boolean value of this filter, we have to call it like a function:
 
 .. code:: python
 
-    print(is_searching())
+  print(is_searching())
 
 
-Built-in filters
-----------------
+``Built-in filters``
+---------------------
 
 There are many built-in filters, ready to use. All of them have a lowercase
 name, because they represent the wrapped function underneath, and can be called
@@ -102,8 +99,8 @@ as a function.
 - :class:`~quo.filters.app.vi_search_direction_reversed`
 
 
-Combining filters
------------------
+``Combining filters``
+-----------------------
 
 Filters can be chained with the ``&`` (AND) and ``|`` (OR) operators and
 negated with the ``~`` (negation) operator.
@@ -112,23 +109,23 @@ Some examples:
 
 .. code:: python
 
-    from quo.keys import Bind
+ from quo.keys import Bind
 
-    bind = Bind()
+ bind = Bind()
 
-    @bind.add('ctrl-t', filter=~is_searching)
-    def _(event):
-        " Do something, but not while searching. "
-        pass
+ @bind.add('ctrl-t', filter=~is_searching)
+ def _(event):
+     " Do something, but not while searching. "
+     pass
 
-    @bind.add('ctrl-t', filter=has_search | has_selection)
-    def _(event):
-        " Do something, but only when searching or when there is a selection. "
-        pass
+ @bind.add('ctrl-t', filter=has_search | has_selection)
+ def _(event):
+     " Do something, but only when searching or when there is a selection. "
+     pass
 
 
-to_filter
----------
+``to_filter``
+--------------
 
 Finally, in many situations you want your code to expose an API that is able to
 deal with both booleans as well as filters. For instance, when for most users a
@@ -139,17 +136,17 @@ that does changes over time.
 In order to handle both use cases, there is a utility called
 :func:`~quo.filters.to_filter`.
 
-This is a function that takes
-either a boolean or an actual :class:`~quo.filters.Filter`
+This is a function that takes either a boolean or an actual :class:`~quo.filters.Filter`
 instance, and always returns a :class:`~quo.filters.Filter`.
 
 .. code:: python
 
-    import quo
+ from quo import Condition
+ from quo.filters import to_filter, has_search, has_selection
 
     # In each of the following three examples, 'f' will be a `Filter`
     # instance.
-    f = quo.filters.to_filter(True)
-    f = quo.filters.to_filter(False)
-    f = quo.filters.to_filter(quo.filters.Condition(lambda: True))
-    f = quo.filters.to_filter(quo.filters.has_search | quo.filters.has_selection)
+    f = to_filter(True)
+    f = to_filter(False)
+    f = to_filter(Condition(lambda: True))
+    f = to_filter(has_search | has_selection)

@@ -1,11 +1,12 @@
 .. currentmodule:: quo
 
+Changelog
+==========
+
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/changelog.png
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
-Changelog
-==========
 ``Version 2022.4``
 -------------------
 
@@ -14,7 +15,7 @@ Unreleased
 **Added**
 ^^^^^^^^^^
 
-- :meth:`quo.console.Console.pager`
+- :func:`quo.console.Console.pager`
 
 ``Version 2022.3.3``
 ---------------------
@@ -23,7 +24,8 @@ Unreleased
 
 **Changed**
 ^^^^^^^^^^^^
-- VerticalAlign and WindowAlign and HorizontalAlign
+- Optimized :param:`align` in :class:`quo.layout.Window`, :class:`quo.layout.HSplit` and :class:`quo.layout.VSplit`
+
 
 
 ``Version 2022.3.2``
@@ -38,7 +40,7 @@ Released on 2022-3-14
 
 **Changed**
 ^^^^^^^^^^^^^
-- Deprecated :param:`.run()` in the Dialog boxes.
+- Deprecated :param:`.run()` in the Dialog UI.
 
 ``Version 2022.3.1``
 ---------------------
@@ -128,21 +130,27 @@ Released on 2022-2-16
 Released on 2022-1-17
 
 - Under the hood optimizations
-- Introduced :func:`quo.MessageBox`, :func:`quo.PromptBox`, :func:`quo.RadiolistBox`, :func:`quo.ConfirmationBox`, :func:`quo.CheckBox`, :func:`quo.ChoiceBox` widgets for displaying formatted text in a window.
+- Introduced :func:`quo.dialog.MessageBox`, :func:`quo.dialog.PromptBox`, :func:`quo.dialog.RadiolistBox`, :func:`quo.dialog.ConfirmBox`, :func:`quo.dialog.CheckBox`, :func:`quo.dialog.ChoiceBox` widgets for displaying formatted text in a window.
 
 ``Version 2022.1.5``
 ---------------------
 Released on 2022-1-11
 
+**Fixed**
+^^^^^^^^^^
 - ImportError: :issue:`37` affecting Windows OS
 
 ``Version 2022.1``
 -------------------
 Released on 2022-1-11
 
+**Changed**
+^^^^^^^^^^^^
 - Dependency update :issue:`32` to :issue:`35`
-- Unexpected argument in :func:`quo.prompt()` :issue:`36`
 
+**Fixed**
+^^^^^^^^^^
+- Unexpected argument in :func:`quo.prompt()` :issue:`36`
 
 ``Version 2021.7``
 -------------------
