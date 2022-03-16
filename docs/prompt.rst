@@ -741,4 +741,4 @@ Line wrapping is enabled by default. This is what most people are used to and th
 
     
 » Check out more examples `here <https://github.com/scalabli/quo
-/tree/master/examples/prompts/>`
+/tree/master/examples/prompts/>`_

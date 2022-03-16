@@ -193,4 +193,4 @@ Similar to the :class:`~quo.text.Text` example, it is also possible to use class
   print(text, style=style)
 
 
-» Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/print-text/>`
+» Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_

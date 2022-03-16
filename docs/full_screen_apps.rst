@@ -408,5 +408,5 @@ input, but it is possible to "merge" multiple processors into one with the :func
 
 
 » Check out more examples `here <https://github.com/scalabli/quo
-/tree/master/examples/full-screen/>`
+/tree/master/examples/full-screen/>`_
 

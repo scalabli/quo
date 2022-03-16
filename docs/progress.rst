@@ -240,4 +240,4 @@ key bindings.
 
 
 » Check out more examples `here <https://github.com/scalabli/quo
-/tree/master/examples/progress/>`
+/tree/master/examples/progress/>`_
