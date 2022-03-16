@@ -72,8 +72,8 @@ from quo.keys.key_binding.key_bindings import (
 from quo.keys.key_binding.key_processor import KeyPressEvent, KeyProcessor
 from quo.keys.key_binding.vi_state import ViState
 from quo.keys import Keys
-from quo.layout import Container, Window
-from quo.layout.controls import BufferControl, UIControl
+from quo.layout import Container, Window, WindowAlign as WA
+from quo.layout.controls import BufferControl, FormattedTextControl, UIControl
 from quo.layout.dummy import create_dummy_layout
 from quo.layout.layout import Layout, walk
 from quo.output import ColorDepth, Output
@@ -200,6 +200,10 @@ class Console(Generic[_AppResult]):
         # Or
         await app.run_async()
     """
+    center = WA.CENTER
+    left = WA.LEFT
+    right = WA.RIGHT
+
 
     def __init__(
         self,
@@ -873,7 +877,10 @@ class Console(Generic[_AppResult]):
       launch a file manager with the file located.  This
       might have weird effects if the URL does not point to the filesystem.
       """
-    
+    def rmdup(string: str):
+        """Input your lists, and get them back without duplicates"""
+        return list(dict.fromkeys(string))                      
+
     @property
     def size(self):
         from quo.i_o.termui import terminalsize as ts
@@ -888,7 +895,7 @@ class Console(Generic[_AppResult]):
             self,
             height: int = 1,
             char: str = "_",
-            style = "fg:white bold"
+            style = "class:rule"
             ) -> "Console":
         from quo.shortcuts import container
         container(Window(char=char, height=height, style=style))
@@ -898,18 +905,11 @@ class Console(Generic[_AppResult]):
             self,
             message: Optional[str] = None,
             align  = "center",
-            style = "fg:yellow bg:brown bold"
+            style = "class:bar"
             )-> "Console":
-        from quo.errors import UsageError
-        from quo.layout import Window, FormattedTextControl
         from quo.shortcuts import container
 
-        if align == "left":
-            container(Window(FormattedTextControl(message), height=1, style=style, align=WA.LEFT))
-        if align == "right":
-            container(Window(FormattedTextControl(message), height=1, style=style, align=WA.RIGHT))
-        if align == "center":
-            container(Window(FormattedTextControl(message), height=1, style=style, align=WA.CENTER))
+        container(Window(FormattedTextControl(message), height=1, style=style, align=align))
     def run(
         self,
         pre_run: Optional[Callable[[], None]] = None,

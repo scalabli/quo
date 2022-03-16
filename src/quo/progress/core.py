@@ -113,6 +113,7 @@ class ProgressBar:
         self,
         title: AnyFormattedText = None,
         formatters: Optional[Sequence[Formatter]] = None,
+        toolbar: AnyFormattedText =None,
         bottom_toolbar: AnyFormattedText = None,
         style: Optional[BaseStyle] = None,
         bind: Optional[KeyBinder] = None,
@@ -165,6 +166,7 @@ class ProgressBar:
             & renderer_height_is_known
             & Condition(lambda: self.bottom_toolbar is not None),
         )
+        toolbar=bottom_toolbar
 
         def width_for_formatter(formatter: Formatter) -> AnyDimension:
             # Needs to be passed as callable (partial) to the 'width'

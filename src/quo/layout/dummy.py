@@ -2,7 +2,7 @@
 Dummy layout. Used when somebody creates a `Console Application` without specifying a `Layout`.
 """
 from quo.text import Text
-from quo.keys import KeyBinder
+from quo.keys import Bind
 from quo.keys.key_binding.key_processor import KeyPressEvent
 
 from .containers import Window
@@ -22,15 +22,15 @@ def create_dummy_layout() -> Layout:
     Create a dummy layout for use in an 'Application' that doesn't have a
     layout specified. When ENTER is pressed, the application quits.
     """
-    kb = KeyBinder()
+    bind = Bind()
 
-    @kb.add("enter")
+    @bind.add("enter")
     def enter(event: E) -> None:
         event.app.exit()
 
     control = FormattedTextControl(
-            Text("<i><green>🚫 No layout was specified.</green></i> \nPress <reverse>ENTER</reverse> to quit."),
-        bind=kb,
+            Text("<b><red>»</red> <green>No layout was specified.</green></b> \nPress <reverse>ENTER</reverse> to quit.\n\n» <khaki>https://quo.rtfd.io</khaki>"),
+            bind=bind,
     )
     window = Window(content=control, height=D(min=1))
     return Layout(container=window, focused_element=window)

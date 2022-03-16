@@ -98,7 +98,7 @@ def batch(iterable, batch_size):
 
 @contextmanager
 def augment_usage_errors(clime, param=None):
-    """Context manager that attaches extra information to exceptions."""
+    """Clime manager that attaches extra information to exceptions."""
     try:
         yield
     except errors.BadParameter as e:
@@ -132,7 +132,7 @@ def iter_params_for_processing(invocation_order, declaration_order):
 class ParameterSource(enum.Enum):
     """This is an :class:`~enum.Enum` that indicates the source of a parameter's value.
 
-    Use :meth:`quo.Context.get_parameter_source` to get the source for a parameter by name.
+    Use :meth:`quo.Clime.get_parameter_source` to get the source for a parameter by name.
 
     """
 
@@ -143,7 +143,7 @@ class ParameterSource(enum.Enum):
     DEFAULT = enum.auto()
     """Used the default specified by the parameter."""
     DEFAULT_MAP = enum.auto()
-    """Used a default provided by :attr:`Context.default_map`."""
+    """Used a default provided by :attr:`Clime.default_map`."""
     PROMPT = enum.auto()
     """Used a prompt to confirm a default or provide a value."""
 
@@ -388,7 +388,7 @@ class Clime:
 
         .. code-block:: python
 
-            with Context(cli) as clime:
+            with Clime(cli) as clime:
                 info = clime.to_info_dict()
 
   
@@ -721,18 +721,18 @@ class BaseCommand:
     #:
     #:
     context_class = Clime
-    #: the default for the :attr:`Context.allow_extra_args` flag.
+    #: the default for the :attr:`Clime.allow_extra_args` flag.
     allow_extra_args = False
-    #: the default for the :attr:`Context.allow_interspersed_args` flag.
+    #: the default for the :attr:`Clime.allow_interspersed_args` flag.
     allow_interspersed_args = True
-    #: the default for the :attr:`Context.ignore_unknown_apps` flag.
+    #: the default for the :attr:`Clime.ignore_unknown_apps` flag.
     ignore_unknown_apps = False
 
     def __init__(self, name, context_settings=None):
         #: the name the command thinks it has.  Upon registering a command
         #: on a :class:`Tether` the tethered sub-commands will default the command name
         #: with this information.  You should instead use the
-        #: :class:`Context`\'s :attr:`~Context.info_name` attribute.
+        #: :class:`Clime`\'s :attr:`~Clime.info_name` attribute.
         self.name = name
         if context_settings is None:
             context_settings = {}
@@ -744,10 +744,10 @@ class BaseCommand:
         user-facing documentation. This traverses the entire structure
         below this command.
 
-        Use :meth:`quo.Context.to_info_dict` to traverse the entire
+        Use :meth:`quo.core.Clime.to_info_dict` to traverse the entire
         CLI structure.
 
-        :param clime: A :class:`Context` representing this command.
+        :param clime: A :class:`Clime` representing this command.
 
         """
         return {"name": self.name}
@@ -1040,12 +1040,15 @@ class Command(BaseCommand):
                 from quo.console import Console
                 from quo.text import Text
                 from quo.widget import Label
+                center = WA.CENTER
+
                 root = HSplit([
                     Window(
-                        FormattedTextControl('[HELP PAGE]'), style='reverse', align=WA.CENTER, height=1),
+                        FormattedTextControl('[HELP PAGE]'), style='reverse', align="center", height=1),
                     Label(
-                        Text(f'{clime.get_help()}')
+                        Text(f'<b>{clime.get_help()}</b>')
                         ),
+                    Window(char="_", height=1),
                     ])
                 layout = Layout(root)
                 bind = Bind()

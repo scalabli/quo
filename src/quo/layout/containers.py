@@ -187,7 +187,6 @@ class VerticalAlign(Enum):
     BOTTOM = "BOTTOM"
     JUSTIFY = "JUSTIFY"
 
-
 class HorizontalAlign(Enum):
     "Alignment for `VSplit`."
     LEFT = "LEFT"
@@ -267,18 +266,22 @@ class HSplit(_Split):
         element in front of floating elements.  `None` means: inherit from parent.
     :param style: A style string.
     :param modal: ``True`` or ``False``.
-    :param key_bindings: ``None`` or a :class:`.KeyBinder` object.
+    :param bind: ``None`` or a :class:`.KeyBinder` object.
 
     :param padding: (`Dimension` or int), size to be used for the padding.
     :param padding_char: Character to be used for filling in the padding.
     :param padding_style: Style to applied to the padding.
     """
+    top = VerticalAlign.TOP
+    center = VerticalAlign.CENTER
+    bottom = VerticalAlign.BOTTOM
+    justify = VerticalAlign.JUSTIFY
 
     def __init__(
         self,
         children: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
-        align: VerticalAlign = VerticalAlign.JUSTIFY,
+        align: VerticalAlign = "justify",
         padding: AnyDimension = 0,
         padding_char: Optional[str] = None,
         padding_style: str = "",
@@ -344,7 +347,9 @@ class HSplit(_Split):
             result: List[Container] = []
 
             # Padding Top.
-            if self.align in (VerticalAlign.CENTER, VerticalAlign.BOTTOM):
+            center = VerticalAlign.CENTER
+            bottom = VerticalAlign.BOTTOM
+            if self.align in (center, bottom):
                 result.append(Window(width=Dimension(preferred=0)))
 
             # The children with padding.
@@ -361,7 +366,9 @@ class HSplit(_Split):
                 result.pop()
 
             # Padding right.
-            if self.align in (VerticalAlign.CENTER, VerticalAlign.TOP):
+            top = VerticalAlign.TOP
+            center = VerticalAlign.CENTER
+            if self.align in (center, top):
                 result.append(Window(width=Dimension(preferred=0)))
 
             return result
@@ -511,12 +518,16 @@ class VSplit(_Split):
     :param padding_char: Character to be used for filling in the padding.
     :param padding_style: Style to applied to the padding.
     """
+    left = HorizontalAlign.LEFT
+    center = HorizontalAlign.CENTER
+    right = HorizontalAlign.RIGHT
+    justify = HorizontalAlign.JUSTIFY
 
     def __init__(
         self,
         children: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
-        align: HorizontalAlign = HorizontalAlign.JUSTIFY,
+        align: HorizontalAlign = "justify",
         padding: AnyDimension = 0,
         padding_char: Optional[str] = None,
         padding_style: str = "",
@@ -597,7 +608,9 @@ class VSplit(_Split):
             result: List[Container] = []
 
             # Padding left.
-            if self.align in (HorizontalAlign.CENTER, HorizontalAlign.RIGHT):
+            center = HorizontalAlign.CENTER
+            right =HorizontalAlign.RIGHT
+            if self.align in (center, right):
                 result.append(Window(width=Dimension(preferred=0)))
 
             # The children with padding.
@@ -614,7 +627,9 @@ class VSplit(_Split):
                 result.pop()
 
             # Padding right.
-            if self.align in (HorizontalAlign.CENTER, HorizontalAlign.LEFT):
+            center = HorizontalAlign.CENTER
+            left = HorizontalAlign.LEFT
+            if self.align in (center, left):
                 result.append(Window(width=Dimension(preferred=0)))
 
             return result
@@ -1463,6 +1478,9 @@ class Window(Container):
         implementation of line continuations, things like Vim "breakindent" and
         so on.
     """
+    left = WindowAlign.LEFT
+    center = WindowAlign.CENTER
+    right = WindowAlign.RIGHT
 
     def __init__(
         self,
@@ -1487,7 +1505,7 @@ class Window(Container):
         colorcolumns: Union[
             None, List[ColorColumn], Callable[[], List[ColorColumn]]
         ] = None,
-        align: Union[WindowAlign, Callable[[], WindowAlign]] = WindowAlign.LEFT,
+        align: Union[WindowAlign, Callable[[], WindowAlign]] = "left",
         style: Union[str, Callable[[], str]] = "",
         char: Union[None, str, Callable[[], str]] = None,
         get_line_prefix: Optional[GetLinePrefixCallable] = None,
@@ -2004,11 +2022,14 @@ class Window(Container):
 
             # Align this line. (Note that this doesn't work well when we use
             # get_line_prefix and that function returns variable width prefixes.)
-            if align == WindowAlign.CENTER:
+            left = WindowAlign.LEFT
+            center = WindowAlign.CENTER
+            right = WindowAlign.RIGHT
+            if align == "center":
                 line_width = fragment_list_width(line)
                 if line_width < width:
                     x += (width - line_width) // 2
-            elif align == WindowAlign.RIGHT:
+            elif align == "right":
                 line_width = fragment_list_width(line)
                 if line_width < width:
                     x += width - line_width

@@ -155,7 +155,7 @@ class Bar(Formatter):
         self,
         start: str = "[",
         end: str = "]",
-        sym_a: str = "=",
+        sym_a: str = "•",
         sym_b: str = ">",
         sym_c: str = " ",
         unknown: str = "#",

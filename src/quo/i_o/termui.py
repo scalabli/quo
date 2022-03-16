@@ -18,6 +18,7 @@ from quo.errors import Abort
 from quo.context.current import resolve_color_default
 from quo.types import Choice # convert_type
 from quo.expediency import LazyFile, inscribe
+
 #convert_type
 
 
@@ -25,7 +26,6 @@ from quo.expediency import LazyFile, inscribe
 # functions to customize how they work.
 
 #insert = input
-
 
 
 def hidden_prompt_func(prompt):
@@ -210,6 +210,7 @@ def flair(
     hidden=None,
     ul=None,
     underline=None,
+    upper=None,
     blink=None,
     italic=None,
     reverse=None,
@@ -285,7 +286,11 @@ def flair(
         try:
             bits.append(f"\033[{_interpret_color(fg)}m")
         except KeyError:
-            raise TypeError(f"Unknown color {fg!r}")
+            # imported like so to avoid circular imports
+            from quo.layout import FormattedTextControl, Window
+            from quo.shortcuts import container
+            container(Window(FormattedTextControl("Color error"), height=1, align="center", style="fg: yellow bg:brown bold"))
+            raise TypeError(f"Unknown color {fg!r}\n Check the documentation for a list of available colors.")
 
     if foreground:
         try:
@@ -298,13 +303,18 @@ def flair(
         try:
             bits.append(f"\033[{_interpret_color(bg, 10)}m")
         except KeyError:
-            raise TypeError(f"Unknown color {bg!r}")
+            from quo.layout import FormattedTextControl, Window
+            from quo.shortcuts import container
+            container(Window(FormattedTextControl("Color error"), height=1, align="center", style="fg: yellow bg:brown bold"))
+            raise TypeError(f"Unknown color {bg!r}\nCheck the documentation for a list of available colors.")
 
     if background:
         try:
             bits.append(f"\033[{_interpret_color(background, 10)}m")
         except KeyError:
             raise TypeError(f"Unknown color {background!r}")
+    if upper is True:
+        text.upper()
 
     if bold is not None:
         bits.append(f"\033[{1 if bold else 22}m")

@@ -17,8 +17,9 @@ QUO_STYLE = [
     # Highlighting of search matches in document.
     ("search", "bg:ansibrightyellow ansiblack"),
     ("search.current", ""),
-    #Rule
-    ("rule", "fg:yellow bg:brown bold"),
+    #Console API
+    ("bar", "fg:yellow bg:brown bold"),
+    ("rule", "fg:white  bold"),
     # Incremental search.
     ("incsearch", ""),
     ("incsearch.current", "reverse"),
