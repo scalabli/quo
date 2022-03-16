@@ -259,4 +259,4 @@ Therefore we can customize each of these elements separately, using for instance
 
 
 » Check out more examples `here <https://github.com/scalabli/quo
-/tree/master/examples/dialogs/>`
+/tree/master/examples/dialogs/>`_

@@ -20,7 +20,7 @@ Unreleased
 ``Version 2022.3.3``
 ---------------------
 
-Unreleased
+Released on 2022-03-16
 
 **Changed**
 ^^^^^^^^^^^^
@@ -100,30 +100,35 @@ Released on 2022-2-25
   
 **Fixed**
 ^^^^^^^^^^
-- Fixed :func:`quo.Console.edit`, :func:`quo.Console.rule`, :func:`quo.Console.openfile`, :func:`quo.Console.encoding`
+- Fixed :func:`quo.Console.edit`, :func:`quo.Console.openfile`, :func:`quo.Console.encoding`
 
  ``Version 2022.2``
 -------------------
 
 Released on 2022-2-16
 
-- Fixed minor bugs
-- Added :func:`quo.types.integer`
-- Deprecated :param:`password` in favor of :param:`hide`
-- Deprecated :class:`quo.text.HTML` in favor of :class:`quo.text.Text`
-- Deprecated :param:`r_elicit` in favor of :param:`rprompt`
-- Deprecated :class:`quo.Suite` in favor of :class:`quo.Console`
-- Deprecated :param:`validator` in favor of :param:`type`
+**Added**
+^^^^^^^^^^
 - Added :func:`quo.Console.edit`
 - Added :func:`quo.Console.launch`
 - Added :func:`quo.Console.size`
 - Added :func:`quo.Console.encoding`
-- Added :func:`quo.Console.bell`
-- Added :func:`quo.Console.rule`
+- Added :func:`quo.Console.bell`                                - Added :func:`quo.Console.rule`
 - Added :func:`quo.Console.openfile`
-- Full support for Windows
+- Added :func:`quo.types.integer`
+
+**Changed**
+^^^^^^^^^^^^^
+- Deprecated :param:`password` in favor of :param:`hide`
+- Deprecated :class:`quo.text.HTML` in favor of :class:`quo.text.Text`
+- Deprecated :param:`r_elicit` in favor of :param:`rprompt`
+- Deprecated :class:`quo.Suite` in favor of :class:`quo.console.Console`
+- Deprecated :param:`validator` in favor of :param:`type`
 - Dropped support for `python < 3.8`
 
+**Fixed**
+^^^^^^^^^^
+- Full support for Windows
 
 ``Version 2022.1.6``
 ---------------------
@@ -156,37 +161,42 @@ Released on 2022-1-11
 -------------------
 Released on 2021-12-25
 
-- Streamlined a number of features
-- Fixed broken placeholder() issue :issue:`30`
+**Changed**
+^^^^^^^^^^^^^
 - Deprecated :param:`foreground` and :param:`background`` in favor of :param:`fg` and :param:`bg`
+
+**Fixed**
+^^^^^^^^^^^
+- Fixed broken placeholder() issue :issue:`30`
 
 ``Version 2021.6``
 -------------------
 Released on 2021-11-20
 
+**Added**
+^^^^^^^^^^^
 - Added Support of a placeholder text that is displayed as long as no input is given.
-- Fixed minor bugs
 
 ``Version 2021.5.5.2``
 ----------------------
 Released on 2021-09-28
 
+**Fixed**
+^^^^^^^^^^
 - Pypi README fix
 
 ``Version 2021.5.5``
 ---------------------
 
-Released on 2021-09-23
+Released on 2021-09-2
 
+**Added**
+^^^^^^^^^^^
 - Added support for tabular presentation of data.
-
-- Added support for colorful error messages
-
+- Added support for colorful error messages.
 - Added :param:`ul` to :func:`quo.echo`. Can be used as a substitute for :param:`underline`  parameter.
-
-- Added a ``strike`` parameter to print strikethrough text.
-
-- Added a ``hidden`` parameter to hide printed text
+- Added :param:`strike`` to :func:`quo.echo`
+- Added a :param:`hidded` to :func:`quo.echo`
 
 
 ``Version 2021.4.5``
@@ -194,10 +204,9 @@ Released on 2021-09-23
 
 Released on 2021-08-22
 
-- Phasing out module ``wcwidth`` to reduce the need for external dependencies.
-
-- Intoducing the ``clipboard`` feature to copy and paste data flawlessly.
-
+**Added**
+^^^^^^^^^^^
+- Intoduced :class:`quo.clipboard.InMemoryClipboard` class to copy and paste data flawlessly.
 
 
 ``Version 2021.3.5``
@@ -205,17 +214,16 @@ Released on 2021-08-22
 
 Released on 2021-07-19
 
--   Added positional arguments `fg`` and ``bg`` which can still be used as a shortform of ``foreground`` and ``background``. foreground and background still works.
+**Added**
+^^^^^^^^^^^
+- Added :param:`fg` and :param:`bg` as an alias of :param:`foreground` and :param:`background`.
+- Added :class:`quo.progress.ProgressBar` class.
+- Added :class:`quo.text.HTML` for easy text formating.
 
--   Added support for lively ``ProgressBars``
-
--   Implementation of :class: ``quo.text.HTML`` for easy text formating
-
--   Fixed changelong link on PyPI
-
--   Fixed wcwidth dependancy issue :issue:`18`
--   Added ability to display tabular which comes with several themes
-
+**Changed**
+^^^^^^^^^^^^
+- Fixed changelong link on PyPI.
+- Fixed wcwidth dependancy issue :issue:`18`
 
 
 
@@ -224,8 +232,7 @@ Released on 2021-07-19
 
 Released on 2021-06-28
 
--   ``importlib_metadata`` backport package is installed on Python < 3.8 therefore will be be delisted as part of Quo's external dependency in later versions of Quo
--   Under the hood optimizations
+- Under the hood optimizations.
 
 
 
@@ -234,6 +241,17 @@ Released on 2021-06-28
 
 Released on 2021-06-18
 
--   Added support for ``ANSI colors`` for better coloring of the terminal
--   Ability to Print both ``text`` and ``binary`` data to stdout 
--   Added support for RGB tuples of three integers
+**Added**
+^^^^^^^^^^^
+- Added support for ``ANSI colors`` for better coloring of the terminal
+- Added support for RGB tuples of three integers
+
+
+      *****
+
+``Version 2021.1.dev0``
+-------------------------
+
+Released on 2021-01-10
+
+- Proof of concept

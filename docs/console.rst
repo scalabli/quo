@@ -205,4 +205,4 @@ This will display an application with no layout specified
 
 
 » Check out more examples `here <https://github.com/scalabli/quo
-/tree/master/examples/console/>`
+/tree/master/examples/console/>`_
