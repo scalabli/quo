@@ -18,7 +18,7 @@ class Input(metaclass=ABCMeta):
     Abstraction for any input.
 
     An instance of this class can be given to the constructor of a
-    :class:`~quo.application.Application` and will also be
+    :class:`~quo.console.Console` and will also be
     passed to the :class:`~quo.eventloop.base.EventLoop`.
     """
 

@@ -423,7 +423,7 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
         from quo.console.console import Console
         console = Console()
 
-        console.rule("Key Error!")
+        console.bar("Key Error!")
         from quo.text import Text
         from quo.shortcuts.utils import print
         print(Text('<aquamarine>»</aquamarine> <b>Check the documentation for mitigation steps</b>\n<green>*</green><b> https//quo.readthedocs.io/en/latest/kb.html</b>'))

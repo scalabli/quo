@@ -2736,8 +2736,8 @@ def to_container(container: AnyContainer) -> Container:
     elif hasattr(container, "__pt_container__"):
         return to_container(container.__pt_container__())
     else:
-        import quo
-        raise errors.UsageError("⚠️ Not a container object: %r" % (container,))
+
+        raise errors.UsageError("\n %r is NOT a container object.\n Check the documentation for mitigation steps.\n\n https://quo.readthedocs.io/en/latest" % (container))
 
 
 def to_window(container: AnyContainer) -> Window:

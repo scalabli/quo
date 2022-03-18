@@ -9,12 +9,11 @@ from quo.widget import Frame, TextArea
 def main():
     """ Example of a simple layout"""
 
-    content = TextArea(text="Hello world🌍")
-    container(
-            Frame(
-                content,
+    content = Frame(
+                TextArea("Hello world!"),
                 title="Quo: python🐍")
-            )
+
+    container(content)
 
 if __name__ == "__main__":
     main()

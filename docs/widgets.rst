@@ -61,28 +61,35 @@ Widget that displays the given text. It is not editable or focusable.
     - ``width`` - When given, use this width, rather than calculating it from the text size.
     - ``dont_extend_width`` - When `True`, don't take up more width than preferred, i.e. the length of the longest line of the text, or value of `width` parameter, if given. `True` by default
     - ``dont_extend_height`` -  When `True`, don't take up more width than the preferred height, i.e. the number of lines of the text. `False` by default.
+      
+You can print the layout to the output in a non-interactive way like so
+
+. code:: python
+
+ from quo import container
+ from quo.widget import Label
+
+ content = Label("Hello, World", style="fg:black bg:red")
+
+ container(content)
+
+Example upgrade. Printing the layout in an interactive way
 
 .. code:: python
 
-   from quo.console import Console
-   from quo.widget import Label
-   from quo.keys import Bind
-   from quo.layout import Layout
+ from quo import container
+ from quo.keys import bind
+ from quo.widget import Label
 
-   root = Label("Hello, World", style="fg:black bg:red")
+ content = Label("Hello, World", style="fg:black bg:red")
+ 
 
-   layout = Layout(root)
+ #Key bindings 
+ @bind.add("ctrl-c")
+ def _(event):
+    event.app.exit()
 
-   bind = Bind()
-
-   @bind.add("ctrl-c")
-   def _(event):
-      event.app.exit()
-
-   Console(
-   layout=layout,
-   bind=bind,
-   full_screen=True).run()
+ container(content, bind=True, full_screen=True)
 
 
 ``Box``
@@ -100,28 +107,21 @@ shrinking other elements. Wrapping something in a ``Box`` makes it flexible.
 
 .. code:: python
 
-  from quo.console import Console
+  from quo import container
+  from quo.keys import bind
   from quo.widget import Box, Label
-  from quo.keys import Bind
-  from quo.layout import Layout
-     
-  root = Box(
-          Label("Hello, World", style="fg:black bg:red"),
-          padding=5)
-          
-          
-  layout = Layout(root)
-  
-  bind = Bind()
 
-  @bind.add("ctrl-c")
+     
+  content = Box(
+              Label("Hello, World", style="fg:black bg:red"),
+              padding=5)
+
+  # Press `q` to cancel
+  @bind.add("q")
   def _(event):
       event.app.exit()
-    
-  Console(
-     layout=layout,
-     bind=bind,
-     full_screen=True).run()
+
+  container(content, bind=True, full_screen=True)  
      
      
 ``Button``
@@ -148,29 +148,21 @@ Changing the title and body of the frame is possible at runtime by assigning to 
 
 .. code:: python
 
-  from quo.console import Console
-  from quo.keys import Bind
+  from quo import container
+  from quo.keys import bind
   from quo.layout import Layout
   from quo.widget import Frame, Label
 
-  bind = Bind()
 
   root = Frame(
             Label("Hello, World!"),
             title="Quo: python")
-  
-  layout = Layout(root)
-
        
   @bind.add("ctrl-c")
   def _(event):
          event.app.exit()
   
-  Console(
-        layout=layout,
-        bind=bind,
-        full_screen=True).run
-                                 
+  container(root, bind=True, full_screen=True)                           
 
 ``Shadow``
 -----------

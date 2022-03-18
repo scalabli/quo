@@ -1,7 +1,7 @@
 .. _full_screen_applications:
 
-Full screen applications
-=================================
+Text User Interface (Full screen applications)
+================================================
 
 `quo` can be used to create complex full screen terminal
 applications. Typically, an application consists of a layout (to describe the
@@ -24,7 +24,7 @@ them together.
 ``A simple application``
 ------------------------
 
-Almost every quo application is an instance of an :class:`~quo.Console` object. The simplest full screen example would look like this:
+Almost every quo application is an instance of an :class:`~quo.console.Console` object. The simplest full screen example would look like this:
 
 .. code:: python
 
@@ -183,29 +183,28 @@ vertical line:
 
 .. code:: python
 
-    from quo.buffer import Buffer
-    from quo.console import Console
-    from quo.layout import BufferControl, FormattedTextControl, Layout, VSplit, Window
+ from quo import container
+ from quo.buffer import Buffer
+ from quo.layout import BufferControl, FormattedTextControl, VSplit, Window
 
-    buffer1 = Buffer()  # Editable buffer.
+ buffer1 = Buffer()  # Editable buffer.
 
-    root_container = VSplit([
+ content = VSplit([
         # One window that holds the BufferControl with the default buffer on the left.
-        Window(BufferControl(buffer=buffer1)),
+      Window(BufferControl(buffer=buffer1)),
 
         # A vertical line in the middle. We explicitly specify the width, to
         # make sure that the layout engine will not try to divide the whole
         # width by three for all these windows. The window will simply fill its
         # content by repeating this character.
-        Window(width=1, char='|'),
+      Window(width=1, char='|'),
 
         # Display the text 'Hello world' on the right.
-        Window(FormattedTextControl('Hello world')),
-    ])
+      Window(FormattedTextControl('Hello world')),
+  ])
 
-    layout = Layout(root_container)
 
-    Console(layout=layout, full_screen=True).run() 
+ container(content, full_screen=True)
     # You won't be able to Exit this app unless you add a key binder
 
 
@@ -277,21 +276,18 @@ Key bindings can be passed to the application as follows:
 
 .. code:: python
 
-    from quo.console import Console
-    from quo.keys import Bind
+    from quo import container
+    from quo.keys import bind
 
-    bind = Bind()
-
-    Console(bind=bind).run()
+    container(bind=True)
 
 To register a new keyboard shortcut, we can use the
 :meth:`~quo.keys.Bind.add` method as a decorator of the key handler:
 
 .. code:: python
 
-    from quo.keys import Bind
+    from quo.keys import bind
 
-    bind = Bind()
 
     @bind.add('ctrl-q')
     def exit_(event):
@@ -303,7 +299,7 @@ To register a new keyboard shortcut, we can use the
         """
         event.app.exit()
 
-    Console(bind=bind, full_screen=True).run()
+    container(bind=True, full_screen=True)
 
 The callback function is named ``exit_`` for clarity, but it could have been
 named ``_`` (underscore) as well, because we won't refer to this name.

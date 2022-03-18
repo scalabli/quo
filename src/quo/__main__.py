@@ -1,29 +1,33 @@
-from quo import print
-
+from quo.console import console
+from quo.keys import bind
 from quo.shortcuts import container
 from quo.style import Style
-from quo.buffer import Buffer
-from quo.console import Console
+
 from quo.widget import Box, Label, Frame, Shadow
-from quo.layout import Layout, HSplit, VSplit, Window, WindowAlign as WA, FormattedTextControl, BufferControl
-from quo.layout.margin import NumberedMargin, ScrollbarMargin
-from quo.keys import KeyBinder
-from quo.text import Text, FormattedText
+from quo.layout import HSplit, VSplit, Window, FormattedTextControl
+from quo.text import Text
 
-console = Console()
 
-LIPSUM = ( """Quo is scallable\n"""* 3)
-buff = Buffer()
-buff.text = LIPSUM
+def get_time():
+    "Tokens to be shown before the prompt."
+    import datetime
 
-root = HSplit([
+    now = datetime.datetime.now()
+    return [
+            ("reverse", "FEATURES | press `q` or `ctrl-c` to quit "),
+            ("fg:green", "%s:%s:%s"  % (now.hour, now.minute, now.second))
+            ]
+
+
+
+content = HSplit([
     Window(
-        FormattedTextControl("FEATURES | press `q` or `ctrl-c` to quit"), style="reverse", height=1, align=WA.CENTER),
+        FormattedTextControl(get_time), style="reverse", height=1, align="centre"), #"FEATURES | press `q` or `ctrl-c` to quit" + get_time), style="reverse", height=1, align="center"),
     Label(
             Text('<red>*</red><b> Support for ANSI, RGB and Hex color models.</b>\n<blue>*</blue><b> Support for tabular presentation of data.</b>\n<green>*</green><b> Intuitive progressbars.</b>\n<magenta>*</magenta><b> Syntax <style fg="yellow" bg="red">Highlighting</style></b>\n<yellow>*</yellow><b> Nesting of Commands.</b>\n<teal>*</teal><b> Automatic help page generation.</b>\n<khaki>*</khaki><b> Key bindings.</b>\n<aquamarine>*</aquamarine><b> Auto suggestions.</b>\n<brown>*</brown><b> Customizable Text User Interface<i>(TUI)</i> dialogs</b>'
                         ),
                     ),
-        Window(height=1, char='_'),
+        Window(height=1, char='\u2501'),
         VSplit([
                    Frame(
                        Label(
@@ -47,33 +51,18 @@ root = HSplit([
                     ),
                 
             ]),
-        Window(height=1, char="_"),
-        HSplit([
-            Window(FormattedTextControl('Margins.'), height=1, style="fg:red bg:yellow bold", align=WA.CENTER),
-            Window(
-        
-                    BufferControl(buffer=buff),
-                left_margins=[NumberedMargin(), ScrollbarMargin()],
-                right_margins=[ScrollbarMargin(), ScrollbarMargin()],),
+        Window(height=1, char="\u2501"),
+        Window(FormattedTextControl("Press Ctrl-D to donate 🎁", style="fg:yellow bg:purple"))
+])
 
-
-        ]),
-        ])
-root1 = Label(
-        Text('<style fg="aquamarine" bg="purple"> Press Ctrl-L to launch the documentation</style>'))
-
-layout = Layout(root)
-layout1 = Layout(root1)
-kb = KeyBinder()
-@kb.add("ctrl-l")
+@bind.add("ctrl-d")
 def _(event):
-    console.launch("https://quo.rtfd.io")
-@kb.add("q")
+    console.launch("https://ko-fi.com/scalabli")
+@bind.add("q")
 def _(event):
     event.app.exit()
-@kb.add("ctrl-c")
+@bind.add("ctrl-c")
 def _(event):
     event.app.exit()
 
-Console(layout=layout, full_screen=True, bind=kb).run()
-#Console(layout=layout1, full_screen=True, bind=kb).run()
+container(content, bind=True, full_screen=True, refresh=0.5)

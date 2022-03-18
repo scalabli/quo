@@ -115,8 +115,7 @@ class Layout:
                 if isinstance(control, BufferControl) and control.buffer.name == value:
                     self.focus(control)
                     return
-            raise errors.UsageError(
-                "Couldn't find Buffer in the current layout: %r." % (value,)
+            raise errors.UsageError("\nCouldn't find Buffer in the current layout: %r." % (value,)
             )
 
         # BufferControl by buffer object.
@@ -125,8 +124,7 @@ class Layout:
                 if isinstance(control, BufferControl) and control.buffer == value:
                     self.focus(control)
                     return
-            raise errors.UsageError(
-                "Couldn't find Buffer in the current layout: %r." % (value,)
+            raise errors.UsageError("\nCouldn't find Buffer in the current layout: %r." % (value,)
             )
 
         # Focus UIControl.

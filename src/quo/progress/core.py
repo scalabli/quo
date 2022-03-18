@@ -149,7 +149,7 @@ class ProgressBar:
             Window(
                 FormattedTextControl(lambda: self.title),
                 height=1,
-                style="class:progressbar,title",
+                style="fg:green",
             ),
             filter=Condition(lambda: self.title is not None),
         )
@@ -157,9 +157,9 @@ class ProgressBar:
         bottom_toolbar = ConditionalContainer(
             Window(
                 FormattedTextControl(
-                    lambda: self.bottom_toolbar, style="class:bottom-toolbar.text"
+                    lambda: self.bottom_toolbar, style="reverse"
                 ),
-                style="class:bottom-toolbar",
+                style="reverse",
                 height=1,
             ),
             filter=~is_done

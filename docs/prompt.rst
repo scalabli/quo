@@ -619,21 +619,21 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
 .. code:: python
 
     from quo import print
+    from quo.keys import bind
     from quo.prompt import Prompt
-    from quo.keys import Bind
-
-    bind = Bind()
 
     @bind.add('ctrl-t')
     def _(event):
-    # Say 'hello' when `ctrl-t` is pressed."
+    # Print `Hello, World!` when `ctrl-t` is pressed."
         print("Hello, World!")
 
     @bind.add('ctrl-x')
     def _(event):
       #Exit when `ctrl-x` is pressed. "
         event.app.exit()
-    session = Prompt(bind=bind)
+
+    session = Prompt()
+
     session.prompt('> ')
 
 Conditional Key bindings
@@ -651,10 +651,8 @@ pass it a :class:`~quo.Condition` instance. (:ref:`Read more about filters <filt
 
     import datetime
     from quo import Condition
+    from quo.keys import bind
     from quo.prompt import Prompt
-    from quo.keys import Bind
-
-    bind = Bind()
 
     @Condition
     def second_half():
@@ -665,7 +663,7 @@ pass it a :class:`~quo.Condition` instance. (:ref:`Read more about filters <filt
     def _(event):
         # ...
         pass
-    session = Prompt(bind=bind)
+    session = Prompt()
     session.prompt('> ')
 
 Toggle visibility of input
@@ -675,19 +673,17 @@ Display asterisks instead of the actual characters with the addition of a Contro
 .. code:: python
 
    from quo import Condition
+   from quo.keys import bind
    from quo.prompt import Prompt
-   from quo.keys import Bind
    
    hidden = [True]  # Nonlocal
-
-   bind = Bind()
 
    @bind.add("ctrl-t")
    def _(event):
        "When ControlT has been pressed, toggle visibility."
        hidden[0] = not hidden[0]
 
-   session = Prompt(hide=Condition(lambda : hidden[0], bind=bind)   
+   session = Prompt(hide=Condition(lambda : hidden[0]))   
    session.prompt( "Password: ")
 
 
@@ -699,9 +695,7 @@ opening the autocompletion menu instead of the tab key. This can be done with th
 
 .. code:: python
 
-    from quo.keys import Bind
-
-    bind = Bind()
+    from quo.keys import bind
 
     @bind.add('ctrl-space')
     def _(event):

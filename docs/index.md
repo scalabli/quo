@@ -81,7 +81,7 @@ In order to for us to maintain this project and grow our community of contributo
 
 For discussions about the usage, development, and the future of quo, please join our Google community
 
-* [Community👨‍👩‍👦‍👦](https://groups.google.com/forum/#!forum/secretum)
+* [Community👨‍👩‍👦‍👦](https://groups.google.com/g/scalabli)
 
 ## Resources
 

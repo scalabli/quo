@@ -90,7 +90,7 @@ class Label(Formatter):
         self.suffix = suffix
 
     def _add_suffix(self, label: AnyFormattedText) -> StyleAndTextTuples:
-        label = to_formatted_text(label, style="class:label")
+        label = to_formatted_text(label, style="fg:green")#"class:label")
         return label + [("", self.suffix)]
 
     def format(
@@ -129,7 +129,7 @@ class Percentage(Formatter):
     Display the progress as a percentage.
     """
 
-    template = "<percentage>{percentage:>5}%</percentage>"
+    template = "<percentage fg='green'>{percentage:>5}%</percentage>"
 
     def format(
         self,
@@ -149,15 +149,15 @@ class Bar(Formatter):
     Display the progress bar itself.
     """
 
-    template = "<bar>{start}<bar-a>{bar_a}</bar-a><bar-b>{bar_b}</bar-b><bar-c>{bar_c}</bar-c>{end}</bar>"
+    template = "<bar bg='black'>{start}<bar-a fg='aquamarine'>{bar_a}</bar-a><bar-b fg='red'>{bar_b}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
 
     def __init__(
         self,
         start: str = "[",
         end: str = "]",
-        sym_a: str = "•",
-        sym_b: str = ">",
-        sym_c: str = " ",
+        sym_a: str = "\u2501",
+        sym_b: str = "\u257E", #Can be an ">>" or something else
+        sym_c: str = "\u2500",
         unknown: str = "#",
     ) -> None:
 
@@ -216,7 +216,7 @@ class Progress(Formatter):
     Display the progress as text.  E.g. "8/20"
     """
 
-    template = "<current>{current:>3}</current>/<total>{total:>3}</total>"
+    template = "<current fg='yellow'><i>{current:>3}</i></current>/<total>{total:>3}</total>"
 
     def format(
         self,
@@ -426,11 +426,12 @@ def create_default_formatters() -> List[Formatter]:
         Percentage(),
         Text(" "),
         Bar(),
-        Text(" "),
+        Text(" ", style="purple"),
         Progress(),
-        Text(" "),
-        Text("eta [", style="class:time-left"),
+        Text(" ", style="purple"),
+        Text("time left: ", style="purple"),
+        Text("[", style="fg:blue bold"),#"class:time-left"),
         TimeLeft(),
-        Text("]", style="class:time-left"),
+        Text("]", style="fg:blue bold"), #class:time-left"),
         Text(" "),
     ]

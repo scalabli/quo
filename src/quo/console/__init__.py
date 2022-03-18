@@ -30,3 +30,5 @@ from quo.decorators import tether as tether
 #    "in_terminal",
 #    "run_in_terminal",
 #]
+
+console = Console()

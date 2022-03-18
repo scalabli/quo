@@ -2,27 +2,27 @@
 """
 A simple example of a scrollable pane.
 """
-
-import quo
-
-from quo.suite.current import get_app
+from quo import container
 from quo.completion import WordCompleter
-
+from quo.console import get_app
+from quo.keys import bind, focus
+from quo.layout import CompletionsMenu, Float, FloatContainer, HSplit, VSplit, ScrollablePane
+from quo.widget import Frame, Label, TextArea
 
 def main():
     # Create a big layout of many text areas, then wrap them in a `ScrollablePane`.
-    root_container = quo.layout.VSplit(
+    content = VSplit(
         [
-            quo.widgets.Label("<left column>"),
-            quo.layout.HSplit(
+            Label("<left column>"),
+            HSplit(
                 [
-                    quo.widgets.Label("ScrollContainer Demo"),
-                    quo.widgets.Frame(
-                        quo.layout.ScrollablePane(
-                            quo.layout.HSplit(
+                    Label("ScrollContainer Demo"),
+                    Frame(
+                        ScrollablePane(
+                            HSplit(
                                 [
-                                    quo.widgets.Frame(
-                                        quo.widgets.TextArea(
+                                    Frame(
+                                        TextArea(
                                             text=f"label-{i}",
                                             completer=animal_completer,
                                         )
@@ -37,39 +37,27 @@ def main():
         ]
     )
 
-    root_container = quo.layout.FloatContainer(
-        root_container,
+    root_container = FloatContainer(
+        content,
         floats=[
-            quo.layout.Float(
+            Float(
                 xcursor=True,
                 ycursor=True,
-                content=quo.layout.CompletionsMenu(max_height=16, scroll_offset=1),
+                content=CompletionsMenu(max_height=16, scroll_offset=1),
             ),
         ],
     )
 
-    layout = quo.layout.Layout(container=root_container)
-
     # Key bindings.
-    kb = quo.keys.KeyBinder()
-
-    @kb.add("ctrl-c")
+    @bind.add("ctrl-c")
     def exit(event) -> None:
         get_app().exit()
 
-    kb.add("tab")(quo.keys.focus.next)
-    kb.add("s-tab")(quo.keys.focus.previous)
+    bind.add("tab")(focus.next)
+    bind.add("s-tab")(focus.previous)
 
     # Create and run application.
-    application = quo.Suite(
-            layout=layout, 
-            bind=kb, 
-            full_screen=True,
-            mouse_support=True
-    )
-    application.run()
-
-
+    container(root_container, bind=True, full_screen=True, mouse_support=True)
 animal_completer = WordCompleter(
     [
         "alligator",

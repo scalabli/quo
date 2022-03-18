@@ -161,8 +161,8 @@ WIDGETS_STYLE = [
     # Shadows.
     ("dialog shadow", "bg:grey"),#000088"),
     ("dialog.body shadow", "bg:#aaaaaa"),
-    ("progress-bar", "bg:#000088"),
-    ("progress-bar.used", "bg:#ff0000"),
+    ("progress-bar", "bg:green"),
+    ("progress-bar.used", "bg:grey"),
 ]
 
 

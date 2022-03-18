@@ -4,22 +4,23 @@ A simple example of a Notepad-like text editor.
 """
 import datetime
 import asyncio
-import quo
 
-from quo.console import Console, get_app
+from quo import container, Condition
 from quo.completion import PathCompleter
-from quo.filters import Condition
+from quo.console import get_app
+from quo.keys import bind
 from quo.layout.containers import (
     ConditionalContainer,
     Float
 )
-from quo.keys import Bind
-from quo.layout import FormattedTextControl, Layout, HSplit, VSplit, Window, WindowAlign as WA
+
+
+from quo.layout import FormattedTextControl, Layout, HSplit, VSplit, Window
+
 from quo.layout.dimension import D
 from quo.layout.menus import CompletionsMenu
 from quo.highlight import DynamicLexer, PygmentsLexer
 from quo.search import start_search
-from quo.style import Style
 from quo.widget import (
     Button,
     Dialog,
@@ -27,11 +28,11 @@ from quo.widget import (
     MenuContainer,
     MenuItem,
     SearchToolbar,
-    TextArea,
-)
+    TextArea
+    )
 
 
-class ApplicationState:
+class Appstate:
     """
     Application state.
 
@@ -42,9 +43,7 @@ class ApplicationState:
     show_status_bar = True
     current_path = None
 
-
-def get_statusbar_text():
-    return " Press Ctrl-C to open menu. "
+    statusbar_text = "Press Ctrl-M to open menu"
 
 
 def get_statusbar_right_text():
@@ -54,11 +53,12 @@ def get_statusbar_right_text():
     )
 
 
-search_toolbar = quo.widget.SearchToolbar()
-text_field = quo.widget.TextArea(
+search_toolbar = SearchToolbar()
+
+text_field = TextArea(
     highlighter=DynamicLexer(
         lambda: PygmentsLexer.from_filename(
-            ApplicationState.current_path or ".txt", sync_from_start=False
+            Appstate.current_path or ".txt", sync_from_start=False
         )
     ),
     scrollbar=True,
@@ -133,31 +133,28 @@ body = HSplit(
             content=VSplit(
                 [
                     Window(
-                        FormattedTextControl(get_statusbar_text), style="class:status"
+                        FormattedTextControl(Appstate.statusbar_text), style="fg:blue bg:white bold"
                     ),
                     Window(
                         FormattedTextControl(get_statusbar_right_text),
                         style="class:status.right",
                         width=9,
-                        align=WA.RIGHT,
+                        align="right",
                     ),
                 ],
                 height=1,
             ),
-            filter=Condition(lambda: ApplicationState.show_status_bar),
+            filter=Condition(lambda: Appstate.show_status_bar),
         ),
     ]
 )
 
 
 # Global key bindings.
-bind = Bind()
-
-
 @bind.add("ctrl-c")
 def _(event):
     "Focus menu."
-    event.app.layout.focus(root_container.window)
+    event.app.layout.focus(content.window)
 
 
 #
@@ -174,7 +171,7 @@ def do_open_file():
         )
 
         path = await show_dialog_as_float(open_dialog)
-        ApplicationState.current_path = path
+        Appstate.current_path = path
 
         if path is not None:
             try:
@@ -201,7 +198,7 @@ def show_message(title, text):
 async def show_dialog_as_float(dialog):
     "Coroutine."
     float_ = Float(content=dialog)
-    root_container.floats.insert(0, float_)
+    content.floats.insert(0, float_)
 
     app = get_app()
 
@@ -210,8 +207,8 @@ async def show_dialog_as_float(dialog):
     result = await dialog.future
     app.layout.focus(focused_before)
 
-    if float_ in root_container.floats:
-        root_container.floats.remove(float_)
+    if float_ in content.floats:
+        content.floats.remove(float_)
 
     return result
 
@@ -225,7 +222,11 @@ def do_exit():
 
 
 def do_time_date():
-    text = datetime.datetime.now().isoformat()
+    now = datetime.datetime.now()
+
+    text = "%s:%s:%s"  % (now.hour, now.minute, now.second)
+
+    #text = datetime.datetime.now().isoformat()
     text_field.buffer.insert_text(text)
 
 
@@ -291,7 +292,7 @@ def do_select_all():
 
 
 def do_status_bar():
-    ApplicationState.show_status_bar = not ApplicationState.show_status_bar
+    Appstate.show_status_bar = not Appstate.show_status_bar
 
 
 #
@@ -299,11 +300,11 @@ def do_status_bar():
 #
 
 
-root_container = MenuContainer(
+content = MenuContainer(
     body=body,
     menu_items=[
         MenuItem(
-            "File",
+            "📂File",
             children=[
                 MenuItem("New...", handler=do_new_file),
                 MenuItem("Open...", handler=do_open_file),
@@ -349,30 +350,5 @@ root_container = MenuContainer(
     bind=bind,
 )
 
-
-style = Style.add(
-    {
-        "status": "reverse",
-        "shadow": "bg:#440044",
-    }
-)
-
-
-layout = Layout(root_container, focused_element=text_field)
-
-
-application = Console(
-    layout=layout,
-    enable_page_navigation_bindings=True,
-    style=style,
-    mouse_support=True,
-    full_screen=True,
-)
-
-
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
+container(
+        content, focused_element=text_field, full_screen=True, mouse_support=True, refresh=0.5)

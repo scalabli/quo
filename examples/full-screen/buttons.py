@@ -2,9 +2,12 @@
 """
 A simple example of a few buttons and click handlers.
 """
-from quo.console import Console, get_app
-from quo.widget import Button, TextArea, Box, Frame, Label
-from quo.layout import Layout, VSplit, HSplit
+import quo
+from quo import container
+from quo.console import get_app
+from quo.keys import bind
+from quo.layout import HSplit, VSplit
+from quo.widget import Box, Button, Frame, Label, TextArea
 
 
 # Event handlers for all the buttons.
@@ -38,54 +41,25 @@ text_area = TextArea(focusable=True)
 # Combine all the widgets in a UI.
 # The `Box` object ensures that padding will be inserted around the containing
 # widget. It adapts automatically, unless an explicit `padding` amount is given.
-root_container = Box(
-        (
-        [
+content =  Box(
+        HSplit(
+            [
             Label(text="Press `Tab` to move the focus."),
             VSplit([
                 Box(body=HSplit([b1, b2, b3, b4], padding=1),
                         padding=1,
-                        style="class:left-pane"),
-                Box(body=Frame(text_area), padding=1, style="class:right-pane")
+                        style="bg:magenta"),
+                Box(body=Frame(text_area), padding=1, style="bg:blue fg:green")
                 ]
             ),
         ]
-    ),
+    )
 )
 
-layout = Layout(container=root_container, focused_element=b1)
 
 
 # Key bindings.
-kb = KeyBinder()
+bind.add("tab")(quo.keys.focus.next)
+bind.add("s-tab")(quo.keys.focus.previous)
 
-kb.add("tab")(quo.keys.focus.next)
-kb.add("s-tab")(quo.keys.focus.previous)
-
-
-# Styling.
-
-styling = Style
-
-style = styling(
-    [
-        ("left-pane", "bg:#888800 #000000"),
-        ("right-pane", "bg:#00aa00 #000000"),
-        ("button", "#000000"),
-        ("button-arrow", "#000000"),
-        ("button focused", "bg:#ff0000"),
-        ("text-area focused", "bg:#ff0000"),
-    ]
-)
-
-
-# Build a main application object.
-application = Console(layout=layout, bind=kb, style=style, full_screen=True)
-
-
-def main():
-    application.run()
-
-
-if __name__ == "__main__":
-    main()
+container(content, bind=True, focused_element=b1, full_screen=True)

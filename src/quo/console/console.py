@@ -220,7 +220,7 @@ class Console(Generic[_AppResult]):
         mouse_support: FilterOrBool = False,
         enable_page_navigation_bindings: Optional[
             FilterOrBool
-        ] = None,  # Can be None, True or False.
+        ] = True, # Can be None, True or False.
         paste_mode: FilterOrBool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         erase_when_done: bool = False,
@@ -894,11 +894,11 @@ class Console(Generic[_AppResult]):
     def rule(
             self,
             height: int = 1,
-            char: str = "_",
+            char: str = "\u2501",
             style = "class:rule"
             ) -> "Console":
         from quo.shortcuts import container
-        container(Window(char=char, height=height, style=style))
+        container(Window(char=char, height=height, style=style), bind=False)
 
 
     def bar(
@@ -909,7 +909,7 @@ class Console(Generic[_AppResult]):
             )-> "Console":
         from quo.shortcuts import container
 
-        container(Window(FormattedTextControl(message), height=1, style=style, align=align))
+        container(Window(FormattedTextControl(message), height=1, style=style, align=align), bind=False)
     def run(
         self,
         pre_run: Optional[Callable[[], None]] = None,

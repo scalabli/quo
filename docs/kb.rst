@@ -8,15 +8,11 @@ A key binding is an association between a physical key on a keyboard and a param
 
   This page contains a couple of extra notes about key bindings.
 
-Key bindings can be defined by creating a
-:class:`~quo.keys.Bind` instance:
-
+Key bindings can be defined by importing :func:`quo.keys.bind` which is an instance of :class:`~quo.keys.Bind`
 
 .. code:: python
 
-    from quo.keys import Bind
-
-    bind = Bind()
+    from quo.keys import bind
 
     @bind.add('a')
     def _(start):
@@ -194,7 +190,8 @@ pass it to :class:`~quo.Condition` instance. (:ref:`Read more about filters <fil
 .. code:: python
 
     import datetime
-    from quo import Condition
+    from quo import Conditio
+    from quo.keys import bind
 
     @Condition
     def is_active():
@@ -217,7 +214,7 @@ Sometimes you want to enable or disable a whole set of key bindings according to
 
 .. code:: python
 
-    from quo import Conditio
+    from quo import Condition
     from quo.keys ConditionalKeyBindings
 
     @Condition

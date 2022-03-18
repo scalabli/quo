@@ -64,7 +64,7 @@ from quo.keys.key_binding.bindings.completion import (
 from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
-from quo.keys import Keys, KeyBinder
+from quo.keys import Keys, KeyBinder, bind as _bind
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
@@ -488,7 +488,8 @@ class Prompt(Generic[_T]):
         mouse_support: FilterOrBool = False,
         input_processors: Optional[List[Processor]] = None,
         placeholder: Optional[AnyFormattedText] = None,
-        bind: Optional[KeyBindingsBase] = None,
+        bind_: Optional[KeyBindingsBase] =  False, 
+        bind: Optional[KeyBindingsBase] = _bind,
         erase_when_done: bool = False,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
         tempfile: Optional[Union[str, Callable[[], str]]] = None,
@@ -551,6 +552,8 @@ class Prompt(Generic[_T]):
         self.search_buffer = self._create_search_buffer()
         self.layout = self._create_layout()
         self.app = self._create_application(editing_mode, erase_when_done)
+        if bind_ is True:
+            bind = _bind
 
     def _dyncond(self, attr_name: str) -> Condition:
         """

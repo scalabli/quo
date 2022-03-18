@@ -3,12 +3,11 @@
 A simple example of a calculator program.
 This could be used as inspiration for a REPL.
 """
-from quo import Console
+from quo import container
 from quo.document import Document
-from quo.keys import Bind
+from quo.keys import bind
+from quo.layout import Window, HSplit
 from quo.widget import SearchToolbar, TextArea
-from quo.layout import Layout, Window, HSplit
-from quo.text import Text
 
 help_text = """
 Type any expression (e.g. "4 + 4") followed by enter to execute.
@@ -21,17 +20,16 @@ def main():
     search_field = SearchToolbar()  # For reverse search.
 
     output_field = TextArea(f'{help_text}', style="bg:blue fg:yellow bold")
-         #   tyle="class:output-field", text=help_text)
     input_field = TextArea(
         height=2,
         prompt=">>",
-        style="bg:green", #class:input-field",
+        style="bg:gray fg:green", #class:input-field",
         multiline=False,
         wrap_lines=False,
         search_field=search_field,
     )
 
-    container = HSplit(
+    content = HSplit(
         [
             output_field,
             Window(height=1, char="-", style="fg:magenta"),
@@ -64,24 +62,16 @@ def main():
     input_field.accept_handler = accept
 
     # The key bindings.
-    bind = Bind()
-
     @bind.add("ctrl-c")
     @bind.add("ctrl-q")
     def _(event):
         "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
         event.app.exit()
 
-    layout = Layout(container, focused_element=input_field)
+# layout = Layout(container, focused_element=input_field)
 
+    container(content, bind=True, focused_element=input_field, full_screen=True, mouse_support=True)
 
-    # Run application.
-    Console(
-            layout=layout,
-            bind=bind,
-            mouse_support=True,
-            full_screen=True,
-            ).run()
 
 if __name__ == "__main__":
     main()
