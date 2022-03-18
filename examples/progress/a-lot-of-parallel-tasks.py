@@ -6,14 +6,14 @@ import random
 import threading
 import time
 
-from prompt_toolkit import HTML
-from prompt_toolkit.shortcuts import ProgressBar
+from quo.text import Text
+from quo.progress import ProgressBar
 
 
 def main():
     with ProgressBar(
-        title=HTML("<b>Example of many parallel tasks.</b>"),
-        bottom_toolbar=HTML("<b>[Control-L]</b> clear  <b>[Control-C]</b> abort"),
+        title=Text("<b>Example of many parallel tasks.</b>"),
+        bottom_toolbar=Text("<b>[Control-L]</b> clear  <b>[Control-C]</b> abort"),
     ) as pb:
 
         def run_task(label, total, sleep_time):

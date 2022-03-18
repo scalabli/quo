@@ -190,7 +190,7 @@ pass it to :class:`~quo.Condition` instance. (:ref:`Read more about filters <fil
 .. code:: python
 
     import datetime
-    from quo import Conditio
+    from quo import Condition
     from quo.keys import bind
 
     @Condition

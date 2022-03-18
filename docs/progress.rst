@@ -25,13 +25,14 @@ when progress happens.
 
 .. code:: python
 
-    import time
-    from quo.progress import ProgressBar
+ import time
+
+ from quo.progress import ProgressBar
 
 
-    with ProgressBar() as pb:
-        for i in pb(range(800)):
-            time.sleep(.01)
+ with ProgressBar() as pb:
+     for i in pb(range(800)):
+         time.sleep(.01)
 
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png
 
@@ -64,35 +65,35 @@ want this depends on the application.
 
 .. code:: python
 
-    from quo.progress import ProgressBar
-    import time
-    import threading
+ import threading
+ import time
+ 
+ from quo.progress import ProgressBar
 
+ with ProgressBar() as pb:
+     # Two parallel tasks.
+     def task_1():
+         for i in pb(range(100)):
+             time.sleep(.05)
 
-    with ProgressBar() as pb:
-        # Two parallel tasks.
-        def task_1():
-            for i in pb(range(100)):
-                time.sleep(.05)
+     def task_2():
+         for i in pb(range(150)):
+             time.sleep(.08)
 
-        def task_2():
-            for i in pb(range(150)):
-                time.sleep(.08)
+     # Start threads.
+     t1 = threading.Thread(target=task_1)
+     t2 = threading.Thread(target=task_2)
+     t1.daemon = True
+     t2.daemon = True
+     t1.start()
+     t2.start()
 
-        # Start threads.
-        t1 = threading.Thread(target=task_1)
-        t2 = threading.Thread(target=task_2)
-        t1.daemon = True
-        t2.daemon = True
-        t1.start()
-        t2.start()
-
-        # Wait for the threads to finish. We use a timeout for the join() call,
-        # because on Windows, join cannot be interrupted by Control-C or any other
-        # signal.
-        for t in [t1, t2]:
-            while t.is_alive():
-                t.join(timeout=.5)
+     # Wait for the threads to finish. We use a timeout for the join() call,
+     # because on Windows, join cannot be interrupted by Control-C or any other
+     # signal.
+     for t in [t1, t2]:
+         while t.is_alive():
+             t.join(timeout=.5)
 
 .. image:: ./images/two_tasks.png
 
@@ -105,16 +106,17 @@ Each progress bar can have one title, and for each task an individual label.
 
 .. code:: python
 
-    from quo.progress import ProgressBar
-    from quo import echo
-    import time
+ import time
 
-    title = echo(f"Downloading 4 files...", bg="yellow", fg="black")
-    label = echo(f"some file:", fg="red")
+ from quo import echo
+ from quo.progress import ProgressBar
 
-    with ProgressBar(title=title) as pb:
-        for i in pb(range(800), label=label):
-            time.sleep(.01)
+ title = echo(f"Downloading 4 files...", bg="yellow", fg="black")
+ label = echo(f"some file:", fg="red")
+
+ with ProgressBar(title=title) as pb:
+     for i in pb(range(800), label=label):
+         time.sleep(.01)
 
 .. image:: ./images/coloredlabel.png
 
@@ -127,56 +129,58 @@ customized by using a different sequence of formatters. The default formatting l
 
 .. code:: python
 
-    from quo.progress.formatters import *
+ from quo.progress.formatters import *
 
-    default_formatting = [
-        Label(),
-        Text(' '),
-        Percentage(),
-        Text(' '),
-        Bar(),
-        Text(' '),
-        Progress(),
-        Text(' '),
-        Text('eta [', style='class:time-left'),
-        TimeLeft(),
-        Text(']', style='class:time-left'),
-        Text(' '),
-    ]
+ default_formatting = [
+     Label(),
+     Text(' '),
+     Percentage(),
+     Text(' '),
+     Bar(),
+     Text(' '),
+     Progress(),
+     Text(' '),
+     Text('time left', style="fg:purple"),
+     Text('[', style='fg:green'),
+     TimeLeft(),
+     Text(']', style='fg:green'),
+     Text(' '),
+  ]
 
 That sequence of
-:class:`~quo.shortcuts.formatters.Formatter` can be
+:class:`~quo.progress.formatters.Formatter` can be
 passed to the `formatter` argument of
 :class:`~quo.progress.ProgressBar`. So, we could change this and
 modify the progress bar to look like an apt-get style progress bar:
 
 .. code:: python
 
-    from quo.progress import ProgressBar, formatters
-    from quo.styles import Style
-    import time
+ import time
 
-    style = Style.add({
-        'label': 'bg:#ffff00 #000000',
-        'percentage': 'bg:#ffff00 #000000',
-        'current': '#448844',
-        'bar': '',
+ from quo.progress import ProgressBar, formatters
+ from quo.styles import Style
+
+ style = Style.add({
+     'label': 'bg:#ffff00 #000000',
+     'percentage': 'bg:#ffff00 #000000',
+     'current': '#448844',
+     'bar': '',
     })
 
 
-    custom_formatters = [
-        formatters.Label(),
-        formatters.Text(': [', style='class:percentage'),
-        formatters.Percentage(),
-        formatters.Text(']', style='class:percentage'),
-        formatters.Text(' '),
-        formatters.Bar(sym_a='#', sym_b='#', sym_c='.'),
-        formatters.Text('  '),
-    ]
+ custom_formatters = [
+     formatters.Label(),
+     formatters.Text(': [', style='class:percentage'),
+     formatters.Percentage(),
+     formatters.Text(']', style='class:percentage'),
+     formatters.Text(' '),
+     formatters.Bar(sym_a='#', sym_b='#', sym_c='.'),
+     formatters.Text('  '),
+  ]
 
-    with ProgressBar(style=style, formatters=custom_formatters) as pb:
-        for i in pb(range(1600), label='Installing'):
-            time.sleep(.01)
+ with ProgressBar(style=style, formatters=custom_formatters) as pb:
+     for i in pb(range(1600), label='Installing'):
+         time.sleep(.01)
 
 .. image:: ./images/apt-get.png
 
@@ -184,50 +188,42 @@ modify the progress bar to look like an apt-get style progress bar:
 ``Adding key bindings and toolbar``
 ------------------------------------
 
-Like other quo  applications, we can add custom key bindings, by passing a :class:`~quo.keys.KeyBinder` object:
+Like other quo  applications, we can add custom key bindings, by passing :func:`quo.keys.bind` which is an instance of :class:`~quo.keys.Bind` object
 
 .. code:: python
 
-    from quo.text import Text
-    from quo.progress import ProgressBar
-    from quo.keys import Bind
-    from quo.patch_stdout import patch_stdout
+ import os
+ import signal
+ import time
 
-    import os
-    import time
-    import signal
+ from quo.keys import bind
+ from quo.progress import ProgressBar
+ from quo.text import Text
 
-    example = Text(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
+ example = Text(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
 
-    # Create custom key bindings first.
-    bind = Bind()
-    cancel = [False]
+ # Create custom key bindings first.
+ cancel = [False]
 
-    @bind.add('f')
-    def _(event):
-        print('You pressed `f`.')
+ @bind.add('f')
+ def _(event):
+     print('You pressed `f`.')
 
-    @bind.add('x')
-    def _(event):
-        " Send Abort (control-c) signal. "
-        cancel[0] = True
-        os.kill(os.getpid(), signal.SIGINT)
+ @bind.add('x')
+ def _(event):
+     " Send Abort (control-c) signal. "
+     cancel[0] = True
+     os.kill(os.getpid(), signal.SIGINT)
 
-    # Use `patch_stdout`, to make sure that prints go above the
-    # application.
-    with patch_stdout():
-        with ProgressBar(bind=bind, bottom_toolbar=example) as pb:
-            for i in pb(range(800)):
-                time.sleep(.01)
+  with ProgressBar(bottom_toolbar=example) as pb
+         for i in pb(range(800)):
+             time.sleep(.01)
 
                 # Stop when the cancel flag has been set.
-                if cancel[0]:
-                    break
+             if cancel[0]:
+                 break
 
-Notice that we use :func:`~quo.patch_stdout.patch_stdout` to make printing text possible while the progress bar is displayed. This ensures that
-printing happens above the progress bar.
-
-Further, when "x" is pressed, we set a cancel flag, which stops the progress.
+ when "x" is pressed, we set a cancel flag, which stops the progress.
 It would also be possible to send `SIGINT` to the mean thread, but that's not
 always considered a clean way of cancelling something.
 

@@ -8,8 +8,8 @@ import signal
 import time
 
 from quo.text import Text
-from quo.keys import KeyBinder
-from prompt_toolkit.patch_stdout import patch_stdout
+from quo.keys import bind
+#from quo.patch_stdout import patch_stdout
 from quo.progress import ProgressBar
 
 
@@ -18,20 +18,19 @@ def main():
         ' <b>[f]</b> Print "f" <b>[q]</b> Abort  <b>[x]</b> Send Control-C.'
     )
 
-    # Create custom key bindings first.
-    kb = KeyBinder()
+    # Create custom key bindings first
     cancel = [False]
 
-    @kb.add("f")
+    @bind.add("f")
     def _(event):
         print("You pressed `f`.")
 
-    @kb.add("q")
+    @bind.add("q")
     def _(event):
         "Quit by setting cancel flag."
         cancel[0] = True
 
-    @kb.add("x")
+    @bind.add("x")
     def _(event):
         "Quit by sending SIGINT to the main thread."
         os.kill(os.getpid(), signal.SIGINT)
@@ -39,7 +38,7 @@ def main():
     # Use `patch_stdout`, to make sure that prints go above the
     # application.
   #  with patch_stdout():
-    with ProgressBar(bind=kb, bottom_toolbar=bottom_toolbar) as pb:
+    with ProgressBar(bottom_toolbar=bottom_toolbar) as pb:
             for i in pb(range(800)):
                 time.sleep(0.01)
 

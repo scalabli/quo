@@ -29,6 +29,8 @@ Released on 2022-03-18
 - Added :param:`full_screen` to :func:`quo.container`
 - Added :param:`mouse_support` to :func:`quo.container`
 - Added :param:`refresh` to :func:`quo.container`
+- Added :func:`quo.keys.bind` as an instance of :obj:`quo.keys.Bind`
+- Added :func:`quo.console.console` as an instance of :obj:`quo.console.Console`
 
 ``Version 2022.3.3``
 ---------------------

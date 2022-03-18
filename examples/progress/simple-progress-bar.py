@@ -4,6 +4,7 @@ A very simple progress bar which keep track of the progress as we consume an
 iterator.
 """
 import time
+
 from quo.progress import ProgressBar
 def main():
     with ProgressBar() as pb:
