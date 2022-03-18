@@ -255,8 +255,7 @@ read on to see how to define key bindings.
 -----------------
 
 In order to react to user actions, we need to create a
-:class:`~quo.keys.Bind` object and pass
-that to our :class:`~quo.console.Console`.
+:class:`~quo.keys.Bind` object using :meth:`quo.keys.bind`
 
 There are two kinds of key bindings:
 
@@ -265,7 +264,7 @@ There are two kinds of key bindings:
   :class:`~quo.layout.controls.UIControl` and are only active when
   this control is focused. Both
   :class:`~quo.layout.BufferControl`
-  :class:`~quo.layout.FormattedTextControl` take a ``bind``
+  :class:`~quo.layout.FormattedTextControl` takes a ``bind``
   argument.
 
 
@@ -304,7 +303,7 @@ To register a new keyboard shortcut, we can use the
 The callback function is named ``exit_`` for clarity, but it could have been
 named ``_`` (underscore) as well, because we won't refer to this name.
 
-:ref:`Read more about key bindings ...<bind>`
+Read more about `key bindings <https://quo.readthedocs.io/en/latest/kb.html>`_
 
 
 Modal containers

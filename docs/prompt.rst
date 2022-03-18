@@ -607,8 +607,8 @@ For instance:
 ``Adding custom key bindings``
 -------------------------------
 
-By default, every prompt already has a set of key bindings which implements the usual Vi or Emacs behaviour. We can extend this by passing another
-:class:`~quo.keys.Bind` instance to the ``bind`` argument of the :class:`~quo.prompt.Prompt` class.
+By default, every prompt already has a set of key bindings which implements the usual Vi or Emacs behaviour. We can extend this by passing :meth:`quo.keys.bind` which is an instance of :class:`~quo.keys.Bind`.
+
 
 .. note::
     :func:`quo.prompt` function does not support key bindings but :class:`quo.prompt.Prompt` does
@@ -618,23 +618,23 @@ An example of a prompt that prints ``'hello world'`` when :kbd:`Control-T` is pr
 
 .. code:: python
 
-    from quo import print
-    from quo.keys import bind
-    from quo.prompt import Prompt
+ from quo import print
+ from quo.keys import bind
+ from quo.prompt import Prompt
 
-    @bind.add('ctrl-t')
-    def _(event):
-    # Print `Hello, World!` when `ctrl-t` is pressed."
-        print("Hello, World!")
+ @bind.add('ctrl-t')
+ def _(event):
+ # Print `Hello, World!` when `ctrl-t` is pressed."
+     print("Hello, World!")
 
     @bind.add('ctrl-x')
-    def _(event):
-      #Exit when `ctrl-x` is pressed. "
-        event.app.exit()
+ def _(event):
+   #Exit when `ctrl-x` is pressed. "
+     event.app.exit()
 
-    session = Prompt()
+ session = Prompt()
 
-    session.prompt('> ')
+ session.prompt('> ')
 
 Conditional Key bindings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -685,27 +685,6 @@ Display asterisks instead of the actual characters with the addition of a Contro
 
    session = Prompt(hide=Condition(lambda : hidden[0]))   
    session.prompt( "Password: ")
-
-
-Using control-space for completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-An popular short cut that people sometimes use it to use control-space for
-opening the autocompletion menu instead of the tab key. This can be done with the following key binding.
-
-.. code:: python
-
-    from quo.keys import bind
-
-    @bind.add('ctrl-space')
-    def _(event):
-        " Initialize autocompletion, or select the next completion. "
-        buff = event.app.current_buffer
-        if buff.complete_state:
-            buff.complete_next()
-        else:
-            buff.start_completion(select_first=False)
-
 
 
 ``Mouse support``

@@ -62,16 +62,16 @@ Widget that displays the given text. It is not editable or focusable.
     - ``dont_extend_width`` - When `True`, don't take up more width than preferred, i.e. the length of the longest line of the text, or value of `width` parameter, if given. `True` by default
     - ``dont_extend_height`` -  When `True`, don't take up more width than the preferred height, i.e. the number of lines of the text. `False` by default.
       
-You can print the layout to the output in a non-interactive way like so
+You can print the layout to the output in a non-interactive way like so:
 
-. code:: python
+.. code:: python
 
  from quo import container
  from quo.widget import Label
 
  content = Label("Hello, World", style="fg:black bg:red")
 
- container(content)
+ container(content, bind=False)
 
 Example upgrade. Printing the layout in an interactive way
 

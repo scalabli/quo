@@ -232,7 +232,7 @@ key bindings.
 
 .. image:: ./images/custom-key-bindings.png
 
-:ref:`Read more about key bindings ...<key_bindings>`
+Read more about `key bindings <https://quo.readthedocs.io/en/latest/kb.html>`_
 
 
 » Check out more examples `here <https://github.com/scalabli/quo

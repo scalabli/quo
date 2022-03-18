@@ -74,7 +74,7 @@ with choices offered as buttons. Buttons are indicated as a list of tuples, each
             ('Yes', True),
             ('No', False),
             ('Maybe...', None)
-        ],)
+        ])
 
 .. image:: ./images/button.png
 

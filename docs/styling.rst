@@ -241,15 +241,15 @@ follows:
 -----------------
 There are four different levels of color depths available:
 
-+--------+-----------------+--------------------------------+---------------------------------+
-| 1 bit  | Black and white | ``ColorDepth.one_bit``         | ``ColorDepth.one_bit``          |
-+--------+-----------------+--------------------------------+---------------------------------+
-| 4 bit  | ANSI colors     | ``ColorDepth.four_bit``        | ``ColorDepth.four_bit``         |
-+--------+-----------------+--------------------------------+---------------------------------+
-| 8 bit  | 256 colors      | ``ColorDepth.eight_bit``       | ``ColorDepth.eight_bit``        |
-+--------+-----------------+--------------------------------+---------------------------------+
-| 24 bit | True colors     | ``ColorDepth.twenty_four_bit`` | ``ColorDepth.twenty_four_bit``  |
-+--------+-----------------+--------------------------------+---------------------------------+
++--------+-----------------+--------------------------------+-----------------------------+
+| 1 bit  | Black and white | ``ColorDepth.one_bit`` or ``ColorDepth.MONOCHROME``          |
++--------+-----------------+--------------------------------+-----------------------------+
+| 4 bit  | ANSI colors     | ``ColorDepth.four_bit`` or ``ColorDepth.ANSI_COLORS_ONLY``   |
++--------+-----------------+--------------------------------+-----------------------------+
+| 8 bit  | 256 colors      | ``ColorDepth.eight_bit`` or ``ColorDepth.DEFAULT``           |
++--------+-----------------+--------------------------------+-----------------------------+
+| 24 bit | True colors     | ``ColorDepth.twenty_four_bit`` or ``ColorDepth.TRUE_COLOR``  |
++--------+-----------------+--------------------------------+-----------------------------+
 
 By default, 256 colors are used, because this is what most terminals support
 these days. If the ``TERM`` enviroment variable is set to ``linux`` or
@@ -296,7 +296,7 @@ minimum brightness to improve rendering on terminals with a dark background.
 
 .. code:: python
 
-    from quo import Console
+    from quo.console import Console
     from quo.style import AdjustBrightnessStyleTransformation
 
     app = Console(

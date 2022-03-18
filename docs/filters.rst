@@ -44,9 +44,7 @@ This filter can then be used in a key binding, like in the following snippet:»
 
 .. code:: python
 
- from quo.keys import Bind
-
- bind = Bind()
+ from quo.keys import bind
 
  @bind.add('ctrl-t', filter=is_searching)
  def _(event):
@@ -109,9 +107,7 @@ Some examples:
 
 .. code:: python
 
- from quo.keys import Bind
-
- bind = Bind()
+ from quo.keys import bind
 
  @bind.add('ctrl-t', filter=~is_searching)
  def _(event):

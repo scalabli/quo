@@ -130,12 +130,12 @@ Using quo.text.Text
     print(Text('<violet>This is violet</violet>'))
 
 Both foreground and background colors can also be specified setting the `fg`
-and `bg` attributes of any HTML tag:
+and `bg` attributes of any Text tag:
 
 .. code:: python
 
-    # Colors from the ANSI palette.
-    print(Text('<aaa fg="white" bg="green">White on green</aaa>'))
+   # Colors from the ANSI palette.
+   print(Text('<aaa fg="white" bg="green">White on green</aaa>'))
 
 Underneath, all Text tags are mapped to classes from a stylesheet, so you can
 assign a style for a custom tag.
@@ -158,10 +158,11 @@ assign a style for a custom tag.
 Using (style, text) tuples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 It is possible to create styles and text tuples using :class:`~quo.text.FormattedText` class
+
 .. code:: python
    
   from quo import print
-  from quo.text import FormattedText
+   from quo.text import FormattedText
 
   text = FormattedText([
       ('fg:red', 'Hello'),
@@ -170,6 +171,7 @@ It is possible to create styles and text tuples using :class:`~quo.text.Formatte
   ])
 
   print(text)
+ 
 Similar to the :class:`~quo.text.Text` example, it is also possible to use class names, and separate the styling in a style sheet.
 
 .. code:: python
