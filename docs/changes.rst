@@ -17,6 +17,15 @@ Unreleased
 
 - :func:`quo.console.Console.pager`
 
+``Version 2022.3.5``
+--------------------
+
+Released on 2022-03-19
+
+**Changed**
+^^^^^^^^^^^^
+- Optimized :func:`quo.print`
+
 ``Version 2022.3.4``
 ---------------------
 
@@ -50,8 +59,8 @@ Released on 2022-3-14
 
 **Added**
 ^^^^^^^^^^
-- Added :meth:`~quo.console.Console.bar`
-- Added :meth:`~quo.console.Console.rule`
+- Added :meth:`quo.console.Console.bar`
+- Added :meth:`qquo.console.Console.rule`
 
 **Changed**
 ^^^^^^^^^^^^^

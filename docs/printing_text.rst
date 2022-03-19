@@ -104,95 +104,53 @@ Using quo.echo
 
 
 
-Using quo.text.Text
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using quo.print
+^^^^^^^^^^^^^^^^^^^^^
 
-:class:`~quo.text.Text` can be used to indicate that a string contains HTML-like formatting. It recognizes the basic tags for bold, italic and underline: ``<b>``, ``<i>`` and ``<u>``.
+:func:`~quo.print` can be used to indicate that a string contains HTML-like formatting. It recognizes the basic tags for bold, italic and underline: ``<b>``, ``<i>`` and ``<u>``.
 
-.. code:: python
-
-    from quo import print
-    from quo.text import Text
-
-    print(Text('<b>This is bold</b>'))
-    print(Text('<i>This is italic</i>'))
-    print(Text('<u>This is underlined</u>'))
+*Changed since v2022.3.5*
 
 .. code:: python
 
-    # Colors from the ANSI palette.
-    print(Text('<red>This is red</red>'))
-    print(Text('<green>This is green</green>'))
+  from quo import print
+  
+  print('<b>This is bold</b>')
+  print('<i>This is italic</i>')
+  print('<u>This is underlined</u>')
 
-    # Named colors (256 color palette, or true color, depending on the output).
-    print(Text('<skyblue>This is sky blue</skyblue>'))
-    print(Text('<seagreen>This is sea green</seagreen>'))
-    print(Text('<violet>This is violet</violet>'))
+.. code:: python
+
+  # Colors from the ANSI palette.
+  print('<red>This is red</red>')
+  print('<green>This is green</green>')
+
+  # Named colors (256 color palette, or true color, depending on the output).
+  print('<skyblue>This is sky blue</skyblue>')
+  print('<seagreen>This is sea green</seagreen>')
+  print('<violet>This is violet</violet>')
 
 Both foreground and background colors can also be specified setting the `fg`
 and `bg` attributes of any Text tag:
 
 .. code:: python
 
-   # Colors from the ANSI palette.
-   print(Text('<aaa fg="white" bg="green">White on green</aaa>'))
+ # Colors from the ANSI palette.
+ print('<aaa fg="white" bg="green">White on green</aaa>')
 
-Underneath, all Text tags are mapped to classes from a stylesheet, so you can
-assign a style for a custom tag.
+Underneath, all Text tags are mapped to classes from a stylesheet, so you can assign a style for a custom tag.
 
 .. code:: python
 
+ from quo import print
  from quo.style import Style
- from quo.text import Text
 
  style = Style.add({
      'aaa': 'fg:red',
-     'bbb': 'fg:blue italic',
- })
+     'bbb': 'fg:blue italic'
+     })
 
- print(Text('<aaa>Hello</aaa> <bbb>world</bbb>!'), style=style)
-
-
-
-
-Using (style, text) tuples
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-It is possible to create styles and text tuples using :class:`~quo.text.FormattedText` class
-
-.. code:: python
-   
-  from quo import print
-   from quo.text import FormattedText
-
-  text = FormattedText([
-      ('fg:red', 'Hello'),
-      ('', ' '),
-      ('fg:blue italic', 'World'),
-  ])
-
-  print(text)
- 
-Similar to the :class:`~quo.text.Text` example, it is also possible to use class names, and separate the styling in a style sheet.
-
-.. code:: python
-
-  from quo import print
-  from quo.text import FormattedText
-  from quo.style import Style
-  # The text.
-  text = FormattedText([
-      ('class:aaa', 'Hello'),
-      ('', ' '),
-      ('class:bbb', 'World'),
-  ])
-
-  # The style sheet.
-  style = Style.add({
-      'aaa': 'fg:red',
-      'bbb': 'fg:green italic',
-  })
-
-  print(text, style=style)
+ print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
 
 
 » Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_

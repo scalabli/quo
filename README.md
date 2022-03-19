@@ -48,6 +48,8 @@ Run the following to test Quo output on your terminal:
 python -m quo
 
 ```
+![test](https://github.com/scalabli/quo/raw/master/docs/images/test.png)
+
 ## Quo echo
 To output formatted text to your terminal you can import the [echo](https://quo.readthedocs.io/en/latest/introduction.html#quick-start) method.
 Try this:

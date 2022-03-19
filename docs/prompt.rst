@@ -567,7 +567,7 @@ otherwise. So, make sure to disable history search for this.
 
 A :class:`~quo.history.History` object keeps track of all the previously entered strings, so that the up-arrow can reveal previously entered items.
 
-``InMemoryHistory``
+InMemoryHistory
 ^^^^^^^^^^^^^^^^^^^^
 The recommended way is to use a :class:`~quo.prompt.Prompt`, which uses an :class:`~quo.history.InMemoryHistory` which has `^` (up) arrow partial string matching enabled by default.
 
@@ -587,7 +587,7 @@ The recommended way is to use a :class:`~quo.prompt.Prompt`, which uses an :clas
    while True:
        session.prompt()
 
-``FileHistory``
+FileHistory
 ^^^^^^^^^^^^^^^^
 To persist a history to disk, use a :class:`~quo.history.FileHistory` instead of the default :class:`~quo.history.InMemoryHistory`. This history object can be passed to a :class:`~quo.prompt.Prompt`.
 For instance:
