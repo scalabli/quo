@@ -90,7 +90,7 @@ class Label(Formatter):
         self.suffix = suffix
 
     def _add_suffix(self, label: AnyFormattedText) -> StyleAndTextTuples:
-        label = to_formatted_text(label, style="fg:green")#"class:label")
+        label = to_formatted_text(label, style="fg:khaki")#"class:label")
         return label + [("", self.suffix)]
 
     def format(
@@ -216,7 +216,7 @@ class Progress(Formatter):
     Display the progress as text.  E.g. "8/20"
     """
 
-    template = "<current fg='yellow'><i>{current:>3}</i></current>/<total>{total:>3}</total>"
+    template = "<current fg='yellow'><i>{current:>3}</i></current>/<total fg='yellow'><i>{total:>3}</i></total>"
 
     def format(
         self,
@@ -429,6 +429,7 @@ def create_default_formatters() -> List[Formatter]:
         Text(" ", style="purple"),
         Progress(),
         Text(" ", style="purple"),
+        Text("\u257D"),
         Text("time left: ", style="purple"),
         Text("[", style="fg:blue bold"),#"class:time-left"),
         TimeLeft(),

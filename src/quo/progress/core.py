@@ -33,6 +33,7 @@ from quo.text import (
 )
 from quo.input import Input
 from quo.keys import KeyBinder
+from quo.keys import bind as _bind
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
@@ -116,7 +117,7 @@ class ProgressBar:
         toolbar: AnyFormattedText =None,
         bottom_toolbar: AnyFormattedText = None,
         style: Optional[BaseStyle] = None,
-        bind: Optional[KeyBinder] = None,
+        bind: Optional[KeyBinder] = _bind,# None,
         file: Optional[TextIO] = None,
         color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
@@ -142,6 +143,7 @@ class ProgressBar:
         self._app_loop = new_event_loop()
         self._has_sigwinch = False
         self._app_started = threading.Event()
+
 
     def __enter__(self) -> "ProgressBar":
         # Create UI Suite.
