@@ -74,7 +74,6 @@ Try this:
 Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
 ```python
  from quo import print
- from quo.text import Text
 
  print('<b>This is bold</b>')
  print('<i>This is italic</i>')
