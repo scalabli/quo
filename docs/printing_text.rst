@@ -157,13 +157,14 @@ Underneath, all Text tags are mapped to classes from a stylesheet, so you can as
 
  print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
 
+ 
+ 
+``Using (style, text) tuples``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. note::
 
    » (style, text) tuples are currently unstable, however its a work in progress and stabiliy may improve on later versions of quo 
-
-
-``Using (style, text) tuples``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to create a list of  manually with FormattedText class. This is a little more verbose, but it’s probably the most powerful way of expressing formatted text.
 
