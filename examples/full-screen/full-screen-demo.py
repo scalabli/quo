@@ -2,17 +2,14 @@
 """
 """
 
-import quo
-from pygments.lexers.html import HtmlLexer
-from quo.console import Console
-from quo.console.current import get_app
+from quo import container
+from quo.console import get_app
 from quo.completion import WordCompleter
-from quo.keys import KeyBinder
+from quo.keys import bind, focus
 from quo.layout.containers import Float, HSplit, VSplit
 from quo.layout.dimension import D
-from quo.layout.layout import Layout
 from quo.layout.menus import CompletionsMenu
-from quo.highlight import PygmentsLexer
+from quo.highlight import Html
 from quo.style import Style
 from quo.widget import (
     Box,
@@ -43,7 +40,7 @@ def do_exit():
 
 yes_button = Button(text="Yes", handler=accept_yes)
 no_button = Button(text="No", handler=accept_no)
-textfield = TextArea(highlighter=PygmentsLexer(HtmlLexer))
+textfield = TextArea(highlighter=Html)
 checkbox1 = Checkbox(text="Checkbox")
 checkbox2 = Checkbox(text="Checkbox")
 
@@ -97,7 +94,7 @@ animal_completer = WordCompleter(
     ignore_case=True,
 )
 
-root_container = HSplit(
+root = HSplit(
     [
         VSplit(
             [
@@ -126,21 +123,21 @@ root_container = HSplit(
     ]
 )
 
-root_container = MenuContainer(
-    body=root_container,
+content = MenuContainer(
+    body=root,
     menu_items=[
         MenuItem(
             "File",
-            children=[
+            subset=[
                 MenuItem("New"),
                 MenuItem(
                     "Open",
-                    children=[
+                    subset=[
                         MenuItem("From file..."),
                         MenuItem("From URL..."),
                         MenuItem(
                             "Something else..",
-                            children=[
+                            subset=[
                                 MenuItem("A"),
                                 MenuItem("B"),
                                 MenuItem("C"),
@@ -158,7 +155,7 @@ root_container = MenuContainer(
         ),
         MenuItem(
             "Edit",
-            children=[
+            subset=[
                 MenuItem("Undo"),
                 MenuItem("Cut"),
                 MenuItem("Copy"),
@@ -173,8 +170,8 @@ root_container = MenuContainer(
                 MenuItem("Time/Date"),
             ],
         ),
-        MenuItem("View", children=[MenuItem("Status Bar")]),
-        MenuItem("Info", children=[MenuItem("About")]),
+        MenuItem("View", subset=[MenuItem("Status Bar")]),
+        MenuItem("Info", subset=[MenuItem("About")]),
     ],
     floats=[
         Float(
@@ -186,9 +183,8 @@ root_container = MenuContainer(
 )
 
 # Global key bindings.
-bindings = KeyBinder() 
-bindings.add("tab")(quo.keys.focus.next)
-bindings.add("s-tab")(quo.keys.focus.previous)
+bind.add("tab")(focus.next)
+bind.add("s-tab")(focus.previous)
 
 
 style = Style.add(
@@ -207,19 +203,15 @@ style = Style.add(
 )
 
 
-application = Console(
-    layout=Layout(root_container, focused_element=yes_button),
-    bind=bindings,
-    style=style,
-    mouse_support=True,
-    full_screen=True,
-)
-
-
-def run():
-    result = application.run()
-    print("You said: %r" % result)
-
+def main():
+    container(
+            content, 
+            bind=True,
+            focused_element=yes_button,
+            full_screen=True,
+            mouse_support=True,
+            style=style
+            )
 
 if __name__ == "__main__":
-    run()
+    main()

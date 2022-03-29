@@ -2,15 +2,12 @@
 """
 Example of printing colored text to the output.
 """
-from prompt_toolkit import print_formatted_text
-from prompt_toolkit.formatted_text import ANSI, HTML, FormattedText
-from prompt_toolkit.styles import Style
-
-print = print_formatted_text
-
+from quo import print
+from quo.text import FormattedText
+from quo.style import Style
 
 def main():
-    style = Style.from_dict(
+    style = Style.add(
         {
             "hello": "#ff0066",
             "world": "#44ff44 italic",
@@ -28,19 +25,12 @@ def main():
     print(text_fragments, style=style)
 
     # Print using an HTML object.
-    print(HTML("<hello>hello</hello> <world>world</world>\n"), style=style)
+    print("<hello>hello</hello> <world>world</world>\n", style=style)
 
     # Print using an HTML object with inline styling.
-    print(
-        HTML(
-            '<style fg="#ff0066">hello</style> '
+    print('<style fg="#ff0066">hello</style> '
             '<style fg="#44ff44"><i>world</i></style>\n'
         )
-    )
-
-    # Print using ANSI escape sequences.
-    print(ANSI("\x1b[31mhello \x1b[32mworld\n"))
-
 
 if __name__ == "__main__":
     main()

@@ -22,14 +22,14 @@ session = Prompt()
 def main():
     # Example 1: fixed text.
     text = session.prompt("Say something: ", bottom_toolbar="This is quo toolbar")
-    echo(f"You said: {text}")
+  #  echo(f"You said: {text}")
 
     # Example 2: fixed text from a callable:
     def get_toolbar():
         return "Bottom toolbar: time=%r" % time.time()
 
     text = session.prompt("Say something: ", bottom_toolbar=get_toolbar, refresh_interval=0.5)
-    echo(f"You said: {text}")
+   # echo(f"You said: {text}")
 
     # Example 3: Using HTML:
     text = session.prompt(
@@ -37,7 +37,7 @@ def main():
         bottom_toolbar=Text( '(html) <b>This</b> <u>is</u> a <style bg="red">toolbar</style>'
         ),
     )
-    echo(f"You said: {text}")
+  #  echo(f"You said: {text}")
 
 
     # Example 4: styling differently.

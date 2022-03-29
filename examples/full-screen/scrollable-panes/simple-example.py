@@ -3,42 +3,42 @@
 A simple example of a scrollable pane.
 """
 
-import quo
 
-from quo.console import Console, get_app
+from quo import container
+from quo.console import get_app
+from quo.keys import bind, focus
+from quo.layout import Dimension, HSplit, ScrollablePane
+from quo.widget import Frame, TextArea
 
 def main():
     # Create a big layout of many text areas, then wrap them in a `ScrollablePane`.
-    root_container = quo.widget.Frame(
-        quo.layout.ScrollablePane(
-            quo.layout.HSplit(
+    content = Frame(
+        ScrollablePane(
+            HSplit(
                 [
-                    quo.widget.Frame(quo.widget.TextArea(text=f"label-{i}"), width=quo.layout.Dimension())
+                    Frame(TextArea(text=f"label-{i}"), width=Dimension())
                     for i in range(20)
                 ]
             )
         ),
-         quo.layout.ScrollablePane(quo.layout.HSplit([quo.widget.TextArea(text=f"label-{i}") for i in range(20)]))
+         ScrollablePane(
+             HSplit([
+                 TextArea(text=f"label-{i}") for i in range(20)]))
     )
 
-    layout = quo.layout.Layout(container=root_container)
+    #layout = quo.layout.Layout(container=root_container)
 
     # Key bindings.
-    kb = quo.keys.KeyBinder()
 
-    @kb.add("ctrl-c")
+    @bind.add("ctrl-c")
     def exit(event) -> None:
         get_app().exit()
 
-    kb.add("tab")(quo.keys.focus.next)
-    kb.add("s-tab")(quo.keys.focus.previous)
+    bind.add("tab")(focus.next)
+    bind.add("s-tab")(focus.previous)
 
     # Create and run application.
-    Console(
-            layout=layout,
-            bind=kb, 
-            full_screen=True).run()
-
-
+    container(
+            content, bind=True, full_screen=True)
 if __name__ == "__main__":
     main()

@@ -13,7 +13,7 @@ def main():
                 TextArea("Hello world!"),
                 title="Quo: python🐍")
 
-    container(content)
+    container(content, bind=False)
 
 if __name__ == "__main__":
     main()

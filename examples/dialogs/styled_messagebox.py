@@ -16,14 +16,17 @@ from quo.style import Style
 
 style = Style.add(
         {
-            "dialog": "bg:aquamarine",
-            "dialog.body": "bg:black fg:green",
-            "dialog.shadow": "bg:yellow",
+            "dialog": "bg:brown",
+            "dialog.body": "bg:white fg:black",
+            "dialog body.text-area": "fg:white bg:purple",
+            "dialog frame.label": "fg:blue bg:green",
+          #  "dialog.shadow": "bg:yellow",
             }
         )
 
 MessageBox(
-        title=Text(
-            '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window'),
+        title="fffff",
+        #"Text(
+        #    '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window')",
         text="Do you want to continue?\nPress ENTER to quit.", 
         style=style)

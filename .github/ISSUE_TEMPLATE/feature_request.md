@@ -21,4 +21,4 @@ What problem do you have that this feature would solve? I may be able to suggest
 
 **Did I help**
 
-If I was able to resolve your problem, consider [sponsoring](https://ko-fi.com/gerrishon) my work on Quo
+If I was able to resolve your problem, consider [sponsoring](https://ko-fi.com/scalabli) our work on Quo

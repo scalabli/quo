@@ -18,8 +18,10 @@ Attributes
 
 The console will auto-detect a number of properties required when rendering.
 
-* :obj:`~quo.Console.size` is the current dimensions of the terminal (which may change if you resize the window).
-* :obj:`~quo.Console.encoding` is the default encoding (typically "utf-8").
+
+``Size``
+---------
+:obj:`quo.Console.size` is the current dimensions of the terminal (which may change if you resize the window).
 
 
 ``Launching Editors``
@@ -136,7 +138,7 @@ Function :obj:`quo.console.Console.size` returns the current size of the termina
 
 ``Encoding``
 -------------
-The default encoding of the Terminal (typically "utf-8")
+:obj:`quo.console.Console.encoding` will detect the default encoding of the Terminal (typically "utf-8")
 
 .. code:: python
 
@@ -145,6 +147,8 @@ The default encoding of the Terminal (typically "utf-8")
    console = Console()
 
    console.encoding()
+
+
 
 ``rule``
 ---------
@@ -181,6 +185,16 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
    console = Console()
 
    console.bar()
+
+
+``pager``
+----------
+:meth:`quo.console.Console.pager` takes a text and shows it via an environment specific pager on stdout.
+*Added on v2022.4*
+
+**Parameters**
+      - ``text`` - The text to page, or alternatively, a  generator emitting the text to page.
+      - ``color`` - controls if the pager supports ANSI colors or not.
 
 
 » Check out more examples `here <https://github.com/scalabli/quo

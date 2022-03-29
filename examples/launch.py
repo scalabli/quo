@@ -1,6 +1,5 @@
-from quo import echo, launch
-echo(f"If your terminal supports links, the following text should be launchable:")
+from quo.console import Console
 
-link = "https://quo.rtfd.io"
-echo(f"Quo's documentation", fg="green")
-launch(link)
+console = Console()
+
+console.launch("https://quo.rtfd.io")

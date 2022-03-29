@@ -68,6 +68,11 @@ Here's a list of supported color names:
 quo ships with a :func:`~quo.print` function that's meant to be (as much as possible) compatible with the built-in print function, and :func:`quo.echo`. It also supports color and formatting just like :func:`quo.echo` 
 On Linux systems, this will output VT100 escape sequences, while on Windows it will use Win32 API calls or VT100 sequences, depending on what is available.
 
+**Parameters**
+      - ``color_depth`` - Instance of :class:`quo.color.ColorDepth`
+      - ``style`` - :class:`quo.style.Style` instance for the color style.
+      - ``fmt`` *bool*  - Default is `False`, when `True`, you will be able to utilize an instance of :class:`quo.text.FormattedText`. *Added on v2022.4*
+
 .. note::
 
         This page is also useful if you'd like to learn how to use formatting
@@ -78,15 +83,15 @@ On Linux systems, this will output VT100 escape sequences, while on Windows it w
 
 There are several ways to display colors:
 
-- By creating a :func:`quo.echo` object.
-- By creating an :class:`~quo.text.Text` object
-- By creating a list of ``(style, text)`` tuples.
+- By creating a :func:`quo.echo` function.
+- By creating a :func:`quo.print` function.
+- By creating a list of ``(style, text)`` tuples mapped to :func:`quo.print`.
 
 
 An instance of any of these three kinds of objects is called "formated text".
 
 Using quo.echo
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -152,5 +157,49 @@ Underneath, all Text tags are mapped to classes from a stylesheet, so you can as
 
  print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
 
+.. note::
+
+   » (style, text) tuples are currently unstable, however its a work in progress and stabiliy may improve on later versions of quo 
+
+
+``Using (style, text) tuples``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible to create a list of  manually with FormattedText class. This is a little more verbose, but it’s probably the most powerful way of expressing formatted text.
+
+.. code:: python
+
+ from quo import print
+ from quo.text import FormattedText
+
+ text = FormattedText([
+     ('fg:red', 'Hello'),
+     ('', ' '),
+     ('fg:purple italic', 'World'),
+   ])
+ print(text, fmt=True)
+
+Similar to theit is also possible to use class names, and separate the styling in a style sheet.
+
+.. code:: python
+
+ from quo import print
+ from quo.style import Style
+ from quo.text import FormattedText
+
+ # The text.
+ text = FormattedText([
+      ('class:aaa', 'Hello'),
+      ('', ' '),
+      ('class:bbb', 'World'),
+    ])
+
+ # The style sheet.
+ style = Style.add({
+      'aaa': 'fg:green',
+      'bbb': 'fg:blue italic',
+   })
+
+ print(text, fmt=True, style=style)
 
 » Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_

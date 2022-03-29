@@ -2,34 +2,33 @@
 """
 Demonstration of how to print using the Text class.
 """
-from quo import print
-from quo.text import Text
+from quo import echo, print
 
 text = "Demonstration of how to print using the text class"
 
 
-print(Text("\n<u><b>{}</b></u>").format(text))
+#echo("\n<u><b>{}</b></u>").format(text)
 
-print(Text("    <b>Bold</b>"))
-print(Text("    <blink>Blink</blink>"))
-print(Text("    <i>Italic</i>"))
-print(Text("    <reverse>Reverse</reverse>"))
-print(Text("    <u>Underline</u>"))
-print(Text("    <s>Strike</s>"))
-print(Text("    <hidden>Hidden</hidden> (hidden)"))
+print("    <b>Bold</b>")
+print("    <blink>Blink</blink>")
+print("    <i>Italic</i>")
+print("    <reverse>Reverse</reverse>")
+print("    <u>Underline</u>")
+print("    <s>Strike</s>")
+print("    <hidden>Hidden</hidden> (hidden)")
 
     # Ansi colors
 
 print("ANSI COLORS")
-print(Text("    <ansired>ANSI Red</ansired>"))
-print(Text("    <ansiblue>ANSI Blue</ansiblue>"))
+print("    <ansired>ANSI Red</ansired>")
+print("    <ansiblue>ANSI Blue</ansiblue>")
 
     # Other named colors.
 print("NAMED COLORS")
-print(Text("    <orange>orange</orange>"))
-print(Text("    <purple>purple</purple>"))
-print(Text("    <khaki>khaki</khaki>"))
+print("    <orange>orange</orange>")
+print("    <purple>purple</purple>")
+print("    <khaki>khaki</khaki>")
 
-print(Text('<i>{}</i>').format("<test>"))
-print(Text('  <b>{text}</b>').format(text="<test>"))
-print(Text('    <u>%s</u>') % ("<text>"))
+#print('<i>{}</i>').format("<test>")
+#print('  <b>{text}</b>').format(text="<test>")
+#print('    <u>%s</u>') % ("<text>")

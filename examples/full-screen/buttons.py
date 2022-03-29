@@ -2,10 +2,9 @@
 """
 A simple example of a few buttons and click handlers.
 """
-import quo
 from quo import container
 from quo.console import get_app
-from quo.keys import bind
+from quo.keys import bind, focus
 from quo.layout import HSplit, VSplit
 from quo.widget import Box, Button, Frame, Label, TextArea
 
@@ -19,10 +18,13 @@ def button1():
 def button2():
     text_area.text = "Button 2 clicked"
 
-import os 
+
 def button3():
     text_area.text = "Button 3 clicked"
 
+def button4():
+    get_app()
+    lbl.style = "fg:red"
 
 def exit():
     get_app().exit()
@@ -35,7 +37,9 @@ b1 = Button("Button 1", handler=button1)
 b2 = Button("Button 2", handler=button2)
 b3 = Button("Button 3", handler=button3)
 b4 = Button("Exit", handler=exit)
-text_area = TextArea(focusable=True)
+b5 = Button("kenya", handler=button4)
+text_area = TextArea(scrollbar=True, focusable=True, style="brown")
+lbl = Label("dkekkrkr")
 
 
 # Combine all the widgets in a UI.
@@ -46,10 +50,10 @@ content =  Box(
             [
             Label(text="Press `Tab` to move the focus."),
             VSplit([
-                Box(body=HSplit([b1, b2, b3, b4], padding=1),
+                Box(body=HSplit([b1, b2, b3, b4, b5], padding=1),
                         padding=1,
                         style="bg:magenta"),
-                Box(body=Frame(text_area), padding=1, style="bg:blue fg:green")
+                Box(body=Frame(text_area, title="eee"), padding=1, style="bg:blue fg:green")
                 ]
             ),
         ]
@@ -59,7 +63,8 @@ content =  Box(
 
 
 # Key bindings.
-bind.add("tab")(quo.keys.focus.next)
-bind.add("s-tab")(quo.keys.focus.previous)
+bind.add("l")(focus.last)
+bind.add("tab")(focus.next)
+bind.add("s-tab")(focus.previous)
 
 container(content, bind=True, focused_element=b1, full_screen=True)

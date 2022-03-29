@@ -512,9 +512,9 @@ Autocompletion can be added by passing a completer parameter.
  from quo.completion import WordCompleter
  from quo.prompt import Prompt
  
- session = Prompt()
  completer = WordCompleter(['<html>', '<body>', '<head>','<title>'])
- session.prompt('Enter HTML: ', completer=completer)
+ session = Prompt(completer=completer)
+ session.prompt('Enter HTML: ')
 
 :class:`~quo.completion.WordCompleter` is a simple completer that completes the last word before the cursor with any of the given words.
 
@@ -555,7 +555,7 @@ Autcompletions can be generated automatically while typing or when the user pres
 
 .. code:: python
 
-    text = session.prompt('Enter HTML: ', completer=my_completer, complete_while_typing=True)
+    session.prompt('Enter HTML: ', completer=completer, complete_while_typing=True)
 
 Notice that this setting is incompatible with the ``enable_history_search``
 option. The reason for this is that the up and down key bindings would conflict

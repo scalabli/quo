@@ -15,7 +15,12 @@ Unreleased
 **Added**
 ^^^^^^^^^^
 
-- :func:`quo.console.Console.pager`
+- :meth:`quo.console.Console.pager`
+- :param:`fmt` to :func:`quo.print`
+
+**Changed**
+^^^^^^^^^^^^
+- Updated quo dialogs
 
 ``Version 2022.3.5``
 --------------------

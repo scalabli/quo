@@ -28,16 +28,33 @@ Almost every quo application is an instance of an :class:`~quo.console.Console` 
 
 .. code:: python
 
-    from quo.console import Console
+ from quo import container
+ from quo.widget import TextField
 
-    Console(full_screen=True).run()
+ content = TextField("Hello, world")
 
-This will display an application with no layout specified.
+ container(content, bind=False)
+
+This will only consume the least amount of space required.
 
 .. note::
 
-        If we wouldn't set the ``full_screen`` option, the application would
-        not run in the alternate screen buffer, and only consume the least amount of space required for the layout.
+        If we set the ``full_screen`` option, the application will run in an alternate screen buffer, in full screen mode. however a key binder has to be added inorder to exit the app
+
+.. code:: python
+
+ from quo import container
+ from quo.keys import bind
+ from quo.widget import TextField
+
+ content = TextField("Hello, world")
+
+ # Key binder to exit the application
+ @bind.add("ctrl-c")
+ def _(event):
+     event.app.exit()
+
+ container(content, full_screen=True)
 
 An application consists of several components. The most important are:
 
@@ -248,8 +265,7 @@ In the following example, we use :func:`~quo.console.get_app` for getting the ac
     # Now focus it.
     get_app().layout.focus(w)
 
-Changing the focus is something which is typically done in a key binding, so
-read on to see how to define key bindings.
+Changing the focus is something which is typically done in a key binding, so read on to see how to define key bindings.
 
 ``Key bindings``
 -----------------

@@ -151,13 +151,19 @@ body = HSplit(
 
 
 # Global key bindings.
-@bind.add("ctrl-c")
+@bind.add("ctrl-m")
 def _(event):
     "Focus menu."
     event.app.layout.focus(content.window)
 
+@bind.add("n")
+def _(event):
+    event.app.exit()
 
-#
+@bind.add("ctrl-o")
+def _(event):
+    do_open_file()
+
 # Handlers for menu items.
 #
 
@@ -226,7 +232,6 @@ def do_time_date():
 
     text = "%s:%s:%s"  % (now.hour, now.minute, now.second)
 
-    #text = datetime.datetime.now().isoformat()
     text_field.buffer.insert_text(text)
 
 
@@ -305,7 +310,7 @@ content = MenuContainer(
     menu_items=[
         MenuItem(
             "📂File",
-            children=[
+            subset=[
                 MenuItem("New...", handler=do_new_file),
                 MenuItem("Open...", handler=do_open_file),
                 MenuItem("Save"),
@@ -316,7 +321,7 @@ content = MenuContainer(
         ),
         MenuItem(
             "Edit",
-            children=[
+            subset=[
                 MenuItem("Undo", handler=do_undo),
                 MenuItem("Cut", handler=do_cut),
                 MenuItem("Copy", handler=do_copy),
@@ -333,11 +338,11 @@ content = MenuContainer(
         ),
         MenuItem(
             "View",
-            children=[MenuItem("Status Bar", handler=do_status_bar)],
+            subset=[MenuItem("Status Bar", handler=do_status_bar)],
         ),
         MenuItem(
             "Info",
-            children=[MenuItem("About", handler=do_about)],
+            subset=[MenuItem("About", handler=do_about)],
         ),
     ],
     floats=[

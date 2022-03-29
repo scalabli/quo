@@ -11,8 +11,9 @@
 
 # Quo
 
-**Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
-Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API.
+**Quo** is a toolkit for writing Command-Line Interface(CLI) app
+lications and a TUI (Text User Interface) framework for Python.                                                                 Quo is making headway towards composing speedy and orderly CLI and TUI applications while forestalling any disappointments brought about by the failure to execute a python application.
+
 Simple to code, easy to learn, and does not come with needless baggage. 
 
 Quo requires Python `3.8` or later. 

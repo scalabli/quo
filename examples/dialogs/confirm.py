@@ -6,5 +6,5 @@ from quo.dialog import ConfirmBox
 result = ConfirmBox(
         title="Yes/No example",
         text="Do you want to confirm?")
-echo(f"Result = {result}")
+#echo(f"Result = {result}")
 

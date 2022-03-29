@@ -6,7 +6,7 @@ labels: Needs triage
 assignees: ""
 ---
 
-You may find a solution to your problem in the [docs](https://quo.readthedocs.io) or [issues](https://github.com/secretum-inc/quo/issues).
+You may find a solution to your problem in the [docs](https://quo.readthedocs.io) or [issues](https://github.com/scalabli/quo/issues).
 
 **Describe the bug**
 A clear and concise description of what the bug is.

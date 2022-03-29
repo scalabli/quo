@@ -7,7 +7,7 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import importlib
 
 from quo.exit import quick_exit as exit
-from quo.console import Console
+from quo.console.console import Console
 from .core import Clime as Clime
 from .core import Parameter as Parameter
 from .core import App as App
@@ -92,4 +92,4 @@ from quo.i_o import (
 
 from quo.shortcuts import container
 
-__version__ = "2022.3.5"
+__version__ = "2022.4"

@@ -14,8 +14,9 @@
 
 `Forever Scalable`
 
-**Quo** is a Python based toolkit for writing Command-Line Interface(CLI) applications.
-Quo is making headway towards composing speedy and orderly CLI applications while forestalling any disappointments brought about by the failure to execute a CLI API.
+**Quo** is a toolkit for writing Command-Line Interface(CLI) applications and a TUI (Text User Interface) framework for Python.
+
+Quo is making headway towards composing speedy and orderly CLI and TUI applications while forestalling any disappointments brought about by the failure to execute a python application.
 Simple to code, easy to learn, and does not come with needless baggage. 
 
 ## Compatibility
@@ -158,11 +159,11 @@ Auto suggestion is a way to propose some input completions to the user. Usually,
  from quo.completion import AutoSuggestFromHistory
  from quo.history import InMemoryHistory
 
- history = InMemoryHistory(
+ history = InMemoryHistory()
  history.append("import os")
  history.append('print("hello")') 
  history.append('print("world")')  
- history.append("import path"
+ history.append("import path")
 
  session = Prompt(auto_suggest=AutoSuggestFromHistory(), history=history)
 
