@@ -28,7 +28,9 @@ def button4():
 
 def exit():
     get_app().exit()
-
+def dd():
+    content = Label("hello, world", style="fg:red bg:blue")
+    container(content, bind=True, full_screen=True)
 
 # All the widgets for the UI.
 
@@ -37,6 +39,7 @@ b1 = Button("Button 1", handler=button1)
 b2 = Button("Button 2", handler=button2)
 b3 = Button("Button 3", handler=button3)
 b4 = Button("Exit", handler=exit)
+b6 = Button("has", handler=dd)
 b5 = Button("kenya", handler=button4)
 text_area = TextArea(scrollbar=True, focusable=True, style="brown")
 lbl = Label("dkekkrkr")
@@ -50,7 +53,7 @@ content =  Box(
             [
             Label(text="Press `Tab` to move the focus."),
             VSplit([
-                Box(body=HSplit([b1, b2, b3, b4, b5], padding=1),
+                Box(body=HSplit([b1, b2, b3, b4, b5, b6], padding=1),
                         padding=1,
                         style="bg:magenta"),
                 Box(body=Frame(text_area, title="eee"), padding=1, style="bg:blue fg:green")
@@ -63,8 +66,7 @@ content =  Box(
 
 
 # Key bindings.
-bind.add("l")(focus.last)
 bind.add("tab")(focus.next)
 bind.add("s-tab")(focus.previous)
 
-container(content, bind=True, focused_element=b1, full_screen=True)
+container(content, bind=True, focused_element=b3, full_screen=True)

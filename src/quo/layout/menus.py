@@ -24,11 +24,11 @@ from quo.filters import (
     is_done,
     to_filter,
 )
-from quo.text import (
+from quo.text.core import (
     StyleAndTextTuples,
-    fragment_list_width,
-    to_formatted_text,
-)
+    to_formatted_text
+    )
+from quo.text.utils import fragment_list_width
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.utils import explode_text_fragments
 from quo.mouse_events import MouseEvent, MouseEventType

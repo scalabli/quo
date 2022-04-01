@@ -20,8 +20,8 @@ from quo.i_o import (
            confirm,
            flair
            )
-from quo.prompt import prompt
-from quo.text import AnyFormattedText
+#from quo.prompt import prompt
+#from quo.text import AnyFormattedText
 from .types import (
         _NumberRangeBase,
         BOOL,

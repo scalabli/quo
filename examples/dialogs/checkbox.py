@@ -2,7 +2,7 @@
 """
 Example of a checkbox-list-based dialog.
 """
-from quo import echo
+#from quo import echo
 from quo.dialog import CheckBox, MessageBox
 from quo.text import Text
 from quo.style import Style
@@ -26,6 +26,7 @@ results = CheckBox(
         ("croissants", "20 Croissants"),
         ("daily", "The breakfast of the day"),
     ],
+    bg=False
     )# style=style)
 
 if results:
@@ -34,4 +35,4 @@ if results:
         text="You selected: %s\nGreat choice sir !" % ",".join(results))
 
 else:
-    MessageBox("*starves*")
+    MessageBox("*starves*", bg=False)

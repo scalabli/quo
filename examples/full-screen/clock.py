@@ -20,4 +20,4 @@ def _(event):
     event.app.exit()
 
 #Console(layout=lay, bind=bind, refresh_interval=0.8).run()
-container(content,  full_screen=True)
+container(content,  bind=True, full_screen=True)

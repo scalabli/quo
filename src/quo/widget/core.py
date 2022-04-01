@@ -4,13 +4,6 @@ Collection of reusable components for building full screen applications.
 All of these widgets implement the ``__pt_container__`` method, which makes
 them usable in any situation where we are expecting a `quo`
 container object.
-
-.. warning::
-
-    At this point, the API for these widgets is considered unstable, and can
-    potentially change between minor releases (we try not too, but no
-    guarantees are made yet). The public API in
-    `quo.shortcuts.dialogs` on the other hand is considered stable.
 """
 from functools import partial
 from typing import Callable, Generic, List, Optional, Sequence, Tuple, TypeVar, Union
@@ -28,7 +21,7 @@ from quo.filters import (
     is_true,
     to_filter,
 )
-from quo.text import (
+from quo.text.core import (
     AnyFormattedText,
     StyleAndTextTuples,
     Template,
@@ -36,8 +29,8 @@ from quo.text import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys, KeyBinder
+from quo.keys.list import Keys
+from quo.keys.key_binding.key_bindings import Bind as KeyBinder
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
@@ -78,7 +71,7 @@ __all__ = [
         "ProgressBar",
         ]
 
-E = KeyPressEvent
+#E = KeyPressEvent
 
 
 class Border():
@@ -372,6 +365,9 @@ class Button:
         `functools.partial` to pass parameters to this callable if needed.
     :param width: Width of the button.
     """
+    from .design import ok
+   # left_u = "\u2570"                                              # left_t = "\u256D\n"
+#    left_symbol = left_t+left_u
 
     def __init__(
         self,
@@ -437,11 +433,12 @@ class Button:
 
     def _get_key_bindings(self) -> KeyBinder:
         "Key bindings for the Button."
+        from quo.event import Event
         kb = KeyBinder()
 
         @kb.add(" ")
         @kb.add("enter")
-        def _(event: E) -> None:
+        def _(event: Event) -> None:
             if self.handler is not None:
                 self.handler()
 
@@ -484,15 +481,15 @@ class Frame:
             [
                 fill(width=1, height=1, char=Border.TOP_LEFT),
                 fill(char=Border.HORIZONTAL),
-                fill(width=1, height=1, char="|"),
+                fill(width=1, height=1, char="\u2563"),
                 # Notice: we use `Template` here, because `self.title` can be an
-                # `HTML` object for instance.
+                # `quo.text.Text` object for instance.
                 Label(
                     lambda: Template(" {} ").format(self.title),
                     style="class:frame.label",
                     dont_extend_width=True,
                 ),
-                fill(width=1, height=1, char="|"),
+                fill(width=1, height=1, char="\u2560"),
                 fill(char=Border.HORIZONTAL),
                 fill(width=1, height=1, char=Border.TOP_RIGHT),
             ],
@@ -566,18 +563,18 @@ class Shadow:
                     left=1,
                     right=-1,
                     transparent=True,
-                    content=Window(style="class:shadow"),
-                ),
+                    content=Window(style="class:shadow")
+                    ),
                 Float(
                     bottom=-1,
                     top=1,
                     width=1,
                     right=-1,
                     transparent=True,
-                    content=Window(style="class:shadow"),
-                ),
-            ],
-        )
+                    content=Window(style="class:shadow")
+                    )
+                ]
+            )
 
     def __pt_container__(self) -> Container:
         return self.container
@@ -673,6 +670,7 @@ class _DialogList(Generic[_T]):
     show_scrollbar: bool = True
 
     def __init__(self, values: Sequence[Tuple[_T, AnyFormattedText]]) -> None:
+        from quo.event import Event
         assert len(values) > 0
 
         self.values = values
@@ -686,15 +684,15 @@ class _DialogList(Generic[_T]):
         kb = KeyBinder()
 
         @kb.add("up")
-        def _up(event: E) -> None:
+        def _up(event: Event) -> None:
             self._selected_index = max(0, self._selected_index - 1)
 
         @kb.add("down")
-        def _down(event: E) -> None:
+        def _down(event: Event) -> None:
             self._selected_index = min(len(self.values) - 1, self._selected_index + 1)
 
         @kb.add("pageup")
-        def _pageup(event: E) -> None:
+        def _pageup(event: Event) -> None:
             w = event.app.layout.current_window
             if w.render_info:
                 self._selected_index = max(
@@ -702,7 +700,7 @@ class _DialogList(Generic[_T]):
                 )
 
         @kb.add("pagedown")
-        def _pagedown(event: E) -> None:
+        def _pagedown(event: Event) -> None:
             w = event.app.layout.current_window
             if w.render_info:
                 self._selected_index = min(
@@ -712,11 +710,11 @@ class _DialogList(Generic[_T]):
 
         @kb.add("enter")
         @kb.add(" ")
-        def _click(event: E) -> None:
+        def _click(event: Event) -> None:
             self._handle_enter()
 
         @kb.add(Keys.Any)
-        def _find(event: E) -> None:
+        def _find(event: Event) -> None:
             # We first check values after the selected value, then all values.
             values = list(self.values)
             for value in values[self._selected_index + 1 :] + values:

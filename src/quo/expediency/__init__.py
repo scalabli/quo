@@ -7,7 +7,6 @@ from .vitals import (
         os_args,
         pick_bool,
         textstream,
-        inscribe,
         LazyFile,
         KeepOpenFile,
         make_default_short_help,

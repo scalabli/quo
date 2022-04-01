@@ -15,8 +15,11 @@ Unreleased
 **Added**
 ^^^^^^^^^^
 
-- :meth:`quo.console.Console.pager`
-- :param:`fmt` to :func:`quo.print`
+- Added :meth:`quo.console.Console.pager`
+- Added :param:`fmt` to :func:`quo.print`
+- Added :param:`bg` to all dialog boxes.
+- Added :param:`multiline` to :func:`quo.dialog.InputBox`
+- Added `TextField` as an aliase to :class:`TextArea`
 
 **Changed**
 ^^^^^^^^^^^^

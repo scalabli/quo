@@ -51,3 +51,6 @@ from .toolbars import ArgToolbar, CompletionsToolbar, FormattedTextToolbar, Sear
 #   "MenuContainer",
 #    "MenuItem",
 #]
+
+
+TextField = TextArea

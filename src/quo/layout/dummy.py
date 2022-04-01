@@ -3,7 +3,6 @@ Dummy layout. Used when somebody creates a `Console Application` without specify
 """
 from quo.text import Text
 from quo.keys import Bind
-from quo.keys.key_binding.key_processor import KeyPressEvent
 
 from .containers import Window
 from .controls import FormattedTextControl
@@ -14,18 +13,17 @@ __all__ = [
     "create_dummy_layout",
 ]
 
-E = KeyPressEvent
-
 
 def create_dummy_layout() -> Layout:
     """
     Create a dummy layout for use in an 'Application' that doesn't have a
     layout specified. When ENTER is pressed, the application quits.
     """
+    from quo.event import Event
     bind = Bind()
 
     @bind.add("enter")
-    def enter(event: E) -> None:
+    def enter(event: Event) -> None:
         event.app.exit()
 
     control = FormattedTextControl(

@@ -190,7 +190,7 @@ pass it to :class:`~quo.Condition` instance. (:ref:`Read more about filters <fil
 .. code:: python
 
     import datetime
-    from quo import Condition
+    from quo.filters import Condition
     from quo.keys import bind
 
     @Condition
@@ -214,7 +214,7 @@ Sometimes you want to enable or disable a whole set of key bindings according to
 
 .. code:: python
 
-    from quo import Condition
+    from quo.filters import Condition
     from quo.keys ConditionalKeyBindings
 
     @Condition

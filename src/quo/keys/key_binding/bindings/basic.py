@@ -9,7 +9,8 @@ from quo.filters import (
     vi_insert_mode,
 )
 from quo.keys.key_binding.key_processor import KeyPress, KeyPressEvent
-from quo.keys import Keys, KeyBinder
+from quo.keys.list import Keys
+from quo.keys.key_binding.key_bindings import Bind
 from .named_commands import get_by_name
 
 __all__ = [
@@ -25,8 +26,8 @@ def if_no_repeat(event: E) -> bool:
     return not event.is_repeat
 
 
-def load_basic_bindings() -> KeyBinder:
-    key_bindings = KeyBinder()
+def load_basic_bindings() -> Bind:
+    key_bindings = Bind()
     insert_mode = vi_insert_mode | emacs_insert_mode
     handle = key_bindings.add
 

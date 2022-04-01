@@ -48,13 +48,13 @@ from quo.filters import (
     renderer_height_is_known,
     to_filter,
 )
-from quo.text import (
+from quo.text.core import (
     AnyFormattedText,
     StyleAndTextTuples,
-    fragment_list_to_text,
     merge_formatted_text,
-    to_formatted_text,
-)
+    to_formatted_text)
+
+from quo.text.utils import fragment_list_to_text
 from quo.history import History, InMemoryHistory
 from quo.input.core import Input
 from quo.keys.key_binding.bindings.auto_suggest import load_auto_suggest_bindings
@@ -64,7 +64,8 @@ from quo.keys.key_binding.bindings.completion import (
 from quo.keys.key_binding.bindings.open_in_editor import (
     load_open_in_editor_bindings,
 )
-from quo.keys import Keys, KeyBinder, bind as _bind
+from quo.keys.list import Keys
+from quo.keys.key_binding.key_bindings import Bind as KeyBinder
 from quo.keys.key_binding.key_bindings import (
     ConditionalKeyBindings,
     DynamicKeyBindings,
@@ -183,9 +184,9 @@ class _Relicit(Window):
     def __init__(self, text: AnyFormattedText) -> None:
         super().__init__(
             FormattedTextControl(text=text),
-            align=WindowAlign.RIGHT,
-            style="class:rprompt",
-        )
+            align="right",
+            style="class:rprompt"
+            )
 
 
 class CompleteStyle(str, Enum):
@@ -247,7 +248,7 @@ def prompt(
 
     """
     from quo.types import convert_type
-    from quo.expediency import inscribe
+    from quo.expediency.vitals import inscribe
     from quo.errors import Abort, UsageError
     from quo.i_o.termui import _build_prompt, hidden_prompt_func
     insert = input
@@ -451,6 +452,8 @@ class Prompt(Generic[_T]):
         "tempfile",
     )
 
+    from quo.keys import bind as _bind
+
     def __init__(
         self,
         text: AnyFormattedText = "",
@@ -488,7 +491,7 @@ class Prompt(Generic[_T]):
         mouse_support: FilterOrBool = False,
         input_processors: Optional[List[Processor]] = None,
         placeholder: Optional[AnyFormattedText] = None,
-        bind_: Optional[KeyBindingsBase] =  False, 
+        bind_: bool = True, 
         bind: Optional[KeyBindingsBase] = _bind,
         erase_when_done: bool = False,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
@@ -553,6 +556,7 @@ class Prompt(Generic[_T]):
         self.layout = self._create_layout()
         self.app = self._create_application(editing_mode, erase_when_done)
         if bind_ is True:
+            from quo.keys import bind as _bind
             bind = _bind
 
     def _dyncond(self, attr_name: str) -> Condition:

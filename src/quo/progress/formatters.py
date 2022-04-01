@@ -7,12 +7,8 @@ import time
 from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, List, Tuple
 
-from quo.text import (
-    Text as Te,
-    AnyFormattedText,
-    StyleAndTextTuples,
-    to_formatted_text,
-)
+from quo.text.html import Text as Te
+from quo.text.core import AnyFormattedText, StyleAndTextTuples, to_formatted_text
 from quo.text.utils import fragment_list_width
 from quo.layout.dimension import AnyDimension, D
 from quo.layout.utils import explode_text_fragments
@@ -153,8 +149,8 @@ class Bar(Formatter):
 
     def __init__(
         self,
-        start: str = "[",
-        end: str = "]",
+        start: str = "",
+        end: str = "",
         sym_a: str = "\u2501",
         sym_b: str = "\u257E", #Can be an ">>" or something else
         sym_c: str = "\u2500",
@@ -430,9 +426,9 @@ def create_default_formatters() -> List[Formatter]:
         Progress(),
         Text(" ", style="purple"),
         Text("\u257D"),
-        Text("time left: ", style="purple"),
-        Text("[", style="fg:blue bold"),#"class:time-left"),
+        Text("eta ", style="purple"),
+        Text("«", style="fg:blue bold"),#"class:time-left"),
         TimeLeft(),
-        Text("]", style="fg:blue bold"), #class:time-left"),
+        Text("»", style="fg:blue bold"), #class:time-left"),
         Text(" "),
     ]

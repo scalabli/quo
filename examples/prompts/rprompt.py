@@ -9,40 +9,29 @@ This is similar to RPROMPT is Zsh.
 from quo import echo
 from quo.text import Text
 from quo.prompt import Prompt
-from quo.style import Style
-
-session = Prompt()
-
-example = Style.add(
-    {
-        "rprompt": "bg:red fg:white",
-    }
-)
-
-
-def get_rprompt_text():
-    return [
-        ("", " "),
-        ("underline", "<rprompt>"),
-        ("", " "),
-    ]
-
 
 def main():
     # Option 1: pass a string to 'rprompt':
-    answer = session.prompt("> ", rprompt=" <Quo> ", style=example)
+    rprompt = Text("<brown><i>Quo</i></brown>")
+    session = Prompt(rprompt=rprompt)
+
+    answer = session.prompt(">> ")
     echo("You said: %s" % answer)
 
-    # Option 2: pass HTML:
-    answer = session.prompt("> ", rprompt=Text(" <u><bold>prompt</bold></u> "), style=example)
+    # Option 2
+
+    rprompt = Text("<style bg='red' fg='green'>Quo</style>")
+    session = Prompt(rprompt=rprompt)
+
+    answer = session.prompt(">> ")
     echo("You said: %s" % answer)
 
-    # Option 3: Pass a callable. (This callable can either return plain text,
-    #           an HTML object, or a list of (style, text)
-    #           tuples.
-    answer = session.prompt("> ", rprompt=get_rprompt_text, style=example)
-    echo("You said: %s" % answer)
+    # Option 3
 
+    rprompt = Text("<style bg='blue'>Quo</style>")
+    session = Prompt(rprompt=rprompt)
+    answer = session.prompt(">> ")
+    echo(f"You said: {answer}")
 
 if __name__ == "__main__":
     main()

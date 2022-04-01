@@ -4,6 +4,7 @@ from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
 from quo.console.console import Console
 from quo.console.current import get_app
+from quo.buffer import Buffer
 from quo.completion.core import Completer
 from quo.eventloop import run_in_executor_with_context
 from quo.filters.core import FilterOrBool
@@ -115,7 +116,7 @@ from quo.widget.design import ok
 def _PromptBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
-    ok_text: str = "Ok",
+    ok_text: str = ok,# "Ok",
     cancel_text: str = "Cancel",
     completer: Optional[Completer] = None,
     type: Optional[Validator] = None,
@@ -128,7 +129,6 @@ def _PromptBox(
     Display a text input box.
     Return the given text, or None when cancelled.
     """
-    from .buffer import Buffer
     from .widget.core import TextArea
     from .widget.toolbars import ValidationToolbar
 
@@ -443,7 +443,7 @@ def ConfirmBox(
 def InputBox(
         title: AnyFormattedText = "",
         text: AnyFormattedText = "",
-        ok_text: str = "Ok",
+        ok_text: str = ok, #"Ok",
         cancel_text: str = "Cancel",
         completer: Optional[Completer] = None,
         type: Optional[Validator] = None,

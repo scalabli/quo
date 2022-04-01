@@ -4,7 +4,8 @@ from quo.console.current import get_app
 from quo.buffer import Buffer
 from quo.enums import SYSTEM_BUFFER
 from quo.filters import Condition, FilterOrBool, emacs_mode, has_arg, has_completions, has_focus, has_validation_error, to_filter, vi_mode, vi_navigation_mode
-from quo.text import AnyFormattedText, StyleAndTextTuples, fragment_list_len, to_formatted_text
+from quo.text.core import AnyFormattedText, StyleAndTextTuples, to_formatted_text
+from quo.text.utils import fragment_list_len
 from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase, merge_key_bindings
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.key_binding.vi_state import InputMode

@@ -171,7 +171,7 @@ exceed the given width. (The width of the prompt margin is defined by the prompt
 When the ``hide=True`` flag in :func:`quo.prompt` or :class:`quo.prompt.Prompt` has been given, the input is hidden in :func:`quo.prompt` or replaced by asterisks (``*`` characters) in :class:`quo.prompt.Prompt`
 
 
-``Using function quo.prompt()``
+Using function quo.prompt()
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
@@ -179,7 +179,7 @@ When the ``hide=True`` flag in :func:`quo.prompt` or :class:`quo.prompt.Prompt` 
 
    prompt("Enter password: ", hide=True)
 
-``Using class `quo.prompt.Prompt()``
+Using class `quo.prompt.Prompt()
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
@@ -645,12 +645,12 @@ same time, but it is possible to switch between Emacs and Vi bindings at run
 time.
 
 In order to enable a key binding according to a certain condition, we have to
-pass it a :class:`~quo.Condition` instance. (:ref:`Read more about filters <filters>`.)
+pass it a :class:`~quo.filters.Condition` instance. (:ref:`Read more about filters <filters>`.)
 
 .. code:: python
 
     import datetime
-    from quo import Condition
+    from quo.filters import Condition
     from quo.keys import bind
     from quo.prompt import Prompt
 
@@ -672,7 +672,7 @@ Display asterisks instead of the actual characters with the addition of a Contro
 
 .. code:: python
 
-   from quo import Condition
+   from quo.filters import Condition
    from quo.keys import bind
    from quo.prompt import Prompt
    

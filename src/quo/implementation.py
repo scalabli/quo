@@ -20,7 +20,7 @@ from quo.accordance import (
         )
 
 from quo import errors
-from quo.expediency import inscribe
+from quo.expediency.vitals import inscribe
 
 if os.name == "nt":
     BEFORE_BAR = "\r"

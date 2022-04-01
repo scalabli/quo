@@ -3,7 +3,7 @@ from typing import Callable, Dict, Iterable, List, NamedTuple, Optional, Tuple, 
 
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.text import AnyFormattedText, StyleAndTextTuples
+from quo.text.core import AnyFormattedText, StyleAndTextTuples
 
 from .core import CompleteEvent, Completer, Completion
 from .word_completer import WordCompleter

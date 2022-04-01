@@ -1,6 +1,6 @@
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys, KeyBinder
-
+from quo.keys.list import Keys
+from quo.keys.key_binding.key_bindings import Bind
 
 __all__ = [
     "load_cpr_bindings",
@@ -9,8 +9,8 @@ __all__ = [
 E = KeyPressEvent
 
 
-def load_cpr_bindings() -> KeyBinder:
-    key_bindings = KeyBinder()
+def load_cpr_bindings() -> Bind:
+    key_bindings = Bind()
 
     @key_bindings.add(Keys.CPRResponse, save_before=lambda e: False)
     def _(event: E) -> None:

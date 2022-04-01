@@ -9,17 +9,15 @@ an :class:`.HTML` object, an :class:`.ANSI` object or a sequence of
 `(style_string, text)` tuples. The :func:`.to_formatted_text` conversion
 function takes any of these and turns all of them into such a tuple sequence.
 """
-from quo.i_o.output.html import Text
-from quo.i_o.output.ansi import ANSI
-from .core import (
-    AnyFormattedText,
-    FormattedText,
-    StyleAndTextTuples,
-    Template,
-    is_formatted_text,
-    merge_formatted_text,
-    to_formatted_text,
-)
+from .html import Text
+from .core import FormattedText 
+    #AnyFormattedText,
+   # StyleAndTextTuples,
+   # Template,
+  #  is_formatted_text,
+  #  merge_formatted_text,
+  #  to_formatted_text,
+#)
 
 from .pygments import PygmentsTokens
 from .utils import (

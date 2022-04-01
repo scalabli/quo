@@ -11,14 +11,15 @@ from quo.completion import (
     Completion,
     get_common_complete_suffix,
 )
-from quo.text import StyleAndTextTuples
-from quo.keys import Keys, KeyBinder
+from quo.text.core import StyleAndTextTuples
+#from quo.keys.list import Keys
+#from quo.keys.key_binding.key_bindings import Bind
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.utils.utils import get_width as get_cwidth
 
 if TYPE_CHECKING:
-    from quo.console import Console
-    from quo.shortcuts import Prompt
+    from quo.console.console import Console
+    from quo.prompt import Prompt
 
 __all__ = [
     "generate_completions",
@@ -174,9 +175,11 @@ def _create_more_session(message: str = "--MORE--") -> "Prompt[bool]":
     """
     Create a `Prompt` object for displaying the "--MORE--".
     """
+    from quo.keys.list import Keys
+    from quo.keys.key_binding.key_bindings import Bind
     from quo.prompt import Prompt
 
-    bindings = KeyBinder()
+    bindings = Bind()
 
     @bindings.add(" ")
     @bindings.add("y")

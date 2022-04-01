@@ -1,4 +1,3 @@
-import sys
 from contextlib import contextmanager
 from typing import TYPE_CHECKING, Any, Generator, Optional
 
@@ -147,6 +146,7 @@ def create_app_session(
     Like in the case of an Telnet/SSH server. This functionality uses
     contextvars and requires at least Python 3.7.
     """
+    import sys
     if sys.version_info <= (3, 6):
         raise RuntimeError("This session requires Python 3.7 or later.")
 

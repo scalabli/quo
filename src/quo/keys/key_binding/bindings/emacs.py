@@ -16,9 +16,9 @@ from quo.filters import (
     shift_selection_mode,
     vi_search_direction_reversed,
 )
-from quo.keys.key_binding.key_bindings import Binding
+from quo.keys.key_binding.key_bindings import Binding, Bind as KeyBinder
 from quo.keys.key_binding.key_processor import KeyPressEvent
-from quo.keys import Keys, KeyBinder
+from quo.keys.list import Keys
 from quo.selection import SelectionType
 
 from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase

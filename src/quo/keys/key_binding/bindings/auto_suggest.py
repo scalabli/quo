@@ -5,7 +5,7 @@ import re
 
 from quo.console.current import get_app
 from quo.filters import Condition, emacs_mode
-from quo.keys import KeyBinder
+from quo.keys.key_binding.key_bindings import Bind
 from quo.keys.key_binding.key_processor import KeyPressEvent
 
 __all__ = [
@@ -15,7 +15,7 @@ __all__ = [
 E = KeyPressEvent
 
 
-def load_auto_suggest_bindings() -> KeyBinder:
+def load_auto_suggest_bindings() -> Bind:
     """
     Key bindings for accepting auto suggestion text.
 
@@ -23,7 +23,7 @@ def load_auto_suggest_bindings() -> KeyBinder:
     implementation for the "right arrow", but we really want the suggestion
     binding when a suggestion is available.)
     """
-    key_bindings = KeyBinder()
+    key_bindings = Bind()
     handle = key_bindings.add
 
     @Condition

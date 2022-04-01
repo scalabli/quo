@@ -20,7 +20,7 @@ from quo.buffer import Buffer
 from quo.cache import SimpleCache
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
-from quo.text import (
+from quo.text.core import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,

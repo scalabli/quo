@@ -7,23 +7,24 @@ import os
 import signal
 import time
 
-from quo.text import Text
 from quo.keys import bind
-#from quo.patch_stdout import patch_stdout
 from quo.progress import ProgressBar
+from quo.text import Text
 
 
 def main():
-    bottom_toolbar = Text(
-        ' <b>[f]</b> Print "f" <b>[q]</b> Abort  <b>[x]</b> Send Control-C.'
-    )
+    bottom_toolbar = Text('<b>[f]</b> Print "f" <b>[q]</b> Abort  <b>[x]</b> Send Control-C.')
 
     # Create custom key bindings first
     cancel = [False]
 
     @bind.add("f")
     def _(event):
-        print("You pressed `f`.")
+        from quo import container
+        from quo.widget import Label
+        content = Label("You pressed `f`", style="fg:brown")
+        container(content, bind=True)
+       #print("You pressed `f`.")
 
     @bind.add("q")
     def _(event):

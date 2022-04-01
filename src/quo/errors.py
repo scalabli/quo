@@ -4,8 +4,6 @@ import os
 
 from quo.accordance import filename_to_ui, get_text_stderr
 
-from quo.expediency import inscribe
-
 _ = gettext.gettext
 
 
@@ -38,6 +36,7 @@ class Outlier(Exception):
         return self.message
 
     def show(self, file=None):
+        from .expediency.vitals import inscribe
         if file is None:
             file = get_text_stderr()
         inscribe(_(f"Error: {self.format_message()}", file=file))

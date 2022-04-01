@@ -5,7 +5,7 @@ from quo.console.console import Console
 from quo.console.current import get_app_session
 from quo.errors import UsageError
 from quo.keys import bind as _bind
-from quo.text import FormattedText, StyleAndTextTuples, to_formatted_text
+from quo.text.core import FormattedText, StyleAndTextTuples, to_formatted_text
 from quo.input import DummyInput
 from quo.layout.layout import Layout
 from quo.output import ColorDepth, Output
@@ -141,7 +141,7 @@ def container(
     style: Optional[BaseStyle] = None,
     full_screen = False,
     mouse_support = False,
-    bind = True,
+    bind = False,
     refresh = 0.5,
     include_default_pygments_style: bool = True,
     test=False

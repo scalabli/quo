@@ -17,7 +17,7 @@ from quo.color import ansi_color_codes, _ansi_reset_all
 from quo.errors import Abort
 from quo.context.current import resolve_color_default
 from quo.types import Choice # convert_type
-from quo.expediency import LazyFile, inscribe
+from quo.expediency.vitals import LazyFile, inscribe
 
 #convert_type
 
@@ -422,5 +422,3 @@ def echo(
             message = flair(message, **styles)
 
         return inscribe(message, file=file, nl=nl, err=err, color=color)
-
-

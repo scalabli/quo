@@ -33,8 +33,8 @@ from a function. For instance, the following condition will evaluate to ``True``
 
 .. code:: python
 
- from quo import Condition
  from quo.console import get_app
+ from quo.filters import Condition
 
  @Condition
  def is_searching():
@@ -137,8 +137,7 @@ instance, and always returns a :class:`~quo.filters.Filter`.
 
 .. code:: python
 
- from quo import Condition
- from quo.filters import to_filter, has_search, has_selection
+ from quo.filters import Condition, to_filter, has_search, has_selection
 
     # In each of the following three examples, 'f' will be a `Filter`
     # instance.

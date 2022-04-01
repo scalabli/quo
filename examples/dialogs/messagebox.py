@@ -6,5 +6,6 @@ from quo.dialog import MessageBox
 
 MessageBox(
         title="Message pop up window",
-        text="Do you want to continue?\nPress ENTER to quit.")
+        text="Do you want to continue?\nPress ENTER to quit."
+        )
 

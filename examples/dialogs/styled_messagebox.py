@@ -20,7 +20,7 @@ style = Style.add(
             "dialog.body": "bg:white fg:black",
             "dialog body.text-area": "fg:white bg:purple",
             "dialog frame.label": "fg:blue bg:green",
-          #  "dialog.shadow": "bg:yellow",
+            "dialog.shadow": "bg:yellow",
             }
         )
 

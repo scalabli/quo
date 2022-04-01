@@ -5,8 +5,9 @@ A simple example of a Notepad-like text editor.
 import datetime
 import asyncio
 
-from quo import container, Condition
-from quo.completion import PathCompleter
+from quo import container
+from quo.filters.core import Condition
+from quo.completion.filesystem import PathCompleter
 from quo.console import get_app
 from quo.keys import bind
 from quo.layout.containers import (
@@ -19,19 +20,21 @@ from quo.layout import FormattedTextControl, Layout, HSplit, VSplit, Window
 
 from quo.layout.dimension import D
 from quo.layout.menus import CompletionsMenu
-from quo.highlight import DynamicLexer, PygmentsLexer
+from quo.highlight.core import DynamicLexer
+from quo.highlight.pygments import PygmentsLexer
 from quo.search import start_search
 from quo.widget import (
     Button,
-    Dialog,
+  #  Dialog,
     Label,
     MenuContainer,
     MenuItem,
     SearchToolbar,
     TextArea
     )
+from quo.widget.dialogs import Dialog
 
-
+subset = children
 class Appstate:
     """
     Application state.
@@ -48,8 +51,8 @@ class Appstate:
 
 def get_statusbar_right_text():
     return " {}:{}  ".format(
-        text_field.document.cursor_position_row + 1,
-        text_field.document.cursor_position_col + 1,
+        text_field.document.cursor_position_row + 20,
+        text_field.document.cursor_position_col + 20,
     )
 
 

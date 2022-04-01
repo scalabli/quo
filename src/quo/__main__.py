@@ -1,4 +1,4 @@
-from quo.console import console
+from quo.console import Console
 from quo.keys import bind
 from quo.shortcuts import container
 from quo.style import Style
@@ -7,7 +7,7 @@ from quo.widget import Box, Label, Frame, Shadow
 from quo.layout import HSplit, VSplit, Window, FormattedTextControl
 from quo.text import Text
 
-
+console = Console()
 def get_time():
     "Tokens to be shown before the prompt."
     import datetime
@@ -25,8 +25,7 @@ content = HSplit([
         FormattedTextControl(get_time), style="reverse", height=1, align="centre"), #"FEATURES | press `q` or `ctrl-c` to quit" + get_time), style="reverse", height=1, align="center"),
     Label(
             Text('<red>*</red><b> Support for ANSI, RGB and Hex color models.</b>\n<blue>*</blue><b> Support for tabular presentation of data.</b>\n<green>*</green><b> Intuitive progressbars.</b>\n<magenta>*</magenta><b> Syntax <style fg="yellow" bg="red">Highlighting</style></b>\n<yellow>*</yellow><b> Nesting of Commands.</b>\n<teal>*</teal><b> Automatic help page generation.</b>\n<khaki>*</khaki><b> Key bindings.</b>\n<aquamarine>*</aquamarine><b> Auto suggestions.</b>\n<brown>*</brown><b> Customizable Text User Interface<i>(TUI)</i> dialogs</b>'
-                        ),
-                    ),
+                        ), width=22),
         Window(height=1, char='\u2501'),
         VSplit([
                    Frame(

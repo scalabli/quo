@@ -23,7 +23,7 @@ from quo.console.current import get_app
 from quo.cache import SimpleCache
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter, vi_insert_multiple_mode
-from quo.text import (
+from quo.text.core import (
     AnyFormattedText,
     StyleAndTextTuples,
     to_formatted_text,

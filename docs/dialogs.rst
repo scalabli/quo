@@ -4,6 +4,8 @@ Dialogs
 =======
 Quo ships with a high level API for displaying `dialog boxes <https://en.m.wikipedia.org/wiki/Dialog_box>`_ to the user for informational purposes, or get input from the user.
 
+All dialogs can be passed ``bg=False`` option to turn off the background. *Added on v2022.4*
+
 *Deprecated :meth:`.run` on v2022.3.2*
 
 ``Message Box``
@@ -37,9 +39,8 @@ input box. It will return the user input as a string.
         text='Please type your name:')
 .. image:: ./images/inputbox.png
 
-
-The ``hide=True`` option can be passed to the
-:func:`~quo.dialog.InputBox` function to turn this into a password input box.
+The ``multiline=True`` option can be passed turn this into a multiline Input box
+The ``hide=True`` option can be passed to the :func:`~quo.dialog.InputBox` function to turn this into a password input box.
 
 
 ``Confirm Box``

@@ -7,15 +7,19 @@ entry of the history starts with the given input, then it will show the
 remaining part as a suggestion. Pressing the right arrow will insert this
 suggestion.
 """
-import quo
+
+from quo import echo
+from quo.completion import AutoSuggestFromHistory
+from quo.history import InMemoryHistory
+from quo.prompt import Prompt
 
 def main():
     # Create some history first. (Easy for testing.)
-    history = quo.history.InMemoryHistory()
-    history.append_string("import os")
-    history.append_string('print("hello")')
-    history.append_string('print("world")')
-    history.append_string("import path")
+    history = InMemoryHistory()
+    history.append("import os")
+    history.append('print("hello")')
+    history.append('print("world")')
+    history.append("import path")
 
     # Print help.
     print("This CLI has fish-style auto-suggestion enable.")
@@ -24,9 +28,9 @@ def main():
     print("Press Control-C to retry. Control-D to exit.")
     print()
 
-    session = quo.Prompt(
+    session = Prompt(
         history=history,
-        auto_suggest=quo.completion.AutoSuggestFromHistory(),
+        auto_suggest=AutoSuggestFromHistory(),
         enable_history_search=True,
     )
 
@@ -38,7 +42,7 @@ def main():
         else:
             break
 
-    quo.echo(f"You said: {text}")
+    echo(f"You said: {text}")
 
 
 if __name__ == "__main__":

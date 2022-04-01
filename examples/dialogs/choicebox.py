@@ -3,7 +3,7 @@
 Example of button dialog window.
 """
 
-from quo import echo
+#from quo import echo
 from quo.dialog import ChoiceBox
 
 result = ChoiceBox(
@@ -12,7 +12,9 @@ result = ChoiceBox(
         buttons= [
             ("Yes", True),
             ("No", False),
-            ("Maybe...", None)]
+            ("Maybe...", None)],
+        bg=False
         )
 if result == True:
-    echo(f"Result = {result}")
+    print("dd")
+  #  echo(f"Result = {result}")

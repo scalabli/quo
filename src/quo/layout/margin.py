@@ -5,11 +5,11 @@ from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, Callable, Optional
 
 from quo.filters import FilterOrBool, to_filter
-from quo.text import (
+from quo.text.core import (
     StyleAndTextTuples,
-    fragment_list_to_text,
-    to_formatted_text,
-)
+    to_formatted_text
+    )
+from quo.text.utils import fragment_list_to_text
 from quo.utils.utils import get_width as g_w
 
 from .controls import UIContent

@@ -3,22 +3,15 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 
 """
 
+import os
+import sys
 
-import importlib
-
-from quo.exit import quick_exit as exit
-from quo.console.console import Console
-from .core import Clime as Clime
-from .core import Parameter as Parameter
-from .core import App as App
-from .core import Tether as Tether
-from .getchar import getchar as getchar
+#from .core import Clime as Clime
+#from .core import Parameter as Parameter
+#from .core import App as App
+#from .core import Tether as Tether
 from .pause import pause as pause
 from .prompt import prompt as prompt  # dont confuse this with :class: quo.prompt.Prompt()
-from quo.filters.core import Condition as Condition
-from quo.shortcuts import print as print
-
-
 
 
 #             Arg,
@@ -38,41 +31,30 @@ from quo.shortcuts import print as print
 #from quo.context.current import resolve_color_default
 #from quo.expediency import inscribe # LazyFile
 
-
-
 #from quo.decorators import (
-                #       app,
- #                      arg,
-            #           command,
-                   #    tether
-       #               )
-
-from quo.decorators import (
-             contextualize,
+#             contextualize,
 #             objectualize,
-             make_pass_decorator
+#             make_pass_decorator
 #             autoversion,
 #             autopasswd,
 #             autohelp,
 #             autoconfirm
-)
+
 
 #from .setout import HelpFormatter, wraptext
-from quo.context.current import currentcontext as pass_clime
+#from quo.context.current import currentcontext as pass_clime
 #from .parser import AppParser
 
-from quo.expediency import (
-    appdir,
-    formatfilename,
-    os_args,
-    textstream,
-    binarystream,
-    )
+from quo.expediency.vitals import (
+        appdir,
+        formatfilename,
+        os_args,
+        textstream,
+        binarystream
+        )
         
 
-def clear():
-    import sys
-    import os
+def clear() ->None:
     from .accordance import isatty, WIN
     """Clears the terminal screen and moves the cursor to the top left.
     """
@@ -84,12 +66,42 @@ def clear():
     else:
         sys.stdout.write("\033[2J\033[1;1H")
 
+def exit(code: int):
 
-from quo.i_o import (
-              confirm,
-              echo
-              )
+    """Low-level exit that skips Python's cleanup but speeds up exit by about 10ms for things like shell completion.
+    :param code: Exit code.
+    """
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os._exit(code)
 
-from quo.shortcuts import container
+def getchar(inscribe: bool=False):
+    """Fetches a single character from the terminal and returns it.  This
+    will always return a unicode character and under certain rare
+    circumstances this might return more than one character.  The
+    situations which more than one character is returned is when for
+    whatever reason multiple characters end up in the terminal buffer or
+    standard input was not actually a terminal.
+    Note that this will always read from the terminal, even if something
+    is piped into the standard input.
+    Note for Windows: in rare cases when typing non-ASCII characters, this
+    function might wait for a second character and then return both at once.
+    This is because certain Unicode characters look like special-key markers.
+    :param inscribe: if set to `True`, the character read will also show up on the terminal.  The default is to not show it.
+    """
+    from quo.expediency.vitals import inscribe
+    _interpose = None
+    f = _interpose
+    if f is None:
+        from quo.implementation import interpose as f
+    return f(inscribe)
+
+def print(*values, style=None, sep=" ", end="\n"):
+    from quo.shortcuts.utils import print
+    return print(*values,  style=None, sep=" ", end="\n ")
+
+from quo.i_o import confirm, echo
+
+from quo.shortcuts.utils import container
 
 __version__ = "2022.4"
