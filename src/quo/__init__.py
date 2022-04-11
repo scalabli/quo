@@ -100,7 +100,7 @@ def print(*values, style=None, sep=" ", end="\n"):
     from quo.shortcuts.utils import print
     return print(*values,  style=None, sep=" ", end="\n ")
 
-from quo.i_o import confirm, echo
+from quo.i_o.termui import confirm, echo
 
 from quo.shortcuts.utils import container
 

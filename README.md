@@ -44,6 +44,11 @@ You can install quo via the Python Package Index (PyPI)
 pip install -U quo
 
 ```
+
+In order to check your installation you can use
+```
+python -m pip show quo # to see which version and where quo is installed
+```
 Run the following to test Quo output on your terminal:
 ```
 python -m quo

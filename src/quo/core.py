@@ -16,10 +16,7 @@ from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
 from quo.expediency.vitals import inscribe as echo
-from quo.i_o import (
-           confirm,
-           flair
-           )
+from quo.i_o.termui import confirm # flair
 #from quo.prompt import prompt
 #from quo.text import AnyFormattedText
 from .types import (
@@ -2298,6 +2295,7 @@ class App(Parameter):
         user until a valid value exists and then returns the processed
         value as result.
         """
+        from .prompt import prompt
         # Calculate the default before prompting anything to be stable.
         default = self.get_default(clime)
 

@@ -29,8 +29,8 @@ from quo.text.core import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-from quo.keys.list import Keys
-from quo.keys.key_binding.key_bindings import Bind as KeyBinder
+#from quo.keys.list import Keys
+#om quo.keys.key_binding.key_bindings import Bind as KeyBinder
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
@@ -40,8 +40,7 @@ from quo.layout.containers import (
     FloatContainer,
     HSplit,
     VSplit,
-    Window,
-    WindowAlign,
+    Window
 )
 from quo.layout.controls import BufferControl, FormattedTextControl, GetLinePrefixCallable
 from quo.layout.dimension import AnyDimension
@@ -166,6 +165,8 @@ class TextArea:
         read_only: FilterOrBool = False,
         width: AnyDimension = None,
         height: AnyDimension = None,
+        extend_height: FilterOrBool = False, #True,
+        extend_width: FilterOrBool = True,
         dont_extend_height: FilterOrBool = False,
         dont_extend_width: FilterOrBool = False,
         line_numbers: bool = False,
@@ -251,6 +252,8 @@ class TextArea:
         self.window = Window(
             height=height,
             width=width,
+            extend_height=extend_height,
+            extend_width=extend_width,
             dont_extend_height=dont_extend_height,
             dont_extend_width=dont_extend_width,
             content=self.control,
@@ -322,6 +325,8 @@ class Label:
         text: AnyFormattedText,
         style: str = "",
         width: AnyDimension = None,
+        extend_height: bool = False,
+        extend_width: bool = True,
         dont_extend_height: bool = True,
         dont_extend_width: bool = False,
     ) -> None:
@@ -365,10 +370,7 @@ class Button:
         `functools.partial` to pass parameters to this callable if needed.
     :param width: Width of the button.
     """
-    from .design import ok
-   # left_u = "\u2570"                                              # left_t = "\u256D\n"
-#    left_symbol = left_t+left_u
-
+    from quo.keys.key_binding.key_bindings import Bind
     def __init__(
         self,
         text: str,
@@ -403,7 +405,7 @@ class Button:
 
         self.window = Window(
             self.control,
-            align=WindowAlign.CENTER,
+            align="center",
             height=1,
             width=width,
             style=get_style,
@@ -431,10 +433,10 @@ class Button:
             ("class:button.arrow", self.right_symbol, handler),
         ]
 
-    def _get_key_bindings(self) -> KeyBinder:
+    def _get_key_bindings(self) -> Bind:
         "Key bindings for the Button."
         from quo.event import Event
-        kb = KeyBinder()
+        kb = Bind()
 
         @kb.add(" ")
         @kb.add("enter")
@@ -459,6 +461,7 @@ class Frame:
     :param title: Text to be displayed in the top of the frame (can be formatted text).
     :param style: Style string to be applied to this widget.
     """
+    from quo.keys.key_binding.key_bindings import Bind
 
     def __init__(
         self,
@@ -467,7 +470,7 @@ class Frame:
         style: str = "",
         width: AnyDimension = None,
         height: AnyDimension = None,
-        bind: Optional[KeyBinder] = None,
+        bind: Optional[Bind] = None,
         modal: bool = False,
     ) -> None:
 
@@ -598,6 +601,7 @@ class Box:
     :param char: Character to be used for filling the space around the body.
         (This is supposed to be a character with a terminal width of 1.)
     """
+    from quo.keys.key_binding.key_bindings import Bind
 
     def __init__(
         self,
@@ -612,7 +616,7 @@ class Box:
         style: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
-        bind: Optional[KeyBinder] = None,
+        bind: Optional[Bind] = None,
     ) -> None:
 
         if padding is None:
@@ -671,6 +675,8 @@ class _DialogList(Generic[_T]):
 
     def __init__(self, values: Sequence[Tuple[_T, AnyFormattedText]]) -> None:
         from quo.event import Event
+        from quo.keys.key_binding.key_bindings import Bind
+        from quo.keys.list import Keys
         assert len(values) > 0
 
         self.values = values
@@ -681,7 +687,7 @@ class _DialogList(Generic[_T]):
         self._selected_index = 0
 
         # Key bindings.
-        kb = KeyBinder()
+        kb = Bind()
 
         @kb.add("up")
         def _up(event: Event) -> None:
@@ -931,3 +937,7 @@ class ProgressBar:
 
     def __pt_container__(self) -> Container:
         return self.container
+
+
+#:TODO:
+ #Change dont_extend_width and dont_extend_height

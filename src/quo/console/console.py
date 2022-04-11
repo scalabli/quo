@@ -883,9 +883,11 @@ class Console(Generic[_AppResult]):
 
     @property
     def size(self):
-        from quo.i_o.termui import terminalsize as ts
-        termsize = ts
-        print(termsize)
+        import shutil
+        return shutil.get_terminal_size()
+      #  from quo.i_o.termui import terminalsize as ts
+     #   termsize = ts
+     #   print(termsize)
 
     @property
     def openfile(self):

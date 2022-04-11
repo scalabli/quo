@@ -1,5 +1,5 @@
 import inspect
-import io
+#import io
 import itertools
 import os
 import struct
@@ -37,9 +37,9 @@ def hidden_prompt_func(prompt):
 def _build_prompt(
         text, 
         suffix, 
-        show_default=False,
+        show_default: bool=False,
         default=None,
-        show_choices=True,
+        show_choices:bool=True,
         type=None
         ):
     prompt = text
@@ -51,6 +51,7 @@ def _build_prompt(
 
 
 def _format_default(default):
+    import io
     if isinstance(default, (io.IOBase, LazyFile)) and hasattr(default, "name"):
         return default.name
 
@@ -287,32 +288,23 @@ def flair(
             bits.append(f"\033[{_interpret_color(fg)}m")
         except KeyError:
             # imported like so to avoid circular imports
-            from quo.layout import FormattedTextControl, Window
-            from quo.shortcuts import container
+            from quo.layout.controls import FormattedTextControl
+            from quo.layout.containers import Window
+            from quo.shortcuts.utils import container
             container(Window(FormattedTextControl("Color error"), height=1, align="center", style="fg: yellow bg:brown bold"))
             raise TypeError(f"Unknown color {fg!r}\n Check the documentation for a list of available colors.")
-
-    if foreground:
-        try:
-            bits.append(f"\033[{_interpret_color(foreground)}m")
-        except KeyError:
-            raise TypeError(f"Unknown color {foreground!r}")
 
 
     if bg:
         try:
             bits.append(f"\033[{_interpret_color(bg, 10)}m")
         except KeyError:
-            from quo.layout import FormattedTextControl, Window
-            from quo.shortcuts import container
+            from quo.layout.controls import FormattedTextControl
+            from quo.layout.containers import Window
+            from quo.shortcuts.utils import container
             container(Window(FormattedTextControl("Color error"), height=1, align="center", style="fg: yellow bg:brown bold"))
             raise TypeError(f"Unknown color {bg!r}\nCheck the documentation for a list of available colors.")
 
-    if background:
-        try:
-            bits.append(f"\033[{_interpret_color(background, 10)}m")
-        except KeyError:
-            raise TypeError(f"Unknown color {background!r}")
     if upper is True:
         text.upper()
 

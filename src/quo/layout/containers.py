@@ -1488,6 +1488,8 @@ class Window(Container):
         width: AnyDimension = None,
         height: AnyDimension = None,
         z_index: Optional[int] = None,
+        extend_width: FilterOrBool = True,
+        extend_height: FilterOrBool = True,
         dont_extend_width: FilterOrBool = False,
         dont_extend_height: FilterOrBool = False,
         ignore_content_width: FilterOrBool = False,
@@ -1518,6 +1520,8 @@ class Window(Container):
         self.cursorcolumn = to_filter(cursorcolumn)
 
         self.content = content or DummyControl()
+        self.extend_width = to_filter(extend_width)
+        self.extend_height = to_filter(extend_height)
         self.dont_extend_width = to_filter(dont_extend_width)
         self.dont_extend_height = to_filter(dont_extend_height)
         self.ignore_content_width = to_filter(ignore_content_width)
@@ -1617,7 +1621,7 @@ class Window(Container):
         return self._merge_dimensions(
             dimension=to_dimension(self.width),
             get_preferred=preferred_content_width,
-            dont_extend=self.dont_extend_width(),
+            dont_extend=self.extend_width(),
         )
 
     def preferred_height(self, width: int, max_available_height: int) -> Dimension:
@@ -1644,7 +1648,7 @@ class Window(Container):
         return self._merge_dimensions(
             dimension=to_dimension(self.height),
             get_preferred=preferred_content_height,
-            dont_extend=self.dont_extend_height(),
+            dont_extend=self.extend_height(),
         )
 
     @staticmethod

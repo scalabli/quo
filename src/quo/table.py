@@ -311,10 +311,10 @@ _table_formats = {
         with_header_hide=None,
     ),
     "fancy_grid": TableFormat(
-        lineabove=Line("╒", "═", "╤", "╕"),
+        lineabove=Line("\u256D", "═", "╤", "\u256E"),
         linebelowheader=Line("╞", "═", "╪", "╡"),
         linebetweenrows=Line("├", "─", "┼", "┤"),
-        linebelow=Line("╘", "═", "╧", "╛"),
+        linebelow=Line("\u2570", "═", "╧", "\u256F"),
         headerrow=DataRow("│", "│", "│"),
         datarow=DataRow("│", "│", "│"),
         padding=1,

@@ -86,6 +86,7 @@ class UsageError(Outlier):
         self.cmd = self.clime.command if self.clime else None
 
     def show(self, file=None):
+        from .expediency.vitals import inscribe
         if file is None:
             file = get_text_stderr()
         color = None
