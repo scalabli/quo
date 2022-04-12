@@ -47,7 +47,7 @@ pip install -U quo
 
 In order to check your installation you can use
 ```
-python -m pip show quo # to see which version and where quo is installed
+python -m pip show quo
 ```
 Run the following to test Quo output on your terminal:
 ```
