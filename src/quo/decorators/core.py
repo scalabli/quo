@@ -9,7 +9,8 @@ from quo.core import Command
 from quo.core import Tether
 from quo.core import App
 from quo.context.current import currentcontext
-#Marks a callback as wanting to receive current context
+
+# Marks a callback as wanting to receive current context
 def contextualize(f):
     """Marks a callback as wanting to receive the current context
     object as first argument.
@@ -132,8 +133,6 @@ def command(name=None, cls=None, **attrs):
     return decorator
 
 
-
-
 def _param_memo(f, param):
     if isinstance(f, Command):
         f.params.append(param)
@@ -141,9 +140,6 @@ def _param_memo(f, param):
         if not hasattr(f, "__quo_params__"):
             f.__quo_params__ = []
         f.__quo_params__.append(param)
-
-
-
 
 
 def app(*param_decls, **attrs):
@@ -183,6 +179,7 @@ def arg(*param_decls, **attrs):
         return f
 
     return decorator
+
 
 def tether(name=None, **attrs):
     """Creates a new :class:`Tether` with a function as callback.  This works otherwise the same as :func:`command` just that the `cls`

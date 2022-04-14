@@ -5,7 +5,17 @@ import asyncio
 import contextvars  # Requires Python3.7!
 import socket
 from asyncio import get_event_loop
-from typing import Awaitable, Callable, List, NamedTuple, Optional, Set, TextIO, Tuple, cast
+from typing import (
+    Awaitable,
+    Callable,
+    List,
+    NamedTuple,
+    Optional,
+    Set,
+    TextIO,
+    Tuple,
+    cast,
+)
 
 from quo.suite.current import create_app_session, get_app
 from quo.suite.run_in_terminal import run_in_terminal
@@ -38,6 +48,7 @@ __all__ = [
 ]
 
 Size = NamedTuple("Size", [("rows", int), ("columns", int)])
+
 
 def int2byte(number: int) -> bytes:
     return bytes((number,))

@@ -4,9 +4,9 @@
 import codecs
 import os
 
-#Verifies the environment
+# Verifies the environment
 def python_environment():
- 
+
     try:
         import locale
 

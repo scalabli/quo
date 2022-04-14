@@ -2219,4 +2219,3 @@ def load_vi_search_bindings() -> KeyBindingsBase:
     handle("escape")(search.accept_search)
 
     return ConditionalKeyBindings(key_bindings, vi_mode)
-

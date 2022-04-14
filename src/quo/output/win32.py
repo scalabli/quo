@@ -9,7 +9,18 @@ if not SPHINX_AUTODOC_RUNNING:
     from ctypes import windll
 
 from ctypes.wintypes import DWORD, HANDLE
-from typing import Callable, Dict, List, NamedTuple, Optional, TextIO, Tuple, Type, TypeVar, Union
+from typing import (
+    Callable,
+    Dict,
+    List,
+    NamedTuple,
+    Optional,
+    TextIO,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
 from quo.errors import NoConsoleScreenBufferError
 from quo.style import ANSI_COLOR_NAMES, Attrs
@@ -24,7 +35,6 @@ from quo.win32_types import (
 
 from .core import Output
 from .color import ColorDepth
-
 
 
 Size = NamedTuple("Size", [("rows", int), ("columns", int)])

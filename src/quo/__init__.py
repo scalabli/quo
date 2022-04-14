@@ -6,12 +6,14 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import os
 import sys
 
-#from .core import Clime as Clime
-#from .core import Parameter as Parameter
-#from .core import App as App
-#from .core import Tether as Tether
+# from .core import Clime as Clime
+# from .core import Parameter as Parameter
+# from .core import App as App
+# from .core import Tether as Tether
 from .pause import pause as pause
-from .prompt import prompt as prompt  # dont confuse this with :class: quo.prompt.Prompt()
+from .prompt import (
+    prompt as prompt,
+)  # dont confuse this with :class: quo.prompt.Prompt()
 
 
 #             Arg,
@@ -21,17 +23,16 @@ from .prompt import prompt as prompt  # dont confuse this with :class: quo.promp
 #             MultiCommand,
 
 
-
-#from quo.accordance import (
+# from quo.accordance import (
 #        DEFAULT_COLUMNS,
 #        get_winterm_size,
 #        strip_ansi_colors
 #        )
 
-#from quo.context.current import resolve_color_default
-#from quo.expediency import inscribe # LazyFile
+# from quo.context.current import resolve_color_default
+# from quo.expediency import inscribe # LazyFile
 
-#from quo.decorators import (
+# from quo.decorators import (
 #             contextualize,
 #             objectualize,
 #             make_pass_decorator
@@ -41,21 +42,22 @@ from .prompt import prompt as prompt  # dont confuse this with :class: quo.promp
 #             autoconfirm
 
 
-#from .setout import HelpFormatter, wraptext
-#from quo.context.current import currentcontext as pass_clime
-#from .parser import AppParser
+# from .setout import HelpFormatter, wraptext
+# from quo.context.current import currentcontext as pass_clime
+# from .parser import AppParser
 
 from quo.expediency.vitals import (
-        appdir,
-        formatfilename,
-        os_args,
-        textstream,
-        binarystream
-        )
-        
+    appdir,
+    formatfilename,
+    os_args,
+    textstream,
+    binarystream,
+)
 
-def clear() ->None:
+
+def clear() -> None:
     from .accordance import isatty, WIN
+
     """Clears the terminal screen and moves the cursor to the top left.
     """
     if not isatty(sys.stdout):
@@ -66,6 +68,7 @@ def clear() ->None:
     else:
         sys.stdout.write("\033[2J\033[1;1H")
 
+
 def exit(code: int):
 
     """Low-level exit that skips Python's cleanup but speeds up exit by about 10ms for things like shell completion.
@@ -75,7 +78,8 @@ def exit(code: int):
     sys.stderr.flush()
     os._exit(code)
 
-def getchar(inscribe: bool=False):
+
+def getchar(inscribe: bool = False):
     """Fetches a single character from the terminal and returns it.  This
     will always return a unicode character and under certain rare
     circumstances this might return more than one character.  The
@@ -90,15 +94,19 @@ def getchar(inscribe: bool=False):
     :param inscribe: if set to `True`, the character read will also show up on the terminal.  The default is to not show it.
     """
     from quo.expediency.vitals import inscribe
+
     _interpose = None
     f = _interpose
     if f is None:
         from quo.implementation import interpose as f
     return f(inscribe)
 
+
 def print(*values, style=None, sep=" ", end="\n"):
     from quo.shortcuts.utils import print
-    return print(*values,  style=None, sep=" ", end="\n ")
+
+    return print(*values, style=None, sep=" ", end="\n ")
+
 
 from quo.i_o.termui import confirm, echo
 

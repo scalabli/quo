@@ -5,6 +5,7 @@ from quo.text.core import FormattedText, StyleAndTextTuples
 
 __all__ = ["Text"]
 
+
 class Text:
     """
     Rich formatted text.

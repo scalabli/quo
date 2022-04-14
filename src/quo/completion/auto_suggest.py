@@ -23,14 +23,14 @@ if TYPE_CHECKING:
     from quo.buffer import Buffer
 
 __all__ = [
-        "Suggestion",
-        "AutoSuggest",
-        "ThreadedAutoSuggest",
-        "DummyAutoSuggest",
-        "AutoSuggestFromHistory",
-        "ConditionalAutoSuggest",
-        "DynamicAutoSuggest",
-        ]
+    "Suggestion",
+    "AutoSuggest",
+    "ThreadedAutoSuggest",
+    "DummyAutoSuggest",
+    "AutoSuggestFromHistory",
+    "ConditionalAutoSuggest",
+    "DynamicAutoSuggest",
+]
 
 
 class Suggestion:

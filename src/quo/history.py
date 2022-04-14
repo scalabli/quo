@@ -7,7 +7,7 @@ NOTE: There is no `DynamicHistory`:
       loading can be done asynchronously and making the history swappable would
       probably break this.
 """
-#import asyncio
+# import asyncio
 import datetime
 import os
 import threading
@@ -15,12 +15,12 @@ from abc import ABCMeta, abstractmethod
 from typing import AsyncGenerator, Iterable, List, Optional, Sequence, Tuple
 
 __all__ = [
-        "History",
-        "ThreadedHistory",
-        "DummyHistory",
-        "FileHistory",
-        "InMemoryHistory",
-        ]
+    "History",
+    "ThreadedHistory",
+    "DummyHistory",
+    "FileHistory",
+    "InMemoryHistory",
+]
 
 
 class History(metaclass=ABCMeta):

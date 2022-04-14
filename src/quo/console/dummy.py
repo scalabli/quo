@@ -6,9 +6,9 @@ from quo.output import DummyOutput
 
 from .console import Console
 
-#__all__ = [
+# __all__ = [
 #    "DummyApplication",
-#]
+# ]
 
 
 class DummyApplication(Console[None]):

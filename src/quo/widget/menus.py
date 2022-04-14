@@ -5,7 +5,15 @@ from quo.text.core import OneStyleAndTextTuple, StyleAndTextTuples
 from quo.keys.key_binding.key_bindings import KeyBindingsBase
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys import Keys, KeyBinder
-from quo.layout.containers import AnyContainer, ConditionalContainer, Container, Float, FloatContainer, HSplit, Window
+from quo.layout.containers import (
+    AnyContainer,
+    ConditionalContainer,
+    Container,
+    Float,
+    FloatContainer,
+    HSplit,
+    Window,
+)
 from quo.layout.controls import FormattedTextControl
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils.utils import get_width as get_cwidth
@@ -13,9 +21,9 @@ from quo.widget import Shadow
 from .core import Border
 
 __all__ = [
-        "MenuContainer",
-        "MenuItem",
-        ]
+    "MenuContainer",
+    "MenuItem",
+]
 
 E = KeyPressEvent
 

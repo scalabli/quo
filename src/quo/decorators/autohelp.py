@@ -1,4 +1,6 @@
 from quo.decorators import core
+
+
 def autohelp(*param_decls, **kwargs):
     """Add a ``--help`` option which immediately prints the help page
     and exits the program.
@@ -22,6 +24,8 @@ def autohelp(*param_decls, **kwargs):
     kwargs.setdefault("is_flag", True)
     kwargs.setdefault("expose_value", False)
     kwargs.setdefault("is_eager", True)
-    kwargs.setdefault("help", "Help page.Check the documentation for further mitigation steps")
+    kwargs.setdefault(
+        "help", "Help page.Check the documentation for further mitigation steps"
+    )
     kwargs["callback"] = callback
     return app(*param_decls, **kwargs)

@@ -3,28 +3,49 @@ from typing import Any, Optional
 from quo.console.current import get_app
 from quo.buffer import Buffer
 from quo.enums import SYSTEM_BUFFER
-from quo.filters import Condition, FilterOrBool, emacs_mode, has_arg, has_completions, has_focus, has_validation_error, to_filter, vi_mode, vi_navigation_mode
+from quo.filters import (
+    Condition,
+    FilterOrBool,
+    emacs_mode,
+    has_arg,
+    has_completions,
+    has_focus,
+    has_validation_error,
+    to_filter,
+    vi_mode,
+    vi_navigation_mode,
+)
 from quo.text.core import AnyFormattedText, StyleAndTextTuples, to_formatted_text
 from quo.text.utils import fragment_list_len
-from quo.keys.key_binding.key_bindings import ConditionalKeyBindings, KeyBindingsBase, merge_key_bindings
+from quo.keys.key_binding.key_bindings import (
+    ConditionalKeyBindings,
+    KeyBindingsBase,
+    merge_key_bindings,
+)
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.keys.key_binding.vi_state import InputMode
 from quo.keys import Keys, KeyBinder
 from quo.layout.containers import ConditionalContainer, Container, Window
-from quo.layout.controls import BufferControl, FormattedTextControl, SearchBufferControl, UIContent, UIControl
+from quo.layout.controls import (
+    BufferControl,
+    FormattedTextControl,
+    SearchBufferControl,
+    UIContent,
+    UIControl,
+)
 from quo.layout.dimension import Dimension
 from quo.layout.processors import BeforeInput
 from quo.highlight import SimpleLexer
 from quo.search import SearchDirection
 
 __all__ = [
-        "ArgToolbar",
-        "CompletionsToolbar",
-        "FormattedTextToolbar",
-        "SearchToolbar",
-        "SystemToolbar",
-        "ValidationToolbar",
-        ]
+    "ArgToolbar",
+    "CompletionsToolbar",
+    "FormattedTextToolbar",
+    "SearchToolbar",
+    "SystemToolbar",
+    "ValidationToolbar",
+]
 
 E = KeyPressEvent
 

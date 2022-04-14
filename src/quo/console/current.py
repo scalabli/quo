@@ -13,13 +13,13 @@ if TYPE_CHECKING:
     from .console import Console
 
 __all__ = [
-        "AppSession",
-        "get_app_session",
-        "get_app",
-        "get_app_or_none",
-        "set_app",
-        "create_app_session",
-        ]
+    "AppSession",
+    "get_app_session",
+    "get_app",
+    "get_app_or_none",
+    "set_app",
+    "create_app_session",
+]
 
 
 class AppSession:
@@ -147,6 +147,7 @@ def create_app_session(
     contextvars and requires at least Python 3.7.
     """
     import sys
+
     if sys.version_info <= (3, 6):
         raise RuntimeError("This session requires Python 3.7 or later.")
 

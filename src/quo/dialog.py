@@ -16,12 +16,12 @@ from quo.types import Validator
 from quo.widget import (
     Box,
     Button,
-  #  CheckboxList,
+    #  CheckboxList,
     Dialog,
     Label,
-#    ProgressBar,
- #   RadioList
-    )
+    #    ProgressBar,
+    #   RadioList
+)
 
 __all__ = [
     "ConfirmBox",
@@ -52,23 +52,27 @@ def _ConfirmationBox(
 
     def no_handler() -> None:
         get_app().exit(result=False)
+
     if bg is False:
         dialog = Dialog(
-                title=title,
-                body=Label(text=text, dont_extend_height=True),
-                buttons=[
-                    Button(text=yes_text, handler=yes_handler),
-                    Button(text=no_text, handler=no_handler)],
-                with_background=False)
+            title=title,
+            body=Label(text=text, dont_extend_height=True),
+            buttons=[
+                Button(text=yes_text, handler=yes_handler),
+                Button(text=no_text, handler=no_handler),
+            ],
+            with_background=False,
+        )
     else:
         dialog = Dialog(
-                title=title,
-                body=Label(text=text, dont_extend_height=True),
-                buttons=[
-                    Button(text=yes_text, handler=yes_handler),
-                    Button(text=no_text, handler=no_handler)],
-                with_background=True
-                )
+            title=title,
+            body=Label(text=text, dont_extend_height=True),
+            buttons=[
+                Button(text=yes_text, handler=yes_handler),
+                Button(text=no_text, handler=no_handler),
+            ],
+            with_background=True,
+        )
 
     return _create_app(dialog, style)
 
@@ -81,7 +85,7 @@ def _ChoiceBox(
     text: AnyFormattedText = "",
     buttons: List[Tuple[str, _T]] = [],
     style: Optional[BaseStyle] = None,
-    bg: bool = True
+    bg: bool = True,
 ) -> Console[_T]:
     """
     Display a dialog with button choices (given as a list of tuples).
@@ -90,27 +94,33 @@ def _ChoiceBox(
 
     def button_handler(v: _T) -> None:
         get_app().exit(result=v)
+
     if bg is False:
         dialog = Dialog(
-                title=title,
-                body=Label(text=text, dont_extend_height=True),
-                buttons=[
-                    Button(text=t, handler=functools.partial(button_handler, v))
-                    for t, v in buttons],
-                with_background=False
-                )
+            title=title,
+            body=Label(text=text, dont_extend_height=True),
+            buttons=[
+                Button(text=t, handler=functools.partial(button_handler, v))
+                for t, v in buttons
+            ],
+            with_background=False,
+        )
     else:
         dialog = Dialog(
-                title=title,
-                body=Label(text=text, dont_extend_height=True),
-                buttons=[
-                    Button(text=t, handler=functools.partial(button_handler, v))
-                    for t, v in buttons],
-                with_background=True)
+            title=title,
+            body=Label(text=text, dont_extend_height=True),
+            buttons=[
+                Button(text=t, handler=functools.partial(button_handler, v))
+                for t, v in buttons
+            ],
+            with_background=True,
+        )
 
     return _create_app(dialog, style)
 
+
 from quo.widget.design import ok
+
 
 def _PromptBox(
     title: AnyFormattedText = "",
@@ -121,7 +131,7 @@ def _PromptBox(
     type: Optional[Validator] = None,
     hide: FilterOrBool = False,
     multiline: bool = False,
-    bg = True,
+    bg=True,
     style: Optional[BaseStyle] = None,
 ) -> Console[str]:
     """
@@ -165,16 +175,18 @@ def _PromptBox(
     )
     if bg is False:
         dialog = Dialog(
-                title=title,
-                body=HSplit(
-                    [
-                        Label(text=text, dont_extend_height=True),
-                        textfield,
-                        ValidationToolbar()
-                        ],
-                    padding=D(preferred=1, max=1)),
-                buttons=[ok_button, cancel_button],
-                with_background=False)
+            title=title,
+            body=HSplit(
+                [
+                    Label(text=text, dont_extend_height=True),
+                    textfield,
+                    ValidationToolbar(),
+                ],
+                padding=D(preferred=1, max=1),
+            ),
+            buttons=[ok_button, cancel_button],
+            with_background=False,
+        )
 
     return _create_app(dialog, style)
 
@@ -184,27 +196,24 @@ def _MessageBox(
     text: AnyFormattedText = "",
     ok_text: str = "Ok",
     style: Optional[BaseStyle] = None,
-    bg: bool = True
+    bg: bool = True,
 ) -> Console[None]:
     """
     Display a simple message box and wait until the user presses enter.
     """
     dialog = Dialog(
-            title=title,
-            body=Label(
-                text=text, 
-                dont_extend_height=True
-                ),
+        title=title,
+        body=Label(text=text, dont_extend_height=True),
         buttons=[Button(text=ok_text, handler=_return_none)],
         with_background=True,
     )
     if bg is False:
         dialog = Dialog(
-                title=title,
-                body=Label(text=text,dont_extend_height=True ),
-                buttons=[Button(text=ok_text, handler=_return_none)],
-                with_background=False
-                )
+            title=title,
+            body=Label(text=text, dont_extend_height=True),
+            buttons=[Button(text=ok_text, handler=_return_none)],
+            with_background=False,
+        )
 
     return _create_app(dialog, style)
 
@@ -216,7 +225,7 @@ def _RadiolistBox(
     cancel_text: str = "Cancel",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     bg: bool = True,
-    style: Optional[BaseStyle] = None
+    style: Optional[BaseStyle] = None,
 ) -> Console[_T]:
     """
     Display a simple list of element the user can choose amongst.
@@ -225,6 +234,7 @@ def _RadiolistBox(
     The focus can be moved between the list and the Ok/Cancel button with tab.
     """
     from .widget.core import RadioList
+
     if values is None:
         values = []
 
@@ -256,7 +266,7 @@ def _CheckBox(
     cancel_text: str = "Cancel",
     values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
     bg: bool = True,
-    style: Optional[BaseStyle] = None
+    style: Optional[BaseStyle] = None,
 ) -> Console[List[_T]]:
     """
     Display a simple list of element the user can choose multiple values amongst.
@@ -265,6 +275,7 @@ def _CheckBox(
     The focus can be moved between the list and the Ok/Cancel button with tab.
     """
     from .widget.core import CheckboxList
+
     if values is None:
         values = []
 
@@ -275,26 +286,29 @@ def _CheckBox(
 
     if bg is False:
         dialog = Dialog(
-                title=title, 
-                body=HSplit([
-                    Label(text=text, dont_extend_height=True),
-                    cb_list],
-                    padding=1),
-                buttons=[
-                    Button(text=ok_text, handler=ok_handler),
-                    Button(text=cancel_text, handler=_return_none)],
-                with_background=False)
-        
+            title=title,
+            body=HSplit(
+                [Label(text=text, dont_extend_height=True), cb_list], padding=1
+            ),
+            buttons=[
+                Button(text=ok_text, handler=ok_handler),
+                Button(text=cancel_text, handler=_return_none),
+            ],
+            with_background=False,
+        )
+
     else:
         dialog = Dialog(
-                title=title,
-                body=HSplit([
-                    Label(text=text, dont_extend_height=True), cb_list],
-                    padding=1),
-                buttons=[
-                    Button(text=ok_text, handler=ok_handler),
-                    Button(text=cancel_text, handler=_return_none)],
-                with_background=True)
+            title=title,
+            body=HSplit(
+                [Label(text=text, dont_extend_height=True), cb_list], padding=1
+            ),
+            buttons=[
+                Button(text=ok_text, handler=ok_handler),
+                Button(text=cancel_text, handler=_return_none),
+            ],
+            with_background=True,
+        )
 
     return _create_app(dialog, style)
 
@@ -303,38 +317,42 @@ def _ProgressBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",
     bg: bool = True,
-    run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (lambda *a: None),
+    run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (
+        lambda *a: None
+    ),
     style: Optional[BaseStyle] = None,
 ) -> Console[None]:
     """
     :param run_callback: A function that receives as input a `set_percentage` function and it does the work.
     """
     from .widget.core import ProgressBar, TextArea
+
     loop = get_event_loop()
     progressbar = ProgressBar()
     text_area = TextArea(
         focusable=False,
         # Prefer this text area as big as possible, to avoid having a window
         # that keeps resizing when we add text to it.
-        height=D(preferred=10 ** 10),
+        height=D(preferred=10**10),
     )
 
     if bg is False:
-        dialog = Dialog(body=HSplit([
-            Box(Label(text=text)),
-            Box(text_area, padding=D.exact(1)),
-            progressbar]),
+        dialog = Dialog(
+            body=HSplit(
+                [Box(Label(text=text)), Box(text_area, padding=D.exact(1)), progressbar]
+            ),
             title=title,
-            with_background=False)
+            with_background=False,
+        )
 
     else:
         dialog = Dialog(
-                body=HSplit([
-                    Box(Label(text=text)),
-                    Box(text_area, padding=D.exact(1)),
-                    progressbar]),
-                title=title,
-                with_background=True)
+            body=HSplit(
+                [Box(Label(text=text)), Box(text_area, padding=D.exact(1)), progressbar]
+            ),
+            title=title,
+            with_background=True,
+        )
 
     app = _create_app(dialog, style)
 
@@ -362,15 +380,13 @@ def _ProgressBox(
     return app
 
 
-def _create_app(
-        dialog: AnyContainer, 
-        style: Optional[BaseStyle]
-        ) -> Console[Any]:
+def _create_app(dialog: AnyContainer, style: Optional[BaseStyle]) -> Console[Any]:
     # Key bindings.
     from .keys.key_binding.key_bindings import Bind
     from quo.keys.key_binding.bindings.focus import next, previous
     from quo.keys.key_binding.defaults import load_key_bindings
     from quo.keys.key_binding.key_bindings import merge_key_bindings
+
     bindings = Bind()
     bindings.add("tab")(next)
     bindings.add("s-tab")(previous)
@@ -388,127 +404,114 @@ def _return_none() -> None:
     "Button handler that returns None."
     get_app().exit()
 
+
 # High level dialog API
 
+
 def CheckBox(
-        title: AnyFormattedText = "",
-        text: AnyFormattedText = "",
-        ok_text: str = "Ok",
-        cancel_text: str = "Cancel",
-        values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
-        bg: bool = True,
-        style: Optional[BaseStyle] = None
-        ):
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
+    ok_text: str = "Ok",
+    cancel_text: str = "Cancel",
+    values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+    bg: bool = True,
+    style: Optional[BaseStyle] = None,
+):
     _CheckBox(
-            title=title,
-            text=text,
-            ok_text=ok_text,
-            cancel_text=cancel_text,
-            values=values,
-            style=style).run()
+        title=title,
+        text=text,
+        ok_text=ok_text,
+        cancel_text=cancel_text,
+        values=values,
+        style=style,
+    ).run()
+
 
 def ChoiceBox(
-        title: str = "",
-        text: str = "",
-        buttons = [],
-        bg: bool = True,
-        style: Optional = None
-        ):
-    _ChoiceBox(
-            title = title,
-            text = text,
-            buttons = buttons,
-            bg = bg,
-            style = style
-            ).run()
+    title: str = "", text: str = "", buttons=[], bg: bool = True, style: Optional = None
+):
+    _ChoiceBox(title=title, text=text, buttons=buttons, bg=bg, style=style).run()
 
-    
+
 def ConfirmBox(
-        title  = "",
-        text = "",
-        yes_text: str = "Yes",
-        no_text: str = "No",
-        bg: bool = True,
-        style: Optional  = None
-        ):
-    return  _ConfirmationBox(
-            title=title,
-            text = text,
-            yes_text=yes_text,
-            no_text=no_text,
-            bg=bg,
-            style=style
-            ).run()
+    title="",
+    text="",
+    yes_text: str = "Yes",
+    no_text: str = "No",
+    bg: bool = True,
+    style: Optional = None,
+):
+    return _ConfirmationBox(
+        title=title, text=text, yes_text=yes_text, no_text=no_text, bg=bg, style=style
+    ).run()
+
 
 def InputBox(
-        title: AnyFormattedText = "",
-        text: AnyFormattedText = "",
-        ok_text: str = "Ok",
-        cancel_text: str = "Cancel",
-        completer: Optional[Completer] = None,
-        type: Optional[Validator] = None,
-        hide: FilterOrBool = False,
-        multiline: bool = False,
-        bg = True,
-        style: Optional[BaseStyle] = None):
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
+    ok_text: str = "Ok",
+    cancel_text: str = "Cancel",
+    completer: Optional[Completer] = None,
+    type: Optional[Validator] = None,
+    hide: FilterOrBool = False,
+    multiline: bool = False,
+    bg=True,
+    style: Optional[BaseStyle] = None,
+):
 
-   return  _PromptBox(
-            title = title,
-            text = text,
-            ok_text = ok_text,
-            cancel_text = cancel_text,
-            completer = completer,
-            type = type,
-            hide = hide,
-            multiline=multiline,
-            bg = bg,
-            style = style
-            ).run()
+    return _PromptBox(
+        title=title,
+        text=text,
+        ok_text=ok_text,
+        cancel_text=cancel_text,
+        completer=completer,
+        type=type,
+        hide=hide,
+        multiline=multiline,
+        bg=bg,
+        style=style,
+    ).run()
 
-def MessageBox(
-        title = "",
-        text ="",
-        ok_text: str = "Ok",
-        style = None,
-        bg: bool=True
-        ):
+
+def MessageBox(title="", text="", ok_text: str = "Ok", style=None, bg: bool = True):
 
     return _MessageBox(
-            title = title,
-            text = text,
-            ok_text = ok_text,
-            bg=bg,
-            style = style
-            ).run()
+        title=title, text=text, ok_text=ok_text, bg=bg, style=style
+    ).run()
+
 
 def ProgressBox(
-        title: AnyFormattedText = "",
-        text: AnyFormattedText = "",
-        bg: bool = True,
-        run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (lambda *a: None),
-        style: Optional[BaseStyle] = None):
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
+    bg: bool = True,
+    run_callback: Callable[[Callable[[int], None], Callable[[str], None]], None] = (
+        lambda *a: None
+    ),
+    style: Optional[BaseStyle] = None,
+):
 
-    return  _ProgressBox(
-            title=title,
-            text=text,
-            bg=bg,
-            run_callback=run_callback,
-            style=style).run()                               
+    return _ProgressBox(
+        title=title, text=text, bg=bg, run_callback=run_callback, style=style
+    ).run()
+
 
 def RadiolistBox(
-        title: AnyFormattedText = "",
-        text: AnyFormattedText = "",
-        ok_text: str = "Ok",
-        cancel_text: str = "Cancel",
-        values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
-        style: Optional[BaseStyle] = None):
+    title: AnyFormattedText = "",
+    text: AnyFormattedText = "",
+    ok_text: str = "Ok",
+    cancel_text: str = "Cancel",
+    values: Optional[List[Tuple[_T, AnyFormattedText]]] = None,
+    style: Optional[BaseStyle] = None,
+):
     _RadiolistBox(
-            title=title,
-            text=text,
-            ok_text=ok_text,
-            cancel_text=cancel_text,
-            values=values,
-            style=style).run()
+        title=title,
+        text=text,
+        ok_text=ok_text,
+        cancel_text=cancel_text,
+        values=values,
+        style=style,
+    ).run()
+
 
 # For backward compatibility
 PromptBox = InputBox

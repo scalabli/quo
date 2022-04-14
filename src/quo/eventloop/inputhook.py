@@ -162,11 +162,7 @@ class InputHookContext:
     Given as a parameter to the inputhook.
     """
 
-    def __init__(
-            self, 
-            fileno: int, 
-            input_is_ready: Callable[[], bool]
-            )-> None:
+    def __init__(self, fileno: int, input_is_ready: Callable[[], bool]) -> None:
         self._fileno = fileno
         self.input_is_ready = input_is_ready
 

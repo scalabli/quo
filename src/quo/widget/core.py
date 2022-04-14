@@ -29,8 +29,9 @@ from quo.text.core import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-#from quo.keys.list import Keys
-#om quo.keys.key_binding.key_bindings import Bind as KeyBinder
+
+# from quo.keys.list import Keys
+# om quo.keys.key_binding.key_bindings import Bind as KeyBinder
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
@@ -40,14 +41,24 @@ from quo.layout.containers import (
     FloatContainer,
     HSplit,
     VSplit,
-    Window
+    Window,
 )
-from quo.layout.controls import BufferControl, FormattedTextControl, GetLinePrefixCallable
+from quo.layout.controls import (
+    BufferControl,
+    FormattedTextControl,
+    GetLinePrefixCallable,
+)
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 from quo.layout.dimension import to_dimension
 from quo.layout.margin import ConditionalMargin, NumberedMargin, ScrollbarMargin
-from quo.layout.processors import AppendAutoSuggestion, BeforeInput, ConditionalProcessor, PasswordProcessor, Processor
+from quo.layout.processors import (
+    AppendAutoSuggestion,
+    BeforeInput,
+    ConditionalProcessor,
+    PasswordProcessor,
+    Processor,
+)
 from quo.highlight import DynamicLexer, Lexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils.utils import get_width as get_cwidth
@@ -56,30 +67,30 @@ from quo.types import DynamicValidator, Validator
 from .toolbars import SearchToolbar
 
 __all__ = [
-        "TextArea",
-        "Label",
-        "Button",
-        "Frame",
-        "Shadow",
-        "Box",
-        "VerticalLine",
-        "HorizontalLine",
-        "RadioList",
-        "CheckboxList",
-        "Checkbox",  # backward compatibility
-        "ProgressBar",
-        ]
+    "TextArea",
+    "Label",
+    "Button",
+    "Frame",
+    "Shadow",
+    "Box",
+    "VerticalLine",
+    "HorizontalLine",
+    "RadioList",
+    "CheckboxList",
+    "Checkbox",  # backward compatibility
+    "ProgressBar",
+]
 
-#E = KeyPressEvent
+# E = KeyPressEvent
 
 
-class Border():
+class Border:
     "Box drawing characters."
 
     HORIZONTAL = "\u2501"
     # "\u2501" #2593
     VERTICAL = "\u2593"
-    #"\u2503"
+    # "\u2503"
     TOP_LEFT = "\u256D"
     TOP_RIGHT = "\u256E"
     BOTTOM_LEFT = "\u2570"
@@ -165,7 +176,7 @@ class TextArea:
         read_only: FilterOrBool = False,
         width: AnyDimension = None,
         height: AnyDimension = None,
-        extend_height: FilterOrBool = False, #True,
+        extend_height: FilterOrBool = False,  # True,
         extend_width: FilterOrBool = True,
         dont_extend_height: FilterOrBool = False,
         dont_extend_width: FilterOrBool = False,
@@ -370,7 +381,9 @@ class Button:
         `functools.partial` to pass parameters to this callable if needed.
     :param width: Width of the button.
     """
+
     from quo.keys.key_binding.key_bindings import Bind
+
     def __init__(
         self,
         text: str,
@@ -436,6 +449,7 @@ class Button:
     def _get_key_bindings(self) -> Bind:
         "Key bindings for the Button."
         from quo.event import Event
+
         kb = Bind()
 
         @kb.add(" ")
@@ -461,6 +475,7 @@ class Frame:
     :param title: Text to be displayed in the top of the frame (can be formatted text).
     :param style: Style string to be applied to this widget.
     """
+
     from quo.keys.key_binding.key_bindings import Bind
 
     def __init__(
@@ -566,18 +581,18 @@ class Shadow:
                     left=1,
                     right=-1,
                     transparent=True,
-                    content=Window(style="class:shadow")
-                    ),
+                    content=Window(style="class:shadow"),
+                ),
                 Float(
                     bottom=-1,
                     top=1,
                     width=1,
                     right=-1,
                     transparent=True,
-                    content=Window(style="class:shadow")
-                    )
-                ]
-            )
+                    content=Window(style="class:shadow"),
+                ),
+            ],
+        )
 
     def __pt_container__(self) -> Container:
         return self.container
@@ -601,6 +616,7 @@ class Box:
     :param char: Character to be used for filling the space around the body.
         (This is supposed to be a character with a terminal width of 1.)
     """
+
     from quo.keys.key_binding.key_bindings import Bind
 
     def __init__(
@@ -677,6 +693,7 @@ class _DialogList(Generic[_T]):
         from quo.event import Event
         from quo.keys.key_binding.key_bindings import Bind
         from quo.keys.list import Keys
+
         assert len(values) > 0
 
         self.values = values
@@ -940,4 +957,4 @@ class ProgressBar:
 
 
 #:TODO:
- #Change dont_extend_width and dont_extend_height
+# Change dont_extend_width and dont_extend_height

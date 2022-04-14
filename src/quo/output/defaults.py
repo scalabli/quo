@@ -17,9 +17,8 @@ __all__ = [
 
 
 def create_output(
-        stdout: typing.Optional[typing.TextIO] = None, 
-        always_prefer_tty: bool = True
-        ) -> Output:
+    stdout: typing.Optional[typing.TextIO] = None, always_prefer_tty: bool = True
+) -> Output:
     """
     Return an :class:`~quo.output.Output` instance for the command
     line.
@@ -68,17 +67,10 @@ def create_output(
             )
         if is_conemu_ansi():
             return typing.cast(
-                    Output, 
-                    ConEmu(
-                        stdout, 
-                        default_color_depth=color_depth_from_env
-                        )
-                    )
+                Output, ConEmu(stdout, default_color_depth=color_depth_from_env)
+            )
         else:
-            return Win32Output(
-                    stdout,
-                    default_color_depth=color_depth_from_env
-                    )
+            return Win32Output(stdout, default_color_depth=color_depth_from_env)
     else:
         from .videoterminal import Vt100
 

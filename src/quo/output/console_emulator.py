@@ -12,6 +12,7 @@ __all__ = [
 
 Size = typing.NamedTuple("Size", [("rows", int), ("columns", int)])
 
+
 class ConEmu:
     """
     ConEmu (short for Console emulator) is a free and open-source tabbed terminal emulator for Windows. ConEmu presents multiple consoles and simple GUI applications as one customizable GUI window with tabs and a status bar. It also provides emulation for ANSI escape codes for color, bypassing the capabilities of the standard Windows Console Host to provide 256 and 24-bit color. This output class serves as a proxy to both `Win32Output` and `Vt100`. It uses `Win32Output` for console sizing and scrolling, but all cursor movements and scrolling happens through the `Vt100`.
@@ -19,19 +20,14 @@ class ConEmu:
     """
 
     def __init__(
-            self, 
-            stdout: typing.TextIO, 
-            default_color_depth: typing.Optional[ColorDepth] = None
-            ) -> None:
-        self.win32_output = Win32Output(
-                stdout, 
-                default_color_depth=default_color_depth
-                )
+        self,
+        stdout: typing.TextIO,
+        default_color_depth: typing.Optional[ColorDepth] = None,
+    ) -> None:
+        self.win32_output = Win32Output(stdout, default_color_depth=default_color_depth)
         self.vt100_output = Vt100(
-                stdout, 
-                lambda: Size(0, 0), 
-                default_color_depth=default_color_depth
-                )
+            stdout, lambda: Size(0, 0), default_color_depth=default_color_depth
+        )
 
     @property
     def responds_to_cpr(self) -> bool:

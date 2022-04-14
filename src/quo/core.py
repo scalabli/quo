@@ -16,22 +16,18 @@ from .parser import _flag_needs_value
 from .parser import AppParser
 from .parser import split_opt
 from quo.expediency.vitals import inscribe as echo
-from quo.i_o.termui import confirm # flair
-#from quo.prompt import prompt
-#from quo.text import AnyFormattedText
-from .types import (
-        _NumberRangeBase,
-        BOOL,
-        convert_type,
-        IntRange
-        )
+from quo.i_o.termui import confirm  # flair
+
+# from quo.prompt import prompt
+# from quo.text import AnyFormattedText
+from .types import _NumberRangeBase, BOOL, convert_type, IntRange
 
 from quo.expediency import (
-        _detect_program_name,
-        make_default_short_help,
-        make_str,
-        PacifyFlushWrapper
-        )
+    _detect_program_name,
+    make_default_short_help,
+    make_str,
+    PacifyFlushWrapper,
+)
 
 _missing = object()
 
@@ -39,6 +35,7 @@ SUBCOMMAND_METAVAR = "COMMAND [ARGS]..."
 SUBCOMMANDS_METAVAR = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
 
 from quo.text import Text
+
 DEPRECATED_HELP_NOTICE = " (DEPRECATED)"
 DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
 
@@ -232,7 +229,7 @@ class Clime:
         default_map=None,
         terminal_width=None,
         max_content_width=None,
-        parse: bool =False,
+        parse: bool = False,
         allow_extra_args=None,
         allow_interspersed_args=None,
         ignore_unknown_apps=None,
@@ -388,7 +385,7 @@ class Clime:
             with Clime(cli) as clime:
                 info = clime.to_info_dict()
 
-  
+
         """
         return {
             "command": self.command.to_info_dict(self),
@@ -411,9 +408,7 @@ class Clime:
         pop_context()
 
     @contextmanager
-    def scope(
-            self, 
-            cleanup: bool =True):
+    def scope(self, cleanup: bool = True):
         """This helper method can be used with the context object to promote it to the current thread local (see :func:`currentcontext`).
         The default behavior of this is to invoke the cleanup functions which can be disabled by setting `cleanup` to `False`.  The cleanup  functions are typically used for things such as closing file handles.
 
@@ -444,19 +439,19 @@ class Clime:
     @property
     def meta(self):
         """This is a dictionary which is shared with all the contexts that are nested.  It exists so that Quo utilities can store some state here if they need to.  It is however the responsibility of that code to manage this dictionary well.
-   
-   The keys are supposed to be unique dotted strings.  For instance module paths are a good choice for it.  What is stored in there is  irrelevant for the operation of Quo.  However what is important is that code that places data here adheres to the general semantics ofthe system.
 
-        Example usage::
+        The keys are supposed to be unique dotted strings.  For instance module paths are a good choice for it.  What is stored in there is  irrelevant for the operation of Quo.  However what is important is that code that places data here adheres to the general semantics ofthe system.
 
-            LANG_KEY = f'{__name__}.lang'
+             Example usage::
 
-            def set_language(value):
-                clime = currentcontext()
-                clime.meta[LANG_KEY] = value
+                 LANG_KEY = f'{__name__}.lang'
 
-            def get_language():
-                return currentcontext().meta.get(LANG_KEY, 'en_US')
+                 def set_language(value):
+                     clime = currentcontext()
+                     clime.meta[LANG_KEY] = value
+
+                 def get_language():
+                     return currentcontext().meta.get(LANG_KEY, 'en_US')
 
         """
         return self._meta
@@ -576,10 +571,7 @@ class Clime:
 
             return value
 
-    def fail(
-            self, 
-            message: str
-            ):
+    def fail(self, message: str):
         """Aborts the execution of the program with a specific error
         message.
 
@@ -591,21 +583,16 @@ class Clime:
         """Aborts the script."""
         raise errors.Abort()
 
-    def exit(
-            self, 
-            code: int =0
-            ):
+    def exit(self, code: int = 0):
         """Exits the application with a given exit code."""
         raise errors.Exit(code)
 
     def get_usage(self):
-        """Helper method to get formatted usage string for the current context and command.
-        """
+        """Helper method to get formatted usage string for the current context and command."""
         return self.command.get_usage(self)
 
     def get_help(self):
-        """Helper method to get formatted help page for the current context and command.
-        """
+        """Helper method to get formatted help page for the current context and command."""
         return self.command.get_help(self)
 
     def _make_sub_context(self, command):
@@ -849,7 +836,6 @@ class BaseCommand:
         if prog_name is None:
             prog_name = _detect_program_name()
 
-
         try:
             try:
                 with self.make_context(prog_name, args, **extra) as clime:
@@ -898,7 +884,6 @@ class BaseCommand:
             echo("Aborted!", file=sys.stderr)
             sys.exit(1)
 
-
     def __call__(self, *args, **kwargs):
         """Alias for :meth:`main`."""
         return self.main(*args, **kwargs)
@@ -939,13 +924,13 @@ class Command(BaseCommand):
         callback=None,
         params=None,
         help=None,
-        epilog="Check the documentation.\n\nhttps://quo.rtfd.io", #None,
+        epilog="Check the documentation.\n\nhttps://quo.rtfd.io",  # None,
         short_help=None,
-        apps_metavar= "[HELP PAGE]",
+        apps_metavar="[HELP PAGE]",
         add_autohelp=True,
         no_args_is_help=False,
         hidden=False,
-        deprecated= False,
+        deprecated=False,
     ):
         super().__init__(name, context_settings)
         #: the callback to execute when the command fires.  This might be
@@ -1032,24 +1017,36 @@ class Command(BaseCommand):
 
         def show_help(clime, param, value):
             if value and not clime.parse:
-                from quo.layout import Layout, Window, WindowAlign as WA, FormattedTextControl, HSplit
+                from quo.layout import (
+                    Layout,
+                    Window,
+                    WindowAlign as WA,
+                    FormattedTextControl,
+                    HSplit,
+                )
                 from quo.keys import Bind
                 from quo.console import Console
                 from quo.text import Text
                 from quo.widget import Label
+
                 center = WA.CENTER
 
-                root = HSplit([
-                    Window(
-                        FormattedTextControl('[HELP PAGE]'), style='reverse', align="center", height=1),
-                    Label(
-                        Text(f'<b>{clime.get_help()}</b>')
+                root = HSplit(
+                    [
+                        Window(
+                            FormattedTextControl("[HELP PAGE]"),
+                            style="reverse",
+                            align="center",
+                            height=1,
                         ),
-                    Window(char="_", height=1),
-                    ])
+                        Label(Text(f"<b>{clime.get_help()}</b>")),
+                        Window(char="_", height=1),
+                    ]
+                )
                 layout = Layout(root)
                 bind = Bind()
-                @bind.add('<any>')
+
+                @bind.add("<any>")
                 def _(event):
                     event.app.exit()
 
@@ -1475,23 +1472,24 @@ class MultiCommand(Command):
         """
         return []
 
-  # def shell_complete(self, clime, incomplete):
- #       """Return a list of completions for the incomplete value. Looks
- #       at the names of apps, subcommands, and chained
-   #     multi-commands.
 
-  #      :param clime: Invocation context for this command.
-  #      :param incomplete: Value being completed. May be empty.
+# def shell_complete(self, clime, incomplete):
+#       """Return a list of completions for the incomplete value. Looks
+#       at the names of apps, subcommands, and chained
+#     multi-commands.
 
-    #    """
-  #      from quo.shelldone import CompletionItem
+#      :param clime: Invocation context for this command.
+#      :param incomplete: Value being completed. May be empty.
+
+#    """
+#      from quo.shelldone import CompletionItem
 #
-   #     results = [
-  #          CompletionItem(name, help=command.get_short_help_str())
-   #         for name, command in _complete_visible_commands(clime, incomplete)
-   #     ]
-    #    results.extend(super().shell_complete(clime, incomplete))
-    #    return results
+#     results = [
+#          CompletionItem(name, help=command.get_short_help_str())
+#         for name, command in _complete_visible_commands(clime, incomplete)
+#     ]
+#    results.extend(super().shell_complete(clime, incomplete))
+#    return results
 
 
 class Tether(MultiCommand):
@@ -1711,7 +1709,6 @@ class Parameter:
         self.envvar = envvar
 
         if autocompletion is not None:
-        
 
             def shell_complete(clime, param, incomplete):
                 from quo.shelldone import CompletionItem
@@ -1736,7 +1733,7 @@ class Parameter:
         user-facing documentation.
 
         Use :meth:`quo.Context.to_info_dict` to traverse the entire
-        CLI structure 
+        CLI structure
 
         """
         return {
@@ -1817,8 +1814,7 @@ class Parameter:
         return value, source
 
     def type_cast_value(self, clime, value):
-        """Given a value this runs it properly through the type system. This automatically handles things like `nargs` and `multiple` as  well as composite types.
-        """
+        """Given a value this runs it properly through the type system. This automatically handles things like `nargs` and `multiple` as  well as composite types."""
         if value is None:
             return () if self.multiple or self.nargs == -1 else None
 
@@ -2111,9 +2107,7 @@ class App(Parameter):
                         "Apps cannot be multiple and count at the same time."
                     )
                 elif self.is_flag:
-                    raise TypeError(
-                        "Apps cannot be count and flags at the same time."
-                    )
+                    raise TypeError("Apps cannot be count and flags at the same time.")
 
     def to_info_dict(self):
         info_dict = super().to_info_dict()
@@ -2167,7 +2161,7 @@ class App(Parameter):
         if name is None:
             if not expose_value:
                 return None, opts, secondary_opts
-            
+
             raise TypeError("Could not determine name for app")
 
         if not opts and not secondary_opts:
@@ -2296,6 +2290,7 @@ class App(Parameter):
         value as result.
         """
         from .prompt import prompt
+
         # Calculate the default before prompting anything to be stable.
         default = self.get_default(clime)
 
@@ -2373,7 +2368,7 @@ class App(Parameter):
 
 class Arg(Parameter):
     """Args are positional parameters(arguments to a command.  They generally  provide fewer features than apps but can have infinite ``nargs`` and are required by default.
- All parameters are passed onwards to the parameter constructor.
+    All parameters are passed onwards to the parameter constructor.
     """
 
     param_type_name = "arg"
@@ -2420,8 +2415,7 @@ class Arg(Parameter):
             name = name.replace("-", "_").lower()
         else:
             raise TypeError(
-                "Args take exactly one parameter declaration, got"
-                f" {len(decls)}."
+                "Args take exactly one parameter declaration, got" f" {len(decls)}."
             )
         return name, [arg], []
 
@@ -2431,5 +2425,6 @@ class Arg(Parameter):
     def get_error_hint(self, clime):
         return repr(self.make_metavar())
 
+
 def add_to_parser(self, parser, clime):
-        parser.add_argument(dest=self.name, nargs=self.nargs, obj=self)
+    parser.add_argument(dest=self.name, nargs=self.nargs, obj=self)

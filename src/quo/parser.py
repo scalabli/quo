@@ -2,12 +2,7 @@
 # maintained by the Python Software Foundation.
 from collections import deque
 
-from quo.errors import (
-        BadArgUsage, 
-        BadAppUsage, 
-        NoSuchApp,
-        UsageError
-        )
+from quo.errors import BadArgUsage, BadAppUsage, NoSuchApp, UsageError
 
 # Sentinel value that indicates an app was passed as a flag without a
 # value but is not a flag app. App.consume_value uses this to
@@ -15,7 +10,7 @@ from quo.errors import (
 _flag_needs_value = object()
 
 # This returns a Tuple with the unpacked arguments
-#at the first index and the remaining arguments as the second 
+# at the first index and the remaining arguments as the second
 def _unpack_args(args, nargs_spec):
     """Given an iterable of arguments and an iterable of nargs specifications,
     it returns a tuple with all the unpacked arguments at the first index
@@ -26,7 +21,7 @@ def _unpack_args(args, nargs_spec):
 
     Missing items are filled with `None`.
     """
-    #Missing items are filled with 'None' 
+    # Missing items are filled with 'None'
     args = deque(args)
     nargs_spec = deque(nargs_spec)
     rv = []
@@ -99,7 +94,7 @@ def split_arg_string(string):
 
     :param string: String to split.
     """
-    #splits an argument using :func :'shlex.split'
+    # splits an argument using :func :'shlex.split'
     import shlex
 
     lex = shlex.shlex(string, posix=True)
@@ -177,9 +172,7 @@ class Arg:
             if holes == len(value):
                 value = None
             elif holes != 0:
-                raise BadArgUsage(
-                    f"argument {self.dest} takes {self.nargs} values"
-                )
+                raise BadArgUsage(f"argument {self.dest} takes {self.nargs} values")
 
         if self.nargs == -1 and self.obj.envvar is not None:
             value = None
@@ -304,7 +297,7 @@ class AppParser:
                 state.rargs.insert(0, arg)
                 return
 
-        # 
+        #
         # not a very interesting subset!
 
     def _match_long_opt(self, opt, explicit_value, state):
@@ -316,10 +309,10 @@ class AppParser:
 
         app = self._long_opt[opt]
         if app.takes_value:
-            # 
             #
             #
-            # 
+            #
+            #
             if explicit_value is not None:
                 state.rargs.insert(0, explicit_value)
 
@@ -382,9 +375,7 @@ class AppParser:
                 value = _flag_needs_value
             else:
                 n_str = "an argument" if nargs == 1 else f"{nargs} arguments"
-                raise BadAppUsage(
-                    app_name, f"{app_name} app requires {n_str}."
-                )
+                raise BadAppUsage(app_name, f"{app_name} app requires {n_str}.")
         elif nargs == 1:
             next_rarg = state.rargs[0]
 

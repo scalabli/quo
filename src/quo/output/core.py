@@ -15,6 +15,7 @@ __all__ = [
 
 Size = ty.NamedTuple("Size", [("rows", int), ("columns", int)])
 
+
 class Output(metaclass=ABCMeta):
     """
     Base class defining the output interface for a

@@ -78,26 +78,28 @@ from .zero_width_table import ZERO_WIDTH
 # general Cf category code to identify these, and some characters in Cf
 # category code are of non-zero width.
 # Also includes some Cc, Mn, Zl, and Zp characters
-ZERO_WIDTH_CF = set([
-    0,       # Null (Cc)
-    0x034F,  # Combining grapheme joiner (Mn)
-    0x200B,  # Zero width space
-    0x200C,  # Zero width non-joiner
-    0x200D,  # Zero width joiner
-    0x200E,  # Left-to-right mark
-    0x200F,  # Right-to-left mark
-    0x2028,  # Line separator (Zl)
-    0x2029,  # Paragraph separator (Zp)
-    0x202A,  # Left-to-right embedding
-    0x202B,  # Right-to-left embedding
-    0x202C,  # Pop directional formatting
-    0x202D,  # Left-to-right override
-    0x202E,  # Right-to-left override
-    0x2060,  # Word joiner
-    0x2061,  # Function application
-    0x2062,  # Invisible times
-    0x2063,  # Invisible separator
-])
+ZERO_WIDTH_CF = set(
+    [
+        0,  # Null (Cc)
+        0x034F,  # Combining grapheme joiner (Mn)
+        0x200B,  # Zero width space
+        0x200C,  # Zero width non-joiner
+        0x200D,  # Zero width joiner
+        0x200E,  # Left-to-right mark
+        0x200F,  # Right-to-left mark
+        0x2028,  # Line separator (Zl)
+        0x2029,  # Paragraph separator (Zp)
+        0x202A,  # Left-to-right embedding
+        0x202B,  # Right-to-left embedding
+        0x202C,  # Pop directional formatting
+        0x202D,  # Left-to-right override
+        0x202E,  # Right-to-left override
+        0x2060,  # Word joiner
+        0x2061,  # Function application
+        0x2062,  # Invisible times
+        0x2063,  # Invisible separator
+    ]
+)
 
 UBOUND_ZERO_WIDTH = len(ZERO_WIDTH) - 1
 UBOUND_WIDE_EASTASIAN = len(WIDE_EASTASIAN) - 1

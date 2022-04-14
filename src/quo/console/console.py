@@ -101,15 +101,15 @@ except ImportError:
     import quo.eventloop.dummy_contextvars as contextvars  # type: ignore
 
 
-#__all__ = [
+# __all__ = [
 #    "Console",
-#]
+# ]
 
 
 E = KeyPressEvent
 _AppResult = TypeVar("_AppResult")
 
-#Data structure
+# Data structure
 Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
 
@@ -200,10 +200,10 @@ class Console(Generic[_AppResult]):
         # Or
         await app.run_async()
     """
+
     center = WA.CENTER
     left = WA.LEFT
     right = WA.RIGHT
-
 
     def __init__(
         self,
@@ -220,7 +220,7 @@ class Console(Generic[_AppResult]):
         mouse_support: FilterOrBool = False,
         enable_page_navigation_bindings: Optional[
             FilterOrBool
-        ] = True, # Can be None, True or False.
+        ] = True,  # Can be None, True or False.
         paste_mode: FilterOrBool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         erase_when_done: bool = False,
@@ -828,14 +828,15 @@ class Console(Generic[_AppResult]):
 
     @property
     def edit(
-            text=None,
-            editor=None,
-            env=None,
-            require_save=True,
-            extension=".txt",
-            filename=None
-            ) -> "Console":
+        text=None,
+        editor=None,
+        env=None,
+        require_save=True,
+        extension=".txt",
+        filename=None,
+    ) -> "Console":
         from quo.i_o.termui import edit as ed
+
         return ed
 
     @property
@@ -844,16 +845,12 @@ class Console(Generic[_AppResult]):
         print(encode)
 
     def bell(self) -> _AppResult:
-        print("\a" *3)
+        print("\a" * 3)
 
-    def launch(
-            self,
-            url, 
-            wait=False, 
-            locate=False
-            ) -> "Console":
+    def launch(self, url, wait=False, locate=False) -> "Console":
 
         from quo.implementation import open_url
+
         open_url(url, wait=wait, locate=locate)
         """
         This function launches the given URL (or filename) in the default
@@ -877,41 +874,44 @@ class Console(Generic[_AppResult]):
       launch a file manager with the file located.  This
       might have weird effects if the URL does not point to the filesystem.
       """
+
     def rmdup(string: str):
         """Input your lists, and get them back without duplicates"""
-        return list(dict.fromkeys(string))                      
+        return list(dict.fromkeys(string))
 
     @property
     def size(self):
         import shutil
+
         return shutil.get_terminal_size()
-      #  from quo.i_o.termui import terminalsize as ts
-     #   termsize = ts
-     #   print(termsize)
+
+    #  from quo.i_o.termui import terminalsize as ts
+    #   termsize = ts
+    #   print(termsize)
 
     @property
     def openfile(self):
         from quo.expediency.vitals import openfile as of
+
         return of
+
     def rule(
-            self,
-            height: int = 1,
-            char: str = "\u2501",
-            style = "class:rule"
-            ) -> "Console":
+        self, height: int = 1, char: str = "\u2501", style="class:rule"
+    ) -> "Console":
         from quo.shortcuts import container
+
         container(Window(char=char, height=height, style=style), bind=False)
 
-
     def bar(
-            self,
-            message: Optional[str] = None,
-            align  = "center",
-            style = "class:bar"
-            )-> "Console":
+        self, message: Optional[str] = None, align="center", style="class:bar"
+    ) -> "Console":
         from quo.shortcuts import container
 
-        container(Window(FormattedTextControl(message), height=1, style=style, align=align), bind=False)
+        container(
+            Window(FormattedTextControl(message), height=1, style=style, align=align),
+            bind=False,
+        )
+
     def run(
         self,
         pre_run: Optional[Callable[[], None]] = None,
@@ -990,10 +990,8 @@ class Console(Generic[_AppResult]):
         )
 
     def _handle_exception(
-        self, 
-        loop: AbstractEventLoop, 
-        context: Dict[str, Any]
-        ) -> None:
+        self, loop: AbstractEventLoop, context: Dict[str, Any]
+    ) -> None:
         """
         Handler for event loop exceptions.
         This will print the exception, using run_in_terminal.
@@ -1020,9 +1018,8 @@ class Console(Generic[_AppResult]):
         ensure_future(in_term())
 
     def create_background_task(
-        self,
-        coroutine: Awaitable[None]
-        ) -> "asyncio.Task[None]":
+        self, coroutine: Awaitable[None]
+    ) -> "asyncio.Task[None]":
         """
         Start a background task (coroutine) for the running application. When
         the `Suite` terminates, unfinished background tasks will be
@@ -1097,21 +1094,13 @@ class Console(Generic[_AppResult]):
         "Exit without arguments."
 
     @overload
-    def exit(self,
-            *, 
-            result: _AppResult, 
-            style: str = ""
-            ) -> None:
+    def exit(self, *, result: _AppResult, style: str = "") -> None:
         "Exit with `_AppResult`."
 
     @overload
     def exit(
-        self,
-        *,
-        exception: Union[BaseException, Type[BaseException]], 
-        style: str = ""
-
-        ) -> None:
+        self, *, exception: Union[BaseException, Type[BaseException]], style: str = ""
+    ) -> None:
         "Exit with exception."
 
     def exit(
@@ -1285,9 +1274,7 @@ class _CombinedRegistry(KeyBindingsBase):
     control.
     """
 
-    def __init__(self, 
-            app: Console[_AppResult]
-            )-> None:
+    def __init__(self, app: Console[_AppResult]) -> None:
         self.app = app
         self._cache: SimpleCache[
             Tuple[Window, FrozenSet[UIControl]], KeyBindingsBase
@@ -1305,10 +1292,8 @@ class _CombinedRegistry(KeyBindingsBase):
         raise NotImplementedError
 
     def _create_key_bindings(
-            self, 
-            current_window: Window, 
-            other_controls: List[UIControl]
-            ) -> KeyBindingsBase:
+        self, current_window: Window, other_controls: List[UIControl]
+    ) -> KeyBindingsBase:
         """
         Create a `KeyBinder` object that merges the `KeyBinder` from the
         `UIControl` with all the parent controls and the global key bindings.
@@ -1398,9 +1383,7 @@ async def _do_wait_for_enter(wait_text: AnyFormattedText) -> None:
         "Disallow typing."
         pass
 
-    session: Prompt[None] = Prompt(
-        text=wait_text, bind=key_bindings
-    )
+    session: Prompt[None] = Prompt(text=wait_text, bind=key_bindings)
     await session.app.run_async()
 
 

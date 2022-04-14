@@ -23,8 +23,7 @@ def encoding_filesystem():
     return sys.getdefaultencoding()
 
 
-def text_flow(
-    stream, encoding, errors, force_readable=False, force_writable=False):
+def text_flow(stream, encoding, errors, force_readable=False, force_writable=False):
     if encoding is None:
         encoding = default_system_encoding(stream)
     if errors is None:
@@ -38,14 +37,16 @@ def text_flow(
         force_writable=force_writable,
     )
 
-#Checks if given code is ACII
+
+# Checks if given code is ACII
 def ascii_encoding(encoding):
     try:
         return codecs.lookup(encoding).name == "ascii"
     except LookupError:
         return False
 
-#If not found returns the default stream encoding
+
+# If not found returns the default stream encoding
 def default_system_encoding(stream):
     rv = getattr(stream, "encoding", None) or sys.getdefaultencoding()
     if ascii_encoding(rv):
@@ -76,11 +77,10 @@ class _NonClosingTextIOWrapper(io.TextIOWrapper):
         # https://bitbucket.org/pypy/pypy/issue/1803
         return self._stream.isatty()
 
-#Fixes stream in some tools that put badly patched
-#bjects on sys 
-class _FixupStream:
-    
 
+# Fixes stream in some tools that put badly patched
+# bjects on sys
+class _FixupStream:
     def __init__(self, stream, force_readable=False, force_writable=False):
         self._stream = stream
         self._force_readable = force_readable
@@ -190,6 +190,7 @@ def _find_binary_writer(stream):
     # actually binary in case it's closed.
     if buf is not None and _is_binary_writer(buf, True):
         return buf
+
 
 # A stream is misconfigured if it's encoding is not ASCII
 def _stream_is_misconfigured(stream):
@@ -539,7 +540,6 @@ if WIN:
                 colorama.win32.STDOUT
             ).srWindow
             return win.Right - win.Left, win.Bottom - win.Top
-
 
 else:
 

@@ -463,6 +463,7 @@ class KeyPressEvent:
         processor = self._key_processor_ref()
         if processor is None:
             from quo.errors import UsageError
+
             raise UsageError("KeyProcessor was lost. This should not happen.")
         return processor
 

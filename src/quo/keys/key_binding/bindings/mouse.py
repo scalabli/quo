@@ -13,8 +13,9 @@ __all__ = [
 
 E = KeyPressEvent
 
-#Data structures
+# Data structures
 Point = NamedTuple("Point", [("x", int), ("y", int)])
+
 
 def load_mouse_bindings() -> KeyBinder:
     """

@@ -177,7 +177,8 @@ AnyContainer = Union[Container, "MagicContainer"]
 def _window_too_small() -> "Window":
     "Create a `Window` that displays the 'Window too small' text."
     return Window(
-            FormattedTextControl(text=[("class:window-too-small", " Window too small")]))
+        FormattedTextControl(text=[("class:window-too-small", " Window too small")])
+    )
 
 
 class VerticalAlign(Enum):
@@ -186,6 +187,7 @@ class VerticalAlign(Enum):
     CENTER = "CENTER"
     BOTTOM = "BOTTOM"
     JUSTIFY = "JUSTIFY"
+
 
 class HorizontalAlign(Enum):
     "Alignment for `VSplit`."
@@ -272,6 +274,7 @@ class HSplit(_Split):
     :param padding_char: Character to be used for filling in the padding.
     :param padding_style: Style to applied to the padding.
     """
+
     top = VerticalAlign.TOP
     center = VerticalAlign.CENTER
     bottom = VerticalAlign.BOTTOM
@@ -518,6 +521,7 @@ class VSplit(_Split):
     :param padding_char: Character to be used for filling in the padding.
     :param padding_style: Style to applied to the padding.
     """
+
     left = HorizontalAlign.LEFT
     center = HorizontalAlign.CENTER
     right = HorizontalAlign.RIGHT
@@ -609,7 +613,7 @@ class VSplit(_Split):
 
             # Padding left.
             center = HorizontalAlign.CENTER
-            right =HorizontalAlign.RIGHT
+            right = HorizontalAlign.RIGHT
             if self.align in (center, right):
                 result.append(Window(width=Dimension(preferred=0)))
 
@@ -843,7 +847,7 @@ class FloatContainer(Container):
 
             if postpone:
                 new_z_index = (
-                    number + 10 ** 8
+                    number + 10**8
                 )  # Draw as late as possible, but keep the order.
                 screen.draw_with_z_index(
                     z_index=new_z_index,
@@ -1478,6 +1482,7 @@ class Window(Container):
         implementation of line continuations, things like Vim "breakindent" and
         so on.
     """
+
     left = WindowAlign.LEFT
     center = WindowAlign.CENTER
     right = WindowAlign.RIGHT
@@ -2741,7 +2746,10 @@ def to_container(container: AnyContainer) -> Container:
         return to_container(container.__pt_container__())
     else:
 
-        raise errors.UsageError("\n %r is NOT a container object.\n Check the documentation for mitigation steps.\n\n https://quo.readthedocs.io/en/latest" % (container))
+        raise errors.UsageError(
+            "\n %r is NOT a container object.\n Check the documentation for mitigation steps.\n\n https://quo.readthedocs.io/en/latest"
+            % (container)
+        )
 
 
 def to_window(container: AnyContainer) -> Window:

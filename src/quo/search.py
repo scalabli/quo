@@ -17,10 +17,10 @@ if TYPE_CHECKING:
     from quo.layout.layout import Layout
 
 __all__ = [
-        "SearchDirection",
-        "start_search",
-        "stop_search",
-        ]
+    "SearchDirection",
+    "start_search",
+    "stop_search",
+]
 
 
 class SearchDirection(Enum):

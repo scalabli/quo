@@ -128,7 +128,7 @@ def _parse_style_str(style_str: str) -> Attrs:
             attrs = attrs._replace(italic=True)
         elif part == "noitalic":
             attrs = attrs._replace(italic=False)
-        elif part =="ul":
+        elif part == "ul":
             attrs = attrs._replace(ul=True)
         elif part == "underline":
             attrs = attrs._replace(underline=True)

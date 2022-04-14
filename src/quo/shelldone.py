@@ -16,28 +16,22 @@ from ctypes.wintypes import (
 )
 
 
-from quo.core import (
-        App,
-        Arg, 
-        MultiCommand,
-        ParameterSource,
-        SHELL_NAMES
-        )
+from quo.core import App, Arg, MultiCommand, ParameterSource, SHELL_NAMES
 
 from .parser import split_arg_string
 from quo.expediency import inscribe
 
 
 def shell_complete(cli, ctx_args, prog_name, complete_var, instruction):
-    #Perform shell completion for the given CLI program.
+    # Perform shell completion for the given CLI program.
 
-    #param cli: Command being called.
-    #param ctx_args: Extra arguments to pass to``cli.make_context``.
-    #param prog_name: Name of the executable in the shell.
-    #param complete_var: Name of the environment variable that holds the completion instruction.
-    #param instruction: Value of ``complete_var`` with the completion instruction and shell, in the form ``instruction_shell``.
-    #return: Status code to exit with.
-    
+    # param cli: Command being called.
+    # param ctx_args: Extra arguments to pass to``cli.make_context``.
+    # param prog_name: Name of the executable in the shell.
+    # param complete_var: Name of the environment variable that holds the completion instruction.
+    # param instruction: Value of ``complete_var`` with the completion instruction and shell, in the form ``instruction_shell``.
+    # return: Status code to exit with.
+
     shell, _, instruction = instruction.partition("_")
     comp_cls = get_completion_class(shell)
 
@@ -556,8 +550,6 @@ def _resolve_incomplete(ctx, args, incomplete):
     return ctx.command, incomplete
 
 
-
-
 INVALID_HANDLE_VALUE = HANDLE(-1).value
 ERROR_NO_MORE_FILES = 18
 ERROR_INSUFFICIENT_BUFFER = 122
@@ -703,6 +695,7 @@ def get_shell(pid=None, max_depth=10):
 
     return None
 
+
 def shelldetector(pid=None, max_depth=10):
     name = os.name
     try:
@@ -717,4 +710,4 @@ def shelldetector(pid=None, max_depth=10):
     shell = get_shell(pid, max_depth=max_depth)
     if shell:
         return shell
-    raise ShellDetectionFailure() 
+    raise ShellDetectionFailure()

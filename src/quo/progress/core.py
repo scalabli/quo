@@ -68,6 +68,7 @@ def create_key_bindings() -> Bind:
     (The main thread is not supposed to handle any key bindings.)
     """
     from quo.event import Event
+
     kb = Bind()
 
     @kb.add("ctrl-l")
@@ -113,10 +114,10 @@ class ProgressBar:
         self,
         title: AnyFormattedText = None,
         formatters: Optional[Sequence[Formatter]] = None,
-        toolbar: AnyFormattedText =None,
+        toolbar: AnyFormattedText = None,
         bottom_toolbar: AnyFormattedText = None,
         style: Optional[BaseStyle] = None,
-        bind: Optional[Bind] = _bind,# None,
+        bind: Optional[Bind] = _bind,  # None,
         file: Optional[TextIO] = None,
         color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
@@ -128,7 +129,7 @@ class ProgressBar:
         self.bottom_toolbar = bottom_toolbar
         self.counters: List[ProgressBarCounter[object]] = []
         self.style = style
-        self.bind= bind
+        self.bind = bind
 
         # Note that we use __stderr__ as default error output, because that
         # works best with `patch_stdout`.
@@ -143,7 +144,6 @@ class ProgressBar:
         self._has_sigwinch = False
         self._app_started = threading.Event()
 
-
     def __enter__(self) -> "ProgressBar":
         # Create UI Suite.
         title_toolbar = ConditionalContainer(
@@ -157,9 +157,7 @@ class ProgressBar:
 
         bottom_toolbar = ConditionalContainer(
             Window(
-                FormattedTextControl(
-                    lambda: self.bottom_toolbar, style="reverse"
-                ),
+                FormattedTextControl(lambda: self.bottom_toolbar, style="reverse"),
                 style="reverse",
                 height=1,
             ),
@@ -167,7 +165,7 @@ class ProgressBar:
             & renderer_height_is_known
             & Condition(lambda: self.bottom_toolbar is not None),
         )
-        toolbar=bottom_toolbar
+        toolbar = bottom_toolbar
 
         def width_for_formatter(formatter: Formatter) -> AnyDimension:
             # Needs to be passed as callable (partial) to the 'width'

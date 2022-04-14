@@ -3,13 +3,14 @@ from functools import wraps
 from typing import Any, Callable, Deque, Dict, Generic, Hashable, Tuple, cast
 
 __all__ = [
-        "SimpleCache",
-        "FastDictCache",
-        "memoized",
-        ]
+    "SimpleCache",
+    "FastDictCache",
+    "memoized",
+]
 
 
 from typing import TypeVar
+
 _T = TypeVar("_T", bound=Hashable)
 _U = TypeVar("_U")
 
@@ -21,7 +22,6 @@ class SimpleCache(Generic[_T, _U]):
 
     :param maxsize: Maximum size of the cache. (Don't make it too big.)
     """
-
 
     def __init__(self, maxsize: int = 8) -> None:
         assert maxsize > 0

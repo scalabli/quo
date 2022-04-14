@@ -21,7 +21,7 @@ class ColorDepth(str, Enum):
     four_bit = "four_bit"
 
     #: The default. 256 colors
-    eight_bit= "eight_bit"
+    eight_bit = "eight_bit"
 
     #: 24 bit True color.
     twenty_four_bit = "twenty_four_bit"

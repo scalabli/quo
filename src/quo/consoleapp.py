@@ -1,4 +1,3 @@
-
 import sys
 import ctypes
 import io
@@ -85,7 +84,7 @@ class Py_buffer(ctypes.Structure):
     ]
 
 
-# Cannot get buffers on Pypi 
+# Cannot get buffers on Pypi
 if pythonapi is None:
     get_buffer = None
 else:
@@ -210,7 +209,6 @@ class ConsoleStream:
 
 
 class WindowsChunkedWriter:
-
     def __init__(self, wrapped):
         # double-underscore everything to prevent clashes with names of
         # attributes on the wrapped stream object.

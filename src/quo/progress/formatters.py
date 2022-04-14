@@ -81,16 +81,12 @@ class Label(Formatter):
         If no task name was given, no suffix will be added.
     """
 
-    def __init__(
-            self, 
-            width: AnyDimension = None, 
-            suffix: str = ""
-            )-> None:
+    def __init__(self, width: AnyDimension = None, suffix: str = "") -> None:
         self.width = width
         self.suffix = suffix
 
     def _add_suffix(self, label: AnyFormattedText) -> StyleAndTextTuples:
-        label = to_formatted_text(label, style="fg:khaki")#"class:label")
+        label = to_formatted_text(label, style="fg:khaki")  # "class:label")
         return label + [("", self.suffix)]
 
     def format(
@@ -156,7 +152,7 @@ class Bar(Formatter):
         start: str = "",
         end: str = "",
         sym_a: str = "\u2501",
-        sym_b: str = "\u257E", #Can be an ">>" or something else
+        sym_b: str = "\u257E",  # Can be an ">>" or something else
         sym_c: str = "\u2500",
         unknown: str = "#",
     ) -> None:
@@ -340,7 +336,7 @@ class SpinningWheel(Formatter):
     Display a spinning wheel.
     """
 
-    characters = r"124489"#/-\|"
+    characters = r"124489"  # /-\|"
 
     def format(
         self,
@@ -350,9 +346,7 @@ class SpinningWheel(Formatter):
     ) -> AnyFormattedText:
 
         index = int(time.time() * 3) % len(self.characters)
-        return Te("<spinning-wheel>{0}</spinning-wheel>").format(
-            self.characters[index]
-        )
+        return Te("<spinning-wheel>{0}</spinning-wheel>").format(self.characters[index])
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
         return D.exact(1)
@@ -431,8 +425,8 @@ def create_default_formatters() -> List[Formatter]:
         Text(" ", style="purple"),
         Text("\u257D"),
         Text("eta ", style="purple"),
-        Text("«", style="fg:blue bold"),#"class:time-left"),
+        Text("«", style="fg:blue bold"),  # "class:time-left"),
         TimeLeft(),
-        Text("»", style="fg:blue bold"), #class:time-left"),
+        Text("»", style="fg:blue bold"),  # class:time-left"),
         Text(" "),
     ]

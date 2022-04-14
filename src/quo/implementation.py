@@ -1,6 +1,6 @@
-#This module contains implementations for the module
-#Some infrequently used functionality are
-#placed in this module and only imported as needed.
+# This module contains implementations for the module
+# Some infrequently used functionality are
+# placed in this module and only imported as needed.
 
 import contextlib
 import math
@@ -9,15 +9,15 @@ import sys
 import time
 
 from quo.accordance import (
-        _default_text_stdout,
-        CYGWIN,
-        default_system_encoding,
-        isatty,
-        openstream,
-        strip_ansi_colors,
-        term_len,
-        WIN
-        )
+    _default_text_stdout,
+    CYGWIN,
+    default_system_encoding,
+    isatty,
+    openstream,
+    strip_ansi_colors,
+    term_len,
+    WIN,
+)
 
 from quo import errors
 from quo.expediency.vitals import inscribe
@@ -46,11 +46,13 @@ def _length_hint(obj):
         if hint is NotImplemented or not isinstance(hint, int) or hint < 0:
             return None
         return hint
+
+
 ################################################################
 
 
-
 ################################################################
+
 
 def scrollable(generator, color=None):
     """Decide what method to use for paging through text."""
@@ -102,6 +104,7 @@ def _pipepager(generator, cmd, color):
 
     c = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, env=env)
     from quo.accordance import default_system_encoding as gg
+
     encoding = gg(c.stdin)
     try:
         for text in generator:
@@ -318,7 +321,7 @@ if WIN:
     def raw_terminal():
         yield
 
-    def interpose (echo):
+    def interpose(echo):
         # The function `getch` will return a bytes object corresponding to
         # the pressed character. Since Windows 10 build 1803, it will also
         # return \x00 when called a second time after pressing a regular key.
@@ -361,7 +364,6 @@ if WIN:
         _translate_ch_to_exc(rv)
         return rv
 
-
 else:
     import tty
     import termios
@@ -387,7 +389,7 @@ else:
         except termios.error:
             pass
 
-    def interpose (echo):
+    def interpose(echo):
         with raw_terminal() as fd:
             ch = os.read(fd, 32)
             ch = ch.decode(default_system_encoding(sys.stdin), "replace")

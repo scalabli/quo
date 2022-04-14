@@ -1,5 +1,6 @@
 import inspect
-#import io
+
+# import io
 import itertools
 import os
 import struct
@@ -7,25 +8,25 @@ import sys
 import math
 from typing import Any, Optional, IO
 from quo.accordance import (
-        DEFAULT_COLUMNS,
-        get_winterm_size,
-        bit_bytes,
-        isatty,
-        strip_ansi_colors,
-        )
+    DEFAULT_COLUMNS,
+    get_winterm_size,
+    bit_bytes,
+    isatty,
+    strip_ansi_colors,
+)
 from quo.color import ansi_color_codes, _ansi_reset_all
 from quo.errors import Abort
 from quo.context.current import resolve_color_default
-from quo.types import Choice # convert_type
+from quo.types import Choice  # convert_type
 from quo.expediency.vitals import LazyFile, inscribe
 
-#convert_type
+# convert_type
 
 
 # The prompt functions to use.  The doc tools currently override these
 # functions to customize how they work.
 
-#insert = input
+# insert = input
 
 
 def hidden_prompt_func(prompt):
@@ -35,13 +36,13 @@ def hidden_prompt_func(prompt):
 
 
 def _build_prompt(
-        text, 
-        suffix, 
-        show_default: bool=False,
-        default=None,
-        show_choices:bool=True,
-        type=None
-        ):
+    text,
+    suffix,
+    show_default: bool = False,
+    default=None,
+    show_choices: bool = True,
+    type=None,
+):
     prompt = text
     if type is not None and show_choices and isinstance(type, Choice):
         prompt += f" ({', '.join(map(str, type.choices))})"
@@ -52,10 +53,12 @@ def _build_prompt(
 
 def _format_default(default):
     import io
+
     if isinstance(default, (io.IOBase, LazyFile)) and hasattr(default, "name"):
         return default.name
 
     return default
+
 
 ##################################################################
 
@@ -67,13 +70,13 @@ def _format_default(default):
 
 
 def confirm(
-        text: Optional[str],
-        default: bool = False, 
-        abort: bool = False,
-        suffix=":>", 
-        show_default=True, 
-        err=False
-        ):
+    text: Optional[str],
+    default: bool = False,
+    abort: bool = False,
+    suffix=":>",
+    show_default=True,
+    err=False,
+):
     """Prompts for confirmation (yes/no question).
 
     If the user aborts the input by sending a interrupt signal this
@@ -113,9 +116,10 @@ def confirm(
     if abort and not rv:
         raise Abort()
     return rv
+
+
 ############
 ########################################################
-
 
 
 def terminalsize():
@@ -161,7 +165,6 @@ def terminalsize():
     return int(cr[1]), int(cr[0])
 
 
-
 def scrollable(text_or_generator, color=None):
     """This function takes a text and shows it via an environment specific
     pager on stdout.
@@ -186,7 +189,6 @@ def scrollable(text_or_generator, color=None):
     from quo.implementation import scrollable
 
     return scrollable(itertools.chain(text_generator, "\n"), color)
-
 
 
 def _interpret_color(color, offset=0):
@@ -219,69 +221,68 @@ def flair(
     strike=None,
 ):
     """Styles a text with ANSI styles and returns the new string.  By
-    default the styling is self contained which means that at the end
-    of the string a reset code is issued.  This can be prevented by
-    passing ``reset=False``.
+      default the styling is self contained which means that at the end
+      of the string a reset code is issued.  This can be prevented by
+      passing ``reset=False``.
 
-    Examples::
+      Examples::
 
-        quo.inscribe(quo.style('Hello World!', foreground='green'))
-        quo.echo(quo.style('ATTENTION!', blink=True))
-        quo.echo(quo.style('Some things', reverse=True, foreground='cyan'))
-        quo.echo(quo.style('More colors', foreground=(255, 12, 128), background=117))
+          quo.inscribe(quo.style('Hello World!', foreground='green'))
+          quo.echo(quo.style('ATTENTION!', blink=True))
+          quo.echo(quo.style('Some things', reverse=True, foreground='cyan'))
+          quo.echo(quo.style('More colors', foreground=(255, 12, 128), background=117))
 
-  Note: v as in vblack or vred stands for vivid black or vivid red
-  Supported color names:
+    Note: v as in vblack or vred stands for vivid black or vivid red
+    Supported color names:
 
-    * ``black`` (might be a gray)
-    * ``red``
-    * ``green``
-    * ``yellow`` (might be an orange)
-    * ``blue``
-    * ``magenta``
-    * ``cyan``
-    * ``white`` (might be light gray)
-    * ``vblack``
-    * ``vred``
-    * ``vgreen``
-    * ``vyellow``
-    * ``vblue``
-    * ``vmagenta``
-    * ``vcyan``
-    * ``vwhite``
-    * ``reset`` (reset the color code only)
+      * ``black`` (might be a gray)
+      * ``red``
+      * ``green``
+      * ``yellow`` (might be an orange)
+      * ``blue``
+      * ``magenta``
+      * ``cyan``
+      * ``white`` (might be light gray)
+      * ``vblack``
+      * ``vred``
+      * ``vgreen``
+      * ``vyellow``
+      * ``vblue``
+      * ``vmagenta``
+      * ``vcyan``
+      * ``vwhite``
+      * ``reset`` (reset the color code only)
 
-    If the terminal supports it, color may also be specified as:
+      If the terminal supports it, color may also be specified as:
 
-    -   An integer in the interval [0, 255]. The terminal must support
-        8-bit/256-color mode.
-    -   An RGB tuple of three integers in [0, 255]. The terminal must
-        support 24-bit/true-color mode.
+      -   An integer in the interval [0, 255]. The terminal must support
+          8-bit/256-color mode.
+      -   An RGB tuple of three integers in [0, 255]. The terminal must
+          support 24-bit/true-color mode.
 
-    See https://en.wikipedia.org/wiki/ANSI_color and
-    https://gist.github.com/XVilka/8346728 for more information.
+      See https://en.wikipedia.org/wiki/ANSI_color and
+      https://gist.github.com/XVilka/8346728 for more information.
 
-    :param text: the string to style with ansi codes.
-    :param foreground: if provided this will become the foreground color.
-    :param background: if provided this will become the background color.
-    :param bold: if provided this will enable or disable bold mode.
-    :param dim: if provided this will enable or disable dim mode.  This is
-                badly supported.
-    :param underline: if provided this will enable or disable underline.
-    :param blink: if provided this will enable or disable blinking.
-    :param reverse: if provided this will enable or disable inverse
-                    rendering (foreground becomes background and the
-                    other way round).
-    :param reset: by default a reset-all code is added at the end of the
-                  string which means that styles do not carry over.  This
-                  can be disabled to compose styles.
+      :param text: the string to style with ansi codes.
+      :param foreground: if provided this will become the foreground color.
+      :param background: if provided this will become the background color.
+      :param bold: if provided this will enable or disable bold mode.
+      :param dim: if provided this will enable or disable dim mode.  This is
+                  badly supported.
+      :param underline: if provided this will enable or disable underline.
+      :param blink: if provided this will enable or disable blinking.
+      :param reverse: if provided this will enable or disable inverse
+                      rendering (foreground becomes background and the
+                      other way round).
+      :param reset: by default a reset-all code is added at the end of the
+                    string which means that styles do not carry over.  This
+                    can be disabled to compose styles.
 
     """
     if not isinstance(text, str):
         text = str(text)
 
     bits = []
-
 
     if fg:
         try:
@@ -291,9 +292,18 @@ def flair(
             from quo.layout.controls import FormattedTextControl
             from quo.layout.containers import Window
             from quo.shortcuts.utils import container
-            container(Window(FormattedTextControl("Color error"), height=1, align="center", style="fg: yellow bg:brown bold"))
-            raise TypeError(f"Unknown color {fg!r}\n Check the documentation for a list of available colors.")
 
+            container(
+                Window(
+                    FormattedTextControl("Color error"),
+                    height=1,
+                    align="center",
+                    style="fg: yellow bg:brown bold",
+                )
+            )
+            raise TypeError(
+                f"Unknown color {fg!r}\n Check the documentation for a list of available colors."
+            )
 
     if bg:
         try:
@@ -302,8 +312,18 @@ def flair(
             from quo.layout.controls import FormattedTextControl
             from quo.layout.containers import Window
             from quo.shortcuts.utils import container
-            container(Window(FormattedTextControl("Color error"), height=1, align="center", style="fg: yellow bg:brown bold"))
-            raise TypeError(f"Unknown color {bg!r}\nCheck the documentation for a list of available colors.")
+
+            container(
+                Window(
+                    FormattedTextControl("Color error"),
+                    height=1,
+                    align="center",
+                    style="fg: yellow bg:brown bold",
+                )
+            )
+            raise TypeError(
+                f"Unknown color {bg!r}\nCheck the documentation for a list of available colors."
+            )
 
     if upper is True:
         text.upper()
@@ -320,7 +340,7 @@ def flair(
     if blink is not None:
         bits.append(f"\033[{5 if blink else 25}m")
     if reverse is not None:
-        bits.append(f"\033[{7 if reverse else 27}m") 
+        bits.append(f"\033[{7 if reverse else 27}m")
     if italic is not None:
         bits.append(f"\x1B[3m")
     if hidden is not None:
@@ -345,12 +365,7 @@ def unstyle(text):
 
 
 def edit(
-        text=None, 
-        editor=None, 
-        env=None, 
-        require_save=True, 
-        extension=".txt", 
-        filename=None
+    text=None, editor=None, env=None, require_save=True, extension=".txt", filename=None
 ):
     r"""Edits the given text in the defined editor.  If an editor is given
     (should be the full path to the executable but the regular operating
@@ -391,26 +406,27 @@ def edit(
 
 def raw_terminal():
     from quo.implementation import raw_terminal as f
+
     return f()
 
 
 def echo(
-        message: Optional[str] = None,
-        file: Optional[IO[str]] = None,
-        nl: bool = True,
-        err: bool = False,
-        color=None,
-        **styles
-        ):
-        """
-        echo('Hello World!', fg='green')
-        echo('Hello World!', bg='green', italic=True)
-        All keyword arguments are forwarded to the underlying functions  depending on which one they go with.
-        Non-string types will be converted to :class:`str`. However,
-        :class:`bytes` are passed directly to :meth:`inscribe` without applying style. If you want to style bytes that represent text, call
-        :meth:`bytes.decode` first.
-        """
-        if message is not None and not bit_bytes(message):
-            message = flair(message, **styles)
+    message: Optional[str] = None,
+    file: Optional[IO[str]] = None,
+    nl: bool = True,
+    err: bool = False,
+    color=None,
+    **styles,
+):
+    """
+    echo('Hello World!', fg='green')
+    echo('Hello World!', bg='green', italic=True)
+    All keyword arguments are forwarded to the underlying functions  depending on which one they go with.
+    Non-string types will be converted to :class:`str`. However,
+    :class:`bytes` are passed directly to :meth:`inscribe` without applying style. If you want to style bytes that represent text, call
+    :meth:`bytes.decode` first.
+    """
+    if message is not None and not bit_bytes(message):
+        message = flair(message, **styles)
 
-        return inscribe(message, file=file, nl=nl, err=err, color=color)
+    return inscribe(message, file=file, nl=nl, err=err, color=color)

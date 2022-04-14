@@ -3,16 +3,10 @@ import threading
 import itertools
 
 
-class Spinner():
-    spinner_cycle = itertools.cycle(['-', '/', '|', '\\'])
+class Spinner:
+    spinner_cycle = itertools.cycle(["-", "/", "|", "\\"])
 
-    def __init__(
-            self, 
-            beep=False,
-            disable=False, 
-            force=False,
-            stream=sys.stdout
-            ):
+    def __init__(self, beep=False, disable=False, force=False, stream=sys.stdout):
         self.disable = disable
         self.beep = beep
         self.force = force
@@ -38,7 +32,7 @@ class Spinner():
             self.stream.write(next(self.spinner_cycle))
             self.stream.flush()
             self.stop_running.wait(0.01)
-            self.stream.write('\b')
+            self.stream.write("\b")
             self.stream.flush()
 
     def __enter__(self):
@@ -50,17 +44,12 @@ class Spinner():
             return False
         self.stop()
         if self.beep:
-            self.stream.write('\7')
+            self.stream.write("\7")
             self.stream.flush()
         return False
 
 
-def spinner(
-        beep=False, 
-        disable=False, 
-        force=False, 
-        stream=sys.stdout
-        ):
+def spinner(beep=False, disable=False, force=False, stream=sys.stdout):
     """This function creates a context manager that is used to display a
     spinner on stdout as long as the context has not exited.
 
@@ -85,5 +74,3 @@ def spinner(
 
     """
     return Spinner(beep, disable, force, stream)
-
-

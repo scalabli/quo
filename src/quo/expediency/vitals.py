@@ -25,9 +25,9 @@ inscribe_functionality = (bytes, bytearray, str)
 def _posixify(name):
     return "-".join(name.split()).lower()
 
-#Wraps a function thus allowing exceptions
-def safecall(func):
 
+# Wraps a function thus allowing exceptions
+def safecall(func):
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
@@ -171,7 +171,6 @@ class KeepOpenFile:
         return iter(self._file)
 
 
-
 def pick_bool(*values: Optional[bool]) -> bool:
     """Pick the first non-none bool or return the last value.
     Args
@@ -184,6 +183,7 @@ def pick_bool(*values: Optional[bool]) -> bool:
         if value is not None:
             return value
         return bool(value)
+
 
 def inscribe(message=None, file=None, nl=True, err=False, color=None):
     """Prints a message plus a newline to the given file or stdout.  On
@@ -267,7 +267,6 @@ def inscribe(message=None, file=None, nl=True, err=False, color=None):
     if message:
         file.write(message)
     file.flush()
-
 
 
 def binarystream(name):
@@ -447,7 +446,7 @@ def _detect_program_name(path=None, _main=sys.modules["__main__"]):
         ``sys.argv[0]``, which is used by default.
     :param _main: The ``__main__`` module. This should only be passed
         during internal testing.
-        
+
         Based on command args detection in the Werkzeug reloader.
 
     :meta private:
@@ -458,7 +457,7 @@ def _detect_program_name(path=None, _main=sys.modules["__main__"]):
     """The value of __package__ indicates how Python was called. It may
      may not exist if a setuptools script is installed as an egg. It may be
     set incorrectly for entry points created with pip on Windows."""
-    
+
     if getattr(_main, "__package__", None) is None or (
         os.name == "nt"
         and _main.__package__ == ""
@@ -472,7 +471,7 @@ def _detect_program_name(path=None, _main=sys.modules["__main__"]):
     Rewritten by Python from "-m script" to "/path/to/script.py".
     # Need to look at main module to determine how it was executed.
     """
-    
+
     py_module = _main.__package__
     name = os.path.splitext(os.path.basename(path))[0]
 

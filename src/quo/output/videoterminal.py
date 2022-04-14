@@ -404,6 +404,7 @@ def _get_size(fileno: int) -> Tuple[int, int]:
 
 Size = NamedTuple("Size", [("rows", int), ("columns", int)])
 
+
 class Vt100(Output):
     """
     :param get_size: A callable which returns the `Size` of the output terminal.
@@ -590,11 +591,7 @@ class Vt100(Output):
     def reset_attributes(self) -> None:
         self.write_raw("\x1b[0m")
 
-    def set_attributes(
-            self,
-            attrs: Attrs, 
-            color_depth: ColorDepth
-            ) -> None:
+    def set_attributes(self, attrs: Attrs, color_depth: ColorDepth) -> None:
         """
         Create new style and output.
 

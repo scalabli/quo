@@ -50,13 +50,13 @@ from quo.utils.utils import Event, to_str
 from quo.types import Validator
 
 __all__ = [
-        "EditReadOnlyBuffer",
-        "Buffer",
-        "CompletionState",
-        "indent",
-        "unindent",
-        "reshape_text",
-        ]
+    "EditReadOnlyBuffer",
+    "Buffer",
+    "CompletionState",
+    "indent",
+    "unindent",
+    "reshape_text",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -1319,9 +1319,7 @@ class Buffer:
             except ValidationError as e:
                 # Set cursor position (don't allow invalid values.)
                 if set_cursor:
-                    self.line = min(
-                        max(0, e.line), len(self.text)
-                    )
+                    self.line = min(max(0, e.line), len(self.text))
 
                 self.validation_state = ValidationState.INVALID
                 self.validation_error = e

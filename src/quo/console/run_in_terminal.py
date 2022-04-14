@@ -14,19 +14,17 @@ except ImportError:
     from quo.eventloop.async_context_manager import asynccontextmanager
 
 
-#__all__ = [
- #   "run_in_terminal",
-  #  "in_terminal",
-#]
+# __all__ = [
+#   "run_in_terminal",
+#  "in_terminal",
+# ]
 
 _T = TypeVar("_T")
 
 
 def run_in_terminal(
-        func: Callable[[], _T], 
-        render_cli_done: bool = False, 
-        in_executor: bool = False
-        ) -> Awaitable[_T]:
+    func: Callable[[], _T], render_cli_done: bool = False, in_executor: bool = False
+) -> Awaitable[_T]:
     """
     Run function on the terminal above the current application or prompt.
 

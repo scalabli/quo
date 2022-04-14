@@ -1,17 +1,18 @@
-from .core import ProgressBar # ProgressBarCounter
-#from .formatters import (
+from .core import ProgressBar  # ProgressBarCounter
+
+# from .formatters import (
 #    Bar,
- #   Formatter,
+#   Formatter,
 #    IterationsPerSecond,
 #    Label,
- #   Percentage,
+#   Percentage,
 #    Progress,
- #   Rainbow,
- #   SpinningWheel,
- #   Text,
-   # TimeElapsed,
-  #  TimeLeft,
-#)
+#   Rainbow,
+#   SpinningWheel,
+#   Text,
+# TimeElapsed,
+#  TimeLeft,
+# )
 
 __all__ = [
     "ProgressBar",

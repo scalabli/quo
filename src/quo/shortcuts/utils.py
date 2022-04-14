@@ -136,15 +136,15 @@ def _print(
 def container(
     container: "AnyContainer",
     file: Optional[TextIO] = None,
-    focused_element = None,
-    bind_ = _bind,
+    focused_element=None,
+    bind_=_bind,
     style: Optional[BaseStyle] = None,
-    full_screen = False,
-    mouse_support = False,
-    bind = False,
-    refresh = 0.5,
+    full_screen=False,
+    mouse_support=False,
+    bind=False,
+    refresh=0.5,
     include_default_pygments_style: bool = True,
-    test=False
+    test=False,
 ) -> None:
     """
     Print any layout to the output.
@@ -163,33 +163,44 @@ def container(
 
     if bind is True:
         app: Console[None] = Console(
-                layout=Layout(container=container, focused_element=focused_element),
-                output=output,
-                style=_create_merged_style(style, include_default_pygments_style=include_default_pygments_style ),
-                bind=bind_,
-                mouse_support=mouse_support,
-                full_screen=full_screen,
-                refresh_interval=refresh
-                )
+            layout=Layout(container=container, focused_element=focused_element),
+            output=output,
+            style=_create_merged_style(
+                style, include_default_pygments_style=include_default_pygments_style
+            ),
+            bind=bind_,
+            mouse_support=mouse_support,
+            full_screen=full_screen,
+            refresh_interval=refresh,
+        )
         app.run()
     if bind is False:
+
         def exit_immediately() -> None:
 
             # Use `call_from_executor` to exit "soon", so that we still render one
             # initial time, before exiting the application.
             get_event_loop().call_soon(lambda: app.exit())
+
         app: Console[None] = Console(
-                layout=Layout(container=container), 
-                output=output,
-                style=_create_merged_style(
-                    style, include_default_pygments_style=include_default_pygments_style),
-                full_screen=full_screen)
+            layout=Layout(container=container),
+            output=output,
+            style=_create_merged_style(
+                style, include_default_pygments_style=include_default_pygments_style
+            ),
+            full_screen=full_screen,
+        )
         app.run(pre_run=exit_immediately, in_thread=True)
     if bind is False and full_screen is True:
-        raise UsageError("\n» `bind` needs to be be True when `full_screen`` is True\n» Check the documentation for mitigations steps.\n\n  https://quo.readthedocs.io/en/latest")
+        raise UsageError(
+            "\n» `bind` needs to be be True when `full_screen`` is True\n» Check the documentation for mitigations steps.\n\n  https://quo.readthedocs.io/en/latest"
+        )
     if test is True:
         from quo.layout.dummy import creat_dummy_layout
+
         layout = create_dummy_layout()
+
+
 def _create_merged_style(
     style: Optional[BaseStyle], include_default_pygments_style: bool
 ) -> BaseStyle:
@@ -220,7 +231,7 @@ def clear_title() -> None:
     terminal_title("")
 
 
-
-def print(*values: Any,  style=None, sep=" ", end="\n "):
+def print(*values: Any, style=None, sep=" ", end="\n "):
     from quo.text import Text
+
     _print(Text(*values), end=end, sep=sep, style=style)

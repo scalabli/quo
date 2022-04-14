@@ -1,5 +1,6 @@
 from quo.decorators import core
 
+
 def autoversion(
     version=None,
     *param_decls,
@@ -103,5 +104,3 @@ def autoversion(
     kwargs.setdefault("help", "Show the version and exit.")
     kwargs["callback"] = callback
     return app(*param_decls, **kwargs)
-
-

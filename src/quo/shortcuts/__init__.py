@@ -1,13 +1,7 @@
-from .utils import (
-        clear_title,
-        container,
-        print,
-        terminal_title
-        )
+from .utils import clear_title, container, print, terminal_title
 
 __all__ = [
-    # 
-
+    #
     "create_confirm_session",
     "CompleteStyle",
     # Utils.

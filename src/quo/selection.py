@@ -4,10 +4,10 @@ Data structures for the selection.
 from enum import Enum
 
 __all__ = [
-        "SelectionType",
-        "PasteMode",
-        "SelectionState",
-        ]
+    "SelectionType",
+    "PasteMode",
+    "SelectionState",
+]
 
 
 class SelectionType(Enum):

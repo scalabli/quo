@@ -346,7 +346,6 @@ class ConsoleInputReader:
         u_char = ev.uChar.UnicodeChar
         ascii_char = u_char.encode("utf-8")
 
-
         if u_char == "\x00":
             if ev.VirtualKeyCode in self.keycodes:
                 result = KeyPress(self.keycodes[ev.VirtualKeyCode], "")

@@ -145,9 +145,8 @@ _current_callbacks: Dict[
 
 @contextlib.contextmanager
 def _attached_input(
-        input: Vt100, 
-        callback: Callable[[], None]
-        ) -> Generator[None, None, None]:
+    input: Vt100, callback: Callable[[], None]
+) -> Generator[None, None, None]:
     """
     Context manager that makes this input active in the current event loop.
 

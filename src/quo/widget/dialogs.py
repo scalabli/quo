@@ -19,8 +19,8 @@ from quo.layout.dimension import Dimension as D
 from .core import Box, Button, Frame, Shadow
 
 __all__ = [
-        "Dialog",
-        ]
+    "Dialog",
+]
 
 
 class Dialog:

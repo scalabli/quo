@@ -1,10 +1,5 @@
 from enum import Enum
-from typing import (
-        TYPE_CHECKING,
-        Callable,
-        Dict, 
-        Optional
-        )
+from typing import TYPE_CHECKING, Callable, Dict, Optional
 
 from quo.clipboard import Data
 
@@ -30,11 +25,7 @@ class InputMode(str, Enum):
 
 
 class CharacterFind:
-    def __init__(
-            self, 
-            character: str, 
-            backwards: bool = False
-            )-> None:
+    def __init__(self, character: str, backwards: bool = False) -> None:
         self.character = character
         self.backwards = backwards
 

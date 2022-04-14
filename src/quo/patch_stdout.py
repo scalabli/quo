@@ -31,9 +31,9 @@ from quo.output import Output
 
 
 __all__ = [
-        "patch_stdout",
-        "StdoutProxy",
-        ]
+    "patch_stdout",
+    "StdoutProxy",
+]
 
 
 @contextmanager

@@ -3,9 +3,9 @@ from typing import Dict, List
 
 
 __all__ = [
-        "Keys",
-        "ALL_KEYS",
-        ]
+    "Keys",
+    "ALL_KEYS",
+]
 
 
 class Keys(str, Enum):

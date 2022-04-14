@@ -46,7 +46,7 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
-   # cast,
+    # cast,
 )
 
 from quo.cache import SimpleCache
@@ -270,6 +270,7 @@ class Bind(KeyBindingsBase):
                     )
                 else:
                     from typing import cast
+
                     self.bindings.append(
                         Binding(
                             keys,
@@ -287,10 +288,7 @@ class Bind(KeyBindingsBase):
 
         return decorator
 
-    def remove(
-            self, 
-            *args: Union[Keys, str, KeyHandlerCallable]
-            ) -> None:
+    def remove(self, *args: Union[Keys, str, KeyHandlerCallable]) -> None:
         """
         Remove a key binding.
 
@@ -319,6 +317,7 @@ class Bind(KeyBindingsBase):
         else:
             assert len(args) > 0
             from typing import cast
+
             args = cast(Tuple[Union[Keys, str]], args)
 
             # Remove this sequence of key bindings.
@@ -334,7 +333,6 @@ class Bind(KeyBindingsBase):
         else:
             # No key binding found for this function. Raise ValueError.
             raise UsageError("Binding not found: %r" % (function,))
-
 
     def get_bindings_for_keys(self, keys: KeysTuple) -> List[Binding]:
         """
@@ -421,13 +419,19 @@ def _parse_key(key: Union[Keys, str]) -> Union[str, Keys]:
     # Final validation.
     if len(key) != 1:
         from quo.console.console import Console
+
         console = Console()
 
         console.bar("Key Error!")
         from quo.text.html import Text
         from quo.shortcuts.utils import print
-        print(Text('<aquamarine>»</aquamarine> <b>Check the documentation for mitigation steps</b>\n<green>*</green><b> https//quo.readthedocs.io/en/latest/kb.html</b>'))
-        raise UsageError(f'Invalid key: {key}')
+
+        print(
+            Text(
+                "<aquamarine>»</aquamarine> <b>Check the documentation for mitigation steps</b>\n<green>*</green><b> https//quo.readthedocs.io/en/latest/kb.html</b>"
+            )
+        )
+        raise UsageError(f"Invalid key: {key}")
     return key
 
 
@@ -521,11 +525,7 @@ class ConditionalKeyBindings(_Proxy):
     :param filter: :class:`~quo.filters.Filter` object.
     """
 
-    def __init__(
-            self,
-            bind: KeyBindingsBase, 
-            filter: FilterOrBool = True
-            ) -> None:
+    def __init__(self, bind: KeyBindingsBase, filter: FilterOrBool = True) -> None:
 
         _Proxy.__init__(self)
 

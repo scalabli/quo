@@ -11,7 +11,6 @@ from quo.expediency.vitals import inscribe as echo
 from collections import namedtuple
 
 
-
 if sys.version_info >= (3, 3):
     from collections.abc import Iterable
 else:
@@ -31,7 +30,6 @@ if sys.version_info[0] < 3:
 
     def _is_file(f):
         return hasattr(f, "read")
-
 
 else:
     from itertools import zip_longest as izip_longest

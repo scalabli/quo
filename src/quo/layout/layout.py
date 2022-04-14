@@ -1,14 +1,7 @@
 """
 Wrapper for the layout.
 """
-from typing import (
-        Dict, 
-        Generator, 
-        Iterable,
-        List,
-        Optional,
-        Union
-        )
+from typing import Dict, Generator, Iterable, List, Optional, Union
 
 from quo.buffer import Buffer
 from quo import errors
@@ -21,11 +14,7 @@ from .containers import (
     Window,
     to_container,
 )
-from .controls import (
-        BufferControl,
-        SearchBufferControl,
-        UIControl
-        )
+from .controls import BufferControl, SearchBufferControl, UIControl
 
 __all__ = [
     "Layout",
@@ -115,7 +104,8 @@ class Layout:
                 if isinstance(control, BufferControl) and control.buffer.name == value:
                     self.focus(control)
                     return
-            raise errors.UsageError("\nCouldn't find Buffer in the current layout: %r." % (value,)
+            raise errors.UsageError(
+                "\nCouldn't find Buffer in the current layout: %r." % (value,)
             )
 
         # BufferControl by buffer object.
@@ -124,7 +114,8 @@ class Layout:
                 if isinstance(control, BufferControl) and control.buffer == value:
                     self.focus(control)
                     return
-            raise errors.UsageError("\nCouldn't find Buffer in the current layout: %r." % (value,)
+            raise errors.UsageError(
+                "\nCouldn't find Buffer in the current layout: %r." % (value,)
             )
 
         # Focus UIControl.

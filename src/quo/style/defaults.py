@@ -17,7 +17,7 @@ QUO_STYLE = [
     # Highlighting of search matches in document.
     ("search", "bg:ansibrightyellow ansiblack"),
     ("search.current", ""),
-    #Console API
+    # Console API
     ("bar", "fg:yellow bg:brown bold"),
     ("rule", "fg:white  bold"),
     # Incremental search.
@@ -141,10 +141,10 @@ WIDGETS_STYLE = [
     ("dialog.body", "bg:black fg:cyan"),
     ("dialog.body text-area", "fg:blue bg:white bold"),
     ("dialog.body text-area last-line", "underline"),
-    ("dialog frame.label", "fg:yellow bg:purple bold"),#"#ff0000 bold"),
+    ("dialog frame.label", "fg:yellow bg:purple bold"),  # "#ff0000 bold"),
     # Scrollbars in dialogs.
     ("dialog.body scrollbar.background", ""),
-    ("dialog.body scrollbar.button", "bg:grey"),#000000"),
+    ("dialog.body scrollbar.button", "bg:grey"),  # 000000"),
     ("dialog.body scrollbar.arrow", ""),
     ("dialog.body scrollbar.start", "nounderline"),
     ("dialog.body scrollbar.end", "nounderline"),
@@ -159,7 +159,7 @@ WIDGETS_STYLE = [
     ("menu.border", "#aaaaaa"),
     ("menu.border shadow", "#444444"),
     # Shadows.
-    ("dialog shadow", "bg:grey"),#000088"),
+    ("dialog shadow", "bg:grey"),  # 000088"),
     ("dialog.body shadow", "bg:#aaaaaa"),
     ("progress-bar", "bg:green"),
     ("progress-bar.used", "bg:grey"),

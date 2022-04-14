@@ -16,9 +16,7 @@ __all__ = ["SSHSession", "SSHServer"]
 
 
 class SSHSession(asyncssh.SSHServerSession):
-    def __init__(
-        self, interact: Callable[["SSHSession"], Awaitable[None]]
-    ) -> None:
+    def __init__(self, interact: Callable[["SSHSession"], Awaitable[None]]) -> None:
         self.interact = interact
         self.interact_task: Optional[asyncio.Task[None]] = None
         self._chan = None
@@ -83,9 +81,7 @@ class SSHSession(asyncssh.SSHServerSession):
 
         term = self._chan.get_terminal_type()
 
-        self._output = Vt100(
-            self.stdout, self._get_size, term=term, write_binary=False
-        )
+        self._output = Vt100(self.stdout, self._get_size, term=term, write_binary=False)
         with create_app_session(input=self._input, output=self._output) as session:
             self.app_session = session
             try:
@@ -141,9 +137,7 @@ class SSHServer(asyncssh.SSHServer):
         loop.run_forever()
     """
 
-    def __init__(
-        self, interact: Callable[[SSHSession], Awaitable[None]]
-    ) -> None:
+    def __init__(self, interact: Callable[[SSHSession], Awaitable[None]]) -> None:
         self.interact = interact
 
     def begin_auth(self, username: str) -> bool:

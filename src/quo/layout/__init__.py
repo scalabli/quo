@@ -83,13 +83,14 @@ from .dimension import (
     to_dimension,
 )
 from .layout import Layout, walk
-#from .margin import (
+
+# from .margin import (
 #    ConditionalMargin,
- #   Margin,
+#   Margin,
 #    NumberedMargin,
 #    PromptMargin,
 #    ScrollbarMargin,
-#)
+# )
 from .menus import CompletionsMenu, MultiColumnCompletionsMenu
 from .scrollable_pane import ScrollablePane
 
@@ -137,7 +138,7 @@ __all__ = [
     "NumberedMargin",
     "ScrollbarMargin",
     "ConditionalMargin",
- #   "PromptMargin",
+    #   "PromptMargin",
     # Menus.
     "CompletionsMenu",
     "MultiColumnCompletionsMenu",

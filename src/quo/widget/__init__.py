@@ -22,35 +22,42 @@ from .core import (
 )
 from .dialogs import Dialog
 from .menus import MenuContainer, MenuItem
-from .toolbars import ArgToolbar, CompletionsToolbar, FormattedTextToolbar, SearchToolbar, SystemToolbar, ValidationToolbar
+from .toolbars import (
+    ArgToolbar,
+    CompletionsToolbar,
+    FormattedTextToolbar,
+    SearchToolbar,
+    SystemToolbar,
+    ValidationToolbar,
+)
 
-#__all__ = [
-    # Base.
- #   "TextArea",
- #   "Label",
- #   "Button",
- #   "Frame",
- #   "Shadow",
+# __all__ = [
+# Base.
+#   "TextArea",
+#   "Label",
+#   "Button",
+#   "Frame",
+#   "Shadow",
 #    "Box",
- #   "VerticalLine",
- #   "HorizontalLine",
- #   "CheckboxList",
- #   "RadioList",
- #   "Checkbox",
+#   "VerticalLine",
+#   "HorizontalLine",
+#   "CheckboxList",
+#   "RadioList",
+#   "Checkbox",
 #    "ProgressBar",
-    # Toolbars.
+# Toolbars.
 #    "ArgToolbar",
 #   "CompletionsToolbar",
 #    "FormattedTextToolbar",
 #    "SearchToolbar",
 #    "SystemToolbar",
- #   "ValidationToolbar",
-    # Dialogs.
+#   "ValidationToolbar",
+# Dialogs.
 #   "Dialog",
-    # Menus.
+# Menus.
 #   "MenuContainer",
 #    "MenuItem",
-#]
+# ]
 
 
 TextField = TextArea

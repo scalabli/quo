@@ -1,18 +1,18 @@
 from .vitals import (
-        appdir,
-        _detect_program_name,
-        formatfilename,
-        binarystream,
-        openfile,
-        os_args,
-        pick_bool,
-        textstream,
-        LazyFile,
-        KeepOpenFile,
-        make_default_short_help,
-        make_str,
-        PacifyFlushWrapper
-        )
+    appdir,
+    _detect_program_name,
+    formatfilename,
+    binarystream,
+    openfile,
+    os_args,
+    pick_bool,
+    textstream,
+    LazyFile,
+    KeepOpenFile,
+    make_default_short_help,
+    make_str,
+    PacifyFlushWrapper,
+)
 
 # open
 # close

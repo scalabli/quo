@@ -12,8 +12,9 @@ from quo.completion import (
     get_common_complete_suffix,
 )
 from quo.text.core import StyleAndTextTuples
-#from quo.keys.list import Keys
-#from quo.keys.key_binding.key_bindings import Bind
+
+# from quo.keys.list import Keys
+# from quo.keys.key_binding.key_bindings import Bind
 from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.utils.utils import get_width as get_cwidth
 

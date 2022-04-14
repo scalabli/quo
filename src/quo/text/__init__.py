@@ -10,14 +10,15 @@ an :class:`.HTML` object, an :class:`.ANSI` object or a sequence of
 function takes any of these and turns all of them into such a tuple sequence.
 """
 from .html import Text
-from .core import FormattedText 
-    #AnyFormattedText,
-   # StyleAndTextTuples,
-   # Template,
-  #  is_formatted_text,
-  #  merge_formatted_text,
-  #  to_formatted_text,
-#)
+from .core import FormattedText
+
+# AnyFormattedText,
+# StyleAndTextTuples,
+# Template,
+#  is_formatted_text,
+#  merge_formatted_text,
+#  to_formatted_text,
+# )
 
 from .pygments import PygmentsTokens
 from .utils import (
@@ -32,8 +33,7 @@ __all__ = [
     "AnyFormattedText",
     "to_formatted_text",
     "is_formatted_text",
-    "Text"
-    "Template",
+    "Text" "Template",
     "merge_formatted_text",
     "FormattedText",
     "StyleAndTextTuples",

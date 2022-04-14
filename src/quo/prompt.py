@@ -52,7 +52,8 @@ from quo.text.core import (
     AnyFormattedText,
     StyleAndTextTuples,
     merge_formatted_text,
-    to_formatted_text)
+    to_formatted_text,
+)
 
 from quo.text.utils import fragment_list_to_text
 from quo.history import History, InMemoryHistory
@@ -108,7 +109,7 @@ from quo.style import (
     StyleTransformation,
     SwapLightAndDarkStyleTransformation,
     merge_style_transformations,
-    )
+)
 
 from quo.utils.utils import get_width as get_cwidth
 from quo.utils.utils import (
@@ -183,10 +184,8 @@ class _Relicit(Window):
 
     def __init__(self, text: AnyFormattedText) -> None:
         super().__init__(
-            FormattedTextControl(text=text),
-            align="right",
-            style="class:rprompt"
-            )
+            FormattedTextControl(text=text), align="right", style="class:rprompt"
+        )
 
 
 class CompleteStyle(str, Enum):
@@ -196,7 +195,7 @@ class CompleteStyle(str, Enum):
 
     value: str
 
-    single_column= "single_column"
+    single_column = "single_column"
     multi_column = "multi_column"
     neat = "neat"
 
@@ -214,6 +213,7 @@ ElicitContinuationText = Union[
 _T = TypeVar("_T")
 
 ##
+
 
 def prompt(
     text: str,
@@ -251,9 +251,9 @@ def prompt(
     from quo.expediency.vitals import inscribe
     from quo.errors import Abort, UsageError
     from quo.i_o.termui import _build_prompt, hidden_prompt_func
+
     insert = input
     result = None
-
 
     def prompt_func(text):
         f = hidden_prompt_func if hide else insert
@@ -271,9 +271,7 @@ def prompt(
     if value_proc is None:
         value_proc = convert_type(type, default)
 
-    prompt = _build_prompt(
-        text, suffix, show_default, default, show_choices, type
-    )
+    prompt = _build_prompt(text, suffix, show_default, default, show_choices, type)
 
     while 1:
         while 1:
@@ -300,12 +298,10 @@ def prompt(
         if value == value2:
             return result
         from quo.i_o.termui import echo
+
         echo(f"ERROR:", nl=False, fg="black", bg="red")
         echo(f" ", nl=False)
         echo(f"The two entered values do not match", err=err, fg="black", bg="yellow")
-
-
-
 
 
 class Prompt(Generic[_T]):
@@ -466,7 +462,7 @@ class Prompt(Generic[_T]):
         editing_mode: EditingMode = EditingMode.EMACS,
         complete_while_typing: FilterOrBool = True,
         validate_while_typing: FilterOrBool = True,
-        enable_history_search: FilterOrBool = True, #False,
+        enable_history_search: FilterOrBool = True,  # False,
         search_ignore_case: FilterOrBool = False,
         highlighter: Optional[Lexer] = None,
         system_prompt: FilterOrBool = False,
@@ -491,7 +487,7 @@ class Prompt(Generic[_T]):
         mouse_support: FilterOrBool = False,
         input_processors: Optional[List[Processor]] = None,
         placeholder: Optional[AnyFormattedText] = None,
-        bind_: bool = True, 
+        bind_: bool = True,
         bind: Optional[KeyBindingsBase] = _bind,
         erase_when_done: bool = False,
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
@@ -518,8 +514,8 @@ class Prompt(Generic[_T]):
         self.highlighter = highlighter
         self.completer = completer
         self.complete_in_thread = complete_in_thread
-        self.is_password =is_password or hide
-        self.bind= bind
+        self.is_password = is_password or hide
+        self.bind = bind
         self.bottom_toolbar = bottom_toolbar
         self.style = style
         self.style_transformation = style_transformation
@@ -557,6 +553,7 @@ class Prompt(Generic[_T]):
         self.app = self._create_application(editing_mode, erase_when_done)
         if bind_ is True:
             from quo.keys import bind as _bind
+
             bind = _bind
 
     def _dyncond(self, attr_name: str) -> Condition:
@@ -680,9 +677,7 @@ class Prompt(Generic[_T]):
             ignore_case=dyncond("search_ignore_case"),
         )
 
-        system_toolbar = SystemToolbar(
-            enable_global_bindings=dyncond("system_prompt")
-        )
+        system_toolbar = SystemToolbar(enable_global_bindings=dyncond("system_prompt"))
 
         def get_search_buffer_control() -> SearchBufferControl:
             "Return the UIControl to be focused when searching start."
@@ -1326,10 +1321,7 @@ class Prompt(Generic[_T]):
     def _get_default_buffer_control_height(self) -> Dimension:
         # If there is an autocompletion menu to be shown, make sure that our
         # layout has at least a minimal height in order to display it.
-        if (
-            self.completer is not None
-            and self.complete_style != CompleteStyle.neat
-        ):
+        if self.completer is not None and self.complete_style != CompleteStyle.neat:
             space = self.reserve_space_for_menu
         else:
             space = 0
@@ -1433,11 +1425,7 @@ class Prompt(Generic[_T]):
         return self.app.output
 
 
-
-def create_confirm_session(
-        text: str,
-        suffix: str = " (y/n) "
-        ) -> Prompt[bool]:
+def create_confirm_session(text: str, suffix: str = " (y/n) ") -> Prompt[bool]:
     """
     Create a `Prompt` object for the 'confirm' function.
     """
@@ -1461,10 +1449,9 @@ def create_confirm_session(
         pass
 
     complete_message = merge_formatted_text([text, suffix])
-    session: Prompt[bool] = Prompt(
-        complete_message, bind=bindings
-    )
+    session: Prompt[bool] = Prompt(complete_message, bind=bindings)
     return session
 
+
 def continuation(width, line_number, wrap_count):
-    return '.' * width
+    return "." * width

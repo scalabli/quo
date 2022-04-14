@@ -14,17 +14,14 @@ def _join_param_hints(param_hint):
 
 
 class Outlier(Exception):
-  #  from quo.rule import Rule
-  #  Rule()
+    #  from quo.rule import Rule
+    #  Rule()
     """An exception that Quo can handle and show to the user."""
 
     #: The exit code for this exception.
     exit_code = 1
 
-    def __init__(
-            self, 
-            message: ty.Optional[str]
-            ):
+    def __init__(self, message: ty.Optional[str]):
         super().__init__(message)
         print("\a")
         self.message = message
@@ -37,9 +34,11 @@ class Outlier(Exception):
 
     def show(self, file=None):
         from .expediency.vitals import inscribe
+
         if file is None:
             file = get_text_stderr()
         inscribe(_(f"Error: {self.format_message()}", file=file))
+
 
 class ValidationError(Outlier):
     """
@@ -48,11 +47,7 @@ class ValidationError(Outlier):
     :param message: Text.
     """
 
-    def __init__(
-            self,
-            line: int = 0,
-            message: str = ""
-            ) -> None:
+    def __init__(self, line: int = 0, message: str = "") -> None:
         super().__init__(message)
         self.line = line
         self.message = message
@@ -64,8 +59,10 @@ class ValidationError(Outlier):
             self.message,
         )
 
+
 class LayoutError(Outlier):
     pass
+
 
 class UsageError(Outlier):
     """An internal exception that signals a usage error.This typically aborts any further handling.
@@ -76,17 +73,14 @@ class UsageError(Outlier):
 
     exit_code = 2
 
-    def __init__(
-            self,
-            message: ty.Optional[str],
-            clime=None
-            ):
+    def __init__(self, message: ty.Optional[str], clime=None):
         super().__init__(message)
         self.clime = clime
         self.cmd = self.clime.command if self.clime else None
 
     def show(self, file=None):
         from .expediency.vitals import inscribe
+
         if file is None:
             file = get_text_stderr()
         color = None
@@ -106,22 +100,21 @@ class NoConsoleScreenBufferError(Outlier):
     """
     Raised when the application is not running inside a Windows Console, but the user tries to instantiate Win32Output.
     """
+
     def __init__(self) -> None:
         # Are we running in 'xterm' on Windows, like git-bash for instance?
         xterm = "xterm" in os.environ.get("TERM", "")
         if xterm:
             message = (
-                    "Found %s, while expecting a Windows console. "
-                    'Maybe try to run this program using "winpty" '
-                    "or run it in cmd.exe instead. Or otherwise, "
-                    "in case of Cygwin, use the Python executable "
-                    "that is compiled for Cygwin." % os.environ["TERM"]
-                    )
+                "Found %s, while expecting a Windows console. "
+                'Maybe try to run this program using "winpty" '
+                "or run it in cmd.exe instead. Or otherwise, "
+                "in case of Cygwin, use the Python executable "
+                "that is compiled for Cygwin." % os.environ["TERM"]
+            )
         else:
             message = "No Windows console found. Are you running cmd.exe?"
             super().__init__(message)
-
-
 
 
 class BadParameter(UsageError):
@@ -133,12 +126,12 @@ class BadParameter(UsageError):
     """
 
     def __init__(
-            self, 
-            message: ty.Optional[str], 
-            clime=None, 
-            param: ty.Optional["Parameter"] = None,
-            param_hint=None
-            ):
+        self,
+        message: ty.Optional[str],
+        clime=None,
+        param: ty.Optional["Parameter"] = None,
+        param_hint=None,
+    ):
         super().__init__(message, clime)
         self.param = param
         self.param_hint = param_hint
@@ -162,13 +155,13 @@ class MissingParameter(BadParameter):
     """
 
     def __init__(
-            self, 
-            message: ty.Optional[str] = None, 
-            clime=None,
-            param: ty.Optional["Parameter"] = None,
-            param_hint=None, 
-            param_type=None
-            ):
+        self,
+        message: ty.Optional[str] = None,
+        clime=None,
+        param: ty.Optional["Parameter"] = None,
+        param_hint=None,
+        param_type=None,
+    ):
         super().__init__(message, clime, param, param_hint)
         self.param_type = param_type
 
@@ -212,12 +205,8 @@ class NoSuchApp(UsageError):
     """
 
     def __init__(
-            self, 
-            appname, 
-            message: ty.Optional[str] =None, 
-            possibilities=None, 
-            clime=None
-            ):
+        self, appname, message: ty.Optional[str] = None, possibilities=None, clime=None
+    ):
         if message is None:
             message = f"{appname}"
 
@@ -248,9 +237,7 @@ class BadAppUsage(UsageError):
 
 
 class BadArgUsage(UsageError):
-    """Raised if an arg is generally supplied but the use of the argument was incorrect.  This is for instance raised if the number of values for an arg is not correct.
-
-    """
+    """Raised if an arg is generally supplied but the use of the argument was incorrect.  This is for instance raised if the number of values for an arg is not correct."""
 
 
 class FileError(Outlier):
@@ -281,7 +268,5 @@ class Exit(RuntimeError):
 
     __slots__ = ("exit_code",)
 
-    def __init__(self, code: ty.Optional[int] =0):
+    def __init__(self, code: ty.Optional[int] = 0):
         self.exit_code = code
-
-
