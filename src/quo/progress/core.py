@@ -32,9 +32,8 @@ from quo.text.core import (
     to_formatted_text,
 )
 from quo.input import Input
-from quo.keys import KeyBinder
+from quo.keys.key_binding.key_bindings import Bind
 from quo.keys import bind as _bind
-from quo.keys.key_binding.key_processor import KeyPressEvent
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
 from quo.layout.containers import VSplit
@@ -59,24 +58,24 @@ except ImportError:
 
 __all__ = ["ProgressBar"]
 
-E = KeyPressEvent
 
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 
 
-def create_key_bindings() -> KeyBinder:
+def create_key_bindings() -> Bind:
     """
     Key bindings handled by the progress bar.
     (The main thread is not supposed to handle any key bindings.)
     """
-    kb = KeyBinder()
+    from quo.event import Event
+    kb = Bind()
 
     @kb.add("ctrl-l")
-    def _clear(event: E) -> None:
+    def _clear(event: Event) -> None:
         event.app.renderer.clear()
 
     @kb.add("ctrl-c")
-    def _interrupt(event: E) -> None:
+    def _interrupt(event: Event) -> None:
         # Send KeyboardInterrupt to the main thread.
         os.kill(os.getpid(), signal.SIGINT)
 
@@ -117,7 +116,7 @@ class ProgressBar:
         toolbar: AnyFormattedText =None,
         bottom_toolbar: AnyFormattedText = None,
         style: Optional[BaseStyle] = None,
-        bind: Optional[KeyBinder] = _bind,# None,
+        bind: Optional[Bind] = _bind,# None,
         file: Optional[TextIO] = None,
         color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
@@ -294,7 +293,7 @@ class _ProgressControl(UIControl):
     def is_focusable(self) -> bool:
         return True  # Make sure that the key bindings work.
 
-    def get_key_bindings(self) -> KeyBinder:
+    def get_key_bindings(self) -> Bind:
         return self._key_bindings
 
 

@@ -4,11 +4,12 @@ A very simple progress bar which keep track of the progress as we consume an
 iterator.
 """
 import time
-import quo
 
-from quo.progress import formatters
+from quo.progress import formatters, ProgressBar
+from quo.style import Style
+from quo.text import Text
 
-style = quo.style.Style.add(
+style = Style.add(
     {
         "progressbar title": "#0000ff",
         "item-title": "#ff4400 underline",
@@ -29,12 +30,12 @@ def main():
         formatters.Text(" "),
         formatters.SpinningWheel(),
         formatters.Text(" "),
-        formatters.Text(quo.text.Text("<tildes>~~~</tildes>")),
+        formatters.Text(Text("<tildes>~~~</tildes>")),
         formatters.Bar(sym_a="#", sym_b="#", sym_c="."),
         formatters.Text(" left: "),
         formatters.TimeLeft(),
     ]
-    with quo.progress.ProgressBar(
+    with ProgressBar(
         title="Progress bar example with custom formatter.",
         formatters=custom_formatters,
         style=style,

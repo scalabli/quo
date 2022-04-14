@@ -81,7 +81,11 @@ class Label(Formatter):
         If no task name was given, no suffix will be added.
     """
 
-    def __init__(self, width: AnyDimension = None, suffix: str = "") -> None:
+    def __init__(
+            self, 
+            width: AnyDimension = None, 
+            suffix: str = ""
+            )-> None:
         self.width = width
         self.suffix = suffix
 
@@ -145,7 +149,7 @@ class Bar(Formatter):
     Display the progress bar itself.
     """
 
-    template = "<bar bg='black'>{start}<bar-a fg='aquamarine'>{bar_a}</bar-a><bar-b fg='red'>{bar_b}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
+    template = "<bar bg='purple'>{start}<bar-a fg='aquamarine' bg='yellow'>{bar_a}</bar-a><bar-b fg='red'>{bar_b}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
 
     def __init__(
         self,
@@ -336,7 +340,7 @@ class SpinningWheel(Formatter):
     Display a spinning wheel.
     """
 
-    characters = r"/-\|"
+    characters = r"124489"#/-\|"
 
     def format(
         self,
