@@ -13,4 +13,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: '💬 Thank you for submitting a bug report, our developers will look at the bug and get back to you soon'
-        pr-message: '🚀 Thank you for submitting a pull request, we'll get back to you soon after reviewing your code'
+        pr-message: '🚀 Thank you for submitting a pull request, we`ll get back to you soon after reviewing your code'

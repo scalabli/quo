@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Consider posting in https://github.com/secretum-inc/quo/discussions for feedback before raising a feature request.
+Consider posting in https://github.com/scalabli/quo/discussions for feedback before raising a feature request.
 
 Have you checked the issues for a similar suggestions?
 
