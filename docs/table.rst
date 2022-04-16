@@ -19,21 +19,32 @@ Table
                -  **presto** - Like tables produce by the Presto CLI.
                -  **mediawiki** - Produces a table markup used in Wikipedia and on other MediaWiki-based sites.
                -  **rst** - Like a simple table format from reStructuredText.
+<<<<<<< HEAD
    -  ``style`` - A style string.
 
 Changed on *v2022.4.3*
 
+=======
+   - ``style`` - A style string.
+
+Changed on *v2022.4.3*
+>>>>>>> ab2c1751dffed35443a5fc154ac626e141ef45a6
 
 .. code:: python
 
  from quo.table import Table
   
- example = [
+ data = [
  ["Name", "Gender", "Age"],
  ["Alice", "F", 24],
  ["Bob", "M", 19],
  ["Dave", "M", 24]
  ]
+<<<<<<< HEAD
  Table(example)
+=======
+ 
+ Table(data)
+>>>>>>> ab2c1751dffed35443a5fc154ac626e141ef45a6
 
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/table.png
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png

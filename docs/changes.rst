@@ -10,11 +10,19 @@ Changelog
 ``Version 2022.4.3``
 ---------------------
 
+<<<<<<< HEAD
 Released on 2022-05-1
 
 **Added**
 ^^^^^^^^^^^
 - Added :param:`style` to :func:`quo.table.Table`
+=======
+Released on 2022-04-16
+
+**Added**
+^^^^^^^^^^
+- Added :func:`style` to :func:`quo.table.Table`
+>>>>>>> ab2c1751dffed35443a5fc154ac626e141ef45a6
 
 ``Version 2022.4.2``
 ---------------------
