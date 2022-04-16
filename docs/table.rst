@@ -7,7 +7,7 @@ Table
 
 **Parameters**
 
-    - ``tabular_data`` - The first required argument. Can be a list-of-lists *(or another iterable of iterables)*, a list of named tuples, a dictionary of iterables, an iterable of dictionaries, a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe.
+    - ``data`` - The first required argument. Can be a list-of-lists *(or another iterable of iterables)*, a list of named tuples, a dictionary of iterables, an iterable of dictionaries, a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe.
 
    - ``theme`` -  **plain** - Separates columns with a double space.
                -  **simple** - like Pandoc simple_tables.
@@ -19,10 +19,13 @@ Table
                -  **presto** - Like tables produce by the Presto CLI.
                -  **mediawiki** - Produces a table markup used in Wikipedia and on other MediaWiki-based sites.
                -  **rst** - Like a simple table format from reStructuredText.
+   -  ``style`` - A style string.
+
+Changed on *v2022.4.3*
+
 
 .. code:: python
 
- from quo import echo
  from quo.table import Table
   
  example = [
@@ -31,6 +34,6 @@ Table
  ["Bob", "M", 19],
  ["Dave", "M", 24]
  ]
- echo(Table(example))
+ Table(example)
 
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/table.png

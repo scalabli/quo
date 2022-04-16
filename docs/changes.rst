@@ -7,6 +7,15 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.4.3``
+---------------------
+
+Released on 2022-05-1
+
+**Added**
+^^^^^^^^^^^
+- Added :param:`style` to :func:`quo.table.Table`
+
 ``Version 2022.4.2``
 ---------------------
 
