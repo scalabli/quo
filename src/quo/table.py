@@ -1236,10 +1236,10 @@ def _wrap_text_to_colwidths(list_of_lists, colwidths, numparses=True):
     return result
 
 
-def Table(
+def _Table(
     tabular_data,
     headers=(),
-    theme="fancy_grid",
+    theme=None,
     floatfmt=_DEFAULT_FLOATFMT,
     numalign=_DEFAULT_ALIGN,
     stralign=_DEFAULT_ALIGN,
@@ -1303,7 +1303,7 @@ def Table(
     Column alignment
     ----------------
 
-    `tabular` tries to detect column types automatically, and aligns
+    `Table` tries to detect column types automatically, and aligns
     the values properly. By default it aligns decimal points of the
     numbers (or flushes integer numbers to the right), and flushes
     everything else to the left. Possible column alignments
@@ -1690,7 +1690,14 @@ def Table(
 
     return _format_table(theme, headers, rows, minwidths, aligns, is_multiline)
 
+def Table(data=None, align="center", style=None, theme="fancy_grid"):
+    from quo.layout.containers import Window
+    from quo.layout.controls import FormattedTextControl
+    from quo.shortcuts.utils import container
 
+    content = Window(FormattedTextControl(_Table(data, theme=theme), style=style), align=align)
+
+    return container(content)
 def _expand_numparse(disable_numparse, column_count):
     """
     Return a list of bools of length `column_count` which indicates whether

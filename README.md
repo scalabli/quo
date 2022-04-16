@@ -284,7 +284,6 @@ Function [Table](https://quo.readthedocs.io/en/latest/table.html) offers a numbe
 
 Example
 ```python
- from quo import echo
  from quo.table import Table
 
  data = [
@@ -293,7 +292,7 @@ Example
    ["Bob", "M", 19],
    ["Dave", "M", 24]
  ]
- echo(Table(data))
+ Table(data)
 ```
 ![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png)
 </details>
