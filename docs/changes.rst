@@ -7,10 +7,29 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.4.2``
+---------------------
+
+Released on 2022-04-16
+
+**Changed**
+^^^^^^^^^^^^
+- Under the hood optimization of class :class:`quo.progress.ProgressBar`
+
+``Version 2022.4.1``
+---------------------
+
+Released on 2022-04-14
+
+**Fixed**
+^^^^^^^^^^
+
+
+
 ``Version 2022.4``
 -------------------
 
-Unreleased
+Released on 2022-04-01
 
 **Added**
 ^^^^^^^^^^
@@ -21,9 +40,6 @@ Unreleased
 - Added :param:`multiline` to :func:`quo.dialog.InputBox`
 - Added `TextField` as an aliase to :class:`TextArea`
 
-**Changed**
-^^^^^^^^^^^^
-- Updated quo dialogs
 
 ``Version 2022.3.5``
 --------------------

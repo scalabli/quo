@@ -27,13 +27,12 @@ from quo.console.console import Console
 from quo.console.current import get_app_session
 from quo.filters import Condition, is_done, renderer_height_is_known
 from quo.text.core import (
-    AnyFormattedText,
+    AnyFormattedText as RichText,
     StyleAndTextTuples,
     to_formatted_text,
 )
 from quo.input import Input
-from quo.keys.key_binding.key_bindings import Bind
-from quo.keys import bind as _bind
+from quo.keys.key_binding.key_bindings import Bind as KeyBinder
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
 from quo.layout.containers import VSplit
@@ -58,18 +57,20 @@ except ImportError:
 
 __all__ = ["ProgressBar"]
 
-
 _SIGWINCH = getattr(signal, "SIGWINCH", None)
 
+_bind = KeyBinder()
 
-def create_key_bindings() -> Bind:
+def create_key_bindings() -> KeyBinder:
     """
     Key bindings handled by the progress bar.
     (The main thread is not supposed to handle any key bindings.)
     """
+
     from quo.event import Event
 
-    kb = Bind()
+    kb = KeyBinder()
+
 
     @kb.add("ctrl-l")
     def _clear(event: Event) -> None:
@@ -109,15 +110,15 @@ class ProgressBar:
     :param output: :class:`~quo.output.Output` instance.
     :param input: :class:`~quo.input.Input` instance.
     """
+    from quo.keys import bind as _bind
 
     def __init__(
         self,
-        title: AnyFormattedText = None,
+        title: RichText = None,
         formatters: Optional[Sequence[Formatter]] = None,
-        toolbar: AnyFormattedText = None,
-        bottom_toolbar: AnyFormattedText = None,
+        bottom_toolbar: RichText = None,
         style: Optional[BaseStyle] = None,
-        bind: Optional[Bind] = _bind,  # None,
+        bind: Optional[KeyBinder] = _bind, # None,
         file: Optional[TextIO] = None,
         color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
@@ -129,7 +130,7 @@ class ProgressBar:
         self.bottom_toolbar = bottom_toolbar
         self.counters: List[ProgressBarCounter[object]] = []
         self.style = style
-        self.bind = bind
+        self.bind= bind
 
         # Note that we use __stderr__ as default error output, because that
         # works best with `patch_stdout`.
@@ -150,22 +151,23 @@ class ProgressBar:
             Window(
                 FormattedTextControl(lambda: self.title),
                 height=1,
-                style="fg:green",
+                style="class:progressbar,title",
             ),
             filter=Condition(lambda: self.title is not None),
         )
 
         bottom_toolbar = ConditionalContainer(
             Window(
-                FormattedTextControl(lambda: self.bottom_toolbar, style="reverse"),
-                style="reverse",
+                FormattedTextControl(
+                    lambda: self.bottom_toolbar, style="class:bottom-toolbar.text"
+                ),
+                style="class:bottom-toolbar",
                 height=1,
             ),
             filter=~is_done
             & renderer_height_is_known
             & Condition(lambda: self.bottom_toolbar is not None),
         )
-        toolbar = bottom_toolbar
 
         def width_for_formatter(formatter: Formatter) -> AnyDimension:
             # Needs to be passed as callable (partial) to the 'width'
@@ -238,7 +240,7 @@ class ProgressBar:
     def __call__(
         self,
         data: Optional[Iterable[_T]] = None,
-        label: AnyFormattedText = "",
+        label: RichText = "",
         remove_when_done: bool = False,
         total: Optional[int] = None,
     ) -> "ProgressBarCounter[_T]":
@@ -291,7 +293,7 @@ class _ProgressControl(UIControl):
     def is_focusable(self) -> bool:
         return True  # Make sure that the key bindings work.
 
-    def get_key_bindings(self) -> Bind:
+    def get_key_bindings(self) -> KeyBinder:
         return self._key_bindings
 
 
@@ -307,7 +309,7 @@ class ProgressBarCounter(Generic[_CounterItem]):
         self,
         progress_bar: ProgressBar,
         data: Optional[Iterable[_CounterItem]] = None,
-        label: AnyFormattedText = "",
+        label: RichText = "",
         remove_when_done: bool = False,
         total: Optional[int] = None,
     ) -> None:

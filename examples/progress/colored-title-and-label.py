@@ -10,7 +10,7 @@ from quo.progress import ProgressBar
 
 def main():
     title = Text('Downloading <style bg="yellow" fg="black">4 files...</style>')
-    label = Text("<ansired>some file</ansired>: ")
+    label = Text("<red>some file</red>: ")
 
     with ProgressBar(title=title) as pb:
         for i in pb(range(800), label=label):

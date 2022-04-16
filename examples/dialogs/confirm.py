@@ -5,7 +5,7 @@ from quo.dialog import ConfirmBox
 
 result = ConfirmBox(
         title="Yes/No example",
-        text="Do you want to confirm?",
-        bg=False)
+        text="Do you want to confirm?"
+        )
 print(f"Result = {result}")
 

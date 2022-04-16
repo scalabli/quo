@@ -18,7 +18,8 @@ QUO_STYLE = [
     ("search", "bg:ansibrightyellow ansiblack"),
     ("search.current", ""),
     #Rule
-    ("rule", "fg:yellow bg:brown bold"),
+    ("bar", "fg:yellow bg:brown"),
+    ("rule", "fg:brown"),
     # Incremental search.
     ("incsearch", ""),
     ("incsearch.current", "reverse"),
@@ -40,7 +41,7 @@ QUO_STYLE = [
     # Default prompt.
     ("prompt", ""),
     ("prompt.arg", "noinherit"),
-    ("prompt.arg.text", ""),
+    ("prompt.arg.text", "fg:red"),
     ("prompt.search", "noinherit"),
     ("prompt.search.text", ""),
     # Search toolbar.
@@ -138,19 +139,19 @@ WIDGETS_STYLE = [
     # Dialog windows.
     ("dialog", "bg:aquamarine"),
     ("dialog.body", "bg:black fg:cyan"),
-    ("dialog.body text-area", "fg:blue bg:white bold"),
+    ("dialog.body text-area", "bg:#cccccc"),
     ("dialog.body text-area last-line", "underline"),
-    ("dialog frame.label", "fg:yellow bg:purple bold"),#"#ff0000 bold"),
+    ("dialog frame.label", "#ff0000 bold"),
     # Scrollbars in dialogs.
     ("dialog.body scrollbar.background", ""),
-    ("dialog.body scrollbar.button", "bg:grey"),#000000"),
+    ("dialog.body scrollbar.button", "bg:#000000"),
     ("dialog.body scrollbar.arrow", ""),
     ("dialog.body scrollbar.start", "nounderline"),
     ("dialog.body scrollbar.end", "nounderline"),
     # Buttons.
     ("button", ""),
     ("button.arrow", "bold"),
-    ("button.focused", "bg:red fg:yellow"),
+    ("button.focused", "bg:red fg:khaki"),
     # Menu bars.
     ("menu-bar", "bg:#aaaaaa #000000"),
     ("menu-bar.selected-item", "bg:#ffffff #000000"),
@@ -158,10 +159,10 @@ WIDGETS_STYLE = [
     ("menu.border", "#aaaaaa"),
     ("menu.border shadow", "#444444"),
     # Shadows.
-    ("dialog shadow", "bg:grey"),#000088"),
-    ("dialog.body shadow", "bg:#aaaaaa"),
-    ("progress-bar", "bg:#000088"),
-    ("progress-bar.used", "bg:#ff0000"),
+    ("dialog shadow", "bg:grey"),
+    ("dialog.body shadow", "bg:green"),
+    ("progress-bar", "bg:yellow"),
+    ("progress-bar.used", "bg:green") #eff0000"),
 ]
 
 

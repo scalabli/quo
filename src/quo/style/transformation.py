@@ -194,7 +194,7 @@ class AdjustBrightnessStyleTransformation(StyleTransformation):
         """
         # Do RGB lookup for ANSI colors.
         try:
-            from prompt_toolkit.output.vt100 import ANSI_COLORS_TO_RGB
+            from quo.o_i.output.vt100 import ANSI_COLORS_TO_RGB
 
             r, g, b = ANSI_COLORS_TO_RGB[color]
             return r / 255.0, g / 255.0, b / 255.0

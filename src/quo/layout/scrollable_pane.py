@@ -14,9 +14,8 @@ __all__ = ["ScrollablePane"]
 # Never go beyond this height, because performance will degrade.
 MAX_AVAILABLE_HEIGHT = 10_000
 
-# Data Structure
+#Data Structure
 Point = NamedTuple("Point", [("x", int), ("y", int)])
-
 
 class ScrollablePane(Container):
     """
@@ -124,10 +123,10 @@ class ScrollablePane(Container):
         z_index: Optional[int],
     ) -> None:
         """
-                Render scrollable pane content.
-        <F11>
-                This works by rendering on an off-screen canvas, and copying over the
-                visible region.
+        Render scrollable pane content.
+<F11>
+        This works by rendering on an off-screen canvas, and copying over the
+        visible region.
         """
         show_scrollbar = self.show_scrollbar()
 

@@ -2,4 +2,4 @@ from quo.console import Console
 
 console = Console()
 
-console.rule()
+console.rule(style="red")

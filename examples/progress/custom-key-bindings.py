@@ -10,8 +10,7 @@ import time
 from quo.keys import bind
 from quo.progress import ProgressBar
 from quo.text import Text
-
-
+from quo.patch_stdout import patch_stdout
 def main():
     bottom_toolbar = Text('<b>[f]</b> Print "f" <b>[q]</b> Abort  <b>[x]</b> Send Control-C.')
 
@@ -20,11 +19,12 @@ def main():
 
     @bind.add("f")
     def _(event):
-        from quo import container
-        from quo.widget import Label
-        content = Label("You pressed `f`", style="fg:brown")
-        container(content, bind=True)
-       #print("You pressed `f`.")
+
+       # from quo import container
+     #   from quo.widget import Label
+       # content = Label("You pressed `f`", style="fg:brown")
+     #   container(content, bind=True)
+        print("You pressed `f`.")
 
     @bind.add("q")
     def _(event):
@@ -38,8 +38,8 @@ def main():
 
     # Use `patch_stdout`, to make sure that prints go above the
     # application.
-  #  with patch_stdout():
-    with ProgressBar(bottom_toolbar=bottom_toolbar) as pb:
+    with patch_stdout():
+        with ProgressBar(bottom_toolbar=bottom_toolbar) as pb:
             for i in pb(range(800)):
                 time.sleep(0.01)
 

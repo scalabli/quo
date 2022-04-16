@@ -26,7 +26,6 @@ results = CheckBox(
         ("croissants", "20 Croissants"),
         ("daily", "The breakfast of the day"),
     ],
-    bg=False
     )# style=style)
 
 if results:
@@ -35,4 +34,4 @@ if results:
         text="You selected: %s\nGreat choice sir !" % ",".join(results))
 
 else:
-    MessageBox("*starves*", bg=False)
+    MessageBox("*starves*")

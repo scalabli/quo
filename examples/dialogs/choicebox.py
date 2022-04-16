@@ -12,8 +12,7 @@ result = ChoiceBox(
         buttons= [
             ("Yes", True),
             ("No", False),
-            ("Maybe...", None)],
-        bg=False
+            ("Maybe...", None)]
         )
 if result == True:
     print("dd")

@@ -177,8 +177,7 @@ AnyContainer = Union[Container, "MagicContainer"]
 def _window_too_small() -> "Window":
     "Create a `Window` that displays the 'Window too small' text."
     return Window(
-        FormattedTextControl(text=[("class:window-too-small", " Window too small")])
-    )
+            FormattedTextControl(text=[("class:window-too-small", " Window too small")]))
 
 
 class VerticalAlign(Enum):
@@ -187,7 +186,6 @@ class VerticalAlign(Enum):
     CENTER = "CENTER"
     BOTTOM = "BOTTOM"
     JUSTIFY = "JUSTIFY"
-
 
 class HorizontalAlign(Enum):
     "Alignment for `VSplit`."
@@ -274,7 +272,6 @@ class HSplit(_Split):
     :param padding_char: Character to be used for filling in the padding.
     :param padding_style: Style to applied to the padding.
     """
-
     top = VerticalAlign.TOP
     center = VerticalAlign.CENTER
     bottom = VerticalAlign.BOTTOM
@@ -521,7 +518,6 @@ class VSplit(_Split):
     :param padding_char: Character to be used for filling in the padding.
     :param padding_style: Style to applied to the padding.
     """
-
     left = HorizontalAlign.LEFT
     center = HorizontalAlign.CENTER
     right = HorizontalAlign.RIGHT
@@ -613,7 +609,7 @@ class VSplit(_Split):
 
             # Padding left.
             center = HorizontalAlign.CENTER
-            right = HorizontalAlign.RIGHT
+            right =HorizontalAlign.RIGHT
             if self.align in (center, right):
                 result.append(Window(width=Dimension(preferred=0)))
 
@@ -847,7 +843,7 @@ class FloatContainer(Container):
 
             if postpone:
                 new_z_index = (
-                    number + 10**8
+                    number + 10 ** 8
                 )  # Draw as late as possible, but keep the order.
                 screen.draw_with_z_index(
                     z_index=new_z_index,
@@ -1482,7 +1478,6 @@ class Window(Container):
         implementation of line continuations, things like Vim "breakindent" and
         so on.
     """
-
     left = WindowAlign.LEFT
     center = WindowAlign.CENTER
     right = WindowAlign.RIGHT
@@ -1493,8 +1488,6 @@ class Window(Container):
         width: AnyDimension = None,
         height: AnyDimension = None,
         z_index: Optional[int] = None,
-        extend_width: FilterOrBool = True,
-        extend_height: FilterOrBool = True,
         dont_extend_width: FilterOrBool = False,
         dont_extend_height: FilterOrBool = False,
         ignore_content_width: FilterOrBool = False,
@@ -1525,8 +1518,6 @@ class Window(Container):
         self.cursorcolumn = to_filter(cursorcolumn)
 
         self.content = content or DummyControl()
-        self.extend_width = to_filter(extend_width)
-        self.extend_height = to_filter(extend_height)
         self.dont_extend_width = to_filter(dont_extend_width)
         self.dont_extend_height = to_filter(dont_extend_height)
         self.ignore_content_width = to_filter(ignore_content_width)
@@ -1626,7 +1617,7 @@ class Window(Container):
         return self._merge_dimensions(
             dimension=to_dimension(self.width),
             get_preferred=preferred_content_width,
-            dont_extend=self.extend_width(),
+            dont_extend=self.dont_extend_width(),
         )
 
     def preferred_height(self, width: int, max_available_height: int) -> Dimension:
@@ -1653,7 +1644,7 @@ class Window(Container):
         return self._merge_dimensions(
             dimension=to_dimension(self.height),
             get_preferred=preferred_content_height,
-            dont_extend=self.extend_height(),
+            dont_extend=self.dont_extend_height(),
         )
 
     @staticmethod
@@ -2746,10 +2737,7 @@ def to_container(container: AnyContainer) -> Container:
         return to_container(container.__pt_container__())
     else:
 
-        raise errors.UsageError(
-            "\n %r is NOT a container object.\n Check the documentation for mitigation steps.\n\n https://quo.readthedocs.io/en/latest"
-            % (container)
-        )
+        raise errors.UsageError("\n %r is NOT a container object.\n Check the documentation for mitigation steps.\n\n https://quo.readthedocs.io/en/latest" % (container))
 
 
 def to_window(container: AnyContainer) -> Window:

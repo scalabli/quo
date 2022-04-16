@@ -20,7 +20,6 @@ def create_dummy_layout() -> Layout:
     layout specified. When ENTER is pressed, the application quits.
     """
     from quo.event import Event
-
     bind = Bind()
 
     @bind.add("enter")
@@ -28,10 +27,8 @@ def create_dummy_layout() -> Layout:
         event.app.exit()
 
     control = FormattedTextControl(
-        Text(
-            "<b><red>»</red> <green>No layout was specified.</green></b> \nPress <reverse>ENTER</reverse> to quit.\n\n» <khaki>https://quo.rtfd.io</khaki>"
-        ),
-        bind=bind,
+            Text("<b><red>»</red> <green>No layout was specified.</green></b> \nPress <reverse>ENTER</reverse> to quit.\n\n» <khaki>https://quo.rtfd.io</khaki>"),
+            bind=bind,
     )
     window = Window(content=control, height=D(min=1))
     return Layout(container=window, focused_element=window)

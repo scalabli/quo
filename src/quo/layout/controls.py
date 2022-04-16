@@ -78,7 +78,6 @@ GetLinePrefixCallable = Callable[[int, int], AnyFormattedText]
 
 Point = NamedTuple("Point", [("x", int), ("y", int)])
 
-
 class UIControl(metaclass=ABCMeta):
     """
     Base class for all user interface controls.
@@ -220,7 +219,7 @@ class UIContent:
             return self._line_heights_cache[key]
         except KeyError:
             if width == 0:
-                height = 10**8
+                height = 10 ** 8
             else:
                 # Calculate line width first.
                 line = fragment_list_to_text(self.get_line(lineno))[:slice_stop]
@@ -247,7 +246,7 @@ class UIContent:
                         prefix_width = get_cwidth(fragment_list_to_text(fragments2))
 
                         if prefix_width >= width:  # Prefix doesn't fit.
-                            height = 10**8
+                            height = 10 ** 8
                             break
 
                         text_width += prefix_width
@@ -256,7 +255,7 @@ class UIContent:
                     try:
                         quotient, remainder = divmod(text_width, width)
                     except ZeroDivisionError:
-                        height = 10**8
+                        height = 10 ** 8
                     else:
                         if remainder:
                             quotient += 1  # Like math.ceil.
@@ -499,7 +498,7 @@ class DummyControl(UIControl):
             return []
 
         return UIContent(
-            get_line=get_line, line_count=100**100
+            get_line=get_line, line_count=100 ** 100
         )  # Something very big.
 
     def is_focusable(self) -> bool:
@@ -963,8 +962,3 @@ class SearchBufferControl(BufferControl):
         # If this BufferControl is used as a search field for one or more other
         # BufferControls, then represents the search state.
         self.searcher_search_state = SearchState(ignore_case=ignore_case)
-
-
-#:TODO:
-
-# Rename FormattedTextControl

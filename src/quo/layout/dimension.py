@@ -3,7 +3,13 @@ Layout dimensions are used to give the minimum, maximum and preferred
 dimensions for containers and controls.
 """
 
-from typing import Any, Callable, List, Optional, Union
+from typing import (
+        Any,
+        Callable, 
+        List, 
+        Optional,
+        Union
+        )
 
 __all__ = [
     "Dimension",
@@ -56,7 +62,7 @@ class Dimension:
         if min is None:
             min = 0  # Smallest possible value.
         if max is None:  # 0-values are allowed, so use "is None"
-            max = 1000**10  # Something huge.
+            max = 1000 ** 10  # Something huge.
         if preferred is None:
             preferred = min
         if weight is None:

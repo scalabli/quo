@@ -314,12 +314,15 @@ class HighlightSelectionProcessor(Processor):
 
 class PasswordProcessor(Processor):
     """
-    Processor that masks the input. (For passwords.)
+    Processor that masks the input.
 
     :param char: (string) Character to be used. "*" by default.
     """
 
-    def __init__(self, char: str = "*") -> None:
+    def __init__(
+            self, 
+            char: str = "\u2735"
+            ) -> None:
         self.char = char
 
     def apply_transformation(self, ti: TransformationInput) -> Transformation:
@@ -533,8 +536,6 @@ class ShowArg(BeforeInput):
     """
     Display the 'arg' in front of the input.
 
-    This was used by the `PromptSession`, but now it uses the
-    `Window.get_line_prefix` function instead.
     """
 
     def __init__(self) -> None:

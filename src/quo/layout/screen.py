@@ -1,14 +1,5 @@
 from collections import defaultdict
-from typing import (
-    TYPE_CHECKING,
-    Callable,
-    DefaultDict,
-    Dict,
-    List,
-    NamedTuple,
-    Optional,
-    Tuple,
-)
+from typing import TYPE_CHECKING, Callable, DefaultDict, Dict, List, NamedTuple, Optional, Tuple
 
 from quo.cache import FastDictCache
 from quo.utils.utils import get_width
@@ -23,7 +14,6 @@ __all__ = [
 ]
 
 Point = NamedTuple("Point", [("x", int), ("y", int)])
-
 
 class Char:
     """

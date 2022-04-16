@@ -896,14 +896,14 @@ class Console(Generic[_AppResult]):
         return of
 
     def rule(
-        self, height: int = 1, char: str = "\u2501", style="class:rule"
+            self, height: int = 1, char: str = "\u2501", style="fg:aquamarine"
     ) -> "Console":
         from quo.shortcuts import container
 
         container(Window(char=char, height=height, style=style), bind=False)
 
     def bar(
-        self, message: Optional[str] = None, align="center", style="class:bar"
+            self, message: Optional[str] = None, align="center", style="fg:black bg:aquamarine"
     ) -> "Console":
         from quo.shortcuts import container
 

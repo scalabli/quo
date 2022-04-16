@@ -7,8 +7,12 @@ import time
 from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, List, Tuple
 
+from quo.text.core import (
+    AnyFormattedText as RichText,
+    StyleAndTextTuples,
+    to_formatted_text,
+)
 from quo.text.html import Text as Te
-from quo.text.core import AnyFormattedText, StyleAndTextTuples, to_formatted_text
 from quo.text.utils import fragment_list_width
 from quo.layout.dimension import AnyDimension, D
 from quo.layout.utils import explode_text_fragments
@@ -44,7 +48,7 @@ class Formatter(metaclass=ABCMeta):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
         pass
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
@@ -56,7 +60,7 @@ class Text(Formatter):
     Display plain text.
     """
 
-    def __init__(self, text: AnyFormattedText, style: str = "") -> None:
+    def __init__(self, text: RichText, style: str = "") -> None:
         self.text = to_formatted_text(text, style=style)
 
     def format(
@@ -64,7 +68,7 @@ class Text(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
         return self.text
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
@@ -85,8 +89,8 @@ class Label(Formatter):
         self.width = width
         self.suffix = suffix
 
-    def _add_suffix(self, label: AnyFormattedText) -> StyleAndTextTuples:
-        label = to_formatted_text(label, style="fg:khaki")  # "class:label")
+    def _add_suffix(self, label: RichText) -> StyleAndTextTuples:
+        label = to_formatted_text(label, style="fg:khaki bold") #Progressbar label #lass:label")
         return label + [("", self.suffix)]
 
     def format(
@@ -94,7 +98,7 @@ class Label(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         label = self._add_suffix(progress.label)
         cwidth = fragment_list_width(label)
@@ -132,7 +136,7 @@ class Percentage(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         return Te(self.template).format(percentage=round(progress.percentage, 1))
 
@@ -145,15 +149,15 @@ class Bar(Formatter):
     Display the progress bar itself.
     """
 
-    template = "<bar bg='#36454F'>{start}<bar-a fg='aquamarine'>{bar_a}</bar-a><bar-b fg='red'>{bar_b}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
+    template = "<bar>{start}<bar-a fg='cyan'>{bar_a}</bar-a><bar-b fg='red'>{bar_b}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
 
     def __init__(
         self,
-        start: str = "",
-        end: str = "",
-        sym_a: str = "\u2501",
-        sym_b: str = "\u257E",  # Can be an ">>" or something else
-        sym_c: str = "\u2500",
+        start: str = " ", #"[",
+        end: str = " ", #"]",
+        sym_a: str = "\u2501", #"=",
+        sym_b: str = "\u257E", # ">",
+        sym_c: str = "\u2500", # " ",
         unknown: str = "#",
     ) -> None:
 
@@ -172,7 +176,7 @@ class Bar(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
         if progress.done or progress.total or progress.stopped:
             sym_a, sym_b, sym_c = self.sym_a, self.sym_b, self.sym_c
 
@@ -212,14 +216,14 @@ class Progress(Formatter):
     Display the progress as text.  E.g. "8/20"
     """
 
-    template = "<current fg='yellow'><i>{current:>3}</i></current>/<total fg='yellow'><i>{total:>3}</i></total>"
+    template = "<current>{current:>3}</current>/<total>{total:>3}</total>"
 
     def format(
         self,
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         return Te(self.template).format(
             current=progress.items_completed, total=progress.total or "?"
@@ -253,7 +257,7 @@ class TimeElapsed(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         text = _format_timedelta(progress.time_elapsed).rjust(width)
         return Te("<time-elapsed>{time_elapsed}</time-elapsed>").format(
@@ -282,7 +286,7 @@ class TimeLeft(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         time_left = progress.time_left
         if time_left is not None:
@@ -316,7 +320,7 @@ class IterationsPerSecond(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         value = progress.items_completed / progress.time_elapsed.total_seconds()
         return Te(self.template.format(iterations_per_second=value))
@@ -335,18 +339,21 @@ class SpinningWheel(Formatter):
     """
     Display a spinning wheel.
     """
+    from quo._spinners import SPINNERS
 
-    characters = r"/-\|"
+    characters = SPINNERS.dots3
 
     def format(
         self,
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
-        index = int(time.time() * 3) % len(self.characters)
-        return Te("<spinning-wheel>{0}</spinning-wheel>").format(self.characters[index])
+        index = int(time.time() * 7) % len(self.characters)
+        return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(
+            self.characters[index]
+        )
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
         return D.exact(1)
@@ -389,7 +396,7 @@ class Rainbow(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> AnyFormattedText:
+    ) -> RichText:
 
         # Get formatted text from nested formatter, and explode it in
         # text/style tuples.
@@ -417,16 +424,15 @@ def create_default_formatters() -> List[Formatter]:
     return [
         Label(),
         Text(" "),
+        SpinningWheel(),
         Percentage(),
         Text(" "),
         Bar(),
-        Text(" ", style="purple"),
+        Text(" "),
         Progress(),
-        Text(" ", style="purple"),
-        Text("\u257D"),
-        Text("eta ", style="purple"),
-        Text("«", style="fg:blue bold"),  # "class:time-left"),
+        Text(" "),
+        Text("eta \u27EE", style="class:time-left"),
         TimeLeft(),
-        Text("»", style="fg:blue bold"),  # class:time-left"),
+        Text("\u27EF", style="class:time-left"),
         Text(" "),
     ]

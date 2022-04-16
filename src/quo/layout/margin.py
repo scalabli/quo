@@ -5,7 +5,10 @@ from abc import ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, Callable, Optional
 
 from quo.filters import FilterOrBool, to_filter
-from quo.text.core import StyleAndTextTuples, to_formatted_text
+from quo.text.core import (
+    StyleAndTextTuples,
+    to_formatted_text
+    )
 from quo.text.utils import fragment_list_to_text
 from quo.utils.utils import get_width as g_w
 
@@ -238,3 +241,5 @@ class ScrollbarMargin(Margin):
                 result.append(("class:scrollbar.arrow", self.down_arrow_symbol))
 
             return result
+
+

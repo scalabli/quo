@@ -108,11 +108,11 @@ Each progress bar can have one title, and for each task an individual label.
 
  import time
 
- from quo import echo
+ from quo import print
  from quo.progress import ProgressBar
 
- title = echo(f"Downloading 4 files...", bg="yellow", fg="black")
- label = echo(f"some file:", fg="red")
+ title = print("<style fg='yellow' bg='black'>Downloading 4 files...</style>")
+ label = print("<red>some file:</red>")
 
  with ProgressBar(title=title) as pb:
      for i in pb(range(800), label=label):
@@ -134,6 +134,7 @@ customized by using a different sequence of formatters. The default formatting l
  default_formatting = [
      Label(),
      Text(' '),
+     SpinningWheel(),
      Percentage(),
      Text(' '),
      Bar(),

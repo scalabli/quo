@@ -29,9 +29,7 @@ from quo.text.core import (
 )
 from quo.text.utils import fragment_list_to_text
 from quo.history import History
-
-# from quo.keys.list import Keys
-# om quo.keys.key_binding.key_bindings import Bind as KeyBinder
+from quo.keys.key_binding.key_bindings import Bind
 from quo.layout.containers import (
     AnyContainer,
     ConditionalContainer,
@@ -48,6 +46,7 @@ from quo.layout.controls import (
     FormattedTextControl,
     GetLinePrefixCallable,
 )
+from quo.keys.key_binding.key_bindings import Bind
 from quo.layout.dimension import AnyDimension
 from quo.layout.dimension import Dimension as D
 from quo.layout.dimension import to_dimension
@@ -263,8 +262,6 @@ class TextArea:
         self.window = Window(
             height=height,
             width=width,
-            extend_height=extend_height,
-            extend_width=extend_width,
             dont_extend_height=dont_extend_height,
             dont_extend_width=dont_extend_width,
             content=self.control,
@@ -382,15 +379,13 @@ class Button:
     :param width: Width of the button.
     """
 
-    from quo.keys.key_binding.key_bindings import Bind
-
     def __init__(
         self,
         text: str,
         handler: Optional[Callable[[], None]] = None,
         width: int = 12,
-        left_symbol: str = "«[",
-        right_symbol: str = "]»",
+        left_symbol: str = "«\u27EC",
+        right_symbol: str = "\u27ED»",
     ) -> None:
 
         self.text = text
