@@ -36,7 +36,7 @@ def main():
 
     while True:
         try:
-            text = session.prompt("Type something: ")
+            text = session.prompt("Type something:» ")
         except KeyboardInterrupt:
             pass  # Ctrl-C pressed. Try again.
         else:

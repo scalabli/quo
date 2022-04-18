@@ -1,9 +1,8 @@
-from quo.spin import spinner
+from quo.spin import Spinner
 
 
 
-with spinner as sp:
-    for i in sp:
-
-    #while 1>0:
-        print("odk")
+with Spinner():
+    import time
+    time.sleep(5)
+    print("Hello, world")

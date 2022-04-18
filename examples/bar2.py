@@ -1,4 +1,4 @@
 from quo.bar import Bar
 
 
-Bar("ddd")
+Bar("ddd", style="fg:green")
