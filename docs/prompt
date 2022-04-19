@@ -47,16 +47,32 @@ provided.  For instance, the following will only accept floats:
 
 .. code:: python
 
- from quo import prompt
+   from quo import prompt
 
- prompt('Please enter a number', default=42.0)
+   prompt('Please enter a number', default=42.0)
 
-You can also pass the ``affirm`` flag to :func:`quo.prompt`
 
-.. code:: python
 
- from quo import prompt
- prompt("What is your name?: ", affirm=True)
+Parameters
+   * ``text`` – the text to show for the prompt.
+
+   * ``default`` *(Optional[str, int])* – The default value to use if no input happens. If this is not given it will prompt until it’s aborted.
+
+   * ``hide`` *(Optional[bool])* – If this is set to true then the input value will be hidden.
+
+   * ``affirm`` – asks for confirmation for the value.
+
+   * ``type`` – the type to use to check the value against.
+
+   * ``value_proc`` – if this parameter is provided it’s a function that is invoked instead of the type conversion to convert a value.
+
+   * ``suffix`` *(Optional[str])* – A suffix that should be added to the prompt.
+
+   * ``show_default`` – shows or hides the default value in the prompt.
+
+   * ``err`` *(Optional[bool])* – If set to true the file defaults to stderr instead of stdout, the same as with echo.
+
+   * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
 
 Alternatively, you can use class:`quo.types.Validator`
 This should implement the :class:`~quo.types.Validator` abstract base class. This requires only one method, named ``type`` that
@@ -82,13 +98,12 @@ By default, the input is validated in real-time while the user is typing, but
 Quo can also validate after the user presses the enter key:
 
 .. code:: python
- 
- session = Prompt(
-              int=True,
+    session = Prompt(
+              type=type,
               validate_while_typing=False
               )
 
- session.prompt('Give a number: ')
+    session.prompt('Give a number: ')
 
 If the input validation contains some heavy CPU intensive code, but you don't
 want to block the event loop, then it's recommended to wrap the validation class in a :class:`~quo.types.ThreadedValidator`.
@@ -201,7 +216,6 @@ as a boolean value:
    from quo import confirm
    
    confirm('Do you want to continue?')
-
 
 ``System prompt``
 ------------------

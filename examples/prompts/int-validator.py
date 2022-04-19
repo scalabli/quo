@@ -2,5 +2,6 @@
 
 """Simple example of an input validator"""
 
-import quo
-quo.prompt("Type a integer: ", type=int)
+from quo import prompt
+
+prompt("Type a integer: ", type=int)
