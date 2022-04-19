@@ -75,23 +75,22 @@ Parameters
    * ``show_choices`` – Show or hide choices if the passed type is a Choice. For example if type is a Choice of either day or week, show_choices is true and text is “Group by” then the prompt will be “Group by (day, week): “.
 
 Alternatively, you can use class:`quo.types.Validator`
-This should implement the :class:`~quo.types.Validator` abstract base class. This requires only one method, named ``validate`` that
+This should implement the :class:`~quo.types.Validator` abstract base class. This requires only one method, named ``type`` that
 takes a :class:`~quo.document.Document` as input and raises
 :class:`~quo.errors.ValidationError` when the validation fails.
+
+Added on *v2022.4.4* :meth:``int`` [bool]  can be used when validating numerical characters.
 
 Interger Validator
 ^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
-    from quo.prompt import Prompt
-    from quo.types import integer
-
-    type = integer()
+ from quo.prompt import Prompt
     
-    session = Prompt(type=type)
+ session = Prompt(int=True)
     
-    number = int(session.prompt('Give a number: '))
-    print(f"You said: {number}")
+ number = int(session.prompt('Give a number: '))
+ print(f"You said: {number}")
 
 .. image:: ./images/number-validator.png
 
@@ -148,18 +147,20 @@ A side effect of this is that the enter key will now insert a newline instead of
 
 
 
-It is possible to specify a continuation prompt. This works by passing a
-``prompt_continuation`` callable to :class:`~quo.prompt.Prompt`.
+It is possible to specify a continuation prompt. This works by passing :meth:``continuation`` [bool] to :class:`~quo.prompt.Prompt`.
 This function is supposed to return :ref:`formatted text <formatted_text>`, or a list of ``(style, text)`` tuples. The width of the returned text should not
 exceed the given width. (The width of the prompt margin is defined by the prompt.)
 
+:meth:`continuation` was added on *v2022.4.4*
+
+
 .. code:: python
 
-    from quo.prompt import Prompt, continuation
+ from quo.prompt import Prompt
 
-    session = Prompt(multiline=True, prompt_continuation=continuation)
+ session = Prompt(multiline=True, continuation=True)
 
-    session.prompt('multiline input> ')
+ session.prompt('multiline input> ')
 
 .. image:: ./images/multiline-input.png
 

@@ -220,7 +220,10 @@ class InMemoryHistory(History):
     `append_string` for all items or pass a list of strings to `__init__` here.
     """
 
-    def __init__(self, history_strings: Optional[Sequence[str]] = None) -> None:
+    def __init__(
+            self, 
+            history_strings: Optional[Sequence[str]] = None
+            ) -> None:
         super().__init__()
         # Emulating disk storage.
         if history_strings is None:

@@ -6,8 +6,8 @@ from quo import echo
 from quo.prompt import Prompt
 from quo.text import Text
 
-session = Prompt(placeholder=Text('<style fg="gray">(please type something)</style>'))
+session = Prompt(placeholder=Text('style fg="gray">(please type something)</style>'))
 
 if __name__ == "__main__":
-    answer = session.prompt("")
+    answer = session.prompt(">> ")
     echo(f"You said: {answer}")

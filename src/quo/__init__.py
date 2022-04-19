@@ -112,4 +112,4 @@ from quo.i_o.termui import confirm, echo
 
 from quo.shortcuts.utils import container
 
-__version__ = "2022.4.3"
+__version__ = "2022.4.4"

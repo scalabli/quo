@@ -330,6 +330,7 @@ class Prompt(Generic[_T]):
         When True (the default), automatically wrap long lines instead of
         scrolling horizontally.
     :param hide: Show asterisks instead of the actual typed characters.
+    :param int: `bool`  Integer validator
     :param editing_mode: ``EditingMode.VI`` or ``EditingMode.EMACS``.
     :param vi_mode: `bool`, if True, Identical to ``editing_mode=EditingMode.VI``.
     :param complete_while_typing: `bool` or
@@ -387,11 +388,11 @@ class Prompt(Generic[_T]):
         This can also be a callable that returns (formatted) text.
     :param bottom_toolbar: Formatted text or callable which is supposed to
         return formatted text.
-    :param elicit_continuation: Text that needs to be displayed for a multiline
-        elicit continuation. This can either be formatted text or a callable
+    :param prompt_continuation: Text that needs to be displayed for a multiline prompt continuation. This can either be formatted text or a callable
         that takes a `elicit_width`, `line_number` and `wrap_count` as input
         and returns formatted text. When this is `None` (the default), then
         `elicit_width` spaces will be used.
+    :param: continuatuon: `bool` if `True` a prompt_continuation will be passed.
     :param complete_style: ``CompleteStyle.COLUMN``,
         ``CompleteStyle.MULTI_COLUMN`` or ``CompleteStyle.READLINE_LIKE``.
     :param mouse_support: `bool` or :class:`~quo.filters.Filter`
@@ -473,14 +474,19 @@ class Prompt(Generic[_T]):
         complete_in_thread: bool = False,
         reserve_space_for_menu: int = 8,
         complete_style: CompleteStyle = CompleteStyle.single_column,
+        keys = None,
+        action: str = None,
+        int: bool = False,
         auto_suggest: Optional[AutoSuggest] = None,
         style: Optional[BaseStyle] = None,
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: FilterOrBool = False,
         color_depth: Optional[ColorDepth] = None,
+        contiuation: bool = False,
         include_default_pygments_style: FilterOrBool = True,
         history: Optional[History] = None,
         clipboard: Optional[Clipboard] = None,
+        continuation: bool = False,
         prompt_continuation: Optional[ElicitContinuationText] = None,
         rprompt: AnyFormattedText = None,
         bottom_toolbar: AnyFormattedText = None,
@@ -516,6 +522,9 @@ class Prompt(Generic[_T]):
         self.complete_in_thread = complete_in_thread
         self.is_password = is_password or hide
         self.bind = bind
+        self.keys = keys
+        self.int = int
+        self.action = action
         self.bottom_toolbar = bottom_toolbar
         self.style = style
         self.style_transformation = style_transformation
@@ -547,14 +556,25 @@ class Prompt(Generic[_T]):
 
         # Create buffers, layout and Application.
         self.history = history
+        self.continuation = continuation
         self.default_buffer = self._create_default_buffer()
         self.search_buffer = self._create_search_buffer()
         self.layout = self._create_layout()
         self.app = self._create_application(editing_mode, erase_when_done)
+
         if bind_ is True:
             from quo.keys import bind as _bind
 
             bind = _bind
+
+        if int is True:
+
+            from .types import integer
+            self.type = integer()
+        if continuation is True:
+            def _continuation(width, line_number, wrap_count):
+                return "." * width
+            self.prompt_continuation = _continuation
 
     def _dyncond(self, attr_name: str) -> Condition:
         """

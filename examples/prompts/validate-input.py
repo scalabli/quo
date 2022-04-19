@@ -1,9 +1,6 @@
 from quo import echo
 from quo.prompt import Prompt
-from quo.types import integer
 
-session = Prompt()
-
-type = integer()
-number = int(session.prompt('Give a number: ', type=type))
+session = Prompt(int=True)
+number = int(session.prompt('Give a number: '))
 echo('You said: %i' % number)

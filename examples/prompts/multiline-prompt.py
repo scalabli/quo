@@ -2,12 +2,10 @@
 """
 Demonstration of how the input can be indented.
 """
-import quo
+from quo.prompt import Prompt
 
-session = quo.Prompt()
-
+session = Prompt(multiline=True)
 if __name__ == "__main__":
     answer = session.prompt(
-        "Give me some input: (ESCAPE followed by ENTER to accept)\n > ", multiline=True
-    )
-    quo.echo(f"You said: {answer}")
+        "Give me some input: (ESCAPE followed by ENTER to accept)\n > ")
+ #   echo(f"You said: {answer}")

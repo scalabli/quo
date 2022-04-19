@@ -220,7 +220,7 @@ def get_bell_environment_variable() -> bool:
     """
     True if env variable is set to true (true, TRUE, TrUe, 1).
     """
-    value = os.environ.get("PROMPT_TOOLKIT_BELL", "true")
+    value = os.environ.get("QUO_BELL", "true")
     return value.lower() in ("1", "true")
 
 

@@ -907,10 +907,11 @@ class Console(Generic[_AppResult]):
     ) -> "Console":
         from quo.shortcuts import container
 
-        container(
-            Window(FormattedTextControl(message), height=1, style=style, align=align),
-            bind=False,
+
+        return container(
+            Window(FormattedTextControl(message), height=1, style=style, align=align)
         )
+
 
     def run(
         self,

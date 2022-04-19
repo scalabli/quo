@@ -188,8 +188,6 @@ class Win32Output(Output):
 
         # Also see:
         #    - https://github.com/ipython/ipython/issues/10070
-        #    - https://github.com/jonathanslenders/python-prompt-toolkit/issues/406
-        #    - https://github.com/jonathanslenders/python-prompt-toolkit/issues/86
 
         self.flush()
         sbinfo = CONSOLE_SCREEN_BUFFER_INFO()

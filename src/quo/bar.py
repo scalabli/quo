@@ -1,18 +1,21 @@
 from typing import Optional
-
-from quo.layout import Window, FormattedTextControl, WindowAlign as WA
+from quo.console import Console
+from quo.shortcuts.utils import container
+from quo.layout import Window, FormattedTextControl
 
 
 def Bar(
-    self, message: Optional[str] = None, align="center", style="fg:yellow bg:brown bold"
-):
-    from quo.shortcuts import container
-    if align == "left":
-        Window(FormattedTextControl(message), height=1, style=style, align=WA.LEFT)
-    if align == "right":
-        Window(FormattedTextControl(message), height=1, style=style, align=WA.RIGHT)
-    if align == "center":
-        content = Window(FormattedTextControl(message), height=1, style=style, align=WA.CENTER)
-        container(content)
+        self, 
+        text: Optional = None, 
+        align="center", 
+        style="fg:black bg:cyan"
+        ) -> "Console":
+    from quo.console.console import Console
+
+    console = Console()
+
+    return console.bar(message=text, align=align, style=style)
+
+#(Window(FormattedTextControl(text), height=1, style=style, align=align))
 
 

@@ -924,7 +924,7 @@ class Command(BaseCommand):
         callback=None,
         params=None,
         help=None,
-        epilog="Check the documentation.\n\nhttps://quo.rtfd.io",  # None,
+        epilog="Check the documentation.\n\nhttps://quo.rtfd.io",
         short_help=None,
         apps_metavar="[HELP PAGE]",
         add_autohelp=True,

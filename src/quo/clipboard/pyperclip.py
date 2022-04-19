@@ -1,8 +1,15 @@
 from typing import Optional
-import pyperclip
+
 from quo.selection import SelectionType
 
 from .core import Clipboard, Data
+
+try:
+    import pyperclip
+
+except ModuleNotFoundError:
+    import os
+    os.system("pip install -U pyperclip")
 
 __all__ = [
     "PyperclipClipboard",

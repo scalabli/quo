@@ -7,22 +7,26 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.4.4``
+-----------------------
+
+Released on 2022-04-
+
+**Added**
+^^^^^^^^^^^
+- Added :param:`int` to :class:`quo.prompt.Prompt`
+- Added :meth:`continuation` to :class:`quo.prompt.Prompt`
+
+
 ``Version 2022.4.3``
 ---------------------
 
-<<<<<<< HEAD
-Released on 2022-05-1
+Released on 2022-04-18
 
 **Added**
 ^^^^^^^^^^^
 - Added :param:`style` to :func:`quo.table.Table`
-=======
-Released on 2022-04-16
-
-**Added**
-^^^^^^^^^^
-- Added :func:`style` to :func:`quo.table.Table`
->>>>>>> ab2c1751dffed35443a5fc154ac626e141ef45a6
+  
 
 ``Version 2022.4.2``
 ---------------------

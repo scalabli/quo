@@ -11,7 +11,6 @@ from .core import (
     merge_completers,
 )
 
-# from quo.shortcuts.prompt import CompleStyle
 from .deduplicate import DeduplicateCompleter
 from .filesystem import ExecutableCompleter, PathCompleter
 from .fuzzy_completer import FuzzyCompleter, FuzzyWordCompleter
