@@ -576,6 +576,7 @@ class Prompt(Generic[_T]):
                 return "." * width
             self.prompt_continuation = _continuation
 
+
     def _dyncond(self, attr_name: str) -> Condition:
         """
         Dynamically take this setting from this 'Prompt' class.

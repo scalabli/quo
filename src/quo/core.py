@@ -34,7 +34,7 @@ _missing = object()
 SUBCOMMAND_METAVAR = "COMMAND [ARGS]..."
 SUBCOMMANDS_METAVAR = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
 
-from quo.text import Text
+#from quo.text import Text
 
 DEPRECATED_HELP_NOTICE = " (DEPRECATED)"
 DEPRECATED_INVOKE_NOTICE = "Warning: The command {name} has been deprecated."
@@ -1020,16 +1020,13 @@ class Command(BaseCommand):
                 from quo.layout import (
                     Layout,
                     Window,
-                    WindowAlign as WA,
                     FormattedTextControl,
                     HSplit,
                 )
-                from quo.keys import Bind
-                from quo.console import Console
-                from quo.text import Text
-                from quo.widget import Label
-
-                center = WA.CENTER
+                from quo.keys.key_binding.key_bindings import Bind
+                from quo.console.console import Console
+                from quo.text.html import Text
+                from quo.widget.core import Label
 
                 root = HSplit(
                     [
@@ -1858,6 +1855,7 @@ class Parameter:
         return False
 
     def full_process_value(self, clime, value):
+        from .errors import MissingParameter
         value = self.process_value(clime, value)
 
         if self.required and self.value_is_missing(value):
@@ -2290,7 +2288,6 @@ class App(Parameter):
         value as result.
         """
         from .prompt import prompt
-
         # Calculate the default before prompting anything to be stable.
         default = self.get_default(clime)
 
@@ -2300,14 +2297,14 @@ class App(Parameter):
             return confirm(self.prompt, default)
 
         return prompt(
-            self.prompt,
-            default=default,
-            type=self.type,
-            hide=self.hide,
-            show_choices=self.show_choices,
-            affirm=self.affirm,
-            value_proc=lambda x: self.process_value(clime, x),
-        )
+                self.prompt,
+                default=default,
+                type=self.type,
+                hide=self.hide,
+                show_choices=self.show_choices,
+                affirm=self.affirm,
+                value_proc=lambda x: self.process_value(clime, x)
+                )
 
     def resolve_envvar_value(self, clime):
         rv = super().resolve_envvar_value(clime)
