@@ -10,7 +10,7 @@ Changelog
 ``Version 2022.4.4``
 -----------------------
 
-Released on 2022-04-
+Released on 2022-04-21
 
 **Added**
 ^^^^^^^^^^^
