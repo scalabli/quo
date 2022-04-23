@@ -1,6 +1,6 @@
 from typing import Callable, Iterable, List, Mapping, Optional, Pattern, Union
 
-from quo.completion import CompleteEvent, Completer, Completion
+from quo.completion.core import CompleteEvent, Completer, Completion
 from quo.document import Document
 from quo.text.core import AnyFormattedText
 
@@ -32,7 +32,7 @@ class WordCompleter(Completer):
     def __init__(
         self,
         words: Union[List[str], Callable[[], List[str]]],
-        ignore_case: bool = False,
+        ignore_case: bool = True,
         display_dict: Optional[Mapping[str, AnyFormattedText]] = None,
         meta_dict: Optional[Mapping[str, AnyFormattedText]] = None,
         WORD: bool = False,

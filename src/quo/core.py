@@ -22,7 +22,7 @@ from quo.i_o.termui import confirm  # flair
 # from quo.text import AnyFormattedText
 from .types import _NumberRangeBase, BOOL, convert_type, IntRange
 
-from quo.expediency import (
+from quo.expediency.vitals import (
     _detect_program_name,
     make_default_short_help,
     make_str,

@@ -384,8 +384,8 @@ class Button:
         text: str,
         handler: Optional[Callable[[], None]] = None,
         width: int = 12,
-        left_symbol: str = "«\u27EC",
-        right_symbol: str = "\u27ED»",
+        left_symbol: str = None, # "«\u27EC",
+        right_symbol: str = None, #"\u27ED»",
     ) -> None:
 
         self.text = text
@@ -398,6 +398,14 @@ class Button:
             bind=self._get_key_bindings(),
             focusable=True,
         )
+        from quo.accordance import WIN
+
+        if WIN:
+            self.left_symbol="«["
+            self.right_symbol="]»"
+        else:
+            self.left_symbol="«\u27EC"
+            self.right_symbol="\u27ED»"
 
         def get_style() -> str:
             if get_app().layout.has_focus(self):

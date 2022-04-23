@@ -349,11 +349,15 @@ class SpinningWheel(Formatter):
         progress: "ProgressBarCounter[object]",
         width: int,
     ) -> RichText:
+        from quo.accordance import WIN
 
-        index = int(time.time() * 7) % len(self.characters)
-        return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(
-            self.characters[index]
-        )
+        if WIN:
+            win_chars = r"/-\|"
+            index = int(time.time() * 7) % len(self.win_chars)
+            return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(self.win_chars[index])
+        else:
+            index = int(time.time() * 7) % len(self.characters)
+            return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(self.characters[index])
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
         return D.exact(1)
@@ -421,7 +425,26 @@ def create_default_formatters() -> List[Formatter]:
     """
     Return the list of default formatters.
     """
-    return [
+    from quo.accordance import WIN
+
+    if WIN:
+        return [
+                Label(),
+                Text(" "),
+                SpinningWheel(),
+                Percentage(),
+                Text(" "),
+                Bar(),
+                Text(" "),
+                Progress(),
+                Text(" "),
+                Text("eta [", style="class:time-left"),
+                TimeLeft(),
+                Text("]", style="class:time-left"),
+                Text(" ")
+                ]
+    else:
+        return [
         Label(),
         Text(" "),
         SpinningWheel(),
