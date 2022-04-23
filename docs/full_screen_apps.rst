@@ -39,7 +39,8 @@ This will only consume the least amount of space required.
 
 .. note::
 
-        If we set the ``full_screen`` option, the application will run in an alternate screen buffer, in full screen mode. Starting with v2022.4.5, :kbd:`ctrl-c` will be the default key binder for to exit the app, you will still be able to define your own set of keys
+        If we set the ``full_screen`` option, the application will run in an alternate screen buffer, in full screen mode.
+       Starting with v2022.4.5, :kbd:`ctrl-c` will be the default key binder for to exit the app, you will still be able to define your own set of key bindings.
 
 .. code:: python
 
@@ -273,22 +274,29 @@ Key bindings can be passed to the application as follows:
 
     container(bind=True)
 
+Registering Key bindings
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 To register a new keyboard shortcut, we can use the
 :meth:`~quo.keys.Bind.add` method as a decorator of the key handler:
 
-.. code:: python
+.. code:: python   
 
+ from quo import container
  from quo.keys import bind
-
-
- @bind.add('ctrl-q')
+ from quo.widget import TextField
+ 
+ content = TextField("Hello, world")
+ 
+ # A custom Key binder to exit the application
+ @bind.add("ctrl-q")
  def exit_(event):
-     """
-     Pressing Ctrl-Q will exit the user interface.
-     """
-     event.app.exit()
+       """
+       Pressing "ctrl-q" will exot the user interface
+       """
+        event.app.exit()
+        
+ container(content, bind=True, full_screen=True)
 
- container(bind=True, full_screen=True)
 
 The callback function is named ``exit_`` for clarity, but it could have been named ``_`` (underscore) as well, or anything you see fit
 
