@@ -435,6 +435,36 @@ the layout.
 
 The global key bindings are always active.
 
+Window
+^^^^^^^^
+Container that holds a control.
+
+**Parameters**
+    - ``content`` - :class:`.UIControl` instance.
+    - ``width`` - :class:`.Dimension` instance or callable.
+    - ``height`` - :class:`.Dimension` instance or callable.
+    - ``z_index`` - When specified, this can be used to bring element in front of floating elements.
+    - ``dont_extend_width`` *(bool)* - When `True`, don't take up more width then the preferred width reported by the control.
+    - ``dont_extend_height`` *(bool)* - When `True`, don't take up more width then the  preferred height reported by the control.
+    - ``ignore_content_width`` *(bool)* - A `bool` or :class:`.Filter` instance. Ignore the :class:`.UIContent` width when calculating the dimensions.
+    - ``ignore_content_height`` *(bool)* - A `bool` or :class:`.Filter` instance. Ignore the :class:`.UIContent` height when calculating the dimensions.
+    - ``left_margins`` - A list of :class:`.Margin` instance to be displayed on the left. For instance: :class:`~quo.layout.NumberedMargin` can be one of them in order to show line numbers.
+    - ``right_margins`` - Like `left_margins`, but on the other side.
+    - ``scroll_offsets`` - :class:`.ScrollOffsets` instance, representing the preferred amount of lines/columns to be always visible before/after the cursor. When both top and bottom are a very high number, the cursor will be centered vertically most of the time.
+    - ``allow_scroll_beyond_bottom`` *(bool)* - A `bool` or :class:`.Filter` instance. When True, allow scrolling so far, that the top part of the content is not visible anymore, while there is still empty space available at the bottom of the window. In the Vi editor for instance, this is possible. You will see tildes while the top part of the body is hidden.
+    - ``wrap_lines`` *(bool)** - A `bool` or :class:`.Filter` instance. When True, don't scroll horizontally, but wrap lines instead.
+    - ``get_vertical_scroll`` - Callable that takes this window instance as input and returns a preferred vertical scroll. *(When this is `None`, the scroll is only determined by the last and current cursor position.)*
+    - ``get_horizontal_scroll`` - Callable that takes this window instance as input and returns a preferred vertical scroll.
+    - ``always_hide_cursor`` *(bool)* - A `bool` or :class:`.Filter` instance. When True, never display the cursor, even when the user control specifies a cursor position.
+    - ``cursorline`` *(bool)* - A `bool` or :class:`.Filter` instance. When True, display a cursorline.
+    - ``cursorcolumn`` *(bool)* - A `bool` or :class:`.Filter` instance When True, display a cursorcolumn.
+    - ``colorcolumns`` - A list of :class:`.ColorColumn` instances that describe the columns to be highlighted, or a callable that returns such a list.
+    - ``align`` - :class:`.WindowAlign` value or callable that returns an :class:`.WindowAlign` value. alignment of content. i.e ``left``, ``centre`` or ``right``
+    - ``style`` - A style string. Style to be applied to all the cells in this  window. *(This can be a callable that returns a string.)*
+    - ``char`` *(str)* - Character to be used for filling the background. This can also be a callable that returns a character.
+    - ``get_line_prefix`` - None or a callable that returns formatted text to  atted text to be inserted before a line. It takes a line number (int) and a wrap_count and returns formatted text. This can be used for implementation of line continuations, things like Vim "breakindent".
+
+
 
 ``More about the Window class``
 -------------------------------
