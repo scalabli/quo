@@ -34,7 +34,7 @@ from quo.widget import (
     )
 from quo.widget.dialogs import Dialog
 
-subset = children
+
 class Appstate:
     """
     Application state.
@@ -359,4 +359,4 @@ content = MenuContainer(
 )
 
 container(
-        content, focused_element=text_field, full_screen=True, mouse_support=True, refresh=0.5)
+        content, focused_element=text_field, full_screen=True, bind=True, mouse_support=True, refresh=0.5)

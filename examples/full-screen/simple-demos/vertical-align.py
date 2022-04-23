@@ -2,17 +2,17 @@
 """
 Vertical align demo with VSplit.
 """
-from quo.console import Console
-from quo.keys import Bind
+from quo import container
+from quo.keys import bind
 from quo.text import Text
-from quo.layout.containers import (
+from quo.layout import (
     HSplit,
     VSplit,
     Window
 )
-from quo.layout.controls import FormattedTextControl
-from quo.layout.dimension import D
-from quo.layout.layout import Layout
+from quo.layout import FormattedTextControl
+from quo.layout import Dimension as D
+from quo.layout import Layout
 from quo.widget import Frame
 
 TITLE = Text(
@@ -26,8 +26,7 @@ quis interdum enim. Nam viverra, mauris et blandit malesuada, ante est bibendum
 mauris, ac dignissim dui tellus quis ligula. Aenean condimentum leo at
 dignissim placerat."""
 
-# 1. The layout
-body = HSplit(
+content = HSplit(
     [
         Frame(
             Window(FormattedTextControl(TITLE), height=2), style="bg:#88ff88 #000000"
@@ -145,9 +144,6 @@ body = HSplit(
 
 
 # 2. Key bindings
-bind = Bind()
-
-
 @bind.add("q")
 def _(event):
     "Quit application."
@@ -155,12 +151,6 @@ def _(event):
 
 
 # 3. The `Application`
-application = Console(layout=Layout(body), bind=bind, full_screen=True)
 
+container(content, bind=True, full_screen=True)
 
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()

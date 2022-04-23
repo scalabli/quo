@@ -15,7 +15,7 @@ Key bindings can be defined by importing :func:`quo.keys.bind` which is an insta
     from quo.keys import bind
 
     @bind.add('a')
-    def _(start):
+    def _(event):
         " Do something if 'a' has been pressed. "
         ...
 
@@ -44,7 +44,7 @@ Key bindings can even consist of a sequence of multiple keys. The binding is onl
 
     @bind.add('q', 'u', 'o')
     def _(start):
-        " Do something if 'a' is pressed and then 'b' is pressed. "
+        " Do something if 'q' is pressed, then 'u' and then 'o' is pressed. "
         ...
 
 If the user presses only `q`, then nothing will happen until either a second

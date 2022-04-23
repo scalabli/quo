@@ -2,11 +2,13 @@
 """
 Similar to the autocompletion example. But display all the completions in multiple columns.
 """
-import quo
 
-session = quo.Prompt()
+from quo.completion import WordCompleter
+from quo.prompt import Prompt
 
-animal_completer = quo.completion.WordCompleter(
+session = Prompt()
+
+animal_completer = WordCompleter(
     [
         "alligator",
         "ant",
@@ -49,8 +51,8 @@ def main():
     text = session.prompt(
         "Give some animals: ",
         completer=animal_completer,
-        complete_style=quo.completion.CompleteStyle.multi_column,
-    )
+        complete_style="multi_column"
+        )
     print("You said: %s" % text)
 
 

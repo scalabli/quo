@@ -2,11 +2,13 @@
 """
 Example of multiple individual completers that are combined into one.
 """
-import quo
 
-session = quo.Prompt()
 
-animal_completer = quo.completion.WordCompleter(
+from quo.completion import WordCompleter, merge_completers
+from quo.prompt import Prompt
+
+
+animal_completer = WordCompleter(
     [
         "alligator",
         "ant",
@@ -44,7 +46,7 @@ animal_completer = quo.completion.WordCompleter(
     ignore_case=True,
 )
 
-color_completer = quo.completion.WordCompleter(
+color_completer = WordCompleter(
     [
         "red",
         "green",
@@ -59,13 +61,13 @@ color_completer = quo.completion.WordCompleter(
         "cyan",
         "magenta",
         "violet",
-    ],
-    ignore_case=True,
+    ]
 )
 
+session = Prompt()
 
 def main():
-    completer = quo.completion.merge_completers([animal_completer, color_completer])
+    completer = merge_completers([animal_completer, color_completer])
 
     text = session.prompt(
         "Give some animals: ", completer=completer, complete_while_typing=False

@@ -13,9 +13,11 @@ An example of how to deal with slow auto completion code.
   when the completer is running, and display this in the toolbar.
 """
 import time
-import quo
 
-session = quo.Prompt()
+from quo.completion import Completer, Completion, CompleteStyle
+from quo.prompt import Prompt
+
+session = Prompt()
 
 
 WORDS = [
@@ -54,7 +56,7 @@ WORDS = [
 ]
 
 
-class SlowCompleter(quo.completion.Completer):
+class SlowCompleter(Completer):
     """
     This is a completer that's very slow.
     """
@@ -71,7 +73,7 @@ class SlowCompleter(quo.completion.Completer):
             for word in WORDS:
                 if word.startswith(word_before_cursor):
                     time.sleep(0.2)  # Simulate slowness.
-                    yield quo.completion.Completion(word, -len(word_before_cursor))
+                    yield Completion(word, -len(word_before_cursor))
 
         finally:
             # We use try/finally because this generator can be closed if the
@@ -95,7 +97,7 @@ def main():
         complete_in_thread=True,
         complete_while_typing=True,
         bottom_toolbar=bottom_toolbar,
-        complete_style=quo.completion.CompleteStyle.multi_column,
+        complete_style=CompleteStyle.multi_column,
     )
     print("You said: %s" % text)
 

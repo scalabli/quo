@@ -3,7 +3,7 @@
 Vertical split example.
 """
 from quo import container
-from quo.keys import Bind
+from quo.keys import bind
 from quo.layout import FormattedTextControl, Window, VSplit
 from quo.text import Text
 
@@ -15,21 +15,19 @@ right_text = Text("""
 
         <b>(right pane)</b>""")
 
-bind = Bind()
-
 @bind.add("q")
 def _(event):
     "Quit application."
     event.app.exit()
 
 
-container(
-        VSplit([
-            Window(FormattedTextControl(left_text)),
-            Window(width=1, char="|", style="fg:green"),  # Vertical line in the middle.
-            Window(FormattedTextControl(right_text))
-            ]),
-        bind=bind,
-        full=True)
+content = VSplit([
+    Window(FormattedTextControl(left_text)),
+    Window(width=1, char="|", style="fg:green"),  # Vertical line in the middle.
+    Window(FormattedTextControl(right_text))
+    ])
+
+
+container(content, bind=True, full_screen=True)
 
 

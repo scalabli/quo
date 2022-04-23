@@ -2,21 +2,20 @@
 """
 Example of nested autocompletion.
 """
-import quo
+from quo.completion import NestedCompleter
+from quo.prompt import Prompt
 
-session = quo.Prompt()
-
-
-completer = quo.completion.NestedCompleter.add(
-    {
+completer = NestedCompleter.add(
+        {
         "show": {"version": None, "clock": None, "ip": {"interface": {"brief": None}}},
         "exit": None,
     }
 )
 
+session = Prompt(completer=completer)
 
 def main():
-    text = session.prompt("Type a command: ", completer=completer)
+    text = session.prompt("Type a command: ") #, completer=completer)
     print("You said: %s" % text)
 
 

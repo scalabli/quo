@@ -6,23 +6,23 @@ This is mainly used for displaying line numbers and scroll bars, but it could
 be used to display any other kind of information as well.
 """
 
+from quo import container
 from quo.buffer import Buffer
-from quo.console import Console
-from quo.keys import Bind
+from quo.keys import bind
 from quo.layout import HSplit, Layout, Window
 from quo.layout import BufferControl, FormattedTextControl
 from quo.layout.margin import NumberedMargin, ScrollbarMargin
 from quo.text import Text
 
-LIPSUM = Text("""<b><purple>Quo</purple> is <style fg="black" bg="red">scallable\n</style></b>\n""")
+LIPSUM = ("""Quo is scallable\n""") *30
+
 # Create text buffers. The margins will update if you scroll up or down.
 
-LIPSUM = LIPSUM *40
 buff = Buffer()
 buff.text = LIPSUM
 
 # 1. The layout
-body = HSplit(
+content = HSplit(
     [
         Window(FormattedTextControl('Press "q" to quit.'), height=1, style="fg:red bg:yellow bold"),
         Window(
@@ -36,23 +36,12 @@ body = HSplit(
 
 
 # 2. Key bindings
-kb = Bind()
-
-@kb.add("q")
-@kb.add("ctrl-c")
+@bind.add("q")
+@bind.add("ctrl-c")
 def _(event):
     "Quit application."
     event.app.exit()
 
-# Layout
-layout = Layout(body)
+
 # 3. The `Application`
-application = Console(layout=layout, bind=kb)# full_screen=True)
-
-
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
+container(content, bind=True, full_screen=True)

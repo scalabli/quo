@@ -2,9 +2,12 @@
 """
 Example of using the control-space key binding for auto completion.
 """
-import quo
+from quo.completion import WordCompleter
+from quo.keys import bind
+from quo.prompt import Prompt
 
-animal_completer = quo.completion.WordCompleter(
+
+animal_completer = WordCompleter(
     [
         "alligator",
         "ant",
@@ -42,11 +45,10 @@ animal_completer = quo.completion.WordCompleter(
     ignore_case=True,
 )
 
-session = quo.Prompt()
-kb = quo.keys.KeyBinder()
+session = Prompt()
 
 
-@kb.add("ctrl-space")
+@bind.add("ctrl-space")
 def _(event):
     """
     Start auto completion. If the menu is showing already, select the next
@@ -63,9 +65,8 @@ def main():
     text = session.prompt(
         "Give some animals: ",
         completer=animal_completer,
-        complete_while_typing=False,
-        bind=kb,
-    )
+        complete_while_typing=False
+        )
     print("You said: %s" % text)
 
 

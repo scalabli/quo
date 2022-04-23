@@ -180,6 +180,7 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
 
 
 .. code:: python
+
    from quo.console import Console
    
    console = Console()

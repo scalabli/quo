@@ -3,8 +3,7 @@
 A simple example of a calculator program.
 This could be used as inspiration for a REPL.
 """
-#from quo import container
-from quo.console import container, Console
+from quo import container
 from quo.document import Document
 from quo.keys import bind
 from quo.layout import Window, HSplit, Layout
@@ -68,9 +67,6 @@ def main():
     def _(event):
         "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
         event.app.exit()
-
-   # layout = Layout(container, focused_element=input_field)
-  #  Console(layout=layout).run()
 
     container(content, bind=True, focused_element=input_field, full_screen=True, mouse_support=True)
 

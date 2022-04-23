@@ -3,7 +3,10 @@
 Demonstration of a custom completer class and the possibility of styling
 completions independently.
 """
-import quo
+from quo.completion import Completer, Completion
+from quo.color import ColorDepth
+from quo.prompt import Prompt
+
 
 colors = [
     "red",
@@ -17,14 +20,12 @@ colors = [
     "pink",
 ]
 
-session = quo.Prompt()
-
-class ColorCompleter(quo.completion.Completer):
+class ColorCompleter(Completer):
     def get_completions(self, document, complete_event):
         word = document.get_word_before_cursor()
         for color in colors:
             if color.startswith(word):
-                yield quo.completion.Completion(
+                yield Completion(
                     color,
                     start_position=-len(word),
                     style="fg:" + color,
@@ -32,24 +33,22 @@ class ColorCompleter(quo.completion.Completer):
                 )
 
 
+
 def main():
     # Simple completion menu.
     print("(The completion menu displays colors.)")
-    session.prompt("Type a color: ", completer=ColorCompleter())
+    session = Prompt(completer=ColorCompleter())
+    session.prompt("Type a color: ")
 
     # Multi-column menu.
-    session.prompt(
-        "Type a color: ",
-        completer=ColorCompleter(),
-        complete_style=quo.completion.CompleteStyle.multi_column,
-    )
+    session = Prompt(completer=ColorCompleter(), complete_style="multi_column")
+    session.prompt("Type a color: ")
+
 
     # Readline-like
-    session.prompt(
-        "Type a color: ",
-        completer=ColorCompleter(),
-        complete_style=quo.completion.CompleteStyle.neat,
-    )
+    session = Prompt(completer=ColorCompleter(), complete_style="readline")
+    session.prompt("Type a color: ")
+
 
     # Prompt with true color output.
     message = [
@@ -70,8 +69,9 @@ def main():
         ("#11aacc", "t"),
         ("#11aaee", ": "),
     ]
-    session.prompt(message, completer=ColorCompleter(), color_depth=quo.color.ColorDepth.twenty_four_bit)
 
+    session = Prompt(completer=ColorCompleter(), color_depth="true_color")
+    session.prompt(message)
 
 if __name__ == "__main__":
     main()

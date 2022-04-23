@@ -2,11 +2,12 @@
 """
 Autocompletion example that shows meta-information alongside the completions.
 """
-import quo
 
-session = quo.Prompt()
+from quo.completion import WordCompleter
+from quo.prompt import Prompt
 
-animal_completer = quo.completion.WordCompleter(
+
+animal_completer = WordCompleter(
     [
         "alligator",
         "ant",
@@ -33,17 +34,16 @@ animal_completer = quo.completion.WordCompleter(
         "ant": "Ants are eusocial insects of the family Formicidae",
         "ape": "Apes (Hominoidea) are a branch of Old World tailless anthropoid catarrhine primates ",
         "bat": "Bats are mammals of the order Chiroptera",
-    },
-    ignore_case=True,
+    }
 )
 
 
-def main():
-    text = session.prompt(
-        "Give some animals: ",
+session = Prompt(
         completer=animal_completer,
-        complete_style=quo.completion.CompleteStyle.multi_column,
-    )
+        complete_style="multi_column"
+        )
+def main():
+    text = session.prompt("Give some animals: ")
     print("You said: %s" % text)
 
 

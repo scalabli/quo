@@ -7,11 +7,10 @@ Press [Tab] to complete the current word.
     and shows all the completions. (In the menu)
 - Any following tab press cycles through all the possible completions.
 """
-from quo import echo
 from quo.completion import WordCompleter
 from quo.prompt import Prompt
 
-animal_completer = WordCompleter(
+example = WordCompleter(
     [
         "alligator",
         "ant",
@@ -45,15 +44,14 @@ animal_completer = WordCompleter(
         "spider",
         "turkey",
         "turtle",
-    ],
-    ignore_case=True,
-)
+    ]
+    )
 
-session = Prompt(completer=animal_completer, complete_while_typing=True)
+session = Prompt(completer=example)
 
 def main():
     text = session.prompt("List famous  animals: ")
-    echo(f"You said: {text}")
+    print(f"You said: {text}")
 
 
 if __name__ == "__main__":

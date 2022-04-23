@@ -7,6 +7,18 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.4.5``
+----------------------
+
+Released on 2022-04-
+
+
+**Changed**
+^^^^^^^^^^^^^
+
+- Renamed :meth:`quo.console.Console.openfile` to :meth:`open`
+
+
 ``Version 2022.4.4``
 -----------------------
 

@@ -5,9 +5,9 @@ completions independently by passing formatted text objects to the "display"
 and "display_meta" arguments of "Completion".
 """
 
-import quo
-
-session = quo.Prompt()
+from quo.completion import Completion, Completer
+from quo.prompt import Prompt
+from quo.text import Text
 
 animals = [
     "alligator",
@@ -61,33 +61,19 @@ family_colors = {
 }
 
 meta = {
-    "alligator": quo.text.HTML(
-        "An <red>alligator</red> is a <u>crocodilian</u> in the genus Alligator of the family Alligatoridae."
+    "alligator": Text("An <red>alligator</red> is a <u>crocodilian</u> in the genus Alligator of the family Alligatoridae."),
+    "ant": Text("<red>Ants</red> are eusocial <u>insects</u> of the family Formicidae."),
+    "ape": Text("<red>Apes</red> (Hominoidea) are a branch of Old World tailless anthropoid catarrhine <u>primates</u>."),
+    "bat": Text("<red>Bats</red> are mammals of the order <u>Chiroptera</u>."),
+    "bee": Text("<red>Bees</red> are flying <u>insects</u> closely related to wasps and ants."),
+    "beaver": Text("The <red>beaver</red> (genus Castor) is a large, primarily <u>nocturnal</u>, semiaquatic <u>rodent</u>."),
+    "bear": Text("<red>Bears</red> are carnivoran <u>mammals</u> of the family Ursidae."
     ),
-    "ant": quo.text.HTML(
-        "<red>Ants</red> are eusocial <u>insects</u> of the family Formicidae."
-    ),
-    "ape": quo.text.HTML(
-        "<red>Apes</red> (Hominoidea) are a branch of Old World tailless anthropoid catarrhine <u>primates</u>."
-    ),
-    "bat": quo.text.HTML("<red>Bats</red> are mammals of the order <u>Chiroptera</u>."),
-    "bee": quo.text.HTML(
-        "<red>Bees</red> are flying <u>insects</u> closely related to wasps and ants."
-    ),
-    "beaver": quo.text.HTML(
-        "The <red>beaver</red> (genus Castor) is a large, primarily <u>nocturnal</u>, semiaquatic <u>rodent</u>."
-    ),
-    "bear": quo.text.HTML(
-        "<red>Bears</red> are carnivoran <u>mammals</u> of the family Ursidae."
-    ),
-    "butterfly": quo.text.HTML(
-        "<blue>Butterflies</blue> are <u>insects</u> in the macrolepidopteran clade Rhopalocera from the order Lepidoptera."
-    ),
-    # ...
-}
+    "butterfly": Text("<blue>Butterflies</blue> are <u>insects</u> in the macrolepidopteran clade Rhopalocera from the order Lepidoptera.")
+    }
 
 
-class AnimalCompleter(quo.completion.Completer):
+class AnimalCompleter(Completer):
     def get_completions(self, document, complete_event):
         word = document.get_word_before_cursor()
         for animal in animals:
@@ -96,7 +82,7 @@ class AnimalCompleter(quo.completion.Completer):
                     family = animal_family[animal]
                     family_color = family_colors.get(family, "default")
 
-                    display = quo.text.HTML(
+                    display = Text(
                         "%s<b>:</b> <red>(<"
                         + family_color
                         + ">%s</"
@@ -106,7 +92,7 @@ class AnimalCompleter(quo.completion.Completer):
                 else:
                     display = animal
 
-                yield quo.completion.Completion(
+                yield Completion(
                     animal,
                     start_position=-len(word),
                     display=display,
@@ -117,22 +103,24 @@ class AnimalCompleter(quo.completion.Completer):
 def main():
     # Simple completion menu.
     print("(The completion menu displays colors.)")
+
+    session = Prompt()
     session.prompt("Type an animal: ", completer=AnimalCompleter())
 
     # Multi-column menu.
+    session = Prompt()
     session.prompt(
         "Type an animal: ",
         completer=AnimalCompleter(),
-        complete_style=quo.completion.CompleteStyle.multi_column,
+        complete_style="multi_column"
     )
 
     # Readline-like
+    session = Prompt()
     session.prompt(
         "Type an animal: ",
         completer=AnimalCompleter(),
-        complete_style=quo.completion.CompleteStyle.neat,
-    )
-
+        complete_style="readline")
 
 if __name__ == "__main__":
     main()

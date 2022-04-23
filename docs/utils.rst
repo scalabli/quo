@@ -73,9 +73,16 @@ cannot be properly exited.
 ``Exitting``
 ------------
 Quo has a low-level exit that skips Python's cleanup and speeds up exit by about 10ms for things like shell completion.
-
 **Parmameters**
      - ``code`` - Exit code.
+
+.. code:: python
+
+ from quo import exit
+
+ exit(1)
+
+
 
 ``Waiting for Key Press(pause)``
 --------------------------------

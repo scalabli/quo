@@ -7,11 +7,11 @@ Press [Tab] to complete the current word.
     and shows all the completions. (In the menu)
 - Any following tab press cycles through all the possible completions.
 """
-import quo
 
-session = quo.Prompt()
+from quo.completion import FuzzyWordCompleter
+from quo.prompt import Prompt
 
-animal_completer = quo.completion.FuzzyWordCompleter(
+example = FuzzyWordCompleter(
     [
         "alligator",
         "ant",
@@ -48,11 +48,9 @@ animal_completer = quo.completion.FuzzyWordCompleter(
     ]
 )
 
-
+session = Prompt(completer=example)
 def main():
-    text = session.prompt(
-        "Give some animals: ", completer=animal_completer, complete_while_typing=True
-    )
+    text = session.prompt("Give some animals: ")#, completer=animal_completer, complete_while_typing=True
     print("You said: %s" % text)
 
 
