@@ -135,7 +135,7 @@ class TextArea:
 
     Window attributes:
 
-    :param lexer: :class:`~quo.lexers.Lexer` instance for syntax
+    :param highlighter: :class:`~quo.lexers.Lexer` instance for syntax
         highlighting.
     :param wrap_lines: When `True`, don't scroll horizontally, but wrap lines.
     :param width: Window width. (:class:`~quo.layout.Dimension` object.)
@@ -160,7 +160,7 @@ class TextArea:
     def __init__(
         self,
         text: str = "",
-        multiline: FilterOrBool = True,
+        multiline: FilterOrBool = False,
         hide: FilterOrBool = False,
         highlighter: Optional[Lexer] = None,
         auto_suggest: Optional[AutoSuggest] = None,

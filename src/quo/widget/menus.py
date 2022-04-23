@@ -92,7 +92,7 @@ class MenuContainer:
         @kb.add("right", filter=in_sub_menu)
         def _submenu(event: E) -> None:
             "go into sub menu."
-            if self._get_menu(len(self.selected_menu) - 1).children:
+            if self._get_menu(len(self.selected_menu) - 1).subset:
                 self.selected_menu.append(0)
 
             # If This item does not have a sub menu. Go up in the parent menu.
@@ -103,7 +103,7 @@ class MenuContainer:
                 self.selected_menu = [
                     min(len(self.menu_items) - 1, self.selected_menu[0] + 1)
                 ]
-                if self.menu_items[self.selected_menu[0]].children:
+                if self.menu_items[self.selected_menu[0]].subset:
                     self.selected_menu.append(0)
 
         @kb.add("up", filter=in_sub_menu)
@@ -115,7 +115,7 @@ class MenuContainer:
 
             previous_indexes = [
                 i
-                for i, item in enumerate(menu.children)
+                for i, item in enumerate(menu.subset)
                 if i < index and not item.disabled
             ]
 
@@ -133,7 +133,7 @@ class MenuContainer:
 
             next_indexes = [
                 i
-                for i, item in enumerate(menu.children)
+                for i, item in enumerate(menu.subset)
                 if i > index and not item.disabled
             ]
 

@@ -154,9 +154,6 @@ def container(
         container(
             Frame(TextArea(text='Hello world!')))
     """
-    if container is None:
-        from quo.widget import Label
-        container = Label("de")
 
     if file:
         output = create_output(stdout=file)
@@ -164,6 +161,12 @@ def container(
         output = get_app_session().output
 
     if bind:
+        # setting `ctrl-c` to be the default key binder to exit the application.
+        #:NOTE:This can be replaced with another key 
+        @_bind.add("ctrl-c")
+        def _(event):
+            event.app.exit()
+
         app: Console[None] = Console(
             layout=Layout(container=container, focused_element=focused_element),
             output=output,
@@ -176,8 +179,7 @@ def container(
             refresh_interval=refresh,
         )
         app.run()
-    if bind is False:
-
+    else:
         def exit_immediately() -> None:
 
             # Use `call_from_executor` to exit "soon", so that we still render one

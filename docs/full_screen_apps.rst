@@ -244,31 +244,6 @@ class that can be used to create long forms or nested layouts that are
 scrollable as a whole.
 
 
-Focusing windows
-^^^^^^^^^^^^^^^^^
-
-Focusing something can be done by calling the
-:meth:`~quo.layout.Layout.focus` method. This method is very
-flexible and accepts a :class:`~quo.layout.Window`, a
-:class:`~quo.buffer.Buffer`, a
-:class:`~quo.layout.controls.UIControl` and more.
-
-In the following example, we use :func:`~quo.console.get_app` for getting the active application.
-
-.. code:: python
-
-    from quo.console import get_app
-
-    # This window was created earlier.
-    w = Window()
-
-    # ...
-
-    # Now focus it.
-    get_app().layout.focus(w)
-
-Changing the focus is something which is typically done in a key binding, so read on to see how to define key bindings.
-
 ``Key bindings``
 -----------------
 
@@ -417,27 +392,22 @@ By default, this doesn't display a vertical line between the children, but if th
           
  container(content, bind=True, full_screen=True)
  
-The following container objects take a ``modal`` argument
-:class:`~quo.layout.VSplit`,
-:class:`~quo.layout.HSplit`,
 
-Setting ``modal=True`` makes what is called a **modal** container. Normally, a
-child container would inherit its parent key bindings. This does not apply to
-**modal** containers.
+ 
+:class:`~quo.layout.VSplit` and :class:`~quo.layout.HSplit` take a ``modal`` argument.
+
+Setting ``modal=True`` makes what is called a **modal** container. Normally, a child container would inherit its parent key bindings. This does not apply to **modal** containers.
 
 Consider a **modal** container (e.g. :class:`~quo.layout.VSplit`)
-is child of another container, its parent. Any key bindings from the parent
-are not taken into account if the **modal** container (child) has the focus.
+is child of another container, its parent. Any key bindings from the parent are not taken into account if the **modal** container (subset) has the focus.
 
-This is useful in a complex layout, where many controls have their own key
-bindings, but you only want to enable the key bindings for a certain region of
-the layout.
+This is useful in a complex layout, where many controls have their own key bindings, but you only want to enable the key bindings for a certain region of the layout.
 
 The global key bindings are always active.
 
 Window
 ^^^^^^^^
-Container that holds a control.
+:class:`~quo.layout.Window` is a :class:`~quo.layout.Container` that wraps a :class:`~quo.layout.UIControl`, like a :class:`~quo.layout.BufferControl` or :class:`~quo.layout.FormattedTextControl`.
 
 **Parameters**
     - ``content`` - :class:`.UIControl` instance.
@@ -463,34 +433,6 @@ Container that holds a control.
     - ``style`` - A style string. Style to be applied to all the cells in this  window. *(This can be a callable that returns a string.)*
     - ``char`` *(str)* - Character to be used for filling the background. This can also be a callable that returns a character.
     - ``get_line_prefix`` - None or a callable that returns formatted text to  atted text to be inserted before a line. It takes a line number (int) and a wrap_count and returns formatted text. This can be used for implementation of line continuations, things like Vim "breakindent".
-
-
-
-``More about the Window class``
--------------------------------
-
-As said earlier, a :class:`~quo.layout.Window` is a
-:class:`~quo.layout.Container` that wraps a
-:class:`~quo.layout.UIControl`, like a
-:class:`~quo.layout.BufferControl` or
-:class:`~quo.layout.FormattedTextControl`.
-
-.. note::
-
-    Basically, windows are the leafs in the tree structure that represent the UI.
-
-A :class:`~quo.layout.Window` provides a "view" on the
-:class:`~quo.layout.UIControl`, which provides lines of content. The
-window is in the first place responsible for the line wrapping and scrolling of
-the content, but there are much more options.
-
-- Adding left or right margins. These are used for displaying scroll bars or
-  line numbers.
-- There are the `cursorline` and `cursorcolumn` options. These allow
-  highlighting the line or column of the cursor position.
-- Alignment of the content. The content can be left aligned, right aligned or
-  centered.
-- Finally, the background can be filled with a default character.
 
 
 ``More about buffers and BufferControl``

@@ -202,7 +202,7 @@ class _Split(Container):
 
     def __init__(
         self,
-        children: Sequence[AnyContainer],
+        subset: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
         padding: AnyDimension = Dimension.exact(0),
         padding_char: Optional[str] = None,
@@ -215,7 +215,7 @@ class _Split(Container):
         style: Union[str, Callable[[], str]] = "",
     ) -> None:
 
-        self.children = [to_container(c) for c in children]
+        self.subset = [to_container(c) for c in subset]
         self.window_too_small = window_too_small or _window_too_small()
         self.padding = padding
         self.padding_char = padding_char
@@ -236,7 +236,7 @@ class _Split(Container):
         return self.bind
 
     def get_children(self) -> List[Container]:
-        return self.children
+        return self.subset
 
 
 class HSplit(_Split):
@@ -266,7 +266,7 @@ class HSplit(_Split):
         element in front of floating elements.  `None` means: inherit from parent.
     :param style: A style string.
     :param modal: ``True`` or ``False``.
-    :param bind: ``None`` or a :class:`.KeyBinder` object.
+    :param bind: ``None`` or a :class:`.Bind` object.
 
     :param padding: (`Dimension` or int), size to be used for the padding.
     :param padding_char: Character to be used for filling in the padding.
@@ -279,7 +279,7 @@ class HSplit(_Split):
 
     def __init__(
         self,
-        children: Sequence[AnyContainer],
+        subset: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
         align: VerticalAlign = "justify",
         padding: AnyDimension = 0,
@@ -294,7 +294,7 @@ class HSplit(_Split):
     ) -> None:
 
         super().__init__(
-            children=children,
+            subset=subset,
             window_too_small=window_too_small,
             padding=padding,
             padding_char=padding_char,
@@ -318,8 +318,8 @@ class HSplit(_Split):
         if self.width is not None:
             return to_dimension(self.width)
 
-        if self.children:
-            dimensions = [c.preferred_width(max_available_width) for c in self.children]
+        if self.subset:
+            dimensions = [c.preferred_width(max_available_width) for c in self.subset]
             return max_layout_dimensions(dimensions)
         else:
             return Dimension()
@@ -334,7 +334,7 @@ class HSplit(_Split):
         return sum_layout_dimensions(dimensions)
 
     def reset(self) -> None:
-        for c in self.children:
+        for c in self.subset:
             c.reset()
 
     @property
@@ -352,8 +352,8 @@ class HSplit(_Split):
             if self.align in (center, bottom):
                 result.append(Window(width=Dimension(preferred=0)))
 
-            # The children with padding.
-            for child in self.children:
+            # The subsets with padding.
+            for child in self.subset:
                 result.append(child)
                 result.append(
                     Window(
@@ -373,7 +373,7 @@ class HSplit(_Split):
 
             return result
 
-        return self._children_cache.get(tuple(self.children), get)
+        return self._children_cache.get(tuple(self.subset), get)
 
     def write_to_screen(
         self,
@@ -437,7 +437,7 @@ class HSplit(_Split):
         Return the heights for all rows.
         Or None when there is not enough space.
         """
-        if not self.children:
+        if not self.subset:
             return []
 
         width = write_position.width
@@ -525,7 +525,7 @@ class VSplit(_Split):
 
     def __init__(
         self,
-        children: Sequence[AnyContainer],
+        subset: Sequence[AnyContainer],
         window_too_small: Optional[Container] = None,
         align: HorizontalAlign = "justify",
         padding: AnyDimension = 0,
@@ -540,7 +540,7 @@ class VSplit(_Split):
     ) -> None:
 
         super().__init__(
-            children=children,
+            subset=subset,
             window_too_small=window_too_small,
             padding=padding,
             padding_char=padding_char,
@@ -583,19 +583,19 @@ class VSplit(_Split):
         # wrap lines because of the smaller width returned by `_divide_widths`.
 
         sizes = self._divide_widths(width)
-        children = self._all_children
+        subset = self._all_children
 
         if sizes is None:
             return Dimension()
         else:
             dimensions = [
                 c.preferred_height(s, max_available_height)
-                for s, c in zip(sizes, children)
+                for s, c in zip(sizes, subset)
             ]
             return max_layout_dimensions(dimensions)
 
     def reset(self) -> None:
-        for c in self.children:
+        for c in self.subset:
             c.reset()
 
     @property
@@ -613,8 +613,8 @@ class VSplit(_Split):
             if self.align in (center, right):
                 result.append(Window(width=Dimension(preferred=0)))
 
-            # The children with padding.
-            for child in self.children:
+            # The subsets with padding.
+            for child in self.subset:
                 result.append(child)
                 result.append(
                     Window(
@@ -634,20 +634,20 @@ class VSplit(_Split):
 
             return result
 
-        return self._children_cache.get(tuple(self.children), get)
+        return self._children_cache.get(tuple(self.subset), get)
 
     def _divide_widths(self, width: int) -> Optional[List[int]]:
         """
         Return the widths for all columns.
         Or None when there is not enough space.
         """
-        children = self._all_children
+        subset = self._all_children
 
-        if not children:
+        if not subset:
             return []
 
         # Calculate widths.
-        dimensions = [c.preferred_width(width) for c in children]
+        dimensions = [c.preferred_width(width) for c in subset]
         preferred_dimensions = [d.preferred for d in dimensions]
 
         # Sum dimensions
@@ -702,10 +702,10 @@ class VSplit(_Split):
         :param screen: The :class:`~quo.layout.screen.Screen` class
             to which the output has to be written.
         """
-        if not self.children:
+        if not self.subset:
             return
 
-        children = self._all_children
+        subset = self._all_children
         sizes = self._divide_widths(write_position.width)
         style = parent_style + " " + to_str(self.style)
         z_index = z_index if self.z_index is None else self.z_index
@@ -721,7 +721,7 @@ class VSplit(_Split):
         # write_position.height.
         heights = [
             child.preferred_height(width, write_position.height).preferred
-            for width, child in zip(sizes, children)
+            for width, child in zip(sizes, subset)
         ]
         height = max(write_position.height, min(write_position.height, max(heights)))
 
@@ -730,7 +730,7 @@ class VSplit(_Split):
         xpos = write_position.xpos
 
         # Draw all child panes.
-        for s, c in zip(sizes, children):
+        for s, c in zip(sizes, subset):
             c.write_to_screen(
                 screen,
                 mouse_handlers,

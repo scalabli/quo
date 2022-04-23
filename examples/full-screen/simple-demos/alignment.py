@@ -2,11 +2,8 @@
 """
 Demo of the different Window alignment options.
 """
-from quo.console import Console
-from quo.keys import Bind
-from quo.layout import Layout, FormattedTextControl, HSplit, Window
-from quo.text import Text
-
+from quo import container
+from quo.layout import FormattedTextControl, HSplit, Window
 
 LIPSUM = """Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Maecenas
 quis interdum enim. Nam viverra, mauris et blandit malesuada, ante est bibendum
@@ -22,11 +19,11 @@ quis sodales maximus."""
 
 # 1. The layout
 
-left_text = '\nLeft aligned text. - (Press "q" to quit)\n\n' + LIPSUM
+left_text = '\nLeft aligned text. - (Press `ctrl-c` to quit)\n\n' + LIPSUM
 center_text = "Centered text.\n\n" + LIPSUM
 right_text = "Right aligned text.\n\n" + LIPSUM
 
-body = HSplit(
+content = HSplit(
     [
         Window(FormattedTextControl(left_text), align="left"),
         Window(height=1, char="-"),
@@ -37,22 +34,9 @@ body = HSplit(
 )
 
 
-# 2. Key bindings
-kb = Bind()
+
+# 3. The `Application`
+
+container(content, bind=True, full_screen=True)
 
 
-@kb.add("q")
-def _(event):
-    "Quit application."
-    event.app.exit()
-
-# 3. The `Console` app
-application = Console(layout=Layout(body), bind=kb, full_screen=True)
-
-
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
