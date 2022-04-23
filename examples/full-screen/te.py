@@ -9,7 +9,7 @@ from quo import container
 from quo.filters.core import Condition
 from quo.completion.filesystem import PathCompleter
 from quo.console import get_app
-from quo.keys import bind, focus
+from quo.keys import bind
 from quo.layout.containers import (
     ConditionalContainer,
     Float
@@ -49,25 +49,25 @@ class Appstate:
     statusbar_text = "Press Ctrl-M to open menu"
 
 
-#def get_statusbar_right_text():
-#    return " {}:{}  ".format(
-    #    text_field.document.cursor_position_row + 20,
- #       text_field.document.cursor_position_col + 20,
- #   )
+def get_statusbar_right_text():
+    return " {}:{}  ".format(
+        text_field.document.cursor_position_row + 20,
+        text_field.document.cursor_position_col + 20,
+    )
 
 
-#search_toolbar = SearchToolbar()
+search_toolbar = SearchToolbar()
 
-#text_field = TextArea(
-  #  highlighter=DynamicLexer(
-    #    lambda: PygmentsLexer.from_filename(
-     #       Appstate.current_path or ".txt", sync_from_start=False
- #       )
-#    ),
- #   scrollbar=True,
- #   line_numbers=True,
-#    search_field=search_toolbar,
-#)
+text_field = TextArea(
+    highlighter=DynamicLexer(
+        lambda: PygmentsLexer.from_filename(
+            Appstate.current_path or ".txt", sync_from_start=False
+        )
+    ),
+    scrollbar=True,
+    line_numbers=True,
+    search_field=search_toolbar,
+)
 
 
 class TextInputDialog:
@@ -130,8 +130,8 @@ class MessageDialog:
 
 body = HSplit(
     [
-      #  text_field,
-        #search_toolbar,
+        text_field,
+        search_toolbar,
         ConditionalContainer(
             content=VSplit(
                 [
@@ -139,7 +139,7 @@ body = HSplit(
                         FormattedTextControl(Appstate.statusbar_text), style="fg:blue bg:white bold"
                     ),
                     Window(
-                        FormattedTextControl("djdjjd"),
+                        FormattedTextControl(get_statusbar_right_text),
                         style="class:status.right",
                         width=9,
                         align="right",
@@ -154,7 +154,7 @@ body = HSplit(
 
 
 # Global key bindings.
-@bind.add("ctrl-n")
+@bind.add("ctrl-m")
 def _(event):
     "Focus menu."
     event.app.layout.focus(content.window)
@@ -162,57 +162,43 @@ def _(event):
 @bind.add("n")
 def _(event):
     event.app.exit()
-@bind.add("k")
-def _(event):
-    get_app().launch("http://fb.com")
+
 @bind.add("ctrl-o")
 def _(event):
-
-    @bind.add("ctrl-d")
-    def _(event):
-        event.app.exit()
-    container(Window(FormattedTextControl("sjdjdjjekekrke"), char="w"))#do_open_file()
+    do_open_file()
 
 # Handlers for menu items.
 #
 
 
-#def do_open_file():
-   # async def coroutine():
-      #  open_dialog = TextInputDialog(
-     #       title="Open file",
-        #    label_text="Enter the path of a file:",
-        #    completer=PathCompleter(),
-  #      )
+def do_open_file():
+    async def coroutine():
+        open_dialog = TextInputDialog(
+            title="Open file",
+            label_text="Enter the path of a file:",
+            completer=PathCompleter(),
+        )
 
-      #  path = await show_dialog_as_float(open_dialog)
-     #   Appstate.current_path = path
+        path = await show_dialog_as_float(open_dialog)
+        Appstate.current_path = path
 
-    #    if path is not None:
-    #        try:
-      #          with open(path, "rb") as f:
-         #           text_field.text = f.read().decode("utf-8", errors="ignore")
-       #     except IOError as e:
-       #         show_message("Error", "{}".format(e))
+        if path is not None:
+            try:
+                with open(path, "rb") as f:
+                    text_field.text = f.read().decode("utf-8", errors="ignore")
+            except IOError as e:
+                show_message("Error", "{}".format(e))
 
- #   asyncio.ensure_future(coroutine())
+    asyncio.ensure_future(coroutine())
 
 
 def do_about():
-   # show_message("eeeereerrrrgu", " gyutttt")
-    from quo.dialog import MessageBox
-  #  MessageBox("ddrrr")
-
-
-   # bind.add("c")(focus.previous)
-
-    container(Window(FormattedTextControl("About Text editor demo.\nCreated by Gerrishon Sirere."))) #bind=True)
+    show_message("About", "Text editor demo.\nCreated by Gerrishon Sirere.")
 
 
 def show_message(title, text):
     async def coroutine():
         dialog = MessageDialog(title, text)
-
         await show_dialog_as_float(dialog)
 
     asyncio.ensure_future(coroutine())
@@ -236,8 +222,8 @@ async def show_dialog_as_float(dialog):
     return result
 
 
-#def do_new_file():
- #   text_field.text = ""
+def do_new_file():
+    text_field.text = ""
 
 
 def do_exit():
@@ -249,31 +235,31 @@ def do_time_date():
 
     text = "%s:%s:%s"  % (now.hour, now.minute, now.second)
 
-    #text_field.buffer.insert_text(text)
+    text_field.buffer.insert_text(text)
 
 
-#def do_go_to():
-#    async def coroutine():
- #       dialog = TextInputDialog(title="Go to line", label_text="Line number:")
+def do_go_to():
+    async def coroutine():
+        dialog = TextInputDialog(title="Go to line", label_text="Line number:")
 
-   #     line_number = await show_dialog_as_float(dialog)
+        line_number = await show_dialog_as_float(dialog)
 
-     #   try:
-      #      line_number = int(line_number)
-    #    except ValueError:
-    #        show_message("Invalid line number")
-     #   else:
-     #       text_field.buffer.cursor_position = (
-      #          text_field.buffer.document.translate_row_col_to_index(
-       #             line_number - 1, 0
-           #     )
-   #         )
+        try:
+            line_number = int(line_number)
+        except ValueError:
+            show_message("Invalid line number")
+        else:
+            text_field.buffer.cursor_position = (
+                text_field.buffer.document.translate_row_col_to_index(
+                    line_number - 1, 0
+                )
+            )
 
-#    asyncio.ensure_future(coroutine())
+    asyncio.ensure_future(coroutine())
 
 
-#def do_undo():
-#    text_field.buffer.undo()
+def do_undo():
+    text_field.buffer.undo()
 
 
 def do_cut():
@@ -281,9 +267,9 @@ def do_cut():
     get_app().clipboard.set_data(data)
 
 
-#def do_copy():
-#    data = text_field.buffer.copy_selection()
-#    get_app().clipboard.set_data(data)
+def do_copy():
+    data = text_field.buffer.copy_selection()
+    get_app().clipboard.set_data(data)
 
 
 def do_delete():
@@ -328,8 +314,8 @@ content = MenuContainer(
         MenuItem(
             "📂File",
             subset=[
-                MenuItem("New..."), # handler=do_new_file),
-                MenuItem("Open...",), #handler=do_open_file),
+                MenuItem("New...", handler=do_new_file),
+                MenuItem("Open...", handler=do_open_file),
                 MenuItem("Save"),
                 MenuItem("Save as..."),
                 MenuItem("-", disabled=True),
@@ -339,16 +325,16 @@ content = MenuContainer(
         MenuItem(
             "Edit",
             subset=[
-                MenuItem("Undo",), # handler=do_undo),
-                MenuItem("Cut"), # handler=do_cut),
-                MenuItem("Copy"), # handler=do_copy),
-                MenuItem("Paste"), # handler=do_paste),
+                MenuItem("Undo", handler=do_undo),
+                MenuItem("Cut", handler=do_cut),
+                MenuItem("Copy", handler=do_copy),
+                MenuItem("Paste", handler=do_paste),
                 MenuItem("Delete", handler=do_delete),
                 MenuItem("-", disabled=True),
                 MenuItem("Find", handler=do_find),
                 MenuItem("Find next", handler=do_find_next),
                 MenuItem("Replace"),
-                MenuItem("Go To"), # handler=do_go_to),
+                MenuItem("Go To", handler=do_go_to),
                 MenuItem("Select All", handler=do_select_all),
                 MenuItem("Time/Date", handler=do_time_date),
             ],
@@ -373,4 +359,4 @@ content = MenuContainer(
 )
 
 container(
-        content, focused_element=None, full_screen=True, bind=True, mouse_support=True, refresh=0.5)
+        content, focused_element=text_field, full_screen=True, bind=True, mouse_support=True, refresh=0.5)

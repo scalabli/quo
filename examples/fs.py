@@ -16,8 +16,21 @@ def _(event):
 
 content = Label("Hello, World")
 
+from quo.keys import focus
+bind.add("tab")(focus.next)
+bind.add("s-tab")(focus.previous)
 
+@bind.add("ctrl-m")
+def _(event):
+    "Focus menu."
+    event.app.layout.focus(content.window)
 
+@bind.add("n")
+def _(event):
+    event.app.exit()
+                                                                @bind.add("ctrl-o")
+def _(event):
+    do_open_file()
 content = MenuContainer(
         body=content,
         menu_items=[

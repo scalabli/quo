@@ -3,7 +3,6 @@
 Vertical split example.
 """
 from quo import container
-from quo.keys import bind
 from quo.layout import FormattedTextControl, Window, VSplit
 from quo.text import Text
 
@@ -14,11 +13,6 @@ left_text = Text("""<b>Vertical-split  Press <red>'q'</red> to quit.
 right_text = Text("""
 
         <b>(right pane)</b>""")
-
-@bind.add("q")
-def _(event):
-    "Quit application."
-    event.app.exit()
 
 
 content = VSplit([
