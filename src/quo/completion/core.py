@@ -1,6 +1,7 @@
 """
 """
 from abc import ABCMeta, abstractmethod
+from enum import Enum
 from typing import AsyncGenerator, Callable, Iterable, Optional, Sequence
 
 from quo.document import Document
@@ -47,7 +48,7 @@ class Completion:
         selected_style: str = "",
     ) -> None:
 
-        from quo.text import to_formatted_text
+        from quo.text.core import to_formatted_text
 
         self.text = text
         self.start_position = start_position
@@ -94,21 +95,21 @@ class Completion:
     @property
     def display_text(self) -> str:
         "The 'display' field as plain text."
-        from quo.text import fragment_list_to_text
+        from quo.text.utils import fragment_list_to_text
 
         return fragment_list_to_text(self.display)
 
     @property
     def display_meta(self) -> StyleAndTextTuples:
         "Return meta-text. (This is lazy when using a callable)."
-        from quo.text import to_formatted_text
+        from quo.text.core import to_formatted_text
 
         return to_formatted_text(self._display_meta or "")
 
     @property
     def display_meta_text(self) -> str:
         "The 'meta' field as plain text."
-        from quo.text import fragment_list_to_text
+        from quo.text.utils import fragment_list_to_text
 
         return fragment_list_to_text(self.display_meta)
 
@@ -128,9 +129,6 @@ class Completion:
         )
 
 
-from enum import Enum
-
-
 class CompleteStyle(str, Enum):
     """
     How to display autocompletions for the elicit.
@@ -139,7 +137,7 @@ class CompleteStyle(str, Enum):
     value: str
     single_column = "single_column"
     multi_column = "multi_column"
-    neat = "neat"
+    readline = "readline"
 
 
 class CompleteEvent:

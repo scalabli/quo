@@ -890,7 +890,7 @@ class Console(Generic[_AppResult]):
     #   print(termsize)
 
     @property
-    def openfile(self):
+    def open(self):
         from quo.expediency.vitals import openfile as of
 
         return of
@@ -898,7 +898,7 @@ class Console(Generic[_AppResult]):
     def rule(
             self, height: int = 1, char: str = "\u2501", style="fg:aquamarine"
     ) -> "Console":
-        from quo.shortcuts import container
+        from quo.shortcuts.utils import container
 
         container(Window(char=char, height=height, style=style), bind=False)
 

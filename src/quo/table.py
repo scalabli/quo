@@ -1249,21 +1249,7 @@ def _Table(
     colalign=None,
     maxcolwidths=None,
 ):
-    """Format a fixed width table for pretty printing.
-
-    >>> echo(Table([[1, 2.34], [-56, "8.999"], ["2", "10001"]]))
-    ---  ---------
-      1      2.34
-    -56      8.999
-      2  10001
-    ---  ---------
-
-    The first required argument (`tabular_data`) can be a
-    list-of-lists (or another iterable of iterables), a list of named
-    tuples, a dictionary of iterables, an iterable of dictionaries,
-    a two-dimensional NumPy array, NumPy record array, or a Pandas'
-    dataframe.
-
+    """
 
     Table headers
     -------------
@@ -1690,12 +1676,17 @@ def _Table(
 
     return _format_table(theme, headers, rows, minwidths, aligns, is_multiline)
 
-def Table(data=None, align="center", style=None, theme="fancy_grid"):
+def Table(data=None, headers=None, align="center", style=None, theme="fancy_grid"):
+
+    """Format a fixed width table for pretty printing.
+    The first required argument (`data`) can be a
+    list-of-lists (or another iterable of iterables), a list of named tuples, a dictionary of iterables, an iterable of dictionaries,  a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe."""
+
     from quo.layout.containers import Window
     from quo.layout.controls import FormattedTextControl
     from quo.shortcuts.utils import container
 
-    content = Window(FormattedTextControl(_Table(data, theme=theme), style=style), align=align)
+    content = Window(FormattedTextControl(_Table(data, theme=theme, headers=headers), style=style), align=align)
 
     return container(content)
 def _expand_numparse(disable_numparse, column_count):

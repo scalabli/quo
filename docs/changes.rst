@@ -8,14 +8,18 @@ Changelog
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 ``Version 2022.4.5``
-----------------------
+---------------------
 
-Released on 2022-04-
+Released on 2022-04-23
 
+**Added**
+^^^^^^^^^^
+- Added :param:`case_sensitive` to :class:`quo.completion.WordCompleter`
 
-**Changed**
+  **Changed**
 ^^^^^^^^^^^^^
-
+- Changed :param:`children` in class :class:`quo.layout.HSplit` to :param:`subset`
+- Changed :param:`children` in class :class:`quo.layout.VSplit` to :param:`subset`
 - Renamed :meth:`quo.console.Console.openfile` to :meth:`open`
 
 

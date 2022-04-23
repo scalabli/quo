@@ -1,10 +1,9 @@
-from quo.console import Console
-from quo.layout import Layout
+from quo import container
+from quo.console import get_app
 from quo.widget import Label
 
 
-content = Label("ddd")
+content = Label("Hello, World")
 
-lay = Layout(content)
-
-Console(layout=lay).run()
+get_app().layout.focus(content)
+container(content)

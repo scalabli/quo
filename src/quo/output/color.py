@@ -30,7 +30,7 @@ class ColorDepth(str, Enum):
     MONOCHROME = one_bit
     ANSI_COLORS_ONLY = four_bit
     DEFAULT = eight_bit
-    TRUE_COLOR = twenty_four_bit
+    true_color = twenty_four_bit
 
     @classmethod
     def from_env(cls) -> Optional["ColorDepth"]:

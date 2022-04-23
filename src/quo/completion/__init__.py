@@ -1,13 +1,13 @@
 from .core import (
     CompleteEvent,
-    CompleteStyle,
+#    CompleteStyle,
     Completer,
     Completion,
-    ConditionalCompleter,
-    DummyCompleter,
+#    ConditionalCompleter,
+#    DummyCompleter,
     DynamicCompleter,
     ThreadedCompleter,
-    get_common_complete_suffix,
+#    get_common_complete_suffix,
     merge_completers,
 )
 

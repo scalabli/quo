@@ -6,9 +6,7 @@ from quo import container
 from quo.console import get_app
 from quo.keys import bind, focus
 from quo.layout import HSplit, VSplit
-from quo.widget import Box, Button, Frame, Label, TextArea
-
-
+from quo.widget import Box, Button, Frame, Label, TextField
 # Event handlers for all the buttons.
 def button1():
     get_app()
@@ -23,9 +21,7 @@ def button3():
     text_area.text = "Button 3 clicked"
 
 def button4():
-    get_app()
-    lbl.style = "fg:red"
-
+    get_app().bar("Hello, World")
 def exit():
     get_app().exit()
 def dd():
@@ -39,11 +35,9 @@ b1 = Button("Button 1", handler=button1)
 b2 = Button("Button 2", handler=button2)
 b3 = Button("Button 3", handler=button3)
 b4 = Button("Exit", handler=exit)
-b6 = Button("has", handler=dd)
 b5 = Button("kenya", handler=button4)
-text_area = TextArea(scrollbar=True, focusable=True, style="brown")
-lbl = Label("dkekkrkr")
 
+text_area = TextField(scrollbar=True, focusable=True, style="fg:brown")
 
 # Combine all the widgets in a UI.
 # The `Box` object ensures that padding will be inserted around the containing
@@ -51,14 +45,24 @@ lbl = Label("dkekkrkr")
 content =  Box(
         HSplit(
             [
-            Label(text="Press `Tab` to move the focus."),
+            Label("Press `Tab` to move the focus."),
             VSplit([
-                Box(body=HSplit([b1, b2, b3, b4, b5, b6], padding=1),
-                        padding=1,
-                        style="bg:magenta"),
-                Box(body=Frame(text_area, title="eee"), padding=1, style="bg:blue fg:green")
+                Box(
+                    HSplit([b1, b2, b3, b4, b5], 
+                        padding=1),
+                    padding=1,
+                    style="bg:magenta"
+                    ),
+                Box(
+                    Frame(
+                        text_area,
+                        title="Quo"
+                        ),
+                    padding=1, 
+                    style="bg:blue fg:green"
+                    )
                 ]
-            ),
+            )
         ]
     )
 )

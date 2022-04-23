@@ -92,7 +92,7 @@ class MenuContainer:
         @kb.add("right", filter=in_sub_menu)
         def _submenu(event: E) -> None:
             "go into sub menu."
-            if self._get_menu(len(self.selected_menu) - 1).children:
+            if self._get_menu(len(self.selected_menu) - 1).subset:
                 self.selected_menu.append(0)
 
             # If This item does not have a sub menu. Go up in the parent menu.
@@ -103,7 +103,7 @@ class MenuContainer:
                 self.selected_menu = [
                     min(len(self.menu_items) - 1, self.selected_menu[0] + 1)
                 ]
-                if self.menu_items[self.selected_menu[0]].children:
+                if self.menu_items[self.selected_menu[0]].subset:
                     self.selected_menu.append(0)
 
         @kb.add("up", filter=in_sub_menu)
@@ -115,7 +115,7 @@ class MenuContainer:
 
             previous_indexes = [
                 i
-                for i, item in enumerate(menu.children)
+                for i, item in enumerate(menu.subset)
                 if i < index and not item.disabled
             ]
 
@@ -133,7 +133,7 @@ class MenuContainer:
 
             next_indexes = [
                 i
-                for i, item in enumerate(menu.children)
+                for i, item in enumerate(menu.subset)
                 if i > index and not item.disabled
             ]
 
@@ -214,7 +214,7 @@ class MenuContainer:
         for i, index in enumerate(self.selected_menu[1:]):
             if i < level:
                 try:
-                    menu = menu.children[index]
+                    menu = menu.subset[index]
                 except IndexError:
                     return MenuItem("debug")
 
@@ -260,7 +260,7 @@ class MenuContainer:
             result: StyleAndTextTuples = []
             if level < len(self.selected_menu):
                 menu = self._get_menu(level)
-                if menu.children:
+                if menu.subset:
                     result.append(("class:menu", Border.TOP_LEFT))
                     result.append(("class:menu", Border.HORIZONTAL * (menu.width + 4)))
                     result.append(("class:menu", Border.TOP_RIGHT))
@@ -304,7 +304,7 @@ class MenuContainer:
                                 mouse_handler,
                             )
 
-                        if item.children:
+                        if item.subset:
                             yield (style, ">", mouse_handler)
                         else:
                             yield (style, " ", mouse_handler)
@@ -315,7 +315,7 @@ class MenuContainer:
 
                         yield ("", "\n")
 
-                    for i, item in enumerate(menu.children):
+                    for i, item in enumerate(menu.subset):
                         result.extend(one_item(i, item))
 
                     result.append(("class:menu", Border.BOTTOM_LEFT))
@@ -338,21 +338,21 @@ class MenuItem:
         self,
         text: str = "",
         handler: Optional[Callable[[], None]] = None,
-        children: Optional[List["MenuItem"]] = None,
+        subset: Optional[List["MenuItem"]] = None,
         shortcut: Optional[Sequence[Union[Keys, str]]] = None,
         disabled: bool = False,
     ) -> None:
 
         self.text = text
         self.handler = handler
-        self.children = children or []
+        self.subset = subset or []
         self.shortcut = shortcut
         self.disabled = disabled
         self.selected_item = 0
 
     @property
     def width(self) -> int:
-        if self.children:
-            return max(get_cwidth(c.text) for c in self.children)
+        if self.subset:
+            return max(get_cwidth(c.text) for c in self.subset)
         else:
             return 0

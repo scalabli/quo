@@ -365,8 +365,13 @@ def unstyle(text):
 
 
 def edit(
-    text=None, editor=None, env=None, require_save=True, extension=".txt", filename=None
-):
+        text: str = None, 
+        editor=None, 
+        env=None, 
+        require_save: bool = True,
+        extension: str = ".txt", 
+        filename=None
+        ):
     r"""Edits the given text in the defined editor.  If an editor is given
     (should be the full path to the executable but the regular operating
     system search path is used for finding the executable) it overrides

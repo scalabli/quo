@@ -72,7 +72,7 @@ def _ConfirmationBox(
                 Button(text=no_text, handler=no_handler),
             ],
             with_background=True,
-        )
+        )  
 
     return _create_app(dialog, style)
 

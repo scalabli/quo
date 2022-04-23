@@ -143,9 +143,8 @@ def container(
     mouse_support=False,
     bind=False,
     refresh=0.5,
-    include_default_pygments_style: bool = True,
-    test=False,
-) -> None:
+    include_default_pygments_style: bool = True
+    ) -> None:
     """
     Print any layout to the output.
 
@@ -161,7 +160,13 @@ def container(
     else:
         output = get_app_session().output
 
-    if bind is True:
+    if bind:
+        # setting `ctrl-c` to be the default key binder to exit the application.
+        #:NOTE:This can be replaced with another key 
+        @_bind.add("ctrl-c")
+        def _(event):
+            event.app.exit()
+
         app: Console[None] = Console(
             layout=Layout(container=container, focused_element=focused_element),
             output=output,
@@ -174,8 +179,7 @@ def container(
             refresh_interval=refresh,
         )
         app.run()
-    if bind is False:
-
+    else:
         def exit_immediately() -> None:
 
             # Use `call_from_executor` to exit "soon", so that we still render one
@@ -195,11 +199,6 @@ def container(
         raise UsageError(
             "\n» `bind` needs to be be True when `full_screen`` is True\n» Check the documentation for mitigations steps.\n\n  https://quo.readthedocs.io/en/latest"
         )
-    if test is True:
-        from quo.layout.dummy import creat_dummy_layout
-
-        layout = create_dummy_layout()
-
 
 def _create_merged_style(
     style: Optional[BaseStyle], include_default_pygments_style: bool

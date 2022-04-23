@@ -135,7 +135,7 @@ class TextArea:
 
     Window attributes:
 
-    :param lexer: :class:`~quo.lexers.Lexer` instance for syntax
+    :param highlighter: :class:`~quo.lexers.Lexer` instance for syntax
         highlighting.
     :param wrap_lines: When `True`, don't scroll horizontally, but wrap lines.
     :param width: Window width. (:class:`~quo.layout.Dimension` object.)
@@ -160,7 +160,7 @@ class TextArea:
     def __init__(
         self,
         text: str = "",
-        multiline: FilterOrBool = True,
+        multiline: FilterOrBool = False,
         hide: FilterOrBool = False,
         highlighter: Optional[Lexer] = None,
         auto_suggest: Optional[AutoSuggest] = None,
@@ -384,8 +384,8 @@ class Button:
         text: str,
         handler: Optional[Callable[[], None]] = None,
         width: int = 12,
-        left_symbol: str = "«\u27EC",
-        right_symbol: str = "\u27ED»",
+        left_symbol: str = None, # "«\u27EC",
+        right_symbol: str = None, #"\u27ED»",
     ) -> None:
 
         self.text = text
@@ -398,6 +398,14 @@ class Button:
             bind=self._get_key_bindings(),
             focusable=True,
         )
+        from quo.accordance import WIN
+
+        if WIN:
+            self.left_symbol="«["
+            self.right_symbol="]»"
+        else:
+            self.left_symbol="«\u27EC"
+            self.right_symbol="\u27ED»"
 
         def get_style() -> str:
             if get_app().layout.has_focus(self):

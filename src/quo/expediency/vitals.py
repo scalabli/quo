@@ -299,8 +299,13 @@ def textstream(name, encoding=None, errors="strict"):
 
 
 def openfile(
-    filename, mode="r", encoding=None, errors="strict", lazy=False, atomic=False
-):
+        filename,
+        mode="r",
+        encoding=None, 
+        errors="strict", 
+        lazy: bool = False, 
+        atomic: bool = False
+        ):
     """This is similar to how the :class:`File` works but for manual
     usage.  Files are opened non lazy by default.  This can open regular
     files as well as stdin/stdout if ``'-'`` is passed.

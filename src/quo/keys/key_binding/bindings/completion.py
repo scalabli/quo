@@ -6,7 +6,7 @@ import math
 from typing import TYPE_CHECKING, List
 
 from quo.console.run_in_terminal import in_terminal
-from quo.completion import (
+from quo.completion.core import (
     CompleteEvent,
     Completion,
     get_common_complete_suffix,
@@ -88,7 +88,7 @@ def _display_completions_like_readline(
     This will ask for a confirmation if there are too many completions to fit
     on a single page and provide a paginator to walk through them.
     """
-    from quo.text import to_formatted_text
+    from quo.text.core import to_formatted_text
     from quo.i_o.termui import confirm as confirm_
 
     # Get terminal dimensions.

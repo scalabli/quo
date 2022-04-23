@@ -442,7 +442,7 @@ class Prompt(Generic[_T]):
         "input_processors",
         "placeholder",
         "enable_system_elicit",
-        "enable_suspend",
+        "suspend",
         "enable_open_in_editor",
         "reserve_space_for_menu",
         "tempfile_suffix",
@@ -450,6 +450,11 @@ class Prompt(Generic[_T]):
     )
 
     from quo.keys import bind as _bind
+    from quo.completion.core import CompleteStyle
+
+    readline = CompleteStyle.readline
+    single_column = CompleteStyle.single_column
+    multi_column = CompleteStyle.multi_column
 
     def __init__(
         self,
@@ -482,7 +487,6 @@ class Prompt(Generic[_T]):
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: FilterOrBool = False,
         color_depth: Optional[ColorDepth] = None,
-        contiuation: bool = False,
         include_default_pygments_style: FilterOrBool = True,
         history: Optional[History] = None,
         clipboard: Optional[Clipboard] = None,
@@ -502,6 +506,17 @@ class Prompt(Generic[_T]):
         input: Optional[Input] = None,
         output: Optional[Output] = None,
     ) -> None:
+        from quo.output.core import ColorDepth
+        monochrome = ColorDepth.one_bit
+
+        #ANSI Colors 16 Colors
+        ansi_only = ColorDepth.four_bit
+
+        #The default 256 color
+        default = ColorDepth.eight_bit
+
+        # 24 bit True color
+        true_color = ColorDepth.twenty_four_bit
 
         history = history or InMemoryHistory()
         clipboard = clipboard or InMemoryClipboard()
@@ -529,7 +544,7 @@ class Prompt(Generic[_T]):
         self.style = style
         self.style_transformation = style_transformation
         self.swap_light_and_dark_colors = swap_light_and_dark_colors
-        self.color_depth = color_depth
+        self.color_depth = true_color #color_dept
         self.include_default_pygments_style = include_default_pygments_style
         self.rprompt = rprompt
         self.multiline = multiline
@@ -562,16 +577,16 @@ class Prompt(Generic[_T]):
         self.layout = self._create_layout()
         self.app = self._create_application(editing_mode, erase_when_done)
 
-        if bind_ is True:
+        if bind_:
             from quo.keys import bind as _bind
 
             bind = _bind
 
-        if int is True:
-
+        if int:
             from .types import integer
             self.type = integer()
-        if continuation is True:
+
+        if continuation:
             def _continuation(width, line_number, wrap_count):
                 return "." * width
             self.prompt_continuation = _continuation

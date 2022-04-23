@@ -27,6 +27,7 @@ from .utils import (
     fragment_list_width,
     split_lines,
 )
+from .text_field import TextField
 
 __all__ = [
     # Core

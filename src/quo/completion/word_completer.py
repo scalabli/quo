@@ -1,6 +1,6 @@
 from typing import Callable, Iterable, List, Mapping, Optional, Pattern, Union
 
-from quo.completion import CompleteEvent, Completer, Completion
+from quo.completion.core import CompleteEvent, Completer, Completion
 from quo.document import Document
 from quo.text.core import AnyFormattedText
 
@@ -14,7 +14,7 @@ class WordCompleter(Completer):
     Simple autocompletion on a list of words.
 
     :param words: List of words or callable that returns a list of words.
-    :param ignore_case: If True, case-insensitive completion.
+    :param case_sensitive: If True, case-insensitive completion.
     :param meta_dict: Optional dict mapping words to their meta-text. (This
         should map strings to strings or formatted text.)
     :param WORD: When True, use WORD characters.
@@ -32,19 +32,25 @@ class WordCompleter(Completer):
     def __init__(
         self,
         words: Union[List[str], Callable[[], List[str]]],
-        ignore_case: bool = False,
+        ignore_case: bool = None, # True,
         display_dict: Optional[Mapping[str, AnyFormattedText]] = None,
         meta_dict: Optional[Mapping[str, AnyFormattedText]] = None,
         WORD: bool = False,
+        case_sensitive: bool = False,
         sentence: bool = False,
         match_middle: bool = False,
         pattern: Optional[Pattern[str]] = None,
     ) -> None:
 
         assert not (WORD and sentence)
+        
+        if case_sensitive:
+            self.ignore_case = False
+        else:
+            self.ignore_case = True
 
         self.words = words
-        self.ignore_case = ignore_case
+        #self.ignore_case = ignore_case
         self.display_dict = display_dict or {}
         self.meta_dict = meta_dict or {}
         self.WORD = WORD
