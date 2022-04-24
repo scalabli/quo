@@ -50,23 +50,6 @@ This will only consume the least amount of space required.
  content = TextField("Hello, world")
  container(content, bind=True, full_screen=True)
  
-Heres a simple application  with a custom key binder to exit the app
-
-.. code:: python
-
- from quo import container
- from quo.keys import bind
- from quo.widget import TextField
- 
- content = TextField("Hello, world")
- 
- # A custom Key binder to exit the application
- @bind.add("q")
- def _(event):  
-       event.app.exit()
-
- container(content, bind=True, full_screen=True)
-
 An application consists of several components. The most important are:
 
 - I/O objects: the input and output device.
@@ -269,10 +252,10 @@ Key bindings can be passed to the application as follows:
 
 .. code:: python
 
-    from quo import container
-    from quo.keys import bind
+ from quo import container
+ from quo.keys import bind
 
-    container(bind=True)
+ container(bind=True)
 
 Registering Key bindings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -441,6 +424,32 @@ Window
     - ``style`` - A style string. Style to be applied to all the cells in this  window. *(This can be a callable that returns a string.)*
     - ``char`` *(str)* - Character to be used for filling the background. This can also be a callable that returns a character.
     - ``get_line_prefix`` - None or a callable that returns formatted text to  atted text to be inserted before a line. It takes a line number (int) and a wrap_count and returns formatted text. This can be used for implementation of line continuations, things like Vim "breakindent".
+      
+FloatContainer
+^^^^^^^^^^^^^^^
+Container which can contain another container for the background, as well as a list of floating containers on top of it.
+
+**Parameters**
+
+     - ``content`` - :class:`.AnyContainer` object
+     - ``z_index`` - (int or None) When specified, this can be used to bring element in front of floating elements.  `None` means: inherit from parent.  This is the z_index for the whole `Float` container as a whole.
+     - ``floats`` - List of :class:`.Float` object.
+     - ``modal`` *(bool)* - Setting ``modal=True`` makes what is called a **modal** container. Normally, a subset container would inherit its parent key bindings. This does not apply to **modal** containers.
+     - ``bind`` - ``None`` or a :class:`.Bind` object.
+     - ``style`` - A style string.
+
+Example Usage:
+.. code:: python
+
+ FloatContainer(
+                Window(...),
+                floats=[
+                      Float(
+                         xcursor=True,
+                         ycursor=True,
+                         content=CompletionsMenu(...)
+                           )
+                           ])                                         
 
 
 ``More about buffers and BufferControl``

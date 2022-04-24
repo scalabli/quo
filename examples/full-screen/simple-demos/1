@@ -95,3 +95,9 @@ content = FloatContainer(
 container(content, bind=True, full_screen=True)
 
 
+#ßdef run():
+ # ß  application.run()
+
+
+#f __name__ == "__main__":
+  #  run()

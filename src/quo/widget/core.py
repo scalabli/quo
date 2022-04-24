@@ -88,7 +88,7 @@ class Border:
 
     HORIZONTAL = "\u2501"
     # "\u2501" #2593
-    VERTICAL = "\u2593"
+    VERTICAL = "\u2503" #"\u2593"
     # "\u2503"
     TOP_LEFT = "\u256D"
     TOP_RIGHT = "\u256E"

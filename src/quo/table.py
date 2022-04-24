@@ -7,6 +7,8 @@ import math
 import re
 import sys
 import textwrap
+from typing import Optional
+
 from quo.expediency.vitals import inscribe as echo
 from collections import namedtuple
 
@@ -1676,7 +1678,7 @@ def _Table(
 
     return _format_table(theme, headers, rows, minwidths, aligns, is_multiline)
 
-def Table(data=None, headers=None, align="center", style=None, theme="fancy_grid"):
+def Table(data=None, align="center", style=None, theme="fancy_grid"):
 
     """Format a fixed width table for pretty printing.
     The first required argument (`data`) can be a
@@ -1686,7 +1688,7 @@ def Table(data=None, headers=None, align="center", style=None, theme="fancy_grid
     from quo.layout.controls import FormattedTextControl
     from quo.shortcuts.utils import container
 
-    content = Window(FormattedTextControl(_Table(data, theme=theme, headers=headers), style=style), align=align)
+    content = Window(FormattedTextControl(_Table(data, theme=theme), style=style), align=align)
 
     return container(content)
 def _expand_numparse(disable_numparse, column_count):
