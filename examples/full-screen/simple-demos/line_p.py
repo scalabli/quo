@@ -6,10 +6,11 @@ completion.
 Important is to make sure that there is a `CompletionsMenu` in the layout,
 otherwise the completions won't be visible.
 """
-from quo import Condition
+from quo import container
 from quo.console import Console
 from quo.buffer import Buffer
 from quo.completion import WordCompleter
+from quo.filters import Condition
 from quo.text import Text
 from quo.keys import KeyBinder
 from quo.layout.containers import Float, FloatContainer, HSplit, Window

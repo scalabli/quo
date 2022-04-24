@@ -306,18 +306,12 @@ Widget that displays the given text. It is not editable or focusable.
 ```python
 
  from quo import container
- from quo.keys import bind
  from quo.widget import Label
 
  content = Label("Hello, World", style="fg:black bg:red")
   
-  
  # Press Ctrl-C to exit
  
- @bind.add("ctrl-c")
- def _(event):
-    event.app.exit()
-
  container(content, bind=True, full_screen=True)
 
 ```
