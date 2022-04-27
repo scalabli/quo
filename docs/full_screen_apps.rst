@@ -24,7 +24,7 @@ them together.
 ``A simple application``
 ------------------------
 
-Almost every quo application is an instance of an :class:`~quo.console.Console` object. The simplest full screen example would look like this:
+Almost every quo application is an instance of an :func:`~quo.container`. The simplest full screen example would look like this:
 
 .. code:: python
 
@@ -71,7 +71,7 @@ Under the hood, class :class:`~quo.layout.Layout` is the layout for function :fu
  """simple example of a a text area displaying `Hello World!` """
  
  from quo import container
- from quo.widget import Box, Frame, TextArea
+ from quo.widget import Box, Frame, TextField
  
  # Layout for displaying hello world.
  # (The frame creates the border, the box takes care of the margin/padding.)
@@ -86,7 +86,21 @@ Under the hood, class :class:`~quo.layout.Layout` is the layout for function :fu
 
 In the example above, the Layout consists of :class:`Box`, :class:`Frame` and :class:`TextField` for displaying hello world.
 
-The class :class:`Box` takes csre of the margin/padding, class :class:`Frame` creates the border,  and class :class:`TextField` takes care of the text to be printed
+The class :class:`Box` takes care of the margin/padding, class :class:`Frame` creates the border,  and class :class:`TextField` takes care of the text to be printed.
+The :func:`quo.container` prints the layout to the output.
+
+
+container
+^^^^^^^^^^
+Print the layout to the output
+
+**Parameters**
+     - ``container`` - AnyContaine
+     - ``bind`` *(bool)* - When True, initiate a :class:`~quo.keys.Bind` instance for the key bindings.
+     - ``full_screen`` - When True, run the application on the alternate screen buffer.
+     - ``focused_element`` - element to be focused initially. *(Can be anything the `focus` function accepts.)*
+     - ``mouse_support`` - :class:`~quo.filters.Filter` or boolean. When True, enable mouse support. 
+     - ``style`` - A style string.
 
 A layered layout architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -208,11 +222,6 @@ vertical line:
 
 
  container(content, full_screen=True)
-    # You won't be able to Exit this app unless you add a key binder
-
-
-Notice that if you execute this right now, there is no way to quit this
-application yet. This is something we explain in the next section below.
 
 More complex layouts can be achieved by nesting multiple
 :class:`~quo.layout.VSplit`,
@@ -274,7 +283,7 @@ To register a new keyboard shortcut, we can use the
  @bind.add("ctrl-q")
  def exit_(event):
        """
-       Pressing "ctrl-q" will exot the user interface
+       Pressing "ctrl-q" will exit the user interface
        """
         event.app.exit()
         
@@ -439,6 +448,7 @@ Container which can contain another container for the background, as well as a l
      - ``style`` - A style string.
 
 Example Usage:
+
 .. code:: python
 
  FloatContainer(
@@ -449,10 +459,21 @@ Example Usage:
                          ycursor=True,
                          content=CompletionsMenu(...)
                            )
-                           ])                                         
+                           ]
+                          
+                          
+ConditionalContainer
+^^^^^^^^^^^^^^^^^^^^^^^^^
+If you want to make some part of the layout only visible when a certain condition is satisfied, use a ConditionalContainer.
+The received `filter` determines whether the given container should be displayed or not.
 
+**Parameters**
 
-``More about buffers and BufferControl``
+     - ``content`` - :class:`.Container` instance.
+     - ``filter`` - :class:`.Filter` instance.
+
+    
+ ``More about buffers and BufferControl``
 ------------------------------------------
 
 
