@@ -36,7 +36,6 @@ def worker(set_percentage, log_text):
 ProgressBox(
         title="Progress box example",
         text="As an examples, we walk through the filesystem and print all directories",
-        bg=True,
         run_callback=worker
         )
 

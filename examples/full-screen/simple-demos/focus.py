@@ -1,4 +1,8 @@
-import quo
+from quo import container
+from quo.buffer import Buffer
+from quo.document import Document
+from quo.keys import bind
+from quo.layout import HSplit, VSplit, Window
 
 from quo.layout.controls import BufferControl, FormattedTextControl
 
@@ -17,70 +21,66 @@ brought about by the failure to execute a CLI API.
 Simple to code, easy to learn, and does not come with needless baggage. """
 
 
-left_top = quo.layout.Window(BufferControl(quo.buffer.Buffer(document=quo.document.Document(content))))
-left_bottom = quo.layout.Window(BufferControl(quo.buffer.Buffer(document=quo.document.Document(content))))
-right_top = quo.layout.Window(BufferControl(quo.buffer.Buffer(document=quo.document.Document(content))))
-right_bottom = quo.layout.Window(BufferControl(quo.buffer.Buffer(document=quo.document.Document(content))))
+left_top = Window(
+        BufferControl(
+            Buffer(document=Document(content)
+                )
+            )
+        )
+left_bottom = Window(BufferControl(Buffer(document=Document(content))))
+right_top = Window(BufferControl(Buffer(document=Document(content))))
+right_bottom = Window(BufferControl(Buffer(document=Document(content))))
 
 
-body = quo.layout.HSplit(
-    [
-        quo.layout.Window(FormattedTextControl(top_text), height=2, style="reverse"),
-        quo.layout.Window(height=1, char="-"),  # Horizontal line in the middle.
-        quo.layout.VSplit([left_top, quo.layout.Window(width=1, char="|"), right_top]),
-        quo.layout.Window(height=1, char="-"),  # Horizontal line in the middle.
-        quo.layout.VSplit([left_bottom, quo.layout.Window(width=1, char="|"), right_bottom]),
-    ]
-)
+content = HSplit([
+
+     Window(FormattedTextControl(top_text), height=2, style="reverse"),
+     Window(height=1, char="-"),  # Horizontal line in the middle.
+     VSplit([
+         left_top,
+         Window(width=1, char="|"),
+         right_top
+         ]),
+     Window(height=1, char="-"),  # Horizontal line in the middle.
+     VSplit([
+         left_bottom,
+         Window(width=1, char="|"),
+         right_bottom
+         ])
+     ])
 
 
-# 2. Key bindings
-kb = quo.keys.KeyBinder()
-
-
-@kb.add("q")
-def _(event):
-    "Quit application."
-    event.app.exit()
-
-
-@kb.add("a")
+# 2. key bindings
+@bind.add("a")
 def _(event):
     event.app.layout.focus(left_top)
 
 
-@kb.add("b")
+@bind.add("b")
 def _(event):
     event.app.layout.focus(right_top)
 
 
-@kb.add("c")
+@bind.add("c")
 def _(event):
     event.app.layout.focus(left_bottom)
 
 
-@kb.add("d")
+@bind.add("d")
 def _(event):
     event.app.layout.focus(right_bottom)
 
 
-@kb.add("tab")
+@bind.add("tab")
 def _(event):
-    event.app.layout.focus_next()
+    event.app.layout.next()
 
 
-@kb.add("s-tab")
+@bind.add("s-tab")
 def _(event):
-    event.app.layout.focus_previous()
+    event.app.layout.previous()
 
 
 # 3. The `Application`
-application = quo.Console(layout=quo.layout.Layout(body), bind=kb, full_screen=True)
 
-
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
+container(content, bind=True, full_screen=True)
