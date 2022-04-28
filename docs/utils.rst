@@ -53,14 +53,14 @@ is instead a pipe.
 
 .. code:: python
 
-    from quo import echo, getchar
+    from quo import getchar
     
     gc = getchar()
 
     if gc == 'y':
-        echo('We will go on')
+        print('We will go on')
     elif gc == 'n':
-        echo('Abort!')
+        print('Abort!')
  
 
 Note that this reads raw input, which means that things like arrow keys

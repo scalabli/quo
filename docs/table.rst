@@ -8,6 +8,8 @@ Table
 **Parameters**
 
     - ``data`` - The first required argument. Can be a list-of-lists *(or another iterable of iterables)*, a list of named tuples, a dictionary of iterables, an iterable of dictionaries, a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe.
+    - ``align`` - :class:`.WindowAlign` value or callable that return an :class:`.WindowAlign` value. alignment of content. i.e ``left``, ``centre`` or ``right``
+    - ``style`` - A style string.
 
    - ``theme``  -  **plain** - Separates columns with a double space.
                -  **simple** - like Pandoc simple_tables.
@@ -20,7 +22,6 @@ Table
                -  **mediawiki** - Produces a table markup used in Wikipedia and on other MediaWiki-based sites.
                -  **rst** - Like a simple table format from reStructuredText.
 
-   -  ``style`` - A style string.
 
 Changed on *v2022.4.3*
 

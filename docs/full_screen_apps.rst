@@ -97,7 +97,7 @@ Print the layout to the output
 **Parameters**
      - ``container`` - AnyContaine
      - ``bind`` *(bool)* - When True, initiate a :class:`~quo.keys.Bind` instance for the key bindings.
-     - ``full_screen`` - When True, run the application on the alternate screen buffer.
+     - ``full_screen`` *(bool)* - When True, run the application on the alternate screen buffer.
      - ``focused_element`` - element to be focused initially. *(Can be anything the `focus` function accepts.)*
      - ``mouse_support`` - :class:`~quo.filters.Filter` or boolean. When True, enable mouse support. 
      - ``style`` - A style string.
