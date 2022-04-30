@@ -8,7 +8,7 @@ Table
 **Parameters**
 
     - ``data`` - The first required argument. Can be a list-of-lists *(or another iterable of iterables)*, a list of named tuples, a dictionary of iterables, an iterable of dictionaries, a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe.
-    - ``align`` - :class:`.WindowAlign` value or callable that return an :class:`.WindowAlign` value. alignment of content. i.e ``left``, ``centre`` or ``right``
+    - ``align`` - :class:`.WindowAlign` value or callable that return an :class:`.WindowAlign` value. alignment of content. i.e ``left``, ``centre`` or ``right``. ``centre`` is the default value.
     - ``style`` - A style string.
 
    - ``theme``  -  **plain** - Separates columns with a double space.
@@ -39,3 +39,33 @@ Changed on *v2022.4.3*
  Table(data)
 
 .. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png
+
+``Table headers``
+------------------
+
+To print nice column headers, supply the ``headers`` argument.
+
+- `headers` can be an explicit list of column headers.
+- if `headers="firstrow"`, then the first row of data is used
+- if `headers="keys"`, then dictionary keys or column indices are used otherwise a headerless table is produced.
+  
+.. code:: python
+
+ data = [
+      ["sex","age"]
+      ["Alice","F",24]
+      ["Bob","M",19]
+      ]
+      
+  Table(data, headers="firstrow")
+
+``Column Widths and  Line Wrapping``
+--------------------------------------
+:func:`Table`  will, by default, set the width of each column to the length of the longest element in that column. However, in situations where fields are expected to reasonably be too long to look good as a single line, :param:`:param:`column_width` can help automate word wrapping long fields.
+
+.. code:: python
+
+ data = [
+       [1, 'John Smith', 'This is a rather long description that might look better if it is wrapped a bit']
+       ]
+ Table(data, headers=("Issue Id", "Author", "Description"), column_width=[None, None, 30]) 

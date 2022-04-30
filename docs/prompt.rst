@@ -463,6 +463,8 @@ Auto suggestion is a way to propose some input completions to the user like the 
 
 Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow :kbd:`→` or :kbd:`ctrl-e` will insert this suggestion, :kbd:`alt-f` will insert the first word of the suggestion.
 
+*Added :param:`suggest` on v2022.5*
+
 .. note::
     
    When suggestions are based on the history, don't forget to share one :class:`~quo.history.History` object between consecutive prompt calls. Using a :class:`~quo.prompt.Prompt`
@@ -472,23 +474,20 @@ Example:
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.completion import AutoSuggestFromHistory
-    from quo.history import InMemoryHistory
+    from quo.history import MemoryHistory
     
-    history = InMemoryHistory()
-    history.append("import os")
-    history.append('print("hello")') 
-    history.append('print("world")')
-    history.append("import path")
+    MemoryHistory.append("import os")
+    MemoryHistory.append('print("hello")') 
+    MemoryHistory.append('print("world")')
+    MemoryHistory.append("import path")
     
-    session = Prompt(auto_suggest=AutoSuggestFromHistory(), history=history)
-    
+    session = Prompt(history=MemoryHistory, suggest="history")  
     while True:
           text = session.prompt('> ')
           print(f"You said: {text}")                                                                                    
 .. image:: ./images/auto-suggestion.png
 
-A suggestion does not have to come from the history. Any implementation of the :class:`~quo.completion.AutoSuggest` abstract base class can be passed as an argument.
+A suggestion does not have to come from the history. Any implementation of the :class:`~quo.completion.AutoSuggest` abstract base class can be passed as a string i.e `history`, `dynamic` or `conditional`
 
 Autocompletion
 ^^^^^^^^^^^^^^^

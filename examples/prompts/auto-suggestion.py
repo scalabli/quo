@@ -8,18 +8,15 @@ remaining part as a suggestion. Pressing the right arrow will insert this
 suggestion.
 """
 
-from quo import echo
-from quo.completion import AutoSuggestFromHistory
-from quo.history import InMemoryHistory
+from quo.history import MemoryHistory
 from quo.prompt import Prompt
 
 def main():
     # Create some history first. (Easy for testing.)
-    history = InMemoryHistory()
-    history.append("import os")
-    history.append('print("hello")')
-    history.append('print("world")')
-    history.append("import path")
+    MemoryHistory.append("import os")
+    MemoryHistory.append('print("hello")')
+    MemoryHistory.append('print("world")')
+    MemoryHistory.append("import path")
 
     # Print help.
     print("This CLI has fish-style auto-suggestion enable.")
@@ -29,10 +26,11 @@ def main():
     print()
 
     session = Prompt(
-        history=history,
-        auto_suggest=AutoSuggestFromHistory(),
-        enable_history_search=True,
-    )
+            history=MemoryHistory,
+            suggest="history"
+            )
+      # auto_suggest=AutoSuggestFromHistory()
+        #)
 
     while True:
         try:
@@ -42,7 +40,7 @@ def main():
         else:
             break
 
-    echo(f"You said: {text}")
+    print(f"You said: {text}")
 
 
 if __name__ == "__main__":

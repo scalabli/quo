@@ -7,4 +7,4 @@ data = [
         ["Dave", "M", 24]
         ]
 
-Table(data)
+Table(data, style="green")

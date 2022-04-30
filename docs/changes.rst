@@ -15,7 +15,8 @@ Released on 2022-05-02
 **Added**
 ^^^^^^^^^^
 - Added :meth:`quo.console.Console.spin`
-  
+- Added :param:`column_width` and :param:`headers` to :func:`quo.table.Table`
+- Added :param:`suggest` to :class:`quo.prompt.Prompt`  
   
 `Version 2022.4.5``
 ---------------------
