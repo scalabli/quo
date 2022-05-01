@@ -1,7 +1,7 @@
 """
 The default styling.
 """
-from quo.cache import memoized
+from quo.cache.core import memoized
 
 from .core import ANSI_COLOR_NAMES, BaseStyle
 from .webcolors import NAMED_COLORS

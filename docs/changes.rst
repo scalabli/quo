@@ -7,7 +7,18 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
-``Version 2022.4.5``
+``Version 2022.5``
+--------------------
+
+Released on 2022-05-01
+
+**Added**
+^^^^^^^^^^
+- Added :meth:`quo.console.Console.spin`
+- Added :param:`column_width` and :param:`headers` to :func:`quo.table.Table`
+- Added :param:`suggest` to :class:`quo.prompt.Prompt`  
+  
+`Version 2022.4.5``
 ---------------------
 
 Released on 2022-04-23

@@ -147,7 +147,7 @@ class AutoSuggestFromHistory(AutoSuggest):
 
 class ConditionalAutoSuggest(AutoSuggest):
     """
-    Auto suggest that can be turned on and of according to a certain condition.
+    Auto suggest that can be turned on and off according to a certain condition.
     """
 
     def __init__(self, auto_suggest: AutoSuggest, filter: Union[bool, Filter]) -> None:

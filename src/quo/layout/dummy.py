@@ -1,7 +1,7 @@
 """
 Dummy layout. Used when somebody creates a `Console Application` without specifying a `Layout`.
 """
-from quo.text import Text
+from quo.text.html import Text
 from quo.keys import Bind
 
 from .containers import Window

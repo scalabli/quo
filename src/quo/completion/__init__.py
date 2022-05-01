@@ -3,7 +3,7 @@ from .core import (
 #    CompleteStyle,
     Completer,
     Completion,
-#    ConditionalCompleter,
+    ConditionalCompleter,
 #    DummyCompleter,
     DynamicCompleter,
     ThreadedCompleter,

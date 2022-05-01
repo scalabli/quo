@@ -160,17 +160,15 @@ Press [Tab] to autocomplete
 Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f willinsert the first word of the suggestion.
 ```python
 
+ from quo.history import MemoryHistory
  from quo.prompt import Prompt
- from quo.completion import AutoSuggestFromHistory
- from quo.history import InMemoryHistory
 
- history = InMemoryHistory()
- history.append("import os")
- history.append('print("hello")') 
- history.append('print("world")')  
- history.append("import path")
+ MemoryHistory.append("import os")
+ MemoryHistory.append('print("hello")') 
+ MemoryHistory.append('print("world")')  
+ MemoryHistory.append("import path")
 
- session = Prompt(auto_suggest=AutoSuggestFromHistory(), history=history)
+ session = Prompt(history=MemoryHistory, suggest="history")
 
  while True:
     session.prompt('> ')
@@ -240,7 +238,7 @@ A key binding is an association between a physical key on a keyboard and a param
  def _(event):
      echo("Hello, World!")
 
- session.prompt(">>")
+ session.prompt(">> ")
 ```
 Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
 

@@ -198,5 +198,22 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
       - ``color`` - controls if the pager supports ANSI colors or not.
 
 
+``spin``
+----------
+This creates a context manager that is used to display a spinner on stdout as long as the context has not exited.
+*Added on v2022.5*
+
+.. code:: python
+
+ import time
+ 
+ from quo.console import Console
+
+ console = Console()
+ 
+ with console.spin():
+           time.sleep(3)
+           print("Hello, World")
+
 » Check out more examples `here <https://github.com/scalabli/quo
 /tree/master/examples/console/>`_

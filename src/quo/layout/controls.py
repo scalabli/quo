@@ -17,7 +17,7 @@ from typing import (
 
 from quo.console.current import get_app
 from quo.buffer import Buffer
-from quo.cache import SimpleCache
+from quo.cache.core import SimpleCache
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter
 from quo.text.core import (

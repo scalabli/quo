@@ -4,7 +4,7 @@ Filters that accept a `Console` as argument.
 from typing import TYPE_CHECKING, cast
 
 from quo.console.current import get_app
-from quo.cache import memoized
+from quo.cache.core import memoized
 from quo.enums import EditingMode
 
 from .core import Condition

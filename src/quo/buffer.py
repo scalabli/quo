@@ -31,7 +31,7 @@ from typing import (
 from quo.console.current import get_app
 from quo.console.run_in_terminal import run_in_terminal
 from quo.completion.auto_suggest import AutoSuggest, Suggestion
-from quo.cache import FastDictCache
+from quo.cache.core import FastDictCache
 from quo.clipboard import Data
 from quo.completion.core import (
     CompleteEvent,
