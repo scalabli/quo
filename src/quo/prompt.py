@@ -297,6 +297,7 @@ def prompt(
                 break
         if value == value2:
             return result
+
         from quo.i_o.termui import echo
 
         echo(f"ERROR:", nl=False, fg="black", bg="red")
@@ -382,6 +383,7 @@ class Prompt(Generic[_T]):
         :class:`~quo.filters.Filter`. Pressing 'v' in Vi mode or
         C-X C-E in emacs mode will open an external editor.
     :param history: :class:`~quo.history.History` instance.
+    :param suggest: `str` An instance of :class:`quo.completion.AutoSuggestFromHistory or the others.
     :param clipboard: :class:`~quo.clipboard.Clipboard` instance.
         (e.g. :class:`~quo.clipboard.InMemoryClipboard`)
     :param rprompt: Text or formatted text to be displayed on the right side.
@@ -449,6 +451,10 @@ class Prompt(Generic[_T]):
         "tempfile",
     )
 
+    from quo.completion.auto_suggest import AutoSuggestFromHistory
+
+    from_history = AutoSuggestFromHistory()
+
     from quo.keys import bind as _bind
     from quo.completion.core import CompleteStyle
 
@@ -503,6 +509,7 @@ class Prompt(Generic[_T]):
         tempfile_suffix: Optional[Union[str, Callable[[], str]]] = ".txt",
         tempfile: Optional[Union[str, Callable[[], str]]] = None,
         refresh_interval: float = 0,
+        suggest: str = None,
         input: Optional[Input] = None,
         output: Optional[Output] = None,
     ) -> None:
@@ -520,6 +527,7 @@ class Prompt(Generic[_T]):
 
         history = history or InMemoryHistory()
         clipboard = clipboard or InMemoryClipboard()
+
 
         # Ensure backwards-compatibility, when `vi_mode` is passed.
         if vi_mode:
@@ -591,6 +599,15 @@ class Prompt(Generic[_T]):
                 return "." * width
             self.prompt_continuation = _continuation
 
+        # An instance of the auto sugfestuon classes
+        if suggest == "conditional":
+            from quo.completion.auto_suggest import ConditionalAutoSuggest
+            self.auto_suggest = ConditionalAutoSuggest()
+        if suggest == "dynamic":
+            self.auto_suggest = DynamicAutoSuggest()
+        elif suggest == "history":
+            from quo.completion.auto_suggest import AutoSuggestFromHistory
+            self.auto_suggest = AutoSuggestFromHistory()
 
     def _dyncond(self, attr_name: str) -> Condition:
         """

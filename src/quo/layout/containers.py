@@ -19,7 +19,7 @@ from typing import (
 )
 
 from quo.console.current import get_app
-from quo.cache import SimpleCache
+from quo.cache.core import SimpleCache
 from quo.filters import (
     FilterOrBool,
     emacs_insert_mode,

@@ -301,3 +301,9 @@ class FileHistory(History):
             write("\n# %s\n" % datetime.datetime.now())
             for line in string.split("\n"):
                 write("+%s\n" % line)
+
+
+
+
+
+MemoryHistory = InMemoryHistory()

@@ -119,9 +119,6 @@ def _ChoiceBox(
     return _create_app(dialog, style)
 
 
-from quo.widget.design import ok
-
-
 def _PromptBox(
     title: AnyFormattedText = "",
     text: AnyFormattedText = "",

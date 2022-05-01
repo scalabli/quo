@@ -20,7 +20,7 @@ from typing import (
 )
 
 from quo.console.current import get_app
-from quo.cache import SimpleCache
+from quo.cache.core import SimpleCache
 from quo.document import Document
 from quo.filters import FilterOrBool, to_filter, vi_insert_multiple_mode
 from quo.text.core import (
@@ -321,9 +321,13 @@ class PasswordProcessor(Processor):
 
     def __init__(
             self, 
-            char: str = "\u2735"
+            char: str = None #u2735"
             ) -> None:
-        self.char = char
+        from quo.accordance import WIN
+        if WIN:
+            self.char = "*"
+        else:
+            self.char = "\u2735" #char
 
     def apply_transformation(self, ti: TransformationInput) -> Transformation:
         fragments: StyleAndTextTuples = cast(

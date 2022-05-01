@@ -49,7 +49,7 @@ from typing import (
     # cast,
 )
 
-from quo.cache import SimpleCache
+from quo.cache.core import SimpleCache
 from quo.errors import UsageError
 from quo.filters import FilterOrBool, Never, to_filter
 from quo.keys.list import KEY_ALIASES, Keys

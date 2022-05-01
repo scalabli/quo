@@ -7,7 +7,6 @@ import math
 import re
 import sys
 import textwrap
-from typing import Optional
 
 from quo.expediency.vitals import inscribe as echo
 from collections import namedtuple
@@ -1269,7 +1268,8 @@ def _Table(
     with the plain-text format of R and Pandas' dataframes.
 
     >>> echo(tabular([["sex","age"],["Alice","F",24],["Bob","M",19]],
-    ...       headers="firstrow"))
+    ... headers="firstrow"))
+    >>> Tabl
            sex      age
     -----  -----  -----
     Alice  F         24
@@ -1678,7 +1678,14 @@ def _Table(
 
     return _format_table(theme, headers, rows, minwidths, aligns, is_multiline)
 
-def Table(data=None, align="center", style=None, theme="fancy_grid"):
+def Table(
+        data=None,
+        align="center", 
+        headers=(),
+        column_width=None,
+        style=None, 
+        theme="fancy_grid"
+        ):
 
     """Format a fixed width table for pretty printing.
     The first required argument (`data`) can be a
@@ -1688,7 +1695,18 @@ def Table(data=None, align="center", style=None, theme="fancy_grid"):
     from quo.layout.controls import FormattedTextControl
     from quo.shortcuts.utils import container
 
-    content = Window(FormattedTextControl(_Table(data, theme=theme), style=style), align=align)
+    content = Window(
+            FormattedTextControl(
+                _Table(
+                    data,
+                    headers=headers,
+                    theme=theme,
+                    maxcolwidths=column_width
+                    ),
+                style=style
+                ), 
+            align=align
+            )
 
     return container(content)
 def _expand_numparse(disable_numparse, column_count):
@@ -2049,105 +2067,5 @@ class _CustomTextWrap(textwrap.TextWrapper):
         return lines
 
 
-def _main():
-    """\
-    Usage: tabular [options] [FILE ...]
-
-    Pretty-print tabular data
-
-    FILE                      a filename of the file with tabular data;
-                              if "-" or missing, read data from stdin.
-
-    Options:
-
-    -h, --help                show this message
-    -1, --header              use the first row of data as a table header
-    -o FILE, --output FILE    print table to FILE (default: stdout)
-    -s REGEXP, --sep REGEXP   use a custom column separator (default: whitespace)
-    -F FPFMT, --float FPFMT   floating point number format (default: g)
-    -f FMT, --format FMT      set output table format; supported formats:
-                              plain, simple, grid, fancy_grid, pipe, orgtbl,
-                              rst, mediawiki, html, latex, latex_raw,
-                              latex_booktabs, latex_longtable, tsv
-                              (default: simple)
-    """
-    import getopt
-    import sys
-    import textwrap
-
-    usage = textwrap.dedent(_main.__doc__)
-    try:
-        opts, args = getopt.getopt(
-            sys.argv[1:],
-            "h1o:s:F:A:f:",
-            ["help", "header", "output", "sep=", "float=", "align=", "format="],
-        )
-    except getopt.GetoptError as e:
-        echo(e)
-        echo(usage)
-        sys.exit(2)
-    headers = []
-    floatfmt = _DEFAULT_FLOATFMT
-    colalign = None
-    theme = "simple"
-    sep = r"\s+"
-    outfile = "-"
-    for opt, value in opts:
-        if opt in ["-1", "--header"]:
-            headers = "firstrow"
-        elif opt in ["-o", "--output"]:
-            outfile = value
-        elif opt in ["-F", "--float"]:
-            floatfmt = value
-        elif opt in ["-C", "--colalign"]:
-            colalign = value.split()
-        elif opt in ["-f", "--format"]:
-            if value not in tabular_formats:
-                echo("%s is not a supported table format" % value)
-                echo(usage)
-                sys.exit(3)
-            theme = value
-        elif opt in ["-s", "--sep"]:
-            sep = value
-        elif opt in ["-h", "--help"]:
-            echo(usage)
-            sys.exit(0)
-    files = [sys.stdin] if not args else args
-    with (sys.stdout if outfile == "-" else open(outfile, "w")) as out:
-        for f in files:
-            if f == "-":
-                f = sys.stdin
-            if _is_file(f):
-                _pprint_file(
-                    f,
-                    headers=headers,
-                    theme=theme,
-                    sep=sep,
-                    floatfmt=floatfmt,
-                    file=out,
-                    colalign=colalign,
-                )
-            else:
-                with open(f) as fobj:
-                    _pprint_file(
-                        fobj,
-                        headers=headers,
-                        theme=theme,
-                        sep=sep,
-                        floatfmt=floatfmt,
-                        file=out,
-                        colalign=colalign,
-                    )
 
 
-def _pprint_file(fobject, headers, theme, sep, floatfmt, file, colalign):
-    rows = fobject.readlines()
-    table = [re.split(sep, r.rstrip()) for r in rows if r.strip()]
-    echo(
-        tabular(table, headers, theme, floatfmt=floatfmt, colalign=colalign),
-        file=file,
-    )
-
-
-if __name__ == "__main__":
-    _main()

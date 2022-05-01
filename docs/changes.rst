@@ -10,7 +10,7 @@ Changelog
 ``Version 2022.5``
 --------------------
 
-Released on 2022-05-02
+Released on 2022-05-01
 
 **Added**
 ^^^^^^^^^^

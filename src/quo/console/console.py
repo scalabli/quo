@@ -44,7 +44,7 @@ from typing import (
 from quo.buffer import Buffer
 from quo.i_o.termui import echo
 from quo import errors
-from quo.cache import SimpleCache
+from quo.cache.core import SimpleCache
 from quo.clipboard import Clipboard, InMemoryClipboard
 from quo.enums import EditingMode
 from quo.eventloop import (
@@ -911,6 +911,9 @@ class Console(Generic[_AppResult]):
         return container(
             Window(FormattedTextControl(message), height=1, style=style, align=align)
         )
+    def spin(self) -> "Console":
+        from quo.spin import Spinner
+        return Spinner()
 
 
     def run(
