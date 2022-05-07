@@ -64,7 +64,7 @@ Try this:
 ```python
  from quo import echo
 
- echo(f"Hello, World!", fg="red", italic=True, bold=True))
+ echo("Hello, World!", fg="red", italic=True, bold=True)
 ```
 ![Hello World](https://github.com/scalabli/quo/raw/master/pics/print.png)
 
@@ -72,8 +72,8 @@ Try this:
 ```python
  from quo import echo
 
- echo(f"Quo is ", nl=False)
- echo(f"scalable", bg="red", fg="black") 
+ echo("Quo is ", nl=False)
+ echo("scalable", bg="red", fg="black") 
 ```
 ![Scalable](https://github.com/scalabli/quo/raw/master/pics/scalable.png)
 

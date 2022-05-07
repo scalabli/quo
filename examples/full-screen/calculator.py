@@ -3,6 +3,7 @@
 A simple example of a calculator program.
 This could be used as inspiration for a REPL.
 """
+import cProfile
 from quo import container
 from quo.document import Document
 from quo.keys import bind
@@ -19,11 +20,11 @@ def main():
     # The layout.
     search_field = SearchToolbar()  # For reverse search.
 
-    output_field = TextArea(f'{help_text}', style="bg:blue fg:yellow bold")
+    output_field = TextArea(f"{help_text}", style="bg:blue fg:yellow bold")
     input_field = TextArea(
         height=2,
         prompt=">>",
-        style="bg:gray fg:green", #class:input-field",
+        style="bg:gray fg:green",  # class:input-field",
         multiline=False,
         wrap_lines=False,
         search_field=search_field,
@@ -62,14 +63,15 @@ def main():
     input_field.accept_handler = accept
 
     # The key bindings.
-    @bind.add("ctrl-c")
-    @bind.add("ctrl-q")
-    def _(event):
-        "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
-        event.app.exit()
-
-    container(content, bind=True, focused_element=input_field, full_screen=True, mouse_support=True)
+    # "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
+    container(
+        content,
+        bind=True,
+        focused_element=input_field,
+        full_screen=True,
+        mouse_support=True,
+    )
 
 
 if __name__ == "__main__":
-    main()
+    cProfile.run("main()")

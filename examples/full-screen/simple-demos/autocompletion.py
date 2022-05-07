@@ -72,11 +72,3 @@ content = FloatContainer(
 # The `Application`
 
 container(content, bind=True, full_screen=True)
-#pplication = quo.console.Console(layout=quo.layout.Layout(body), bind=kb, full_screen=True)
-
-
-#def run():
- #   application.run()
-
-#if __name__ == "__main__":
-#    run()
