@@ -283,6 +283,8 @@ def flair(
         text = str(text)
 
     bits = []
+    if fg == "aquamarine":
+        fg = (220, 232,1)
 
     if fg:
         try:

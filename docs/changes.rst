@@ -7,6 +7,18 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.5.1``
+---------------------
+
+Released on 2022-05-07
+
+**Fixed**
+^^^^^^^^^^^
+- Fixed :class:`SpinningWheel` attribute error.
+
+
+
+
 ``Version 2022.5``
 --------------------
 

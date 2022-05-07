@@ -342,6 +342,7 @@ class SpinningWheel(Formatter):
     from quo._spinners import SPINNERS
 
     characters = SPINNERS.dots3
+    win_chars = r"/-\|"
 
     def format(
         self,
@@ -352,7 +353,6 @@ class SpinningWheel(Formatter):
         from quo.accordance import WIN
 
         if WIN:
-            win_chars = r"/-\|"
             index = int(time.time() * 7) % len(self.win_chars)
             return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(self.win_chars[index])
         else:
