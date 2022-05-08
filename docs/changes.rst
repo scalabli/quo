@@ -7,6 +7,15 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.5.2``
+---------------------
+
+Released on 2022-05
+
+**Added**
+^^^^^^^^^^
+- Added :func:`quo.color.Color`
+
 ``Version 2022.5.1``
 ---------------------
 

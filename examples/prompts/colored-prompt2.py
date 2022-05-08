@@ -1,7 +1,8 @@
+from quo.color import Color
 from quo.prompt import Prompt
-from quo.style import Style
 
-style = Style.add({' ':'fg:blue'}) # User input (default text)
+style = Color("fg:blue bg:green")
+
 session = Prompt(style=style)
 
 message = [
@@ -13,4 +14,4 @@ message = [
         ('fg:red', '$ ')
         ]
 
-session.prompt(message, ('fg:red', 'dfff'))
+session.prompt(message)

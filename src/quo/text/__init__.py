@@ -5,7 +5,7 @@ plain text or formatted text for the prompt. The
 :class:`~quo.layout.FormattedTextControl` can also take either plain text or formatted text.
 
 In any case, there is an input that can either be just plain text (a string),
-an :class:`.HTML` object, an :class:`.ANSI` object or a sequence of
+an :class:`.Text` object, an :class:`.ANSI` object or a sequence of
 `(style_string, text)` tuples. The :func:`.to_formatted_text` conversion
 function takes any of these and turns all of them into such a tuple sequence.
 """
@@ -21,14 +21,15 @@ from .core import FormattedText
 # )
 
 from .pygments import PygmentsTokens
-from .utils import (
-    fragment_list_len,
-    fragment_list_to_text,
-    fragment_list_width,
-    split_lines,
-)
-from .text_field import TextField
+#from .utils import (
+  #  fragment_list_len,
+  #  fragment_list_to_text,
+   # fragment_list_width,
+   # split_lines,
+#
 
+
+#
 __all__ = [
     # Core
     "AnyFormattedText",

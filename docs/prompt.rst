@@ -11,8 +11,7 @@ This can be accomplished with the :func:`prompt` function, which asks for
 valid input according to a type, or the :class:`quo.prompt.Prompt` object, this makes it possible to create a Prompt instance followed by calling prompt() method for every input. This creates a kind of an input session and its packed with lots of features.
 You can also use the :func:`quo.confirm` function, which asks for confirmation (yes/no).
 
-The following snippet uses the :func:`quo.prompt` function to ask the user for input
-and returns the text. Just like ``input``.
+The following snippet uses the :func:`quo.prompt` function to ask the user for input just like ``input``.
 
 .. code:: python
 
@@ -393,16 +392,16 @@ A simple way to add color to create a style, is by using the :meth:`~quo.style.S
 Coloring the prompt itself
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to add some colors to the prompt itself. For this, we need to
-build some :ref:`formatted text <formatted_text>`. One way of doing this is by
-creating a list of style/text tuples. In the following example, the input will be in red
+It is possible to add some colors to the prompt itself. For this, we need to import :func:`quo.color.Color` function.
+In the following example, the input will be in red
+*version changed 2022.5.2*
 
 .. code:: python
 
+ from quo.color import Color
  from quo.prompt import Prompt
- from quo.style import Style
 
- style = Style.add({' ':'fg:red'}) #User input (default text) 
+ style = Color("fg:red")  #User input (default text) 
 
  session = Prompt(style=style)
 
@@ -415,10 +414,11 @@ Here's an example upgrade:
 
 .. code:: python
  
+   from quo.color import Color
    from quo.prompt import Prompt
-   from quo.style import Style
 
-   style = Style.add({' ':'fg:blue'}) # User input (default text)
+   style = Color("fg:blue") # User input (default text)
+
    session = Prompt(style=style)
 
    message = [
@@ -553,37 +553,37 @@ otherwise. So, make sure to disable history search for this.
 
 A :class:`~quo.history.History` object keeps track of all the previously entered strings, so that the up-arrow can reveal previously entered items.
 
-InMemoryHistory
-^^^^^^^^^^^^^^^^^^^^
-The recommended way is to use a :class:`~quo.prompt.Prompt`, which uses an :class:`~quo.history.InMemoryHistory` which has `^` (up) arrow partial string matching enabled by default.
+MemoryHistory
+^^^^^^^^^^^^^^^^^
+The recommended way is to use a :class:`~quo.prompt.Prompt`, which uses an :class:`~quo.history.MemoryHistory` which has `^` (up) arrow partial string matching enabled by default.
 
 .. code:: python
 
+   from quo.history import MemoryHistory
    from quo.prompt import Prompt
-   from quo.history import InMemoryHistory
 
-   history = InMemoryHistory()
-   history.append("import os")
-   history.append('print("hello")')
-   history.append('print("world")')
-   history.append("import path")
+   MemoryHistory.append("import os")
+   MemoryHistory.append('print("hello")')
+   MemoryHistory.append('print("world")')
+   MemoryHistory.append("import path")
 
-   session = Prompt(history=history)
+   session = Prompt(history=MemoryHistory)
 
    while True:
        session.prompt()
 
 FileHistory
 ^^^^^^^^^^^^^^^^
-To persist a history to disk, use a :class:`~quo.history.FileHistory` instead of the default :class:`~quo.history.InMemoryHistory`. This history object can be passed to a :class:`~quo.prompt.Prompt`.
+To persist a history to disk, use a :class:`~quo.history.FileHistory` instead of the default :class:`~quo.history.MemoryHistory`. This history object can be passed to a :class:`~quo.prompt.Prompt`.
 For instance:
 
 .. code:: python
 
-   from quo.prompt import Prompt
    from quo.history import FileHistory
+   from quo.prompt import Prompt
 
-   session = Prompt(history=FileHistory('~/.myhistory'))
+   history = FileHistory("~/.myhistory")
+   session = Prompt(history=history)
 
    while True:
        session.prompt()
@@ -699,5 +699,4 @@ Line wrapping is enabled by default. This is what most people are used to and th
     session.prompt('What is your name: ')
 
     
-» Check out more examples `here <https://github.com/scalabli/quo
-/tree/master/examples/prompts/>`_
+» Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/prompts/>`_

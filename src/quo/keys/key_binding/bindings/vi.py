@@ -7,7 +7,7 @@ from typing import Callable, Iterable, List, Optional, Tuple, TypeVar, Union, ca
 
 from quo.console.current import get_app
 from quo.buffer import Buffer, indent, reshape_text, unindent
-from quo.clipboard import Data
+from quo.clipboard.core import Data
 from quo.document import Document
 from quo.filters import (
     Always,

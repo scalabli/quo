@@ -180,7 +180,7 @@ It is possible to create a list of  manually with FormattedText class. This is a
    ])
  print(text, fmt=True)
 
-Similar to theit is also possible to use class names, and separate the styling in a style sheet.
+It is also possible to use class names, and separate the styling in a style sheet.
 
 .. code:: python
 

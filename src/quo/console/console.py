@@ -45,7 +45,8 @@ from quo.buffer import Buffer
 from quo.i_o.termui import echo
 from quo import errors
 from quo.cache.core import SimpleCache
-from quo.clipboard import Clipboard, InMemoryClipboard
+from quo.clipboard.core import Clipboard
+from quo.clipboard.momento import InMemoryClipboard
 from quo.enums import EditingMode
 from quo.eventloop import (
     get_traceback_from_context,
@@ -71,30 +72,22 @@ from quo.keys.key_binding.key_bindings import (
 )
 from quo.keys.key_binding.key_processor import KeyPressEvent, KeyProcessor
 from quo.keys.key_binding.vi_state import ViState
-from quo.keys import Keys
-from quo.layout import Container, Window, WindowAlign as WA
+from quo.keys.list import Keys
+from quo.layout.containers import Container, Window, WindowAlign as WA
 from quo.layout.controls import BufferControl, FormattedTextControl, UIControl
 from quo.layout.dummy import create_dummy_layout
 from quo.layout.layout import Layout, walk
 from quo.output import ColorDepth, Output
 from quo.renderer import Renderer, print_formatted_text
 from quo.search import SearchState
-from quo.style import (
-    BaseStyle,
-    DummyStyle,
-    DummyStyleTransformation,
-    DynamicStyle,
-    StyleTransformation,
-    default_pygments_style,
-    default_ui_style,
-    merge_styles,
-)
+from quo.style.core import BaseStyle, DummyStyle, DynamicStyle
+from quo.style.defaults import default_pygments_style, default_ui_style
+from quo.style.style import merge_styles
+from quo.style.transformation import DummyStyleTransformation, StyleTransformation
 from quo.utils.utils import Event, in_main_thread
 
 from .current import get_app_session, set_app
 from .run_in_terminal import in_terminal, run_in_terminal
-from quo.layout import Window, WindowAlign as WA
-
 try:
     import contextvars
 except ImportError:
@@ -220,7 +213,7 @@ class Console(Generic[_AppResult]):
         mouse_support: FilterOrBool = False,
         enable_page_navigation_bindings: Optional[
             FilterOrBool
-        ] = True,  # Can be None, True or False.
+        ] = False,  # Can be None, True or False.
         paste_mode: FilterOrBool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
         erase_when_done: bool = False,
@@ -905,7 +898,7 @@ class Console(Generic[_AppResult]):
     def bar(
             self, message: Optional[str] = None, align="center", style="fg:black bg:aquamarine"
     ) -> "Console":
-        from quo.shortcuts import container
+        from quo.shortcuts.utils import container
 
 
         return container(

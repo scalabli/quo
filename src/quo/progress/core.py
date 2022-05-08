@@ -31,7 +31,7 @@ from quo.text.core import (
     StyleAndTextTuples,
     to_formatted_text,
 )
-from quo.input import Input
+from quo.input.core import Input
 from quo.keys.key_binding.key_bindings import Bind as KeyBinder
 from quo.layout.containers import ConditionalContainer
 from quo.layout.containers import FormattedTextControl
@@ -42,7 +42,7 @@ from quo.layout.layout import Layout
 from quo.layout.controls import UIContent, UIControl
 from quo.layout.dimension import AnyDimension, D
 from quo.output import ColorDepth, Output
-from quo.style import BaseStyle
+from quo.style.core import BaseStyle
 from quo.utils.utils import in_main_thread
 
 from .formatters import Formatter, create_default_formatters

@@ -1,4 +1,4 @@
-from .core import Clipboard, Data, DummyClipboard, DynamicClipboard
+#from .core import Clipboard, Data, DummyClipboard, DynamicClipboard #Data DummyClipboard, Clipboard
 from .momento import InMemoryClipboard
 
 from .pyperclip import PyperClipboard

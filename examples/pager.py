@@ -3,23 +3,30 @@
 A simple application that shows a Pager application.
 """
 
-
 from quo import container
-from quo.layout import HSplit, Window, Layout
+from pygments.lexers.python import PythonLexer
+
+#from prompt_toolkit.application import Application
+from quo.layout.containers import HSplit, Window
 from quo.layout.controls import FormattedTextControl
 from quo.layout.dimension import LayoutDimension as D
-from quo.widget import TextArea, SearchToolbar
-from quo.highlight import Python
+from quo.layout.layout import Layout
+from quo.highlight import PygmentsLexer
 from quo.style import Style
+from quo.widget import Label, SearchToolbar, TextArea
+
 # Create one text buffer for the main content.
 
-with open(__file__, "rb") as f:
+_pager_py_path = __file__
+
+_file = "/root/git/quo/setup.py"
+with open(_file, "rb") as f:
     text = f.read().decode("utf-8")
 
 
 def get_statusbar_text():
     return [
-        ("reverse", __file__ + " - "),
+        ("class:status", _pager_py_path + " - "),
         (
             "class:status.position",
             "{}:{}".format(
@@ -35,20 +42,20 @@ def get_statusbar_text():
     ]
 
 
-search_field =  SearchToolbar(
+search_field = SearchToolbar(
     text_if_not_searching=[("class:not-searching", "Press '/' to start searching.")]
 )
 
-
+text_ = Window(FormattedTextControl(f"{text}"))
 text_area = TextArea(
-    text=text,
+    text,
     read_only=True,
-    scrollbar=True,
+    scrollbar=False,
     line_numbers=True,
+    multiline=True,
     search_field=search_field,
-    highlighter=Python,
+    highlighter=PygmentsLexer(PythonLexer),
 )
-
 
 content = HSplit(
     [
@@ -60,6 +67,7 @@ content = HSplit(
         ),
         # The main content.
         text_area,
+       # text_,
         search_field,
     ]
 )
@@ -67,23 +75,33 @@ content = HSplit(
 
 style = Style.add(
     {
+        "status": "reverse",
         "status.position": "#aaaa00",
         "status.key": "#ffaa00",
         "not-searching": "#888888",
     }
 )
 
-#ayout = Layout(root_container, focused_element=text_area)
 
 # create application.
+#application = Application(
+#    layout=Layout(root_container, focused_element=text_area),
+#    key_bindings=bindings,
+#    enable_page_navigation_bindings=True,
+#    mouse_support=True,
+ #   style=style,
+#    full_screen=True,
 
-#onsole(
-  #  layout=layout,
-   # bind=bindings,
-   #enable_page_navigation_bindings=True,
-   # mouse_support=True,
-  #  style=style,
- #   full_screen=True,
-  #  ).run()
 
-container(content, bind=True, focused_element=text_area, full_screen=True, mouse_support=True, style=style)
+def run():
+    container(
+            content,
+            bind=True,
+            focused_element=text_area,
+            full_screen=True,
+            style=style
+            )
+
+
+if __name__ == "__main__":
+    run()
