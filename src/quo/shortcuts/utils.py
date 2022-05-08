@@ -6,20 +6,17 @@ from quo.console.current import get_app_session
 from quo.errors import UsageError
 from quo.keys import bind as _bind
 from quo.text.core import FormattedText, StyleAndTextTuples, to_formatted_text
-from quo.input import DummyInput
+from quo.input.core import DummyInput
 from quo.layout.layout import Layout
 from quo.output import ColorDepth, Output
 from quo.output.defaults import create_output
 from quo.renderer import (
     print_formatted_text as renderer_print_formatted_text,
 )
-from quo.style import (
-    BaseStyle,
-    StyleTransformation,
-    default_pygments_style,
-    default_ui_style,
-    merge_styles,
-)
+from quo.style.core import BaseStyle
+from quo.style.defaults import default_pygments_style, default_ui_style
+from quo.style.style import merge_styles
+from quo.style.transformation import StyleTransformation
 
 if TYPE_CHECKING:
     from quo.layout.containers import AnyContainer

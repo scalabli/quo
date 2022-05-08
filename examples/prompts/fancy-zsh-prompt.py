@@ -10,17 +10,18 @@ See:
 - https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1111
 """
 import datetime
+
+from quo.console import get_app
 from quo.prompt import Prompt
-import quo
+from quo.style import Style
+from quo.text import Text
+
 session = Prompt()
 
-from quo.text import (
-    fragment_list_width,
-    merge_formatted_text,
-    to_formatted_text,
-)
+from quo.text.utils import fragment_list_width
+from quo.text.core import merge_formatted_text, to_formatted_text
 
-style = quo.style.Style.add(
+style = Style.add(
     {
         "username": "#aaaaaa italic",
         "path": "#ffffff bold",
@@ -34,21 +35,21 @@ style = quo.style.Style.add(
 )
 
 
-def get_prompt() -> quo.text.Text:
+def get_prompt() -> Text:
     """
     Build the prompt dynamically every time its rendered.
     """
-    left_part = quo.text.Text(
+    left_part = Text(
         "<left-part>"
         " <username>root</username> "
         " abc "
         "<path>~/.oh-my-zsh/themes</path>"
         "</left-part>"
     )
-    right_part = quo.text.Text(
+    right_part = Text(
         "<right-part> "
         "<branch> master<exclamation-mark>!</exclamation-mark> </branch> "
-        " <env> py36 </env> "
+        " <env> py3.10</env> "
         " <time>%s</time> "
         "</right-part>"
     ) % (datetime.datetime.now().isoformat(),)
@@ -60,10 +61,10 @@ def get_prompt() -> quo.text.Text:
         ]
     )
 
-    total_width = quo.console.get_app().output.get_size().columns
+    total_width = get_app().output.get_size().columns
     padding_size = total_width - used_width
 
-    padding = quo.text.Text("<padding>%s</padding>") % (" " * padding_size,)
+    padding = Text("<padding>%s</padding>") % (" " * padding_size,)
 
     return merge_formatted_text([left_part, padding, right_part, "\n", "# "])
 

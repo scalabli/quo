@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import TYPE_CHECKING, Callable, Dict, Optional
 
-from quo.clipboard import Data
+from quo.clipboard.core import Data
 
 if TYPE_CHECKING:
     from .key_bindings.vi import TextObject

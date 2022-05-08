@@ -4,7 +4,7 @@ Interface for an output.
 import typing as ty
 from abc import ABCMeta, abstractmethod
 
-from quo.style import Attrs
+from quo.style.core import Attrs
 
 from .color import ColorDepth
 

@@ -34,7 +34,8 @@ from quo.console.console import Console
 from quo.console.current import get_app
 from quo.completion.auto_suggest import AutoSuggest, DynamicAutoSuggest
 from quo.buffer import Buffer
-from quo.clipboard import Clipboard, DynamicClipboard, InMemoryClipboard
+from quo.clipboard.core import Clipboard, DynamicClipboard
+from quo.clipboard.momento import InMemoryClipboard
 from quo.completion import Completer, DynamicCompleter, ThreadedCompleter
 from quo.document import Document
 from quo.enums import DEFAULT_BUFFER, SEARCH_BUFFER, EditingMode
@@ -101,16 +102,8 @@ from quo.layout.processors import (
 from quo.layout.utils import explode_text_fragments
 from quo.highlight import DynamicLexer, Lexer
 from quo.output import ColorDepth, DummyOutput, Output
-from quo.style import (
-    BaseStyle,
-    ConditionalStyleTransformation,
-    DynamicStyle,
-    DynamicStyleTransformation,
-    StyleTransformation,
-    SwapLightAndDarkStyleTransformation,
-    merge_style_transformations,
-)
-
+from quo.style.core import BaseStyle, DynamicStyle
+from quo.style.transformation import ConditionalStyleTransformation, DynamicStyleTransformation, StyleTransformation, SwapLightAndDarkStyleTransformation, merge_style_transformations
 from quo.utils.utils import get_width as get_cwidth
 from quo.utils.utils import (
     is_dumb_terminal,
@@ -222,7 +215,7 @@ def prompt(
     affirm=False,
     type=None,
     value_proc=None,
-    suffix: str = ":> ",
+    suffix: str = "» ",
     show_default=True,
     err=False,
     show_choices=True,
@@ -314,7 +307,7 @@ class Prompt(Generic[_T]):
     be a replacement for `input`.
 
     All parameters that expect "formatted text" can take either just plain text
-    (a unicode object), a list of ``(style_str, text)`` tuples or an HTML object.
+    (a unicode object), a list of ``(style_str, text)`` tuples or an Text object.
 
     Example usage::
 
@@ -472,6 +465,7 @@ class Prompt(Generic[_T]):
         hide: FilterOrBool = False,
         vi_mode: bool = False,
         editing_mode: EditingMode = EditingMode.EMACS,
+        color = None,
         complete_while_typing: FilterOrBool = True,
         validate_while_typing: FilterOrBool = True,
         enable_history_search: FilterOrBool = True,  # False,

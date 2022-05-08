@@ -23,7 +23,7 @@ from typing import (
 )
 
 from quo.errors import NoConsoleScreenBufferError
-from quo.style import ANSI_COLOR_NAMES, Attrs
+from quo.style.core import ANSI_COLOR_NAMES, Attrs
 from quo.utils.utils import get_width
 from quo.win32_types import (
     CONSOLE_SCREEN_BUFFER_INFO,

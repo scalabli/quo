@@ -22,12 +22,8 @@ from quo.text.core import AnyFormattedText, to_formatted_text
 from quo.layout.mouse_handlers import MouseHandlers
 from quo.layout.screen import Char, Screen, WritePosition
 from quo.output import ColorDepth, Output
-from quo.style import (
-    Attrs,
-    BaseStyle,
-    DummyStyleTransformation,
-    StyleTransformation,
-)
+from quo.style.core import Attrs, BaseStyle
+from quo.style.transformation import DummyStyleTransformation, StyleTransformation
 
 if TYPE_CHECKING:
     from quo.console.console import Console
