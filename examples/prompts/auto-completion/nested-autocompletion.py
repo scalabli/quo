@@ -7,7 +7,18 @@ from quo.prompt import Prompt
 
 completer = NestedCompleter.add(
         {
-        "show": {"version": None, "clock": None, "ip": {"interface": {"brief": None}}},
+        "show": 
+        {
+            "version": None,
+            "clock": None, 
+            "ip": 
+            {
+                "interface": 
+                {
+                    "brief": None
+                    }
+                }
+            },
         "exit": None,
     }
 )
@@ -15,7 +26,7 @@ completer = NestedCompleter.add(
 session = Prompt(completer=completer)
 
 def main():
-    text = session.prompt("Type a command: ") #, completer=completer)
+    text = session.prompt("Type a command: ", completer=completer)
     print("You said: %s" % text)
 
 

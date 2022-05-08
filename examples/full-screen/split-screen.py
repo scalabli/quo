@@ -8,7 +8,7 @@ reversed input is shown on the right. Pressing Ctrl-Q will quit the application.
 from quo.console import Console
 from quo.buffer import Buffer
 from quo.keys import Bind
-from quo.layout import Layout, Window, BufferControl, FormattedTextControl, VSplit, HSplit, WindowAlign
+from quo.layout import Layout, Window, BufferControl, FormattedTextControl, VSplit, HSplit
 
 # 3. Create the buffers
 #    ------------------
@@ -56,7 +56,7 @@ root_container = HSplit(
         Window(
             height=1,
             content=FormattedTextControl(get_titlebar_text),
-            align=WindowAlign.CENTER,
+            align="center"
         ),
         # Horizontal separator.
         Window(height=1, char="-", style="class:line"),

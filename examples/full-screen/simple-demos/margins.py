@@ -8,7 +8,6 @@ be used to display any other kind of information as well.
 
 from quo import container
 from quo.buffer import Buffer
-from quo.keys import bind
 from quo.layout import HSplit, Layout, Window
 from quo.layout import BufferControl, FormattedTextControl
 from quo.layout.margin import NumberedMargin, ScrollbarMargin
@@ -24,7 +23,7 @@ buff.text = LIPSUM
 # 1. The layout
 content = HSplit(
     [
-        Window(FormattedTextControl('Press "q" to quit.'), height=1, style="fg:red bg:yellow bold"),
+        Window(FormattedTextControl('Press "ctrl-c" to quit.'), height=1, style="fg:red bg:yellow bold"),
         Window(
             BufferControl(buffer=buff),
             # Add margins.
@@ -33,14 +32,6 @@ content = HSplit(
         ),
     ]
 )
-
-
-# 2. Key bindings
-@bind.add("q")
-@bind.add("ctrl-c")
-def _(event):
-    "Quit application."
-    event.app.exit()
 
 
 # 3. The `Application`
