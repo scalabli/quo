@@ -367,4 +367,4 @@ version 1.2.0 available at
 
 
 ## Blog
-- How to build using [quo](https://www.python-engineer.com/posts/cli-with-quo/)
+→ How to build using [quo](https://www.python-engineer.com/posts/cli-with-quo/)

@@ -5,4 +5,4 @@ style = Color("fg:red")
 
 session = Prompt(style=style)
 
-session.prompt("Type something: ")
+session.prompt(">> ")
