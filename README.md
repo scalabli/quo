@@ -363,3 +363,8 @@ This software is licensed under the `MIT License`. See the [License](https://git
 Code of Conduct is adapted from the Contributor Covenant,
 version 1.2.0 available at
 [Code of Conduct](http://contributor-covenant.org/version/1/2/0/)
+
+
+
+## Blog
+→ How to build using [quo](https://www.python-engineer.com/posts/cli-with-quo/)

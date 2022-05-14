@@ -166,12 +166,13 @@ Underneath, all Text tags are mapped to classes from a stylesheet, so you can as
 
    » (style, text) tuples are currently unstable, however its a work in progress and stabiliy may improve on later versions of quo 
 
-It is possible to create a list of  manually with FormattedText class. This is a little more verbose, but it’s probably the most powerful way of expressing formatted text.
+It is possible to create a list of  manually with :param:``fmt``
+
 
 .. code:: python
 
  from quo import print
- from quo.text import FormattedText
+ f
 
  text = FormattedText([
      ('fg:red', 'Hello'),

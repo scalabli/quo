@@ -269,10 +269,6 @@ def _output_screen_diff(
     return current_pos, last_style
 
 
-class HeightIsUnknownError(Exception):
-    "Information unavailable. Did not yet receive the CPR response."
-
-
 class _StyleStringToAttrsCache(Dict[str, Attrs]):
     """
     A cache structure that maps style strings to :class:`.Attr`.
@@ -461,6 +457,7 @@ class Renderer:
             last_screen_height = self._last_screen.height if self._last_screen else 0
             return total_rows - max(self._min_available_height, last_screen_height)
         else:
+            from quo.errors import HeightIsUnknownError
             raise HeightIsUnknownError("Rows above layout is unknown.")
 
     def request_absolute_cursor_position(self) -> None:

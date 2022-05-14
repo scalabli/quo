@@ -7,10 +7,19 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.5.3``
+---------------------
+
+Released on 2022-05-14
+
+- Under the hood optimizations.
+
+
+
 ``Version 2022.5.2``
 ---------------------
 
-Released on 2022-05
+Released on 2022-05-
 
 **Added**
 ^^^^^^^^^^

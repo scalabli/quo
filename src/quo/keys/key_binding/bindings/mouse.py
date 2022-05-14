@@ -90,7 +90,7 @@ def load_mouse_bindings() -> KeyBinder:
         if event.app.renderer.height_is_known and mouse_event_type is not None:
             # Take region above the layout into account. The reported
             # coordinates are absolute to the visible part of the terminal.
-            from quo.renderer import HeightIsUnknownError
+            from quo.errors import HeightIsUnknownError
 
             try:
                 y -= event.app.renderer.rows_above_layout
