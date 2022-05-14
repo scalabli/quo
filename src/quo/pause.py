@@ -1,4 +1,4 @@
-def pause(info: str = "Press any key to proceed >> ...", err: bool = False):
+def pause(info: str = "Press any key to proceed »...", err: bool = False):
     """This command stops execution and waits for the user to press any key to continue.  This is similar to the Windows batch "pause"
     command.  If the program is not run through a terminal, this command
     will instead do nothing.

@@ -10,7 +10,7 @@ an :class:`.Text` object, an :class:`.ANSI` object or a sequence of
 function takes any of these and turns all of them into such a tuple sequence.
 """
 from .html import Text
-from .core import FormattedText
+from .core import AnyFormattedText as RichText, FormattedText
 
 # AnyFormattedText,
 # StyleAndTextTuples,

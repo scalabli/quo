@@ -227,7 +227,20 @@ def clear_title() -> None:
     terminal_title("")
 
 
-def print(*values: Any, style=None, sep=" ", end="\n "):
-    from quo.text import Text
+def print(
+        *values: Any,
+        fmt:bool= False,
+        include_default_pygments_style=None,
+        style=None, 
+        sep=" ", 
+        end="\n ",
+        output=None,
+        style_transformation=None
+        ) ->None:
 
-    _print(Text(*values), end=end, sep=sep, style=style)
+    from quo.text import FormattedText, Text
+
+    if fmt is True:
+        _print(FormattedText([[*values]]), end=end, include_default_pygments_style=include_default_pygments_style, output=output, sep=sep, style=style, style_transformation=style_transformation)
+   # elif fmt is False:
+   #     _print(Text(*values), end=end, include_default_pygments_style=include_default_pygments_style, output=output, sep=sep, style=style, style_transformation=style_transformation)

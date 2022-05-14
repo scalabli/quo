@@ -8,3 +8,4 @@ def Color(color:str = None):
     from quo.style.style import Style
 
     return Style.add({' ':color})
+

@@ -1004,9 +1004,9 @@ class Console(Generic[_AppResult]):
             async with in_terminal():
                 # Print output. Similar to 'loop.default_exception_handler',
                 # but don't use logger. (This works better on Python 2.)
-                echo(f"Unhandled ", nl=False)
-                echo(f"exception", fg="black", bg="yellow", nl=False)
-                echo(f" in the event loop:")
+                echo("Unhandled ", nl=False)
+                echo("exception", fg="black", bg="yellow", nl=False)
+                echo(" in the event loop:")
                 echo(formatted_tb)
                 print("Exception %s" % (context.get("exception"),))
 
@@ -1019,7 +1019,7 @@ class Console(Generic[_AppResult]):
     ) -> "asyncio.Task[None]":
         """
         Start a background task (coroutine) for the running application. When
-        the `Suite` terminates, unfinished background tasks will be
+        the `Console` terminates, unfinished background tasks will be
         cancelled.
 
         If asyncio had nurseries like Trio, we would create a nursery in

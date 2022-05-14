@@ -14,8 +14,6 @@ def _join_param_hints(param_hint):
 
 
 class Outlier(Exception):
-    #  from quo.rule import Rule
-    #  Rule()
     """An exception that Quo can handle and show to the user."""
 
     #: The exit code for this exception.
@@ -270,3 +268,13 @@ class Exit(RuntimeError):
 
     def __init__(self, code: ty.Optional[int] = 0):
         self.exit_code = code
+
+
+class HeightIsUnknownError(Outlier):
+    # used in quo.renderer
+    "Information unavailable. Did not yet receive the CPR response."
+
+
+
+class ClipboardError(Outlier):
+    pass
