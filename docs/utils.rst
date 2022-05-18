@@ -74,7 +74,7 @@ cannot be properly exited.
 ------------
 Quo has a low-level exit that skips Python's cleanup and speeds up exit by about 10ms for things like shell completion.
 **Parmameters**
-     - ``code`` - Exit code.
+     - ``code`` *(str)* - Exit code.
 
 .. code:: python
 
@@ -120,9 +120,9 @@ context of a full Unicode string.
 
 .. code:: python
 
-   import quo
+   from quo import echo, formatfilename
 
-   quo.echo(f"Path: {quo.formatfilename(b'foo.txt')}")
+   echo(f"Path: {formatfilename(b'foo.txt')}")
 
 
 ``Standard Streams``
@@ -139,10 +139,10 @@ stream object (except in very odd cases; see :doc:`/unicode-support`).
 
 .. code:: python
 
-    import quo
+ from quo import binarystream, textstream
 
-    stdin_t = quo.textstream('stdin')
-    stdout_b = quo.binarystream('stdout')
+ stdin_t = textstream('stdin')
+ stdout_b = binarystream('stdout')
 
 
 

@@ -61,7 +61,7 @@ To print nice column headers, supply the ``headers`` argument.
 
 ``Column Widths and  Line Wrapping``
 --------------------------------------
-:func:`Table`  will, by default, set the width of each column to the length of the longest element in that column. However, in situations where fields are expected to reasonably be too long to look good as a single line, :param:`:param:`column_width` can help automate word wrapping long fields.
+:func:`Table`  will, by default, set the width of each column to the length of the longest element in that column. However, in situations where fields are expected to reasonably be too long to look good as a single line, :param:`column_width` can help automate word wrapping long fields.
 
 .. code:: python
 
