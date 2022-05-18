@@ -1,8 +1,7 @@
 →  PROJECT PERITIA FOR INABLE ORG
 
 
-[![Logo](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/peritia.png)](https://github.com/scalabli/master
-/peritia/README.md")
+![Logo](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/peritia.png)
 
 ## Tools
 1) Data Analysis & Forecasting tool\nForecasting is to predict or estimate (a future event or trend). This is actualized by determining what is going to happen in the future by analyzing what happened in the past and whatis going on now.This tool can be used to analyse students' performance.
