@@ -11,7 +11,7 @@ Forecasting is to predict or estimate (a future event or trend). This is actuali
 2) Finger spelling
 Translation of text to sign language is also be given as a task during sign language study session. This tool can easily produce the correct answers and because the visual stays on screen, students can follow the hand movements at their own pace.
 
-##About Peritia
+## About Peritia
 Peritia is Latin word which means experience or practical knowledge.
 
 In this context peritia is an assistive software packed with puzzle games, finger spelling and a data analytics tool
