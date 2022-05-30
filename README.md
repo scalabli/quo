@@ -11,9 +11,6 @@
 
 [![Logo](https://raw.githubusercontent.com/scalabli/quo/master/pics/quo.png)](https://github.com/scalabli/quo)
 
-→  PROJECT PERITIA FOR INABLE ORG
-
-[![Logo](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/peritia.png)](https://github.com/scalabli/master/peritia/README.md")
 
 
 `Forever Scalable`
