@@ -15,9 +15,6 @@
 
 [![Logo](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/peritia.png)](https://github.com/scalabli/master/peritia/README.md")
 
-READ MORE ABOUT THIS PROJECT
-→ Click this link to read more about [peritia](https://github.com/scalabli/master/peritia/README.md)
-
 
 `Forever Scalable`
 
