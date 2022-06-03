@@ -11,16 +11,6 @@
 
 [![Logo](https://raw.githubusercontent.com/scalabli/quo/master/pics/quo.png)](https://github.com/scalabli/quo)
 
-<<<<<<< HEAD
-=======
-→  PROJECT PERITIA FOR INABLE ORG
-
-[![Logo](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/peritia.png)](https://github.com/scalabli/master/peritia/README.md")
-
-READ MORE ABOUT THIS PROJECT
-→ Click this link to read more about [peritia](https://github.com/scalabli/quo/tree/master/peritia) 
->>>>>>> origin/master
-
 
 `Forever Scalable`
 
@@ -377,4 +367,4 @@ version 1.2.0 available at
 
 
 ## Blog
-→ How to build using [quo](https://www.python-engineer.com/posts/cli-with-quo/)
+→ How to build CLI using [quo](https://www.python-engineer.com/posts/cli-with-quo/)
