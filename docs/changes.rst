@@ -7,6 +7,13 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.6.1``
+----------------------
+
+Released on 2022-06-12
+
+- Optimised :obj:`quo.console.Console.bell`
+  
 ``Version 2022.6``
 -------------------
 
