@@ -865,8 +865,8 @@ class Console(Generic[_AppResult]):
         encode = sys.getdefaultencoding()
         print(encode)
 
-    def bell(instance:int=3) -> _AppResult:
-        print("\a" * 3)
+    def bell(self, instance:int=3) -> _AppResult:
+        print("\a" * instance)
 
     def launch(self, url, wait=False, locate=False) -> "Console":
 

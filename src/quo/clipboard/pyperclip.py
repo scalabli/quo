@@ -12,7 +12,7 @@ from .core import Clipboard, Data
  #   os.system("pip install -U pyperclip")
 
 #__all__ = [
-    "PyperclipClipboard",
+ #   "PyperclipClipboard",
 #]
 
 # We will be deprecating this in the later versions..
