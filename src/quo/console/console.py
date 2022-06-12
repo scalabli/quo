@@ -819,7 +819,35 @@ class Console(Generic[_AppResult]):
 
         return await _run_async2()
 
+    def command(name:str=None, cls=None, **attrs):
+        from quo.decorators.core import command as _command
+
+        return _command(name=name, cls=cls, **attrs)
+
     @property
+    def app(self, *param_decls, **attrs)->"Console":
+        import inspect
+
+        from quo.core import App
+
+        def decorator(f):
+            # Issue 926, copy attrs, so pre-defined options can re-use the same cls=
+
+            app_attrs = attrs.copy()
+
+            if "help" in app_attrs:
+                app_attrs["help"] = inspect.cleandoc(app_attrs["help"])
+                AppClass = app_attrs.pop("cls", App)
+                _param_memo(f, AppClass(param_decls, **app_attrs))
+                return f
+
+            return decorator
+      #  from quo.decorators.core import app as _app
+
+       # return _app(*param_decls, **attrs)
+
+    @property
+
     def edit(
         text=None,
         editor=None,
@@ -837,7 +865,7 @@ class Console(Generic[_AppResult]):
         encode = sys.getdefaultencoding()
         print(encode)
 
-    def bell(self) -> _AppResult:
+    def bell(instance:int=3) -> _AppResult:
         print("\a" * 3)
 
     def launch(self, url, wait=False, locate=False) -> "Console":

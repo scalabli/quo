@@ -1017,8 +1017,8 @@ class Command(BaseCommand):
 
         def show_help(clime, param, value):
             if value and not clime.parse:
+                from quo.layout.layout import Layout
                 from quo.layout import (
-                    Layout,
                     Window,
                     FormattedTextControl,
                     HSplit,
@@ -1037,7 +1037,7 @@ class Command(BaseCommand):
                             height=1,
                         ),
                         Label(Text(f"<b>{clime.get_help()}</b>")),
-                        Window(char="_", height=1),
+                        Window(char="\u2501", height=1),
                     ]
                 )
                 layout = Layout(root)

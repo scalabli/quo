@@ -4,17 +4,18 @@ from quo.selection import SelectionType
 
 from .core import Clipboard, Data
 
-try:
-    import pyperclip
+#try:
+#    import pyperclip
 
-except ModuleNotFoundError:
-    import os
-    os.system("pip install -U pyperclip")
+#except ModuleNotFoundError:
+ #   import os
+ #   os.system("pip install -U pyperclip")
 
-__all__ = [
+#__all__ = [
     "PyperclipClipboard",
-]
+#]
 
+# We will be deprecating this in the later versions..
 
 class PyperClipboard(Clipboard):
     """
@@ -27,10 +28,10 @@ class PyperClipboard(Clipboard):
 
     def set_data(self, data: Data) -> None:
         self._data = data
-        pyperclip.copy(data.text)
+      #  pyperclip.copy(data.text)
 
     def get_data(self) -> Data:
-        text = pyperclip.paste()
+    #    text = pyperclip.paste()
 
         # When the clipboard data is equal to what we copied last time, reuse
         # the `Data` instance. That way we're sure to keep the same
