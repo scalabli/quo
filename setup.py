@@ -7,7 +7,6 @@ setup(
     name="quo",
     install_requires=[
         "colorama; platform_system == 'Windows'",
-        "pyperclip",
         "pygments",
     ],
 )

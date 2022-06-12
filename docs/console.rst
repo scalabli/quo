@@ -185,7 +185,16 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
    
    console = Console()
 
-   console.bar()
+   console.bar("I am a bar")
+
+.. code:: python
+
+
+   from quo.console import Console
+
+   console = Console()
+
+   console.bar("I am a styled bar", style="fg:blue bg:yellow")
 
 
 ``pager``

@@ -7,6 +7,14 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.6``
+-------------------
+
+Released on 2022-06-12
+
+- Deprecated clipboard
+- Optimized help paramater
+
 ``Version 2022.5.3``
 ---------------------
 
@@ -19,7 +27,7 @@ Released on 2022-05-14
 ``Version 2022.5.2``
 ---------------------
 
-Released on 2022-05-
+Released on 2022-05-08
 
 **Added**
 ^^^^^^^^^^
