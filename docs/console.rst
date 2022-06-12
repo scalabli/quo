@@ -18,6 +18,13 @@ Attributes
 
 The console will auto-detect a number of properties required when rendering.
 
+``Bell``
+---------
+
+For making a beep sound multiple times
+
+**Parameters**
+     ``instance`` *(int)* - The number of times to ring the bell
 
 ``Size``
 ---------
