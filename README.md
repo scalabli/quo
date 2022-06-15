@@ -353,6 +353,12 @@ to our issue tracker at
  📥 scalabli@googlegroups.com
 
 
+
+
+## Blogs💻
+
+→ How to build CLIs using [quo](https://www.python-engineer.com/posts/cli-with-quo/)
+
 ## License📑
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
@@ -365,6 +371,3 @@ version 1.2.0 available at
 [Code of Conduct](http://contributor-covenant.org/version/1/2/0/)
 
 
-
-## Blog
-→ How to build CLI using [quo](https://www.python-engineer.com/posts/cli-with-quo/)

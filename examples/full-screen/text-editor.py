@@ -16,8 +16,8 @@ from quo.layout.containers import (
 )
 
 
-from quo.layout import FormattedTextControl, Layout, HSplit, VSplit, Window
-
+from quo.layout import FormattedTextControl, HSplit, VSplit, Window
+from quo.layout.layout import Layout
 from quo.layout.dimension import D
 from quo.layout.menus import CompletionsMenu
 from quo.highlight.core import DynamicLexer

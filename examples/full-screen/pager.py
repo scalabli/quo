@@ -5,7 +5,8 @@ A simple application that shows a Pager application.
 
 
 from quo import container
-from quo.layout import HSplit, Window, Layout
+from quo.layout import HSplit, Window
+from quo.layout.layout import Layout
 from quo.layout.controls import FormattedTextControl
 from quo.layout.dimension import LayoutDimension as D
 from quo.widget import TextArea, SearchToolbar
@@ -45,6 +46,7 @@ text_area = TextArea(
     read_only=True,
     scrollbar=True,
     line_numbers=True,
+    multiline=True,
     search_field=search_field,
     highlighter=Python,
 )
