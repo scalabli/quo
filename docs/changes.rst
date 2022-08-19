@@ -7,6 +7,16 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+
+``Version 2022.8``
+---------------------
+
+Released on 2022-08-20
+
+**Added**
+^^^^^^^^^^^^^^
+- Added :param:`animated` to :obj:`quo.console.Console.rule`
+
 ``Version 2022.7``
 ---------------------
 
