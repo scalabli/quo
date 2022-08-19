@@ -917,11 +917,28 @@ class Console(Generic[_AppResult]):
         return of
 
     def rule(
-            self, height: int = 1, char: str = "\u2501", style="fg:aquamarine"
-    ) -> "Console":
-        from quo.shortcuts.utils import container
+            self,
+            animated: bool =False,
+            height: int = 1,
+            char: str = "\u2501",
+            style=""
+            ) -> "Console":
+        if animated:
+            from quo.color import ColorDepth
+            from quo.progress import formatters, ProgressBar
+            custom_formatters = [
+                    formatters.Rainbow(formatters.Bar())
+                    ]
 
-        container(Window(char=char, height=height, style=style), bind=False)
+            color_depth = ColorDepth.eight_bit
+
+            with ProgressBar(color_depth=color_depth, formatters=custom_formatters) as pb:
+                for i in pb(range(100)):
+                    time.sleep(0.01)
+
+        if not animated:
+            from quo.shortcuts.utils import container
+            container(Window(char=char, height=height, style="fg:aquamarine"),bind=False)
 
     def bar(
             self,
