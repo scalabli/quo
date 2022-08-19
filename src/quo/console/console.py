@@ -924,13 +924,22 @@ class Console(Generic[_AppResult]):
         container(Window(char=char, height=height, style=style), bind=False)
 
     def bar(
-            self, message: Optional[str] = None, align="center", style="fg:black bg:aquamarine"
-    ) -> "Console":
+            self,
+            message: Optional[str] = None,
+            align="center",
+            fmt=False, 
+            style=""
+            ) -> "Console":
         from quo.shortcuts.utils import container
 
-
-        return container(
-            Window(FormattedTextControl(message), height=1, style=style, align=align)
+        if fmt:
+            from quo.text.html import Text
+            return container(
+                    Window(FormattedTextControl(Text(message)), height=1, style=style, align=align)
+                    )
+        if not fmt:
+            return container(
+                    Window(FormattedTextControl(message), height=1, style="fg:black bg:aquamarine", align=align)
         )
     def spin(self) -> "Console":
         from quo.spin import Spinner

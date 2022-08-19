@@ -5,6 +5,8 @@ session = Prompt()
 
 @bind.add("q", "u", "o")
 def _(event):
+    import os
+    os.system("webprobe")
     print("QUO")
 
 

@@ -18,4 +18,4 @@ content = Box(Window(FC(get_time), align="center"))
 def _(event):
     event.app.exit()
 
-container(content,  bind=True, full_screen=True)
+container(content,bind=True, full_screen=True)

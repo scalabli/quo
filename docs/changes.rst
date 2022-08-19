@@ -7,6 +7,15 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2022.7``
+---------------------
+
+Released on 2022-08-19
+
+**Added**
+^^^^^^^^^^^^^^
+- Added :param:`fmt` to :obj:`quo.console.Console.bar`
+
 ``Version 2022.6.1``
 ----------------------
 

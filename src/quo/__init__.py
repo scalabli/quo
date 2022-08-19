@@ -139,4 +139,4 @@ def print(
 from quo.i_o.termui import confirm, echo
 from quo.shortcuts.utils import container
 
-__version__ = "2022.6.1"
+__version__ = "2022.7"

@@ -183,6 +183,7 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
 **Parameters**
       - ``message`` Optional[*(str)*] – Message print on the terminal.
       - ``align`` Optional[*(str)*] - Postion of the message to be printed. Default is ``center`` other options are ``left`` and ``right``.
+      - ``fmt`` Optional[*(bool)*] - If True, a multi-colored style can be applied. *Added on v2022.7*
       - ``style`` Optional - Style to be applied.
 
 
@@ -203,6 +204,13 @@ The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an o
 
    console.bar("I am a styled bar", style="fg:blue bg:yellow")
 
+.. code:: python
+
+   from quo.console import Console
+   
+   console = Console()
+   
+   console.bar("<red>I am a</red> <green>multi-colored bar</green>", fmt=True)
 
 ``pager``
 ----------
