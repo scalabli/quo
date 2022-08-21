@@ -157,7 +157,7 @@ class Bar(Formatter):
         end: str = " ", #"]",
         sym_a: str = "\u2501", #"=",
         sym_b: str = "\u257E", # ">",
-        sym_c: str = "\u2500", # " ",
+        sym_c: str = "\u2500", # " ", this is what is being replaced as we consume an iterator
         unknown: str = "#",
     ) -> None:
 

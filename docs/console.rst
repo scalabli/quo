@@ -163,7 +163,7 @@ The :meth:`~quo.console.Console.rule` method will draw a horizontal line.
 *Added on v2022.3.2*
 
 **Parameters**
-      - ``animated`` Optional[*(bool)*] - If True, an animated rainbow border will be applied. *(Added on v2022.8)*
+      - ``multicolored`` Optional[*(bool)*] - If True, a multicolored border will be applied. *(Added on v2022.8)*
       
       - ``char`` Optional[*(str)*] - Character to be used to draw out the border.
       - ``style`` Optional - Style to be applied.
@@ -176,6 +176,15 @@ The :meth:`~quo.console.Console.rule` method will draw a horizontal line.
 
  console.rule()
 
+.. code:: python
+
+ from quo.console import Console
+   
+ console = Console()
+   
+ console.rule(multicolored=True)
+   
+.. image:: ./images/rulemulticolored.jpg
 
 ``bar``
 ---------

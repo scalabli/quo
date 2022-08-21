@@ -918,27 +918,31 @@ class Console(Generic[_AppResult]):
 
     def rule(
             self,
-            animated: bool =False,
             height: int = 1,
             char: str = "\u2501",
-            style=""
+            multicolored: bool = False,
+            style="fg:aquamarine"
             ) -> "Console":
-        if animated:
+        if multicolored:
             from quo.color import ColorDepth
-            from quo.progress import formatters, ProgressBar
+            from quo.progress.core import ProgressBar
+            from quo.progress import formatters
             custom_formatters = [
-                    formatters.Rainbow(formatters.Bar())
+                    formatters.Rainbow(
+
+                        # sym_b is the endpoint of the bar
+                        formatters.Bar(sym_b ="\u2501"))
                     ]
 
             color_depth = ColorDepth.eight_bit
 
             with ProgressBar(color_depth=color_depth, formatters=custom_formatters) as pb:
                 for i in pb(range(100)):
-                    time.sleep(0.01)
+                    time.sleep(0.001)
 
-        if not animated:
+        if not multicolored:
             from quo.shortcuts.utils import container
-            container(Window(char=char, height=height, style="fg:aquamarine"),bind=False)
+            container(Window(char=char, height=height, style=style),bind=False)
 
     def bar(
             self,
