@@ -1,6 +1,6 @@
 from quo.console import Console
 from quo.keys import bind
-from quo.shortcuts import container
+from quo.shortcuts.utils import container
 from quo.style import Style
 
 from quo.widget import Box, Label, Frame, Shadow

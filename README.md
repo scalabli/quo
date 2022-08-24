@@ -147,8 +147,7 @@ A prompt with a bottom toolbar
 
 ```
 
-![validate](https://raw.githubusercontent.com/scalabli/quo/
-master/docs/images/bottom-toolbar.png)
+![validate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/bottom-toolbar.png)
 
 
 **Example 4**
@@ -292,8 +291,7 @@ Message Box dialog
               )
 
 ```
-![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messageb
-ox.png)
+![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messagebox.png)
 
 **Example 2**
 
