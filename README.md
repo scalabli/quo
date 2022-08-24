@@ -188,6 +188,7 @@ A multicolored border.
 
 
 ``Spin``
+
 Quo can create a context manager that is used to display a spinner on stdout as long as the context has not exited
 
 ```python
@@ -202,8 +203,7 @@ Quo can create a context manager that is used to display a spinner on stdout as 
            print("Hello, World")
 
 ```
-Read more on [Console](https://quo.readthedocs.
-io/en/latest/console.html)
+Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
 
 
 
