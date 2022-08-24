@@ -3,6 +3,8 @@ Widgets
 
 A collection of reusable components for building full screen applications.
 
+When in ``full_screen`` mode, the default key binder to exit the application is ``Ctrl-C``, however you can set your own.
+
 ``TextArea``
 --------------
 A simple input field.

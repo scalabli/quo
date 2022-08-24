@@ -56,6 +56,10 @@ python -m quo
 ```
 ![test](https://github.com/scalabli/quo/raw/master/docs/images/test.png)
 
+# Quo Library
+Quo contains a number of builtin features you c
+an use to create elegant output in your CLI.
+
 ## Quo echo
 To output formatted text to your terminal you can import the [echo](https://quo.readthedocs.io/en/latest/introduction.html#quick-start) method.
 Try this:
@@ -109,36 +113,177 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 ```
 Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
 
-# Quo Library
-Quo contains a number of builtin features you can use to create elegant output in your CLI.
+## Quo Console
 
-Click the following headings for details:»
-<details>
-<summary>Console</summary>
 For more control over quo terminal content, import and construct a `Console` object.
 
-```python
-   
-  from quo.console import Console
 
-  console = Console()
+``Bar``
 
-```
+Draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
 
-## ``Launching Applications``
-
-Quo supports launching applications through `Console.launch`. This can be used to open the default application associated with a URL or filetype.
 ```python
 
  from quo.console import Console
-   
+
+ console = Console()
+ console.bar("I am a bar", style="fg:red bg:yellow")
+
+```
+
+``Launching Applications``
+
+Quo supports launching applications through `Console.launch`
+
+**Example 1**
+
+```python
+
+ from quo.console import Console
+
  console = Console()
  console.launch("https://quo.rtfd.io/")
-                                                    
-```
-Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
 
-</details>
+```
+
+**Example 2**
+
+```python
+
+ from quo.console import Console
+
+ console = Console()
+ console.launch("/home/path/README.md", locate=True)
+
+```
+
+``Rule``
+
+Draw a horizontal line.
+
+**Example 1**
+
+```python
+
+ from quo.console import Console
+
+ console = Console()
+ console.rule(
+
+```
+
+A multicolored border.
+
+**Example 2**
+
+```python
+
+ from quo.console import Console
+
+ console = Console()
+ console.rule(multicolored=True)
+
+```
+![Multicolored](https://quo.readthedocs.io/en/latest/_images/rulemulticolored.jpg)
+
+
+``Spin``
+Quo can create a context manager that is used to display a spinner on stdout as long as the context has not exited
+
+```python
+
+ import time
+ from quo.console import Console
+
+ console = Console()
+
+ with console.spin():
+           time.sleep(3)
+           print("Hello, World")
+
+```
+Read more on [Console](https://quo.readthedocs.
+io/en/latest/console.html)
+
+
+
+
+## Quo Widgets
+A collection of reusable components for building full screen applications.
+
+``Frame``
+Draw a border around any container, optionally with a titletext.
+
+```python
+
+ from quo import container
+ from quo.widget import Frame, Label
+
+ content = Frame(
+             Label("Hello, World!"),
+               title="Quo: python")
+
+ #Press Ctrl-C to exit
+ container(content, bind=True, full_screen=True)
+
+```
+
+``Label``
+Widget that displays the given text. It is not editable or focusable.
+
+**Example 1**
+
+This will occupy a minimum space in your terminal
+
+```python
+
+ from quo import container
+ from quo.widget import Label
+
+ content = Label("Hello, World", style="fg:black bg:red")
+
+ container(content)
+
+```
+**Example 2**
+
+This will be a fullscreen application
+
+```python
+
+ from quo import container
+ from quo.widget import Label
+
+ content = Label("Hello, World", style="fg:black bg:red")
+
+ # Press Ctrl-C to exit
+ container(content, bind=True, full_screen=True)
+
+```
+**Example 3**
+
+Full screen application using a custom binding key.
+
+```python
+
+ from quo import container
+ from quo.keys import bind
+ from quo.widget import Label
+
+ content = Label("Hello, World", style="fg:black bg:red")
+
+ #Press Ctrl-Z to exit
+ @bind.add("ctrl-z")
+ def _(event):
+     event.app.exit()
+
+ container(content, bind=True, full_screen=True)
+
+```
+
+Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
+
+Click the following headings for details:»
 
 <details>
 <summary>Completion</summary>
@@ -295,27 +440,6 @@ Example
 ![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png)
 </details>
 
-<details>
-<summary>Widgets</summary>
-A collection of reusable components for building full screen applications.
-
-## ``Label``
-Widget that displays the given text. It is not editable or focusable.
-```python
-
- from quo import container
- from quo.widget import Label
-
- content = Label("Hello, World", style="fg:black bg:red")
-  
- # Press Ctrl-C to exit
- 
- container(content, bind=True, full_screen=True)
-
-```
-Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
-
-</details>
 
 For more intricate  examples, have a look in the [examples](https://github.com/scalabli/quo/tree/master/examples) directory and the documentation.
 
