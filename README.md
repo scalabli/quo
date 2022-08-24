@@ -335,8 +335,7 @@ A key binding is an association between a physical key on akeyboard and a parame
 
 ```
 
-Read more on [Key bindings](https://quo.readthedocs.io/en/l
-atest/kb.html)
+Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
 
 ## Quo Tables
 
@@ -426,7 +425,7 @@ Grid table
 
 
 
-Read more on[Table](https://quo.readthedocs.io/en/latest/table.html)
+Read more on [Table](https://quo.readthedocs.io/en/latest/table.html)
 
 ## Quo Widgets
 A collection of reusable components for building full screen applications.
