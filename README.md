@@ -187,7 +187,7 @@ A multicolored border.
 ![Multicolored](https://quo.readthedocs.io/en/latest/_images/rulemulticolored.jpg)
 
 
-``Spin``
+``Spin``🔁
 
 Quo can create a context manager that is used to display a spinner on stdout as long as the context has not exited
 
@@ -211,7 +211,7 @@ Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
 ## Quo Widgets
 A collection of reusable components for building full screen applications.
 
-``Frame``
+``Frame`` 🎞️
 
 Draw a border around any container, optionally with a titletext.
 
