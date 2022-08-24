@@ -159,7 +159,7 @@ Quo supports launching applications through `Console.launch`
 
 ``Rule``
 
-Draw a horizontal line.
+Used for drawing a horizontal line.
 
 **Example 1**
 
@@ -172,9 +172,9 @@ Draw a horizontal line.
 
 ```
 
-A multicolored border.
-
 **Example 2**
+
+A multicolored line.
 
 ```python
 
