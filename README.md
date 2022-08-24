@@ -212,6 +212,7 @@ Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
 A collection of reusable components for building full screen applications.
 
 ``Frame``
+
 Draw a border around any container, optionally with a titletext.
 
 ```python
@@ -229,6 +230,7 @@ Draw a border around any container, optionally with a titletext.
 ```
 
 ``Label``
+
 Widget that displays the given text. It is not editable or focusable.
 
 **Example 1**
