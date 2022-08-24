@@ -115,6 +115,7 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 ```
 
 **Example 2**
+
 Real time integer validator
 
 ```python
@@ -151,6 +152,7 @@ A prompt with a bottom toolbar
 
 
 **Example 4**
+
 A placeholder  text that's displayed as long as no input s given.
 
 :bulb: This won't be returned as part of the output.
