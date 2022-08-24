@@ -64,7 +64,7 @@ takes a :class:`~quo.document.Document` as input and raises
 
 Added on *v2022.4.4* :meth:``int`` [bool]  can be used when validating numerical characters.
 
-Interger Validator
+Integer Validator
 ^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 

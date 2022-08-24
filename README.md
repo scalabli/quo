@@ -105,12 +105,82 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 
 - Using ``quo.prompt.Prompt`` object
 
+**Example 1**
+
 ```python
  from quo.prompt import Prompt
    
  session = Prompt()
  session.prompt("Type something:") 
 ```
+
+**Example 2**
+Real time integer validator
+
+```python
+
+ from quo.prompt import Prompt
+
+ session = Prompt(int=True)
+ number = int(session.prompt('Give a number: '))
+
+```
+
+![validate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/number-validator.png)
+
+
+**Example 3**
+
+A prompt with a bottom toolbar
+
+```python
+
+  from quo.prompt import Prompt
+  from quo.text import Text
+
+  def toolbar():
+        return Text('This is a <b><style bg="red">Toolbar</style></b>!')
+
+  # Returns a callable
+  session = Prompt(bottom_toolbar=toolbar)
+  session.prompt('> ')
+
+```
+
+![validate](https://raw.githubusercontent.com/scalabli/quo/
+master/docs/images/bottom-toolbar.png)
+
+
+**Example 4**
+A placeholder  text that's displayed as long as no input s given.
+
+:bulb: This won't be returned as part of the output.
+
+```python
+
+  from quo.prompt import Prompt
+  from quo.text import Text
+
+  session = Prompt(placeholder=Text('<gray>(please type something)</gray>'))
+  session.prompt("What is your name?: ")
+```
+**Example 5**
+
+Add colors to the prompt itself.
+
+```python
+
+ from quo.color import Color
+ from quo.prompt import Prompt
+
+ style = Color("fg:red")
+ session = Prompt(style=style)
+ session.prompt("Type something: ")
+
+```
+![validate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/colored-prompt1.png)
+
+
 Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
 
 ## Quo Console
@@ -205,15 +275,165 @@ Quo can create a context manager that is used to display a spinner on stdout as 
 ```
 Read more on [Console](https://quo.readthedocs.io/en/latest/console.html)
 
+## Quo Dialogs
+
+High level API for displaying dialog boxes to the user for informational purposes, or to get input from the user.
+
+**Example 1**
+
+Message Box dialog
+```python
+
+ from quo.dialog import MessageBox
+
+ MessageBox(
+       title="Message pop up window", 
+       text="Do you want to continue?\nPress ENTER to quit."
+              )
+
+```
+![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messageb
+ox.png)
+
+**Example 2**
+
+Input Box dialog
+
+```python
+
+ from quo.dialog import InputBox
+
+ InputBox(
+      title="InputBox shenanigans",
+      text="What Country are you from? :"
+        )
+
+```
+![Prompt Box](https://github.com/scalabli/quo/raw/master/docs/images/promptbox.png)
+
+Read more on [Dialogs](https://quo.readthedocs.io/en/latest/dialogs.html)
 
 
+## Quo Key Binding🔐
+
+A key binding is an association between a physical key on akeyboard and a parameter.
+
+```python
+
+ from quo import echo
+ from quo.keys import bind
+ from quo.prompt import Prompt
+
+ session = Prompt()
+
+ # Print "Hello world" when ctrl-h is pressed
+ @bind.add("ctrl-h")
+ def _(event):
+      echo("Hello, World!")
+
+ session.prompt("")
+
+```
+
+Read more on [Key bindings](https://quo.readthedocs.io/en/l
+atest/kb.html)
+
+## Quo Tables
+
+This offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
+
+**Example 1**
+
+```python
+
+ from quo.table import Table
+
+ data = [
+     ["Name", "Gender", "Age"],
+     ["Alice", "F", 24],
+     ["Bob", "M", 19],
+     ["Dave", "M", 24]
+  ]
+
+ Table(data)
+
+```
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/table.png)
+
+**Example 2**
+
+Right aligned table
+
+```python
+
+ from quo.table import Table
+
+ data = [
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
+ Table(data, align="right")
+
+```
+
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right-table.png)
+
+**Example 3**
+
+Colored table
+
+```python
+
+ from quo.table import Table
+
+ data = [
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    
+ Table(data, style="fg:green")
+
+```
+
+
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/colored-table.png)
+
+**Example 4**
+
+Grid table
+
+```python
+
+ from quo.table import Table
+
+ data = [
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
+
+ Table(data, theme="grid")
+
+```
+
+
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png)
+
+
+
+
+Read more on[Table](https://quo.readthedocs.io/en/latest/table.html)
 
 ## Quo Widgets
 A collection of reusable components for building full screen applications.
 
 ``Frame`` 🎞️
 
-Draw a border around any container, optionally with a titletext.
+Draw a border around any container, optionally with a title.
 
 ```python
 
@@ -228,6 +448,7 @@ Draw a border around any container, optionally with a titletext.
  container(content, bind=True, full_screen=True)
 
 ```
+![Frame](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/widgets/frame.png)
 
 ``Label``
 
@@ -285,7 +506,7 @@ Full screen application using a custom binding key.
 
 Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
 
-Click the following headings for details:»
+Click the following headings for more:»
 
 <details>
 <summary>Completion</summary>
@@ -367,81 +588,6 @@ The progress can be displayed for any iterable. This works by wrapping the itera
 Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
 
 </details>
-
-<details>
-<summary>Key Binding</summary>
-A key binding is an association between a physical key on a keyboard and a parameter.
-
-```python
-  
- from quo import echo
- from quo.keys import bind
- from quo.prompt import Prompt
- 
- session = Prompt()
-
- # Print "Hello world" when ctrl-h is pressed
- @bind.add("ctrl-h")
- def _(event):
-     echo("Hello, World!")
-
- session.prompt(">> ")
-```
-Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
-
-</details>
-
-<details>
-<summary>Dialog</summary>
-High level API for displaying dialog boxes to the user for informational purposes, or get input fromthe user.
-
-1) Example of a message box dialog.
-```python
-
- from quo.dialog import MessageBox
-
- MessageBox(
-         title="Message pop up window",
-         text="Do you want to continue?\nPress ENTER to quit.")                                    
-```
-The above produces the following output
-![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messagebox.png)
-
-2) Example of a prompt box dialog
-```python
- from quo.dialog import InputBox
-
- InputBox(
-           title="InputBox shenanigans",
-           text="What Country are you from?:")
-
-```
-![Prompt Box](https://github.com/scalabli/quo/raw/master/docs/images/promptbox.png)
-
-Read more on [Dialogs](https://quo.readthedocs.io/en/latest/dialogs.html)
-
-</details>
-
-<details>
-<summary>Table</summary>
-
-Function [Table](https://quo.readthedocs.io/en/latest/table.html) offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
-
-Example
-```python
- from quo.table import Table
-
- data = [
-   ["Name", "Gender", "Age"],
-   ["Alice", "F", 24],
-   ["Bob", "M", 19],
-   ["Dave", "M", 24]
- ]
- Table(data)
-```
-![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png)
-</details>
-
 
 For more intricate  examples, have a look in the [examples](https://github.com/scalabli/quo/tree/master/examples) directory and the documentation.
 
