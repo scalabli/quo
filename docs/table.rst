@@ -122,4 +122,4 @@ Grid table
     
  Table(data, theme="grid")
  
-.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png)
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png
