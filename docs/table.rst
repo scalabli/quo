@@ -38,7 +38,8 @@ Changed on *v2022.4.3*
 
  Table(data)
 
-.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/table.png
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/table.png
+
 
 ``Table headers``
 ------------------
@@ -69,3 +70,56 @@ To print nice column headers, supply the ``headers`` argument.
        [1, 'John Smith', 'This is a rather long description that might look better if it is wrapped a bit']
        ]
  Table(data, headers=("Issue Id", "Author", "Description"), column_width=[None, None, 30]) 
+
+
+Right aligned table
+
+.. code:: python
+
+ from quo.table import Table
+ 
+ data = [
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
+    
+ Table(data, align="right")
+
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right-table.png
+
+Colored table
+
+.. code:: python
+
+ from quo.table import Table
+ 
+ data = [
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
+  
+ Table(data, style="fg:green")
+
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/colored-table.png
+
+
+Grid table
+
+.. code:: python
+
+ from quo.table import Table
+ 
+ data = [
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
+    
+ Table(data, theme="grid")
+ 
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png)

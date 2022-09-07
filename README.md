@@ -392,6 +392,7 @@ Colored table
     ["Alice", "F", 24],
     ["Bob", "M", 19],
     ["Dave", "M", 24]
+    ]
     
  Table(data, style="fg:green")
 
