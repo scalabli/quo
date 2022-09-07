@@ -506,6 +506,41 @@ Autocompletion can be added by passing a completer parameter.
 
 .. image:: ./images/html-completion.png
 
+Demonstration of a custom completer class and the possibility of styling completions independently.
+
+.. code:: python
+
+ from quo.completion import Completer, Completion
+ from quo.prompt import Prompt
+ 
+ colors = [
+     "red",
+     "blue",
+     "green",
+     "orange",
+     "purple",
+     "yellow",
+     "cyan",
+     "magenta",
+     "pink",
+     ]
+     
+ class ColorCompleter(Completer):
+     def get_completions(self, document, complete_event):
+          word = document.get_word_before_cursor()
+          for color in colors:
+              if color.startswith(word):
+                  yield Completion(
+                            color,
+                            start_position=-len(word),
+                            style="fg:" + color,
+                            selected_style="fg:white bg:" + color,
+                            )
+                       
+ session = Prompt(completer=ColorCompleter(), complete_style="multi_column")
+ session.prompt("Type a color: ")
+
+.. image:: ./images/custom-completion.png
 
 Nested completion
 ^^^^^^^^^^^^^^^^^^
@@ -533,6 +568,7 @@ A simple :class:`~quo.completion.WordCompleter` is not enough in that case. We w
      session.prompt('# ')
 
 Whenever there is a ``None`` value in the dictionary, it means that there is no further nested completion at that point. When all values of a dictionary would be ``None``, it can also be replaced with a set.
+
 
 Complete while typing
 ^^^^^^^^^^^^^^^^^^^^^

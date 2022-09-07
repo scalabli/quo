@@ -2,10 +2,10 @@
 """
 Example of nested autocompletion.
 """
-from prompt_toolkit.completion import NestedCompleter
-from prompt_toolkit.shortcuts import PromptSession as Prompt
+from quo.completion import NestedCompleter
+from quo.prompt import Prompt
 
-completer = NestedCompleter.from_nested_dict(
+completer = NestedCompleter.add(
         {
         "show": 
         {
