@@ -2,7 +2,6 @@
 """
 Example of a checkbox-list-based dialog.
 """
-#from quo import echo
 from quo.dialog import CheckBox, MessageBox
 from quo.text import Text
 from quo.style import Style
