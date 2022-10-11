@@ -152,11 +152,6 @@ On Linux systems, this will output VT100 escape sequences, while on Windows it w
 Both foreground and background colors can also be specified setting the `fg`
 and `bg` attributes of any Text tag:
 
-.. note::
-
-   » style tag in the example below can be anything i.e: <abc...
-
-
 
 .. code:: python
    from quo import print
@@ -165,14 +160,12 @@ and `bg` attributes of any Text tag:
    
    
 .. image:: ./images/print/white-on-green.png
-   
-   
+
 .. note::
 
-        This page is also useful if you'd like to learn how to use formatting
-        in other places, like in a prompt or a toolbar.
+   » style tag in the example above can be anything i.e: <abc...
 
-
+   
 
 
 Underneath, all Text tags are mapped to classes from a stylesheet, so you can assign a style for a custom tag.
@@ -235,5 +228,12 @@ It is also possible to use class names, and separate the styling in a style shee
    })
 
  print(text, fmt=True, style=style)
+ 
+ 
+ 
+.. note::
+
+        This page is also useful if you'd like to learn how to use formatting
+        in other places, like in a prompt or a toolbar.
 
 » Check out more examples `here <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_
