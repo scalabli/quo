@@ -373,6 +373,7 @@ Formatted text placeholder
   
   
 .. image:: ./images/prompt/gray-placeholder.png
+     :align: center
 
   
 
