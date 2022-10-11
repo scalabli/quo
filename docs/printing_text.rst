@@ -137,7 +137,8 @@ On Linux systems, this will output VT100 escape sequences, while on Windows it w
  .. image:: ./images/print/skyblue.png
   
   
-  
+More examples
+ 
  .. code:: python
   
     from quo import print 
