@@ -171,6 +171,10 @@ A placeholder  text that's displayed as long as no input s given.
   session = Prompt(placeholder=Text('<gray>(please type something)</gray>'))
   session.prompt("What is your name?: ")
 ```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/gray-placeholder.png" />
+</p>
+
 **Example 5**
 
 Add colors to the prompt itself.
