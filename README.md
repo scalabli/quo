@@ -189,7 +189,10 @@ Add colors to the prompt itself.
  session.prompt("Type something: ")
 
 ```
-![validate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/colored-prompt1.png)
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/red-prompt.png" />
+</p>
 
 
 Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
