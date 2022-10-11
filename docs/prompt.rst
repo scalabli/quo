@@ -371,6 +371,10 @@ Formatted text placeholder
   session = Prompt(placeholder=Text('<gray>(please type something)</gray>'))
   session.prompt("What is your name?: ")
   
+  
+.. image:: ./images/prompt/gray-placeholder.png
+
+  
 
 .. _colors:
 
