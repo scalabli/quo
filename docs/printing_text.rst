@@ -126,7 +126,7 @@ Using quo.print
    print('<green>This is green</green>')
    
    
-» List of supported `ANSI colors  <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_
+» List of supported `ANSI colors  <https://quo.readthedocs.io/en/latest/appendix/print-ansi-colors.html>`_
 
   
   
@@ -150,7 +150,7 @@ Using quo.print
     print('<violet>This is violet</violet>')
     
     
-» List of supported `named colors  <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_
+» List of supported `Named colors  <https://quo.readthedocs.io/en/latest/appendix/print-named-colors.html>`_
     
     
 

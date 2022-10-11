@@ -4,6 +4,7 @@ Appendix
 .. toctree::
    :maxdepth: 3
 
-   appendix/colors.rst
    appendix/echo-ansi-colors.rst
+   appendix/print-ansi-colors.rst
+   appendix/print-named-colors.rst
    syntax_styles.rst 
