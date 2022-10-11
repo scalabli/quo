@@ -53,9 +53,13 @@ quo ships with a :func:`~quo.print` function that's meant to be (as much as poss
 On Linux systems, this will output VT100 escape sequences, while on Windows it will use Win32 API calls or VT100 sequences, depending on what is available.
 
 **Parameters**
-      - ``color_depth`` - Instance of :class:`quo.color.ColorDepth`
-      - ``style`` - :class:`quo.style.Style` instance for the color style.
-      - ``fmt`` *bool*  - Default is `False`, when `True`, you will be able to utilize an instance of :class:`quo.text.FormattedText`. *Added on v2022.4*
+       * ``values`` - Any kind of printable object, or formatted string.
+       * ``end`` - String appended after the last value, default a newline.(the default is a new line).
+       * ``fmt`` *bool*  - Default is `False`, if `True`, you will be able to utilize an instance of :class:`quo.text.FormattedText`. *Added on v2022.4*
+       * ``color_depth`` - Instance of :class:`quo.color.ColorDepth` . This specifies the number of bits used for each color component i.e: *one_bit(2 colors black ad white), four_bit(ANSI 16 colors), eight_bit(256 colors) or twenty_four_bit(24 bit True color)*. The default color scheme is ``eight_bit``.
+       * ``sep`` - String inserted between values, default a space.
+       * ``style`` -  :class:`quo.style.Style` instance for the color scheme.
+       
 
 .. note::
 
