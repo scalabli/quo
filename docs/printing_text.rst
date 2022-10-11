@@ -156,6 +156,8 @@ and `bg` attributes of any Text tag:
 
    » style tag in the example below can be anything i.e: <abc...
 
+
+
 .. code:: python
    from quo import print
 
