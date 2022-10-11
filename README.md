@@ -70,7 +70,10 @@ Try this:
 
  echo("Hello, World!", fg="red", italic=True, bold=True)
 ```
-![Hello World](https://github.com/scalabli/quo/raw/master/pics/print.png)
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/hello-world.png" />
+</p>
+
 
 **Example 2**
 ```python
