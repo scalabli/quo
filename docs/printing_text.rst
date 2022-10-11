@@ -3,6 +3,19 @@
 Printing (and using) formatted text
 ===================================
 
+
+``Formatted text``
+-------------------
+
+There are several ways to display colors:
+
+- By creating a :func:`quo.echo` function.
+- By creating a :func:`quo.print` function.
+- By creating a list of ``(style, text)`` tuples mapped to :func:`quo.print`.
+
+
+An instance of any of these three kinds of objects is called "formated text".
+
 ``echo``
 --------
 :func:`quo.echo` prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode, binary data and formatted text. It will emit  newline by default, which cab be suppressed by passing :param: ``nl=False``
@@ -29,57 +42,7 @@ Printing (and using) formatted text
  from quo import echo
 
  echo("Hello, world!", nl=False)
-
-.. code:: python
-
- from quo import echo
-
- echo(b'\xe2\x98\x83')
-
-Printing to Standard error
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can easily print to standard error by passing :param:``err=True``
-
-.. code:: python
-
- from quo import echo
  
- echo('Hello World!', err=True)
- 
-
-``print``
-----------
-quo ships with a :func:`~quo.print` function that's meant to be (as much as possible) compatible with the built-in print function, and :func:`quo.echo`. It also supports color and formatting just like :func:`quo.echo` 
-On Linux systems, this will output VT100 escape sequences, while on Windows it will use Win32 API calls or VT100 sequences, depending on what is available.
-
-**Parameters**
-       * ``values`` - Any kind of printable object, or formatted string.
-       * ``end`` - String appended after the last value, default a newline.(the default is a new line).
-       * ``fmt`` *bool*  - Default is `False`, if `True`, you will be able to utilize an instance of :class:`quo.text.FormattedText`. *Added on v2022.4*
-       * ``color_depth`` - Instance of :class:`quo.color.ColorDepth` . This specifies the number of bits used for each color component i.e: *one_bit(2 colors black ad white), four_bit(ANSI 16 colors), eight_bit(256 colors) or twenty_four_bit(24 bit True color)*. The default color scheme is ``eight_bit``.
-       * ``sep`` - String inserted between values, default a space.
-       * ``style`` -  :class:`quo.style.Style` instance for the color scheme.
-       
-
-.. note::
-
-        This page is also useful if you'd like to learn how to use formatting
-        in other places, like in a prompt or a toolbar.
-
-``Formatted text``
--------------------
-
-There are several ways to display colors:
-
-- By creating a :func:`quo.echo` function.
-- By creating a :func:`quo.print` function.
-- By creating a list of ``(style, text)`` tuples mapped to :func:`quo.print`.
-
-
-An instance of any of these three kinds of objects is called "formated text".
-
-Using quo.echo
-^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -103,12 +66,39 @@ Using quo.echo
 
 
 
-Using quo.print
-^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
 
+ from quo import echo
+
+ echo(b'\xe2\x98\x83')
+
+Printing to Standard error using echo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can easily print to standard error by passing :param:``err=True``
+
+.. code:: python
+
+ from quo import echo
+ 
+ echo('Hello World!', err=True)
+ 
+
+``print``
+----------
+Quo ships with a :func:`~quo.print` function that's meant to be (as much as possible) compatible with the built-in print function, and :func:`quo.echo`. It also supports color and formatting just like :func:`quo.echo` 
 :func:`~quo.print` can be used to indicate that a string contains HTML-like formatting. It recognizes the basic tags for bold, italic and underline: ``<b>``, ``<i>`` and ``<u>``.
-
 *Changed since v2022.3.5*
+
+On Linux systems, this will output VT100 escape sequences, while on Windows it will use Win32 API calls or VT100 sequences, depending on what is available.
+
+**Parameters**
+       * ``values`` - Any kind of printable object, or formatted string.
+       * ``end`` - String appended after the last value, default a newline.(the default is a new line).
+       * ``fmt`` *bool*  - Default is `False`, if `True`, you will be able to utilize an instance of :class:`quo.text.FormattedText`. *Added on v2022.4*
+       * ``color_depth`` - Instance of :class:`quo.color.ColorDepth` . This specifies the number of bits used for each color component i.e: *one_bit(2 colors black ad white), four_bit(ANSI 16 colors), eight_bit(256 colors) or twenty_four_bit(24 bit True color)*. The default color scheme is ``eight_bit``.
+       * ``sep`` - String inserted between values, default a space.
+       * ``style`` -  :class:`quo.style.Style` instance for the color scheme.
+       
 
 .. code:: python
 
@@ -120,7 +110,7 @@ Using quo.print
   
   
   
--  Colors from the ANSI palette.
+- Colors from the ANSI palette.
 
 .. code:: python
 
@@ -174,6 +164,13 @@ and `bg` attributes of any Text tag:
 .. image:: ./images/print/white-on-green.png
    
    
+.. note::
+
+        This page is also useful if you'd like to learn how to use formatting
+        in other places, like in a prompt or a toolbar.
+
+
+
 
 Underneath, all Text tags are mapped to classes from a stylesheet, so you can assign a style for a custom tag.
 
