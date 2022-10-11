@@ -77,23 +77,26 @@ Try this:
 
 **Example 2**
 ```python
- from quo import print
+ from quo import echo
 
- print("Quo is <style bg='red'>Scalable</style>") 
+ echo("Blue on white", fg="blue", bg="white")
+ 
 ```
-
 <p align="center">
-  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/scalable.png" />
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/blue-on-white.png" />
 </p>
 
 
 Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
+
+**Example 1**
 ```python
  from quo import print
 
  print('<b>This is bold</b>')
  print('<i>This is italic</i>')
 ```
+**Example 2**
 
 ```python
  from quo import print
@@ -105,12 +108,27 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
   <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/underlined1.png" />
 </p>
 
+**Example 3**
+```python
+ from quo import print
+
+ print("Quo is <style bg='red'>Scalable</style>") 
+```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/scalable.png" />
+</p>
+
+**Example 4**
 ```python                   
  # Colors from the ANSI palette.
  print('<red>This is red</red>')
- print('<style fg="green" bg="red">Green on red background</stlye>')
+ print('<style fg="white" bg="green">White on green</stlye>')
 
 ```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/white-on-green.png" />
+</p>
+
 ## Quo prompt
  - Using ``quo.prompt`` method.
 ```python
