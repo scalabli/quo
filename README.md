@@ -74,12 +74,11 @@ Try this:
 
 **Example 2**
 ```python
- from quo import echo
+ from quo import print
 
- echo("Quo is ", nl=False)
- echo("scalable", bg="red", fg="black") 
+ print("Quo is <style bg='red'>Scalable</style>") 
 ```
-![Scalable](https://github.com/scalabli/quo/raw/master/pics/scalable.png)
+![Scalable](https://github.com/scalabli/quo/raw/master/docs/images/print/scalable.png)
 
 Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
 ```python
@@ -239,7 +238,7 @@ Used for drawing a horizontal line.
  from quo.console import Console
 
  console = Console()
- console.rule(
+ console.rule()
 
 ```
 
