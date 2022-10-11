@@ -7,6 +7,8 @@ Printing (and using) formatted text
 --------
 :func:`quo.echo` prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode, binary data and formatted text. It will emit  newline by default, which cab be suppressed by passing :param: ``nl=False``
 
+» List of supported `ANSI colors  <https://quo.readthedocs.io/en/latest/appendix/echo-ansi-colors.html/>`_
+
 **Parameters**
       * ``text`` – the string to style with ansi or rgb color codes.
       * ``fg``  – if provided this will become the foreground color.
@@ -44,24 +46,6 @@ You can easily print to standard error by passing :param:``err=True``
  
  echo('Hello World!', err=True)
  
-Here's a list of supported color names:
-
-* ``black (might be a gray)``
-* ``red``
-* ``green``
-* ``yellow`` *(might be an orange)*
-* ``blue``
-* ``magenta``
-* ``cyan``
-* ``white`` *(might be light gray)*
-* ``vblack``  *vibrant black*
-* ``vblue``
-* ``vmagenta``
-* ``vwhite``
-* ``vcyan``
-* ``vred``
-* ``vgreen``
-* ``vyellow``
 
 ``print``
 ----------
@@ -146,7 +130,7 @@ Using quo.print
 
   
   
- -  Named colors (256 color palette, or true color, depending on the output).
+- Named colors (256 color palette, or true color, depending on the output).
     
   
  .. code:: python
