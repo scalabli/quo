@@ -93,8 +93,19 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 
  print('<b>This is bold</b>')
  print('<i>This is italic</i>')
+```
+
+```python
+ from quo import print
+
  print('<u>This is underlined</u>')
-                    
+ 
+```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/underlined1.png" />
+</p>
+
+```python                   
  # Colors from the ANSI palette.
  print('<red>This is red</red>')
  print('<style fg="green" bg="red">Green on red background</stlye>')

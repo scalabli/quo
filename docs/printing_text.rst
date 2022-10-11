@@ -99,13 +99,19 @@ Using quo.echo
 
    echo("This is bold", bold=True)
    echo("This is italic", italic=True)
-   echo("This is underlined", underline=True)
+   
 
    # Colors from the ANSI palette
 
    echo("This is red", fg="red")
    echo("This is green", fg="green")
 
+.. code:: python
+
+   from quo import echo
+   echo("This is underlined", underline=True)
+
+.. image:: ./images/print/underlined.png
 
 
 
@@ -118,44 +124,82 @@ Using quo.print
 
 .. code:: python
 
-  from quo import print
+   from quo import print
   
-  print('<b>This is bold</b>')
-  print('<i>This is italic</i>')
-  print('<u>This is underlined</u>')
+   print('<b>This is bold</b>')
+   print('<i>This is italic</i>')
+   print('<u>This is underlined</u>')
+  
+  
+  
+-  Colors from the ANSI palette.
 
 .. code:: python
 
-  # Colors from the ANSI palette.
-  print('<red>This is red</red>')
-  print('<green>This is green</green>')
+   from quo import print
+   
+   print('<red>This is red</red>')
+   print('<green>This is green</green>')
+   
+   
+» List of supported `ANSI colors  <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_
 
-  # Named colors (256 color palette, or true color, depending on the output).
-  print('<skyblue>This is sky blue</skyblue>')
-  print('<seagreen>This is sea green</seagreen>')
-  print('<violet>This is violet</violet>')
+  
+  
+ -  Named colors (256 color palette, or true color, depending on the output).
+    
+  
+ .. code:: python
+
+    from quo import print 
+  
+    print('<skyblue>This is sky blue</skyblue>')
+    
+    
+ .. image:: ./images/print/white-on-green.png
+  
+  
+ .. code:: python
+  
+    from quo import print 
+    print('<seagreen>This is sea green</seagreen>')
+    print('<violet>This is violet</violet>')
+    
+    
+» List of supported `named colors  <https://github.com/scalabli/quo/tree/master/examples/print-text/>`_
+    
+    
 
 Both foreground and background colors can also be specified setting the `fg`
 and `bg` attributes of any Text tag:
 
-.. code:: python
+.. note::
 
- # Colors from the ANSI palette.
- print('<aaa fg="white" bg="green">White on green</aaa>')
+   » style tag in the example below can be anything i.e: <abc...
+
+.. code:: python
+   from quo import print
+
+   print('<style fg="white" bg="green">White on green</style>')
+   
+   
+.. image:: ./images/print/white-on-green.png
+   
+   
 
 Underneath, all Text tags are mapped to classes from a stylesheet, so you can assign a style for a custom tag.
 
 .. code:: python
 
- from quo import print
- from quo.style import Style
+   from quo import print
+   from quo.style import Style
 
- style = Style.add({
-     'aaa': 'fg:red',
-     'bbb': 'fg:blue italic'
-     })
+   style = Style.add({
+       'aaa': 'fg:red',
+       'bbb': 'fg:blue italic'
+       })
 
- print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
+   print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
 
  
  
