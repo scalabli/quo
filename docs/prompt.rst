@@ -412,7 +412,8 @@ In the following example, the input will be in red
 
  session.prompt("Type something: ")
 
-.. image:: ./images/colored-prompt1.png
+.. image:: ./images/prompt/red-prompt.png
+     :align: center
 
 
 Here's an example upgrade:
