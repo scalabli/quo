@@ -7,7 +7,7 @@ Printing (and using) formatted text
 --------
 :func:`quo.echo` prints a message plus a newline to the given file or stdout. On first sight, this looks like the print function, but it has improved support for handling Unicode, binary data and formatted text. It will emit  newline by default, which cab be suppressed by passing :param: ``nl=False``
 
-» List of supported `ANSI colors  <https://quo.readthedocs.io/en/latest/appendix/echo-ansi-colors.html/>`_
+» List of supported `ANSI colors  <https://quo.readthedocs.io/en/latest/appendix/echo-ansi-colors.html>`_
 
 **Parameters**
       * ``text`` – the string to style with ansi or rgb color codes.
