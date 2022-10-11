@@ -214,9 +214,14 @@ Draw a horizontal bar with an optional title, which is a good way of dividing yo
  from quo.console import Console
 
  console = Console()
- console.bar("I am a bar", style="fg:red bg:yellow")
+ console.bar("I am a bar")
 
 ```
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/console/bar.png" />
+</p>
+
 
 ``Launching Applications``
 
@@ -258,6 +263,9 @@ Used for drawing a horizontal line.
  console.rule()
 
 ```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/console/rule.png" />
+</p>
 
 **Example 2**
 
@@ -271,7 +279,11 @@ A multicolored line.
  console.rule(multicolored=True)
 
 ```
-![Multicolored](https://quo.readthedocs.io/en/latest/_images/rulemulticolored.jpg)
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/console/multicolored-rule.png" />
+</p>
+
 
 
 ``Spin``🔁

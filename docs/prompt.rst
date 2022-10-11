@@ -379,6 +379,8 @@ Formatted text placeholder
 
 .. _colors:
 
+
+
 ``Colors``
 ---------
 
@@ -411,6 +413,9 @@ In the following example, the input will be in red
  session = Prompt(style=style)
 
  session.prompt("Type something: ")
+ 
+ 
+ 
 
 .. image:: ./images/prompt/red-prompt.png
      :align: center
