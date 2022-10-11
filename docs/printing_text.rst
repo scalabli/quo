@@ -124,7 +124,7 @@ On Linux systems, this will output VT100 escape sequences, while on Windows it w
 
   
   
-- Named colors (256 color palette, or true color, depending on the output).
+- Named colors (256 color palette, or true color).
     
   
  .. code:: python
