@@ -386,7 +386,7 @@ The colors for syntax highlighting are defined by a
 built-in style is used, but any style instance can be passed to the :class:`~quo.prompt.Prompt` class.
 
 .. note::
-      ;func:`quo.prompt` has different semantics and cannot output colored text but :class:`quo.prompt.Prompt` is packed with several ways on how this can be achieved.
+      :func:`quo.prompt` has different semantics and cannot output colored text but :class:`quo.prompt.Prompt` is packed with several ways on how this can be achieved.
 
 
 A simple way to add color to create a style, is by using the :meth:`~quo.style.Style.add` function
