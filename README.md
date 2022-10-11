@@ -78,7 +78,11 @@ Try this:
 
  print("Quo is <style bg='red'>Scalable</style>") 
 ```
-![Scalable](https://github.com/scalabli/quo/raw/master/docs/images/print/scalable.png)
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/print/scalable.png" />
+</p>
+
 
 Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/printing_text.html#print)
 ```python
