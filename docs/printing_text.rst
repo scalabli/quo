@@ -155,6 +155,7 @@ and `bg` attributes of any Text tag:
 
 
 .. code:: python
+
    from quo import print
 
    print('<style fg="white" bg="green">White on green</style>')
