@@ -104,7 +104,10 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 
  prompt("What is your name?")
 ```
-![quo.prompt](https://github.com/scalabli/quo/raw/master/pics/prompt.png)
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/prompt1.png" />
+</p>
+
 
 - Using ``quo.prompt.Prompt`` object
 
