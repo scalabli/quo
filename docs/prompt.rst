@@ -309,12 +309,14 @@ The following example returns a callable
 Quo ships with an intuitive syntax highligher.
 It is also possible to create a custom highligher by implementing the :class:`~quo.highlight.Lexer` abstract base class.
 
+*(changed since v2022.9)*
+
 .. code:: python
 
     from quo.prompt import Prompt
-    from quo.highlight import HTML
+    from quo.highlight Highlight
     
-    session = Prompt(highlighter=HTML)
+    session = Prompt(highlighter=Highlight.html)
 
     session.prompt('Enter HTML: ')
 
@@ -325,9 +327,9 @@ If you want to use another style you can do the following:»
 .. code:: python
 
    from quo.prompt import Prompt
-   from quo.highlight import Python
+   from quo.highlight import Highlight
 
-   session = Prompt(highlighter=Python)
+   session = Prompt(highlighter=Highlight.python)
    session.prompt('Enter Python code: ')
 
 .. image:: ./images/python-input.png
@@ -336,13 +338,14 @@ or:»
 .. code:: python
 
    from quo.prompt import Prompt
-   from quo.highlight import css
+   from quo.highlight import Highlight
 
-   session = Prompt(highlighter=css)
+   session = Prompt(highlighter=Highlight.css)
    session.prompt('Enter css: ')
 .. image:: ./images/css-input.png
 
-Syntax highlighting is as simple as adding a highlighter. All of the available syntax styles can be found `here <http://quo.readthedocs.io/en/latest/syntax_styles.html>`_ 
+Syntax highlighting is as simple as adding a highlighter. All of the available syntax styles can be found `here <http://quo.readthedocs.io/en/latest/syntax_styles.html>`_  or 
+:ref:`Read more about styling <syntax>`.
 
 ``Placeholder text``
 --------------------

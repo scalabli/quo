@@ -1,13 +1,14 @@
 ###  Available Syntax highlighters
 
-- Actionscript
-- Bibtex
-- Cpp _(C ++)_
 - CSS
+- Email
 - Fortran
 - Go
 - Haskell
 - HTML
-- Javascript
 - Python
+- Ruby
+- Rust
+- Shell
+- Solidity
 - Sql

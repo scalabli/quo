@@ -121,6 +121,7 @@ On Linux systems, this will output VT100 escape sequences, while on Windows it w
    
    
 » List of supported `ANSI colors  <https://quo.readthedocs.io/en/latest/appendix/print-ansi-colors.html>`_
+:ref:`Read more about styling <appendix>`.
 
   
   

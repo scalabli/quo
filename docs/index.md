@@ -24,7 +24,7 @@ Features
 - [x] Support for tabular presentation of data
 - [x] Intuitive progressbars
 - [x] Code completions
-- [x] Nesting of commands
+- [x] Parsing and nesting of commands
 - [x] Customizable Text User Interface _(TUI)_ dialogs
 - [x] Automatic help page generation
 - [x] Syntax highlighting
@@ -44,6 +44,7 @@ console.rst
 prompt.rst
 utils.rst
 table.rst
+parse.rst
 commands.rst
 apps.rst
 args.rst

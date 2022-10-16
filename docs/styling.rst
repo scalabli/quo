@@ -51,7 +51,7 @@ by any of its children. The parent can for instance say ``style="bold
 underline"`` where a child overrides this style partly by specifying
 ``style="nobold bg:ansired"``.
 
-The following ANSI colors are available (both for foreground and background):
+The following ANSI colors are available (both for foreground and background) when using :class:`Style`
 
 .. code::
 
@@ -63,7 +63,7 @@ The following ANSI colors are available (both for foreground and background):
     ansibrightblack, ansibrightred, ansibrightgreen, ansibrightyellow
     ansibrightblue, ansibrightmagenta, ansibrightcyan, ansiwhite
 
-In order to know which styles are actually used in an application, it is
+In order to know which styles are actually used in an application using :class:`Console` class, it is
 possible to call :meth:`~Console.get_used_style_strings`, when the
 application is done.
 
@@ -259,7 +259,7 @@ is chosen, all colors will be mapped to the closest ANSI color.
 
 Setting the default color depth for any  application can be done
 by setting the ``QUO_COLOR_DEPTH`` environment variable. You could
-for instance copy the following into your `.bashrc` file.
+for instance copy the following into your `.bashrc` or `.zshrc` file.
 
 .. code:: shell
 
