@@ -273,12 +273,15 @@ The following example returns a formatted text:
 
 .. code:: python
 
- from quo.prompt import Prompt
- from quo.text import Text
+   from quo.prompt import Prompt
+   from quo.text import Text
 
- session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>'))
+   session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>'))
 
- session.prompt("")
+   session.prompt("")
+   
+   
+.. image:: ./images/prompt/redgreenrprompt.png
 
 The following example returns a callable
 
