@@ -543,12 +543,12 @@ Ouput:
 That should be easy to follow. I’ve added that last output so you can see the sort of flexibility you get, i.e. mixing long form options with short form ones.
 
 
-Before we conclude, you probably want to tell your users the main purpose of your program, just in case they don’t know:
+Before we conclude, you probably want to tell your users the main purpose of your program, just in case they don’t know
 
 .. code:: python
 
    from quo.parse import Parser
-   
+ 
    parser = Parser(description="calculate X to the power of Y")
    
    group = parser.add_mutually_exclusive_group()
