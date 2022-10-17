@@ -435,6 +435,67 @@ A key binding is an association between a physical key on akeyboard and a parame
 
 Read more on [Key bindings](https://quo.readthedocs.io/en/latest/kb.html)
 
+
+## Quo Parser 
+
+You can parse optional and positional arguments with Quo and generate help pages for your command-line tools.
+
+```python
+ from quo.parse import Parser
+ 
+ parser = Parser(description= "This script prints hello NAME COUNT times.")
+
+ parser.argument('--count', default=3, type=int, help='number of greetings')
+ parser.argument('name', help="The person to greet")
+ 
+ arg = parser.parse()
+ 
+ for x in range(arg.count):
+     print(f"Hello {arg.name}!")
+
+```
+
+```shell
+   $ python prog.py John --count 4
+   
+```
+
+And what it looks like:
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/parse/document-scripts.png" />
+</p>
+
+Here's what the help page looks like:
+
+```shell
+ $ python prog.py --help
+```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/parse/document-scripts-help.png" />
+</p>
+
+Read more on [Parser](https://quo.readthedocs.io/en/latest/parse.html)
+
+## Quo ProgressBar
+Creating a new progress bar can be done by calling the class **ProgressBar**
+The progress can be displayed for any iterable. This works by wrapping the iterable (like ``range``) with the class **ProgressBar**
+
+```python
+
+ import time
+ from quo.progress import ProgressBar
+  
+ with ProgressBar() as pb:
+               for i in pb(range(800)):
+                             time.sleep(.01)
+```
+![ProgressBar](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/simple-progress-bar.png)
+
+Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
+
+
+
 ## Quo Tables
 
 This offers a number of configuration options to set the look and feel of the table, including how borders are rendered and the style and alignment of the columns.
@@ -604,53 +665,6 @@ Full screen application using a custom binding key.
 
 Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
 
-Click the following headings for more:»
-
-
-<details>
-<summary>Documenting Scripts</summary>
-Quo automatically generates help pages for your command-line tools.
-
-```python
- from quo import print
- from quo.console import command
- from quo.console import app
-
- @command()
- @app('--count', default=1, help='number of greetings')
- @app('--name', prompt="What is your name?", help="The person to greet")
-
-def hello(count: int, name: str):
-    """This script prints hello NAME COUNT times."""
-       for x in range(count):
-           print(f"Hello {name}!")
-
- if __name__ == "__main__:
-          hello()
-```
-And what it looks like:
-![Help Text](https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/help-text.png)
-
-</details>
-<details>
-<summary>Progress</summary>
-Creating a new progress bar can be done by calling the class **ProgressBar**
-The progress can be displayed for any iterable. This works by wrapping the iterable (like ``range``) with the class **ProgressBar**
-
-```python
-
- import time
- from quo.progress import ProgressBar
-  
- with ProgressBar() as pb:
-               for i in pb(range(800)):
-                             time.sleep(.01)
-```
-![Progress](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/simple-progress-bar.png)
-
-Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
-
-</details>
 
 For more intricate  examples, have a look in the [examples](https://github.com/scalabli/quo/tree/master/examples) directory and the documentation.
 
