@@ -476,31 +476,33 @@ We have introduced another action, ``count``, to count the number of occurrences
 
 Grouping conflicting optional arguments
 ===========================================
-:meth:`group()` allows us to specify options that conflict with each other. Let’s also change the rest of the program so that the new functionality makes more sense: we’ll introduce the ``--quiet`` option, which will be the opposite of the ``--verbose`` one:
+:meth:`group()` allows us to specify options that conflict with each other. Let’s also change the rest of the program so that the new functionality makes more sense: we’ll introduce the ``--quiet`` option, which will be the opposite of the ``--verbose`` one.
 
 .. code:: python
     
- from quo.parse import Parser
+   from quo.parse import Parser
 
- parser = Parser()
+   parser = Parser()
 
- group = parser.group()
- group.argument("-v", "--verbose", action="store_true")
- group.argument("-q", "--quiet", action="store_true")
- parser.argument("x", type=int, help="the base")
- parser.argument("y", type=int, help="the exponent")
- arg = parser.parse()
+   group = parser.group()
+   group.argument("-v", "--verbose", action="store_true")
+   group.argument("-q", "--quiet", action="store_true")
+   
+   parser.argument("x", type=int, help="the base")
+   parser.argument("y", type=int, help="the exponent")
+   
+   arg = parser.parse()
 
- answer = arg.x**arg.y
+   answer = arg.x**arg.y
 
- if arg.quiet:
-     print(answer)
- elif arg.verbose:
-     print(f"{arg.x} to the power {arg.y} equals {answer}")
- else:
-     print(f"{arg.x}^{arg.y} == {answer}")
+   if arg.quiet:
+       print(answer)
+   elif arg.verbose:
+       print(f"{arg.x} to the power {arg.y} equals {answer}")
+   else:
+       print(f"{arg.x}^{arg.y} == {answer}")
 
-Our program is now simpler, and we’ve lost some functionality for the sake of demonstration. Anyways, here’s the output:
+Our program is now simpler, and we’ve lost some functionality for the sake of demonstration. Anyways, here’s the output
 
 .. code:: shell
    
@@ -537,7 +539,6 @@ Ouput:
  $ python prog.py 4 2 -vq
 
 
- //image//
 
 
 That should be easy to follow. I’ve added that last output so you can see the sort of flexibility you get, i.e. mixing long form options with short form ones.
@@ -551,11 +552,12 @@ Before we conclude, you probably want to tell your users the main purpose of you
  
    parser = Parser(description="calculate X to the power of Y")
    
-   group = parser.add_mutually_exclusive_group()
+   group = parser.group()
+   
    group.argument("-v", "--verbose", action="store_true")
    group.argument("-q", "--quiet", action="store_true")
    parser.argument("x", type=int, help="the base")
-   parser.add_argument("y", type=int, help="the exponent")
+   parser.argument("y", type=int, help="the exponent")
    
    arg = parser.parse()
    answer = arg.x**arg.y
@@ -568,9 +570,10 @@ Before we conclude, you probably want to tell your users the main purpose of you
        print("{}^{} == {}".format(arg.x, arg.y, answer))
        
        
-Note that slight difference in the usage text. Note the [-v | -q], which tells us that we can either use -v or -q, but not both at the same time:
+Note that slight difference in the usage text. Note the [-v | -q], which tells us that we can either use -v or -q, but not both at the same time
 
-.. code:: console
+.. code:: shell
+
    python prog.py --help
 
 
