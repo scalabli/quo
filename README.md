@@ -191,6 +191,7 @@ A prompt with a bottom toolbar
 
 **Example 4**
 
+``Placeholder text``
 A placeholder  text that's displayed as long as no input s given.
 
 :bulb: This won't be returned as part of the output.
@@ -209,7 +210,7 @@ A placeholder  text that's displayed as long as no input s given.
 
 **Example 5**
 
-Add colors to the prompt itself.
+``Coloring the prompt.``
 
 ```python
 
@@ -228,7 +229,7 @@ Add colors to the prompt itself.
 
 **Example 6**
 
-Autocomplete text
+``Autocomplete text``
 
 Press [Tab] to autocomplete
 ```python
@@ -243,7 +244,7 @@ Press [Tab] to autocomplete
 
 **Example 7**
 
-Autosuggest text
+``Autosuggest text``
 
 Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input.
 Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f will insert the first word of the suggestion.
