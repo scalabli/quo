@@ -100,7 +100,7 @@ from quo.layout.processors import (
 )
 
 from quo.layout.utils import explode_text_fragments
-from quo.highlight import DynamicLexer, Lexer
+from quo.highlight.core import DynamicLexer, Lexer
 from quo.output import ColorDepth, DummyOutput, Output
 from quo.style.core import BaseStyle, DynamicStyle
 from quo.style.transformation import ConditionalStyleTransformation, DynamicStyleTransformation, StyleTransformation, SwapLightAndDarkStyleTransformation, merge_style_transformations

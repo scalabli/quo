@@ -2,8 +2,10 @@
 Lexer interface and implementations.
 Used for syntax highlighting.
 """
-from .core import DynamicLexer, Lexer, SimpleLexer
-from .pygments import PygmentsLexer, RegexSync, SyncFromStart, SyntaxSync
+
+#from .core import DynamicLexer, Lexer, SimpleLexer
+#from .pygments import RegexSync, SyncFromStart, SyntaxSync
+
 
 __all__ = [
     # Core
@@ -18,25 +20,110 @@ __all__ = [
 ]
 
 
-from pygments.lexers.html import HtmlLexer as HL
+class Highlight:
 
-HTML = PygmentsLexer(HL)
-html = HTML
+    from .pygments import PygmentsLexer
 
-from pygments.lexers.python import PythonLexer as PL
+    _CSS = []
+    match _CSS:
+        case css:
+             from pygments.lexers.css import CssLexer
+             css = PygmentsLexer(CssLexer)
 
-Python = PygmentsLexer(PL)
+    _EMAIL = []
+    match _EMAIL:
+        case email:
+            from pygments.lexers.email import EmailLexer
+            email = PygmentsLexer(EmailLexer)
 
-from pygments.lexers.css import CssLexer as CL
+    _FORTRAN = []
+    match _FORTRAN:
+        case fortran:
+            from pygments.lexers.fortran import FortranLexer
+            fortran = PygmentsLexer(FortranLexer)
 
-css = PygmentsLexer(CL)
-CSS = css
-Css = css
+    _GO = []
+    match _GO:
+        case go:
+            from pygments.lexers.go import GoLexer
+            go = PygmentsLexer(GoLexer)
 
+
+    _HASKELL = []
+    match _HASKELL:
+        case haskell:
+             from pygments.lexers.haskell import HaskellLexer
+             haskell = PygmentsLexer(HaskellLexer)
+
+    _HTML = []
+    match _HTML:
+        case html:
+            from pygments.lexers.html import HtmlLexer
+            html = PygmentsLexer(HtmlLexer)
+
+
+    _PYTHON = []
+    match _PYTHON:
+        case python:
+            from pygments.lexers.python import PythonLexer
+            python = PygmentsLexer(PythonLexer)
+
+    _RUBY = []
+    match _RUBY:
+        case ruby:
+            from pygments.lexers.ruby import RubyLexer
+            ruby = PygmentsLexer(RubyLexer)
+
+    _RUST = []
+    match _RUST:
+        case rust:
+            from pygments.lexers.rust import RustLexer
+            rust = PygmentsLexer(RustLexer)
+
+    _SHELL = []
+    match _SHELL:
+        case shell:
+            from pygments.lexers.shell import BashLexer
+            shell = PygmentsLexer(BashLexer)
+            
+            
+    _SOLIDITY = []
+    match _SOLIDITY:
+        case solidity:
+            from pygments.lexers.solidity import SolidityLexer
+            solidity = PygmentsLexer(SolidityLexer)
+
+    _SQL = []
+    match _SQL:
+        case sql:
+            from pygments.lexers.sql import SqlLexer
+            sql = PygmentsLexer(SqlLexer)
+
+
+
+
+
+            
+#:TODO: Add more lexers
+
+
+
+   
+
+
+
+# sas.py
+# scdoc.py
+# scripting.py
+# sgf.py   
+
+# special.py
+
+# snobol.py
 # Actionscript
-from pygments.lexers.actionscript import ActionScriptLexer as ActionLexer
+##from pygments.lexers.actionscript import ActionScriptLexer as ActionLexer
 
-actionscript = PygmentsLexer(ActionLexer)
+#actionscript = PygmentsLexer(ActionLexer)
 # agile = PygmentsLexer(CL)
 # algebra = PygmentsLexer(CL)
 # ambient = PygmentsLexer(CL)
@@ -44,28 +131,30 @@ actionscript = PygmentsLexer(ActionLexer)
 # apl = PygmentsLexer(CL)
 # archetype = PygmentsLexer(CL)
 
-from pygments.lexers.arrow import ArrowLexer as ArrowL
+#from pygments.lexers.arrow import ArrowLexer as ArrowL
 
-arrow = PygmentsLexer(ArrowL)
+#arrow = PygmentsLexer(ArrowL)
 # asm = PygmentsLexer(CL)
-from pygments.lexers.automation import AutohotkeyLexer as AutomationL
+##from pygments.lexers.automation import AutohotkeyLexer as AutomationL
 
-automation = PygmentsLexer(AutomationL)
+##automation = PygmentsLexer(AutomationL)
 
 # bare.py
 # basic.py
 # bibtex
-from pygments.lexers.bibtex import BibTeXLexer as BibL
+#from pygments.lexers.bibtex import BibTeXLexer as BibL
 
-bibtex = PygmentsLexer(BibL)
-Bibtex = bibtex
+##bibtex = PygmentsLexer(BibL)
+#Bibtex = bibtex
 # boa.py
 
-from pygments.lexers.c_cpp import CFamilyLexer as C_Lexer
+#from pygments.lexers.c_cpp import CFamilyLexer as C_Lexer
 
-cpp = PygmentsLexer(C_Lexer)
-Cpp = cpp
-CPP = cpp
+
+
+#cpp = PygmentsLexer(C_Lexer)
+#Cpp = cpp
+#CPP = cpp
 
 # c_like.py
 # capnproto.py
@@ -82,10 +171,9 @@ CPP = cpp
 # diff.py
 # dotnet.py
 # dsls.p
-from pygments.lexers.email import EmailLexer as EmailL
 
-email = PygmentsLexer(EmailL)
-Email = email
+
+
 
 # erlang.py
 # esoteric.py
@@ -95,26 +183,16 @@ Email = email
 # felix.py
 # floscript.py
 # forth.py
-from pygments.lexers.fortran import FortranLexer as FortL
 
-fortran = PygmentsLexer(FortL)
-Fortran = fortran
 
 # gdscript.py
-from pygments.lexers.go import GoLexer as GoL
-
-go = PygmentsLexer(GoL)
-Go = go
 
 
 # grammar_notation.py
 # graph.py
 # graphics.py
 
-from pygments.lexers.haskell import HaskellLexer as HaskellL
 
-haskell = PygmentsLexer(HaskellL)
-Haskell = haskell
 # haxe.py
 # hdl.py
 # hexdump.py
@@ -123,15 +201,15 @@ Haskell = haskell
 # iolang.py
 # j.py
 # Javascript
-from pygments.lexers.javascript import JavascriptLexer as JavasL
+#from pygments.lexers.javascript import JavascriptLexer as JavasL
 
-javascript = PygmentsLexer(JavasL)
-Javascript = javascript
+#javascript = PygmentsLexer(JavasL)
+#Javascript = javascript
 # Julia
-from pygments.lexers.julia import JuliaLexer
+#from pygments.lexers.julia import JuliaLexer
 
-julia = PygmentsLexer(JuliaLexer)
-Julia = julia
+#julia = PygmentsLexer(JuliaLexer)
+#Julia = julia
 # jvm.py
 # lisp.py
 # make.py
@@ -152,58 +230,20 @@ Julia = julia
 
 # pascal.py
 # pawn.py
-# perl
-from pygments.lexers.perl import PerlLexer
+#from pygments.lexers.perl import PerlLexer
 
-perl = PygmentsLexer(EmailL)
-Perl = perl
+#perl = PygmentsLexer(EmailL)
+#Perl = perl
 
-# php
-from pygments.lexers.php import PhpLexer
+#from pygments.lexers.php import PhpLexer
 
-php = PygmentsLexer(PhpLexer)
-Php = php
-PHP = php
+#php = PygmentsLexer(PhpLexer)
+#Php = php
+#PHP = php
 
 # r.py
 # rdf.py
 
-# ruby
-from pygments.lexers.ruby import RubyLexer
-
-ruby = PygmentsLexer(RubyLexer)
-Ruby = ruby
-
-# rust
-from pygments.lexers.rust import RustLexer
-
-rust = PygmentsLexer(RustLexer)
-Rust = rust
-# sas.py
-# scdoc.py
-# scripting.py
-# sgf.py
-# shell
-from pygments.lexers.shell import BashLexer
-
-shell = PygmentsLexer(BashLexer)
-Shell = shell
-
-# snobol.py
-# solidity
-from pygments.lexers.solidity import SolidityLexer
-
-solidity = PygmentsLexer(SolidityLexer)
-Solidity = solidity
-
-# special.py
-
-# sql
-from pygments.lexers.sql import SqlLexer
-
-sql = PygmentsLexer(SqlLexer)
-Sql = sql
-SQL = sql
 
 # stata.py
 

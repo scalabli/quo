@@ -35,7 +35,7 @@ from quo.layout.controls import (
 )
 from quo.layout.dimension import Dimension
 from quo.layout.processors import BeforeInput
-from quo.highlight import SimpleLexer
+from quo.highlight.core import SimpleLexer
 from quo.search import SearchDirection
 
 __all__ = [

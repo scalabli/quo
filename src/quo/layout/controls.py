@@ -30,7 +30,7 @@ from quo.text.utils import (
     fragment_list_width,
     split_lines,
 )
-from quo.highlight import Lexer, SimpleLexer
+from quo.highlight.core import Lexer, SimpleLexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.search import SearchState
 from quo.selection import SelectionType

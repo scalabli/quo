@@ -58,7 +58,7 @@ from quo.layout.processors import (
     PasswordProcessor,
     Processor,
 )
-from quo.highlight import DynamicLexer, Lexer
+from quo.highlight.core import DynamicLexer, Lexer
 from quo.mouse_events import MouseEvent, MouseEventType
 from quo.utils.utils import get_width as get_cwidth
 from quo.types import DynamicValidator, Validator

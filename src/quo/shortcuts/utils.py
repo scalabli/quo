@@ -151,11 +151,15 @@ def container(
         container(
             Frame(TextArea(text='Hello world!')))
     """
+    print('\033[?251', end="")
 
     if file:
         output = create_output(stdout=file)
     else:
         output = get_app_session().output
+
+        
+
 
     if bind:
         # setting `ctrl-c` to be the default key binder to exit the application.

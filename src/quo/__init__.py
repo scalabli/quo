@@ -46,13 +46,13 @@ from .prompt import (
 # from quo.context.current import currentcontext as pass_clime
 # from .parser import AppParser
 
-from quo.expediency.vitals import (
-    appdir,
-    formatfilename,
-    os_args,
-    textstream,
-    binarystream,
-)
+#from quo.expediency.vitals import (
+ #   appdir,
+  #  formatfilename,
+   # os_args,
+    #textstream,
+    #binarystream,
+#)
 
 
 def clear() -> None:
@@ -139,4 +139,4 @@ def print(
 from quo.i_o.termui import confirm, echo
 from quo.shortcuts.utils import container
 
-__version__ = "2022.8.2"
+__version__ = "2022.9"

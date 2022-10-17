@@ -1,5 +1,4 @@
 from typing import TYPE_CHECKING, Any, Callable, Iterable, List, Tuple, Union, cast
-
 from quo.mouse_events import MouseEvent
 
 if TYPE_CHECKING:
@@ -78,6 +77,7 @@ def to_formatted_text(
         return to_formatted_text(value(), style=style)
     elif auto_convert:
         result = [("", "{}".format(value))]
+   
     else:
         raise ValueError(
             "No formatted text. Expecting a unicode object, "
@@ -136,7 +136,7 @@ class Template:
 
     Example::
 
-        Template(' ... {} ... ').format(HTML(...))
+        Template(' ... {} ... ').format(Text(...))
 
     :param text: Plain text.
     """
