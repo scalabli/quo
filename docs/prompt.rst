@@ -173,7 +173,10 @@ Using class `quo.prompt.Prompt()
 
    session = Prompt(hide=True)
 
-   session.prompt("Enter password: ")
+   session.prompt("Password: ")
+
+
+.. image:: ./images/prompt/promptclasspassword.png
 
 
 ``Confirmation Prompts``
