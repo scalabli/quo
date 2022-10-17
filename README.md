@@ -56,6 +56,7 @@ python -m quo
 ```
 ![test](https://github.com/scalabli/quo/raw/master/docs/images/test.png)
 
+:bulb: press ``Ctrl-c`` to exit
 # Quo Library
 Quo contains a number of builtin features you c
 an use to create elegant output in your CLI.
