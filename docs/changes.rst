@@ -11,7 +11,16 @@ Changelog
 ``Version 2022.9``
 ---------------------
 
-Unreleased
+Released 0n 2022-10-17
+
+**Added**
+^^^^^^^^^^^^
+- Added :class:`Highlight` for syntax highlighting
+- Added :class:`Parser` for parsing arguments
+
+**Changed**
+^^^^^^^^^^^^^^
+- Deprecated several syntax highlighters in favor of :class:`Highlight`
 
 ``Version 2022.8.1``
 ---------------------
