@@ -288,7 +288,7 @@ That went well. The program now even helpfully quit on illegal input before proc
 
 Combining Positional and Optional arguments
 ==================================================
-Our program keeps growing in complexity:
+Our program keeps growing in complexity
 
 .. code:: console
 
@@ -508,7 +508,8 @@ Our program is now simpler, and we’ve lost some functionality for the sake of 
    
   python prog.py 4 2
 
- Ouput:
+
+Ouput:
 
 .. code:: shell
 
@@ -518,7 +519,7 @@ Our program is now simpler, and we’ve lost some functionality for the sake of 
 
  $ python prog.py 4 2 -q
 
- Output:
+Output:
 
 .. code:: python
 
