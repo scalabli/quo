@@ -170,7 +170,7 @@ Real time integer validator
 
 **Example 3**
 
-A prompt with a bottom toolbar
+``Bottom toolbar``
 
 ```python
 
@@ -192,6 +192,7 @@ A prompt with a bottom toolbar
 **Example 4**
 
 ``Placeholder text``
+
 A placeholder  text that's displayed as long as no input s given.
 
 :bulb: This won't be returned as part of the output.
@@ -211,6 +212,7 @@ A placeholder  text that's displayed as long as no input s given.
 **Example 5**
 
 ``Coloring the prompt.``
+
 
 ```python
 
