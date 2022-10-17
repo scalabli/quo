@@ -1,0 +1,90 @@
+``Scrollable test``
+-------------------
+
+In some situations, you might want to show long texts on the terminal and
+let a user scroll through it.  This can be achieved by using the
+:func:`scrollable` function which works similarly to the :func:`echo`
+function, but always writes to stdout.
+
+Example::
+
+    @quo.command()
+    def less():
+        quo.scrollable("\n".join(f"Line {idx}" for idx in range(200)))
+
+If you want to print a lot of text, especially if generating everything in advance would take a lot of time, you can pass a generator (or generator function) instead of a string::
+
+    def _generate_output():
+        for idx in range(50000):
+            yield f"Line {idx}\n"
+
+    @quo.command()
+    def less():
+        quo.scrollable(_generate_output())
+
+
+``Printing Filenames``
+-----------------------
+
+Because filenames might not be Unicode, formatting them can be a bit
+tricky.
+
+The way this works with quo is through the :func:`quo.formatfilename`
+function.  It does a best-effort conversion of the filename to Unicode and
+will never fail.  This makes it possible to use these filenames in the
+context of a full Unicode string.
+
+.. code:: python
+
+   from quo import echo, formatfilename
+
+   echo(f"Path: {formatfilename(b'foo.txt')}")
+
+``Standard Streams``
+---------------------
+
+For command line utilities, it's very important to get access to input and
+output streams reliably.  Python generally provides access to these
+streams through ``sys.stdout`` and friends but quo provides the :func:`binarystream` and
+:func:`textstream` functions, which produce consistent results with
+different Python versions and for a wide variety of terminal configurations.
+
+The end result is that these functions will always return a functional
+stream object (except in very odd cases; see :doc:`/unicode-support`).
+
+.. code:: python
+
+ from quo import binarystream, textstream
+
+ stdin_t = textstream('stdin')
+ stdout_b = binarystream('stdout')
+
+
+
+``Finding Application Folders``
+---------------------------------
+
+Very often, you want to open a configuration file that belongs to your
+application.  However, different operating systems store these configuration
+files in different locations depending on their standards.  Quo provides
+a :func:`quo.appdir` function which returns the most appropriate location
+for per-user config files for your application depending on the OS.
+
+.. code:: python
+
+    import os
+    import quo
+    import ConfigParser
+
+    APP_NAME = 'My Application'
+
+    def read_config():
+        cfg = os.path.join(quo.appdir(APP_NAME), 'config.ini')
+        parser = ConfigParser.RawConfigParser()
+        parser.read([cfg])
+        rv = {}
+        for section in parser.sections():
+            for key, value in parser.items(section):
+                rv[f"{section}.{key}"] = value
+        return rv
+

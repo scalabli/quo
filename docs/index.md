@@ -45,9 +45,6 @@ prompt.rst
 utils.rst
 table.rst
 parse.rst
-commands.rst
-apps.rst
-args.rst
 exceptions.rst
 dialogs.rst
 widgets.rst
@@ -58,7 +55,6 @@ filters.rst
 styling
 help_text.rst
 reference.rst
-unicode-support.rst
 ```
 
 ```{toctree}
