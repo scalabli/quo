@@ -226,6 +226,43 @@ Add colors to the prompt itself.
   <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/red-prompt.png" />
 </p>
 
+**Example 6**
+
+Autocomplete text
+
+Press [Tab] to autocomplete
+```python
+
+ from quo.prompt import Prompt
+ from quo.completion import WordCompleter
+ example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+ session = Prompt(completer=example)
+ session.prompt('Which country are you from?: ')
+```
+![Autocompletion](https://github.com/scalabli/quo/raw/master/docs/images/autocompletion.png)
+
+**Example 7**
+
+Autosuggest text
+
+Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input.
+Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f will insert the first word of the suggestion.
+```python
+
+ from quo.history import MemoryHistory
+ from quo.prompt import Prompt
+
+ MemoryHistory.append("import os")
+ MemoryHistory.append('print("hello")') 
+ MemoryHistory.append('print("world")')  
+ MemoryHistory.append("import path")
+
+ session = Prompt(history=MemoryHistory, suggest="history")
+
+ while True:
+    session.prompt('> ')
+```
+
 
 Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
 
@@ -565,41 +602,6 @@ Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
 
 Click the following headings for more:»
 
-<details>
-<summary>Completion</summary>
-
-## ``Autocompletion``
-
-Press [Tab] to autocomplete
-```python
-
- from quo.prompt import Prompt
- from quo.completion import WordCompleter
- example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
- session = Prompt(completer=example)
- session.prompt('Which country are you from?: ')
-```
-![Autocompletion](https://github.com/scalabli/quo/raw/master/docs/images/autocompletion.png)
-
-## ``Autosuggestion``
-Auto suggestion is a way to propose some input completions to the user. Usually, the input is compared to the history and when there is another entry starting with the given text, the completion will be shown as gray text behind the current input. Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f willinsert the first word of the suggestion.
-```python
-
- from quo.history import MemoryHistory
- from quo.prompt import Prompt
-
- MemoryHistory.append("import os")
- MemoryHistory.append('print("hello")') 
- MemoryHistory.append('print("world")')  
- MemoryHistory.append("import path")
-
- session = Prompt(history=MemoryHistory, suggest="history")
-
- while True:
-    session.prompt('> ')
-```
-Read more on [Completions](https://quo.readthedocs.io/en/latest/prompt.html#completion)
-</details>
 
 <details>
 <summary>Documenting Scripts</summary>
