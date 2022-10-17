@@ -20,6 +20,8 @@ Released 0n 2022-10-17
 
 **Changed**
 ^^^^^^^^^^^^^^
+
+- Deprecated :func:`quo.console.app`, :func:`quo.console.arg` and :func:`quo.console.command` in favor of :class:`quo.parse.Parser`
 - Deprecated several syntax highlighters in favor of :class:`Highlight`
 
 ``Version 2022.8.1``
