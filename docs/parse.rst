@@ -545,7 +545,7 @@ That should be easy to follow. I’ve added that last output so you can see the 
 
 Before we conclude, you probably want to tell your users the main purpose of your program, just in case they don’t know:
 
-..code:: python
+.. code:: python
 
    from quo.parse import Parser
    
