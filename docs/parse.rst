@@ -48,7 +48,7 @@ Let us start with a very simple example which does (almost) nothing:
 Following is a result of running the code:
 
 
-.. code:: console
+.. code:: shell
 
    python example1.py --help
    
@@ -56,7 +56,7 @@ Following is a result of running the code:
 .. image:: ./images/parse/example1a.png
 
 
-.. code:: console
+.. code:: shell
 
    python example1.py --verbose
    
