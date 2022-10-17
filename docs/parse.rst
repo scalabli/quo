@@ -290,7 +290,7 @@ Combining Positional and Optional arguments
 ==================================================
 Our program keeps growing in complexity
 
-.. code:: console
+.. code:: python
 
    from quo.parse import Parser
    
@@ -310,14 +310,14 @@ Our program keeps growing in complexity
 
 And now the output:
 
-.. code:: console
+.. code:: shell
    
    python prog.py
  
  
 .. image:: ./images/parse/example2c.png  
 
-.. code:: console
+.. code:: shell
    
    python3 prog.py 4 --verbose
    
@@ -326,7 +326,7 @@ And now the output:
    
 Note that the order does not matter. The above program can be written like so:
 
-.. code:: console
+.. code:: shell
    
    python3 prog.py --verbose 4
    
