@@ -89,7 +89,7 @@ If you have any suggestions, bug reports, or annoyances please report them
 to our issue tracker at 
 [Bug tracker](https://github.com/scalabli/quo/issues/) or send an email to:
 
- 📥 scalabli@proton.me
+ 📥 scalabli@proton.me | scalabli@googlegroups.com
 
 
 
