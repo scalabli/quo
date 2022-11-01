@@ -439,4 +439,5 @@ Released on 2021-06-18
 
 Released on 2021-01-10
 
-- Proof of concept
+- Proof of concept/Initial release.
+

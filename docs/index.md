@@ -53,7 +53,6 @@ kb.rst
 progress.rst
 filters.rst
 styling
-help_text.rst
 reference.rst
 ```
 
