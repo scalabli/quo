@@ -270,27 +270,64 @@ Pressing the right arrow → or ctrl-e will insert this suggestion, alt-f will i
 
 Read more on [Prompt](https://quo.readthedocs.io/latest/prompt.html)
 
-## Quo Console
-
-For more control over quo terminal content, import and construct a `Console` object.
 
 
-``Bar``
+## Quo Bar
 
 Draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
 
 ```python
 
- from quo.console import Console
+ from quo.bar import Bar
 
- console = Console()
- console.bar("I am a bar")
+ bar = Bar("I am a bar")
+ bar.draw()
+
 
 ```
 
 <p align="center">
-  <img src="https://github.com/scalabli/quo/raw/master/docs/images/console/bar.png" />
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/bar/default.png" />
 </p>
+
+
+- Styled bar
+
+```python
+
+ from quo.bar import Bar
+
+ bar = Bar("I am a styled bar")
+ bar.draw(fg="blue", bg="yellow")
+
+```
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/bar/styled.png" />
+</p>
+
+
+- Right aligned
+
+```python
+
+ from quo.bar import Bar
+   
+ bar = Bar("I am right aligned")
+ bar.draw(align="right")
+
+```
+
+<p align="right">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/bar/right.png" />
+</p>
+
+
+ 
+## Quo Console
+
+For more control over quo terminal content, import and construct a `Console` object.
+
 
 
 ``Launching Applications``
@@ -571,7 +608,7 @@ Colored table
 
 Column width
 
-In situations where fields are expected to reasonably be too long to look good as a single line, :param:`column_width` can help automate word wrapping long fields.
+In situations where fields are expected to reasonably be too long to look good as a single line, parameter `column_width` can help automate word wrapping long fields.
 ```python
 
  from quo.table import Table

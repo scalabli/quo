@@ -23,7 +23,7 @@ The :class:`~quo.bar.Bar` can be used to draw a horizontal bar with an optional 
 
    bar.draw()
    
-.. image:: ./images/console/bar.png
+.. image:: ./images/default.png
 
 
 
@@ -34,6 +34,8 @@ The :class:`~quo.bar.Bar` can be used to draw a horizontal bar with an optional 
    bar = Bar("I am a styled bar")
 
    bar.draw(fg="blue", bg="yellow")
+
+.. image:: ./images/styled.png
 
  
    
