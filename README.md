@@ -524,7 +524,7 @@ Used for drawing a horizontal line.
  from quo.rule import Rule
 
  rule = Rule()
- rule.draw(multicolored=True)
+ rule.draw(color="purple")
 
 ```
 <p align="center">

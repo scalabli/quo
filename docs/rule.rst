@@ -19,10 +19,9 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 
    rule.draw()
    
-.. image:: ./images/rule/rule.png
+.. image:: ./images/rule/default.png
    
-   
-   
+     
 
 .. code:: python
 
@@ -32,4 +31,15 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
  
    rule.draw(multicolored=True)
    
-.. image:: ./images/rule/multicolored-rule.png
+.. image:: ./images/rule/multicolored.png
+
+
+.. code:: python
+
+   from quo.rule import Rule
+
+   rule = Rule()
+   rule.draw(color="purple")
+
+.. image:: ./images/rule/styled.png
+
