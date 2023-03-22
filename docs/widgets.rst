@@ -72,17 +72,6 @@ You can print the layout to the output in a non-interactive way like so:
  from quo.widget import Label
 
  content = Label("Hello, World", style="fg:black bg:red")
-
- container(content, bind=False)
-
-Example upgrade. Printing the layout in an interactive way
-
-.. code:: python
-
- from quo import container
- from quo.widget import Label
-
- content = Label("Hello, World", style="fg:black bg:red")
  container(content)
 
 .. image:: ./images/widgets/label.png
