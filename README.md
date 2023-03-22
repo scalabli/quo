@@ -569,6 +569,27 @@ Colored table
 
 **Example 4**
 
+Column width
+
+In situations where fields are expected to reasonably be too long to look good as a single line, :param:`column_width` can help automate word wrapping long fields.
+```python
+
+ from quo.table import Table
+
+ data = [
+       [1, 'John Smith', 'This is a rather long description that might look better if it is wrapped a bit']
+       ]
+
+ table = Table(data)
+ table.print(headers=("Issue Id", "Author", "Description"), column_width=[None, None, 30])
+
+```
+
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/width.png)
+
+
+**Example 5**
+
 Grid table
 
 ```python
