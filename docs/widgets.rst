@@ -53,6 +53,39 @@ Other attributes
 - ``search_field`` - An optional `SearchToolbar` object.
 
 
+
+``Frame``
+---------
+
+Draw a border around any container, optionally with a title text.
+Changing the title and body of the frame is possible at runtime by assigning to the `body` and `title` attributes of this class.
+
+**Parameters**
+      - ``body`` - Another container object.
+      - ``title`` - Text to be displayed in the top of the frame *(can be formatted text)*
+      - ``style`` - Style string to be applied to this widget.
+      - ``width`` - Frame width
+      - ``height`` - Frame height.
+
+.. code:: python
+
+  from quo import container
+  from quo.widget import Frame, Label
+
+
+  root = Frame(
+            Label("Hello, World!"),
+            title="Quo: python")
+       
+  @bind.add("ctrl-c")
+  def _(event):
+         event.app.exit()
+  
+  container(root, bind=True, full_screen=True)                           
+
+
+.. image:: ./images/widgets/label.png
+
 ``Label``
 ---------
 Widget that displays the given text. It is not editable or focusable.
@@ -150,34 +183,6 @@ Clickable button.
       - ``width`` - Width of the button. 
 
       
-``Frame``
----------
-
-Draw a border around any container, optionally with a title text.
-Changing the title and body of the frame is possible at runtime by assigning to the `body` and `title` attributes of this class.
-
-**Parameters**
-      - ``body`` - Another container object.
-      - ``title`` - Text to be displayed in the top of the frame *(can be formatted text)*
-      - ``style`` - Style string to be applied to this widget.
-
-.. code:: python
-
-  from quo import container
-  from quo.keys import bind
-  from quo.layout import Layout
-  from quo.widget import Frame, Label
-
-
-  root = Frame(
-            Label("Hello, World!"),
-            title="Quo: python")
-       
-  @bind.add("ctrl-c")
-  def _(event):
-         event.app.exit()
-  
-  container(root, bind=True, full_screen=True)                           
 
 ``Shadow``
 -----------
