@@ -18,12 +18,14 @@ Released 0n 2023-03-23
 ^^^^^^^^^^^^
 - Added :class:`Bar`
 - Added :class:`Rule`
+- Added :class:`Table`
 
 **Changed**
 ^^^^^^^^^^^^^^
 - Deprecated :meth:`quo.console.Console.bar`
 - Deprecated :meth:`quo.console.Console.rule`
 - Deprecated :param:`fmt` in :func:`quo.print`
+- Deprecated :func:`quo.table.Table`
 
 ``Version 2022.9``
 ---------------------

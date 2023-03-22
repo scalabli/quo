@@ -35,8 +35,10 @@ Changed on *v2022.4.3*
  ["Bob", "M", 19],
  ["Dave", "M", 24]
  ]
-
- Table(data)
+  
+ table = Table(data)
+ 
+ table.print()
 
 .. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/table.png
 
@@ -52,13 +54,17 @@ To print nice column headers, supply the ``headers`` argument.
   
 .. code:: python
 
+ from quo.table import Table
+ 
  data = [
-      ["sex","age"]
-      ["Alice","F",24]
-      ["Bob","M",19]
-      ]
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
       
-  Table(data, headers="firstrow")
+ table = Table(data)
+ table.print(headers="firstrow")
 
 ``Column Widths and  Line Wrapping``
 --------------------------------------
@@ -66,10 +72,14 @@ To print nice column headers, supply the ``headers`` argument.
 
 .. code:: python
 
+ from quo.table import Table
+
  data = [
        [1, 'John Smith', 'This is a rather long description that might look better if it is wrapped a bit']
        ]
- Table(data, headers=("Issue Id", "Author", "Description"), column_width=[None, None, 30]) 
+
+ table = Table(data)
+ table.print(headers=("Issue Id", "Author", "Description"), column_width=[None, None, 30])
 
 
 Right aligned table
@@ -85,7 +95,7 @@ Right aligned table
     ["Dave", "M", 24]
     ]
     
- Table(data, align="right")
+ 
 
 .. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right-table.png
 
@@ -102,7 +112,9 @@ Colored table
     ["Dave", "M", 24]
     ]
   
- Table(data, style="fg:green")
+ table = Table(data)
+ table.print(fg="green")
+ 
 
 .. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/colored-table.png
 
@@ -120,6 +132,8 @@ Grid table
     ["Dave", "M", 24]
     ]
     
- Table(data, theme="grid")
+ table = Table(data)
+ table.print(theme="grid")
+ 
  
 .. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png

@@ -1,10 +1,11 @@
 from quo.table import Table
 
-data = [
+datas = [
         ["Name", "Gender", "Age"],
         ["Alice", "F", 24],
         ["Bob", "M", 19],
         ["Dave", "M", 24]
         ]
 
-Table(data, style="green")
+table = Table(datas)
+table.print()
