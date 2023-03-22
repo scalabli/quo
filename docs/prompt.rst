@@ -515,16 +515,16 @@ Autocompletion can be added by passing a completer parameter.
 
 .. code:: python
 
- from quo.completion import WordCompleter
- from quo.prompt import Prompt
+   from quo.prompt import Prompt
+   from quo.completion import WordCompleter
+   
+   example = WordCompleter(['USA', 'UK', 'Canada', 'Kenya'])
+   session = Prompt(completer=example)
+   session.prompt('Which country are you from?: ')
  
- completer = WordCompleter(['<html>', '<body>', '<head>','<title>'])
- session = Prompt(completer=completer)
- session.prompt('Enter HTML: ')
-
 :class:`~quo.completion.WordCompleter` is a simple completer that completes the last word before the cursor with any of the given words.
 
-.. image:: ./images/html-completion.png
+.. image:: ./images/prompt/wordcompleter.png
 
 Demonstration of a custom completer class and the possibility of styling completions independently.
 

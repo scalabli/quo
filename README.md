@@ -243,7 +243,7 @@ Press [Tab] to autocomplete
  session = Prompt(completer=example)
  session.prompt('Which country are you from?: ')
 ```
-![Autocompletion](https://github.com/scalabli/quo/raw/master/docs/images/autocompletion.png)
+![Autocompletion](https://github.com/scalabli/quo/raw/master/docs/images/prompt/wordcompleter.png)
 
 **Example 7**
 
