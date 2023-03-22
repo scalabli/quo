@@ -8,6 +8,23 @@ Changelog
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 
+
+``Version 2023.1``
+---------------------
+
+Released 0n 2023-03-23
+
+**Added**
+^^^^^^^^^^^^
+- Added :class:`Bar`
+- Added :class:`Rule`
+
+**Changed**
+^^^^^^^^^^^^^^
+- Deprecated :meth:`quo.console.Console.bar`
+- Deprecated :meth:`quo.console.Console.rule`
+- Deprecated :param:`fmt` in :func:`quo.print`
+
 ``Version 2022.9``
 ---------------------
 

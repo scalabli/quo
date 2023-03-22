@@ -14,7 +14,7 @@ def main():
     print("\n<u>Named colors, using 16 color output.</u>")
     print("Note that it doesn't really make sense to use named colors ")
     print("with only 16 color output.)")
-    print(tokens, color_depth=ColorDepth.four_bit)# fmt=True)
+    print(tokens, colorDepth=ColorDepth.four_bit)# fmt=True)
 
     print("\n<u>Named colors, use 256 colors.</u>")
     print(tokens, fmt=True)

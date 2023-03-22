@@ -19,10 +19,10 @@ simple message box. For instance:
     from quo.dialog import MessageBox
 
     MessageBox(
-        title='Example dialog window',
+        title='Message window',
         text='Do you want to continue?\nPress ENTER to quit.')
 
-.. image:: ./images/messagebox.png
+.. image:: ./images/dialog/message.png
 
 
 ``Input Box``
@@ -35,11 +35,13 @@ input box. It will return the user input as a string.
 
     from quo.dialog import InputBox
     InputBox(
-        title='Input dialog example',
-        text='Please type your name:')
-.. image:: ./images/inputbox.png
+        title='PromptBox Shenanigans',
+        text='What Country are you from?:')
+.. image:: ./images/dialog/input.png
 
 The ``multiline=True`` option can be passed turn this into a multiline Input box
+
+.. image:: ./images/dialog/multiline.png
 The ``hide=True`` option can be passed to the :func:`~quo.dialog.InputBox` function to turn this into a password input box.
 
 
@@ -53,9 +55,9 @@ The :func:`~quo.dialog.ConfirmBox` function displays a yes/no confirmation dialo
     from quo.dialog import ConfirmBox
 
     ConfirmBox(
-        title='Yes/No dialog example',
+        title='Yes/No example',
         text='Do you want to confirm?')
-.. image:: ./images/confirm.png
+.. image:: ./images/dialog/confirm.png
 
 
 ``Choice Box``
@@ -77,7 +79,7 @@ with choices offered as buttons. Buttons are indicated as a list of tuples, each
             ('Maybe...', None)
         ])
 
-.. image:: ./images/button.png
+.. image:: ./images/dialog/checkbox.png
 
 
 ``Radiolist Box``
@@ -92,14 +94,14 @@ each providing the return value (first element) and the displayed value (second 
     from quo.dialog import RadiolistBox
 
     RadiolistBox( 
-        title="RadioList dialog", 
+        title="RadioList dialog example", 
         text="Which breakfast would you like ?", 
         values=[ 
             ("breakfast1", "Eggs and beacon"), 
             ("breakfast2", "French breakfast"), 
             ("breakfast3", "Equestrian breakfast") 
         ])
-.. image:: ./images/dialog/radiolist.png
+.. image:: ./images/dialog/radiolist1.png
 
 ``Check Box``
 -------------

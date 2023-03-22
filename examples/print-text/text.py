@@ -2,7 +2,7 @@
 """
 Demonstration of how to print using the Text class.
 """
-from quo import echo, print
+from quo import print
 
 text = "Demonstration of how to print using the text class"
 
@@ -28,7 +28,3 @@ print("NAMED COLORS")
 print("    <orange>orange</orange>")
 print("    <purple>purple</purple>")
 print("    <khaki>khaki</khaki>")
-
-#print('<i>{}</i>').format("<test>")
-#print('  <b>{text}</b>').format(text="<test>")
-#print('    <u>%s</u>') % ("<text>")

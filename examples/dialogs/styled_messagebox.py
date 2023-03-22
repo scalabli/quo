@@ -25,7 +25,7 @@ style = Style.add(
         )
 
 MessageBox(
-        title="fffff",
+        title="Styled",
         #"Text(
         #    '<style bg="blue" fg="white">Styled</style> ' '<style fg="red">dialog</style> window')",
         text="Do you want to continue?\nPress ENTER to quit.", 

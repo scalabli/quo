@@ -21,7 +21,7 @@ def worker(set_percentage, log_text):
             log_text("{} / {}\n".format(dirpath, f))
             set_percentage(percentage + 1)
             percentage += 2
-            time.sleep(0.1)
+            time.sleep(.01)
 
             if percentage == 100:
                 break
@@ -35,7 +35,7 @@ def worker(set_percentage, log_text):
 
 ProgressBox(
         title="Progress box example",
-        text="As an examples, we walk through the filesystem and print all directories",
+        text="",
         run_callback=worker
         )
 

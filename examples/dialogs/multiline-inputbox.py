@@ -2,7 +2,6 @@
 """
 Example of an input box dialog.
 """
-from quo import print
 from quo.dialog import InputBox
 
 result = InputBox(

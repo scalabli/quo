@@ -9,9 +9,7 @@ from quo.layout import HSplit, VSplit
 from quo.widget import Box, Button, Frame, Label, TextField
 # Event handlers for all the buttons.
 def button1():
-    get_app()
     text_area.text = "Button 1 clicked"
-
 
 def button2():
     text_area.text = "Button 2 clicked"
@@ -20,8 +18,10 @@ def button2():
 def button3():
     text_area.text = "Button 3 clicked"
 
-def button4():
-    get_app().bar("Hello, World")
+def button4():    
+    text_area.text = "Button 4 clicked"
+
+
 def exit():
     get_app().exit()
 def dd():
@@ -34,8 +34,8 @@ def dd():
 b1 = Button("Button 1", handler=button1)
 b2 = Button("Button 2", handler=button2)
 b3 = Button("Button 3", handler=button3)
-b4 = Button("Exit", handler=exit)
-b5 = Button("kenya", handler=button4)
+b4 = Button("kenya", handler=button4)
+b5 = Button("Exit", handler=exit)
 
 text_area = TextField(scrollbar=True, focusable=True, style="fg:brown")
 

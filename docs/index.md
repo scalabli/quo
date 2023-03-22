@@ -40,7 +40,9 @@ Quo is **simple** If you know Python you can  easily use Quo and it can integrat
 introduction.rst
 printing_text.rst
 
+bars.rst
 console.rst
+rule.rst
 prompt.rst
 utils.rst
 table.rst

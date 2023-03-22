@@ -2,7 +2,6 @@
 """
 Example of a radio list box dialog.
 """
-from quo import echo
 from quo.dialog import RadiolistBox
 from quo.text import Text
 
@@ -16,7 +15,7 @@ result = RadiolistBox(
             ],
         title="Radiolist dialog example",
         text="Please select a color:")
-echo(f"Result = {result}")
+print(f"Result = {result}")
 
 # With Text
 result = RadiolistBox(
@@ -28,5 +27,5 @@ result = RadiolistBox(
         ],
         title=Text("RadiolistBox example <reverse>with colors</reverse>"),
         text="Please select a color:")
-echo(f"Result = {result}")
+print(f"Result = {result}")
 
