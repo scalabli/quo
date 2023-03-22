@@ -356,40 +356,6 @@ Quo supports launching applications through `Console.launch`
 
 ```
 
-``Rule``
-
-Used for drawing a horizontal line.
-
-**Example 1**
-
-```python
-
- from quo.console import Console
-
- console = Console()
- console.rule()
-
-```
-<p align="center">
-  <img src="https://github.com/scalabli/quo/raw/master/docs/images/console/rule.png" />
-</p>
-
-**Example 2**
-
-A multicolored line.
-
-```python
-
- from quo.console import Console
-
- console = Console()
- console.rule(multicolored=True)
-
-```
-
-<p align="center">
-  <img src="https://github.com/scalabli/quo/raw/master/docs/images/console/multicolored-rule.png" />
-</p>
 
 
 
@@ -531,6 +497,58 @@ The progress can be displayed for any iterable. This works by wrapping the itera
 
 Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
 
+## Quo Rule
+
+Used for drawing a horizontal line.
+
+**Example 1**
+
+```python
+
+ from quo.rule import Rule
+
+ rule = Rule()
+ rule.draw()
+
+
+```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/rule/default.png" />
+</p>
+
+**Example 2**
+- A styled line.
+
+```python
+
+ from quo.rule import Rule
+
+ rule = Rule()
+ rule.draw(multicolored=True)
+
+```
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/rule/styled.png" />
+</p>
+
+
+**Example 3**
+
+- A multicolored line.
+
+```python
+
+ from quo.rule import Rule
+
+ rule = Rule()
+ rule.draw(multicolored=True)
+
+
+```
+
+<p align="center">
+  <img src="https://github.com/scalabli/quo/raw/master/docs/images/rule/multicolored.png" />
+</p>
 
 
 ## Quo Tables

@@ -3,8 +3,6 @@
 Bars
 ==========
 
-``Bar``
----------
 The :class:`~quo.bar.Bar` can be used to draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
 *Added on v2023.3*
 

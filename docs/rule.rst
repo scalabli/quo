@@ -13,7 +13,7 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 
 .. code:: python
 
-   from quo.rule.Rule
+   from quo.rule import Rule
 
    rule = Rule()
 
@@ -26,7 +26,7 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 
 .. code:: python
 
-   from quo.rule.Rule
+   from quo.rule import Rule
 
    rule = Rule()
  
