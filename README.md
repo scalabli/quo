@@ -675,7 +675,7 @@ Read more on [Table](https://quo.readthedocs.io/en/latest/table.html)
 A collection of reusable components for building full screen applications.
 
 
-###``Frame`` 🎞️
+### ``Frame`` 🎞️
 
 Used draw a border around any container, optionally with a title.
 
