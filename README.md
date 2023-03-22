@@ -517,7 +517,7 @@ This offers a number of configuration options to set the look and feel of the ta
  table.print()
 
 ```
-![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/table.png)
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/default.png)
 
 **Example 2**
 
@@ -540,7 +540,7 @@ Right aligned table
 
 ```
 
-![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right-table.png)
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right.png)
 
 **Example 3**
 

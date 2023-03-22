@@ -40,7 +40,7 @@ Changed on *v2022.4.3*
  
  table.print()
 
-.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/table.png
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/default.png
 
 
 ``Table headers``
@@ -82,6 +82,8 @@ To print nice column headers, supply the ``headers`` argument.
  table.print(headers=("Issue Id", "Author", "Description"), column_width=[None, None, 30])
 
 
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/width.png
+
 Right aligned table
 
 .. code:: python
@@ -101,7 +103,7 @@ Right aligned table
     
  
 
-.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right-table.png
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/right.png
 
 Colored table
 
