@@ -80,18 +80,42 @@ Example upgrade. Printing the layout in an interactive way
 .. code:: python
 
  from quo import container
- from quo.keys import bind
  from quo.widget import Label
 
  content = Label("Hello, World", style="fg:black bg:red")
+ container(content)
+
+.. image:: ./images/prompt/label.png
  
 
- #Key bindings 
- @bind.add("ctrl-c")
- def _(event):
-    event.app.exit()
+To make it fullscreen set :param:`bind` and :param:`full_screen` to ``True`` Press :kbd:`Ctrl-C` to quit 
 
- container(content, bind=True, full_screen=True)
+.. code:: python
+
+   from quo import container
+   from quo.widget import Label
+
+   content = Label("Hello, World", style="fg:black bg:red")
+   container(content, bind=True, full_screen=True)
+
+.. image:: ./images/prompt/label-fullscreen.png
+
+Adding a custom key binder
+ 
+.. code:: python
+
+   from quo import container
+   from quo.keys import bind
+   from quo.widget import Label
+
+   content = Label("Hello, World", style="fg:black bg:red")
+
+   #Press Ctrl-a to exit
+   @bind.add("ctrl-a")
+   def _(event):
+      event.app.exit()
+
+   container(content, bind=True, full_screen=True)
 
 
 ``Box``
