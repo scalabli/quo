@@ -674,9 +674,21 @@ Read more on [Table](https://quo.readthedocs.io/en/latest/table.html)
 ## Quo Widgets
 A collection of reusable components for building full screen applications.
 
+
 ``Frame`` 🎞️
 
-Draw a border around any container, optionally with a title.
+Used draw a border around any container, optionally with a title.
+
+Read more on [Frame](https://quo.readthedocs.io/en/latest/widgets.html#frame)
+
+``Label``
+Widget that displays text.
+
+Read more on [Label](https://quo.readthedocs.io/en/latest/widgets.html#label)
+
+
+
+### Frame + Label
 
 ```python
 
@@ -684,68 +696,15 @@ Draw a border around any container, optionally with a title.
  from quo.widget import Frame, Label
 
  content = Frame(
-             Label("Hello, World!"),
+             Label("Hello, World!", style="fg:blue bg:yellow"),
                title="Quo: python")
-
- #Press Ctrl-C to exit
- container(content, bind=True, full_screen=True)
-
-```
-![Frame](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/widgets/frame.png)
-
-``Label``
-
-Widget that displays the given text. It is not editable or focusable.
-
-**Example 1**
-
-This will occupy a minimum space in your terminal
-
-```python
-
- from quo import container
- from quo.widget import Label
-
- content = Label("Hello, World", style="fg:black bg:red")
 
  container(content)
 
 ```
-**Example 2**
+![Frame](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/widgets/frame-and-label.png)
 
-This will be a fullscreen application
 
-```python
-
- from quo import container
- from quo.widget import Label
-
- content = Label("Hello, World", style="fg:black bg:red")
-
- # Press Ctrl-C to exit
- container(content, bind=True, full_screen=True)
-
-```
-**Example 3**
-
-Full screen application using a custom binding key.
-
-```python
-
- from quo import container
- from quo.keys import bind
- from quo.widget import Label
-
- content = Label("Hello, World", style="fg:black bg:red")
-
- #Press Ctrl-Z to exit
- @bind.add("ctrl-z")
- def _(event):
-     event.app.exit()
-
- container(content, bind=True, full_screen=True)
-
-```
 
 Read more on [Widgets](https://quo.readthedocs.io/en/latest/widgets.html)
 
