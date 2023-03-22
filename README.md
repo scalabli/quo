@@ -588,7 +588,7 @@ table.print(theme="grid")
 ```
 
 
-![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png)
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid.png)
 
 
 

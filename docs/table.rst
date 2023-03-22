@@ -120,7 +120,7 @@ Colored table
  table.print(fg="green")
  
 
-.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/colored-table.png
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/green.png
 
 
 Grid table
@@ -140,4 +140,4 @@ Grid table
  table.print(theme="grid")
  
  
-.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid-table.png
+.. image:: https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/grid.png
