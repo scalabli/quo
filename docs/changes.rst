@@ -12,7 +12,7 @@ Changelog
 ``Version 2023.1``
 ---------------------
 
-Released 0n 2023-03-23
+Released 0n 2023-03-22
 
 **Added**
 ^^^^^^^^^^^^
