@@ -505,15 +505,16 @@ This offers a number of configuration options to set the look and feel of the ta
 ```python
 
  from quo.table import Table
-
+ 
  data = [
-     ["Name", "Gender", "Age"],
-     ["Alice", "F", 24],
-     ["Bob", "M", 19],
-     ["Dave", "M", 24]
-  ]
+    ["Name", "Gender", "Age"],
+    ["Alice", "F", 24],
+    ["Bob", "M", 19],
+    ["Dave", "M", 24]
+    ]
 
- Table(data)
+ table = Table(data)
+ table.print()
 
 ```
 ![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/table.png)
@@ -532,7 +533,10 @@ Right aligned table
     ["Bob", "M", 19],
     ["Dave", "M", 24]
     ]
- Table(data, align="right")
+
+ table = Table(data)
+ table.print(align="right")
+
 
 ```
 
@@ -553,7 +557,10 @@ Colored table
     ["Dave", "M", 24]
     ]
     
- Table(data, style="fg:green")
+ table = Table(data)
+ table.print(fg="green")
+
+
 
 ```
 
@@ -575,7 +582,8 @@ Grid table
     ["Dave", "M", 24]
     ]
 
- Table(data, theme="grid")
+ table = Table(data)
+ table.print(theme="grid")
 
 ```
 
