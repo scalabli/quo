@@ -39,7 +39,7 @@ input box. It will return the user input as a string.
         text='What Country are you from?:')
 .. image:: ./images/dialog/input.png
 
-The ``multiline=True`` option can be passed turn this into a multiline Input box
+The ``multiline=True`` parameter can be passed to turn this into a multiline Input box
 
 .. image:: ./images/dialog/multiline.png
 The ``hide=True`` option can be passed to the :func:`~quo.dialog.InputBox` function to turn this into a password input box.

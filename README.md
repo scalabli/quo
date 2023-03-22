@@ -389,28 +389,73 @@ Message Box dialog
  from quo.dialog import MessageBox
 
  MessageBox(
-       title="Message pop up window", 
-       text="Do you want to continue?\nPress ENTER to quit."
-              )
+    title='Message window',
+    text='Do you want to continue?\nPress ENTER to quit.')
 
 ```
-![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/messagebox.png)
+![Message Box](https://github.com/scalabli/quo/raw/master/docs/images/dialog/message.png)
 
 **Example 2**
 
-Input Box dialog
+- Input dialog
 
 ```python
 
  from quo.dialog import InputBox
 
  InputBox(
-      title="InputBox shenanigans",
-      text="What Country are you from? :"
-        )
+     title='PromptBox Shenanigans',
+     text='What Country are you from?:')
 
 ```
-![Prompt Box](https://github.com/scalabli/quo/raw/master/docs/images/promptbox.png)
+![Input Box](https://github.com/scalabli/quo/raw/master/docs/images/dialog/input.png)
+
+
+- Multiline Input dialog
+
+```python
+
+ from quo.dialog import InputBox
+
+ InputBox(
+     title='PromptBox Shenanigans',
+     text='What Country are you from?:',
+     multiline=True)
+
+```
+![Input Box](https://github.com/scalabli/quo/raw/master/docs/images/dialog/multiline.png)
+
+- Password Input dialog
+
+```python
+
+ from quo.dialog import InputBox
+
+ InputBox(
+     title='PromptBox Shenanigans',
+     text='What Country are you from?:',
+     hide=True)
+
+```
+![Input Box](https://github.com/scalabli/quo/raw/master/docs/images/dialog/password.png)
+
+- Radiolist
+
+```python
+
+ from quo.dialog import RadiolistBox
+
+ RadiolistBox(
+     title="RadioList dialog example",
+     text="Which breakfast would you like ?",
+     values=[
+         ("breakfast1", "Eggs and beacon"),
+         ("breakfast2", "French breakfast"),
+         ("breakfast3", "Equestrian breakfast")
+     ])
+
+```
+![Radiolist](https://github.com/scalabli/quo/raw/master/docs/images/dialog/radiolist1.png)
 
 Read more on [Dialogs](https://quo.readthedocs.io/en/latest/dialogs.html)
 
