@@ -106,37 +106,22 @@ def getchar(inscribe: bool = False):
 def print(
         *values, #: Any,
         end="\n ",
-        fmt:bool= False,
         include_default_pygments_style=None,
-        style=None,
         sep=" ",
+        style=None,
         output=None,
+        colorDepth=None,
         style_transformation=None
         ) ->None:
 
     from quo.shortcuts.utils import _print
-    from quo.text.core import FormattedText
     from quo.text.html import Text
-    if fmt:
-
-        _print(
-                FormattedText(
-                    [
-                        [*values]
-                        ]
-                    ),
-                end=end,
-                include_default_pygments_style=include_default_pygments_style,
-                output=output, 
-                sep=sep,
-                style=style,
-                style_transformation=style_transformation
-                )
-    else:
-        _print(Text(*values), end=end, include_default_pygments_style=include_default_pygments_style, output=output, sep=sep, style=style, style_transformation=style_transformation)
+    _print(Text(*values), end=end, include_default_pygments_style=include_default_pygments_style, color_depth=colorDepth, style=style, output=output, sep=sep, style_transformation=style_transformation)
+        
+    
 
 #from quo.shortcuts.utils import print
 from quo.i_o.termui import confirm, echo
 from quo.shortcuts.utils import container
 
-__version__ = "2022.9"
+__version__ = "2023.1"

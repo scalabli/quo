@@ -7,6 +7,7 @@ setup(
     name="quo",
     install_requires=[
         "colorama; platform_system == 'Windows'",
-        "pygments", 
+        "pygments",
+        "termcolor",
     ],
 )

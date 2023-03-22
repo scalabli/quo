@@ -241,7 +241,7 @@ def prompt(
 
     """
     from quo.types import convert_type
-    from quo.expediency.vitals import inscribe
+    #from quo.expediency.vitals import inscribe
     from quo.errors import Abort, UsageError
     from quo.i_o.termui import _build_prompt, hidden_prompt_func
 
@@ -251,14 +251,16 @@ def prompt(
     def prompt_func(text):
         f = hidden_prompt_func if hide else insert
         try:
-            inscribe(text, nl=False, err=err)
+            print(text, end="")
+            #inscribe(text, nl=False, err=err)
             return f("")
         except (KeyboardInterrupt, EOFError):
             # getpass doesn't print a newline if the user aborts input with ^C.
             # Allegedly this behavior is inherited from getpass(3).
             # A doc bug has been filed at https://bugs.python.org/issue24711
             if hide:
-                inscribe(None, err=err)
+                print(None)
+                #inscribe(None, err=err)
             raise Abort("You've aborted input")
 
     if value_proc is None:
@@ -277,10 +279,11 @@ def prompt(
         try:
             result = value_proc(value)
         except UsageError as e:
+            from termcolor import colored
             if hide:
-                inscribe("ERROR: the value you entered was invalid", err=err)
+                print(colored("ERROR:", blue) ,colored("the value you entered was invalid","red"))
             else:
-                inscribe(f"Error: {e.message}", err=err)  # noqa: B306
+                print("Error:",colored(f"{e.message}", on_color="on_light_red", attrs=["bold"]))          
             continue
         if not affirm:
             return result
@@ -291,12 +294,9 @@ def prompt(
         if value == value2:
             return result
 
-        from quo.i_o.termui import echo
-
-        echo(f"ERROR:", nl=False, fg="black", bg="red")
-        echo(f" ", nl=False)
-        echo(f"The two entered values do not match", err=err, fg="black", bg="yellow")
-
+        #from quo.i_o.termui import echo
+        from termcolor import colored
+        print(colored("ERROR", "black", on_color="on_light_red", attrs=["bold"]), colored("The two entered value do not match", "black", on_color="on_light_yellow", attrs=["bold"]))
 
 class Prompt(Generic[_T]):
     """

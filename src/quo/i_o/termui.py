@@ -108,9 +108,10 @@ def confirm(
         elif default is not None and value == "":
             rv = default
         else:
-            echo(f"ERROR:", bg="red", fg="black", nl=False)
-            echo(" ", nl=False)
-            echo(f"invalid input", bg="yellow", fg="black", err=err)
+            from termcolor import colored
+
+            print(colored("ERROR:", "blue", on_color="on_red", attrs=["bold"]), colored("invalid input", "black", on_color="on_yellow", attrs=["bold"]))
+
             continue
         break
     if abort and not rv:

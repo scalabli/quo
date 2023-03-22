@@ -1678,37 +1678,41 @@ def _Table(
 
     return _format_table(theme, headers, rows, minwidths, aligns, is_multiline)
 
-def Table(
-        data=None,
-        align="center", 
+
+class Table:
+    """Format a fixed width table for pretty printing. The first required argument (`data`) can be a list-of-lists (or another iterable of iterables), a 
+    list of named tuples, a dictionary of iterables, an iterable of dictionaries,  a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe.
+    """
+
+    def __init__(self, data=None) -> None:
+        self.data=data
+
+    def print(
+        self,
+        align:str="center", 
         headers=(),
         column_width=None,
-        style=None, 
+        fg:str="",
+        bg:str="",
         theme="fancy_grid"
         ):
+        from quo.layout.containers import Window
+        from quo.layout.controls import FormattedTextControl
+        from quo.shortcuts.utils import container
 
-    """Format a fixed width table for pretty printing.
-    The first required argument (`data`) can be a
-    list-of-lists (or another iterable of iterables), a list of named tuples, a dictionary of iterables, an iterable of dictionaries,  a two-dimensional NumPy array, NumPy record array, or a Pandas' dataframe."""
-
-    from quo.layout.containers import Window
-    from quo.layout.controls import FormattedTextControl
-    from quo.shortcuts.utils import container
-
-    content = Window(
+        content = Window(
             FormattedTextControl(
                 _Table(
-                    data,
+                    self.data,
                     headers=headers,
                     theme=theme,
                     maxcolwidths=column_width
                     ),
-                style=style
+                style="fg:" + fg + " bg:" + bg
                 ), 
             align=align
             )
-
-    return container(content)
+        return container(content)
 def _expand_numparse(disable_numparse, column_count):
     """
     Return a list of bools of length `column_count` which indicates whether

@@ -42,7 +42,7 @@ from typing import (
 )
 
 from quo.buffer import Buffer
-from quo.i_o.termui import echo
+#from quo.i_o.termui import echo
 from quo import errors
 from quo.cache.core import SimpleCache
 from quo.clipboard.core import Clipboard
@@ -891,52 +891,7 @@ class Console(Generic[_AppResult]):
 
         return of
 
-    def rule(
-            self,
-            height: int = 1,
-            char: str = "\u2501",
-            multicolored: bool = False,
-            style="fg:aquamarine"
-            ) -> "Console":
-        if multicolored:
-            from quo.color import ColorDepth
-            from quo.progress.core import ProgressBar
-            from quo.progress import formatters
-            custom_formatters = [
-                    formatters.Rainbow(
-
-                        # sym_b is the endpoint of the bar
-                        formatters.Bar(sym_b ="\u2501"))
-                    ]
-
-            color_depth = ColorDepth.eight_bit
-
-            with ProgressBar(color_depth=color_depth, formatters=custom_formatters) as pb:
-                for i in pb(range(100)):
-                    time.sleep(0.001)
-
-        if not multicolored:
-            from quo.shortcuts.utils import container
-            container(Window(char=char, height=height, style=style),bind=False)
-
-    def bar(
-            self,
-            message: Optional[str] = None,
-            align="center",
-            fmt=False, 
-            style=""
-            ) -> "Console":
-        from quo.shortcuts.utils import container
-
-        if fmt:
-            from quo.text.html import Text
-            return container(
-                    Window(FormattedTextControl(Text(message)), height=1, style=style, align=align)
-                    )
-        if not fmt:
-            return container(
-                    Window(FormattedTextControl(message), height=1, style="fg:black bg:aquamarine", align=align)
-        )
+   
     def spin(self) -> "Console":
         from quo.spin import Spinner
         return Spinner()
@@ -1037,10 +992,9 @@ class Console(Generic[_AppResult]):
             async with in_terminal():
                 # Print output. Similar to 'loop.default_exception_handler',
                 # but don't use logger. (This works better on Python 2.)
-                echo("Unhandled ", nl=False)
-                echo("exception", fg="black", bg="yellow", nl=False)
-                echo(" in the event loop:")
-                echo(formatted_tb)
+                #colorize this
+                print("Unhandled exception in the event loop")
+                print(formatted_tb)
                 print("Exception %s" % (context.get("exception"),))
 
                 await _do_wait_for_enter("Press ENTER to continue...")
