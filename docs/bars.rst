@@ -23,7 +23,7 @@ The :class:`~quo.bar.Bar` can be used to draw a horizontal bar with an optional 
 
    bar.draw()
    
-.. image:: ./images/default.png
+.. image:: ./images/bar/default.png
 
 
 
@@ -35,8 +35,18 @@ The :class:`~quo.bar.Bar` can be used to draw a horizontal bar with an optional 
 
    bar.draw(fg="blue", bg="yellow")
 
-.. image:: ./images/styled.png
+.. image:: ./images/bar/styled.png
 
+
+.. code:: python
+
+   from quo.bar import Bar
+   
+   bar = Bar("I am right aligned")
+
+   bar.draw(align="right")
+   
+.. image:: ./images/bar/right.png
  
    
 
