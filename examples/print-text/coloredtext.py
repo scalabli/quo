@@ -20,14 +20,3 @@ print('<violet>This is violet</violet>')
 
 print('<style fg="white" bg="green">White on green</style>')
 
-
-from quo.style import Style
-
-style = Style.add({
-      'aaa': 'fg:red',
-     'bbb': 'fg:blue italic'
-     })
-
-print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
-
-    

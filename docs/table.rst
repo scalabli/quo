@@ -94,6 +94,10 @@ Right aligned table
     ["Bob", "M", 19],
     ["Dave", "M", 24]
     ]
+
+ table = Table(data)
+ table.print(align="right")
+ 
     
  
 
