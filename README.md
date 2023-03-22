@@ -573,17 +573,17 @@ Grid table
 
 ```python
 
- from quo.table import Table
+from quo.table import Table
 
- data = [
+data = [
     ["Name", "Gender", "Age"],
     ["Alice", "F", 24],
     ["Bob", "M", 19],
     ["Dave", "M", 24]
-    ]
+   ]
 
- table = Table(data)
- table.print(theme="grid")
+table = Table(data)
+table.print(theme="grid")
 
 ```
 
