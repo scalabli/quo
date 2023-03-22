@@ -513,6 +513,8 @@ Autocompletion
 ^^^^^^^^^^^^^^^
 Autocompletion can be added by passing a completer parameter.
 
+Press [Tab] to autocomplete
+
 .. code:: python
 
    from quo.prompt import Prompt
