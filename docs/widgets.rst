@@ -85,7 +85,7 @@ Example upgrade. Printing the layout in an interactive way
  content = Label("Hello, World", style="fg:black bg:red")
  container(content)
 
-.. image:: ./images/prompt/label.png
+.. image:: ./images/widgets/label.png
  
 
 To make it fullscreen set :param:`bind` and :param:`full_screen` to ``True`` Press :kbd:`Ctrl-C` to quit 
@@ -98,7 +98,7 @@ To make it fullscreen set :param:`bind` and :param:`full_screen` to ``True`` Pre
    content = Label("Hello, World", style="fg:black bg:red")
    container(content, bind=True, full_screen=True)
 
-.. image:: ./images/prompt/label-fullscreen.png
+.. image:: ./images/widgets/label-fullscreen.png
 
 Adding a custom key binder
  
