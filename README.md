@@ -565,7 +565,7 @@ Colored table
 ```
 
 
-![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/colored-table.png)
+![tabulate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/tables/green.png)
 
 **Example 4**
 
