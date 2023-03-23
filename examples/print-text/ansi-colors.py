@@ -5,7 +5,7 @@ Demonstration of all the ANSI colors.
 from quo import print
 
 print("\n<u>Foreground colors</u>")
-print("black", "black", fmt=True)
+print("black", "black",)
 print("red", "red", fmt=True)
 print("green", "green", fmt=True)
 print("ansiyellow", "ansiyellow", fmt=True)

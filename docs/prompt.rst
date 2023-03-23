@@ -237,33 +237,32 @@ Adding a bottom toolbar is as easy as passing a bottom_toolbar argument to promp
 
 When a function is given, it will be called every time the prompt is rendered, so the bottom toolbar can be used to display dynamic information.
 
-The toolbar is always erased when the prompt returns. Here we have an example of a callable that returns a :class:`quo.text.Text` object. By default, the toolbar has the reversed style, which is why we are setting the background instead of the foreground.
+By default, the toolbar has the reversed style, which is why we are setting the background instead of the foreground.
 
 .. code:: python
 
- from quo.prompt import Prompt
- from quo.text import Text
+   from quo.prompt import Prompt
 
- def toolbar():
-    return Text('This is a <b><style bg="red">Toolbar</style></b>!')
- # Returns a callable
- session = Prompt(bottom_toolbar=toolbar)
- session.prompt('> ')
+   session = Prompt()
 
-.. image:: ./images/bottom-toolbar.png
+   session.prompt('> ', bottom_toolbar="<i>This is a</i><b><style bg='red'> Toolbar</style></b>")
 
-Similar, we could use a list of style/text tuples.
+
+.. image:: ./images/prompt/bottom-toolbar.png
+
+
+Here's an example of a multiline bottom toolbar.
 
 .. code:: python
 
- from quo.prompt import Prompt
+   from quo.prompt import Prompt
 
- def toolbar():
-     return [('fg:white bg:green', ' This is a toolbar. ')]
+   session = Prompt()
 
- session = Prompt(bottom_toolbar=toolbar)
+   session.prompt("Say something: ", bottom_toolbar="This is\na multiline toolbar")
 
- session.prompt('> ')
+
+.. image:: ./images/prompt/multiline-bottom-toolbar.png
 
 
 ``Right prompt(rprompt)``
@@ -277,37 +276,13 @@ The following example returns a formatted text:
 .. code:: python
 
    from quo.prompt import Prompt
-   from quo.text import Text
 
-   session = Prompt(rprompt=Text('<style fg="red" bg="green">Quo rprompt</style>'))
-
-   session.prompt("")
+   session = Prompt()
+   session.prompt(">> ", rprompt='<style fg="red" bg="green">Quo rprompt</style>')
    
    
-.. image:: ./images/prompt/redgreenrprompt.png
+.. image:: ./images/prompt/red-and-green-rprompt.png
 
-The following example returns a callable
-
-.. code:: python
-
- from quo.prompt import Prompt
- from quo.style import Style
-
-   
- style = Style.add({'rprompt': 'bg:red fg:white'})
-   
- def get_rprompt():
-   return '<rprompt>'
-
- session = Prompt(
-           rprompt=get_rprompt,
-           style=style
-           )
-
- session.prompt('> ')
-
-
-.. image:: ./images/rprompt.png
 
 ``Syntax highlighting``
 -----------------------
@@ -366,19 +341,18 @@ Plain text placeholder
 
    from quo.prompt import Prompt
 
-   session = Prompt(placeholder="..(please type something)")
+   session = Prompt()
 
-   session.prompt("What is your name?: ")
+   session.prompt("What is your name?: ", placeholder="..(please type something)")
  
 Formatted text placeholder
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: python
 
-  from quo.prompt import Prompt
-  from quo.text import Text
+   from quo.prompt import Prompt
 
-  session = Prompt(placeholder=Text('<gray>(please type something)</gray>'))
-  session.prompt("What is your name?: ")
+   session = Prompt()
+   session.prompt("What is your name?: ", placeholder='<gray>(please type something)</gray>')
   
   
 .. image:: ./images/prompt/gray-placeholder.png
@@ -394,65 +368,99 @@ Formatted text placeholder
 ---------
 
 The colors for syntax highlighting are defined by a
-:class:`~quo.style.Style` instance. By default, a neutral
+:class:`~quo.style.Style` instance under the hood. By default, a neutral
 built-in style is used, but any style instance can be passed to the :class:`~quo.prompt.Prompt` class.
 
 .. note::
-      :func:`quo.prompt` has different semantics and cannot output colored text but :class:`quo.prompt.Prompt` is packed with several ways on how this can be achieved.
+      :func:`quo.prompt` has different semantics and cannot output colored text but :class:`quo.prompt.Prompt` has several ways on how this can be achieved.
 
 
 A simple way to add color to create a style, is by using the :meth:`~quo.style.Style.add` function
 
 :ref:`Read more about styling <styling>`.
 
-Coloring the prompt itself
-^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to add some colors to the prompt itself. For this, we need to import :func:`quo.color.Color` function.
-In the following example, the input will be in red
-*version changed 2022.5.2*
+Plain text prompt
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
- from quo.color import Color
- from quo.prompt import Prompt
+   from quo.prompt import Prompt
 
- style = Color("fg:red")  #User input (default text) 
+   session = Prompt()
 
- session = Prompt(style=style)
-
- session.prompt("Type something: ")
+   session.prompt("What is your name?: ")
  
- 
+Formatted text prompt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*added on v2023.2*
+
+It is possible to add some colors to the prompt itself.
+In the following example, the prompt will be in green.
+*added on v2023.2*
+
+.. code:: python
+
+   from quo.prompt import Prompt
+
+   session = Prompt()
+   session.prompt("<green>What is your name?: </green>")
+  
+
+Styled prompt
+^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+   from quo.prompt import Prompt
+
+   session = Prompt()
+   session.prompt("<red>john</red><white>@</white><green>localhost</green><red>:</red><cyan><u>/user/john</u></cyan><purple>$ </purple>")
+
+
+.. image:: ./images/prompt/styled-prompt.png
+     :align: center
+
+
+Coloring the prompt and the input
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+It is possible to add some colors to the prompt itself and the input.
+In the following example, the prompt and the input will be in red
+
+*version changed 2023.2*
+
+.. code:: python
+
+   from quo.prompt import Prompt
+
+   session = Prompt(fg="red")
+   session.prompt("Type something: ")
  
 
 .. image:: ./images/prompt/red-prompt.png
      :align: center
 
 
+*fg and bg parameters added on version 2023.2*
+.. code:: python
+
+   from quo.prompt import Prompt
+
+   session = Prompt(fg="red", bg="green")
+
+   session.prompt("Type something: ")
+ 
 Here's an example upgrade:
 
 .. code:: python
  
-   from quo.color import Color
    from quo.prompt import Prompt
 
-   style = Color("fg:blue") # User input (default text)
+   session = Prompt(fg="blue") #The input will be colored blue
 
-   session = Prompt(style=style)
+   session.prompt("<red>john</red><white>@</white><green>localhost</green><red>:</red><cyan><u>/user/john</u></cyan><purple>$ </purple>")
 
-   message = [
-       ('fg:red', 'john'),
-       ('fg:white', '@'),
-       ('fg:green bg:white', 'localhost'),
-       ('fg:yellow', ':'),
-       ('fg:cyan underline', '/user/john'),
-       ('fg:red', '$ ')
-   ]
-
-   session.prompt(message)
-
-.. image:: ./images/colored-prompt2.png
+.. image:: ./images/prompt/blue-input.png
 
 The `message` can be any kind of formatted text, as discussed :ref:`here
 <formatted_text>`. It can also be a callable that returns some formatted text.
@@ -464,13 +472,9 @@ By default, colors are taken from the 256 color palette. If you want to have 24b
     from quo.prompt import Prompt
     from quo.color import ColorDepth
 
-    session = Prompt(
-                style=style,
-                color_depth=ColorDepth.TRUE_COLOR
-                )
-    
-             
-    session.prompt(message)
+    session = Prompt(color_depth=ColorDepth.TRUE_COLOR)
+          
+    session.prompt("<style fg='red' bg='blue'>What is your name:? </style>")
 
 
 

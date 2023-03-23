@@ -9,10 +9,21 @@ Changelog
 
 
 
+``Version 2023.2``
+---------------------
+
+Released On ,,,,
+
+**Added**
+^^^^^^^^^^^^
+-Added :param:`fg` and `bg` to :func:`quo.color.Color`
+
+
+
 ``Version 2023.1``
 ---------------------
 
-Released 0n 2023-03-22
+Released On 2023-03-22
 
 **Added**
 ^^^^^^^^^^^^

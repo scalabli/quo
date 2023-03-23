@@ -4,10 +4,9 @@ Example of a placeholer that's displayed as long as no input is given.
 """
 from quo import echo
 from quo.prompt import Prompt
-from quo.text import Text
 
-session = Prompt(placeholder=Text('<style fg="gray">(please type something)</style>'))
+session = Prompt()
 
-if __name__ == "__main__":
-    answer = session.prompt(">> ")
-    echo(f"You said: {answer}")
+answer = session.prompt(">> ", placeholder="<gray>(please type something)</gray>")
+
+echo(f"You said: {answer}")

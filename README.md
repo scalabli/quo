@@ -147,6 +147,7 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 **Example 1**
 
 ```python
+
  from quo.prompt import Prompt
    
  session = Prompt()
@@ -154,43 +155,64 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 ```
 
 **Example 2**
-
-Real time integer validator
+Colored Prompt
 
 ```python
 
  from quo.prompt import Prompt
-
- session = Prompt(int=True)
- number = int(session.prompt('Give a number: '))
-
+   
+ session = Prompt()
+ session.prompt("<red>Type something: </red>") 
 ```
-
-![validate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/number-validator.png)
-
-
 **Example 3**
-
-``Bottom toolbar``
+Example upgrade
 
 ```python
 
   from quo.prompt import Prompt
-  from quo.text import Text
 
-  def toolbar():
-        return Text('This is a <b><style bg="red">Toolbar</style></b>!')
+  session = Prompt(fg="blue") #The input will be colored blue
 
-  # Returns a callable
-  session = Prompt(bottom_toolbar=toolbar)
-  session.prompt('> ')
+  session.prompt("<red>john</red><white>@</white><green>localhost</green><red>:</red><cyan><u>/user/john</u></cyan><purple>$ </purple>")
 
 ```
 
-![validate](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/bottom-toolbar.png)
-
+![styled](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/prompt/blue-input.png)
 
 **Example 4**
+Bottom toolbar
+
+```python
+
+from quo.prompt import Prompt
+
+session = Prompt()
+
+session.prompt('> ', bottom_toolbar="<i>This is a</i><b><style bg='red'> Toolbar</style></b>")
+
+```
+
+![Bottom toolbar](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/prompt/bottom-toolbar.png)
+
+**Example 5**
+
+Here's an example of a multiline bottom toolbar.
+
+```python
+
+from quo.prompt import Prompt
+
+session = Prompt()
+
+session.prompt("Say something: ", bottom_toolbar="This is\na multiline toolbar")
+
+```
+
+![Bottom toolbar](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/prompt/multiline-bottom-toolbar.png)
+
+
+
+**Example 6**
 
 ``Placeholder text``
 
@@ -210,19 +232,17 @@ A placeholder  text that's displayed as long as no input s given.
   <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/gray-placeholder.png" />
 </p>
 
-**Example 5**
+**Example 7**
 
 ``Coloring the prompt.``
 
 
 ```python
 
- from quo.color import Color
- from quo.prompt import Prompt
+from quo.prompt import Prompt
 
- style = Color("fg:red")
- session = Prompt(style=style)
- session.prompt("Type something: ")
+session = Prompt(fg="red")
+session.prompt("Type something: ")
 
 ```
 
@@ -230,7 +250,7 @@ A placeholder  text that's displayed as long as no input s given.
   <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/red-prompt.png" />
 </p>
 
-**Example 6**
+**Example 8**
 
 ``Autocomplete text``
 
@@ -245,7 +265,7 @@ Press [Tab] to autocomplete
 ```
 ![Autocompletion](https://github.com/scalabli/quo/raw/master/docs/images/prompt/wordcompleter.png)
 
-**Example 7**
+**Example 9**
 
 ``Autosuggest text``
 

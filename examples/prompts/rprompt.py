@@ -7,31 +7,22 @@ is long enough to cover the right side of the terminal.
 This is similar to RPROMPT is Zsh.
 """
 from quo import echo
-from quo.text import Text
 from quo.prompt import Prompt
 
-def main():
-    # Option 1: pass a string to 'rprompt':
-    rprompt = Text("<brown><i>Quo</i></brown>")
-    session = Prompt(rprompt=rprompt)
 
-    answer = session.prompt(">> ")
-    echo("You said: %s" % answer)
+# Option 1: pass a brown colored  and italicized string 'rprompt':
+session = Prompt()
 
-    # Option 2
+answer = session.prompt(">> ", rprompt="<brown><i>Quo</i></brown>")
+echo("You said: %s" % answer)
 
-    rprompt = Text("<style bg='red' fg='green'>Quo</style>")
-    session = Prompt(rprompt=rprompt)
+# Option 2 pass a string with red background color
+session = Prompt()
 
-    answer = session.prompt(">> ")
-    echo("You said: %s" % answer)
+answer = session.prompt(">> ", rprompt="<style bg='red' fg='green'>Quo</style>")
+echo("You said: %s" % answer)
 
-    # Option 3
-
-    rprompt = Text("<style bg='blue'>Quo</style>")
-    session = Prompt(rprompt=rprompt)
-    answer = session.prompt(">> ")
-    echo(f"You said: {answer}")
-
-if __name__ == "__main__":
-    main()
+# Option 3 pass a bold string with blue background color
+session = Prompt()
+answer = session.prompt(">> ", rprompt="<style bg='blue'><b>Quo</b></style>")
+echo(f"You said: {answer}")
