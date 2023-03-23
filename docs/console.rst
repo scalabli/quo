@@ -18,50 +18,6 @@ Attributes
 
 The console will auto-detect a number of properties required when rendering.
 
-
-
-
-``Bar``
----------
-The :meth:`~quo.console.Console.bar` method will draw a horizontal bar with an optional title, which is a good way of dividing your terminal output in to sections.
-*Added on v2022.3.2*
-
-**Parameters**
-      - ``message`` Optional[*(str)*] – Message print on the terminal.
-      - ``align`` Optional[*(str)*] - Postion of the message to be printed. Default is ``center`` other options are ``left`` and ``right``.
-      - ``fmt`` Optional[*(bool)*] - If True, a multi-colored style can be applied. *Added on v2022.7*
-      - ``style`` Optional - Style to be applied.
-
-
-.. code:: python
-
-   from quo.console import Console
-   
-   console = Console()
-
-   console.bar("I am a bar")
-   
-.. image:: ./images/console/bar.png
-
-
-
-.. code:: python
-
-
-   from quo.console import Console
-
-   console = Console()
-
-   console.bar("I am a styled bar", style="fg:blue bg:yellow")
-
-.. code:: python
-
-   from quo.console import Console
-   
-   console = Console()
-   
-   console.bar("<red>I am a</red> <green>multi-colored bar</green>", fmt=True)
-   
   
 
 ``Bell``
@@ -214,41 +170,6 @@ Alternatively, the function can also be used to launch editors for files by a sp
       - ``color`` - controls if the pager supports ANSI colors or not.
       
       
-``Rule``
----------
-The :meth:`~quo.console.Console.rule` method will draw a horizontal line.
-*Added on v2022.3.2*
-
-**Parameters**
-      - ``multicolored`` Optional[*(bool)*] - If True, a multicolored border will be applied. *(Added on v2022.8)*
-      
-      - ``char`` Optional[*(str)*] - Character to be used to draw out the border.
-      - ``style`` Optional - Style to be applied.
-
-.. code:: python
-
-   from quo.console import Console
-
-   console = Console()
-
-   console.rule()
-   
-.. image:: ./images/console/rule.png
-   
-   
-   
-
-.. code:: python
-
-   from quo.console import Console
-   
-   console = Console()
-   
-   console.rule(multicolored=True)
-   
-.. image:: ./images/console/multicolored-rule.png
-
-
 
 
 
