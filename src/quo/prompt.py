@@ -484,6 +484,8 @@ class Prompt(Generic[_T]):
         int: bool = False,
         auto_suggest: Optional[AutoSuggest] = None,
         style: Optional[BaseStyle] = None,
+        fg: Optional[str] = "",
+        bg: Optional[str] = "",
         style_transformation: Optional[StyleTransformation] = None,
         swap_light_and_dark_colors: FilterOrBool = False,
         color_depth: Optional[ColorDepth] = None,
@@ -543,7 +545,6 @@ class Prompt(Generic[_T]):
         self.int = int
         self.action = action
         self.bottom_toolbar = bottom_toolbar
-        self.style = style
         self.style_transformation = style_transformation
         self.swap_light_and_dark_colors = swap_light_and_dark_colors
         self.color_depth = true_color #color_dept
@@ -578,6 +579,15 @@ class Prompt(Generic[_T]):
         self.search_buffer = self._create_search_buffer()
         self.layout = self._create_layout()
         self.app = self._create_application(editing_mode, erase_when_done)
+
+        if fg or bg != "":
+            from quo.style.style import Style
+
+            setStyle = Style.add({' ':"fg:"+str(fg) + " bg:"+str(bg)})
+            self.style = setStyle
+        else:
+            self.style=style
+
 
         if bind_:
             from quo.keys import bind as _bind
@@ -1064,7 +1074,14 @@ class Prompt(Generic[_T]):
         #         then we loose the advantage of mypy and pyflakes to be able
         #         to verify the code.
         if text is not None:
-            self.text = text
+            import re
+
+            if re.search("^<.*>$", str(text)) is not None:
+                from quo.text.html import Text
+                inpText  = Text(str(text))
+                self.text = inpText
+            else:
+                self.text = text
         if editing_mode is not None:
             self.editing_mode = editing_mode
         if refresh_interval is not None:
@@ -1084,7 +1101,13 @@ class Prompt(Generic[_T]):
         if bind is not None:
             self.bind = bind
         if bottom_toolbar is not None:
-            self.bottom_toolbar = bottom_toolbar
+            import re
+            if re.search("^<.*>$", str(bottom_toolbar)) is not None:
+                from quo.text.html import Text
+                bttmtlbrText  = Text(str(bottom_toolbar))
+                self.bottom_toolbar= bttmtlbrText
+            else:
+                self.bottom_toolbar = bottom_toolbar
         if style is not None:
             self.style = style
         if color_depth is not None:
@@ -1096,7 +1119,13 @@ class Prompt(Generic[_T]):
         if swap_light_and_dark_colors is not None:
             self.swap_light_and_dark_colors = swap_light_and_dark_colors
         if rprompt is not None:
-            self.rprompt = rprompt
+            import re
+            if re.search("^<.*>$", str(rprompt)) is not None:
+                from quo.text.html import Text
+                rprmptText  = Text(str(rprompt))
+                self.rprompt = rprmptText
+            else:
+                self.rprompt = rprompt
         if multiline is not None:
             self.multiline = multiline
         if elicit_continuation is not None:
@@ -1124,7 +1153,15 @@ class Prompt(Generic[_T]):
         if input_processors is not None:
             self.input_processors = input_processors
         if placeholder is not None:
-            self.placeholder = placeholder
+            import re
+            
+            if re.search("^<.*>$", str(placeholder)) is not None:
+                from quo.text.html import Text
+                plchldrText  = Text(str(placeholder))
+                self.placeholder= plchldrText
+            else:
+                self.placeholder = placeholder
+
         if reserve_space_for_menu is not None:
             self.reserve_space_for_menu = reserve_space_for_menu
         if system_prompt is not None:

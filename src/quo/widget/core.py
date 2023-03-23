@@ -483,7 +483,7 @@ class Frame:
 
     def __init__(
         self,
-        body: AnyContainer=None,
+        body: AnyContainer,
         title: AnyFormattedText = "",
         style: str = "",
         width: AnyDimension = None,

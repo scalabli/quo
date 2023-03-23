@@ -3,9 +3,12 @@ from quo.output.color import ColorDepth
 from quo.style.webcolors import NAMED_COLORS
 from .rgb import *
 
-def Color(color:str = None):
-    #User input (default text color)
-    from quo.style.style import Style
 
-    return Style.add({' ':color})
+def Color(style:str="", fg:str="", bg:str=""):
+    from quo.style.style import Style
+    if fg or bg != "":
+        return Style.add({' ':"fg:"+str(fg) + " bg:"+str(bg)})
+    if style != "":
+        return Style.add({' ':style})
+
 
