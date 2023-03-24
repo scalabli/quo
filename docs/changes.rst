@@ -8,11 +8,20 @@ Changelog
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 
+``Version 2023.3``
+---------------------
+
+Released On 2023-03-23
+
+**Added**
+^^^^^^^^^^^
+-Added :param:`lines` to  :obj:`quo.rule.Rule`
+
 
 ``Version 2023.2``
 ---------------------
 
-Released On ,,,,
+Released On 2023-03-23
 
 **Added**
 ^^^^^^^^^^^^

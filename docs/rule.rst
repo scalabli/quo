@@ -7,8 +7,10 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 *Added on v2023.1*
 
 **Parameters**
-      - ``multicolored`` Optional[*(bool)*] - If True, a multicolored border will be applied.  
       - ``char`` Optional[*(str)*] - Character to be used to draw out the border.
+      - ``lines`` Optional[*(int)*] - Indicates the number of lines to be drawn.
+
+      - ``multicolored`` Optional[*(bool)*] - If True, a multicolored border will be applied.  
       - ``color`` Optional[*(str)*] - Color to be applied.
 
 .. code:: python
@@ -22,7 +24,7 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 .. image:: ./images/rule/default.png
    
      
-
+- Multicolored
 .. code:: python
 
    from quo.rule import Rule
@@ -34,6 +36,7 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 .. image:: ./images/rule/multicolored.png
 
 
+- Styled
 .. code:: python
 
    from quo.rule import Rule
@@ -43,3 +46,17 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 
 .. image:: ./images/rule/styled.png
 
+
+- Multiline
+
+*Added on v2023.3*
+.. code:: python
+
+   from quo.rule import Rule
+
+   rule = Rule(lines=4)
+
+   rule.draw()
+   
+.. image:: ./images/rule/multiline.png
+   
