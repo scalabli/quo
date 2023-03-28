@@ -1,6 +1,6 @@
 [![Logo](https://raw.githubusercontent.com/scalabli/quo/master/pics/quo.png)](https://github.com/scalabli/quo)
 
-| Version    | [2022.x](https://quo.rtfd.io)
+| Version    | [2023.x](https://quo.rtfd.io)
 |------------|----------------------------------------------------------------------------
 | Web        | [Documentation📃](https://quo.readthedocs.io/)
 | Download   | [Downloads](https://pypi.org/project/quo)
