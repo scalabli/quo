@@ -6,11 +6,7 @@ iterator.
 import time
 
 from quo.progress import ProgressBar
-def main():
-    with ProgressBar() as pb:
-        for i in pb(range(800)):
-            time.sleep(0.01)
 
-
-if __name__ == "__main__":
-    main()
+with ProgressBar() as pb:
+    for i in pb(range(800)):
+        time.sleep(0.01)

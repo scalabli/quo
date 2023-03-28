@@ -25,6 +25,7 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
    
      
 - Multicolored
+
 .. code:: python
 
    from quo.rule import Rule
@@ -50,6 +51,7 @@ The :class:`~quo.rule.Rule` method will draw a horizontal line.
 - Multiline
 
 *Added on v2023.3*
+
 .. code:: python
 
    from quo.rule import Rule

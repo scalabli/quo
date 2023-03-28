@@ -12,10 +12,10 @@ style = Style.add(
     {
         "title": "#4444ff underline",
         "label": "#ff4400 bold",
-        "percentage": "#00ff00",
+        "percentage": "red", ##00ff00",
         "bar-a": "bg:#00ff00 #004400",
         "bar-b": "bg:#00ff00 #000000",
-        "bar-c": "#000000 underline",
+        "bar-c": "#000000",
         "current": "#448844",
         "total": "#448844",
         "time-elapsed": "#444488",
@@ -24,13 +24,6 @@ style = Style.add(
 )
 
 
-def main():
-    with ProgressBar(
-        style=style, title="Progress bar example with custom styling."
-    ) as pb:
-        for i in pb(range(1600), label="Downloading..."):
-            time.sleep(0.01)
-
-
-if __name__ == "__main__":
-    main()
+with ProgressBar("<b><maroon>Progress bar example with custom styling.</maroon></b>") as pb:
+    for i in pb(range(1600), label="<blue>Downloading...</blue>"):
+        time.sleep(0.01)

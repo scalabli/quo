@@ -50,6 +50,56 @@ in order to make displaying the progress possible:
             time.sleep(.01)
 
 
+
+``Autohide progressbar``
+---------------------------
+
+Autohide the progressbar after consuming an iterator.
+
+*(Added on v2023.3)*
+
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   with ProgressBar() as pb:
+        for i in pb(range(800), auto_hide=True):
+           time.sleep(.01)
+
+
+
+
+``Adding a title and label``
+-------------------------------
+
+Each progress bar can have one title, and for each task an individual label.
+
+
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   title = "<style fg='yellow' bg='black'>Downloading 4 files...</style>"
+
+   label = "<red>some file:</red>"
+
+   with ProgressBar(title) as pb:
+       for i in pb(range(800), label):
+         time.sleep(.01)
+
+.. image:: ./images/progress/colored-title-and-label.png
+
+
+``Spinner themes``
+--------------------------
+*(Added on v2023.3)*
+
+- ``hamberger``
+
 ``Multiple parallel tasks``
 -----------------------------
 
@@ -65,60 +115,37 @@ want this depends on the application.
 
 .. code:: python
 
- import threading
- import time
+   import threading
+   import time
  
- from quo.progress import ProgressBar
+   from quo.progress import ProgressBar
 
- with ProgressBar() as pb:
-     # Two parallel tasks.
-     def task_1():
-         for i in pb(range(100)):
-             time.sleep(.05)
+   with ProgressBar("TWO TASKS") as pb:
+       # Two parallel tasks.
+       def task1():
+           for i in pb(range(100)):
+               time.sleep(.05)
 
-     def task_2():
-         for i in pb(range(150)):
-             time.sleep(.08)
+       def task2():
+           for i in pb(range(150)):
+               time.sleep(.08)
 
-     # Start threads.
-     t1 = threading.Thread(target=task_1)
-     t2 = threading.Thread(target=task_2)
-     t1.daemon = True
-     t2.daemon = True
-     t1.start()
-     t2.start()
+       # Start threads.
+       t1 = threading.Thread(target=task1)
+       t2 = threading.Thread(target=task2)
+       t1.daemon = True
+       t2.daemon = True
+       t1.start()
+       t2.start()
 
-     # Wait for the threads to finish. We use a timeout for the join() call,
-     # because on Windows, join cannot be interrupted by Control-C or any other
-     # signal.
-     for t in [t1, t2]:
-         while t.is_alive():
-             t.join(timeout=.5)
+       # Wait for the threads to finish. We use a timeout for the join() call,
+       # because on Windows, join cannot be interrupted by Control-C or any other
+       # signal.
+       for t in [t1, t2]:
+           while t.is_alive():
+               t.join(timeout=.5)
 
-.. image:: ./images/two_tasks.png
-
-
-``Adding a title and label``
--------------------------------
-
-Each progress bar can have one title, and for each task an individual label.
-
-
-.. code:: python
-
- import time
-
- from quo import print
- from quo.progress import ProgressBar
-
- title = print("<style fg='yellow' bg='black'>Downloading 4 files...</style>")
- label = print("<red>some file:</red>")
-
- with ProgressBar(title=title) as pb:
-     for i in pb(range(800), label=label):
-         time.sleep(.01)
-
-.. image:: ./images/coloredlabel.png
+.. image:: ./images/progress/two_tasks.png
 
 
 ``Formatting the progress bar``
