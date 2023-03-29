@@ -11,7 +11,7 @@ There are several ways to display colors:
 
 - By creating a :func:`quo.echo` function.
 - By creating a :func:`quo.print` function.
-- By creating a list of ``(style, text)`` tuples mapped to :func:`quo.print`.
+
 
 
 An instance of any of these three kinds of objects is called "formated text".
@@ -39,9 +39,9 @@ An instance of any of these three kinds of objects is called "formated text".
 
 .. code:: python
 
- from quo import echo
+   from quo import echo
 
- echo("Hello, world!", nl=False)
+   echo("Hello, world!", nl=False)
  
 
 .. code:: python
@@ -68,9 +68,9 @@ An instance of any of these three kinds of objects is called "formated text".
 
 .. code:: python
 
- from quo import echo
+   from quo import echo
 
- echo(b'\xe2\x98\x83')
+   echo(b'\xe2\x98\x83')
 
 Printing to Standard error using echo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -78,9 +78,9 @@ You can easily print to standard error by passing :param:``err=True``
 
 .. code:: python
 
- from quo import echo
+   from quo import echo
  
- echo('Hello World!', err=True)
+   echo('Hello World!', err=True)
  
 
 ``print``
@@ -168,8 +168,6 @@ and `bg` attributes of any Text tag:
 
    » style tag in the example above can be anything i.e: <abc...
 
-   
-
 
 Underneath, all Text tags are mapped to classes from a stylesheet, so you can assign a style for a custom tag.
 
@@ -185,54 +183,6 @@ Underneath, all Text tags are mapped to classes from a stylesheet, so you can as
 
    print('<aaa>Hello</aaa> <bbb>world</bbb>!', style=style)
 
- 
- 
-``Using (style, text) tuples``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. note::
-
-   » (style, text) tuples are currently unstable, however its a work in progress and stabiliy may improve on later versions of quo 
-
-It is possible to create a list of  manually with :param:``fmt``
-
-
-.. code:: python
-
- from quo import print
- f
-
- text = FormattedText([
-     ('fg:red', 'Hello'),
-     ('', ' '),
-     ('fg:purple italic', 'World'),
-   ])
- print(text, fmt=True)
-
-It is also possible to use class names, and separate the styling in a style sheet.
-
-.. code:: python
-
- from quo import print
- from quo.style import Style
- from quo.text import FormattedText
-
- # The text.
- text = FormattedText([
-      ('class:aaa', 'Hello'),
-      ('', ' '),
-      ('class:bbb', 'World'),
-    ])
-
- # The style sheet.
- style = Style.add({
-      'aaa': 'fg:green',
-      'bbb': 'fg:blue italic',
-   })
-
- print(text, fmt=True, style=style)
- 
- 
  
 .. note::
 
