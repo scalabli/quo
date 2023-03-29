@@ -1,14 +1,13 @@
-#!/usr/bin/env python
 """
 Horizontal align demo with HSplit.
 """
 from quo.console import Console
 from quo.keys import Bind
-from quo.layout import HSplit, VSplit,  Window, FormattedTextControl
+from quo.layout import HSplit, VSplit,   Window, FormattedTextControl
 from quo.layout.dimension import D
 from quo.layout.layout import Layout
 from quo.text import Text
-from quo.widget import Frame
+from quo.widget import Frame, Box
 
 TITLE = Text(
     """ <u>HSplit HorizontalAlign</u> example.
@@ -27,7 +26,8 @@ interdum enim."""
 body = HSplit(
     [
         Frame(
-            Window(FormattedTextControl(TITLE), height=2), style="bg:#88ff88 #000000"
+            Box(
+            Window(FormattedTextControl(TITLE),align="center", style="bg:#88ff88 #000000"), style="fg:red")
         ),
         HSplit(
             [

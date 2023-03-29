@@ -26,7 +26,7 @@ right_text = "Right aligned text.\n\n" + LIPSUM
 content = HSplit(
     [
         Window(FormattedTextControl(left_text), align="left"),
-        Window(height=1, char="-"),
+        Window(height=3, char="-"),
         Window(FormattedTextControl(center_text), align="center"),
         Window(height=1, char="-"),
         Window(FormattedTextControl(right_text), align="right")

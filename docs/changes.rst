@@ -16,6 +16,7 @@ Released On 2023-03-23
 **Added**
 ^^^^^^^^^^^
 -Added :param:`lines` to  :obj:`quo.rule.Rule`
+-Added :param:``spinner` to :obj:``quo.progress.ProgressBar`
 
 
 ``Version 2023.2``

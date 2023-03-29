@@ -34,7 +34,9 @@ when progress happens.
        for i in pb(range(800)):
            time.sleep(.01)
 
-.. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png
+
+.. image:: ./images/progress/dots3.png
+
 
 Keep in mind that not all iterables can report their total length. This happens
 with a typical generator. In that case, you can still pass the total as follows
@@ -117,13 +119,45 @@ Each progress bar can have one title, and for each task an individual label.
 
 - ``arrows``
 
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   with ProgressBar(spinner="arrows") as pb:
+       for i in pb(range(800)):
+           time.sleep(0.01
+
 .. image:: ./images/progress/arrows.png
+
 
 - ``dots3``
 
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   with ProgressBar(spinner="dots3") as pb:
+       for i in pb(range(800)):
+           time.sleep(0.01
+
 .. image:: ./images/progress/dots3.png
 
+
 - ``hamburger``
+
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   with ProgressBar(spinner="hamburger") as pb:
+       for i in pb(range(800)):
+           time.sleep(0.01
 
 .. image:: ./images/progress/hamburger.png
 
@@ -202,74 +236,21 @@ Example of nested progress bars.
 ``Rainbow progress bar``
 -------------------------------
 
+A simple progress bar, visualised with rainbow colors for fun.
+
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   with ProgressBar("Rainbow Progressbar", rainbow=True, spinner="arrows") as pb:
+          for i in pb(range(20), label="Downloading...", auto_hide=True):
+              time.sleep(0.1)
 
 
 .. image:: ./images/progress/rainbow.png
 
-
-``Formatting the progress bar``
-----------------------------------
-
-The visualisation of a :class:`~quo.progress.ProgressBar` can be
-customized by using a different sequence of formatters. The default formatting looks something like this:
-
-.. code:: python
-
- from quo.progress.formatters import *
-
- default_formatting = [
-     Label(),
-     Text(' '),
-     SpinningWheel(),
-     Percentage(),
-     Text(' '),
-     Bar(),
-     Text(' '),
-     Progress(),
-     Text(' '),
-     Text('time left', style="fg:purple"),
-     Text('[', style='fg:green'),
-     TimeLeft(),
-     Text(']', style='fg:green'),
-     Text(' '),
-  ]
-
-That sequence of
-:class:`~quo.progress.formatters.Formatter` can be
-passed to the `formatter` argument of
-:class:`~quo.progress.ProgressBar`. So, we could change this and
-modify the progress bar to look like an apt-get style progress bar:
-
-.. code:: python
-
- import time
-
- from quo.progress import ProgressBar, formatters
- from quo.styles import Style
-
- style = Style.add({
-     'label': 'bg:#ffff00 #000000',
-     'percentage': 'bg:#ffff00 #000000',
-     'current': '#448844',
-     'bar': '',
-    })
-
-
- custom_formatters = [
-     formatters.Label(),
-     formatters.Text(': [', style='class:percentage'),
-     formatters.Percentage(),
-     formatters.Text(']', style='class:percentage'),
-     formatters.Text(' '),
-     formatters.Bar(sym_a='#', sym_b='#', sym_c='.'),
-     formatters.Text('  '),
-  ]
-
- with ProgressBar(style=style, formatters=custom_formatters) as pb:
-     for i in pb(range(1600), label='Installing'):
-         time.sleep(.01)
-
-.. image:: ./images/apt-get.png
 
 
 ``Adding key bindings``

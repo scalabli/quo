@@ -1,0 +1,64 @@
+``Formatting the progress bar``
+----------------------------------
+
+The visualisation of a :class:`~quo.progress.ProgressBar` can be
+customized by using a different sequence of formatters. The default formatting looks something like this:
+
+.. code:: python
+
+ from quo.progress.formatters import *
+
+ default_formatting = [
+     Label(),
+     Text(' '),
+     SpinningWheel(),
+     Percentage(),
+     Text(' '),
+     Bar(),
+     Text(' '),
+     Progress(),
+     Text(' '),
+     Text('time left', style="fg:purple"),
+     Text('[', style='fg:green'),
+     TimeLeft(),
+     Text(']', style='fg:green'),
+     Text(' '),
+  ]
+
+That sequence of
+:class:`~quo.progress.formatters.Formatter` can be
+passed to the `formatter` argument of
+:class:`~quo.progress.ProgressBar`. So, we could change this and
+modify the progress bar to look like an apt-get style progress bar:
+
+.. code:: python
+
+ import time
+
+ from quo.progress import ProgressBar, formatters
+ from quo.styles import Style
+
+ style = Style.add({
+     'label': 'bg:#ffff00 #000000',
+     'percentage': 'bg:#ffff00 #000000',
+     'current': '#448844',
+     'bar': '',
+    })
+
+
+ custom_formatters = [
+     formatters.Label(),
+     formatters.Text(': [', style='class:percentage'),
+     formatters.Percentage(),
+     formatters.Text(']', style='class:percentage'),
+     formatters.Text(' '),
+     formatters.Bar(sym_a='#', sym_b='#', sym_c='.'),
+     formatters.Text('  '),
+  ]
+
+ with ProgressBar(style=style, formatters=custom_formatters) as pb:
+     for i in pb(range(1600), label='Installing'):
+         time.sleep(.01)
+
+.. image:: ./images/apt-get.png
+
