@@ -7,7 +7,7 @@ import time
 from quo.progress import ProgressBar
 
 
-with ProgressBar("Rainbow Progressbar", rainbow=True, spinner="hamburger") as pb:
+with ProgressBar("Rainbow Progressbar", rainbow=True, spinner="arrows") as pb:
         for i in pb(range(20), label="Downloading...", auto_hide=True):
             time.sleep(0.1)
 

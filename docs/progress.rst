@@ -25,14 +25,14 @@ when progress happens.
 
 .. code:: python
 
- import time
+   import time
 
- from quo.progress import ProgressBar
+   from quo.progress import ProgressBar
 
 
- with ProgressBar() as pb:
-     for i in pb(range(800)):
-         time.sleep(.01)
+   with ProgressBar() as pb:
+       for i in pb(range(800)):
+           time.sleep(.01)
 
 .. image:: https://raw.githubusercontent.com/secretum-inc/quo/master/docs/images/simple-progress-bar.png
 
@@ -94,11 +94,39 @@ Each progress bar can have one title, and for each task an individual label.
 .. image:: ./images/progress/colored-title-and-label.png
 
 
+``Adding a toolbar``
+-----------------------
+
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   toolbar = "Press <b>CTRL+C</b> to quit"
+
+   with ProgressBar(toolbar=toolbar) as pb:
+       for i in pb(range(800)):
+         time.sleep(.01)
+
+.. image:: ./images/progress/toolbar.png
+
 ``Spinner themes``
 --------------------------
 *(Added on v2023.3)*
 
-- ``hamberger``
+- ``arrows``
+
+.. image:: ./images/progress/arrows.png
+
+- ``dots3``
+
+.. image:: ./images/progress/dots3.png
+
+- ``hamburger``
+
+.. image:: ./images/progress/hamburger.png
+
 
 ``Multiple parallel tasks``
 -----------------------------
@@ -145,7 +173,38 @@ want this depends on the application.
            while t.is_alive():
                t.join(timeout=.5)
 
-.. image:: ./images/progress/two_tasks.png
+.. image:: ./images/progress/two-tasks.png
+
+
+
+``Nested progressbars``
+---------------------------
+
+Example of nested progress bars.
+
+.. code:: python
+
+   import time
+
+   from quo.progress import ProgressBar
+
+   title='<blue>Nested progress bars</blue>'
+   toolbar="<b>[Control-L]</b> clear  <b>[Control-C]</b> abort"
+
+   with ProgressBar(title, bottom_toolbar=toolbar)as pb:
+       for i in pb(range(6), label="Main task"):
+           for j in pb(range(200), label=f"Subtask  <%s>" % (i + 1,), auto_hide=True):
+               time.sleep(0.01)
+
+.. image:: ./images/progress/nested.png
+
+
+``Rainbow progress bar``
+-------------------------------
+
+
+
+.. image:: ./images/progress/rainbow.png
 
 
 ``Formatting the progress bar``
@@ -213,7 +272,7 @@ modify the progress bar to look like an apt-get style progress bar:
 .. image:: ./images/apt-get.png
 
 
-``Adding key bindings and toolbar``
+``Adding key bindings``
 ------------------------------------
 
 Like other quo  applications, we can add custom key bindings, by passing :func:`quo.keys.bind` which is an instance of :class:`~quo.keys.Bind` object
@@ -262,6 +321,48 @@ key bindings.
 
 Read more about `key bindings <https://quo.readthedocs.io/en/latest/kb.html>`_
 
+
+
+Here's a more complex demonstration of what's possible with the progress bar.
+
+.. code:: python
+
+   import threading
+   import time
+
+   from quo.progress import ProgressBar
+
+   title = "<b>Example of many parallel tasks.</b>"
+   toolbar = "<b>[Control-L]</b> clear  <b>[Control-C]</b> abort"
+
+   with ProgressBar(title, bottom_toolbar=toolbar) as pb:
+       def run_task(label, total, sleep_time):
+           for i in pb(range(total), label=label):
+                   time.sleep(sleep_time)
+
+       threads = [
+           threading.Thread(target=run_task, args=("First task", 50, 0.1)),
+           threading.Thread(target=run_task, args=("Second task", 100, 0.1)),
+           threading.Thread(target=run_task, args=("Third task", 8, 3)),
+           threading.Thread(target=run_task, args=("Fourth task", 200, 0.1)),
+           threading.Thread(target=run_task, args=("Fifth task", 40, 0.2)),
+           threading.Thread(target=run_task, args=("Sixth task", 220, 0.1)),
+           threading.Thread(target=run_task, args=("Seventh task", 85, 0.05)),
+           threading.Thread(target=run_task, args=("Eight task", 200, 0.05)),
+       ]
+
+       for t in threads:
+           t.daemon = True
+           t.start()
+
+       # Wait for the threads to finish. We use a timeout for the join() call,
+       # because on Windows, join cannot be interrupted by Control-C or any other
+       # signal.
+       for t in threads:
+             while t.is_alive():
+                t.join(timeout=0.5)
+
+.. image:: ./images/progress/many-parallel-tasks.png
 
 » Check out more examples `here <https://github.com/scalabli/quo
 /tree/master/examples/progress/>`_
