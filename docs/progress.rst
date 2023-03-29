@@ -292,52 +292,13 @@ Like other quo  applications, we can add custom key bindings, by passing :func:`
 
 
 
-
-
-
-
-
-==============================================
-
- import os
- import signal
- import time
-
- from quo.keys import bind
- from quo.progress import ProgressBar
- from quo.text import Text
-
- example = Text(' <b>[f]</b> Print "f" <b>[x]</b> Abort.')
-
- # Create custom key bindings first.
- cancel = [False]
-
- @bind.add('f')
- def _(event):
-     print('You pressed `f`.')
-
- @bind.add('x')
- def _(event):
-     " Send Abort (control-c) signal. "
-     cancel[0] = True
-     os.kill(os.getpid(), signal.SIGINT)
-
-  with ProgressBar(bottom_toolbar=example) as pb
-         for i in pb(range(800)):
-             time.sleep(.01)
-
-                # Stop when the cancel flag has been set.
-             if cancel[0]:
-                 break
-
- when "x" is pressed, we set a cancel flag, which stops the progress.
+when "x" is pressed, we set a cancel flag, which stops the progress.
 It would also be possible to send `SIGINT` to the mean thread, but that's not
 always considered a clean way of cancelling something.
 
 In the example above, we also display a toolbar at the bottom which shows the
 key bindings.
 
-.. image:: ./images/custom-key-bindings.png
 
 Read more about `key bindings <https://quo.readthedocs.io/en/latest/kb.html>`_
 
