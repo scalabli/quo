@@ -558,7 +558,7 @@ The progress can be displayed for any iterable. This works by wrapping the itera
                for i in pb(range(800)):
                              time.sleep(.01)
 ```
-![ProgressBar](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/simple-progress-bar.png)
+![ProgressBar](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/progress/dots3.png)
 
 Read more on [Progress](https://quo.readthedocs.io/en/latest/progress.html)
 
