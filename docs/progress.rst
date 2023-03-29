@@ -253,12 +253,51 @@ A simple progress bar, visualised with rainbow colors for fun.
 
 
 
-``Adding key bindings``
+``Adding a key binder``
 ------------------------------------
 
 Like other quo  applications, we can add custom key bindings, by passing :func:`quo.keys.bind` which is an instance of :class:`~quo.keys.Bind` object
 
 .. code:: python
+
+   import os
+   import signal
+   import time
+
+   from quo.keys import bind
+   from quo.progress import ProgressBar
+
+   bottom_toolbar = 'Press <b>[q]</b> to Abort or <b>[x]</b>  to Send Control-C.'
+
+   # Create custom key bindings first
+   cancel = [False]
+
+   @bind.add("q")
+   def _(event):
+       "Quit by setting cancel flag."
+       cancel[0] = True
+
+   @bind.add("x")
+   def _(event):
+       "Quit by sending SIGINT to the main thread."
+       os.kill(os.getpid(), signal.SIGINT)
+
+
+   with ProgressBar(bottom_toolbar=bottom_toolbar) as pb:
+        for i in pb(range(800)):
+             time.sleep(0.01)
+
+            if cancel[0]:
+                break
+
+
+
+
+
+
+
+
+==============================================
 
  import os
  import signal
