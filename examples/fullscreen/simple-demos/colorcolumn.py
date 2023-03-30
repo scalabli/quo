@@ -4,7 +4,7 @@ Colorcolumn example.
 """
 from quo.buffer import Buffer
 from quo.console import Console
-from quo.keys import Bind
+from quo.keys import bind
 from quo.layout.containers import ColorColumn, HSplit, Window
 from quo.layout.controls import BufferControl, FormattedTextControl
 from quo.layout.layout import Layout
@@ -43,14 +43,11 @@ body = HSplit(
 )
 
 
-# 2. Key bindings
-bind =  Bind()
+
 
 @bind.add("q")
 def _(event):
     "Quit application."
     event.app.exit()
 
-
-# 3. The `Application`
-Console(layout=Layout(body), bind=bind, full_screen=True).run()
+co

@@ -1,18 +1,20 @@
 """
 Horizontal align demo with HSplit.
 """
-from quo.console import Console
-from quo.keys import Bind
-from quo.layout import HSplit, VSplit,   Window, FormattedTextControl
+from quo.layout import HSplit, VSplit, FormattedTextControl
 from quo.layout.dimension import D
 from quo.layout.layout import Layout
-from quo.text import Text
-from quo.widget import Frame, Box
+from quo.widget import Frame, Box, Label
+from quo.bar import Bar
 
-TITLE = Text(
-    """ <u>HSplit HorizontalAlign</u> example.
+from quo import container
+from quo.keys import bind
+from quo.label import Label
+from quo.window import Window
+
+
+TITLE = """ <u><cyan>HSplit and VSplit</cyan></u> demo.
  Press <b>'q'</b> to quit."""
-)
 
 LIPSUM = """\
 Lorem ipsum dolor
@@ -21,21 +23,22 @@ adipiscing elit.
 Maecenas quis
 interdum enim."""
 
+label = Label(TITLE)
+window = Window(label)
+box = Box(window)
+frame = Frame(box, height=4)
 
-# 1. The layout
 body = HSplit(
     [
-        Frame(
-            Box(
-            Window(FormattedTextControl(TITLE),align="center", style="bg:#88ff88 #000000"), style="fg:red")
-        ),
+        frame,
+
         HSplit(
             [
                 # Left alignment.
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(Text("<u>LEFT</u>")),
+                            Label("<u><blue>LEFT</blue></u>"),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
@@ -71,7 +74,7 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(Text("<u>CENTER</u>")),
+                            Label("<u><green>CENTER</green></u>"),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
@@ -107,7 +110,7 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(Text("<u>RIGHT</u>")),
+                            FormattedTextControl("<u>RIGHT</u>"),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
@@ -143,7 +146,7 @@ body = HSplit(
                 VSplit(
                     [
                         Window(
-                            FormattedTextControl(Text("<u>JUSTIFY</u>")),
+                            FormattedTextControl("<u>JUSTIFY</u>"),
                             width=10,
                             ignore_content_width=True,
                             style="bg:#ff3333 ansiblack",
@@ -180,8 +183,6 @@ body = HSplit(
 
 
 # 2. Key bindings
-bind = Bind()
-
 @bind.add("q")
 def _(event):
     "Quit application."
@@ -189,12 +190,6 @@ def _(event):
 
 
 # 3. The `Application`
-application = Console(layout=Layout(body), bind=bind,full_screen=True)
 
 
-def run():
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
+container(body, bind=True, full_screen=True)

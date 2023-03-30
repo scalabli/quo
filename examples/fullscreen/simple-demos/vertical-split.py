@@ -14,9 +14,15 @@ right_text = Text("""
 
         <b>(right pane)</b>""")
 
+class dd:
+    def __init__(self) -> None:
 
+            Window(FormattedTextControl(left_text)),
+
+        
+        
 content = VSplit([
-    Window(FormattedTextControl(left_text)),
+    dd(),
     Window(width=1, char="|", style="fg:green"),  # Vertical line in the middle.
     Window(FormattedTextControl(right_text))
     ])
