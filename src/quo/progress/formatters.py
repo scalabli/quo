@@ -90,6 +90,8 @@ class Label(Formatter):
         self.suffix = suffix
 
     def _add_suffix(self, label: RichText) -> StyleAndTextTuples:
+
+        # khaki bold is there default pb label color style
         label = to_formatted_text(label, style="fg:khaki bold") #Progressbar label #lass:label")
         return label + [("", self.suffix)]
 
@@ -149,14 +151,14 @@ class Bar(Formatter):
     Display the progress bar itself.
     """
 
-    template = "<bar>{start}<bar-a fg='cyan'>{bar_a}</bar-a><bar-b fg='red'>{bar_b}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
+    template = "<bar>{start}<bar-a fg='cyan'>{bar_a}</bar-a><bar-b fg='red'>{barTip}</bar-b><bar-c fg='grey'>{bar_c}</bar-c>{end}</bar>"
 
     def __init__(
         self,
-        start: str = " ", #"[",
+        start: str = "", #"[",
         end: str = " ", #"]",
         sym_a: str = "\u2501", #"=",
-        sym_b: str = "\u257E", # ">",
+        barTipStyle: str = "\u257E",
         sym_c: str = "\u2500", # " ", this is what is being replaced as we consume an iterator
         unknown: str = "#",
     ) -> None:
@@ -167,7 +169,7 @@ class Bar(Formatter):
         self.start = start
         self.end = end
         self.sym_a = sym_a
-        self.sym_b = sym_b
+        self.barTipStyle = barTipStyle
         self.sym_c = sym_c
         self.unknown = unknown
 
@@ -178,7 +180,7 @@ class Bar(Formatter):
         width: int,
     ) -> RichText:
         if progress.done or progress.total or progress.stopped:
-            sym_a, sym_b, sym_c = self.sym_a, self.sym_b, self.sym_c
+            sym_a, barTipStyle, sym_c = self.sym_a, self.barTipStyle, self.sym_c
 
             # Compute pb_a based on done, total, or stopped states.
             if progress.done:
@@ -189,23 +191,21 @@ class Bar(Formatter):
                 percent = progress.percentage / 100
         else:
             # Total is unknown and bar is still running.
-            sym_a, sym_b, sym_c = self.sym_c, self.unknown, self.sym_c
+            sym_a, barTipStyle, sym_c = self.sym_c, self.unknown, self.sym_c
 
             # Compute percent based on the time.
             percent = time.time() * 20 % 100 / 100
 
         # Subtract left, sym_b, and right.
-        width -= get_cwidth(self.start + sym_b + self.end)
+        width -= get_cwidth(self.start + barTipStyle + self.end)
 
         # Scale percent by width
         pb_a = int(percent * width)
         bar_a = sym_a * pb_a
-        bar_b = sym_b
+        barTip = barTipStyle
         bar_c = sym_c * (width - pb_a)
 
-        return Te(self.template).format(
-            start=self.start, end=self.end, bar_a=bar_a, bar_b=bar_b, bar_c=bar_c
-        )
+        return Te(self.template).format(start=self.start, end=self.end, bar_a=bar_a, barTip=barTip, bar_c=bar_c)
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
         return D(min=9)
@@ -339,9 +339,20 @@ class SpinningWheel(Formatter):
     """
     Display a spinning wheel.
     """
-    from quo._spinners import SPINNERS
 
-    characters = SPINNERS.dots3
+    def __init__(self, spinner:str="") -> None:
+        self.spinner=spinner  
+
+        from quo._spinners import Spinners
+
+        if spinner == "arrows":
+            self.spinner= Spinners.arrows
+            
+        elif spinner == "hamburger":
+            self.spinner= Spinners.hamburger
+        else:
+            self.spinner= Spinners.dots3
+    
     win_chars = r"/-\|"
 
     def format(
@@ -349,15 +360,15 @@ class SpinningWheel(Formatter):
         progress_bar: "ProgressBar",
         progress: "ProgressBarCounter[object]",
         width: int,
-    ) -> RichText:
-        from quo.accordance import WIN
+        ) -> RichText:
+        import platform
 
-        if WIN:
+        if "Windows" in platform.system():
             index = int(time.time() * 7) % len(self.win_chars)
             return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(self.win_chars[index])
         else:
-            index = int(time.time() * 7) % len(self.characters)
-            return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(self.characters[index])
+            index = int(time.time() * 7) % len(self.spinner)
+            return Te("<spinning-wheel><b>{0}</b></spinning-wheel>").format(self.spinner[index])
 
     def get_width(self, progress_bar: "ProgressBar") -> AnyDimension:
         return D.exact(1)
@@ -425,9 +436,9 @@ def create_default_formatters() -> List[Formatter]:
     """
     Return the list of default formatters.
     """
-    from quo.accordance import WIN
+    import platform
 
-    if WIN:
+    if "Windows" in platform.system():
         return [
                 Label(),
                 Text(" "),

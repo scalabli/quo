@@ -17,7 +17,6 @@ from .core import (
     ProgressBar,
     RadioList,
     Shadow,
-    TextArea,
     VerticalLine,
 )
 from .dialogs import Dialog
@@ -59,5 +58,3 @@ from .toolbars import (
 #    "MenuItem",
 # ]
 
-
-TextField = TextArea

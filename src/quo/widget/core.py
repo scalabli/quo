@@ -96,7 +96,8 @@ class Border:
     BOTTOM_RIGHT = "\u256F"
 
 
-class TextArea:
+
+class TextField:
     """
     A simple input field.
 
@@ -141,7 +142,8 @@ class TextArea:
     :param width: Window width. (:class:`~quo.layout.Dimension` object.)
     :param height: Window height. (:class:`~quo.layout.Dimension` object.)
     :param scrollbar: When `True`, display a scroll bar.
-    :param style: A style string.
+    :param fg: Foreground color string.
+    :param bg: Background color string.
     :param dont_extend_width: When `True`, don't take up more width then the
                               preferred width reported by the control.
     :param dont_extend_height: When `True`, don't take up more width then the
@@ -170,7 +172,7 @@ class TextArea:
         accept_handler: Optional[BufferAcceptHandler] = None,
         history: Optional[History] = None,
         focusable: FilterOrBool = True,
-        focus_on_click: FilterOrBool = False,
+        focus_on_click: FilterOrBool = True,
         wrap_lines: FilterOrBool = True,
         read_only: FilterOrBool = False,
         width: AnyDimension = None,
@@ -182,7 +184,8 @@ class TextArea:
         line_numbers: bool = False,
         get_line_prefix: Optional[GetLinePrefixCallable] = None,
         scrollbar: bool = False,
-        style: str = "",
+        fg: str = "",
+        bg: str = "",
         search_field: Optional[SearchToolbar] = None,
         preview_search: FilterOrBool = True,
         prompt: AnyFormattedText = "",
@@ -253,7 +256,18 @@ class TextArea:
             left_margins = []
             right_margins = []
 
-        style = "class:text-area " + style
+        if fg == "" and bg == "":
+            txtfldstyle = ""
+        elif fg != "" and bg != "":
+            txtfldstyle = fg + " bg:" + bg
+        elif fg != "" and bg == "":
+            txtfldstyle = fg
+        elif fg == "" and bg != "":
+            txtfldstyle="bg:" + bg
+
+
+        #style = "{  class:text-area " + "fg:" fg + " bg:" + bg
+
 
         # If no height was given, guarantee height of at least 1.
         if height is None:
@@ -265,7 +279,7 @@ class TextArea:
             dont_extend_height=dont_extend_height,
             dont_extend_width=dont_extend_width,
             content=self.control,
-            style=style,
+            style=txtfldstyle,
             wrap_lines=Condition(lambda: is_true(self.wrap_lines)),
             left_margins=left_margins,
             right_margins=right_margins,
@@ -332,6 +346,8 @@ class Label:
         self,
         text: AnyFormattedText,
         style: str = "",
+        fg: str = "",
+        bg: str = "",
         width: AnyDimension = None,
         extend_height: bool = False,
         extend_width: bool = True,
@@ -355,13 +371,27 @@ class Label:
 
         self.formatted_text_control = FormattedTextControl(text=lambda: self.text)
 
+
+        if fg == "" and bg == "":
+            txtfldstyle = ""
+        elif fg != "" and bg != "":
+            txtfldstyle = fg + " bg:" + bg
+        elif fg != "" and bg == "":
+            txtfldstyle = fg
+        elif fg == "" and bg != "":
+            txtfldstyle="bg:" + bg
+
+        from quo.text.html import Text
+
+
         self.window = Window(
-            content=self.formatted_text_control,
-            width=get_width,
-            height=D(min=1),
-            style="class:label " + style,
-            dont_extend_height=dont_extend_height,
-            dont_extend_width=dont_extend_width,
+            FormattedTextControl(Text(text)),
+           # content=self.formatted_text_control,
+          #  width=get_width,
+          #  height=D(min=1),
+          #  style="class:label " + style,
+           # dont_extend_height=dont_extend_height,
+            #dont_extend_width=dont_extend_width,
         )
 
     def __pt_container__(self) -> Container:
@@ -398,9 +428,9 @@ class Button:
             bind=self._get_key_bindings(),
             focusable=True,
         )
-        from quo.accordance import WIN
+        import platform
 
-        if WIN:
+        if "Windows" in platform.system():
             self.left_symbol="«["
             self.right_symbol="]»"
         else:
@@ -633,6 +663,8 @@ class Box:
         width: AnyDimension = None,
         height: AnyDimension = None,
         style: str = "",
+        fg: str = "",
+        bg: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
         bind: Optional[Bind] = None,
@@ -666,7 +698,7 @@ class Box:
             ],
             width=width,
             height=height,
-            style=style,
+            style="fg:" + fg + " bg:" + bg,
             modal=modal,
             bind=None,
         )

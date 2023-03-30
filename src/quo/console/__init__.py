@@ -1,12 +1,16 @@
 from quo.console.console import Console
-from .current import (
+from .current import get_app as application
+
+
+
+#(
     #    AppSession,
     #    create_app_session,
-    get_app,
+ #   get_app,
     #    get_app_or_none,
     #    get_app_session,
     #    set_app,
-)
+#)
 
 # from .dummy import DummyApplication
 # from .run_in_terminal import in_terminal, run_in_terminal

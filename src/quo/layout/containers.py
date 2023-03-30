@@ -176,8 +176,9 @@ AnyContainer = Union[Container, "MagicContainer"]
 
 def _window_too_small() -> "Window":
     "Create a `Window` that displays the 'Window too small' text."
+    import getpass
     return Window(
-            FormattedTextControl(text=[("class:window-too-small", " Window too small")]))
+            FormattedTextControl(text=[("class:window-too-small", f"Hi {getpass.getuser()}, your Window is too small\nEnlarge your terminal window")]), align="center")
 
 
 class VerticalAlign(Enum):
@@ -1484,7 +1485,7 @@ class Window(Container):
 
     def __init__(
         self,
-        content: Optional[UIControl] = None,
+        content: Optional[FormattedTextControl] = None,
         width: AnyDimension = None,
         height: AnyDimension = None,
         z_index: Optional[int] = None,

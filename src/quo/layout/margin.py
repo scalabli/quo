@@ -169,17 +169,10 @@ class ScrollbarMargin(Margin):
         up_arrow_symbol: str = None,
         down_arrow_symbol: str = None,
     ) -> None:
-        from quo.accordance import WIN
-
-        if WIN:
-            up_arrow_symbol = "↑"
-            down_arrow_symbol = "↓"
-
-        else:
-            up_arrow_symbol = "\u27F0"
-            down_arrow_symbol = "\u27F1"
-
-
+        
+        
+        up_arrow_symbol = "↑" #"\u27F0"
+        down_arrow_symbol = "↓" # \u27F1"
         self.display_arrows = to_filter(display_arrows)
         self.up_arrow_symbol = up_arrow_symbol
         self.down_arrow_symbol = down_arrow_symbol
