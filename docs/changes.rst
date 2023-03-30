@@ -8,6 +8,14 @@ Changelog
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 
+``Version 2023.4``
+
+Unreleased
+
+**Added**
+^^^^^^^^^^^
+-Added :param:`flexible_height` and :param:`flexible_width` to :obj:`Label`
+
 ``Version 2023.3``
 ---------------------
 

@@ -10,7 +10,6 @@ from quo.keys import bind, focus
 from quo.layout import HSplit, VSplit
 from quo.label import Label
 from quo.textfield import TextField
-from quo.window import Window
 
 
 # Event handlers for all the buttons.
@@ -42,9 +41,8 @@ b5 = Button("Exit", handler=exit)
 text_area = TextField(scrollbar=True, multiline=True, bg="black", fg="red")
 
 
-title = Label("Press <maroon><b>`Tab`</b></maroon> or <gold><b>`Up and Down`</b></gold> keys to move focus")
+label = Label("Press <maroon><b>`Tab`</b></maroon> or <gold><b>`Up and Down`</b></gold> keys to move focus")
 
-header = Window(title, height=1)
 
 
 mainBody = Box(text_area, bg="blue")
@@ -57,7 +55,7 @@ buttonsBody = Box(buttons, padding=1, bg="magenta")
 # widget. It adapts automatically, unless an explicit `padding` amount is given.
 content =  Box(
         HSplit([
-            header,
+            label,
             VSplit([buttonsBody, mainBody])
         ]), 
         char="$"
