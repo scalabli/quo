@@ -83,10 +83,12 @@ Under the hood, class :class:`~quo.layout.Layout` is the layout for function :fu
 
    container(content, bind=True, full_screen=True)
 
-In the example above, the Layout consists of :class:`Box`, :class:`Frame` and :class:`TextField` for displaying hello world.
 
-The class :class:`Box` takes care of the margin/padding, class :class:`Frame` creates the border,  and class :class:`TextField` takes care of the text to be printed.
-The :func:`quo.container` prints the layout to the output.
+.. image:: ./images/fullscreen/box-and-textfield.png
+In the example above, the Layout consists of :class:`Box`  and :class:`TextField` for displaying hello world.
+
+The class :class:`Box` takes care of the margin/padding and class :class:`TextField` takes care of the text to be printed.
+:func:`quo.container` prints the layout.
 
 
 container
@@ -107,198 +109,45 @@ Here's a simple example of a few buttons and click handlers.
 
 .. image:: ./images/fullscreen/click-handlers.png
 
+» Source code `here <https://github.com/scalabli/quo/tree/master/examples/fullscreen/click-handlers.py>`_
+
+
 
 A layered layout architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are several ways to create a layout, depending on how
-customizable you want things to be. In fact, there are several layers of abstraction.
+customizable you want things to be.
 
-- The most low-level way of creating a layout is by combining
-  :class:`~quo.layout.Container` and
-  :class:`~quo.layout.UIControl` objects.
 
   Examples of :class:`~quo.layout.Container` objects are
   :class:`~quo.layout.VSplit` (vertical split),
-  :class:`~quo.layout.HSplit` (horizontal split) and
-  :class:`~quo.layout.FloatContainer`. These containers arrange the
-  layout and can split it in multiple regions. Each container can recursively
-  contain multiple other containers. They can be combined in any way to define
-  the "shape" of the layout.
+  :class:`~quo.layout.HSplit` (horizontal split)
 
-  The :class:`~quo.layout.Window` object is a special kind of
-  container that can contain a :class:`~quo.layout.UIControl`
-  object. The :class:`~quo.layout.UIControl` object is responsible
-  for the generation of the actual content. The
+  :class:`~quo.window.Window` object is a special kind of
+  container that can contain objects responsible
+  for the generation of content. The
   :class:`~quo.layout.Window` object acts as an adaptor between the
   :class:`~quo.layout.UIControl` and other containers, but it's also
   responsible for the scrolling and line wrapping of the content.
 
-  Examples of :class:`~quo.layout.UIControl` objects are
-  :class:`~quo.layout.BufferControl` for showing the content of an
-  editable/scrollable buffer, and
-  :class:`~quo.layout.FormattedTextControl` for displaying
-  (:ref:`formatted <formatted_text>`) text.
-
-  Normally, it is never needed to create new
-  :class:`~quo.layout.UIControl` or
-  :class:`~quo.layout.Container` classes, but instead you would
-  create the layout by composing instances of the existing built-ins.
-
-- A higher level abstraction of building a layout is by using "widgets". A
-  widget is a reusable layout component that can contain multiple containers and controls.
   
 Quo contains several widgets like:
-  :class:`~quo.widget.Button`,
-  :class:`~quo.widget.Frame`,
-  :class:`~quo.widget.Label`,
-  :class:`~quo.widget.TextField`,
-  :class:`~quo.widget.VerticalLine` and so on.
+  :class:`~quo.button.Button`,
+  :class:`~quo.frame.Frame`,
+  :class:`~quo.label.Label`,
+  :class:`~quo.textfield.TextField`,
 
 - The highest level abstractions can be found in the ``dialog`` module.
-  There we don't have to think about the layout, controls and containers at
-  all. This is the simplest way to use quo, but is only meant for specific use cases, like a prompt or a simple dialog window.
-
-Containers and controls
-^^^^^^^^^^^^^^^^^^^^^^^
-
-The biggest difference between containers and controls is that containers
-arrange the layout by splitting the screen in many regions, while controls are
-responsible for generating the actual content.
-
-.. note::
-
-   Under the hood, the difference is:
-
-   - containers use *absolute coordinates*, and paint on a
-     :class:`~quo.layout.screen.Screen` instance.
-   - user controls create a :class:`~quo.layout.UIContent`
-     instance. This is a collection of lines that represent the actual
-     content. A :class:`~quo.layout.UIControl` is not aware
-     of the screen.
-
-+------------------------------------+-------------------------------------------+
-| Abstract base class                | Examples                                  |
-+====================================+===========================================+
-| :class:`~quo.layout.Container`     | :class:`~quo.layout.HSplit`               |
-|                                    | :class:`~quo.layout.VSplit`               |
-|                                    | :class:`~quo.layout.FloatContainer`       |
-|                                    | :class:`~quo.layout.Window`               |
-|                                    | :class:`~quo.layout.ScrollablePane`       |
-+------------------------------------+-------------------------------------------+
-| :class:`~quo.layout.UIControl`     | :class:`~quo.layout.BufferControl`        |
-|                                    | :class:`~quo.layout.FormattedTextControl` |
-+------------------------------------+-------------------------------------------+
-
-The :class:`~quo.layout.Window` class itself is
-particular: it is a :class:`~quo.layout.Container` that
-can contain a :class:`~quo.layout.UIControl`. Thus, it's the adaptor
-between the two. The :class:`~quo.layout.Window` class also takes
-care of scrolling the content and wrapping the lines if needed.
-
-Finally, there is the :class:`~quo.layout.Layout` class which wraps
-the whole layout. This is responsible for keeping track of which window has the
-focus.
-
-Here is an example of a layout that displays the content of the default buffer
-on the left, and displays ``"Hello world"`` on the right. In between it shows a
-vertical line:
-
-.. code:: python
-
- from quo import container
- from quo.buffer import Buffer
- from quo.layout import BufferControl, FormattedTextControl, VSplit, Window
-
- buffer1 = Buffer()  # Editable buffer.
-
- content = VSplit([
-        # One window that holds the BufferControl with the default buffer on the left.
-      Window(BufferControl(buffer=buffer1)),
-
-        # A vertical line in the middle. We explicitly specify the width, to
-        # make sure that the layout engine will not try to divide the whole
-        # width by three for all these windows. The window will simply fill its
-        # content by repeating this character.
-      Window(width=1, char='|'),
-
-        # Display the text 'Hello world' on the right.
-      Window(FormattedTextControl('Hello world')),
-  ])
 
 
- container(content, full_screen=True)
+
+
+
 
 More complex layouts can be achieved by nesting multiple
 :class:`~quo.layout.VSplit`,
-:class:`~quo.layout.HSplit` and
-:class:`~quo.layout.FloatContainer` objects.
-
-If you want to make some part of the layout only visible when a certain
-condition is satisfied, use a
-:class:`~quo.layout.ConditionalContainer`.
-
-Finally, there is :class:`~quo.layout.ScrollablePane`, a container
-class that can be used to create long forms or nested layouts that are
-scrollable as a whole.
-
-
-``Key bindings``
------------------
-
-In order to react to user actions, we need to create a
-:class:`~quo.keys.Bind` object using :meth:`quo.keys.bind`
-
-There are two kinds of key bindings:
-
-- Global key bindings, which are always active.
-- Key bindings that belong to a certain
-  :class:`~quo.layout.controls.UIControl` and are only active when
-  this control is focused. Both
-  :class:`~quo.layout.BufferControl`
-  :class:`~quo.layout.FormattedTextControl` takes a ``bind``
-  argument.
-
-
-Global key bindings
-^^^^^^^^^^^^^^^^^^^
-
-Key bindings can be passed to the application as follows:
-
-.. code:: python
-
- from quo import container
- from quo.keys import bind
-
- container(bind=True)
-
-Registering Key bindings
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-To register a new keyboard shortcut, we can use the
-:meth:`~quo.keys.Bind.add` method as a decorator of the key handler:
-
-.. code:: python   
-
- from quo import container
- from quo.keys import bind
- from quo.widget import TextField
- 
- content = TextField("Hello, world")
- 
- # A custom Key binder to exit the application
- @bind.add("ctrl-q")
- def exit_(event):
-       """
-       Pressing "ctrl-q" will exit the user interface
-       """
-        event.app.exit()
-        
- container(content, bind=True, full_screen=True)
-
-
-The callback function is named ``exit_`` for clarity, but it could have been named ``_`` (underscore) as well, or anything you see fit
-
-Read more about `key bindings <https://quo.readthedocs.io/en/latest/kb.html>`_
+:class:`~quo.layout.HSplit`
 
 
 HSplit
@@ -315,7 +164,7 @@ By default, this doesn't display a horizontal line between the children, but if 
 
 .. code:: python
 
- HSplit(subset=[ ... ], padding_char='-', padding=1, padding_style='fg:red')
+   HSplit(subset=[ ... ], padding_char='-', padding=1, padding_style='fg:red')
 
 **Parameters**
 
@@ -334,20 +183,21 @@ By default, this doesn't display a horizontal line between the children, but if 
     
 .. code:: python
 
- from quo import container
- from quo.layout import HSplit, Window
- from quo.widget import Label
+   from quo import container
+   from quo.layout import HSplit
+   from quo.window import Window
+   from quo.label import Label
  
- # 1. The layout
- content = HSplit([
-        Label("\n\n(Top pane)"),
-        Window(height=1, char="-"),  # Horizontal line in the middle.
-        Label("\n\n(Bottom pane)")
-        ])
+   # 1. The layout
+   content = HSplit([
+          Label("\n\n(Top pane)"),
+          Window(height=1, char="-"),  # Horizontal line in the middle.
+          Label("\n\n(Bottom pane)")
+          ])
         
-  # 2. The `Application`
-  # Press `ctrl-c` to exit 
- container(content, bind=True)
+   # 2. The `Application`
+   # Press `ctrl-c` to exit 
+   container(content, bind=True)
 
 
 
@@ -366,7 +216,7 @@ By default, this doesn't display a vertical line between the children, but if th
 
 .. code:: python
 
- VSplipt([ ... ], padding_char='|', padding=1, padding_style='fg:blue')
+   VSplipt([ ... ], padding_char='|', padding=1, padding_style='fg:blue')
 
 **Parameters**
     - ``subset`` - List of subsets :class:`.Container` objects.
@@ -384,20 +234,69 @@ By default, this doesn't display a vertical line between the children, but if th
 
 .. code:: python
 
- # Press `ctrl-c` to exit
- from quo import container
- from quo.layout import VSplit, Window
- from quo.widget import Label
+   # Press `ctrl-c` to exit
+   from quo import container
+   from quo.label import Label
+   from quo.layout import VSplit
+   from quo,window import Window
+
  
- # 1. The layout
- content = VSplit([
-          Label("(Left pane)"),
-          Window(width=1, char="|"), # Vertical line in the middle.
-          Label("(Right pane)")
-          ])
+   # 1. The layout
+   content = VSplit([
+            Label("(Left pane)"),
+            Window(width=1, char="|"), # Vertical line in the middle.
+            Label("(Right pane)")
+            ])
           
- container(content, bind=True, full_screen=True)
+   container(content, bind=True, full_screen=True)
  
+
+
+``Key bindings``
+-----------------
+
+
+Global key bindings
+^^^^^^^^^^^^^^^^^^^
+
+Key bindings can be passed to the application as follows:
+
+.. code:: python
+
+   from quo import container
+   from quo.keys import bind
+
+   container(bind=True)
+
+Registering Key bindings
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+To register a new keyboard shortcut, we can use the
+:meth:`~quo.keys.Bind.add` method as a decorator of the key handler:
+
+.. code:: python   
+
+   from quo import container
+   from quo.keys import bind
+   from quo.textfield import TextField
+ 
+   content = TextField("Hello, world")
+ 
+   # A custom Key binder to exit the application
+   @bind.add("ctrl-q")
+   def exit_(event):
+         """
+         Pressing "ctrl-q" will exit the user interface
+         """
+        event.app.exit()
+        
+   container(content, bind=True, full_screen=True)
+
+
+The callback function is named ``exit_`` for clarity, but it could have been named ``_`` (underscore) as well, or anything you see fit
+
+Read more about `key bindings <https://quo.readthedocs.io/en/latest/kb.html>`_
+
+
 
  
 :class:`~quo.layout.VSplit` and :class:`~quo.layout.HSplit` take a ``modal`` argument.
@@ -440,90 +339,6 @@ Window
     - ``char`` *(str)* - Character to be used for filling the background. This can also be a callable that returns a character.
     - ``get_line_prefix`` - None or a callable that returns formatted text to  atted text to be inserted before a line. It takes a line number (int) and a wrap_count and returns formatted text. This can be used for implementation of line continuations, things like Vim "breakindent".
       
-FloatContainer
-^^^^^^^^^^^^^^^
-Container which can contain another container for the background, as well as a list of floating containers on top of it.
-
-**Parameters**
-
-     - ``content`` - :class:`.AnyContainer` object
-     - ``z_index`` - (int or None) When specified, this can be used to bring element in front of floating elements.  `None` means: inherit from parent.  This is the z_index for the whole `Float` container as a whole.
-     - ``floats`` - List of :class:`.Float` object.
-     - ``modal`` *(bool)* - Setting ``modal=True`` makes what is called a **modal** container. Normally, a subset container would inherit its parent key bindings. This does not apply to **modal** containers.
-     - ``bind`` - ``None`` or a :class:`.Bind` object.
-     - ``style`` - A style string.
-
-Example Usage:
-
-.. code:: python
-
- FloatContainer(
-                Window(...),
-                floats=[
-                      Float(
-                         xcursor=True,
-                         ycursor=True,
-                         content=CompletionsMenu(...)
-                           )
-                           ]
-                          
-                          
-ConditionalContainer
-^^^^^^^^^^^^^^^^^^^^^^^^^
-If you want to make some part of the layout only visible when a certain condition is satisfied, use a ConditionalContainer.
-The received `filter` determines whether the given container should be displayed or not.
-
-**Parameters**
-
-     - ``content`` - :class:`.Container` instance.
-     - ``filter`` - :class:`.Filter` instance.
-
-    
- ``More about buffers and BufferControl``
-------------------------------------------
-
-
-Input processors
-^^^^^^^^^^^^^^^^
-
-A :class:`~quo.layout.processors.Processor` is used to postprocess
-the content of a :class:`~quo.layout.BufferControl` before it's
-displayed. It can for instance highlight matching brackets or change the
-visualisation of tabs and so on.
-
-A :class:`~quo.layout.processors.Processor` operates on individual
-lines. Basically, it takes a (formatted) line and produces a new (formatted)
-line.
-
-Some build-in processors:
-
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| Processor                                                       |                      Usage:                                          |
-+=================================================================+======================================================================+
-| :class:`~quo.layout.processors.HighlightSearchProcessor`        |           Highlight the current search results.                      |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.HighlightSelectionProcessor`     |           Highlight the selection.                                   |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.PasswordProcessor`               |           Display input as asterisks. (``*`` characters).            |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.BracketsMismatchProcessor`       |           Highlight open/close mismatches for brackets.              |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.BeforeInput`                     |           Insert some text before.                                   |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.AfterInput`                      |           Insert some text after.                                    |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.AppendAutoSuggestion`            |           Append auto suggestion text.                               |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.ShowLeadingWhiteSpaceProcessor`  |           Visualise leading whitespace.                              |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.ShowTrailingWhiteSpaceProcessor` |           Visualise trailing whitespace.                             |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-| :class:`~quo.layout.processors.TabsProcessor`                   |           Visualise tabs as `n` spaces, or some symbols.             |
-+-----------------------------------------------------------------+----------------------------------------------------------------------+
-
-A :class:`~quo.layout.BufferControl` takes only one processor as
-input, but it is possible to "merge" multiple processors into one with the :func:`~quo.layout.processors.merge_processors` function
-
 
 » Check out more examples `here <https://github.com/scalabli/quo
 /tree/master/examples/fullscreen/>`_

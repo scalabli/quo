@@ -754,21 +754,20 @@ Read more on [Label](https://quo.readthedocs.io/en/latest/widgets.html#label)
 
 
 
-### Frame + Label
+### Box + Label
 
 ```python
 
  from quo import container
- from quo.widget import Frame, Label
+ from quo.box import Box
+ from quo.label import Label
 
- content = Frame(
-             Label("Hello, World!", style="fg:blue bg:yellow"),
-               title="Quo: python")
+ content = Label("<style fg='red' bg='yellow'>Hello, World!</style>"),
 
  container(content)
 
 ```
-![Frame](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/widgets/frame-and-label.png)
+![Box](https://raw.githubusercontent.com/scalabli/quo/master/docs/images/fullscreen/box-and-label-redyellow.png)
 
 
 

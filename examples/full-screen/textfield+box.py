@@ -1,12 +1,14 @@
 from quo import container
 from quo.box import Box
 from quo.label import Label
+from quo.window import Window
  
 # Layout for displaying hello world.
 # (The box takes care of the margin/padding.)
 
-label = Label("<style fg='red' bg='yellow'>Hello, world!!</style>")
+label = Labe("Hello, world!!")
+window = Window(label)
  
-content = Box(label, char="!")
+content = Box(window, char="!")
 
 container(content, bind=True, full_screen=True)
