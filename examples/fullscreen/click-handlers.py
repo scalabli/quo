@@ -38,8 +38,7 @@ b3 = Button("Button 3", handler=button3)
 b4 = Button("Button 4", handler=button4)
 b5 = Button("Exit", handler=exit)
 
-text_area = TextField(scrollbar=True, multiline=True, bg="black", fg="red")
-
+text_area = TextField(scrollbar=True, multiline=True, fixed_height=False, fixed_width=False)
 
 label = Label("Press <maroon><b>`Tab`</b></maroon> or <gold><b>`Up and Down`</b></gold> keys to move focus")
 

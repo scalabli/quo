@@ -1,9 +1,8 @@
 from quo.prompt import Prompt
-from quo.style import Style
+from quo.color import ColorDepth
 
 
-style = Style.add({' ':'fg:blue'}) # User input (default text)
-session = Prompt(color_depth="true_color", style=style)
+session = Prompt(color_depth=ColorDepth.eight_bit)
 
 message = [
        ('fg:red', 'john'),

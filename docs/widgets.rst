@@ -77,8 +77,8 @@ Widget that displays the given text. It is not editable or focusable.
 **Parameters**
     - ``text`` - Text to display. Can be multiline.
     - ``width`` - When given, use this width, rather than calculating it from the text size.
-    - ``flexible_width`` *(bool)* - When `False`, don't take up more width than preferred, i.e. the length of the longest line of the text, or value of `width` parameter, if given. `True` by default
-    - ``flexible_height`` *(bool)*-  When `False`, don't take up more width than the preferred height, i.e. the number of lines of the text. `True` by default.
+    - ``fixed_width`` *(bool)* - When `False`, don't take up more width than preferred, i.e. the length of the longest line of the text, or value of `width` parameter, if given. `True` by default
+    - ``fixed_height`` *(bool)*-  When `False`, don't take up more width than the preferred height, i.e. the number of lines of the text. `True` by default.
 
 *(Changed on v2023.3)*
    

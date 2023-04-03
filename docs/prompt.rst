@@ -367,17 +367,10 @@ Formatted text placeholder
 ``Colors``
 ---------
 
-The colors for syntax highlighting are defined by a
-:class:`~quo.style.Style` instance under the hood. By default, a neutral
-built-in style is used, but any style instance can be passed to the :class:`~quo.prompt.Prompt` class.
+By default, a neutral built-in  color syntax is used, but any style instance can be passed to the :class:`~quo.prompt.Prompt` class.
 
 .. note::
       :func:`quo.prompt` has different semantics and cannot output colored text but :class:`quo.prompt.Prompt` has several ways on how this can be achieved.
-
-
-A simple way to add color to create a style, is by using the :meth:`~quo.style.Style.add` function
-
-:ref:`Read more about styling <styling>`.
 
 
 Plain text prompt
@@ -465,7 +458,7 @@ Here's an example upgrade:
 The `message` can be any kind of formatted text, as discussed :ref:`here
 <formatted_text>`. It can also be a callable that returns some formatted text.
 
-By default, colors are taken from the 256 color palette. If you want to have 24bit true color, this is possible by adding the ``color_depth=ColorDepth.TRUE_COLOR`` option to the :class:`~quo.prompt.Prompt` .
+By default, colors are taken from the 256 color palette. If you want to have 24-bit true color, this is possible by adding the ``color_depth=ColorDepth.TRUE_COLOR`` option to the :class:`~quo.prompt.Prompt` .
 
 .. code:: python
 
