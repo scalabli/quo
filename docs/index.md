@@ -39,22 +39,19 @@ Quo is **simple** If you know Python you can  easily use Quo and it can integrat
 :caption: Tutorials & Explanations
 introduction.rst
 printing_text.rst
-
 bars.rst
 console.rst
-rule.rst
-prompt.rst
-utils.rst
-table.rst
-parse.rst
-exceptions.rst
 dialogs.rst
+parse.rst
+progress.rst
+prompt.rst
+rule.rst
+table.rst
 widgets.rst
+utils.rst
+exceptions.rst
 full_screen_apps.rst
 kb.rst
-progress.rst
-filters.rst
-styling
 reference.rst
 ```
 
