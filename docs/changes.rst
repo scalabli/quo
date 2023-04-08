@@ -15,6 +15,7 @@ Unreleased
 **Added**
 ^^^^^^^^^^^
 -Added :param:`flexible_height` and :param:`flexible_width` to :obj:`Label`
+-Added ``Progressbar`` as an alias of :obj:`quo.progress.ProgressBar`
 
 ``Version 2023.3``
 ---------------------
