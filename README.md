@@ -224,8 +224,8 @@ A placeholder  text that's displayed as long as no input s given.
 
   from quo.prompt import Prompt
 
-  session = Prompt(placeholder='<gray>(please type something)</gray>')
-  session.prompt("What is your name?: ")
+  session = Prompt() 
+  session.prompt("What is your name?: ", placeholder='<gray>(please type something)</gray>')
 ```
 <p align="center">
   <img src="https://github.com/scalabli/quo/raw/master/docs/images/prompt/gray-placeholder.png" />
