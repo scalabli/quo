@@ -133,7 +133,7 @@ Alternatively, you can import [print](https://quo.readthedocs.io/en/latest/print
 ## Quo prompt
  - Using ``quo.prompt`` method.
 ```python
- from quo import prompt
+ from quo.prompt import prompt
 
  prompt("What is your name?")
 ```
@@ -223,9 +223,8 @@ A placeholder  text that's displayed as long as no input s given.
 ```python
 
   from quo.prompt import Prompt
-  from quo.text import Text
 
-  session = Prompt(placeholder=Text('<gray>(please type something)</gray>'))
+  session = Prompt(placeholder='<gray>(please type something)</gray>')
   session.prompt("What is your name?: ")
 ```
 <p align="center">
