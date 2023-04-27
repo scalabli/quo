@@ -11,15 +11,61 @@ This can be accomplished with the :func:`prompt` function, which asks for
 valid input according to a type, or the :class:`quo.prompt.Prompt` object, this makes it possible to create a Prompt instance followed by calling prompt() method for every input. This creates a kind of an input session and its packed with lots of features.
 You can also use the :func:`quo.confirm` function, which asks for confirmation (yes/no).
 
-The following snippet uses the :func:`quo.prompt` function to ask the user for input just like ``input``.
+
+The prompt function is a quo function that displays a prompt to the user and waits for input.
+The purpose of the prompt function is to obtain user input from the console. It can be used to ask the user for a variety of input, including text, numbers,
+and boolean values.
+It has several optional arguments which can be used to customize the prompt and how the input is handled.
+
+Parameters
+
+The prompt function takes several parameters, which are explained below:
+
+    text: The text to show for the prompt. This parameter is required and must be a string.
+    default: The default value to use if no input happens. If this is not given, it will prompt until it's aborted. This parameter is optional and can be any data type.
+    hide: If this is set to true, then the input value will be hidden, and asterisks printed instead. This parameter is optional and defaults to False.
+    affirm: Asks for confirmation for the value. This parameter is optional and defaults to False.
+    type: The type to use to check the value against. This parameter is optional and defaults to str.
+    suffix: A suffix that should be added to the prompt. This parameter is optional and defaults to an empty string.
+    show_default: Shows or hides the default value in the prompt. This parameter is optional and defaults to True.
+    fg: The color for the prompt text. This parameter is optional and defaults to None.
+    bg: The color for the prompt background. This parameter is optional and defaults to None.
+
+
+
+Examples
+
+Here's a simple example
 
 .. code:: python
 
-    from quo import prompt
+    import quo
 
-    prompt('Give me some input: ')
+    quo.prompt('Give me some input: ')
 
 .. image:: ./images/prompt.png
+
+
+The prompt function returns the input value provided by the user, or the default value if no input was provided. The data type of the return value will depend on the
+type parameter.
+
+.. code:: python
+   
+   import quo
+
+   name = quo.prompt('What is your name?', type=str)
+   age =  quo.prompt('What is your age?', default=18, type=int)
+
+
+Additionally, the type will be determined automatically if a default value is
+provided.  For instance, the following will only accept floats:
+
+.. code:: python
+  
+   import quo
+
+   quo.prompt('Please enter a number', default=42.0)
+
 
 ``App Prompts``
 --------------
@@ -41,14 +87,7 @@ For instance, you can ask for a valid integer:
    
    prompt('Please enter a valid integer', type=int)
 
-Additionally, the type will be determined automatically if a default value is
-provided.  For instance, the following will only accept floats:
 
-.. code:: python
-
- from quo import prompt
-
- prompt('Please enter a number', default=42.0)
 
 You can also pass the ``affirm`` flag to :func:`quo.prompt`
 

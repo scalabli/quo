@@ -20,12 +20,12 @@ print(f"Result = {result}")
 # With Text
 result = RadiolistBox(
             values=[
-                ("red", Text('<style bg="red" fg="white">Red</style>')),
+                ("red", '<style bg="red" fg="white">Red</style>'),
             ("green", Text('<style bg="green" fg="white">Green</style>')),
             ("blue", Text('<style bg="blue" fg="white">Blue</style>')),
             ("orange", Text('<style bg="orange" fg="white">Orange</style>')),
         ],
-        title=Text("RadiolistBox example <reverse>with colors</reverse>"),
-        text="Please select a color:")
+        title="RadiolistBox example <reverse>with colors</reverse>",
+        text="<b><green>Please select a color:</green></b>")
 print(f"Result = {result}")
 

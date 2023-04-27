@@ -176,9 +176,8 @@ AnyContainer = Union[Container, "MagicContainer"]
 
 def _window_too_small() -> "Window":
     "Create a `Window` that displays the 'Window too small' text."
-    import getpass
     return Window(
-            FormattedTextControl(text=[("class:window-too-small", f"Hi {getpass.getuser()}, your Window is too small\nEnlarge your terminal window")]), align="center")
+            FormattedTextControl(text=[("class:window-too-small", " Window too small")]))
 
 
 class VerticalAlign(Enum):
@@ -1427,9 +1426,9 @@ class Window(Container):
     :param height: :class:`.Dimension` instance or callable.
     :param z_index: When specified, this can be used to bring element in front
         of floating elements.
-    :param dont_extend_width: When `True`, don't take up more width then the
+    :param fixed_width: When `True`, don't take up more width then the
                               preferred width reported by the control.
-    :param dont_extend_height: When `True`, don't take up more width then the
+    :param fixed_height: When `True`, don't take up more width then the
                                preferred height reported by the control.
     :param ignore_content_width: A `bool` or :class:`.Filter` instance. Ignore
         the :class:`.UIContent` width when calculating the dimensions.
@@ -1485,12 +1484,12 @@ class Window(Container):
 
     def __init__(
         self,
-        content: Optional[FormattedTextControl] = None,
+        content: Optional[UIControl] = None,
         width: AnyDimension = None,
         height: AnyDimension = None,
         z_index: Optional[int] = None,
-        dont_extend_width: FilterOrBool = False,
-        dont_extend_height: FilterOrBool = False,
+        fixed_width: FilterOrBool = False,
+        fixed_height: FilterOrBool = False,
         ignore_content_width: FilterOrBool = False,
         ignore_content_height: FilterOrBool = False,
         left_margins: Optional[Sequence[Margin]] = None,
@@ -1519,8 +1518,8 @@ class Window(Container):
         self.cursorcolumn = to_filter(cursorcolumn)
 
         self.content = content or DummyControl()
-        self.dont_extend_width = to_filter(dont_extend_width)
-        self.dont_extend_height = to_filter(dont_extend_height)
+        self.fixed_width = to_filter(fixed_width)
+        self.fixed_height = to_filter(fixed_height)
         self.ignore_content_width = to_filter(ignore_content_width)
         self.ignore_content_height = to_filter(ignore_content_height)
         self.left_margins = left_margins or []
@@ -1618,7 +1617,7 @@ class Window(Container):
         return self._merge_dimensions(
             dimension=to_dimension(self.width),
             get_preferred=preferred_content_width,
-            dont_extend=self.dont_extend_width(),
+            dont_extend=self.fixed_width(),
         )
 
     def preferred_height(self, width: int, max_available_height: int) -> Dimension:
@@ -1645,7 +1644,7 @@ class Window(Container):
         return self._merge_dimensions(
             dimension=to_dimension(self.height),
             get_preferred=preferred_content_height,
-            dont_extend=self.dont_extend_height(),
+            dont_extend=self.fixed_height(),
         )
 
     @staticmethod
@@ -1732,7 +1731,7 @@ class Window(Container):
         Write window to screen. This renders the user control, the margins and
         copies everything over to the absolute position at the given screen.
         """
-        # If dont_extend_width/height was given. Then reduce width/height in
+        # If fixed_width/height was given. Then reduce width/height in
         # WritePosition if the parent wanted us to paint in a bigger area.
         # (This happens if this window is bundled with another window in a
         # HSplit/VSplit, but with different size requirements.)
@@ -1743,13 +1742,13 @@ class Window(Container):
             height=write_position.height,
         )
 
-        if self.dont_extend_width():
+        if self.fixed_width():
             write_position.width = min(
                 write_position.width,
                 self.preferred_width(write_position.width).preferred,
             )
 
-        if self.dont_extend_height():
+        if self.fixed_height():
             write_position.height = min(
                 write_position.height,
                 self.preferred_height(

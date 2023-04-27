@@ -13,16 +13,9 @@ from quo.layout.containers import AnyContainer, HSplit
 from quo.layout.dimension import Dimension as D
 from quo.style.core import BaseStyle
 from quo.types import Validator
-from quo.widget import (
-    Box,
-    Button,
-    #  CheckboxList,
-    Dialog,
-    Label,
-    #    ProgressBar,
-    #   RadioList
-)
 
+from quo.widget.core import Box, Button, Label
+from quo.widget.dialogs import Dialog
 __all__ = [
     "ConfirmBox",
     "ChoiceBox",
@@ -56,7 +49,7 @@ def _ConfirmationBox(
     if bg is False:
         dialog = Dialog(
             title=title,
-            body=Label(text=text, dont_extend_height=True),
+            body=Label(text=text, fixed_height=True),
             buttons=[
                 Button(text=yes_text, handler=yes_handler),
                 Button(text=no_text, handler=no_handler),
@@ -66,7 +59,7 @@ def _ConfirmationBox(
     else:
         dialog = Dialog(
             title=title,
-            body=Label(text=text, dont_extend_height=True),
+            body=Label(text=text, fixed_height=True),
             buttons=[
                 Button(text=yes_text, handler=yes_handler),
                 Button(text=no_text, handler=no_handler),
@@ -98,7 +91,7 @@ def _ChoiceBox(
     if bg is False:
         dialog = Dialog(
             title=title,
-            body=Label(text=text, dont_extend_height=True),
+            body=Label(text=text, fixed_height=True),
             buttons=[
                 Button(text=t, handler=functools.partial(button_handler, v))
                 for t, v in buttons
@@ -108,7 +101,7 @@ def _ChoiceBox(
     else:
         dialog = Dialog(
             title=title,
-            body=Label(text=text, dont_extend_height=True),
+            body=Label(text=text, fixed_height=True),
             buttons=[
                 Button(text=t, handler=functools.partial(button_handler, v))
                 for t, v in buttons
@@ -161,7 +154,7 @@ def _PromptBox(
         title=title,
         body=HSplit(
             [
-                Label(text=text, dont_extend_height=True),
+                Label(text=text, fixed_height=True),
                 textfield,
                 ValidationToolbar(),
             ],
@@ -175,7 +168,7 @@ def _PromptBox(
             title=title,
             body=HSplit(
                 [
-                    Label(text=text, dont_extend_height=True),
+                    Label(text=text, fixed_height=True),
                     textfield,
                     ValidationToolbar(),
                 ],
@@ -200,14 +193,14 @@ def _MessageBox(
     """
     dialog = Dialog(
         title=title,
-        body=Label(text=text, dont_extend_height=True),
+        body=Label(text=text, fixed_height=True),
         buttons=[Button(text=ok_text, handler=_return_none)],
         with_background=True,
     )
     if bg is False:
         dialog = Dialog(
             title=title,
-            body=Label(text=text, dont_extend_height=True),
+            body=Label(text=text, fixed_height=True),
             buttons=[Button(text=ok_text, handler=_return_none)],
             with_background=False,
         )
@@ -243,7 +236,7 @@ def _RadiolistBox(
     dialog = Dialog(
         title=title,
         body=HSplit(
-            [Label(text=text, dont_extend_height=True), radio_list],
+            [Label(text=text, fixed_height=True), radio_list],
             padding=1,
         ),
         buttons=[
@@ -285,7 +278,7 @@ def _CheckBox(
         dialog = Dialog(
             title=title,
             body=HSplit(
-                [Label(text=text, dont_extend_height=True), cb_list], padding=1
+                [Label(text=text, fixed_height=True), cb_list], padding=1
             ),
             buttons=[
                 Button(text=ok_text, handler=ok_handler),
@@ -298,7 +291,7 @@ def _CheckBox(
         dialog = Dialog(
             title=title,
             body=HSplit(
-                [Label(text=text, dont_extend_height=True), cb_list], padding=1
+                [Label(text=text, fixed_height=True), cb_list], padding=1
             ),
             buttons=[
                 Button(text=ok_text, handler=ok_handler),

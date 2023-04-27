@@ -1,3 +1,3 @@
-from quo.getchar import getchar
+import quo
 
-getchar()
+quo.getchar()

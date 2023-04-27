@@ -22,12 +22,14 @@ MIT License
     ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGs IN THE SOFTWARE.
 
     """
-    # This code has been reformatted...
 
-class Spinners:
-    arrows = r"▹▹▹▹▹▸▹▹▹▹ ▹▸▹▹▹ ▹▹▸▹▹ ▹▹▹▸▹ ▹▹▹▹▸"
+    # This code has been reformatted to suit our purpose...
+
+class SPINNERS():
+    arrows3 = r"▹▹▹▹▹▸▹▹▹▹ ▹▸▹▹▹ ▹▹▸▹▹ ▹▹▹▸▹ ▹▹▹▹▸"
     dots = r"⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
     dots2 = r"⣾⣽⣻⢿⡿⣟⣯⣷"
     dots3 = r"⠋⠙⠚⠞⠖⠦⠴⠲⠳⠓"
     dots4 = r"⠄⠆⠇⠋⠙⠸⠰⠠⠰⠸⠙⠋⠇⠆"
+
     hamburger = r"☱☲☴"

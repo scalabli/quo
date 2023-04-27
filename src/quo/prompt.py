@@ -716,7 +716,7 @@ class Prompt(Generic[_T]):
                     lambda: self.bottom_toolbar, style="class:bottom-toolbar.text"
                 ),
                 style="class:bottom-toolbar",
-                dont_extend_height=True,
+                fixed_height=True,
                 height=Dimension(min=1),
             ),
             filter=~is_done
@@ -775,7 +775,7 @@ class Prompt(Generic[_T]):
                             ConditionalContainer(
                                 Window(
                                     FormattedTextControl(get_elicit_text_1),
-                                    dont_extend_height=True,
+                                    fixed_height=True,
                                 ),
                                 Condition(has_before_fragments),
                             ),

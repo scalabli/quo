@@ -6,73 +6,38 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import os
 import sys
 
-# from .core import Clime as Clime
-# from .core import Parameter as Parameter
-# from .core import App as App
-# from .core import Tether as Tether
-from .pause import pause as pause
+#from .pause import pause as pause
 from .prompt import (
     prompt as prompt,
 )  # dont confuse this with :class: quo.prompt.Prompt()
 
 
-#             Arg,
-#             BaseCommand,
-#             Command,
-#             CommandCollection,
-#             MultiCommand,
-
-
-# from quo.accordance import (
-#        DEFAULT_COLUMNS,
-#        get_winterm_size,
-#        strip_ansi_colors
-#        )
-
-# from quo.context.current import resolve_color_default
-# from quo.expediency import inscribe # LazyFile
-
-# from quo.decorators import (
-#             contextualize,
-#             objectualize,
-#             make_pass_decorator
-#             autoversion,
-#             autopasswd,
-#             autohelp,
-#             autoconfirm
-
-
-# from .setout import HelpFormatter, wraptext
-# from quo.context.current import currentcontext as pass_clime
-# from .parser import AppParser
-
-#from quo.expediency.vitals import (
- #   appdir,
-  #  formatfilename,
-   # os_args,
-    #textstream,
-    #binarystream,
-#)
-
 
 def clear() -> None:
-    from .accordance import isatty, WIN
 
     """Clears the terminal screen and moves the cursor to the top left.
+       :return: None
     """
-    if not isatty(sys.stdout):
-        return
 
-    if WIN:
-        os.system("class")
-    else:
-        sys.stdout.write("\033[2J\033[1;1H")
+    os.system('cls' if os.name == 'nt' else 'clear')
 
+    
 
 def exit(code: int):
 
-    """Low-level exit that skips Python's cleanup but speeds up exit by about 10ms for things like shell completion.
-    :param code: Exit code.
+    """
+    Exit the interpreter immediately using os._exit()
+
+    This function provides a low-level exit that bypasses the normal Python
+    shutdown process and immediately terminates the interpreter. This can
+    be useful in situations where a faster exit is needed, such as shell
+    completion or other interactive applications.
+
+    Args:
+        code (int, optional): The exit status code. Defaults to 0.
+
+    Returns:
+        None
     """
     sys.stdout.flush()
     sys.stderr.flush()
@@ -124,4 +89,4 @@ def print(
 from quo.i_o.termui import confirm, echo
 from quo.shortcuts.utils import container
 
-__version__ = "2023.3"
+__version__ = "2023.4"

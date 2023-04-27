@@ -96,8 +96,7 @@ class Border:
     BOTTOM_RIGHT = "\u256F"
 
 
-
-class TextField:
+class TextArea:
     """
     A simple input field.
 
@@ -142,11 +141,10 @@ class TextField:
     :param width: Window width. (:class:`~quo.layout.Dimension` object.)
     :param height: Window height. (:class:`~quo.layout.Dimension` object.)
     :param scrollbar: When `True`, display a scroll bar.
-    :param fg: Foreground color string.
-    :param bg: Background color string.
-    :param dont_extend_width: When `True`, don't take up more width then the
+    :param style: A style string.
+    :param fixed_width: When `True`, don't take up more width then the
                               preferred width reported by the control.
-    :param dont_extend_height: When `True`, don't take up more width then the
+    :param fixed_height: When `True`, don't take up more width then the
                                preferred height reported by the control.
     :param get_line_prefix: None or a callable that returns formatted text to
         be inserted before a line. It takes a line number (int) and a
@@ -172,20 +170,19 @@ class TextField:
         accept_handler: Optional[BufferAcceptHandler] = None,
         history: Optional[History] = None,
         focusable: FilterOrBool = True,
-        focus_on_click: FilterOrBool = True,
+        focus_on_click: FilterOrBool = False,
         wrap_lines: FilterOrBool = True,
         read_only: FilterOrBool = False,
         width: AnyDimension = None,
         height: AnyDimension = None,
         extend_height: FilterOrBool = False,  # True,
         extend_width: FilterOrBool = True,
-        dont_extend_height: FilterOrBool = False,
-        dont_extend_width: FilterOrBool = False,
+        fixed_height: FilterOrBool = False,
+        fixed_width: FilterOrBool = False,
         line_numbers: bool = False,
         get_line_prefix: Optional[GetLinePrefixCallable] = None,
         scrollbar: bool = False,
-        fg: str = "",
-        bg: str = "",
+        style: str = "",
         search_field: Optional[SearchToolbar] = None,
         preview_search: FilterOrBool = True,
         prompt: AnyFormattedText = "",
@@ -256,18 +253,7 @@ class TextField:
             left_margins = []
             right_margins = []
 
-        if fg == "" and bg == "":
-            txtfldstyle = ""
-        elif fg != "" and bg != "":
-            txtfldstyle = fg + " bg:" + bg
-        elif fg != "" and bg == "":
-            txtfldstyle = fg
-        elif fg == "" and bg != "":
-            txtfldstyle="bg:" + bg
-
-
-        #style = "{  class:text-area " + "fg:" fg + " bg:" + bg
-
+        style = "class:text-area " + style
 
         # If no height was given, guarantee height of at least 1.
         if height is None:
@@ -276,10 +262,10 @@ class TextField:
         self.window = Window(
             height=height,
             width=width,
-            dont_extend_height=dont_extend_height,
-            dont_extend_width=dont_extend_width,
+            fixed_height=fixed_height,
+            fixed_width=fixed_width,
             content=self.control,
-            style=txtfldstyle,
+            style=style,
             wrap_lines=Condition(lambda: is_true(self.wrap_lines)),
             left_margins=left_margins,
             right_margins=right_margins,
@@ -333,11 +319,11 @@ class Label:
     :param style: A style string.
     :param width: When given, use this width, rather than calculating it from
         the text size.
-    :param dont_extend_width: When `True`, don't take up more width than
+    :param fixed_width: When `True`, don't take up more width than
                               preferred, i.e. the length of the longest line of
                               the text, or value of `width` parameter, if
                               given. `True` by default
-    :param dont_extend_height: When `True`, don't take up more width than the
+    :param fixed_height: When `True`, don't take up more width than the
                                preferred height, i.e. the number of lines of
                                the text. `False` by default.
     """
@@ -346,13 +332,11 @@ class Label:
         self,
         text: AnyFormattedText,
         style: str = "",
-        fg: str = "",
-        bg: str = "",
         width: AnyDimension = None,
         extend_height: bool = False,
         extend_width: bool = True,
-        dont_extend_height: bool = True,
-        dont_extend_width: bool = False,
+        fixed_height: bool = True,
+        fixed_width: bool = False,
     ) -> None:
 
         self.text = text
@@ -371,27 +355,13 @@ class Label:
 
         self.formatted_text_control = FormattedTextControl(text=lambda: self.text)
 
-
-        if fg == "" and bg == "":
-            txtfldstyle = ""
-        elif fg != "" and bg != "":
-            txtfldstyle = fg + " bg:" + bg
-        elif fg != "" and bg == "":
-            txtfldstyle = fg
-        elif fg == "" and bg != "":
-            txtfldstyle="bg:" + bg
-
-        from quo.text.html import Text
-
-
         self.window = Window(
-            FormattedTextControl(Text(text)),
-           # content=self.formatted_text_control,
-          #  width=get_width,
-          #  height=D(min=1),
-          #  style="class:label " + style,
-           # dont_extend_height=dont_extend_height,
-            #dont_extend_width=dont_extend_width,
+            content=self.formatted_text_control,
+            width=get_width,
+            height=D(min=1),
+            style="class:label " + style,
+            fixed_height=fixed_height,
+            fixed_width=fixed_width,
         )
 
     def __pt_container__(self) -> Container:
@@ -428,9 +398,9 @@ class Button:
             bind=self._get_key_bindings(),
             focusable=True,
         )
-        import platform
+        from quo.accordance import WIN
 
-        if "Windows" in platform.system():
+        if WIN:
             self.left_symbol="«["
             self.right_symbol="]»"
         else:
@@ -443,7 +413,7 @@ class Button:
             else:
                 return "class:button"
 
-        # Note: `dont_extend_width` is False, because we want to allow buttons
+        # Note: `fixed_width` is False, because we want to allow buttons
         #       to take more space if the parent container provides more space.
         #       Otherwise, we will also truncate the text.
         #       Probably we need a better way here to adjust to width of the
@@ -455,8 +425,8 @@ class Button:
             height=1,
             width=width,
             style=get_style,
-            dont_extend_width=False,
-            dont_extend_height=True,
+            fixed_width=False,
+            fixed_height=True,
         )
 
     def _get_text_fragments(self) -> StyleAndTextTuples:
@@ -538,7 +508,7 @@ class Frame:
                 Label(
                     lambda: Template(" {} ").format(self.title),
                     style="class:frame.label",
-                    dont_extend_width=True,
+                    fixed_width=True,
                 ),
                 fill(width=1, height=1, char="\u2560"),
                 fill(char=Border.HORIZONTAL),
@@ -663,8 +633,6 @@ class Box:
         width: AnyDimension = None,
         height: AnyDimension = None,
         style: str = "",
-        fg: str = "",
-        bg: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
         bind: Optional[Bind] = None,
@@ -698,7 +666,7 @@ class Box:
             ],
             width=width,
             height=height,
-            style="fg:" + fg + " bg:" + bg,
+            style=style,
             modal=modal,
             bind=None,
         )
@@ -796,7 +764,7 @@ class _DialogList(Generic[_T]):
                     filter=Condition(lambda: self.show_scrollbar),
                 ),
             ],
-            dont_extend_height=True,
+            fixed_height=True,
         )
 
     def _handle_enter(self) -> None:
@@ -990,6 +958,3 @@ class ProgressBar:
     def __pt_container__(self) -> Container:
         return self.container
 
-
-#:TODO:
-# Change dont_extend_width and dont_extend_height

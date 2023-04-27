@@ -289,7 +289,7 @@ class CompletionsMenu(ConditionalContainer):
                 height=Dimension(min=1, max=max_height),
                 scroll_offsets=ScrollOffsets(top=scroll_offset, bottom=scroll_offset),
                 right_margins=[ScrollbarMargin(display_arrows=display_arrows)],
-                dont_extend_width=True,
+                fixed_width=True,
                 style="class:completion-menu",
                 z_index=z_index,
             ),

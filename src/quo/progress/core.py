@@ -97,11 +97,11 @@ class ProgressBar:
             for item in pb(data):
                 ...
 
-    :param title: Text to be displayed above the progress bars. This can be plain text or formatted text as well.
+    :param title: Text to be displayed above the progress bars. This can be a
+        callable or formatted text as well.
     :param formatters: List of :class:`.Formatter` instances.
-    :param start: Appears right before the progress bar. Default is a space.
-    :param end: Appears right after the progress bar. Default is a space.
-    :param bottom_toolbar: Text to be displayed in the bottom toolbar. This can be plain text or formatted text.
+    :param bottom_toolbar: Text to be displayed in the bottom toolbar. This
+        can be a callable or formatted text.
     :param style: :class:`quo.styles.BaseStyle` instance.
     :param bind: :class:`.KeyBinder` instance.
     :param file: The file object used for rendering, by default `sys.stderr` is used.
@@ -117,84 +117,20 @@ class ProgressBar:
         title: RichText = None,
         formatters: Optional[Sequence[Formatter]] = None,
         bottom_toolbar: RichText = None,
-        start: str = "",
-        end: str = "",
-        spinner: str = "",
-        rainbow: bool = False,
         style: Optional[BaseStyle] = None,
         bind: Optional[KeyBinder] = _bind, # None,
         file: Optional[TextIO] = None,
-        color_depth: Optional[ColorDepth] = ColorDepth.eight_bit,
+        color_depth: Optional[ColorDepth] = None,
         output: Optional[Output] = None,
         input: Optional[Input] = None,
+    ) -> None:
 
-        ) -> None:
-
-        
-        if title is not None:
-            from quo.text.html import Text
-            self.title = Text(title)
-        else:
-            self.title = title
-
-        if bottom_toolbar is not None:
-            from quo.text.html import Text
-            self.bottom_toolbar = Text(bottom_toolbar)
-        else:
-            self.bottom_toolbar = bottom_toolbar
-
+        self.title = title
+        self.formatters = formatters or create_default_formatters()
+        self.bottom_toolbar = bottom_toolbar
         self.counters: List[ProgressBarCounter[object]] = []
         self.style = style
         self.bind= bind
-        self.start= start
-        self.end=end
-
-        import platform
-
-        if "Windows" in platform.system():
-            opener = "eta [ "
-            closer = " ]"
-
-        else:
-            opener = "eta \u27EE"
-            closer = " \u27EF"
-        
-        from .formatters import Label, Bar, Text as PbText, TimeLeft, Percentage, SpinningWheel, Progress
-        
-        if rainbow:
-            from .formatters import Rainbow
-
-            custom_formatters = [
-                Label(),
-                PbText(" "),
-                Rainbow(SpinningWheel(spinner=spinner)),
-                Rainbow(Percentage()),
-                Rainbow(Bar(start=" " + start + " ", end=end)),
-                Rainbow(Progress()),
-                Rainbow(PbText(" left: ")),
-                Rainbow(PbText(opener)),
-                Rainbow(TimeLeft()),
-                Rainbow(PbText(closer)),
-            ]
-            self.formatters = custom_formatters
-        else:
-
-            custom_formatters = [
-                Label(),
-                PbText(" "),
-                SpinningWheel(spinner=spinner),
-                Percentage(),
-                Bar(start=" " + start + " ", end=end),
-                Progress(),
-                PbText(" left: "),
-                PbText(opener),
-                TimeLeft(),
-                PbText(closer),
-
-                ]
-            self.formatters = custom_formatters
-
-
 
         # Note that we use __stderr__ as default error output, because that
         # works best with `patch_stdout`.
@@ -214,7 +150,8 @@ class ProgressBar:
         title_toolbar = ConditionalContainer(
             Window(
                 FormattedTextControl(lambda: self.title),
-                height=1,# height between the title and the pb
+                height=1,
+                style="class:progressbar,title",
             ),
             filter=Condition(lambda: self.title is not None),
         )
@@ -304,26 +241,21 @@ class ProgressBar:
         self,
         data: Optional[Iterable[_T]] = None,
         label: RichText = "",
-        auto_hide: bool = False,
+        remove_when_done: bool = False,
         total: Optional[int] = None,
     ) -> "ProgressBarCounter[_T]":
         """
         Start a new counter.
 
-        :param label: Title text or description for this progress. (This can be formatted text as well).
-        :param auto_hide: When `True`, hide this progress bar after consuming the iterator.
+        :param label: Title text or description for this progress. (This can be
+            formatted text as well).
+        :param remove_when_done: When `True`, hide this progress bar.
         :param total: Specify the maximum value if it can't be calculated by
             calling ``len``.
         """
-        if "<" and "</" in label:
-            from quo.text.html import Text
-            counter = ProgressBarCounter(
-                self, data, label=Text(label), auto_hide=auto_hide, total=total
-                )
-        else:
-            counter = ProgressBarCounter(
-            self, data, label=label, auto_hide=auto_hide, total=total
-            )
+        counter = ProgressBarCounter(
+            self, data, label=label, remove_when_done=remove_when_done, total=total
+        )
         self.counters.append(counter)
         return counter
 
@@ -378,7 +310,7 @@ class ProgressBarCounter(Generic[_CounterItem]):
         progress_bar: ProgressBar,
         data: Optional[Iterable[_CounterItem]] = None,
         label: RichText = "",
-        auto_hide: bool = False,
+        remove_when_done: bool = False,
         total: Optional[int] = None,
     ) -> None:
 
@@ -388,7 +320,7 @@ class ProgressBarCounter(Generic[_CounterItem]):
         self.data = data
         self.items_completed = 0
         self.label = label
-        self.auto_hide = auto_hide
+        self.remove_when_done = remove_when_done
         self._done = False
         self.total: Optional[int]
 
@@ -442,7 +374,7 @@ class ProgressBarCounter(Generic[_CounterItem]):
         self._done = value
         self.stopped = value
 
-        if value and self.auto_hide:
+        if value and self.remove_when_done:
             self.progress_bar.counters.remove(self)
 
     @property
