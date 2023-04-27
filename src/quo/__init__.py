@@ -6,7 +6,7 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import os
 import sys
 
-#from .pause import pause as pause
+from .pause import pause as pause
 from .prompt import (
     prompt as prompt,
 )  # dont confuse this with :class: quo.prompt.Prompt()
