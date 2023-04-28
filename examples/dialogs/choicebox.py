@@ -14,6 +14,7 @@ result = ChoiceBox(
             ("No", False),
             ("Maybe...", None)]
         )
+print(result)
 if result == True:
     print("dd")
   #  echo(f"Result = {result}")
