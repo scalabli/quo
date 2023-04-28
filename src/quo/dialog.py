@@ -233,10 +233,23 @@ def _RadiolistBox(
 
     radio_list = RadioList(values)
 
+    if text  != "":
+        from quo.text.html import Text
+        subTitle = Text(text)
+    else:
+        subTitle = text
+       
+    if title  != "":
+        from quo.text.html import Text
+        header = Text(title)
+    else:
+        header = title
+
+
     dialog = Dialog(
-        title=title,
+        title=header,
         body=HSplit(
-            [Label(text=text, fixed_height=True), radio_list],
+            [Label(text=subTitle, fixed_height=True), radio_list],
             padding=1,
         ),
         buttons=[

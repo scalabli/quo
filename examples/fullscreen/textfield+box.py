@@ -5,7 +5,7 @@ from quo.label import Label
 # Layout for displaying hello world.
 # (The box takes care of the margin/padding.)
 
-label = Label("<style fg='red' bg='yellow'>Hello, world!!</style>")
+label = Label("Hello, world!!", fg="purple", italic=True, underline=True)
  
 content = Box(label, char="!")
 

@@ -761,7 +761,7 @@ Read more on [Label](https://quo.readthedocs.io/en/latest/widgets.html#label)
  from quo.box import Box
  from quo.label import Label
 
- content = Label("<style fg='red' bg='yellow'>Hello, World!</style>"),
+ content = Label("Hello, World!", fg='red', bg='yellow')
 
  container(content)
 

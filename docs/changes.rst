@@ -8,14 +8,27 @@ Changelog
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 
-``Version 2023.4``
+``Version 2023.5``
 
-Unreleased
+Realeased On 2023-04-28
 
 **Added**
 ^^^^^^^^^^^
--Added :param:`flexible_height` and :param:`flexible_width` to :obj:`Label`
--Added ``Progressbar`` as an alias of :obj:`quo.progress.ProgressBar`
+- Added :param:`bold` to :obj:`Label`.
+- Added :param:`italic` to :obj:`Label`.
+- Added :param:`underline` to :obj:`Label`.
+- Added :param:`fg` to :obj:`Label`.
+- Added :param:`bg` to :obj:`Label`.
+
+
+``Version 2023.4``
+
+Realeased On 2023-04-27
+
+**Added**
+^^^^^^^^^^^
+- Added :param:`fixed_height` and :param:`fixed_width` to :obj:`Label`
+- Added ``Progressbar`` as an alias of :obj:`quo.progress.ProgressBar`
 
 ``Version 2023.3``
 ---------------------
@@ -24,9 +37,9 @@ Released On 2023-03-30
 
 **Added**
 ^^^^^^^^^^^
--Added :param:`lines` to  :obj:`quo.rule.Rule`
+- Added :param:`lines` to  :obj:`quo.rule.Rule`
 
--Added :param:``spinner` to :obj:``quo.progress.ProgressBar`
+- Added :param:``spinner` to :obj:``quo.progress.ProgressBar`
 
 **Fixed**
 ^^^^^^^^^^^^
@@ -41,7 +54,7 @@ Released On 2023-03-23
 
 **Added**
 ^^^^^^^^^^^^
--Added :param:`fg` and `bg` to :func:`quo.color.Color`
+- Added :param:`fg` and `bg` to :func:`quo.color.Color`
 
 
 

@@ -316,7 +316,11 @@ class Label:
     :param text: Text to display. Can be multiline. All value types accepted by
         :class:`quo.layout.FormattedTextControl` are allowed,
         including a callable.
-    :param style: A style string.
+    :param bold: Bold text.
+    :param italic: Italic text.
+    :param underline: Underline text.
+    :param fg: Foreground text color.
+    :param bg: Background text color.
     :param width: When given, use this width, rather than calculating it from
         the text size.
     :param fixed_width: When `True`, don't take up more width than
@@ -332,14 +336,34 @@ class Label:
         self,
         text: AnyFormattedText,
         style: str = "",
+        fg: str = "",
+        bg: str = "",
+        bold: bool = False,
+        italic: bool = False,
+        underline: bool = False,
         width: AnyDimension = None,
-        extend_height: bool = False,
-        extend_width: bool = True,
         fixed_height: bool = True,
         fixed_width: bool = False,
     ) -> None:
 
         self.text = text
+
+        if fg and bg != "":
+            setStyle = " fg:" + fg + " bg:" + bg
+        elif fg != "" and bg == "":
+            setStyle = " fg:" + fg
+        elif fg == "" and bg != "":
+            setStyle = " bg:" + bg
+
+        else:
+            setStyle = ""
+
+        if italic:
+            setStyle+=" italic"
+        if bold:
+            setStyle+=" bold"
+        if underline:
+            setStyle+=" underline"
 
         def get_width() -> AnyDimension:
             if width is None:
@@ -355,11 +379,13 @@ class Label:
 
         self.formatted_text_control = FormattedTextControl(text=lambda: self.text)
 
+        
+
         self.window = Window(
             content=self.formatted_text_control,
             width=get_width,
             height=D(min=1),
-            style="class:label " + style,
+            style="class:label " + setStyle,
             fixed_height=fixed_height,
             fixed_width=fixed_width,
         )
@@ -384,7 +410,7 @@ class Button:
         text: str,
         handler: Optional[Callable[[], None]] = None,
         width: int = 12,
-        left_symbol: str = None, # "«\u27EC",
+        left_symbol: str = None, #"«\u27EC",
         right_symbol: str = None, #"\u27ED»",
     ) -> None:
 
@@ -735,7 +761,7 @@ class _DialogList(Generic[_T]):
                 )
 
         @kb.add("enter")
-        @kb.add(" ")
+        @kb.add(" ") #space bar
         def _click(event: Event) -> None:
             self._handle_enter()
 

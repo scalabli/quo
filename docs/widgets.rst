@@ -74,9 +74,15 @@ This also makes sure that the parent can provide more space than required by the
 ---------
 Widget that displays the given text. It is not editable or focusable.
 
+
 **Parameters**
-    - ``text`` - Text to display. Can be multiline.
-    - ``width`` - When given, use this width, rather than calculating it from the text size.
+    - ``text`` *(str)* - Text to display. Can be multiline.
+    - ``width``  *(int)*- When given, use this width, rather than calculating it from the text size.
+    - ``bold`` *(bool)* - Bold text.
+    - ``italic``  *(bool)*- Italic text.
+    - ``underline`` *(bool)* - Underline text.
+    - ``fg`` *(str)* - Foreground text color.
+    - ``bg`` *(str)* - Background text color.
     - ``fixed_width`` *(bool)* - When `False`, don't take up more width than preferred, i.e. the length of the longest line of the text, or value of `width` parameter, if given. `True` by default
     - ``fixed_height`` *(bool)*-  When `False`, don't take up more width than the preferred height, i.e. the number of lines of the text. `True` by default.
 
@@ -89,7 +95,7 @@ You can print the layout to the output in a non-interactive way like so:
    from quo import container
    from quo.label import Label
 
-   content = Label("<fg='black' bg='red'>Hello, World</style>")
+   content = Label("Hello, World", fg='black', bg='red')
    container(content)
 
 .. image:: ./images/widgets/label.png
