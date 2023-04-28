@@ -1,7 +1,7 @@
 .. _full_screen_applications:
 
-Text User Interface (Full screen applications)
-================================================
+Text User Interface (Full screen Command-line applications)
+=================================================================
 
 `quo` can be used to create complex full screen terminal
 applications. Typically, an application consists of a layout (to describe the

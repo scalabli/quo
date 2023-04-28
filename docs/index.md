@@ -50,7 +50,7 @@ table.rst
 widgets.rst
 utils.rst
 exceptions.rst
-full_screen_apps.rst
+tui.rst
 kb.rst
 reference.rst
 ```
