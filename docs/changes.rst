@@ -19,6 +19,7 @@ Realeased On 2023-04-28
 - Added :param:`underline` to :obj:`Label`.
 - Added :param:`fg` to :obj:`Label`.
 - Added :param:`bg` to :obj:`Label`.
+- Added :param:`bg` to :obj:`Box`.
 
 
 ``Version 2023.4``
