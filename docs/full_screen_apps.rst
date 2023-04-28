@@ -319,8 +319,8 @@ Window
     - ``width`` - :class:`.Dimension` instance or callable.
     - ``height`` - :class:`.Dimension` instance or callable.
     - ``z_index`` - When specified, this can be used to bring element in front of floating elements.
-    - ``dont_extend_width`` *(bool)* - When `True`, don't take up more width then the preferred width reported by the control.
-    - ``dont_extend_height`` *(bool)* - When `True`, don't take up more width then the  preferred height reported by the control.
+    - ``fixed_width`` *(bool)* - When `True`, don't take up more width then the preferred width reported by the control.
+    - ``fixed_height`` *(bool)* - When `True`, don't take up more width then the  preferred height reported by the control.
     - ``ignore_content_width`` *(bool)* - A `bool` or :class:`.Filter` instance. Ignore the :class:`.UIContent` width when calculating the dimensions.
     - ``ignore_content_height`` *(bool)* - A `bool` or :class:`.Filter` instance. Ignore the :class:`.UIContent` height when calculating the dimensions.
     - ``left_margins`` - A list of :class:`.Margin` instance to be displayed on the left. For instance: :class:`~quo.layout.NumberedMargin` can be one of them in order to show line numbers.
