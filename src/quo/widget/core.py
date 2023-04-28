@@ -658,6 +658,7 @@ class Box:
         padding_bottom: AnyDimension = None,
         width: AnyDimension = None,
         height: AnyDimension = None,
+        bg: str = "",
         style: str = "",
         char: Union[None, str, Callable[[], str]] = None,
         modal: bool = False,
@@ -678,6 +679,11 @@ class Box:
         self.padding_bottom = get(padding_bottom)
         self.body = body
 
+        if bg != "":
+            setStyle = " bg:" + bg
+        else:
+            setStyle = ""
+
         self.container = HSplit(
             [
                 Window(height=self.padding_top, char=char),
@@ -692,7 +698,7 @@ class Box:
             ],
             width=width,
             height=height,
-            style=style,
+            style=setStyle,
             modal=modal,
             bind=None,
         )

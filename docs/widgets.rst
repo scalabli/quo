@@ -162,8 +162,8 @@ This widget does have the most common options, but it does not intend to cover e
 - ``scrollbar`` *(bool)* - When `True`, display a scroll bar.
 - ``fg`` *(Optional[str])* - A foregound color string.
 - ``bg`` *(Optional[str])* - A background color string.
-- ``flexible_width`` *(bool)* - When `False`, don't take up more width than the preferred width reported by the control.
-- ``flexible_height`` *(bool)* - When `False`, don't take up more width than the preferred height reported by the control.
+- ``fixed_width`` *(bool)* - When `True`, don't take up more width than the preferred width reported by the control.
+- ``fixed_height`` *(bool)* - When `True`, don't take up more width than the preferred height reported by the control.
 - ``get_line_prefix`` - None or a callable that returns formatted text to be inserted before a line. It takes a line number *(int)* and a wrap_count and returns formatted text. This can be used for implementation of line continuations, things like Vim "breakindent" and so on.
 
 Other attributes

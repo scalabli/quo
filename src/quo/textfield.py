@@ -1,1 +1,1 @@
-from quo.widget.core import TextField as TextField
+from quo.widget.core import TextArea as TextField

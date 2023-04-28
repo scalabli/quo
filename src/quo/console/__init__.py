@@ -2,7 +2,7 @@ from quo.console.console import Console
 from .current import (
     #    AppSession,
     #    create_app_session,
-    get_app,
+    get_app as application,
     #    get_app_or_none,
     #    get_app_session,
     #    set_app,

@@ -40,14 +40,12 @@ b5 = Button("Exit", handler=exit)
 
 text_area = TextField(scrollbar=True, multiline=True, fixed_height=False, fixed_width=False)
 
-label = Label("Press <maroon><b>`Tab`</b></maroon> or <gold><b>`Up and Down`</b></gold> keys to move focus")
-
-
+label = Label("Press `Tab` or `Up and Down` keys to move focus", fg="maroon", bg="gold", bold=True)
 
 mainBody = Box(text_area, bg="blue")
 
 buttons = HSplit([b1, b2, b3, b4, b5], padding=1)
-buttonsBody = Box(buttons, padding=1, bg="magenta")
+buttonsBody = Box(buttons, bg="purple", padding=1)
 
 # Combine all the widgets in a UI.
 # The `Box` object ensures that padding will be inserted around the containing
