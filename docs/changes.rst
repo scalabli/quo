@@ -8,7 +8,7 @@ Changelog
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
 
-``Version 2023.5``
+``Version 2023.5`` **Whimsical Walrus**
 
 Realeased On 2023-04-28
 
