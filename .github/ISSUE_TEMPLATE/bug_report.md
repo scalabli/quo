@@ -28,11 +28,5 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS, Ubuntu]
  - Version [e.g. 22]
 
-**Android(please complete the following information):**
- - Model [e.g. Samsung]
- - OS: [eg. Android 11]
- - App [e.g. Termux]
- - Version [e.g. 22]
-
 **Additional context**
 Add any other context about the problem here.
