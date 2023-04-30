@@ -6,7 +6,7 @@ Quo is a Python based Command Line toolkit for writing Command-Line Interface(CL
 import os
 import sys
 
-from .pause import pause as pause
+#from .pause import pause as pause
 from .prompt import (
     prompt as prompt,
 )  # dont confuse this with :class: quo.prompt.Prompt()
@@ -44,28 +44,37 @@ def exit(code: int):
     os._exit(code)
 
 
-def getchar(inscribe: bool = False):
-    """Fetches a single character from the terminal and returns it.  This
-    will always return a unicode character and under certain rare
-    circumstances this might return more than one character.  The
-    situations which more than one character is returned is when for
-    whatever reason multiple characters end up in the terminal buffer or
-    standard input was not actually a terminal.
-    Note that this will always read from the terminal, even if something
-    is piped into the standard input.
-    Note for Windows: in rare cases when typing non-ASCII characters, this
-    function might wait for a second character and then return both at once.
-    This is because certain Unicode characters look like special-key markers.
-    :param inscribe: if set to `True`, the character read will also show up on the terminal.  The default is to not show it.
+def getchar():
     """
-    from quo.expediency.vitals import inscribe
+    Get a single character from standard input.
 
-    _interpose = None
-    f = _interpose
-    if f is None:
-        from quo.implementation import interpose as f
-    return f(inscribe)
+    This function reads a single character from standard input (stdin)
+    and returns it as a string. If an end-of-file (EOF) character is
+    encountered, this function returns an empty string.
 
+    Note that this function may behave differently depending on the
+    operating system and the terminal emulator being used. In some cases,
+    certain special characters (such as arrow keys or function keys) may
+    not be interpreted correctly.
+
+    Returns:
+          str: A single character read from standard input, or an empty
+             string if an end-of-file character is encountered.
+    """
+    if sys.platform.startswith('win'):
+        import msvcrt
+        return msvcrt.getch().decode('utf-8')
+    else:
+        import termios
+        import tty
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            char = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return char
 
 
 def print(
@@ -84,9 +93,44 @@ def print(
     _print(Text(*values), end=end, include_default_pygments_style=include_default_pygments_style, color_depth=colorDepth, style=style, output=output, sep=sep, style_transformation=style_transformation)
         
     
+def pause(message: str ='Press any key to continue »...'):
+    """
+    Pause execution and wait for the user to press any key.
 
+    This function displays a message (default 'Press any key to continue...')
+    and waits for the user to press any key before continuing execution.
+    The message is displayed on standard output (stdout), and user input is
+    read from standard input (stdin).
+
+    Note that this function may behave differently depending on the
+    operating system and the terminal emulator being used. In some cases,
+    certain special characters (such as arrow keys or function keys) may
+    not be interpreted correctly.
+
+    Args:
+        message (str, optional): The message to display before waiting for
+                                 user input. Defaults to 'Press any key to continue...'.
+
+    Returns:
+        None
+    """
+
+    print(message)
+    if sys.platform.startswith('win'):
+        import msvcrt
+        msvcrt.getch()
+    else:
+        import termios
+        import tty
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings) 
 #from quo.shortcuts.utils import print
 from quo.i_o.termui import confirm, echo
 from quo.shortcuts.utils import container
 
-__version__ = "2023.5"
+__version__ = "2023.5.1"

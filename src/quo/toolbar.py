@@ -1,0 +1,1 @@
+from quo.widget.toolbars import SearchToolbar

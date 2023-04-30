@@ -501,8 +501,8 @@ class Frame:
     assigning to the `body` and `title` attributes of this class.
 
     :param body: Another container object.
-    :param title: Text to be displayed in the top of the frame (can be formatted text).
-    :param style: Style string to be applied to this widget.
+    :param title: Text to be displayed in the top of the frame (can be formatted text i.e <red>Hello</red>).
+    :param frame_color: Frame color Style string to be applied to this widget.
     """
 
     from quo.keys.key_binding.key_bindings import Bind
@@ -511,17 +511,21 @@ class Frame:
         self,
         body: AnyContainer,
         title: AnyFormattedText = "",
+        frame_color: str = None,
         style: str = "",
         width: AnyDimension = None,
         height: AnyDimension = None,
         bind: Optional[Bind] = None,
         modal: bool = False,
-    ) -> None:
+        ) -> None:
+        from quo.text.html import Text
 
-        self.title = title
+        self.title = Text(title)
         self.body = body
 
-        fill = partial(Window, style="class:frame.border")
+
+
+        fill = partial(Window, style="class:frame.border" if frame_color is None else "fg:"+frame_color)
         style = "class:frame " + style
 
         top_row_with_title = VSplit(
@@ -533,7 +537,7 @@ class Frame:
                 # `quo.text.Text` object for instance.
                 Label(
                     lambda: Template(" {} ").format(self.title),
-                    style="class:frame.label",
+                 #   style="class:frame.label",
                     fixed_width=True,
                 ),
                 fill(width=1, height=1, char="\u2560"),
