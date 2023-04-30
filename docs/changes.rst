@@ -15,7 +15,7 @@ Unreleased
 ^^^^^^^^^^^
 - Added :param:`frame_color` to :obj:`Frame`.
 
-``Version 2023.5``
+``Version 2023.5`` **Whimsical Walrus**
 
 Realeased On 2023-04-28
 
