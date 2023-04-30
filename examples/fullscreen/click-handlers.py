@@ -55,7 +55,8 @@ content =  Box(
             label,
             VSplit([buttonsBody, mainBody])
         ]), 
-        char="$"
+        char=" ",
+        bg="red"
         )
 
 # Key bindings.

@@ -5,35 +5,41 @@ Simple example of a full screen application with a vertical split.
 This will show a window on the left for user input. When the user types, the
 reversed input is shown on the right. Pressing Ctrl-Q will quit the application.
 """
-from quo.console import Console
+from quo import container
 from quo.buffer import Buffer
-from quo.keys import Bind
-from quo.layout import Layout, Window, BufferControl, FormattedTextControl, VSplit, HSplit
+from quo.keys import bind
+from quo.layout.controls import BufferControl, FormattedTextControl
+from quo.layout import VSplit, HSplit
+from quo.window import Window
 
 # 3. Create the buffers
 #    ------------------
 
-left_buffer = Buffer()
-right_buffer =Buffer()
+leftBuffer = Buffer()
+rightBuffer =Buffer()
 
 # 1. First we create the layout
 #    --------------------------
 
-left_window = Window(BufferControl(left_buffer))
-right_window = Window(BufferControl(right_buffer))
+leftWindow = Window(BufferControl(leftBuffer))
+rightWindow = Window(BufferControl(rightBuffer))
 
 
-body = VSplit(
-    [
-        left_window,
-        # A vertical line in the middle. We explicitly specify the width, to make
-        # sure that the layout engine will not try to divide the whole width by
-        # three for all these windows.
-        Window(width=1, char="|", style="class:line"),
+
+# A vertical line in the middle. We explicitly specify the width, to make
+# sure that the layout engine will not try to divide the whole width by
+# # three for all these windows.
+
+verticalLine = Window(width=1, char="|", style="class:line")
+
+
+body = VSplit([
+
+        leftWindow,
+        verticalLine,
         # Display the Result buffer on the right.
-        right_window,
-    ]
-)
+        rightWindow
+    ])
 
 # As a demonstration. Let's add a title bar to the top, displaying "Hello world".
 
@@ -50,7 +56,7 @@ def get_titlebar_text():
     ]
 
 
-root_container = HSplit(
+rootContainer = HSplit(
     [
         # The titlebar.
         Window(
@@ -71,7 +77,6 @@ root_container = HSplit(
 
 # As a demonstration, we will add just a ControlQ key binding to exit the
 # application.
-kb = Bind()
 
 # Now add the Ctrl-Q binding. We have to pass `eager=True` here. The reason is
 # that there is another key *sequence* that starts with Ctrl-Q as well. Yes, a
@@ -91,8 +96,8 @@ kb = Bind()
 # existing key binding, and you definitely want to override that behaviour.
 
 
-@kb.add("ctrl-c", eager=True)
-@kb.add("ctrl-q", eager=True)
+@bind.add("ctrl-c", eager=True)
+@bind.add("ctrl-q", eager=True)
 def _(event):
     """
     Pressing Ctrl-Q or Ctrl-C will exit the user interface.
@@ -115,37 +120,20 @@ def default_buffer_changed(_):
     When the buffer on the left changes, update the buffer on
     the right. We just reverse the text.
     """
-    right_buffer.text = left_buffer.text[::-1]
+    rightBuffer.text = leftBuffer.text[::-1]
 
 
-left_buffer.on_text_changed += default_buffer_changed
+leftBuffer.on_text_changed += default_buffer_changed
 
-
-# 3. Creating an `Console` instance
-#    ----------------------------------
 
 # This glues everything together.
-layout = Layout(root_container, focused_element=left_window)
+container(rootContainer, focused_element=leftWindow, bind=True,  mouse_support=True,full_screen=True)
 
-application = Console(
-        layout=layout,
-        bind=kb,
+#application = Console(
+ #       layout=layout,
+  #      bind=kb,
     # Let's add mouse support!
-        mouse_support=True,
     # Using an alternate screen buffer means as much as: "run full screen".
     # It switches the terminal to an alternate screen.
-        full_screen=True,
-        )
-
-
-# 4. Run the application
-#    -------------------
-
-
-def run():
-    # Run the interface. (This runs the event loop until Ctrl-Q is pressed.)
-    application.run()
-
-
-if __name__ == "__main__":
-    run()
+    #    full_screen=True,
+        

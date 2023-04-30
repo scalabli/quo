@@ -12,24 +12,28 @@ When in ``full_screen`` mode, the default key binder to exit the application is 
 Draw a border around any container, optionally with a title text.
 Changing the title and body of the frame is possible at runtime by assigning to the `body` and `title` attributes of this class.
 
+
+
 **Parameters**
       - ``body`` - Another container object.
-      - ``title`` - Text to be displayed in the top of the frame *(can be formatted text)*
-      - ``style`` - Style string to be applied to this widget.
-      - ``width`` - Frame width
-      - ``height`` - Frame height.
+      - ``title``  *(Optional[str])* - Text to be displayed in the top of the frame *(can be formatted text i.e <b><green>Hello</green></b>)*
+      - ``frame_color`` - Frame color string. *(Added on v2023.5.1)*
+      - ``width`` *(Optional[int])* - Frame width
+      - ``height``  *(Optional[int])* - Frame height.
 
 .. code:: python
 
   from quo import container
-  from quo.widget import Frame, Label
+  from quo.frame import Frame
+  from quo.keys import bind
+  from quo.label import Label
 
 
   root = Frame(
             Label("Hello, World!"),
             title="Quo: python")
        
-  @bind.add("ctrl-c")
+  @bind.add("ctrl-z") #press ctrl+z to exit
   def _(event):
          event.app.exit()
   

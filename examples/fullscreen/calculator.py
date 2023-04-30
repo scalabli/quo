@@ -3,75 +3,71 @@
 A simple example of a calculator program.
 This could be used as inspiration for a REPL.
 """
-import cProfile
+
 from quo import container
 from quo.document import Document
 from quo.keys import bind
-from quo.layout import Window, HSplit, Layout
-from quo.widget import SearchToolbar, TextArea
+from quo.layout import HSplit
+from quo.textfield import TextField
+from quo.toolbar import SearchToolbar
+from quo.window import Window
 
 help_text = """
-Type any expression (e.g. "4 + 4") followed by enter to execute.
-Press Control-C to exit.
-"""
+            Type any expression (e.g. "4 + 4") followed by enter to execute.
+            Press Control-C to exit.
+            """
 
 
-def main():
-    # The layout.
-    search_field = SearchToolbar()  # For reverse search.
+# The layout.
+searchField = SearchToolbar()  # For reverse search.
 
-    output_field = TextArea(f"{help_text}", style="bg:blue fg:yellow bold")
-    input_field = TextArea(
-        height=2,
-        prompt=">>",
-        style="bg:gray fg:green",  # class:input-field",
-        multiline=False,
-        wrap_lines=False,
-        search_field=search_field,
-    )
+outputField = TextField(text=help_text, style="bg:blue fg:yellow bold", multiline=True)
 
-    content = HSplit(
-        [
-            output_field,
+inputField = TextField(
+                height=5, 
+                prompt=">>", 
+                style="bg:gray fg:green", 
+                wrap_lines=True,
+                search_field=searchField,
+                )
+
+content = HSplit([
+            outputField,
             Window(height=1, char="-", style="fg:magenta"),
-            input_field,
-            search_field,
-        ]
-    )
+            inputField,
+           # searchField,
+        ])
 
-    # Attach accept handler to the input field. We do this by assigning the
-    # handler to the `TextArea` that we created earlier. it is also possible to
-    # pass it to the constructor of `TextArea`.
-    # NOTE: It's better to assign an `accept_handler`, rather then adding a
-    #       custom ENTER key binding. This will automatically reset the input
-    #       field and add the strings to the history.
-    def accept(buff):
-        # Evaluate "calculator" expression.
-        try:
-            output = "\n\nIn:  {}\nOut: {}".format(
-                input_field.text, eval(input_field.text)
+# Attach accept handler to the input field. We do this by assigning the
+# handler to the `TextArea` that we created earlier. it is also possible to
+# pass it to the constructor of `TextArea`.
+# NOTE: It's better to assign an `accept_handler`, rather then adding a
+#       custom ENTER key binding. This will automatically reset the input
+#       field and add the strings to the history.
+def accept(buff):
+     # Evaluate "calculator" expression.
+    try:
+        output = "\n\nIn:  {}\nOut: {}".format(
+            inputField.text, eval(inputField.text)
             )  # Don't do 'eval' in real code!
-        except BaseException as e:
-            output = "\n\n{}".format(e)
-        new_text = output_field.text + output
 
+    except BaseException as e:
+        output = "\n\n{}".format(e)
+        newText = outputField.text + output
         # Add text to output buffer.
-        output_field.buffer.document = Document(
-            text=new_text, cursor_position=len(new_text)
-        )
+        outputField.buffer.document = Document(
+            text=newText, cursor_position=len(newText)
+            )
+inputField.accept_handler = accept
 
-    input_field.accept_handler = accept
+print(inputField.text)
 
-    # The key bindings.
-    # "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
-    container(
-        content,
-        bind=True,
-        focused_element=input_field,
-        full_screen=True,
-        mouse_support=True,
+# The key bindings.
+# "Pressing Ctrl-Q or Ctrl-C will exit the user interface."
+container(
+    content,
+    bind=True,
+    focused_element=inputField,
+    full_screen=True,
+    mouse_support=True,
     )
-
-
-if __name__ == "__main__":
-    cProfile.run("main()")

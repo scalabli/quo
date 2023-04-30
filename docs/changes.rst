@@ -7,6 +7,13 @@ Changelog
 
 .. image:: https://media.giphy.com/media/12oufCB0MyZ1Go/giphy.gif
 
+``Version 2023.5.1``
+
+Unreleased
+
+**Added**
+^^^^^^^^^^^
+- Added :param:`frame_color` to :obj:`Frame`.
 
 ``Version 2023.5``
 
