@@ -7,6 +7,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5848515.svg)](https://doi.org/10.5281/zenodo.5848515)
 [![licence](https://img.shields.io/pypi/l/quo.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gerrishon_s.svg?style=social)](https://twitter.com/gerrishon_s)
+![Github Repo Size](https://img.shields.io/github/repo-size/scalabli/quo?style=for-the-badge&color=aqua)
 
 
 [![Logo](https://raw.githubusercontent.com/scalabli/quo/master/pics/quo.png)](https://github.com/scalabli/quo)
