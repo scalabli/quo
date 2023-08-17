@@ -1,4 +1,4 @@
-Sphinx==4.4.0
+Sphinx==7.2.1
 pyperclip==1.8.2
 sphinx_rtd_theme==1.0.0
 secretum_sphinx_theme==2022.2
